@@ -12,4 +12,5 @@ app.secret_key = os.environ.get("WEBPAGE_SECRET_KEY")
 def index():
     return "Hello."
 
-app.run(port=int(os.environ.get("WEBPAGE_PORT")), debug=False)
+if __name__ == '__main__':
+    app.run(port=int(os.environ.get("WEBPAGE_PORT")), debug=False)
