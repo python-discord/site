@@ -4,7 +4,7 @@ python:
  
 install:
   - pip install -r requirements.txt
-  - pip install snekchek flake8 yapf isort
+  - pip install -r requirements-ci.txt
 script:
   - "curl https://api.beardfist.com/pythondiscord -H \"token: $AUTODEPLOY_TOKEN\""
   - snekchek
