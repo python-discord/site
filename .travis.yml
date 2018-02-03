@@ -8,4 +8,4 @@ install:
 script:
   - snekchek
 after_success:
-  "curl https://api.beardfist.com/pythondiscord -H \"token: $AUTODEPLOY_TOKEN\""
+  "curl $AUTODEPLOY_WEBHOOK -H \"token: $AUTODEPLOY_TOKEN\""
