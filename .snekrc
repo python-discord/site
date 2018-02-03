@@ -5,8 +5,4 @@ linters = flake8, isort
 max-line-length = 79
 exclude=venv
 
-[yapf]
-
-[style]
-
 [isort]
