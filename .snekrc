@@ -10,7 +10,7 @@ indent='    '
 multi_line_output=0
 length_sort=1
 use_parentheses=true
-sections=sections=FUTURE,STDLIB,THIRDPARTY,FIRSTPARTY,LOCALFOLDER
+sections=FUTURE,STDLIB,THIRDPARTY,FIRSTPARTY,LOCALFOLDER
 import_heading_stdlib=Stdlib
 import_heading_thirdparty=External Libraries
 import_heading_firstparty=Snekchek
