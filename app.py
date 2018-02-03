@@ -18,12 +18,12 @@ def _index():
 
 
 @app.route("/healthcheck")
-def healthcheck():
+def _healthcheck():
     return jsonify({"status":"ok"})
 
 
 @app.errorhandler(404)
-def page_not_found(e):
+def _page_not_found(e):
     return "replace me with a template, 404 not found", 404
 
 
