@@ -1,0 +1,9 @@
+[all]
+linters = flake8, yapf
+
+[flake8]
+max-line-length = 79
+
+[yapf]
+
+[style]
