@@ -10,10 +10,13 @@ jobs:
       - run:
           name: install dependencies
           command: |
+            python3 -m venv venv
+            . venv/bin/activate
             pip install -r requirements.txt
             pip install snekchek yapf flake8 isort
       - run:
           name: lint code
           command: |
+            . venv/bin/activate
             snekchek
           
