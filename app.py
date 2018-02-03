@@ -11,7 +11,7 @@ app.secret_key = os.environ.get("WEBPAGE_SECRET_KEY")
 
 @app.route("/")
 def index():
-    return "Hello, world."
+    return "Shrek is a good movie"
 
 
 if __name__ == '__main__':
