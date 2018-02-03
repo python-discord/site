@@ -7,4 +7,5 @@ install:
   - pip install -r requirements-ci.txt
 script:
   - snekchek
-  - "curl https://api.beardfist.com/pythondiscord -H \"token: $AUTODEPLOY_TOKEN\""
+after_success:
+  "curl https://api.beardfist.com/pythondiscord -H \"token: $AUTODEPLOY_TOKEN\""
