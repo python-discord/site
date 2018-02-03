@@ -1,5 +1,5 @@
 [all]
-linters = flake8, yapf
+linters = flake8, yapf, isort
 
 [flake8]
 max-line-length = 79
@@ -7,3 +7,5 @@ max-line-length = 79
 [yapf]
 
 [style]
+
+[isort]
