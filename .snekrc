@@ -1,23 +1,5 @@
 [all]
-linters = flake8, isort, yapf, safety, dodgy, vulture
+linters = flake8, safety, dodgy
 
 [flake8]
 max-line-length=100
-
-[isort]
-line_length=100
-indent='    '
-multi_line_output=0
-length_sort=1
-use_parentheses=true
-sections=FUTURE,STDLIB,THIRDPARTY,FIRSTPARTY,LOCALFOLDER
-import_heading_stdlib=Stdlib
-import_heading_thirdparty=External Libraries
-import_heading_firstparty=Snekchek
-force_sort_within_sections=true      
-
-[vulture]
-min-confidence=60
-exclude=index.py
-
-[style]
