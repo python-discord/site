@@ -13,7 +13,7 @@ app.secret_key = os.environ.get("WEBPAGE_SECRET_KEY")
 
 @app.route("/")
 def index():
-    return "Robots are taking over. doot."
+    return "Coming soon:tm:"
 
 
 @app.route("/invite")
