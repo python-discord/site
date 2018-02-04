@@ -6,6 +6,7 @@ import os
 # Snekchek
 from flask import Flask
 from flask import jsonify
+from flask import redirect
 
 app = Flask(__name__)
 
@@ -14,8 +15,11 @@ app._secret_key = os.environ.get("WEBPAGE_SECRET_KEY")
 
 @app.route("/")
 def _index():
-    return "Robots are taking over"
+    return "Robots are taking over. doot."
 
+@app.route("/invite")
+def _invite():
+	return redirect("https://invite.pythondiscord.com/")
 
 @app.route("/healthcheck")
 def _healthcheck():
