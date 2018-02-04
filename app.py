@@ -1,9 +1,5 @@
 #!/usr/bin/env python3
 
-# Stdlib
-import os
-
-# Snekchek
 from flask import Flask
 from flask import jsonify
 from flask import redirect
@@ -17,13 +13,15 @@ app.secret_key = os.environ.get("WEBPAGE_SECRET_KEY")
 def index():
     return "Robots are taking over. doot."
 
+
 @app.route("/invite")
 def invite():
-	return redirect("https://invite.pythondiscord.com/")
+    return redirect("https://invite.pythondiscord.com/")
+
 
 @app.route("/healthcheck")
 def healthcheck():
-    return jsonify({"status":"ok"})
+    return jsonify({"status": "ok"})
 
 
 @app.errorhandler(404)
