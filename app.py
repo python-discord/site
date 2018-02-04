@@ -18,7 +18,7 @@ def index():
 
 @app.route("/invite")
 def invite():
-    return redirect("https://invite.pythondiscord.com/")
+    return redirect("http://invite.pythondiscord.com/")
 
 
 @app.route("/healthcheck")
