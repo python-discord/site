@@ -22,12 +22,12 @@ def invite():
 	return redirect("https://invite.pythondiscord.com/")
 
 @app.route("/healthcheck")
-def _healthcheck():
+def healthcheck():
     return jsonify({"status":"ok"})
 
 
 @app.errorhandler(404)
-def _page_not_found(e):
+def page_not_found(e):
     return "replace me with a template, 404 not found", 404
 
 
