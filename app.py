@@ -8,15 +8,15 @@ from flask import Flask, redirect
 
 app = Flask(__name__)
 
-app._secret_key = os.environ.get("WEBPAGE_SECRET_KEY")
+app.secret_key = os.environ.get("WEBPAGE_SECRET_KEY")
 
 
 @app.route("/")
-def _index():
+def index():
     return "Robots are taking over. doot."
 
 @app.route("/invite")
-def _invite():
+def invite():
 	return redirect("https://invite.pythondiscord.com/")
 
 if __name__ == '__main__':
