@@ -6,9 +6,6 @@ flake8-import-order
 flake8-tidy-imports 
 flake8-todo 
 flake8-string-format 
-isort 
-yapf 
 safety 
-dodgy 
-vulture
+dodgy
 
