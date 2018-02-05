@@ -26,4 +26,4 @@ class ErrorView(MethodView):
         if not cls.name or not cls.error_code:
             raise RuntimeError("Error views must have both `name` and `error_code` defined")
 
-        app._register_error_handler(None, 404, cls.as_view(cls.name))
+        app._register_error_handler(None, cls.error_code, cls.as_view(cls.name))
