@@ -9,3 +9,6 @@ script:
   - snekchek
 after_success:
   "curl $AUTODEPLOY_WEBHOOK -H \"token: $AUTODEPLOY_TOKEN\""
+
+notifications:
+  email: false
