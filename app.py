@@ -96,11 +96,11 @@ routes = find_routes("routes")
 static = find_static_files("static")
 errors = find_errors("error_handlers")
 
-for route in routes:
-    app.router.add_route(route.path, route.run, method=route.method)
-
-for path, method, handle in static:
+for path, method, handle in routes:
     app.router.add_route(path, handle, method=method)
+
+for path, handle in static:
+    app.router.add_route(path, handle, method="GET")
 
 for errcode, handler in errors:
     app.add_error_handler(errcode, handler)
