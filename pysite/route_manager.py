@@ -2,9 +2,10 @@
 import importlib
 import inspect
 import os
-import rethinkdb
 
-from flask import Flask, g, abort
+from flask import Flask, abort, g
+
+import rethinkdb
 
 from pysite.base_route import BaseView, ErrorView, RouteView
 
