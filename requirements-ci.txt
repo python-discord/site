@@ -7,5 +7,3 @@ flake8-tidy-imports
 flake8-string-format 
 safety 
 dodgy
-isort
-yapf
