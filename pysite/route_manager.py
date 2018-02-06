@@ -19,7 +19,7 @@ DB_TABLE = os.environ.get("RETHINKDB_TABLE")
 
 class RouteManager:
     def __init__(self):
-        self.app = Flask(__name__)
+        self.app = Flask(__name__, template_folder="../templates")
         self.app.secret_key = os.environ.get("WEBPAGE_SECRET_KEY")
 
         self.load_views()
