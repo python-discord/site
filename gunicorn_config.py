@@ -8,25 +8,25 @@ def when_ready(server):
         server.log.info("rethinkdb initialising")
 
         construct = [
-            {'DB':'test', 'TABLE':'test', 'INDEXES': ['test']},
+            {'DB': 'test', 'TABLE': 'test', 'INDEXES': ['test']},
         ]
         for struct in construct:
             DB = struct['DB']
             TABLE = struct['TABLE']
             INDEXES = struct['INDEXES']
 
-            conn  = r.connect(host='pdrdb', port=28016, db=DB)
+            conn = r.connect(host='pdrdb', port=28016, db=DB)
 
             # Check if database exists, if not create it
             db_exists = r.db_list().contains(DB).run(conn)
             if not db_exists:
-                log.info('adding database {0}'.format(DB))
+                server.log.info('adding database {0}'.format(DB))
                 r.db_create(DB).run(conn)
 
             # Check if table exist, if not create it
             table_exists = r.db(DB).table_list().contains(TABLE).run(conn)
             if not table_exists:
-                log.info('adding table {0}'.format(TABLE))
+                server.log.info('adding table {0}'.format(TABLE))
                 result = r.db(DB).table_create(TABLE).run(conn)
 
             # Check if index exists if not add it
@@ -34,11 +34,11 @@ def when_ready(server):
             current_indexes = rtable.index_list().run(conn)
             for index in INDEXES:
                 if index not in current_indexes:
-                    log.info('adding index {0}'.format(index))
+                    server.log.info('adding index {0}'.format(index))
                     rtable.index_create(index).run(conn)
 
         server.log.info("rethinkdb ready")
 
-    except:
+    except Exception as e:
         server.log.error(traceback.format_exc())
         server.log.error("rethinkdb failed to initialise")
