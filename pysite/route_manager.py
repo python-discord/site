@@ -11,10 +11,10 @@ from pysite.base_route import BaseView, ErrorView, RouteView
 
 __author__ = "Gareth Coles"
 
-DB_HOST = os.environ["RETHINKDB_HOST"]
-DB_PORT = os.environ["RETHINKDB_PORT"]
-DB_DATABASE = os.environ["RETHINKDB_DATABASE"]
-DB_TABLE = os.environ["RETHINKDB_TABLE"]
+DB_HOST = os.environ.get("RETHINKDB_HOST")
+DB_PORT = os.environ.get("RETHINKDB_PORT")
+DB_DATABASE = os.environ.get("RETHINKDB_DATABASE")
+DB_TABLE = os.environ.get("RETHINKDB_TABLE")
 
 
 class RouteManager:
