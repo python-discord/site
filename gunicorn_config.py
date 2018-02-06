@@ -27,7 +27,7 @@ def when_ready(server):
             table_exists = r.db(DB).table_list().contains(TABLE).run(conn)
             if not table_exists:
                 server.log.info('adding table {0}'.format(TABLE))
-                result = r.db(DB).table_create(TABLE).run(conn)
+                r.db(DB).table_create(TABLE).run(conn)
 
             # Check if index exists if not add it
             rtable = r.db(DB).table(TABLE)
