@@ -1,12 +1,12 @@
 # coding=utf-8
-from pysite.base_route import BaseView
+from pysite.base_route import RouteView
 
 __author__ = "Gareth Coles"
 
 
-class IndexView(BaseView):
+class IndexView(RouteView):
     path = "/"
     name = "index"
 
     def get(self):
-        return "Coming soon:tm:"
+        return self.render("index.html")

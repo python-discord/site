@@ -5,7 +5,7 @@ import os
 
 from flask import Flask
 
-from pysite.base_route import BaseView, ErrorView
+from pysite.base_route import BaseView, ErrorView, RouteView
 
 __author__ = "Gareth Coles"
 
@@ -35,7 +35,8 @@ class RouteManager:
                             inspect.isclass(cls) and
                             cls is not BaseView and
                             cls is not ErrorView and
-                            (BaseView in cls.__mro__ or ErrorView in cls.__mro__)
+                            cls is not RouteView and
+                            BaseView in cls.__mro__
                     ):
                         cls.setup(self.app)
                         print(f"View loaded: {cls.name: <25} ({module.__name__}.{cls_name})")

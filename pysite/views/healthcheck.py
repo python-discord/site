@@ -1,13 +1,13 @@
 # coding=utf-8
 from flask import jsonify
 
-from pysite.base_route import BaseView
+from pysite.base_route import RouteView
 
 
 __author__ = "Gareth Coles"
 
 
-class IndexView(BaseView):
+class IndexView(RouteView):
     path = "/healthcheck"
     name = "healthcheck"
 
