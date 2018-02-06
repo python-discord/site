@@ -2,12 +2,18 @@
 import importlib
 import inspect
 import os
+import rethinkdb
 
-from flask import Flask
+from flask import Flask, g, abort
 
 from pysite.base_route import BaseView, ErrorView, RouteView
 
 __author__ = "Gareth Coles"
+
+DB_HOST = os.environ["RETHINKDB_HOST"]
+DB_PORT = os.environ["RETHINKDB_PORT"]
+DB_DATABASE = os.environ["RETHINKDB_DATABASE"]
+DB_TABLE = os.environ["RETHINKDB_TABLE"]
 
 
 class RouteManager:
@@ -40,3 +46,38 @@ class RouteManager:
                     ):
                         cls.setup(self.app)
                         print(f"View loaded: {cls.name: <25} ({module.__name__}.{cls_name})")
+
+    def setup_db(self):
+        connection = self.get_db_connection(connect_database=False)
+
+        try:
+            rethinkdb.db_create(DB_DATABASE).run(connection)
+            rethinkdb.db(DB_DATABASE).table_create(DB_TABLE).run(connection)
+            print("Database created")
+        except rethinkdb.RqlRuntimeError:
+            print("Database found")
+        finally:
+            connection.close()
+
+        self.app.before_request(self.db_before_request)
+        self.app.teardown_request(self.db_teardown_request)
+
+    def get_db_connection(self, connect_database=True):
+        if connect_database:
+            return rethinkdb.connect(host=DB_HOST, port=DB_PORT, db=DB_DATABASE)
+        else:
+            return rethinkdb.connect(host=DB_HOST, port=DB_PORT)
+
+    def db_before_request(self):
+        try:
+            # g is the Flask global context object
+            g.rdb_conn = self.get_db_connection()
+        except rethinkdb.RqlDriverError:
+            abort(503, "Database connection could be established.")
+
+    def db_teardown_request(self, _):
+        try:
+            # g is the Flask global context object
+            g.rdb_conn.close()
+        except AttributeError:
+            pass
