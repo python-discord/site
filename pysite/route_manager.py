@@ -16,10 +16,15 @@ DB_PORT = os.environ.get("RETHINKDB_PORT")
 DB_DATABASE = os.environ.get("RETHINKDB_DATABASE")
 DB_TABLE = os.environ.get("RETHINKDB_TABLE")
 
+TEMPLATES_PATH = "../templates"
+STATIC_PATH = "../static"
+
 
 class RouteManager:
     def __init__(self):
-        self.app = Flask(__name__, template_folder="../templates")
+        self.app = Flask(
+            __name__, template_folder=TEMPLATES_PATH, static_folder=STATIC_PATH, static_url_path="/static"
+        )
         self.app.secret_key = os.environ.get("WEBPAGE_SECRET_KEY")
 
         self.load_views()

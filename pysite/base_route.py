@@ -6,14 +6,17 @@ __author__ = "Gareth Coles"
 
 
 class BaseView(MethodView):
+    name = None  # type: str
+
     def render(self, *template_names, **context):
-        # thin wrapper here in case it needs to be modified later
+        context["current_page"] = self.name
+        context["view"] = self
+
         return render_template(template_names, **context)
 
 
 class RouteView(BaseView):
-    path = None  #: str
-    name = None  #: str
+    path = None  # type: str
 
     @classmethod
     def setup(cls: "RouteView", app: Flask):
@@ -24,8 +27,7 @@ class RouteView(BaseView):
 
 
 class ErrorView(BaseView):
-    name = None  #: str
-    error_code = None  #: int
+    error_code = None  # type: int
 
     @classmethod
     def setup(cls: "ErrorView", app: Flask):

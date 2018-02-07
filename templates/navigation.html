@@ -1,0 +1,18 @@
+<div class="uk-container uk-container-expand uk-section-secondary">
+    <nav data-uk-navbar class="uk-navbar-container uk-navbar-transparent">
+        <div class="uk-navbar-left">
+            <a href="/" class="uk-navbar-item uk-logo">
+                <img src="/static/logos/logo_discord.png" style="height: 50px;"/>
+            </a>
+        </div>
+        <div class="uk-navbar-right">
+            <ul class="uk-navbar-nav">
+                {% if current_page == "index" %}
+                    <li class="uk-active"><a href="/">Home</a></li>
+                {% else %}
+                    <li><a href="/">Home</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+</div>
