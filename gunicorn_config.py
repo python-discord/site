@@ -1,6 +1,7 @@
 def when_ready(server):
     """ server hook that only runs when the gunicorn master process loads """
 
+    import os
     import traceback
     import rethinkdb as r
 
@@ -17,14 +18,14 @@ def when_ready(server):
 
         # Check if database exists, if not create it
         db_exists = r.db_list().contains(DB_DATABASE).run(conn)
-        
+
         if not db_exists:
             server.log.info('adding database {0}'.format(DB_DATABASE))
             r.db_create(DB_DATABASE).run(conn)
 
         # Check if table exist, if not create it
         table_exists = r.db(DB_DATABASE).table_list().contains(DB_TABLE).run(conn)
-        
+
         if not table_exists:
             server.log.info('adding table {0}'.format(DB_TABLE))
             r.db(DB_DATABASE).table_create(DB_TABLE).run(conn)
@@ -32,7 +33,7 @@ def when_ready(server):
         # Check if index exists if not add it
         rtable = r.db(DB_DATABASE).table(DB_TABLE)
         current_indexes = rtable.index_list().run(conn)
-        
+
         for index in indexes:
             if index not in current_indexes:
                 server.log.info('adding index {0}'.format(index))
