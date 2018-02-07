@@ -1,13 +1,11 @@
 language: python
 python:
   - "3.6"
- 
+
 install:
   - pip install -r requirements.txt
   - pip install -r requirements-ci.txt
 script:
   - snekchek
 after_success:
-  - |
-    test $TRAVIS_BRANCH = "master" &&
-    "curl $AUTODEPLOY_WEBHOOK -H \"token: $AUTODEPLOY_TOKEN\""
+  - python deploy.py
