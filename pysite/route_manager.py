@@ -23,14 +23,16 @@ STATIC_PATH = "../static"
 class RouteManager:
     def __init__(self):
         self.app = Flask(
-            __name__, template_folder=TEMPLATES_PATH, static_folder=STATIC_PATH, static_url_path="/static"
+            __name__, template_folder=TEMPLATES_PATH, static_folder=STATIC_PATH, static_url_path="/static",
         )
         self.app.secret_key = os.environ.get("WEBPAGE_SECRET_KEY")
 
         self.load_views()
 
     def run(self):
-        self.app.run(port=int(os.environ.get("WEBPAGE_PORT")), debug=False)
+        self.app.run(
+            port=int(os.environ.get("WEBPAGE_PORT")), debug="FLASK_DEBUG" in os.environ
+        )
 
     def load_views(self, location="pysite/views"):
         for filename in os.listdir(location):
