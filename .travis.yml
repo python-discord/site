@@ -8,4 +8,6 @@ install:
 script:
   - snekchek
 after_success:
-  "curl $AUTODEPLOY_WEBHOOK -H \"token: $AUTODEPLOY_TOKEN\""
+  - |
+    test $TRAVIS_BRANCH = "master" &&
+    "curl $AUTODEPLOY_WEBHOOK -H \"token: $AUTODEPLOY_TOKEN\""
