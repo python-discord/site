@@ -5,7 +5,6 @@ import os
 
 from flask import Flask, abort, g
 
-from pysite.base_route import BaseView, ErrorView
 import rethinkdb
 
 from pysite.base_route import BaseView, ErrorView, RouteView
