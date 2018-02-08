@@ -3,7 +3,7 @@ import importlib
 import inspect
 import os
 
-from flask import Flask, abort, g
+from flask import Blueprint, Flask, abort, g
 
 import rethinkdb
 
@@ -25,18 +25,30 @@ class RouteManager:
         )
         self.app.secret_key = os.environ.get("WEBPAGE_SECRET_KEY")
 
-        self.load_views()
+        self.main_blueprint = Blueprint("main", __name__)
+
+        print(f"Loading Blueprint: {self.main_blueprint.name}")
+        self.load_views(self.main_blueprint, "pysite/views/main")
+        self.app.register_blueprint(self.main_blueprint)
+        print("")
+
+        self.api_blueprint = Blueprint("api", __name__, subdomain="api")
+
+        print(f"Loading Blueprint: {self.api_blueprint.name}")
+        self.load_views(self.api_blueprint, "pysite/views/api")
+        self.app.register_blueprint(self.api_blueprint)
+        print("")
 
     def run(self):
         self.app.run(
             port=int(os.environ.get("WEBPAGE_PORT")), debug="FLASK_DEBUG" in os.environ
         )
 
-    def load_views(self, location="pysite/views"):
+    def load_views(self, blueprint, location="pysite/views"):
         for filename in os.listdir(location):
             if os.path.isdir(f"{location}/{filename}"):
                 # Recurse if it's a directory; load ALL the views!
-                self.load_views(location=f"{location}/{filename}")
+                self.load_views(blueprint, location=f"{location}/{filename}")
                 continue
 
             if filename.endswith(".py") and not filename.startswith("__init__"):
@@ -50,8 +62,8 @@ class RouteManager:
                             cls is not RouteView and
                             BaseView in cls.__mro__
                     ):
-                        cls.setup(self.app)
-                        print(f"View loaded: {cls.name: <25} ({module.__name__}.{cls_name})")
+                        cls.setup(blueprint)
+                        print(f">> View loaded: {cls.name: <15} ({module.__name__}.{cls_name})")
 
     def setup_db(self):
         connection = self.get_db_connection(connect_database=False)
