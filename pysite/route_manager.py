@@ -7,8 +7,6 @@ from flask import Flask
 
 from pysite.base_route import BaseView, ErrorView
 
-__author__ = "Gareth Coles"
-
 
 class RouteManager:
     def __init__(self):

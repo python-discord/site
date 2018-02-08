@@ -2,8 +2,6 @@
 from flask import Flask
 from flask.views import MethodView
 
-__author__ = "Gareth Coles"
-
 
 class BaseView(MethodView):
     path = None  #: str

@@ -3,8 +3,6 @@ from werkzeug.exceptions import NotFound
 
 from pysite.base_route import ErrorView
 
-__author__ = "Gareth Coles"
-
 
 class Error404View(ErrorView):
     name = "error_404"
