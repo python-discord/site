@@ -7,7 +7,7 @@ from flask import Blueprint, Flask, abort, g
 
 import rethinkdb
 
-from pysite.base_route import BaseView, ErrorView, RouteView, APIView
+from pysite.base_route import APIView, BaseView, ErrorView, RouteView
 
 DB_HOST = os.environ.get("RETHINKDB_HOST")
 DB_PORT = os.environ.get("RETHINKDB_PORT")

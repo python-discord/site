@@ -1,5 +1,5 @@
 # coding=utf-8
-from flask import Blueprint, render_template, jsonify
+from flask import Blueprint, jsonify, render_template
 from flask.views import MethodView
 
 from pysite.constants import ErrorCodes
