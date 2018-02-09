@@ -1,6 +1,8 @@
 # coding=utf-8
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, jsonify
 from flask.views import MethodView
+
+from pysite.constants import ErrorCodes
 
 
 class BaseView(MethodView):
@@ -22,6 +24,19 @@ class RouteView(BaseView):
             raise RuntimeError("Route views must have both `path` and `name` defined")
 
         blueprint.add_url_rule(cls.path, view_func=cls.as_view(cls.name))
+
+
+class APIView(BaseView):
+    def error(self, error_code: ErrorCodes):
+        data = {
+            "error_code": error_code.value,
+            "error_message": "Unknown error"
+        }
+
+        if error_code is ErrorCodes.unknown_route:
+            data["error_message"] = "Unknown API route"
+
+        return jsonify(data)
 
 
 class ErrorView(BaseView):
