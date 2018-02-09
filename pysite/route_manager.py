@@ -7,7 +7,7 @@ from flask import Blueprint, Flask, abort, g
 
 import rethinkdb
 
-from pysite.base_route import BaseView, ErrorView, RouteView
+from pysite.base_route import BaseView, ErrorView, RouteView, APIView
 
 DB_HOST = os.environ.get("RETHINKDB_HOST")
 DB_PORT = os.environ.get("RETHINKDB_PORT")
@@ -60,6 +60,7 @@ class RouteManager:
                             cls is not BaseView and
                             cls is not ErrorView and
                             cls is not RouteView and
+                            cls is not APIView and
                             BaseView in cls.__mro__
                     ):
                         cls.setup(blueprint)
