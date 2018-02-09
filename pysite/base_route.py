@@ -26,7 +26,7 @@ class RouteView(BaseView):
         blueprint.add_url_rule(cls.path, view_func=cls.as_view(cls.name))
 
 
-class APIView(BaseView):
+class APIView(RouteView):
     def error(self, error_code: ErrorCodes):
         data = {
             "error_code": error_code.value,
