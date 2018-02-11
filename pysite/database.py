@@ -3,7 +3,7 @@ __author__ = 'Joreth Cales'
 
 import os
 
-from flask import abort, g
+from flask import abort
 
 import rethinkdb
 
@@ -15,32 +15,31 @@ class RethinkDB:
 
         self.host = os.environ.get("RETHINKDB_HOST")
         self.port = os.environ.get("RETHINKDB_PORT")
-        self.db = os.environ.get("RETHINKDB_DATABASE")
+        self.database = os.environ.get("RETHINKDB_DATABASE")
+        self.conn = None
 
         try:
-            rethinkdb.db_create(self.db).run(connection)
-            print(f"Database created: {self.db}")
+            rethinkdb.db_create(self.database).run(connection)
+            print(f"Database created: {self.database}")
         except rethinkdb.RqlRuntimeError:
-            print(f"Database found: {self.db}")
+            print(f"Database found: {self.database}")
         finally:
             connection.close()
 
     def get_connection(self, connect_database=True):
         if connect_database:
-            return rethinkdb.connect(host=self.host, port=self.port, db=self.db)
+            return rethinkdb.connect(host=self.host, port=self.port, db=self.database)
         else:
             return rethinkdb.connect(host=self.host, port=self.port)
 
     def before_request(self):
         try:
-            # g is the Flask global context object
-            g.rdb_conn = self.get_connection()
+            self.conn = self.get_connection()
         except rethinkdb.RqlDriverError:
             abort(503, "Database connection could not be established.")
 
     def teardown_request(self, _):
         try:
-            # g is the Flask global context object
-            g.rdb_conn.close()
+            self.conn.close()
         except AttributeError:
             pass

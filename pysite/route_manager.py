@@ -3,7 +3,7 @@ import importlib
 import inspect
 import os
 
-from flask import Blueprint, Flask
+from flask import Blueprint, Flask, g
 
 from pysite.base_route import APIView, BaseView, ErrorView, RouteView
 from pysite.database import RethinkDB
@@ -25,20 +25,26 @@ class RouteManager:
         self.app.before_request(self.db.before_request)
         self.app.teardown_request(self.db.teardown_request)
 
-        # Load all the blueprints
-        self.main_blueprint = Blueprint("main", __name__)
+        # Store the database in the Flask global context
+        g.db = self.db
 
+        # Load the main blueprint
+        self.main_blueprint = Blueprint("main", __name__)
         print(f"Loading Blueprint: {self.main_blueprint.name}")
         self.load_views(self.main_blueprint, "pysite/views/main")
         self.app.register_blueprint(self.main_blueprint)
         print("")
 
-        self.api_blueprint = Blueprint("api", __name__, subdomain="api")
+        # Load the subdomains
+        self.subdomains = ['api', 'staff']
 
-        print(f"Loading Blueprint: {self.api_blueprint.name}")
-        self.load_views(self.api_blueprint, "pysite/views/api")
-        self.app.register_blueprint(self.api_blueprint)
-        print("")
+        for sub in self.subdomains:
+            self.sub_blueprint = Blueprint(sub, __name__, subdomain=sub)
+
+            print(f"Loading Blueprint: {self.sub_blueprint.name}")
+            self.load_views(self.sub_blueprint, f"pysite/views/{sub}")
+            self.app.register_blueprint(self.sub_blueprint)
+            print("")
 
     def run(self):
         self.app.run(
