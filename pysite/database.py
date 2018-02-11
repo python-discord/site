@@ -36,7 +36,7 @@ class RethinkDB:
             # g is the Flask global context object
             g.rdb_conn = self.get_connection()
         except rethinkdb.RqlDriverError:
-            abort(503, "Database connection could be established.")
+            abort(503, "Database connection could not be established.")
 
     def teardown_request(self, _):
         try:
