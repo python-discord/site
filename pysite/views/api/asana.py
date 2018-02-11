@@ -112,7 +112,6 @@ class IndexView(APIView):
                     description=f"{story['text']}\n\n"
                                 f"No project on task - Keys: `{', '.join(task.keys())}`",
                     color=COLOUR_GREEN,
-                    url=f"https://app.asana.com/0/{project['id']}/{parent}",
                     author_name=story["created_by"]["name"],
                     author_icon=photo
                 )
