@@ -77,7 +77,7 @@ class IndexView(APIView):
 
         session.post(ASANA_WEBHOOK, json={"embeds": [embed]})
 
-    def asana_unknown(self, *, resource, parent, created_at, user, action, _type):
+    def asana_unknown(self, *, resource, parent, created_at, user, action, type):
         pretty_event = json.dumps(
             {
                 "resource": resource,
@@ -85,7 +85,7 @@ class IndexView(APIView):
                 "created_at": created_at,
                 "user": user,
                 "action": action,
-                "type": _type
+                "type": type
             },
             indent=4,
             sort_key=True
