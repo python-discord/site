@@ -10,6 +10,7 @@ from pysite.base_route import APIView
 from pysite.constants import ErrorCodes
 
 ASANA_KEY = os.environ.get("ASANA_KEY")
+ASANA_TOKEN = os.environ.get("ASANA_TOKEN")
 ASANA_WEBHOOK = os.environ.get("ASANA_WEBHOOK")
 
 BASE_URL = "https://app.asana.com/api/1.0"
@@ -85,6 +86,8 @@ class IndexView(APIView):
 
     def asana_story(self, *, resource, parent, created_at, user, action, type):
         session = requests.session()
+        session.headers["Authorization"] = f"Bearer {ASANA_TOKEN}"
+
         resp = session.get(f"{STORY_URL}/{resource}").json()
         resp.raise_for_status()
         story = resp.json()
@@ -128,6 +131,7 @@ class IndexView(APIView):
 
     def asana_task(self, *, resource, parent, created_at, user, action, type):
         session = requests.session()
+        session.headers["Authorization"] = f"Bearer {ASANA_TOKEN}"
 
         resp = session.get(f"{TASK_URL}/{resource}")
         resp.raise_for_status()
