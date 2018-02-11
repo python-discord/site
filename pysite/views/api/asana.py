@@ -23,12 +23,6 @@ class IndexView(APIView):
 
     def post(self, asana_key):
         if asana_key != ASANA_KEY:
-            self.send_webhook(
-                title="Asana",
-                description=f"Key verification failed\nExpected: `{ASANA_KEY}`\nGot: `{asana_key}`",
-                color=COLOUR_RED
-            )
-
             return self.error(ErrorCodes.unauthorized)
 
         if "X-Hook-Secret" in request.headers:  # Confirm to Asana that we would like to make this hook
