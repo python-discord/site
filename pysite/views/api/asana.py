@@ -44,7 +44,7 @@ class IndexView(APIView):
             try:
                 func(**event)
             except Exception as e:
-                pretty_event = json.dumps(event, indent=4, sort_key=True)
+                pretty_event = json.dumps(event, indent=4, sort_keys=True)
 
                 try:
                     self.send_webhook(
@@ -88,7 +88,7 @@ class IndexView(APIView):
                 "type": type
             },
             indent=4,
-            sort_key=True
+            sort_keys=True
         )
 
         self.send_webhook(
