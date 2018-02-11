@@ -120,96 +120,97 @@ class IndexView(APIView):
                 project = task["projects"][0]  # Just use the first project in the list
 
                 self.send_webhook(
-                    title=f"Comment: {project['name']}",
+                    title=f"Comment: {project['name']}/{task['name']}",
                     description=story["text"],
                     color=COLOUR_GREEN,
                     url=f"https://app.asana.com/0/{project['id']}/{parent}",
                     author_name=story["created_by"]["name"],
                     author_icon=photo
                 )
-        else:
-            pretty_story = json.dumps(
-                story,
-                indent=4,
-                sort_keys=True
-            )
-
-            self.send_webhook(
-                title=f"Unknown story action/type: {action}/{story.get('type')}",
-                description=f"```json\n{pretty_story}\n```"
-            )
+        # else:
+        #     pretty_story = json.dumps(
+        #         story,
+        #         indent=4,
+        #         sort_keys=True
+        #     )
+        #
+        #     self.send_webhook(
+        #         title=f"Unknown story action/type: {action}/{story.get('type')}",
+        #         description=f"```json\n{pretty_story}\n```"
+        #     )
         session.close()
 
     def asana_task(self, *, resource, parent, created_at, user, action, type):
         session = requests.session()
         session.headers["Authorization"] = f"Bearer {ASANA_TOKEN}"
 
-        resp = session.get(f"{TASK_URL}/{resource}")
-        resp.raise_for_status()
-        task = resp.json()["data"]
+        # resp = session.get(f"{TASK_URL}/{resource}")
+        # resp.raise_for_status()
+        # task = resp.json()["data"]
 
-        if action == "changed":  # New comment!
-            if not user:
-                # ????????????????????????????
-                user = {}
-            else:
-                resp = session.get(f"{USER_URL}/{user}")
-                resp.raise_for_status()
-                user = resp.json()["data"]
-
-            if user.get("photo"):
-                photo = user["photo"]["image_128x128"]
-            else:
-                photo = None
-
-            if "projects" in task:
-                project = task["projects"][0]  # Just use the first project in the list
-
-                self.send_webhook(
-                    title=f"Task updated: {project['name']}/{task['name']}",
-                    description="What was updated? We don't know!",
-                    color=COLOUR_GREEN,
-                    url=f"https://app.asana.com/0/{project['id']}/{task['id']}",
-                    author_name=user.get("name"),
-                    author_icon=photo
-                )
-            else:
-                self.send_webhook(
-                    title=f"Task updated: Unknown Project/{task['name']}",
-                    description=f"What was updated? We don't know!\n\n"
-                                f"No project on task - Keys: `{', '.join(task.keys())}`",
-                    color=COLOUR_GREEN,
-                    author_name=user["name"],
-                    author_icon=photo
-                )
-        else:
-            pretty_task = json.dumps(
-                task,
-                indent=4,
-                sort_keys=True
-            )
-
-            self.send_webhook(
-                title=f"Unknown task action: {action}",
-                description=f"```json\n{pretty_task}\n```"
-            )
+        # if action == "changed":  # New comment!
+        #     if not user:
+        #         # ????????????????????????????
+        #         user = {}
+        #     else:
+        #         resp = session.get(f"{USER_URL}/{user}")
+        #         resp.raise_for_status()
+        #         user = resp.json()["data"]
+        #
+        #     if user.get("photo"):
+        #         photo = user["photo"]["image_128x128"]
+        #     else:
+        #         photo = None
+        #
+        #     if "projects" in task:
+        #         project = task["projects"][0]  # Just use the first project in the list
+        #
+        #         self.send_webhook(
+        #             title=f"Task updated: {project['name']}/{task['name']}",
+        #             description="What was updated? We don't know!",
+        #             color=COLOUR_GREEN,
+        #             url=f"https://app.asana.com/0/{project['id']}/{task['id']}",
+        #             author_name=user.get("name"),
+        #             author_icon=photo
+        #         )
+        #     else:
+        #         self.send_webhook(
+        #             title=f"Task updated: Unknown Project/{task['name']}",
+        #             description=f"What was updated? We don't know!\n\n"
+        #                         f"No project on task - Keys: `{', '.join(task.keys())}`",
+        #             color=COLOUR_GREEN,
+        #             author_name=user["name"],
+        #             author_icon=photo
+        #         )
+        # else:
+        #     pretty_task = json.dumps(
+        #         task,
+        #         indent=4,
+        #         sort_keys=True
+        #     )
+        #
+        #     self.send_webhook(
+        #         title=f"Unknown task action: {action}",
+        #         description=f"```json\n{pretty_task}\n```"
+        #     )
         session.close()
 
     def asana_unknown(self, *, resource, parent, created_at, user, action, type):
-        pretty_event = json.dumps(
-            {
-                "resource": resource,
-                "parent": parent,
-                "created_at": created_at,
-                "user": user,
-                "action": action,
-                "type": type
-            },
-            indent=4,
-            sort_keys=True
-        )
-
-        self.send_webhook(
-            title="Unknown event",
-            description=f"```json\n{pretty_event}\n```"
-        )
+        pass  # For now
+        # pretty_event = json.dumps(
+        #     {
+        #         "resource": resource,
+        #         "parent": parent,
+        #         "created_at": created_at,
+        #         "user": user,
+        #         "action": action,
+        #         "type": type
+        #     },
+        #     indent=4,
+        #     sort_keys=True
+        # )
+        #
+        # self.send_webhook(
+        #     title="Unknown event",
+        #     description=f"```json\n{pretty_event}\n```"
+        # )
