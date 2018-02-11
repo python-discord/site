@@ -59,7 +59,7 @@ class IndexView(APIView):
                         color=COLOUR_RED
                     )
                 except Exception as e:
-                    print(f"Fatal error sending webhook: {e}")
+                    print(f"Fatal error sending webhook: {repr(e)}")
 
         return "", 200  # Empty 200 response
 
@@ -101,21 +101,33 @@ class IndexView(APIView):
             resp.raise_for_status()
             user = resp.json()
 
-            project = task["projects"][0]  # Just use the first project in the list
-
             if user.get("photo"):
                 photo = user["photo"]["image_128x128"]
             else:
                 photo = None
 
-            self.send_webhook(
-                title=f"Comment: {project['name']}",
-                description=story["text"],
-                color=COLOUR_GREEN,
-                url=f"https://app.asana.com/0/{project['id']}/{parent}",
-                author_name=story["created_by"]["name"],
-                author_icon=photo
-            )
+            if not task.get("projects"):
+                self.send_webhook(
+                    title=f"Comment: Unknown Project/{task['name']}",
+                    description=f"{story['text']}\n\n"
+                                f"No project on task - Keys: `{', '.join(task.keys())}`",
+                    color=COLOUR_GREEN,
+                    url=f"https://app.asana.com/0/{project['id']}/{parent}",
+                    author_name=story["created_by"]["name"],
+                    author_icon=photo
+                )
+
+            else:
+                project = task["projects"][0]  # Just use the first project in the list
+
+                self.send_webhook(
+                    title=f"Comment: {project['name']}",
+                    description=story["text"],
+                    color=COLOUR_GREEN,
+                    url=f"https://app.asana.com/0/{project['id']}/{parent}",
+                    author_name=story["created_by"]["name"],
+                    author_icon=photo
+                )
         else:
             pretty_story = json.dumps(
                 story,
@@ -138,7 +150,7 @@ class IndexView(APIView):
         task = resp.json()
 
         if action == "changed":  # New comment!
-            if not task["user"]:
+            if not user:
                 # ????????????????????????????
                 user = {}
             else:
@@ -165,7 +177,8 @@ class IndexView(APIView):
             else:
                 self.send_webhook(
                     title=f"Task updated: Unknown Project/{task['name']}",
-                    description="What was updated? We don't know!",
+                    description=f"What was updated? We don't know!\n\n"
+                                f"No project on task - Keys: `{', '.join(task.keys())}`",
                     color=COLOUR_GREEN,
                     author_name=user["name"],
                     author_icon=photo
