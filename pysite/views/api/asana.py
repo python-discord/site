@@ -118,6 +118,40 @@ class IndexView(APIView):
             )
         session.close()
 
+    def asana_task(self, *, resource, parent, created_at, user, action, type):
+        session = requests.session()
+        task = session.get(f"{TASK_URL}/{resource}").json()
+
+        if action == "changed":  # New comment!
+            user = session.get(f"{USER_URL}/{user}").json()
+            project = task["projects"][0]  # Just use the first project in the list
+
+            if user["photo"]:
+                photo = user["photo"]["image_128x128"]
+            else:
+                photo = None
+
+            self.send_webhook(
+                title=f"Task updated: {project['name']}/{task['name']}",
+                description="What was updated? We don't know!",
+                color=COLOUR_GREEN,
+                url=f"https://app.asana.com/0/{project['id']}/{task['id']}",
+                author_name=user["name"],
+                author_icon=photo
+            )
+        else:
+            pretty_task = json.dumps(
+                task,
+                indent=4,
+                sort_keys=True
+            )
+
+            self.send_webhook(
+                title=f"Unknown task action: {action}",
+                description=f"```json\n{pretty_task}\n```"
+            )
+        session.close()
+
     def asana_unknown(self, *, resource, parent, created_at, user, action, type):
         pretty_event = json.dumps(
             {
