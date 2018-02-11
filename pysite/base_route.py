@@ -33,10 +33,18 @@ class APIView(RouteView):
             "error_message": "Unknown error"
         }
 
+        http_code = 200
+
         if error_code is ErrorCodes.unknown_route:
             data["error_message"] = "Unknown API route"
+            http_code = 404
+        elif error_code is ErrorCodes.unauthorized:
+            data["error_message"] = "Unauthorized"
+            http_code = 403
 
-        return jsonify(data)
+        response = jsonify(data)
+        response.status_code = http_code
+        return response
 
 
 class ErrorView(BaseView):
