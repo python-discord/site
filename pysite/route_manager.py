@@ -3,11 +3,7 @@ import importlib
 import inspect
 import os
 
-<<<<<<< HEAD
 from flask import Blueprint, Flask, g
-=======
-from flask import Blueprint, Flask
->>>>>>> 327f3f1b4b6e53f6aa2093e459c203009b77aa65
 
 from pysite.base_route import APIView, BaseView, ErrorView, RouteView
 from pysite.database import RethinkDB

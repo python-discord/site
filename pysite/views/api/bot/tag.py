@@ -3,9 +3,9 @@ __author__ = 'Ferret Moles'
 
 from flask import g, session
 
-from pysite.base_route import APIView
-
 import rethinkdb
+
+from pysite.base_route import APIView
 
 
 class TagView(APIView):
