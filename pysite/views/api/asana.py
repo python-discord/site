@@ -85,11 +85,19 @@ class IndexView(APIView):
 
     def asana_story(self, *, resource, parent, created_at, user, action, type):
         session = requests.session()
-        story = session.get(f"{STORY_URL}/{resource}").json()
+        resp = session.get(f"{STORY_URL}/{resource}").json()
+        resp.raise_for_status()
+        story = resp.json()
 
         if story.get("type") == "comment" and action == "added":  # New comment!
-            task = session.get(f"{TASK_URL}/{parent}").json()
-            user = session.get(f"{USER_URL}/{user}").json()
+            resp = session.get(f"{TASK_URL}/{parent}").json()
+            resp.raise_for_status()
+            task = resp.json()
+
+            resp = session.get(f"{USER_URL}/{user}").json()
+            resp.raise_for_status()
+            user = resp.json()
+
             project = task["projects"][0]  # Just use the first project in the list
 
             if user["photo"]:
@@ -120,25 +128,38 @@ class IndexView(APIView):
 
     def asana_task(self, *, resource, parent, created_at, user, action, type):
         session = requests.session()
-        task = session.get(f"{TASK_URL}/{resource}").json()
+
+        resp = session.get(f"{TASK_URL}/{resource}")
+        resp.raise_for_status()
+        task = resp.json()
 
         if action == "changed":  # New comment!
             user = session.get(f"{USER_URL}/{user}").json()
-            project = task["projects"][0]  # Just use the first project in the list
 
             if user["photo"]:
                 photo = user["photo"]["image_128x128"]
             else:
                 photo = None
 
-            self.send_webhook(
-                title=f"Task updated: {project['name']}/{task['name']}",
-                description="What was updated? We don't know!",
-                color=COLOUR_GREEN,
-                url=f"https://app.asana.com/0/{project['id']}/{task['id']}",
-                author_name=user["name"],
-                author_icon=photo
-            )
+            if "projects" in task:
+                project = task["projects"][0]  # Just use the first project in the list
+
+                self.send_webhook(
+                    title=f"Task updated: {project['name']}/{task['name']}",
+                    description="What was updated? We don't know!",
+                    color=COLOUR_GREEN,
+                    url=f"https://app.asana.com/0/{project['id']}/{task['id']}",
+                    author_name=user["name"],
+                    author_icon=photo
+                )
+            else:
+                self.send_webhook(
+                    title=f"Task updated: Unknown Project/{task['name']}",
+                    description="What was updated? We don't know!",
+                    color=COLOUR_GREEN,
+                    author_name=user["name"],
+                    author_icon=photo
+                )
         else:
             pretty_task = json.dumps(
                 task,
