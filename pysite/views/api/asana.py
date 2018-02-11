@@ -1,9 +1,10 @@
 # coding=utf-8
 import json
 import os
-import requests
 
-from flask import Response, make_response, request
+from flask import make_response, request
+
+import requests
 
 from pysite.base_route import APIView
 from pysite.constants import ErrorCodes
@@ -25,7 +26,7 @@ class IndexView(APIView):
             return self.error(ErrorCodes.unauthorized)
 
         if "X-Hook-Secret" in request.headers:  # Confirm to Asana that we would like to make this hook
-            response = make_response()  # type: Response
+            response = make_response()  # type: flask.Response
             response.headers["X-Hook-Secret"] = request.headers["X-Hook-Secret"]
             return response
 
