@@ -9,4 +9,4 @@ class InviteView(RouteView):
     name = "invite"
 
     def get(self):
-        return redirect("http://invite.pythondiscord.com/")
+        return redirect("https://discord.gg/8NWhsvT")
