@@ -155,7 +155,7 @@ class IndexView(APIView):
             else:
                 resp = session.get(f"{USER_URL}/{user}")
                 resp.raise_for_status()
-                user = resp.json()
+                user = resp.json()["data"]
 
             if user.get("photo"):
                 photo = user["photo"]["image_128x128"]
