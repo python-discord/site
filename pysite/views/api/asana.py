@@ -95,11 +95,11 @@ class IndexView(APIView):
         if story.get("type") == "comment" and action == "added":  # New comment!
             resp = session.get(f"{TASK_URL}/{parent}")
             resp.raise_for_status()
-            task = resp.json()
+            task = resp.json()["data"]
 
             resp = session.get(f"{USER_URL}/{user}")
             resp.raise_for_status()
-            user = resp.json()
+            user = resp.json()["data"]
 
             if user.get("photo"):
                 photo = user["photo"]["image_128x128"]
@@ -146,7 +146,7 @@ class IndexView(APIView):
 
         resp = session.get(f"{TASK_URL}/{resource}")
         resp.raise_for_status()
-        task = resp.json()
+        task = resp.json()["data"]
 
         if action == "changed":  # New comment!
             if not user:
