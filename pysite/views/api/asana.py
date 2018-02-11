@@ -90,7 +90,7 @@ class IndexView(APIView):
 
         resp = session.get(f"{STORY_URL}/{resource}")
         resp.raise_for_status()
-        story = resp.json()
+        story = resp.json()["data"]
 
         if story.get("type") == "comment" and action == "added":  # New comment!
             resp = session.get(f"{TASK_URL}/{parent}")
@@ -103,7 +103,7 @@ class IndexView(APIView):
 
             project = task["projects"][0]  # Just use the first project in the list
 
-            if user["photo"]:
+            if user.get("photo"):
                 photo = user["photo"]["image_128x128"]
             else:
                 photo = None
@@ -138,11 +138,15 @@ class IndexView(APIView):
         task = resp.json()
 
         if action == "changed":  # New comment!
-            resp = session.get(f"{USER_URL}/{user}")
-            resp.raise_for_status()
-            user = resp.json()
+            if not task["user"]:
+                # ????????????????????????????
+                user = {}
+            else:
+                resp = session.get(f"{USER_URL}/{user}")
+                resp.raise_for_status()
+                user = resp.json()
 
-            if user["photo"]:
+            if user.get("photo"):
                 photo = user["photo"]["image_128x128"]
             else:
                 photo = None
@@ -155,7 +159,7 @@ class IndexView(APIView):
                     description="What was updated? We don't know!",
                     color=COLOUR_GREEN,
                     url=f"https://app.asana.com/0/{project['id']}/{task['id']}",
-                    author_name=user["name"],
+                    author_name=user.get("name"),
                     author_icon=photo
                 )
             else:
