@@ -24,7 +24,7 @@ class RouteManager:
             __name__, template_folder=TEMPLATES_PATH, static_folder=STATIC_PATH, static_url_path="/static",
         )
         self.app.secret_key = os.environ.get("WEBPAGE_SECRET_KEY")
-        self.app.config["SERVER_NAME"] = "pythondiscord.com"
+        self.app.config["SERVER_NAME"] = os.environ.get("SERVER_NAME", "localhost")
 
         self.main_blueprint = Blueprint("main", __name__)
 
