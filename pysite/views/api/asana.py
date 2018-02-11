@@ -87,7 +87,7 @@ class IndexView(APIView):
         session = requests.session()
         story = session.get(f"{STORY_URL}/{resource}").json()
 
-        if story["type"] == "comment" and action == "added":  # New comment!
+        if story.get("type", None) == "comment" and action == "added":  # New comment!
             task = session.get(f"{TASK_URL}/{parent}").json()
             user = session.get(f"{USER_URL}/{user}").json()
             project = task["projects"][0]  # Just use the first project in the list
@@ -116,6 +116,7 @@ class IndexView(APIView):
                 title=f"Unknown story action/type: {action}/{story['type']}",
                 description=f"```json\n{pretty_story}\n```"
             )
+        session.close()
 
     def asana_unknown(self, *, resource, parent, created_at, user, action, type):
         pretty_event = json.dumps(
