@@ -88,16 +88,16 @@ class IndexView(APIView):
         session = requests.session()
         session.headers["Authorization"] = f"Bearer {ASANA_TOKEN}"
 
-        resp = session.get(f"{STORY_URL}/{resource}").json()
+        resp = session.get(f"{STORY_URL}/{resource}")
         resp.raise_for_status()
         story = resp.json()
 
         if story.get("type") == "comment" and action == "added":  # New comment!
-            resp = session.get(f"{TASK_URL}/{parent}").json()
+            resp = session.get(f"{TASK_URL}/{parent}")
             resp.raise_for_status()
             task = resp.json()
 
-            resp = session.get(f"{USER_URL}/{user}").json()
+            resp = session.get(f"{USER_URL}/{user}")
             resp.raise_for_status()
             user = resp.json()
 
@@ -138,7 +138,9 @@ class IndexView(APIView):
         task = resp.json()
 
         if action == "changed":  # New comment!
-            user = session.get(f"{USER_URL}/{user}").json()
+            resp = session.get(f"{USER_URL}/{user}")
+            resp.raise_for_status()
+            user = resp.json()
 
             if user["photo"]:
                 photo = user["photo"]["image_128x128"]
