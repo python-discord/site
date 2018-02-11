@@ -23,11 +23,18 @@ class IndexView(APIView):
 
     def post(self, asana_key):
         if asana_key != ASANA_KEY:
+            self.send_webhook(
+                title="Asana",
+                description=f"Key verification failed\nExpected: `{ASANA_KEY}`\nGot: `{asana_key}`",
+                color=COLOUR_RED
+            )
+
             return self.error(ErrorCodes.unauthorized)
 
         if "X-Hook-Secret" in request.headers:  # Confirm to Asana that we would like to make this hook
             response = make_response()  # type: flask.Response
             response.headers["X-Hook-Secret"] = request.headers["X-Hook-Secret"]
+            self.send_webhook(title="Asana", description="Hook added", color=COLOUR_GREEN)
             return response
 
         events = request.get_json()["events"]
