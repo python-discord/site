@@ -1,4 +1,8 @@
 # coding=utf-8
+import os
+import random
+import string
+
 from flask import Blueprint, jsonify, render_template
 from flask.views import MethodView
 
@@ -27,6 +31,15 @@ class RouteView(BaseView):
 
 
 class APIView(RouteView):
+    def validate_key(self, api_key: str):
+        """ Placeholder! """
+        return api_key == os.environ("API_KEY")
+
+    def generate_api_key(n: int):
+        """ Generate a random string of n characters. """
+        pool = random.choices(string.ascii_letters + string.digits, k=n)
+        return "".join(pool)
+
     def error(self, error_code: ErrorCodes):
         data = {
             "error_code": error_code.value,

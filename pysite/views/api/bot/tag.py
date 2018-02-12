@@ -1,7 +1,7 @@
 # coding=utf-8
 __author__ = 'Ferret Moles'
 
-from flask import g, session, jsonify
+from flask import g, jsonify, session
 
 import rethinkdb
 
@@ -27,23 +27,45 @@ class TagView(APIView):
 
         rdb = rethinkdb.table(self.table)
         tag_name = session.get('tag_name')
+        api_key = session.get('api_key')
 
-        if tag_name:
-            tag_data = rdb.get(tag_name).run(g.db.conn)
-            tag_data = dict(tag_data) if tag_data else {}
+        if self.validate_key(api_key):
+            if tag_name:
+                data = rdb.get(tag_name).run(g.db.conn)
+                data = dict(data) if data else {}
+            else:
+                data = rdb.pluck('tag_name').run(g.db.conn)
+                data = list(data) if data else []
         else:
-            tag_data = rdb.pluck('tag_name').run(g.db.conn)
-            tag_data = list(tag_data) if tag_data else []
+            data = {'errors': 'invalid api_key'}
 
-        return jsonify(tag_data)
+        return jsonify(data)
 
     def post(self):
 
+        rdb = rethinkdb.table(self.table)
         tag_name = session.get('tag_name')
         tag_content = session.get('tag_content')
+        tag_category = session.get('tag_category')
+        api_key = session.get('api_key')
 
-        if tag_name and tag_content:
-            pass       # put the data in the database
-            return     # some sort of success message
+        if self.validate_key(api_key):
+            if tag_name and tag_content:
+                rdb.insert({
+                    'tag_name': tag_name,
+                    'tag_content': tag_content,
+                    'tag_category': tag_category
+                }).run(g.db.conn)
+                data = {'errors': None}
+
+            else:
+                required = {'tag_name': tag_name, 'tag_content': tag_content}
+                missing = [key for key, value in required.items() if not value]
+                s = 's' if len(missing) > 1 else ''
+                error = f"Missing {len(missing)} required parameter{s}: {', '.join(missing)}"
+                data = {'errors': error}
+
         else:
-            return     # abort?
+            data = {'errors': 'invalid api_key'}
+
+        return jsonify(data)
