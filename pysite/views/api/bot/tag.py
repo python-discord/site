@@ -1,7 +1,7 @@
 # coding=utf-8
 __author__ = 'Ferret Moles'
 
-from flask import g, session
+from flask import g, session, jsonify
 
 import rethinkdb
 
@@ -18,21 +18,24 @@ class TagView(APIView):
         # make sure the table exists
         conn = g.db.get_connection()
         try:
-            rethinkdb.db(g.db.database).table_create(self.table).run(conn)
+            rethinkdb.db(g.db.database).table_create(self.table, {'primary_key': 'tag_name'}).run(conn)
         except rethinkdb.RqlRuntimeError:
             print(f'Table {self.table} exists')
         conn.close()
 
     def get(self):
 
+        rdb = rethinkdb.table(self.table)
         tag_name = session.get('tag_name')
 
         if tag_name:
-            pass  # get that specific tag
+            tag_data = rdb.get(tag_name).run(g.db.conn)
+            tag_data = dict(tag_data) if tag_data else {}
         else:
-            pass  # get a list of all tags
+            tag_data = rdb.pluck('tag_name').run(g.db.conn)
+            tag_data = list(tag_data) if tag_data else []
 
-        return
+        return jsonify(tag_data)
 
     def post(self):
 
