@@ -41,6 +41,7 @@ class APIView(RouteView):
         return "".join(pool)
 
     def error(self, error_code: ErrorCodes):
+
         data = {
             "error_code": error_code.value,
             "error_message": "Unknown error"
@@ -53,7 +54,12 @@ class APIView(RouteView):
             http_code = 404
         elif error_code is ErrorCodes.unauthorized:
             data["error_message"] = "Unauthorized"
-            http_code = 403
+            http_code = 401
+        elif error_code is ErrorCodes.invalid_api_key:
+            data["error_message"] = "Invalid API-key"
+            http_code = 401
+        elif error_code is ErrorCodes.missing_parameters:
+            data["error_message"] = "Not all required parameters were provided"
 
         response = jsonify(data)
         response.status_code = http_code
