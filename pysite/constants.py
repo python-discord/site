@@ -1,5 +1,4 @@
 # coding=utf-8
-__author__ = "Careth Goles"
 
 from enum import IntEnum
 

@@ -1,5 +1,4 @@
 # coding=utf-8
-__author__ = 'Ferret Moles'
 
 from flask import g, jsonify, session
 
