@@ -11,11 +11,11 @@ import rethinkdb
 class RethinkDB:
 
     def __init__(self):
-        connection = self.get_connection(connect_database=False)
         self.host = os.environ.get("RETHINKDB_HOST", "127.0.0.1")
         self.port = os.environ.get("RETHINKDB_PORT", "28015")
         self.database = os.environ.get("RETHINKDB_DATABASE", "pythondiscord")
         self.conn = None
+        connection = self.get_connection(connect_database=False)
 
         try:
             rethinkdb.db_create(self.database).run(connection)
