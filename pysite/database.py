@@ -9,22 +9,22 @@ import rethinkdb
 
 class RethinkDB:
 
-    def __init__(self):
+    def __init__(self, loop_type: str = "gevent"):
         self.host = os.environ.get("RETHINKDB_HOST", "127.0.0.1")
         self.port = os.environ.get("RETHINKDB_PORT", "28015")
         self.database = os.environ.get("RETHINKDB_DATABASE", "pythondiscord")
         self.conn = None
-        connection = self.get_connection(connect_database=False)
 
-        try:
-            rethinkdb.db_create(self.database).run(connection)
-            print(f"Database created: {self.database}")
-        except rethinkdb.RqlRuntimeError:
-            print(f"Database found: {self.database}")
-        finally:
-            connection.close()
+        rethinkdb.set_loop_type(loop_type)
 
-    def get_connection(self, connect_database=True):
+        with self.get_connection(connect_database=False) as conn:
+            try:
+                rethinkdb.db_create(self.database).run(conn)
+                print(f"Database created: {self.database}")
+            except rethinkdb.RqlRuntimeError:
+                print(f"Database found: {self.database}")
+
+    def get_connection(self, connect_database: bool = True):
         if connect_database:
             return rethinkdb.connect(host=self.host, port=self.port, db=self.database)
         else:

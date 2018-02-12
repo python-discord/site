@@ -35,9 +35,9 @@ class APIView(RouteView):
         """ Placeholder! """
         return api_key == os.environ("API_KEY")
 
-    def generate_api_key(n: int):
+    def generate_api_key(self):
         """ Generate a random string of n characters. """
-        pool = random.choices(string.ascii_letters + string.digits, k=n)
+        pool = random.choices(string.ascii_letters + string.digits, k=32)
         return "".join(pool)
 
     def error(self, error_code: ErrorCodes):

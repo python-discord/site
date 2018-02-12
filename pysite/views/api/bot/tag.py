@@ -13,17 +13,14 @@ class TagView(APIView):
     table = 'tag'
 
     def __init__(self):
-
         # make sure the table exists
-        conn = g.db.get_connection()
-        try:
-            rethinkdb.db(g.db.database).table_create(self.table, {'primary_key': 'tag_name'}).run(conn)
-        except rethinkdb.RqlRuntimeError:
-            print(f'Table {self.table} exists')
-        conn.close()
+        with g.db.get_connection() as conn:
+            try:
+                rethinkdb.db(g.db.database).table_create(self.table, {'primary_key': 'tag_name'}).run(conn)
+            except rethinkdb.RqlRuntimeError:
+                print(f'Table {self.table} exists')
 
     def get(self):
-
         rdb = rethinkdb.table(self.table)
         tag_name = session.get('tag_name')
         api_key = session.get('api_key')
@@ -41,7 +38,6 @@ class TagView(APIView):
         return jsonify(data)
 
     def post(self):
-
         rdb = rethinkdb.table(self.table)
         tag_name = session.get('tag_name')
         tag_content = session.get('tag_content')

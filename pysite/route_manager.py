@@ -26,7 +26,7 @@ class RouteManager:
         self.app.teardown_request(self.db.teardown_request)
 
         # Store the database in the Flask global context
-        g.db = self.db
+        g.db = self.db  # type: RethinkDB
 
         # Load the main blueprint
         self.main_blueprint = Blueprint("main", __name__)
