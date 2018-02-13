@@ -2,12 +2,12 @@
 import os
 import random
 import string
+from functools import wraps
 
 from flask import Blueprint, jsonify, render_template, request
 from flask.views import MethodView
 
 from pysite.constants import ErrorCodes
-from functools import wraps
 
 
 class BaseView(MethodView):
