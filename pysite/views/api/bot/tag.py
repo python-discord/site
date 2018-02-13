@@ -27,7 +27,7 @@ class TagView(APIView):
         API key must be provided as header
         """
         rdb = rethinkdb.table(self.table)
-        api_key = request.headers.get('X-API_Key')
+        api_key = request.headers.get('X-API-Key')
         tag_name = request.args.get('tag_name')
 
         if self.validate_key(api_key):
