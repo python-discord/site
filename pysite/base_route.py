@@ -3,10 +3,11 @@ import os
 import random
 import string
 
-from flask import Blueprint, jsonify, render_template
+from flask import Blueprint, jsonify, render_template, request
 from flask.views import MethodView
 
 from pysite.constants import ErrorCodes
+from functools import wraps
 
 
 class BaseView(MethodView):
@@ -33,12 +34,26 @@ class RouteView(BaseView):
 class APIView(RouteView):
     def validate_key(self, api_key: str):
         """ Placeholder! """
-        return api_key == os.environ("API_KEY")
+        return api_key == os.environ.get("API_KEY")
 
     def generate_api_key(self):
         """ Generate a random string of n characters. """
         pool = random.choices(string.ascii_letters + string.digits, k=32)
         return "".join(pool)
+
+    def valid_api_key(f):
+        """
+        Decorator to check if X-API-Key is valid.
+        """
+        @wraps(f)
+        def has_valid_api_key(*args, **kwargs):
+            if not request.headers.get("X-API-Key") == os.environ.get("API_KEY"):
+                resp = jsonify({"error_code": 401, "error_message": "Invalid API-Key"})
+                resp.status_code = 401
+                return resp
+            return f(*args, **kwargs)
+
+        return has_valid_api_key
 
     def error(self, error_code: ErrorCodes):
 
