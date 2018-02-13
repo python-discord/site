@@ -7,6 +7,7 @@ from flask import Blueprint, Flask, g
 
 from pysite.base_route import APIView, BaseView, ErrorView, RouteView
 from pysite.database import RethinkDB
+from pysite.logs import Logs
 
 TEMPLATES_PATH = "../templates"
 STATIC_PATH = "../static"
@@ -19,6 +20,12 @@ class RouteManager:
         self.app = Flask(
             __name__, template_folder=TEMPLATES_PATH, static_folder=STATIC_PATH, static_url_path="/static",
         )
+
+        # Store logger in the Flask global context
+        self.log = Logs(self.app)
+        with self.app.app_context():
+            g.log = self.log  # type: RethinkDB
+
         self.db = RethinkDB()
         self.app.secret_key = os.environ.get("WEBPAGE_SECRET_KEY", "super_secret")
         self.app.config["SERVER_NAME"] = os.environ.get("SERVER_NAME", "pythondiscord.com:8080")
@@ -31,10 +38,10 @@ class RouteManager:
 
         # Load the main blueprint
         self.main_blueprint = Blueprint("main", __name__)
-        print(f"Loading Blueprint: {self.main_blueprint.name}")
+        self.log.debug(f"Loading Blueprint: {self.main_blueprint.name}")
         self.load_views(self.main_blueprint, "pysite/views/main")
         self.app.register_blueprint(self.main_blueprint)
-        print("")
+        self.log.debug("")
 
         # Load the subdomains
         self.subdomains = ['api', 'staff']
@@ -42,14 +49,16 @@ class RouteManager:
         for sub in self.subdomains:
             self.sub_blueprint = Blueprint(sub, __name__, subdomain=sub)
 
-            print(f"Loading Blueprint: {self.sub_blueprint.name}")
+            self.log.debug(f"Loading Blueprint: {self.sub_blueprint.name}")
             self.load_views(self.sub_blueprint, f"pysite/views/{sub}")
             self.app.register_blueprint(self.sub_blueprint)
-            print("")
+            self.log.debug("")
 
     def run(self):
         self.app.run(
-            port=int(os.environ.get("WEBPAGE_PORT", 8080)), debug="FLASK_DEBUG" in os.environ
+            host=os.environ.get("FLASK_HOST", "127.0.0.1"),
+            port=int(os.environ.get("WEBPAGE_PORT", 8080)),
+            debug="FLASK_DEBUG" in os.environ
         )
 
     def load_views(self, blueprint, location="pysite/views"):
@@ -72,4 +81,4 @@ class RouteManager:
                             BaseView in cls.__mro__
                     ):
                         cls.setup(blueprint)
-                        print(f">> View loaded: {cls.name: <15} ({module.__name__}.{cls_name})")
+                        self.log.debug(f">> View loaded: {cls.name: <15} ({module.__name__}.{cls_name})")

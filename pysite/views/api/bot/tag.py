@@ -1,5 +1,4 @@
 # coding=utf-8
-
 from flask import g, jsonify, request
 
 import rethinkdb
