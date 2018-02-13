@@ -9,4 +9,3 @@ class IndexView(APIView):
 
     def get(self):
         return self.error(ErrorCodes.unknown_route)
- 
