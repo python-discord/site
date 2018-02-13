@@ -24,7 +24,7 @@ class RouteManager:
         # Store logger in the Flask global context
         self.log = Logs(self.app)
         with self.app.app_context():
-            g.log = self.log  # type: RethinkDB
+            g.log = self.log  # type: logger
 
         self.db = RethinkDB()
         self.app.secret_key = os.environ.get("WEBPAGE_SECRET_KEY", "super_secret")
