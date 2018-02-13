@@ -22,11 +22,13 @@ class TagView(APIView):
                 print(f'Table {self.table} exists')
 
     def get(self):
-        """ Indata must be provided as params """
+        """
+        Indata must be provided as params,
+        API key must be provided as header
+        """
         rdb = rethinkdb.table(self.table)
-        indata = request.args
-        tag_name = indata.get('tag_name')
-        api_key = indata.get('api_key')
+        api_key = request.headers.get('API_KEY')
+        tag_name = request.args.get('tag_name')
 
         if self.validate_key(api_key):
             if tag_name:

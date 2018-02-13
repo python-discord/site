@@ -21,12 +21,13 @@ class RouteManager:
         )
         self.db = RethinkDB()
         self.app.secret_key = os.environ.get("WEBPAGE_SECRET_KEY")
-        self.app.config["SERVER_NAME"] = os.environ.get("SERVER_NAME", "localhost")
+        self.app.config["SERVER_NAME"] = os.environ.get("SERVER_NAME", "pythondiscord.com:8080")
         self.app.before_request(self.db.before_request)
         self.app.teardown_request(self.db.teardown_request)
 
         # Store the database in the Flask global context
-        g.db = self.db  # type: RethinkDB
+        with self.app.app_context():
+            g.db = self.db  # type: RethinkDB
 
         # Load the main blueprint
         self.main_blueprint = Blueprint("main", __name__)
@@ -48,7 +49,7 @@ class RouteManager:
 
     def run(self):
         self.app.run(
-            port=int(os.environ.get("WEBPAGE_PORT")), debug="FLASK_DEBUG" in os.environ
+            port=int(os.environ.get("WEBPAGE_PORT", 8080)), debug="FLASK_DEBUG" in os.environ
         )
 
     def load_views(self, blueprint, location="pysite/views"):
