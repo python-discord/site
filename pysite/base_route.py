@@ -1,4 +1,8 @@
 # coding=utf-8
+import os
+import random
+import string
+
 from flask import Blueprint, jsonify, render_template
 from flask.views import MethodView
 
@@ -27,7 +31,17 @@ class RouteView(BaseView):
 
 
 class APIView(RouteView):
+    def validate_key(self, api_key: str):
+        """ Placeholder! """
+        return api_key == os.environ("API_KEY")
+
+    def generate_api_key(self):
+        """ Generate a random string of n characters. """
+        pool = random.choices(string.ascii_letters + string.digits, k=32)
+        return "".join(pool)
+
     def error(self, error_code: ErrorCodes):
+
         data = {
             "error_code": error_code.value,
             "error_message": "Unknown error"
@@ -40,7 +54,12 @@ class APIView(RouteView):
             http_code = 404
         elif error_code is ErrorCodes.unauthorized:
             data["error_message"] = "Unauthorized"
-            http_code = 403
+            http_code = 401
+        elif error_code is ErrorCodes.invalid_api_key:
+            data["error_message"] = "Invalid API-key"
+            http_code = 401
+        elif error_code is ErrorCodes.missing_parameters:
+            data["error_message"] = "Not all required parameters were provided"
 
         response = jsonify(data)
         response.status_code = http_code

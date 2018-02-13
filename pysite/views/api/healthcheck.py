@@ -1,10 +1,10 @@
 # coding=utf-8
 from flask import jsonify
 
-from pysite.base_route import RouteView
+from pysite.base_route import APIView
 
 
-class IndexView(RouteView):
+class HealthCheckView(APIView):
     path = "/healthcheck"
     name = "healthcheck"
 
