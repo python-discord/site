@@ -3,3 +3,5 @@ rethinkdb
 requests
 gevent
 gevent-websocket
+wsaccel
+ujson
