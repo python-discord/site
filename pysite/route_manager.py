@@ -20,7 +20,7 @@ class RouteManager:
             __name__, template_folder=TEMPLATES_PATH, static_folder=STATIC_PATH, static_url_path="/static",
         )
         self.db = RethinkDB()
-        self.app.secret_key = os.environ.get("WEBPAGE_SECRET_KEY")
+        self.app.secret_key = os.environ.get("WEBPAGE_SECRET_KEY", "super_secret")
         self.app.config["SERVER_NAME"] = os.environ.get("SERVER_NAME", "pythondiscord.com:8080")
         self.app.before_request(self.db.before_request)
         self.app.teardown_request(self.db.teardown_request)
