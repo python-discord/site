@@ -1,7 +1,7 @@
 # coding=utf-8
 
 import os
-from typing import Union
+from typing import Union, List, Any, Dict, Callable
 
 from flask import abort
 
@@ -58,7 +58,7 @@ class RethinkDB:
         return rethinkdb.table(table_name)
 
     def run(self, query: RqlMethodQuery, *, new_connection: bool=False,
-            connect_database: bool=True, coerce: type=None) -> Union[rethinkdb.Cursor, object]:
+            connect_database: bool=True, coerce: type=None) -> Union[rethinkdb.Cursor, List, Dict, object]:
         if not new_connection:
             result = query.run(self.conn)
         else:
@@ -68,24 +68,153 @@ class RethinkDB:
             return coerce(result) if result else coerce()
         return result
 
-    def insert_now(self, table_name, *args):
-        return self.run(
-            self.query(table_name).insert(*args)
+    # endregion
+
+    # region: Table wrapper functions
+
+    def insert(self, table_name, *objects,
+               durability: str="hard", return_changes: Union[bool, str]=False,
+               conflict: Union[str, Callable]="error", **kwargs) -> Union[List, Dict]:
+        kwargs["durability"] = durability
+        kwargs["return_changes"] = return_changes
+        kwargs["conflict"] = conflict
+
+        if return_changes:
+            return self.run(
+                self.query(table_name).insert(*objects, **kwargs),
+                coerce=list
+            )
+        else:
+            return self.run(
+                self.query(table_name).insert(*objects, **kwargs),
+                coerce=dict
+            )
+
+    def get(self, table_name, key) -> Union[Dict[str, Any], None]:
+
+        result = self.run(
+            self.query(table_name).get(key)
         )
 
-    def get_now(self, table_name, *args):
+        return dict(result) if result else None
+
+    def get_all(self, table_name, *keys, index="id") -> List[Any]:
         return self.run(
-            self.query(table_name).get(*args)
+            self.query(table_name).get_all(*keys, index=index),
+            coerce=list
         )
 
-    def get_all_now(self, table_name, *args, **kwargs):
+    def index_create(self, table_name, *args, **kwargs) -> bool:
+        try:
+            self.run(
+                self.query(table_name).index_create(*args, **kwargs),
+                coerce=dict
+            )
+            return True
+        except rethinkdb.RqlRuntimeError:
+            # Index already exists
+            return False
+
+    def index_drop(self, table_name, *args) -> bool:
+        try:
+            self.run(
+                self.query(table_name).index_drop(*args),
+                coerce=dict
+            )
+            return True
+        except rethinkdb.RqlRuntimeError:
+            # Index already exists
+            return False
+
+    def index_rename(self, table_name, old_index, new_index, *args, overwrite=False, **kwargs):
+        args += (old_index, new_index)
+        kwargs["overwrite"] = overwrite
+
         return self.run(
-            self.query(table_name).get_all(*args, **kwargs)
+            self.query(table_name).index_rename(*args, **kwargs),
+            coerce=dict
         )
 
-    def index_create_now(self, table_name, *args, **kwargs):
+    def index_list(self, table_name, *args):
         return self.run(
-            self.query(table_name).index_create(*args, **kwargs)
+            self.query(table_name).index_list(*args),
+            coerce=list
+        )
+
+    def index_status(self, table_name, *args):
+        return self.run(
+            self.query(table_name).index_status(*args),
+            coerce=list
+        )
+
+    def index_wait(self, table_name, *args):
+        return self.run(
+            self.query(table_name).index_wait(*args),
+            coerce=list
+        )
+
+    def status(self, table_name, *args):
+        return self.run(
+            self.query(table_name).status(*args)
+        )
+
+    def config(self, table_name, *args):
+        return self.run(
+            self.query(table_name).config(*args)
+        )
+
+    def wait(self, table_name, *args, **kwargs):
+        return self.run(
+            self.query(table_name).wait(*args, **kwargs)
+        )
+
+    def reconfigure(self, table_name, *args, **kwargs):
+        return self.run(
+            self.query(table_name).reconfigure(*args, **kwargs)
+        )
+
+    def rebalance(self, table_name, *args, **kwargs):
+        return self.run(
+            self.query(table_name).reconfigure(*args, **kwargs)
+        )
+
+    def sync(self, table_name, *args):
+        return self.run(
+            self.query(table_name).sync(*args)
+        )
+
+    def grant(self, table_name, *args, **kwargs):
+        return self.run(
+            self.query(table_name).grant(*args, **kwargs)
+        )
+
+    def get_intersecting(self, table_name, *args, **kwargs):
+        return self.run(
+            self.query(table_name).get_intersecting(*args, **kwargs)
+        )
+
+    def get_nearest(self, table_name, *args, **kwargs):
+        return self.run(
+            self.query(table_name).get_nearest(*args, **kwargs)
+        )
+
+    def uuid(self, table_name, *args, **kwargs):
+        return self.run(
+            self.query(table_name).uuid(*args, **kwargs)
+        )
+
+    # endregion
+
+    # region: RqlQuery wrapper functions
+
+    def changes(self, table_name, *args):
+        return self.run(
+            self.query(table_name).changes(*args)
+        )
+
+    def pluck(self, table_name, *args):
+        return self.run(
+            self.query(table_name).pluck(*args)
         )
 
     # endregion

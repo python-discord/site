@@ -4,26 +4,21 @@ from flask import g, jsonify, request
 
 import rethinkdb
 
-from pysite.base_route import APIView
+from pysite.base_route import APIView, DBViewMixin
 from pysite.constants import ErrorCodes
 
 
-class TagView(APIView):
+class TagView(APIView, DBViewMixin):
     path = "/tag"
     name = "tag"
-    table = "tag"
-
-    def __init__(self):
-        # make sure the table exists
-        if not self.db.create_table(self.table, {"primary_key": "tag_name"}):
-            print(f"Table {self.table} exists")
+    table_name = "tag"
 
     def get(self):
         """
         Data must be provided as params,
         API key must be provided as header
         """
-        query = self.db.query(self.table)
+        query = self.table
         api_key = request.headers.get("X-API-Key")
         tag_name = request.args.get("tag_name")
 
