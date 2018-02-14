@@ -28,7 +28,7 @@ class TagView(APIView, DBViewMixin):
         else:
             return self.error(ErrorCodes.invalid_api_key)
 
-        return jsonify(data if data is not None else {})
+        return jsonify(data or {})
 
     def post(self):
         """ Data must be provided as JSON. """
@@ -36,7 +36,7 @@ class TagView(APIView, DBViewMixin):
         tag_name = indata.get("tag_name")
         tag_content = indata.get("tag_content")
         tag_category = indata.get("tag_category")
-        api_key = indata.get("api_key")
+        api_key = request.headers.get("X-API-Key")
 
         if self.validate_key(api_key):
             if tag_name and tag_content:

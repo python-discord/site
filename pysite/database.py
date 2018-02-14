@@ -86,7 +86,7 @@ class RethinkDB:
                 return False
 
             # Use a kwargs dict because the driver doesn't check the value
-            # of `primate_replica_tag` properly; None is not handled
+            # of `primary_replica_tag` properly; None is not handled
             kwargs = {
                 "primary_key": primary_key,
                 "durability": durability,
@@ -184,9 +184,14 @@ class RethinkDB:
     # region: RethinkDB wrapper functions
 
     def insert(self, table_name: str, *objects: Dict[str, Any],
-               durability: str="hard", return_changes: Union[bool, str]=False,
-               conflict: Union[str, Callable[[Dict[str, Any], Dict[str, Any]], Dict[str, Any]]]="error"
-               ) -> Union[List, Dict]:
+               durability: str="hard",
+               return_changes: Union[bool, str]=False,
+               conflict: Union[  # Any of...
+                   str, Callable[  # ...str, or a callable that...
+                       [Dict[str, Any], Dict[str, Any]],  # ...takes two dicts with string keys and any values...
+                       Dict[str, Any]  # ...and returns a dict with string keys and any values
+                   ]
+               ]="error") -> Union[List, Dict]:
         """
         Insert an object or a set of objects into a table
 
@@ -242,7 +247,7 @@ class RethinkDB:
             coerce=list
         )
 
-    def wait(self, table_name: str, wait_for="all_replicas_ready", timeout=0) -> bool:
+    def wait(self, table_name: str, wait_for: str="all_replicas_ready", timeout: int=0) -> bool:
         """
         Wait until an operation has happened on a specific table; will block the current function
 
@@ -366,7 +371,7 @@ class RethinkDB:
 
     def without(self, table_name: str, *selectors: Union[str, Dict[str, Union[List[...], Dict[str, ...]]]]):
         """
-        THe functional opposite of `pluck()`, returning full documents without the specified selectors
+        The functional opposite of `pluck()`, returning full documents without the specified selectors
 
         >>> db = RethinkDB()
         >>> db.without("users", "posts")
