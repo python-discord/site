@@ -341,7 +341,7 @@ class RethinkDB:
             new_connection=True
         )
 
-    def pluck(self, table_name: str, *selectors: Union[str, Dict[str, Union[List[...], Dict[str, ...]]]]):
+    def pluck(self, table_name: str, *selectors: Union[str, Dict[str, Union[List, Dict]]]):
         """
         Get a list of values for a specific set of keys for every document in the table; this can include
         nested values
