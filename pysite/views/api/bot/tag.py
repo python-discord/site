@@ -38,7 +38,7 @@ class TagView(APIView):
                 data = rdb.pluck('tag_name').run(g.db.conn)
                 data = list(data) if data else []
         else:
-            self.error(ErrorCodes.invalid_api_key)
+            return self.error(ErrorCodes.invalid_api_key)
 
         return jsonify(data)
 
@@ -59,8 +59,8 @@ class TagView(APIView):
                     'tag_category': tag_category
                 }).run(g.db.conn)
             else:
-                self.error(ErrorCodes.missing_parameters)
+                return self.error(ErrorCodes.missing_parameters)
         else:
-            self.error(ErrorCodes.invalid_api_key)
+            return self.error(ErrorCodes.invalid_api_key)
 
         return jsonify({'success': True})
