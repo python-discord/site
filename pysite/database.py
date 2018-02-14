@@ -1,7 +1,7 @@
 # coding=utf-8
 
 import os
-from typing import Any, Callable, Dict, List, Union, Optional, Iterator
+from typing import Any, Callable, Dict, Iterator, List, Optional, Union
 
 from flask import abort
 

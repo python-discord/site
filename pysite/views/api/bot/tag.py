@@ -1,8 +1,6 @@
 # coding=utf-8
 
-from flask import g, jsonify, request
-
-import rethinkdb
+from flask import jsonify, request
 
 from pysite.base_route import APIView, DBViewMixin
 from pysite.constants import ErrorCodes
