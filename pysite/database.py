@@ -191,7 +191,7 @@ class RethinkDB:
                        [Dict[str, Any], Dict[str, Any]],  # ...takes two dicts with string keys and any values...
                        Dict[str, Any]  # ...and returns a dict with string keys and any values
                    ]
-               ]="error") -> Union[List, Dict]:
+               ]="error") -> Union[List, Dict]:  # flake8: noqa
         """
         Insert an object or a set of objects into a table
 
