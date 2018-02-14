@@ -89,6 +89,7 @@ class APIView(RouteView):
 
 class DBViewMixin:
     table_name = ""  # type: str
+    table_primary_key = "id"
 
     @classmethod
     def setup(cls: "DBViewMixin", manager: "pysite.route_manager.RouteManager", blueprint: Blueprint):
@@ -98,7 +99,7 @@ class DBViewMixin:
         if not cls.table_name:
             raise RuntimeError("Routes using DBViewMixin must define `table_name`")
 
-        manager.db.create_table(cls.table_name)
+        manager.db.create_table(cls.table_name, primary_key=cls.table_primary_key)
 
     @property
     def table(self) -> Table:

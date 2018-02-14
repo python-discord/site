@@ -12,35 +12,28 @@ class TagView(APIView, DBViewMixin):
     path = "/tag"
     name = "tag"
     table_name = "tag"
+    table_primary_key = "tag_name"
 
     def get(self):
         """
         Data must be provided as params,
         API key must be provided as header
         """
-        query = self.table
         api_key = request.headers.get("X-API-Key")
         tag_name = request.args.get("tag_name")
 
         if self.validate_key(api_key):
             if tag_name:
-                data = self.db.run(
-                    query.get(tag_name),
-                    coerce=dict
-                )
+                data = self.db.get(self.table_name, tag_name)
             else:
-                data = self.db.run(
-                    query.pluck("tag_name"),
-                    coerce=list
-                )
+                data = self.db.pluck(self.table_name, "tag_name")
         else:
             return self.error(ErrorCodes.invalid_api_key)
 
-        return jsonify(data)
+        return jsonify(data if data is not None else {})
 
     def post(self):
         """ Data must be provided as JSON. """
-        rdb = rethinkdb.table(self.table)
         indata = request.get_json()
         tag_name = indata.get("tag_name")
         tag_content = indata.get("tag_content")
@@ -49,11 +42,14 @@ class TagView(APIView, DBViewMixin):
 
         if self.validate_key(api_key):
             if tag_name and tag_content:
-                rdb.insert({
-                    "tag_name": tag_name,
-                    "tag_content": tag_content,
-                    "tag_category": tag_category
-                }).run(g.db.conn)
+                self.db.insert(
+                    self.table_name,
+                    {
+                        "tag_name": tag_name,
+                        "tag_content": tag_content,
+                        "tag_category": tag_category
+                    }
+                )
             else:
                 return self.error(ErrorCodes.missing_parameters)
         else:
