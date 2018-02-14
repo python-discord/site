@@ -55,6 +55,8 @@ class RethinkDB:
                 print(f"Table found: '{table_name}' ({len(all_tables)} tables in total)")
                 return False
 
+            # Use a kwargs dict because the driver doesn't check the value
+            # of `primate_replica_tag` properly; None is not handled
             kwargs = {
                 "primary_key": primary_key,
                 "durability": durability,
@@ -72,11 +74,13 @@ class RethinkDB:
 
     def drop_table(self, table_name: str):
         with self.get_connection() as conn:
-            try:
-                rethinkdb.db(self.database).table_drop(table_name).run(conn)
-                return True
-            except rethinkdb.RqlRuntimeError:
+            all_tables = rethinkdb.db(self.database).table_list().run(conn)
+
+            if table_name not in all_tables:
                 return False
+
+            rethinkdb.db(self.database).table_drop(table_name).run(conn)
+            return True
 
     def query(self, table_name: str) -> Table:
         return rethinkdb.table(table_name)
