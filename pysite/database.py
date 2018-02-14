@@ -369,7 +369,7 @@ class RethinkDB:
             self.query(table_name).pluck(*selectors)
         )
 
-    def without(self, table_name: str, *selectors: Union[str, Dict[str, Union[List[...], Dict[str, ...]]]]):
+    def without(self, table_name: str, *selectors: Union[str, Dict[str, Union[List, Dict]]]):
         """
         The functional opposite of `pluck()`, returning full documents without the specified selectors
 
