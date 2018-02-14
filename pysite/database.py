@@ -301,11 +301,14 @@ class RethinkDB:
         when the connection used for a request context is closed.
 
         :param table_name: The name of the table to watch for changes on
+
         :param squash: How to deal with batches of changes to a single document - False (the default) to send changes
             as they happen, True to squash changes for single objects together and send them as a single change,
             or an int to specify how many seconds to wait for an object to change before batching it
+
         :param changefeed_queue_size: The number of changes the server will buffer between client reads before it
             starts to drop changes and issues errors - defaults to  100,000
+
         :param include_initial: If True, the changefeed will start with the initial values of all the documents in
             the table; the results will have `new_val` fields ONLY to start with if this is the case. Note that
             the old values may be intermixed with new changes if you're still iterating through the old values, but
@@ -313,9 +316,11 @@ class RethinkDB:
             already seen moves it to a part of the group you haven't yet seen, an "unitial" notification is sent, which
             is simply a dict with an `old_val` field set, and not a `new_val` field set. This option defaults to
             False.
+
         :param include_states: Whether to send special state documents to the changefeed as its state changes. This
             comprises of special documents with only a `state` field, set to a string - the state of the feed. There
             are currently two states - "initializing" and "ready". This option defaults to False.
+
         :param include_types: If True, each document generated will include a `type` field which states what type
             of change the document represents. This may be "add", "remove", "change", "initial", "uninitial" or
             "state". This option defaults to False.
