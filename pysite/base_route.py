@@ -27,9 +27,9 @@ class RouteView(BaseView):
     path = None  # type: str
 
     @classmethod
-    def setup(cls: "RouteView", blueprint: Blueprint):
+    def setup(cls: "RouteView", manager: "pysite.route_manager.RouteManager", blueprint: Blueprint):
         if hasattr(super(), "setup"):
-            super().setup(blueprint)
+            super().setup(manager, blueprint)
 
         if not cls.path or not cls.name:
             raise RuntimeError("Route views must have both `path` and `name` defined")
@@ -91,14 +91,14 @@ class DBViewMixin:
     table_name = ""  # type: str
 
     @classmethod
-    def setup(cls: "DBViewMixin", blueprint: Blueprint):
+    def setup(cls: "DBViewMixin", manager: "pysite.route_manager.RouteManager", blueprint: Blueprint):
         if hasattr(super(), "setup"):
-            super().setup(blueprint)
+            super().setup(manager, blueprint)
 
         if not cls.table_name:
             raise RuntimeError("Routes using DBViewMixin must define `table_name`")
 
-        cls.db.create_table(cls.table_name)
+        manager.db.create_table(cls.table_name)
 
     @property
     def table(self) -> Table:
@@ -113,9 +113,9 @@ class ErrorView(BaseView):
     error_code = None  # type: int
 
     @classmethod
-    def setup(cls: "ErrorView", blueprint: Blueprint):
+    def setup(cls: "ErrorView", manager: "pysite.route_manager.RouteManager", blueprint: Blueprint):
         if hasattr(super(), "setup"):
-            super().setup(blueprint)
+            super().setup(manager, blueprint)
 
         if not cls.name or not cls.error_code:
             raise RuntimeError("Error views must have both `name` and `error_code` defined")
