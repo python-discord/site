@@ -4,10 +4,13 @@ import random
 import string
 from functools import wraps
 
-from flask import Blueprint, jsonify, render_template, request
+from flask import Blueprint, g, jsonify, render_template, request
 from flask.views import MethodView
 
+from rethinkdb.ast import Table
+
 from pysite.constants import ErrorCodes
+from pysite.database import RethinkDB
 
 
 class BaseView(MethodView):
@@ -25,6 +28,9 @@ class RouteView(BaseView):
 
     @classmethod
     def setup(cls: "RouteView", blueprint: Blueprint):
+        if hasattr(super(), "setup"):
+            super().setup(blueprint)
+
         if not cls.path or not cls.name:
             raise RuntimeError("Route views must have both `path` and `name` defined")
 
@@ -81,11 +87,36 @@ class APIView(RouteView):
         return response
 
 
+class DBViewMixin:
+    table_name = ""  # type: str
+
+    @classmethod
+    def setup(cls: "DBViewMixin", blueprint: Blueprint):
+        if hasattr(super(), "setup"):
+            super().setup(blueprint)
+
+        if not cls.table_name:
+            raise RuntimeError("Routes using DBViewMixin must define `table_name`")
+
+        cls.db.create_table(cls.table_name)
+
+    @property
+    def table(self) -> Table:
+        return self.db.query(self.table_name)
+
+    @property
+    def db(self) -> RethinkDB:
+        return g.db
+
+
 class ErrorView(BaseView):
     error_code = None  # type: int
 
     @classmethod
     def setup(cls: "ErrorView", blueprint: Blueprint):
+        if hasattr(super(), "setup"):
+            super().setup(blueprint)
+
         if not cls.name or not cls.error_code:
             raise RuntimeError("Error views must have both `name` and `error_code` defined")
 
