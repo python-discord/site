@@ -99,3 +99,6 @@ ENV/
 
 # PyCharm
 .idea/
+
+# RethinkDB data
+rethinkdb_data/
