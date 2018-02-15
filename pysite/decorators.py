@@ -1,5 +1,6 @@
 # coding=utf-8
 import os
+from functools import wraps
 
 from flask import request
 
@@ -13,9 +14,10 @@ def valid_api_key(f):
     Should only be applied to functions on APIView routes.
     """
 
+    @wraps(f)
     def has_valid_api_key(self, *args, **kwargs):
         if not request.headers.get("X-API-Key") == os.environ.get("API_KEY"):
             return self.error(ErrorCodes.invalid_api_key)
-        return f(*args, **kwargs)
+        return f(self, *args, **kwargs)
 
     return has_valid_api_key

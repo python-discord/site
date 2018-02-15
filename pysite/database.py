@@ -366,7 +366,8 @@ class RethinkDB:
         """
 
         return self.run(
-            self.query(table_name).pluck(*selectors)
+            self.query(table_name).pluck(*selectors),
+            coerce=list
         )
 
     def without(self, table_name: str, *selectors: Union[str, Dict[str, Union[List, Dict]]]):

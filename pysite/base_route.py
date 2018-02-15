@@ -2,6 +2,7 @@
 import os
 import random
 import string
+from _weakref import ref
 
 from flask import Blueprint, g, jsonify, render_template
 from flask.views import MethodView
@@ -153,6 +154,7 @@ class DBViewMixin:
         if not cls.table_name:
             raise RuntimeError("Routes using DBViewMixin must define `table_name`")
 
+        cls._db = ref(manager.db)
         manager.db.create_table(cls.table_name, primary_key=cls.table_primary_key)
 
     @property
@@ -161,7 +163,7 @@ class DBViewMixin:
 
     @property
     def db(self) -> RethinkDB:
-        return g.db
+        return self._db()
 
 
 class ErrorView(BaseView):

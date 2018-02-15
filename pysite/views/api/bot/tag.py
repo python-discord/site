@@ -23,11 +23,11 @@ class TagView(APIView, DBViewMixin):
         tag_name = request.args.get("tag_name")
 
         if tag_name:
-            data = self.db.get(self.table_name, tag_name)
+            data = self.db.get(self.table_name, tag_name) or {}
         else:
-            data = self.db.pluck(self.table_name, "tag_name")
+            data = self.db.pluck(self.table_name, "tag_name") or []
 
-        return jsonify(data or {})
+        return jsonify(data)
 
     @valid_api_key
     def post(self):

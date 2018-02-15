@@ -21,13 +21,9 @@ class RouteManager:
         )
         self.db = RethinkDB()
         self.app.secret_key = os.environ.get("WEBPAGE_SECRET_KEY", "super_secret")
-        self.app.config["SERVER_NAME"] = os.environ.get("SERVER_NAME", "pythondiscord.com:8080")
+        self.app.config["SERVER_NAME"] = os.environ.get("", "pythondiscord.com:8080")
         self.app.before_request(self.db.before_request)
         self.app.teardown_request(self.db.teardown_request)
-
-        # Store the database in the Flask global context
-        with self.app.app_context():
-            g.db = self.db  # type: RethinkDB
 
         # Load the main blueprint
         self.main_blueprint = Blueprint("main", __name__)
