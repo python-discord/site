@@ -80,5 +80,5 @@ class RouteManager:
                             cls is not APIView and
                             BaseView in cls.__mro__
                     ):
-                        cls.setup(blueprint)
+                        cls.setup(self, blueprint)
                         self.log.debug(f">> View loaded: {cls.name: <15} ({module.__name__}.{cls_name})")
