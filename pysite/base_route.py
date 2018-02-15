@@ -2,9 +2,10 @@
 import os
 import random
 import string
+
 from _weakref import ref
 
-from flask import Blueprint, g, jsonify, render_template
+from flask import Blueprint, jsonify, render_template
 from flask.views import MethodView
 
 from rethinkdb.ast import Table
