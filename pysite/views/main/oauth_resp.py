@@ -1,4 +1,5 @@
 # coding=utf-8
+
 import requests
 from flask import redirect
 from flask import request as r
@@ -15,7 +16,7 @@ class OauthResp(RouteView):
     def get(self):
         code = r.args.get('code')  # Get the code parameter from the URL requested
         if code is None:  # If the code was not supplied, return with a client error (400).
-            return "Failed Request", 400  # TODO: Create error pages
+            return "Failed Request", 400  # Create error pages
 
         data = {
             'client_id': "{client_id}",  # Fill this in
@@ -30,7 +31,7 @@ class OauthResp(RouteView):
         request = requests.post(API_ENDPOINT + '/oauth2/token', data, headers)
         resp = request.json()
         if 'access_token' not in resp:
-            # There was an error, TODO: Log these errors, and do stuff with result
+            # There was an error, Log these errors, and do stuff with result
             return "Token Request Failed", 500
-        # TODO: Add function to manager the user's tokens
+        # Add function to manager the user's tokens
         return redirect("/")
