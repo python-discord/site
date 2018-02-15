@@ -1,5 +1,4 @@
 # coding=utf-8
-
 from flask import jsonify, request
 
 from pysite.base_route import APIView, DBViewMixin
