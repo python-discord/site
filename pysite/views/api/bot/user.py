@@ -12,7 +12,7 @@ REQUIRED_KEYS = [
 ]
 
 
-class TagView(APIView, DBViewMixin):
+class UserView(APIView, DBViewMixin):
     path = "/user"
     name = "user"
     table_name = "users"
