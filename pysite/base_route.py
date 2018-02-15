@@ -2,9 +2,8 @@
 import os
 import random
 import string
-from functools import wraps
 
-from flask import Blueprint, g, jsonify, render_template, request
+from flask import Blueprint, g, jsonify, render_template
 from flask.views import MethodView
 
 from rethinkdb.ast import Table
@@ -92,20 +91,6 @@ class APIView(RouteView):
         """ Generate a random string of n characters. """
         pool = random.choices(string.ascii_letters + string.digits, k=32)
         return "".join(pool)
-
-    def valid_api_key(f):
-        """
-        Decorator to check if X-API-Key is valid.
-        """
-        @wraps(f)
-        def has_valid_api_key(*args, **kwargs):
-            if not request.headers.get("X-API-Key") == os.environ.get("API_KEY"):
-                resp = jsonify({"error_code": 401, "error_message": "Invalid API-Key"})
-                resp.status_code = 401
-                return resp
-            return f(*args, **kwargs)
-
-        return has_valid_api_key
 
     def error(self, error_code: ErrorCodes):
 
