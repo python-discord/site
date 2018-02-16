@@ -46,7 +46,7 @@ def api_params(schema: Schema, validation_type: ValidationTypes = ValidationType
                     if not request.is_json:
                         return self.error(ErrorCodes.bad_data_format)
 
-                    data = request.get_json()
+                    data = list(request.get_json())
                 except JSONDecodeError:
                     return self.error(ErrorCodes.bad_data_format)
 
@@ -79,8 +79,6 @@ def api_params(schema: Schema, validation_type: ValidationTypes = ValidationType
 
             else:
                 raise ValueError(f"Unknown validation type: {validation_type}")
-
-            data = list(data)
 
             try:
                 schema.validate(data)
