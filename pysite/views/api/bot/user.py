@@ -31,13 +31,9 @@ class UserView(APIView, DBViewMixin):
     @api_key
     @api_params(schema=SCHEMA, validation_type=ValidationTypes.json)
     def post(self, data):
-        for user in data:
-            self.db.insert(
-                self.table_name, user,
-                conflict="update",
-                durability="soft"
-            )
+        changes = self.db.insert(
+            self.table_name, *data,
+            conflict="update"
+        )
 
-        self.db.sync(self.table_name)
-
-        return jsonify({"success": True})
+        return jsonify(changes)
