@@ -69,7 +69,7 @@ def api_params(schema: Schema, validation_type: ValidationTypes = ValidationType
                         # At least one key has a different number of values
                         return self.error(ErrorCodes.bad_data_format)
 
-                for i, in range(longest):  # Now we know all keys have the same number of values...
+                for i in range(longest):  # Now we know all keys have the same number of values...
                     obj = {}  # New dict to store this set of values
 
                     for key, items in multi.lists():
