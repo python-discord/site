@@ -80,8 +80,7 @@ def api_params(schema: Schema, validation_type: ValidationTypes = ValidationType
             else:
                 raise ValueError(f"Unknown validation type: {validation_type}")
 
-            if not isinstance(data, list):
-                data = list(data)
+            data = list(data)
 
             try:
                 schema.validate(data)
