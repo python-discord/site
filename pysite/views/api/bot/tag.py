@@ -4,7 +4,7 @@ from flask import jsonify, request
 
 from pysite.base_route import APIView, DBViewMixin
 from pysite.constants import ErrorCodes
-from pysite.decorators import valid_api_key
+from pysite.decorators import api_key
 
 
 class TagView(APIView, DBViewMixin):
@@ -13,7 +13,7 @@ class TagView(APIView, DBViewMixin):
     table_name = "tag"
     table_primary_key = "tag_name"
 
-    @valid_api_key
+    @api_key
     def get(self):
         """
         Data must be provided as params,
@@ -29,7 +29,7 @@ class TagView(APIView, DBViewMixin):
 
         return jsonify(data)
 
-    @valid_api_key
+    @api_key
     def post(self):
         """
         Data must be provided as JSON.
@@ -51,6 +51,6 @@ class TagView(APIView, DBViewMixin):
                 }
             )
         else:
-            return self.error(ErrorCodes.missing_parameters)
+            return self.error(ErrorCodes.incorrect_parameters)
 
         return jsonify({"success": True})

@@ -112,8 +112,12 @@ class APIView(RouteView):
         elif error_code is ErrorCodes.invalid_api_key:
             data["error_message"] = "Invalid API-key"
             http_code = 401
-        elif error_code is ErrorCodes.missing_parameters:
-            data["error_message"] = "Not all required parameters were provided"
+        elif error_code is ErrorCodes.bad_data_format:
+            data["error_message"] = "Input data in incorrect format"
+            http_code = 400
+        elif error_code is ErrorCodes.incorrect_parameters:
+            data["error_message"] = "Incorrect parameters provided"
+            http_code = 400
 
         response = jsonify(data)
         response.status_code = http_code
