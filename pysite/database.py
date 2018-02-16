@@ -207,7 +207,7 @@ class RethinkDB:
         """
 
         query = self.query(table_name).insert(
-            objects, durability=durability, return_changes=return_changes, conflict=conflict
+            *objects, durability=durability, return_changes=return_changes, conflict=conflict
         )
 
         if return_changes:
