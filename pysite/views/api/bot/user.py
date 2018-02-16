@@ -1,10 +1,20 @@
 # coding=utf-8
 
-from flask import jsonify, request
+from flask import jsonify
+
+from schema import Schema
 
 from pysite.base_route import APIView, DBViewMixin
-from pysite.constants import ErrorCodes
-from pysite.decorators import valid_api_key
+from pysite.constants import ValidationTypes
+from pysite.decorators import api_key, api_params
+
+
+SCHEMA = Schema([
+    {
+        "user_id": int,
+        "role": int
+    }
+])
 
 REQUIRED_KEYS = [
     "user_id",
@@ -18,24 +28,12 @@ class UserView(APIView, DBViewMixin):
     table_name = "users"
     table_primary_key = "user_id"
 
-    @valid_api_key
-    def post(self):
-        data = request.get_json()
-
-        if not isinstance(data, list):
-            data = [data]
-
+    @api_key
+    @api_params(schema=SCHEMA, validation_type=ValidationTypes.json)
+    def post(self, data):
         for user in data:
-            if not all(k in user for k in REQUIRED_KEYS):
-                print(user)
-                return self.error(ErrorCodes.missing_parameters)
-
             self.db.insert(
-                self.table_name,
-                {
-                    "user_id": user["user_id"],
-                    "role": user["role"],
-                },
+                self.table_name, user,
                 conflict="update",
                 durability="soft"
             )
