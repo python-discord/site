@@ -19,7 +19,7 @@ def api_key(f):
 
     @wraps(f)
     def inner(self, *args, **kwargs):
-        if not request.headers.get("X-API-Key") == os.environ.get("API_KEY"):
+        if not request.headers.get("X-API-Key") == os.environ.get("BOT_API_KEY"):
             return self.error(ErrorCodes.invalid_api_key)
         return f(self, *args, **kwargs)
 
