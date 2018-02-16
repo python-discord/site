@@ -5,3 +5,4 @@ gevent
 gevent-websocket
 wsaccel
 ujson
+schema
