@@ -1,5 +1,4 @@
 # coding=utf-8
-from collections import OrderedDict
 import os
 
 from geventwebsocket import Resource, WebSocketApplication, WebSocketServer
