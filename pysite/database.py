@@ -1,6 +1,7 @@
 # coding=utf-8
-
+import logging
 import os
+
 from typing import Any, Callable, Dict, Iterator, List, Optional, Union
 
 from flask import abort
@@ -16,6 +17,7 @@ class RethinkDB:
         self.host = os.environ.get("RETHINKDB_HOST", "127.0.0.1")
         self.port = os.environ.get("RETHINKDB_PORT", "28016")
         self.database = os.environ.get("RETHINKDB_DATABASE", "pythondiscord")
+        self.log = logging.getLogger('site')
         self.conn = None
 
         rethinkdb.set_loop_type(loop_type)
@@ -23,9 +25,9 @@ class RethinkDB:
         with self.get_connection(connect_database=False) as conn:
             try:
                 rethinkdb.db_create(self.database).run(conn)
-                print(f"Database created: '{self.database}'")
+                self.log.debug(f"Database created: '{self.database}'")
             except rethinkdb.RqlRuntimeError:
-                print(f"Database found: '{self.database}'")
+                self.log.debug(f"Database found: '{self.database}'")
 
     def get_connection(self, connect_database: bool=True) -> DefaultConnection:
         """
@@ -82,7 +84,7 @@ class RethinkDB:
             all_tables = rethinkdb.db(self.database).table_list().run(conn)
 
             if table_name in all_tables:
-                print(f"Table found: '{table_name}' ({len(all_tables)} tables in total)")
+                self.log.debug(f"Table found: '{table_name}' ({len(all_tables)} tables in total)")
                 return False
 
             # Use a kwargs dict because the driver doesn't check the value
@@ -99,7 +101,7 @@ class RethinkDB:
 
             rethinkdb.db(self.database).table_create(table_name, **kwargs).run(conn)
 
-            print(f"Table created: '{table_name}'")
+            self.log.debug(f"Table created: '{table_name}'")
             return True
 
     def drop_table(self, table_name: str):
