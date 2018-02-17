@@ -1,6 +1,6 @@
 # coding=utf-8
-
 from collections import OrderedDict
+import os
 
 from geventwebsocket import Resource, WebSocketApplication, WebSocketServer
 
@@ -18,10 +18,12 @@ class EchoApplication(WebSocketApplication):
         print(reason)
 
 
-if __name__ == "__main__":
-    app = WebSocketServer(
-        ('', 8000),
-        Resource(OrderedDict([('/ws/echo', EchoApplication)]))
-    )
+app = WebSocketServer(
+    ('', os.environ.get("WS_PORT", 8080)),
+    Resource({
+        "/ws/echo": EchoApplication  # Dicts are ordered in Python 3.6
+    })
+)
 
+if __name__ == "__main__":
     app.serve_forever()
