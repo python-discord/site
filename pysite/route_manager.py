@@ -5,8 +5,11 @@ import os
 
 from flask import Blueprint, Flask
 
+from flask_sockets import Sockets
+
 from pysite.base_route import APIView, BaseView, ErrorView, RouteView
 from pysite.database import RethinkDB
+from pysite.websockets import Websocket
 
 TEMPLATES_PATH = "../templates"
 STATIC_PATH = "../static"
@@ -19,6 +22,8 @@ class RouteManager:
         self.app = Flask(
             __name__, template_folder=TEMPLATES_PATH, static_folder=STATIC_PATH, static_url_path="/static",
         )
+        self.sockets = Sockets(self.app)
+
         self.db = RethinkDB()
         self.app.secret_key = os.environ.get("WEBPAGE_SECRET_KEY", "super_secret")
         self.app.config["SERVER_NAME"] = os.environ.get("SERVER_NAME", "pythondiscord.com:8080")
@@ -36,17 +41,29 @@ class RouteManager:
         self.subdomains = ['api', 'staff']
 
         for sub in self.subdomains:
-            self.sub_blueprint = Blueprint(sub, __name__, subdomain=sub)
+            sub_blueprint = Blueprint(sub, __name__, subdomain=sub)
 
-            print(f"Loading Blueprint: {self.sub_blueprint.name}")
-            self.load_views(self.sub_blueprint, f"pysite/views/{sub}")
-            self.app.register_blueprint(self.sub_blueprint)
+            print(f"Loading Blueprint: {sub_blueprint.name}")
+            self.load_views(sub_blueprint, f"pysite/views/{sub}")
+            self.app.register_blueprint(sub_blueprint)
             print("")
 
+        # Load the websockets
+        self.ws_blueprint = Blueprint("ws", __name__)
+
+        print("Loading websocket routes...")
+        self.load_views(self.ws_blueprint, "pysite/views/ws")
+        self.sockets.register_blueprint(self.ws_blueprint, url_prefix="/ws")
+
     def run(self):
-        self.app.run(
-            port=int(os.environ.get("WEBPAGE_PORT", 8080)), debug="FLASK_DEBUG" in os.environ
+        from gevent.pywsgi import WSGIServer
+        from geventwebsocket.handler import WebSocketHandler
+
+        server = WSGIServer(
+            ("", int(os.environ.get("WEBPAGE_PORT", 8080))),
+            self.app, handler_class=WebSocketHandler
         )
+        server.serve_forever()
 
     def load_views(self, blueprint, location="pysite/views"):
         for filename in os.listdir(location):
@@ -65,7 +82,11 @@ class RouteManager:
                             cls is not ErrorView and
                             cls is not RouteView and
                             cls is not APIView and
-                            BaseView in cls.__mro__
+                            cls is not Websocket and
+                            (
+                                BaseView in cls.__mro__ or
+                                Websocket in cls.__mro__
+                            )
                     ):
                         cls.setup(self, blueprint)
                         print(f">> View loaded: {cls.name: <15} ({module.__name__}.{cls_name})")

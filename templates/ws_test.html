@@ -5,7 +5,7 @@
         <h1>Open your JS console to test</h1>
 
         <script type="application/javascript">
-            let ws = new WebSocket("wss://api.{{ server_name }}/ws/echo");
+            let ws = new WebSocket("ws://{{ server_name }}/ws/echo");
 
             ws.onopen = function(event) {
                 console.log("WS opened! Use send() to send a message.");

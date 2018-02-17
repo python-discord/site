@@ -2,12 +2,13 @@
 
 from flask import jsonify, request
 
-from pysite.base_route import APIView, DBViewMixin
+from pysite.base_route import APIView
 from pysite.constants import ErrorCodes
 from pysite.decorators import api_key
+from pysite.mixins import DBMixin
 
 
-class TagView(APIView, DBViewMixin):
+class TagView(APIView, DBMixin):
     path = "/tag"
     name = "tag"
     table_name = "tag"

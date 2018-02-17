@@ -4,10 +4,10 @@ from flask import jsonify
 
 from schema import Schema
 
-from pysite.base_route import APIView, DBViewMixin
+from pysite.base_route import APIView
 from pysite.constants import ValidationTypes
 from pysite.decorators import api_key, api_params
-
+from pysite.mixins import DBMixin
 
 SCHEMA = Schema([
     {
@@ -22,7 +22,7 @@ REQUIRED_KEYS = [
 ]
 
 
-class UserView(APIView, DBViewMixin):
+class UserView(APIView, DBMixin):
     path = "/user"
     name = "user"
     table_name = "users"

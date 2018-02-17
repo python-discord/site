@@ -6,3 +6,4 @@ gevent-websocket
 wsaccel
 ujson
 schema
+flask_sockets
