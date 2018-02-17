@@ -1,8 +1,8 @@
 # coding=utf-8
-
-import requests
 from flask import redirect
 from flask import request as r
+
+import requests
 
 from pysite.base_route import RouteView
 
@@ -14,8 +14,8 @@ class OauthResp(RouteView):
     name = "oauth_resp"
 
     def get(self):
-        code = r.args.get('code')  # Get the code parameter from the URL requested
-        if code is None:  # If the code was not supplied, return with a client error (400).
+        code = r.args.get('code')  # Get the code parameter from the URL req
+        if code is None:  # If the code was not supplied, return with a (400)
             return "Failed Request", 400  # Create error pages
 
         data = {
