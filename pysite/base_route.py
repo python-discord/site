@@ -1,10 +1,8 @@
 # coding=utf-8
-import os
-import random
-import string
 from collections import Iterable
+from typing import Any, Dict
 
-from flask import Blueprint, jsonify, render_template
+from flask import Blueprint, Response, jsonify, render_template
 from flask.views import MethodView
 
 from pysite.constants import ErrorCodes
@@ -19,7 +17,14 @@ class BaseView(MethodView):
 
     name = None  # type: str
 
-    def render(self, *template_names, **context):
+    def render(self, *template_names: str, **context: Dict[str, Any]) -> str:
+        """
+        Render some templates and get them back in a form that you can simply return from your view function.
+
+        :param template_names: Names of the templates to render
+        :param context: Extra data to pass into the template
+        :return: String representing the rendered templates
+        """
         context["current_page"] = self.name
         context["view"] = self
 
@@ -81,16 +86,13 @@ class APIView(RouteView):
     ...         return self.error(ErrorCodes.unknown_route)
     """
 
-    def validate_key(self, api_key: str):
-        """ Placeholder! """
-        return api_key == os.environ.get("API_KEY")
+    def error(self, error_code: ErrorCodes) -> Response:
+        """
+        Generate a JSON response for you to return from your handler, for a specific type of API error
 
-    def generate_api_key(self):
-        """ Generate a random string of n characters. """
-        pool = random.choices(string.ascii_letters + string.digits, k=32)
-        return "".join(pool)
-
-    def error(self, error_code: ErrorCodes):
+        :param error_code: The type of error to generate a response for - see `constants.ErrorCodes` for more
+        :return: A Flask Response object that you can return from your handler
+        """
 
         data = {
             "error_code": error_code.value,
@@ -146,7 +148,7 @@ class ErrorView(BaseView):
     @classmethod
     def setup(cls: "ErrorView", manager: "pysite.route_manager.RouteManager", blueprint: Blueprint):
         """
-        Set up the view by registering it as the error handler for the HTTP status code specified in the class
+        Set up the view by registering it as the error handler for the HTTP status codes specified in the class
         attributes - this will also deal with multiple inheritance by calling `super().setup()` as appropriate.
 
         :param manager: Instance of the current RouteManager
