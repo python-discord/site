@@ -48,6 +48,7 @@ export RETHINKDB_PORT="28016"
 export RETHINKDB_DATABASE="database"
 export RETHINKDB_TABLE="table"
 export BOT_API_KEY="abcdefghijklmnopqrstuvwxyz"
+alias python=python3.6
 
 mesg n || true
 EOF
@@ -61,6 +62,6 @@ sudo su
 cd /vagrant
 gunicorn -w 1 -b 0.0.0.0:80 -c gunicorn_config.py --log-level debug -k geventwebsocket.gunicorn.workers.GeventWebSocketWorker app:app
 or
-python3.6 app.py
+python app.py
 in browser: http://pysite.local/
 '
