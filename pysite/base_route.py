@@ -2,6 +2,7 @@
 import os
 import random
 import string
+from collections import Iterable
 
 from flask import Blueprint, jsonify, render_template
 from flask.views import MethodView
@@ -129,13 +130,18 @@ class ErrorView(BaseView):
     >>> class MyView(ErrorView):
     ...     name = "my_view"  # Flask internal name for this route
     ...     path = "/my_view"  # Actual URL path to reach this route
-    ...     error_code = 404
+    ...     error_code = 404  # Error code
     ...
-    ...     def get(self):  # Name your function after the relevant HTTP method
+    ...     def get(self, error: HTTPException):  # Name your function after the relevant HTTP method
     ...         return "Replace me with a template, 404 not found", 404
+
+    If you'd like to catch multiple HTTP error codes, feel free to supply an iterable for `error_code`. For example...
+
+    >>> error_code = [401, 403]  # Handle two specific errors
+    >>> error_code = range(500, 600)  # Handle all 5xx errors
     """
 
-    error_code = None  # type: int
+    error_code = None  # type: Union[int, Iterable]
 
     @classmethod
     def setup(cls: "ErrorView", manager: "pysite.route_manager.RouteManager", blueprint: Blueprint):
@@ -153,4 +159,14 @@ class ErrorView(BaseView):
         if not cls.name or not cls.error_code:
             raise RuntimeError("Error views must have both `name` and `error_code` defined")
 
-        manager.app.errorhandler(cls.error_code)(cls.as_view(cls.name))
+        if isinstance(cls.error_code, int):
+            cls.error_code = [cls.error_code]
+
+        if isinstance(cls.error_code, Iterable):
+            for code in cls.error_code:
+                try:
+                    manager.app.errorhandler(code)(cls.as_view(cls.name))
+                except KeyError:  # This happens if we try to register a handler for a HTTP code that doesn't exist
+                    pass
+        else:
+            raise RuntimeError("Error views must have an `error_code` that is either an `int` or an iterable")
