@@ -2,13 +2,15 @@
 
 This uses vagrant and virtualbox, but it is entirely optional. You can install all the prerequisites directly on your computer.
 
+> Note that it's entirely optional to use Vagrant, you can decide for yourself whether you want to run everything on your local machine instead of in a virtual machine. The benefit is that you can spin up your development environment anywhere.
+
 # Starting point
 
 Go the root of this project
 
 ## Booting the VM
 
-Start by installing the prerequisites:
+Install the prerequisites:
 
 - [Vagrant](https://www.vagrantup.com/downloads.html)
 - [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
