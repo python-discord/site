@@ -84,8 +84,8 @@ class RouteManager:
                             cls is not APIView and
                             cls is not WS and
                             (
-                                    BaseView in cls.__mro__ or
-                                    WS in cls.__mro__
+                                BaseView in cls.__mro__ or
+                                WS in cls.__mro__
                             )
                     ):
                         cls.setup(self, blueprint)
