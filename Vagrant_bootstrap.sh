@@ -16,6 +16,7 @@ apt-get install -y python3.6-dev
 apt-get install -y build-essential
 curl -s https://bootstrap.pypa.io/get-pip.py | python3.6 -
 python3.6 -m pip install -r /vagrant/requirements.txt
+python3.6 -m pip install -r /vagrant/requirements-ci.txt
 python3.6 -m pip install gunicorn
 # RethinkDB
 apt-get install -y rethinkdb
