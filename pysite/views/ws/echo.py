@@ -1,14 +1,17 @@
 # coding=utf-8
 import logging
 
-from pysite.websockets import Websocket
+from geventwebsocket.websocket import WebSocket
+
+from pysite.websockets import WS
 
 
-class EchoWebsocket(Websocket):
+class EchoWebsocket(WS):
     path = "/echo"
     name = "ws_echo"
 
-    def __init__(self):
+    def __init__(self, socket: WebSocket):
+        super().__init__(socket)
         self.log = logging.getLogger()
 
     def on_open(self):

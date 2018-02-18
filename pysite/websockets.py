@@ -4,7 +4,7 @@ from flask import Blueprint
 from geventwebsocket.websocket import WebSocket
 
 
-class Websocket:
+class WS:
     """
     Base class for representing a Websocket.
 
@@ -13,7 +13,7 @@ class Websocket:
 
     If you need access to the database, you can mix-in DBMixin, just like any view class:
 
-    >>> class DBWebsocket(Websocket, DBMixin):
+    >>> class DBWebsocket(WS, DBMixin):
     ...     name = "db_websocket"
     ...     path = "/db_websocket"  # This will be prefixed with "/ws" by the blueprint
     ...     table = "ws"
@@ -61,7 +61,7 @@ class Websocket:
             self.socket.send(message, binary=binary)
 
     @classmethod
-    def setup(cls: "type(Websocket)", manager: "pysite.route_manager.RouteManager", blueprint: Blueprint):
+    def setup(cls: "type(WS)", manager: "pysite.route_manager.RouteManager", blueprint: Blueprint):
         """
         Set up the websocket object, calling `setup()` on any superclasses as necessary (for example, on the DB
         mixin).
@@ -78,7 +78,7 @@ class Websocket:
 
         def handle(socket: WebSocket):
             """
-            Wrap the current Websocket class, dispatching events to it as necessary. We're using gevent, so there's
+            Wrap the current WS class, dispatching events to it as necessary. We're using gevent, so there's
             no need to worry about blocking here.
             """
 

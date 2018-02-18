@@ -82,6 +82,7 @@ class RethinkDB:
 
         with self.get_connection() as conn:
             all_tables = rethinkdb.db(self.database).table_list().run(conn)
+            self.log.debug(f"Call to table_list returned the following list of tables: {all_tables}")
 
             if table_name in all_tables:
                 self.log.debug(f"Table found: '{table_name}' ({len(all_tables)} tables in total)")
