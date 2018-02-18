@@ -1,9 +1,8 @@
 # coding=utf-8
-import os
-import random
-import string
+from collections import Iterable
+from typing import Any, Dict
 
-from flask import Blueprint, jsonify, render_template
+from flask import Blueprint, Response, jsonify, render_template
 from flask.views import MethodView
 
 from pysite.constants import ErrorCodes
@@ -18,7 +17,14 @@ class BaseView(MethodView):
 
     name = None  # type: str
 
-    def render(self, *template_names, **context):
+    def render(self, *template_names: str, **context: Dict[str, Any]) -> str:
+        """
+        Render some templates and get them back in a form that you can simply return from your view function.
+
+        :param template_names: Names of the templates to render
+        :param context: Extra data to pass into the template
+        :return: String representing the rendered templates
+        """
         context["current_page"] = self.name
         context["view"] = self
 
@@ -80,16 +86,13 @@ class APIView(RouteView):
     ...         return self.error(ErrorCodes.unknown_route)
     """
 
-    def validate_key(self, api_key: str):
-        """ Placeholder! """
-        return api_key == os.environ.get("API_KEY")
+    def error(self, error_code: ErrorCodes) -> Response:
+        """
+        Generate a JSON response for you to return from your handler, for a specific type of API error
 
-    def generate_api_key(self):
-        """ Generate a random string of n characters. """
-        pool = random.choices(string.ascii_letters + string.digits, k=32)
-        return "".join(pool)
-
-    def error(self, error_code: ErrorCodes):
+        :param error_code: The type of error to generate a response for - see `constants.ErrorCodes` for more
+        :return: A Flask Response object that you can return from your handler
+        """
 
         data = {
             "error_code": error_code.value,
@@ -129,18 +132,23 @@ class ErrorView(BaseView):
     >>> class MyView(ErrorView):
     ...     name = "my_view"  # Flask internal name for this route
     ...     path = "/my_view"  # Actual URL path to reach this route
-    ...     error_code = 404
+    ...     error_code = 404  # Error code
     ...
-    ...     def get(self):  # Name your function after the relevant HTTP method
+    ...     def get(self, error: HTTPException):  # Name your function after the relevant HTTP method
     ...         return "Replace me with a template, 404 not found", 404
+
+    If you'd like to catch multiple HTTP error codes, feel free to supply an iterable for `error_code`. For example...
+
+    >>> error_code = [401, 403]  # Handle two specific errors
+    >>> error_code = range(500, 600)  # Handle all 5xx errors
     """
 
-    error_code = None  # type: int
+    error_code = None  # type: Union[int, Iterable]
 
     @classmethod
     def setup(cls: "ErrorView", manager: "pysite.route_manager.RouteManager", blueprint: Blueprint):
         """
-        Set up the view by registering it as the error handler for the HTTP status code specified in the class
+        Set up the view by registering it as the error handler for the HTTP status codes specified in the class
         attributes - this will also deal with multiple inheritance by calling `super().setup()` as appropriate.
 
         :param manager: Instance of the current RouteManager
@@ -153,4 +161,14 @@ class ErrorView(BaseView):
         if not cls.name or not cls.error_code:
             raise RuntimeError("Error views must have both `name` and `error_code` defined")
 
-        blueprint.errorhandler(cls.error_code)(cls.as_view(cls.name))
+        if isinstance(cls.error_code, int):
+            cls.error_code = [cls.error_code]
+
+        if isinstance(cls.error_code, Iterable):
+            for code in cls.error_code:
+                try:
+                    manager.app.errorhandler(code)(cls.as_view(cls.name))
+                except KeyError:  # This happens if we try to register a handler for a HTTP code that doesn't exist
+                    pass
+        else:
+            raise RuntimeError("Error views must have an `error_code` that is either an `int` or an iterable")
