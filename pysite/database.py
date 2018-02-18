@@ -17,7 +17,7 @@ class RethinkDB:
         self.host = os.environ.get("RETHINKDB_HOST", "127.0.0.1")
         self.port = os.environ.get("RETHINKDB_PORT", "28016")
         self.database = os.environ.get("RETHINKDB_DATABASE", "pythondiscord")
-        self.log = logging.getLogger('site')
+        self.log = logging.getLogger()
         self.conn = None
 
         rethinkdb.set_loop_type(loop_type)

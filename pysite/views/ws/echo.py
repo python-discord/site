@@ -9,7 +9,7 @@ class EchoWebsocket(Websocket):
     name = "ws_echo"
 
     def __init__(self):
-        self.log = logging.getLogger('site')
+        self.log = logging.getLogger()
 
     def on_open(self):
         self.log.debug("Echo | WS opened.")

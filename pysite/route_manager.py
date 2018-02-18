@@ -26,7 +26,7 @@ class RouteManager:
         self.sockets = Sockets(self.app)
 
         self.db = RethinkDB()
-        self.log = logging.getLogger('site')
+        self.log = logging.getLogger()
         self.app.secret_key = os.environ.get("WEBPAGE_SECRET_KEY", "super_secret")
         self.app.config["SERVER_NAME"] = os.environ.get("SERVER_NAME", "pythondiscord.com:8080")
         self.app.before_request(self.db.before_request)
