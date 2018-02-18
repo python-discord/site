@@ -23,7 +23,7 @@ class DBMixin:
 
     This class will also work with Websockets:
 
-    >>> class MyWeboscket(WS, DBMixin):
+    >>> class MyWebsocket(WS, DBMixin):
     ...     name = "my_websocket"
     ...     path = "/my_websocket"
     ...     table_name = "my_table"
