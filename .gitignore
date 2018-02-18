@@ -102,3 +102,6 @@ ENV/
 
 # RethinkDB data
 rethinkdb_data/
+
+# Vagrant
+.vagrant/
