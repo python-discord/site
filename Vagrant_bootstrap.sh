@@ -56,7 +56,9 @@ EOF
 source /root/.profile
 
 echo '
-SET YOUR HOSTS FILE TO INCLUDE: 10.1.0.2 pysite.local
+Include in hosts file: 10.1.0.2 pysite.local
+Include in hosts file: 10.1.0.2 api.pysite.local
+
 vagrant ssh
 sudo su
 cd /vagrant
