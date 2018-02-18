@@ -1,0 +1,60 @@
+# How to set up the development environment
+
+This uses vagrant and virtualbox, but it is entirely optional. You can install all the prerequisites directly on your computer.
+
+> Note that it's entirely optional to use Vagrant, you can decide for yourself whether you want to run everything on your local machine instead of in a virtual machine. The benefit is that you can spin up your development environment anywhere.
+
+# Starting point
+
+Go the root of this project
+
+## Booting the VM
+
+Install the prerequisites:
+
+- [Vagrant](https://www.vagrantup.com/downloads.html)
+- [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
+
+### Hosts file
+
+Next put these values in your hosts file
+
+```bash
+10.1.0.2    pysite.local
+10.1.0.2    api.pysite.local
+```
+
+you will typically find the hosts file here: `C:\Windows\System32\drivers\etc\hosts` or here `/etc/hosts`
+
+> You need administrative or root privileges to edit a hosts file
+
+### Booting the VM
+
+Once installed, open your favorite terminal and type
+
+```bash
+vagrant up   # Wait for the vm to boot
+vagrant ssh  # Enter a SSH session
+sudo su
+cd /vagrant
+python app.py
+```
+
+You can also try the gunicorn way, which reflects production:
+```bash
+gunicorn -w 1 -b 0.0.0.0:80 -c gunicorn_config.py --log-level debug -k geventwebsocket.gunicorn.workers.GeventWebSocketWorker app:app
+```
+
+Now open your browser and navigate to `http://pysite.local/`
+
+### Environment Variables
+
+The vagrantfile includes the necessary dummy environment variables to run the flask app
+
+### Rethinkdb
+
+The Vagrantfile includes installation of Rethinkdb, the code in the flask app takes care of adding the neccesary databases and tables.
+
+### Changing code
+
+Any code you change outside the virtual machine is sync'd with the /vagrant folder inside the VM, so there is no need to copy files in manually.
