@@ -1,6 +1,7 @@
 # coding=utf-8
 import importlib
 import inspect
+import logging
 import os
 
 from flask import Blueprint, Flask
@@ -25,6 +26,7 @@ class RouteManager:
         self.sockets = Sockets(self.app)
 
         self.db = RethinkDB()
+        self.log = logging.getLogger()
         self.app.secret_key = os.environ.get("WEBPAGE_SECRET_KEY", "super_secret")
         self.app.config["SERVER_NAME"] = os.environ.get("SERVER_NAME", "pythondiscord.com:8080")
         self.app.before_request(self.db.before_request)
@@ -32,26 +34,24 @@ class RouteManager:
 
         # Load the main blueprint
         self.main_blueprint = Blueprint("main", __name__)
-        print(f"Loading Blueprint: {self.main_blueprint.name}")
+        self.log.debug(f"Loading Blueprint: {self.main_blueprint.name}")
         self.load_views(self.main_blueprint, "pysite/views/main")
         self.app.register_blueprint(self.main_blueprint)
-        print("")
+        self.log.debug("")
 
         # Load the subdomains
         self.subdomains = ['api', 'staff']
 
         for sub in self.subdomains:
             sub_blueprint = Blueprint(sub, __name__, subdomain=sub)
-
-            print(f"Loading Blueprint: {sub_blueprint.name}")
+            self.log.debug(f"Loading Blueprint: {sub_blueprint.name}")
             self.load_views(sub_blueprint, f"pysite/views/{sub}")
             self.app.register_blueprint(sub_blueprint)
-            print("")
 
         # Load the websockets
         self.ws_blueprint = Blueprint("ws", __name__)
 
-        print("Loading websocket routes...")
+        self.log.debug("Loading websocket routes...")
         self.load_views(self.ws_blueprint, "pysite/views/ws")
         self.sockets.register_blueprint(self.ws_blueprint, url_prefix="/ws")
 
@@ -89,4 +89,4 @@ class RouteManager:
                             )
                     ):
                         cls.setup(self, blueprint)
-                        print(f">> View loaded: {cls.name: <15} ({module.__name__}.{cls_name})")
+                        self.log.debug(f">> View loaded: {cls.name: <15} ({module.__name__}.{cls_name})")
