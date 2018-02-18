@@ -9,7 +9,7 @@ from flask_sockets import Sockets
 
 from pysite.base_route import APIView, BaseView, ErrorView, RouteView
 from pysite.database import RethinkDB
-from pysite.websockets import Websocket
+from pysite.websockets import WS
 
 TEMPLATES_PATH = "../templates"
 STATIC_PATH = "../static"
@@ -82,10 +82,10 @@ class RouteManager:
                             cls is not ErrorView and
                             cls is not RouteView and
                             cls is not APIView and
-                            cls is not Websocket and
+                            cls is not WS and
                             (
-                                BaseView in cls.__mro__ or
-                                Websocket in cls.__mro__
+                                    BaseView in cls.__mro__ or
+                                    WS in cls.__mro__
                             )
                     ):
                         cls.setup(self, blueprint)

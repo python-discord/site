@@ -1,8 +1,8 @@
 # coding=utf-8
-from pysite.websockets import Websocket
+from pysite.websockets import WS
 
 
-class EchoWebsocket(Websocket):
+class EchoWebsocket(WS):
     path = "/echo"
     name = "ws_echo"
 
