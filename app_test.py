@@ -1,7 +1,7 @@
-#import pytest
-#import json
-from flask_testing import TestCase
 from app import app
+
+from flask_testing import TestCase
+
 
 class siteTest(TestCase):
 
@@ -18,6 +18,5 @@ class RootEndpoint(siteTest):
         self.assertEqual(response.status_code, 200)
 
     def test_api(self):
-        from pprint import pprint
         response = self.client.get('/nonexistantpath')
         self.assertEqual(response.status_code, 404)
