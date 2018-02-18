@@ -33,12 +33,16 @@ you will typically find the hosts file here: `C:\Windows\System32\drivers\etc\ho
 Once installed, open your favorite terminal and type
 
 ```bash
-vagrant ssh
+vagrant up   # Wait for the vm to boot
+vagrant ssh  # Enter a SSH session
 sudo su
 cd /vagrant
-gunicorn -w 1 -b 0.0.0.0:80 -c gunicorn_config.py --log-level debug -k geventwebsocket.gunicorn.workers.GeventWebSocketWorker app:app
-# or
 python app.py
+```
+
+You can also try the gunicorn way, which reflects production:
+```bash
+gunicorn -w 1 -b 0.0.0.0:80 -c gunicorn_config.py --log-level debug -k geventwebsocket.gunicorn.workers.GeventWebSocketWorker app:app
 ```
 
 Now open your browser and navigate to `http://pysite.local/`
