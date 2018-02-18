@@ -47,6 +47,10 @@ Now open your browser and navigate to `http://pysite.local/`
 
 The vagrantfile includes the necessary dummy environment variables to run the flask app
 
+### Rethinkdb
+
+The Vagrantfile includes installation of Rethinkdb, the code in the flask app takes care of adding the neccesary databases and tables.
+
 ### Changing code
 
 Any code you change outside the virtual machine is sync'd with the /vagrant folder inside the VM, so there is no need to copy files in manually.
