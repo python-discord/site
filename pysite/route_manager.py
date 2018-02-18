@@ -44,11 +44,9 @@ class RouteManager:
 
         for sub in self.subdomains:
             sub_blueprint = Blueprint(sub, __name__, subdomain=sub)
-
             self.log.debug(f"Loading Blueprint: {sub_blueprint.name}")
             self.load_views(sub_blueprint, f"pysite/views/{sub}")
             self.app.register_blueprint(sub_blueprint)
-            self.log.debug("")
 
         # Load the websockets
         self.ws_blueprint = Blueprint("ws", __name__)
