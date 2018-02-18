@@ -52,6 +52,8 @@ export BOT_API_KEY="abcdefghijklmnopqrstuvwxyz"
 mesg n || true
 EOF
 
+source /root/.profile
+
 echo '
 SET YOUR HOSTS FILE TO INCLUDE: 10.1.0.2 pysite.local
 vagrant ssh
