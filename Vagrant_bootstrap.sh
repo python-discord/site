@@ -20,6 +20,17 @@ python3.6 -m pip install gunicorn
 # RethinkDB
 apt-get install -y rethinkdb
 
+
+tee /etc/rethinkdb/instances.d/rethinkdb.conf <<EOF
+runuser=root
+rungroup=root
+bind=0.0.0.0
+driver-port=28016
+http-port=28010
+EOF
+
+service rethinkdb restart
+
 # Configs
 tee /root/.profile <<EOF
 if [ "$BASH" ]; then
@@ -39,14 +50,6 @@ export RETHINKDB_TABLE="table"
 export BOT_API_KEY="abcdefghijklmnopqrstuvwxyz"
 
 mesg n || true
-EOF
-
-tee /etc/rethinkdb/instances.d/rethinkdb.conf <<EOF
-runuser=root
-rungroup=root
-bind=0.0.0.0
-driver-port=28016
-http-port=28010
 EOF
 
 echo '
