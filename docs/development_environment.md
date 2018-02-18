@@ -41,6 +41,10 @@ python app.py
 
 Now open your browser and navigate to `http://pysite.local/`
 
+### Environment Variables
+
+The vagrantfile includes the necessary dummy environment variables to run the flask app
+
 ### Changing code
 
 Any code you change outside the virtual machine is sync'd with the /vagrant folder inside the VM, so there is no need to copy files in manually.
