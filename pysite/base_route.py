@@ -153,4 +153,4 @@ class ErrorView(BaseView):
         if not cls.name or not cls.error_code:
             raise RuntimeError("Error views must have both `name` and `error_code` defined")
 
-        blueprint.errorhandler(cls.error_code)(cls.as_view(cls.name))
+        manager.app.errorhandler(cls.error_code)(cls.as_view(cls.name))
