@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# Dependencies
 apt-get update
 apt-get install -y software-properties-common
 apt-get install -y python-software-properties
@@ -18,9 +19,9 @@ curl -s https://bootstrap.pypa.io/get-pip.py | python3.6 -
 python3.6 -m pip install -r /vagrant/requirements.txt
 python3.6 -m pip install -r /vagrant/requirements-ci.txt
 python3.6 -m pip install gunicorn
+
 # RethinkDB
 apt-get install -y rethinkdb
-
 
 tee /etc/rethinkdb/instances.d/rethinkdb.conf <<EOF
 runuser=root
@@ -32,13 +33,32 @@ EOF
 
 service rethinkdb restart
 
-# Configs
-tee /root/.profile <<EOF
-if [ "$BASH" ]; then
-  if [ -f ~/.bashrc ]; then
-    . ~/.bashrc
-  fi
+# development environment variables
+tee /root/.bashrc <<EOF
+HISTCONTROL=ignoreboth
+shopt -s histappend
+HISTSIZE=1000
+HISTFILESIZE=2000
+shopt -s checkwinsize
+
+if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
+    debian_chroot=$(cat /etc/debian_chroot)
 fi
+
+case "$TERM" in
+    xterm-color|*-256color) color_prompt=yes;;
+esac
+
+PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+
+test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+alias ls='ls --color=auto'
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+alias ll='ls -alF --color=auto'
+alias la='ls -A --color=auto'
+alias l='ls -CF --color=auto'
 
 export LOG_LEVEL=DEBUG
 export SERVER_NAME="pysite.local"
@@ -50,21 +70,6 @@ export RETHINKDB_DATABASE="database"
 export RETHINKDB_TABLE="table"
 export BOT_API_KEY="abcdefghijklmnopqrstuvwxyz"
 alias python=python3.6
-
-mesg n || true
 EOF
 
-source /root/.profile
-
-echo '
-Include in hosts file: 10.1.0.2 pysite.local
-Include in hosts file: 10.1.0.2 api.pysite.local
-
-vagrant ssh
-sudo su
-cd /vagrant
-gunicorn -w 1 -b 0.0.0.0:80 -c gunicorn_config.py --log-level debug -k geventwebsocket.gunicorn.workers.GeventWebSocketWorker app:app
-or
-python app.py
-in browser: http://pysite.local/
-'
+echo 'docs: https://github.com/discord-python/site/wiki/Development-Environment-(Vagrant)'
