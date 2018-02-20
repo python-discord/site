@@ -1,6 +1,7 @@
 # Python Discord website
 
 [![Build Status](https://travis-ci.org/discord-python/site.svg?branch=master)](https://travis-ci.org/discord-python/site) [![Coverage Status](https://coveralls.io/repos/github/discord-python/site/badge.svg?branch=unit-testing)](https://coveralls.io/github/discord-python/site?branch=unit-testing)
+[![Coverage Status](https://coveralls.io/repos/github/discord-python/site/badge.svg?branch=master)](https://coveralls.io/github/discord-python/site?branch=master) [![Build Status](https://travis-ci.org/discord-python/site.svg?branch=master)](https://travis-ci.org/discord-python/site)
 
 ### See the wiki for details
 
