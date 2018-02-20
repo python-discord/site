@@ -2,10 +2,15 @@ language: python
 python:
   - "3.6"
 
+addons:
+  rethinkdb: "2.3"
+
 install:
   - pip install -r requirements.txt
   - pip install -r requirements-ci.txt
 script:
   - snekchek
+  - py.test app_test.py --cov . --cov-report term-missing -v
+  - coveralls
 after_success:
   - python deploy.py

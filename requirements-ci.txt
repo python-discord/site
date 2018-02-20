@@ -11,3 +11,4 @@ requests
 Flask-Testing
 pytest
 pytest-cov
+python-coveralls
