@@ -2,6 +2,7 @@ from app import app
 
 from flask_testing import TestCase
 
+
 class SiteTest(TestCase):
     ''' extend TestCase with flask app instantiation '''
     def create_app(self):
@@ -10,6 +11,7 @@ class SiteTest(TestCase):
         app.config['LIVESERVER_TIMEOUT'] = 10
         app.allow_subdomain_redirects = True
         return app
+
 
 class RootEndpoint(SiteTest):
     ''' test cases for the root endpoint and error handling '''
