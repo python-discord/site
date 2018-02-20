@@ -20,7 +20,7 @@ class RootEndpoint(SiteTest):
         response = self.client.get('/')
         self.assertEqual(response.status_code, 200)
 
-    def test_api(self):
+    def test_not_found(self):
         ''' Check paths without handlers returns 404 Not Found '''
         response = self.client.get('/nonexistentpath')
         self.assertEqual(response.status_code, 404)
