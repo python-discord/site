@@ -8,3 +8,7 @@ flake8-string-format
 safety
 dodgy
 requests
+Flask-Testing
+pytest
+pytest-cov
+python-coveralls

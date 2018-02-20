@@ -1,0 +1,2 @@
+[run]
+omit = /usr/*, gunicorn_config.py, deploy.py, app_test.py, app.py
