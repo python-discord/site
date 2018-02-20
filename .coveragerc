@@ -1,2 +1,2 @@
 [run]
-omit = /usr/*
+omit = /usr/*, gunicorn_config.py, deploy.py
