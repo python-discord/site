@@ -10,7 +10,7 @@ install:
   - pip install -r requirements-ci.txt
 script:
   - snekchek
-  - py.test app_test.py --cov . --cov-report term-missing -v
+  - py.test app_test.py --cov pysite --cov-report term-missing -v
   - coveralls
 after_success:
   - python deploy.py
