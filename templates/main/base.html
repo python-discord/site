@@ -13,7 +13,7 @@
 </head>
 <body>
 {% include "main/navigation.html" %}
-
+{% if current_page != "index" %}
 <div class="uk-container uk-section">
     <div class="uk-alert-danger" uk-alert>
         <p>
@@ -22,7 +22,7 @@
         </p>
     </div>
 </div>
-
+{% endif %}
 {% block content %}{% endblock %}
 </body>
 </html>
