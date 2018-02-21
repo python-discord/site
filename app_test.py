@@ -167,6 +167,10 @@ class RootEndpoint(SiteTest):
         av.error(ErrorCodes.unauthorized)
         av.error(ErrorCodes.bad_data_format)
 
+    def test_ws_test(self):
+        response = self.client.get('/ws_test')
+        self.assertEqual(response.status_code, 200)
+
     def test_datadog_redirect(self):
         ''' Check datadog path redirects '''
         response = self.client.get('/datadog')
