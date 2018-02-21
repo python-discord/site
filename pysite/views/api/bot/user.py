@@ -36,4 +36,4 @@ class UserView(APIView, DBMixin):
             conflict="update"
         )
 
-        return jsonify(changes)
+        return jsonify(changes)  # pragma: no cover
