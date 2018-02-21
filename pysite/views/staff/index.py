@@ -7,4 +7,4 @@ class StaffView(RouteView):
     name = "staff"
 
     def get(self):
-        return self.render("staff.html")
+        return self.render("staff/staff.html")

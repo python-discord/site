@@ -36,6 +36,7 @@ class RouteManager:
         self.main_blueprint = Blueprint("main", __name__)
         self.log.debug(f"Loading Blueprint: {self.main_blueprint.name}")
         self.load_views(self.main_blueprint, "pysite/views/main")
+        self.load_views(self.main_blueprint, "pysite/views/error_handlers")
         self.app.register_blueprint(self.main_blueprint)
         self.log.debug("")
 
