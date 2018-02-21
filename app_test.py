@@ -159,6 +159,7 @@ class RootEndpoint(SiteTest):
         self.assertEqual(True, "inserted" in response.json)
 
     def test_api_route_errors(self):
+        ''' Check api route errors '''
         from pysite.base_route import APIView
         from pysite.constants import ErrorCodes
 
