@@ -9,3 +9,11 @@
 .uk-background-secondary .uk-navbar-dropbar {
     background: #222222 !important;
 }
+
+.uk-navbar-container {
+    height: 60px;
+}
+
+.uk-navbar-dropdown {
+    top: 45px !important;
+}
