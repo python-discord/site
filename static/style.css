@@ -1,0 +1,11 @@
+.uk-background-secondary .uk-navbar-dropdown-nav .uk-active a {
+    color: white !important;
+}
+
+.uk-background-secondary .uk-navbar-dropdown-nav .uk-nav-header {
+    color: white !important;
+}
+
+.uk-background-secondary .uk-navbar-dropbar {
+    background: #222222 !important;
+}
