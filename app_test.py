@@ -36,7 +36,7 @@ class RootEndpoint(SiteTest):
         ''' Check that a wrong value for log level raises runtime error '''
         os.environ['LOG_LEVEL'] = 'wrong value'
         try:
-            import pysite.__init__
+            import pysite.__init__  # noqa: F401
         except RuntimeError:
             return True
         finally:
@@ -165,7 +165,6 @@ class RootEndpoint(SiteTest):
         av = APIView()
         av.error(ErrorCodes.unauthorized)
         av.error(ErrorCodes.bad_data_format)
-
 
     def test_datadog_redirect(self):
         ''' Check datadog path redirects '''
