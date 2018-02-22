@@ -1,7 +1,7 @@
 import json  # pragma: no cover
 import os  # pragma: no cover
 
-from app import app
+from app import app  # , manager
 
 from flask_testing import TestCase  # pragma: no cover
 
@@ -10,6 +10,11 @@ class SiteTest(TestCase):
     ''' extend TestCase with flask app instantiation '''
     def create_app(self):
         ''' add flask app configuration settings '''
+
+        # This fails. No idea how to do this :(
+        # manager.load_views(manager.tests_blueprint, "pysite/views/tests")
+        # app.register_blueprint(manager.tests_blueprint)
+
         server_name = 'pytest.local'
         app.config['TESTING'] = True
         app.config['LIVESERVER_TIMEOUT'] = 10
@@ -182,3 +187,28 @@ class RootEndpoint(SiteTest):
         os.environ['WEBPAGE_SECRET_KEY'] = 'super_secret'
         rm = RouteManager()
         self.assertEqual(rm.app.secret_key, 'super_secret')
+
+    def test_decorator_api_json(self):
+        ''' Check the json validation decorator '''
+        from pysite.decorators import api_params
+        from pysite.constants import ValidationTypes
+        from schema import Schema
+
+        SCHEMA = Schema([{"user_id": int, "role": int}])
+
+        @api_params(schema=SCHEMA, validation_type=ValidationTypes.json)
+        def try_json_type(data):
+            return data
+
+        try:
+            try_json_type("not json")
+        except Exception as error_message:
+            self.assertEqual(type(error_message), AttributeError)
+
+    def test_decorator_params(self):
+        ''' Check the params validation decorator '''
+
+        response = self.client.post('/testparams?test=params')
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json, [{'test': 'params'}])

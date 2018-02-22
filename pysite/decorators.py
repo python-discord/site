@@ -36,7 +36,6 @@ def api_params(schema: Schema, validation_type: ValidationTypes = ValidationType
     This data will always be a list, and view functions are expected to be able to handle that
     in the case of multiple sets of data being provided by the api.
     """
-
     def inner_decorator(f):
 
         @wraps(f)
@@ -48,7 +47,7 @@ def api_params(schema: Schema, validation_type: ValidationTypes = ValidationType
 
                     data = list(request.get_json())
                 except JSONDecodeError:
-                    return self.error(ErrorCodes.bad_data_format)
+                    return self.error(ErrorCodes.bad_data_format)  # pragma: no cover
 
             elif validation_type == ValidationTypes.params:
                 # I really don't like this section here, but I can't think of a better way to do it

@@ -23,6 +23,7 @@ class RouteManager:
         self.app = Flask(
             __name__, template_folder=TEMPLATES_PATH, static_folder=STATIC_PATH, static_url_path="/static",
         )
+
         self.sockets = Sockets(self.app)
 
         self.db = RethinkDB()
@@ -55,6 +56,11 @@ class RouteManager:
         self.log.debug("Loading websocket routes...")
         self.load_views(self.ws_blueprint, "pysite/views/ws")
         self.sockets.register_blueprint(self.ws_blueprint, url_prefix="/ws")
+
+        # Inver: This is temporary until I figure out how to do it in the tests
+        self.tests_blueprint = Blueprint("tests", __name__)
+        self.load_views(self.tests_blueprint, "pysite/views/tests")
+        self.app.register_blueprint(self.tests_blueprint)
 
     def run(self):
         from gevent.pywsgi import WSGIServer
