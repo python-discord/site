@@ -1,20 +1,22 @@
 import json  # pragma: no cover
 import os  # pragma: no cover
 
-from app import app  # , manager
+from app import manager  # , manager
+
+from flask import Blueprint
 
 from flask_testing import TestCase  # pragma: no cover
+
+manager.app.tests_blueprint = Blueprint("tests", __name__)
+manager.load_views(manager.app.tests_blueprint, "pysite/views/tests")
+manager.app.register_blueprint(manager.app.tests_blueprint)
+app = manager.app
 
 
 class SiteTest(TestCase):
     ''' extend TestCase with flask app instantiation '''
     def create_app(self):
         ''' add flask app configuration settings '''
-
-        # This fails. No idea how to do this :(
-        # manager.load_views(manager.tests_blueprint, "pysite/views/tests")
-        # app.register_blueprint(manager.tests_blueprint)
-
         server_name = 'pytest.local'
         app.config['TESTING'] = True
         app.config['LIVESERVER_TIMEOUT'] = 10
