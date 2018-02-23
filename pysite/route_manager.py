@@ -23,7 +23,6 @@ class RouteManager:
         self.app = Flask(
             __name__, template_folder=TEMPLATES_PATH, static_folder=STATIC_PATH, static_url_path="/static",
         )
-
         self.sockets = Sockets(self.app)
 
         self.db = RethinkDB()
