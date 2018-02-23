@@ -1,9 +1,9 @@
 import json  # pragma: no cover
 import os  # pragma: no cover
 
-from app import manager  # , manager
+from app import manager  # pragma: no cover
 
-from flask import Blueprint
+from flask import Blueprint  # pragma: no cover
 
 from flask_testing import TestCase  # pragma: no cover
 
