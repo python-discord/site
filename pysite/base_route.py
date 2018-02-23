@@ -171,4 +171,4 @@ class ErrorView(BaseView):
                 except KeyError:  # This happens if we try to register a handler for a HTTP code that doesn't exist
                     pass
         else:
-            raise RuntimeError("Error views must have an `error_code` that is either an `int` or an iterable")
+            raise RuntimeError("Error views must have an `error_code` that is either an `int` or an iterable")  # pragma: no cover # noqa: E501

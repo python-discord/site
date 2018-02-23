@@ -1,11 +1,11 @@
-import json  # pragma: no cover
-import os  # pragma: no cover
+import json
+import os
 
-from app import manager  # pragma: no cover
+from app import manager
 
-from flask import Blueprint  # pragma: no cover
+from flask import Blueprint
 
-from flask_testing import TestCase  # pragma: no cover
+from flask_testing import TestCase
 
 manager.app.tests_blueprint = Blueprint("tests", __name__)
 manager.load_views(manager.app.tests_blueprint, "pysite/views/tests")
@@ -27,86 +27,31 @@ class SiteTest(TestCase):
         return app
 
 
-class RootEndpoint(SiteTest):
-    ''' test cases for the root endpoint and error handling '''
+class BaseEndpoints(SiteTest):
+    ''' test cases for the base endpoints '''
     def test_index(self):
         ''' Check the root path reponds with 200 OK '''
         response = self.client.get('/', 'http://pytest.local')
         self.assertEqual(response.status_code, 200)
-
-    def test_not_found(self):
-        ''' Check paths without handlers returns 404 Not Found '''
-        response = self.client.get('/nonexistentpath')
-        self.assertEqual(response.status_code, 404)
-
-    def test_logging_runtime_error(self):
-        ''' Check that a wrong value for log level raises runtime error '''
-        os.environ['LOG_LEVEL'] = 'wrong value'
-        try:
-            import pysite.__init__  # noqa: F401
-        except RuntimeError:
-            return True
-        finally:
-            os.environ['LOG_LEVEL'] = 'info'
-        raise Exception('Expected a failure due to wrong LOG_LEVEL attribute name')
-
-    def test_route_view_runtime_error(self):
-        ''' Check that wrong values for route view setup raises runtime error '''
-        from pysite.base_route import RouteView
-
-        rv = RouteView()
-        try:
-            rv.setup('sdf', 'sdfsdf')
-        except RuntimeError:
-            return True
-        raise Exception('Expected runtime error on setup() when giving wrongful arguments')
-
-    def test_error_view_runtime_error(self):
-        ''' Check that wrong values for error view setup raises runtime error '''
-        import pysite.base_route
-
-        ev = pysite.base_route.ErrorView()
-        try:
-            ev.setup('sdf', 'sdfsdf')
-        except RuntimeError:
-            return True
-        raise Exception('Expected runtime error on setup() when giving wrongful arguments')
-
-    def test_dbmixin_runtime_error(self):
-        ''' Check that wrong values for error view setup raises runtime error '''
-        import pysite.base_route
-
-        dbm = pysite.mixins.DBMixin()
-        try:
-            dbm.setup('sdf', 'sdfsdf')
-        except RuntimeError:
-            return True
-        raise Exception('Expected runtime error on setup() when giving wrongful arguments')
-
-    def test_handler_5xx(self):
-        ''' Check error view returns error message '''
-        from werkzeug.exceptions import InternalServerError
-        from pysite.views.error_handlers import http_5xx
-
-        error_view = http_5xx.Error404View()
-        error_message = error_view.get(InternalServerError)
-        self.assertEqual(error_message, ('Internal server error. Please try again later!', 500))
 
     def test_invite(self):
         ''' Check invite redirects '''
         response = self.client.get('/invite')
         self.assertEqual(response.status_code, 302)
 
-    def test_staff_view(self):
-        ''' Check staff view renders '''
-        from pysite.views.staff.index import StaffView
-        sv = StaffView()
-        result = sv.get()
-        self.assertEqual(result.startswith('<!DOCTYPE html>'), True)
-
-        response = self.client.get('/', app.config['STAFF_SUBDOMAIN'])
+    def test_ws_test(self):
+        ''' check ws_test responds '''
+        response = self.client.get('/ws_test')
         self.assertEqual(response.status_code, 200)
 
+    def test_datadog_redirect(self):
+        ''' Check datadog path redirects '''
+        response = self.client.get('/datadog')
+        self.assertEqual(response.status_code, 302)
+
+
+class ApiEndpoints(SiteTest):
+    ''' test cases for the api subdomain '''
     def test_api_unknown_route(self):
         ''' Check api unknown route '''
         response = self.client.get('/', app.config['API_SUBDOMAIN'])
@@ -174,14 +119,79 @@ class RootEndpoint(SiteTest):
         av.error(ErrorCodes.unauthorized)
         av.error(ErrorCodes.bad_data_format)
 
-    def test_ws_test(self):
-        response = self.client.get('/ws_test')
+    def test_not_found(self):
+        ''' Check paths without handlers returns 404 Not Found '''
+        response = self.client.get('/nonexistentpath')
+        self.assertEqual(response.status_code, 404)
+
+
+class StaffEndpoints(SiteTest):
+    ''' Test cases for staff subdomain '''
+    def test_staff_view(self):
+        ''' Check staff view renders '''
+        from pysite.views.staff.index import StaffView
+        sv = StaffView()
+        result = sv.get()
+        self.assertEqual(result.startswith('<!DOCTYPE html>'), True)
+
+        response = self.client.get('/', app.config['STAFF_SUBDOMAIN'])
         self.assertEqual(response.status_code, 200)
 
-    def test_datadog_redirect(self):
-        ''' Check datadog path redirects '''
-        response = self.client.get('/datadog')
-        self.assertEqual(response.status_code, 302)
+
+class Utilities(SiteTest):
+    ''' Test cases for internal utility code '''
+    def test_logging_runtime_error(self):
+        ''' Check that a wrong value for log level raises runtime error '''
+        os.environ['LOG_LEVEL'] = 'wrong value'
+        try:
+            import pysite.__init__  # noqa: F401
+        except RuntimeError:
+            return True
+        finally:
+            os.environ['LOG_LEVEL'] = 'info'
+        raise Exception('Expected a failure due to wrong LOG_LEVEL attribute name')
+
+    def test_error_view_runtime_error(self):
+        ''' Check that wrong values for error view setup raises runtime error '''
+        import pysite.base_route
+
+        ev = pysite.base_route.ErrorView()
+        try:
+            ev.setup('sdf', 'sdfsdf')
+        except RuntimeError:
+            return True
+        raise Exception('Expected runtime error on setup() when giving wrongful arguments')
+
+    def test_dbmixin_runtime_error(self):
+        ''' Check that wrong values for error view setup raises runtime error '''
+        from pysite.mixins import DBMixin
+
+        dbm = DBMixin()
+        try:
+            dbm.setup('sdf', 'sdfsdf')
+        except RuntimeError:
+            return True
+        raise Exception('Expected runtime error on setup() when giving wrongful arguments')
+
+    def test_handler_5xx(self):
+        ''' Check error view returns error message '''
+        from werkzeug.exceptions import InternalServerError
+        from pysite.views.error_handlers import http_5xx
+
+        error_view = http_5xx.Error404View()
+        error_message = error_view.get(InternalServerError)
+        self.assertEqual(error_message, ('Internal server error. Please try again later!', 500))
+
+    def test_route_view_runtime_error(self):
+        ''' Check that wrong values for route view setup raises runtime error '''
+        from pysite.base_route import RouteView
+
+        rv = RouteView()
+        try:
+            rv.setup('sdf', 'sdfsdf')
+        except RuntimeError:
+            return True
+        raise Exception('Expected runtime error on setup() when giving wrongful arguments')
 
     def test_route_manager(self):
         ''' Check route manager '''
@@ -190,6 +200,8 @@ class RootEndpoint(SiteTest):
         rm = RouteManager()
         self.assertEqual(rm.app.secret_key, 'super_secret')
 
+
+class DecoratorTests(SiteTest):
     def test_decorator_api_json(self):
         ''' Check the json validation decorator '''
         from pysite.decorators import api_params
@@ -214,3 +226,31 @@ class RootEndpoint(SiteTest):
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json, [{'test': 'params'}])
+
+
+class DatabaseTests(SiteTest):
+    ''' Test cases for the database module '''
+    def test_table_actions(self):
+        import string
+        import secrets
+        from pysite.database import RethinkDB
+
+        alphabet = string.ascii_letters
+        generated_table_name = ''.join(secrets.choice(alphabet) for i in range(8))
+
+        rdb = RethinkDB()
+        # Create table name and expect it to work
+        result = rdb.create_table(generated_table_name)
+        self.assertEquals(result, True)
+
+        # Create the same table name and expect it to already exist
+        result = rdb.create_table(generated_table_name)
+        self.assertEquals(result, False)
+
+        # Drop table and expect it to work
+        result = rdb.drop_table(generated_table_name)
+        self.assertEquals(result, True)
+
+        # Drop the same table and expect it to already be gone
+        result = rdb.drop_table(generated_table_name)
+        self.assertEquals(result, False)
