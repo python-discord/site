@@ -3,6 +3,13 @@
 }
 
 .uk-background-secondary .uk-navbar-dropdown-nav .uk-nav-header {
+    color: #666 !important;
+    text-transform: none !important;
+    font-weight: bold !important;
+    font-size: 120% !important;
+    padding: 0 !important;
+}
+.uk-background-secondary .uk-navbar-dropdown-nav .uk-nav-header.uk-active {
     color: white !important;
 }
 
@@ -16,4 +23,34 @@
 
 .uk-navbar-dropdown {
     top: 45px !important;
+}
+
+.uk-article-title a {
+    visibility: hidden;
+    opacity: 0;
+
+    transition: opacity 200ms ease-in-out;
+    -moz-transition: opacity 200ms ease-in-out;
+    -webkit-transition: opacity 200ms ease-in-out;
+}
+
+.uk-article-title:hover a {
+    visibility: visible;
+    opacity: 1;
+
+    transition: opacity 200ms ease-in-out;
+    -moz-transition: opacity 200ms ease-in-out;
+    -webkit-transition: opacity 200ms ease-in-out;
+}
+
+.uk-article-title {
+    margin-bottom: 0 !important;
+}
+
+.uk-article-meta {
+    margin-top: 0 !important;
+}
+
+summary::-webkit-details-marker {
+    display: none;
 }

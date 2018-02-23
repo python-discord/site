@@ -1,4 +1,4 @@
-<div class="uk-container uk-container-expand uk-background-secondary uk-light">
+<div class="uk-container uk-container-expand uk-background-secondary uk-light" uk-sticky="sel-target: .uk-navbar-container; cls-active: uk-navbar-sticky">
     <nav data-uk-navbar class="uk-navbar-container uk-navbar-transparent" uk-navbar="boundary-align: true; align: right">
         <div class="uk-navbar-left">
             <a href="/" class="uk-navbar-item uk-logo">
@@ -17,13 +17,16 @@
                     <a><i class="uk-icon fas fa-chevron-down"></i></a>
                     <div class="uk-navbar-dropdown uk-background-secondary">
                         <ul class="uk-nav uk-navbar-dropdown-nav">
-                            <li class="uk-active"><a href="#">Active</a></li>
-                            <li><a href="#">Item</a></li>
-                            <li class="uk-nav-header">Header</li>
-                            <li><a href="#">Item</a></li>
-                            <li><a href="#">Item</a></li>
+                            {% if current_page == "help" %}
+                                <li class="uk-nav-header uk-active"><a href="/help">Getting Help</a></li>
+                            {% else %}
+                                <li class="uk-nav-header"><a href="/help">Getting Help</a></li>
+                            {% endif %}
+                            <li><a href="/help#before">Before You Ask</a></li>
+                            <li><a href="/help#good-question">A Good Question</a></li>
+                            <li><a href="/help#answers">Interpreting Answers</a></li>
+                            <li><a href="/help#what-not-to-ask">What Not To Ask</a></li>
                             <li class="uk-nav-divider"></li>
-                            <li><a href="#">Item</a></li>
                         </ul>
                     </div>
                 </li>
