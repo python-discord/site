@@ -269,7 +269,7 @@ class DatabaseTests(SiteTest):
         result = rdb.drop_table(generated_table_name)
         self.assertEquals(result, False)
 
-        #
+        # This is to get some more code coverage
         self.assertEquals(rdb.teardown_request('_'), None)
 
 
