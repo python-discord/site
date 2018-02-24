@@ -162,6 +162,9 @@ class Utilities(SiteTest):
             return True
         raise Exception('Expected runtime error on setup() when giving wrongful arguments')
 
+
+class MixinTests(SiteTest):
+    ''' Test cases for mixins '''
     def test_dbmixin_runtime_error(self):
         ''' Check that wrong values for error view setup raises runtime error '''
         from pysite.mixins import DBMixin
@@ -172,6 +175,17 @@ class Utilities(SiteTest):
         except RuntimeError:
             return True
         raise Exception('Expected runtime error on setup() when giving wrongful arguments')
+
+    def test_dbmixin_table_property(self):
+        ''' Check the table property returns correctly '''
+        from pysite.mixins import DBMixin
+
+        try:
+            dbm = DBMixin()
+            dbm.table_name = 'Table'
+            self.assertEquals(dbm.table, 'Table')
+        except AttributeError:
+            pass
 
     def test_handler_5xx(self):
         ''' Check error view returns error message '''
@@ -254,3 +268,18 @@ class DatabaseTests(SiteTest):
         # Drop the same table and expect it to already be gone
         result = rdb.drop_table(generated_table_name)
         self.assertEquals(result, False)
+
+        #
+        self.assertEquals(rdb.teardown_request('_'), None)
+
+
+class TestWebsocketEcho(SiteTest):
+    ''' Test cases for the echo endpoint '''
+    def testEcho(self):
+        ''' Check rudimentary websockets handlers work '''
+        from geventwebsocket.websocket import WebSocket
+        from pysite.views.ws.echo import EchoWebsocket
+        ew = EchoWebsocket(WebSocket)
+        ew.on_open()
+        ew.on_message('message')
+        ew.on_close()
