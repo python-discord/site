@@ -9,4 +9,4 @@ class Error404View(ErrorView):
     error_code = 404
 
     def get(self, error: NotFound):
-        return "Unable to find page", 404
+        return "replace me with a template, 404 not found", 404
