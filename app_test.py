@@ -27,6 +27,11 @@ class RootEndpoint(SiteTest):
         response = self.client.get('/', 'http://pytest.local')
         self.assertEqual(response.status_code, 200)
 
+    def test_help(self):
+        ''' Check the help path responds with 200 OK '''
+        response = self.client.get('/help', 'http://pytest.local/help')
+        self.assertEqual(response.status_code, 200)
+
     def test_not_found(self):
         ''' Check paths without handlers returns 404 Not Found '''
         response = self.client.get('/nonexistentpath')
