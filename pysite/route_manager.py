@@ -8,7 +8,10 @@ from flask import Blueprint, Flask
 
 from flask_sockets import Sockets
 
+from flask_dance.contrib.discord import make_discord_blueprint
+
 from pysite.base_route import APIView, BaseView, ErrorView, RouteView
+from pysite.constants import CLIENT_ID, CLIENT_SECRET, SCOPE
 from pysite.database import RethinkDB
 from pysite.websockets import WS
 
@@ -38,6 +41,17 @@ class RouteManager:
         self.load_views(self.main_blueprint, "pysite/views/main")
         self.load_views(self.main_blueprint, "pysite/views/error_handlers")
         self.app.register_blueprint(self.main_blueprint)
+        self.log.debug("")
+
+        # Load the oauth blueprint
+        self.oauth_blueprint = make_discord_blueprint(
+            CLIENT_ID,
+            CLIENT_SECRET,
+            SCOPE,
+            '/'
+        )
+        self.log.debug(f"Loading Blueprint: {self.oauth_blueprint.name}")
+        self.app.register_blueprint(self.oauth_blueprint)
         self.log.debug("")
 
         # Load the subdomains
