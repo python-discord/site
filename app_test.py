@@ -14,9 +14,9 @@ app = manager.app
 
 
 class SiteTest(TestCase):
-    ''' extend TestCase with flask app instantiation '''
+    """ extend TestCase with flask app instantiation """
     def create_app(self):
-        ''' add flask app configuration settings '''
+        """ add flask app configuration settings """
         server_name = 'pytest.local'
         app.config['TESTING'] = True
         app.config['LIVESERVER_TIMEOUT'] = 10
@@ -28,44 +28,44 @@ class SiteTest(TestCase):
 
 
 class BaseEndpoints(SiteTest):
-    ''' test cases for the base endpoints '''
+    """ test cases for the base endpoints """
     def test_index(self):
-        ''' Check the root path reponds with 200 OK '''
+        """ Check the root path reponds with 200 OK """
         response = self.client.get('/', 'http://pytest.local')
         self.assertEqual(response.status_code, 200)
 
     def test_invite(self):
-        ''' Check invite redirects '''
+        """ Check invite redirects """
         response = self.client.get('/invite')
         self.assertEqual(response.status_code, 302)
 
     def test_ws_test(self):
-        ''' check ws_test responds '''
+        """ check ws_test responds """
         response = self.client.get('/ws_test')
         self.assertEqual(response.status_code, 200)
 
     def test_datadog_redirect(self):
-        ''' Check datadog path redirects '''
+        """ Check datadog path redirects """
         response = self.client.get('/datadog')
         self.assertEqual(response.status_code, 302)
 
 
 class ApiEndpoints(SiteTest):
-    ''' test cases for the api subdomain '''
+    """ test cases for the api subdomain """
     def test_api_unknown_route(self):
-        ''' Check api unknown route '''
+        """ Check api unknown route """
         response = self.client.get('/', app.config['API_SUBDOMAIN'])
         self.assertEqual(response.json, {'error_code': 0, 'error_message': 'Unknown API route'})
         self.assertEqual(response.status_code, 404)
 
     def test_api_healthcheck(self):
-        ''' Check healthcheck url responds '''
+        """ Check healthcheck url responds """
         response = self.client.get('/healthcheck', app.config['API_SUBDOMAIN'])
         self.assertEqual(response.json, {'status': 'ok'})
         self.assertEqual(response.status_code, 200)
 
     def test_api_tag(self):
-        ''' Check tag api '''
+        """ Check tag api """
         os.environ['BOT_API_KEY'] = 'abcdefg'
         headers = {'X-API-Key': 'abcdefg', 'Content-Type': 'application/json'}
         good_data = json.dumps({
@@ -95,7 +95,7 @@ class ApiEndpoints(SiteTest):
         self.assertEqual(response.status_code, 200)
 
     def test_api_user(self):
-        ''' Check insert user '''
+        """ Check insert user """
         os.environ['BOT_API_KEY'] = 'abcdefg'
         headers = {'X-API-Key': 'abcdefg', 'Content-Type': 'application/json'}
         bad_data = json.dumps({'user_id': 1234, 'role': 5678})
@@ -111,7 +111,7 @@ class ApiEndpoints(SiteTest):
         self.assertEqual(True, "inserted" in response.json)
 
     def test_api_route_errors(self):
-        ''' Check api route errors '''
+        """ Check api route errors """
         from pysite.base_route import APIView
         from pysite.constants import ErrorCodes
 
@@ -120,15 +120,15 @@ class ApiEndpoints(SiteTest):
         av.error(ErrorCodes.bad_data_format)
 
     def test_not_found(self):
-        ''' Check paths without handlers returns 404 Not Found '''
+        """ Check paths without handlers returns 404 Not Found """
         response = self.client.get('/nonexistentpath')
         self.assertEqual(response.status_code, 404)
 
 
 class StaffEndpoints(SiteTest):
-    ''' Test cases for staff subdomain '''
+    """ Test cases for staff subdomain """
     def test_staff_view(self):
-        ''' Check staff view renders '''
+        """ Check staff view renders """
         from pysite.views.staff.index import StaffView
         sv = StaffView()
         result = sv.get()
@@ -139,9 +139,9 @@ class StaffEndpoints(SiteTest):
 
 
 class Utilities(SiteTest):
-    ''' Test cases for internal utility code '''
+    """ Test cases for internal utility code """
     def test_logging_runtime_error(self):
-        ''' Check that a wrong value for log level raises runtime error '''
+        """ Check that a wrong value for log level raises runtime error """
         os.environ['LOG_LEVEL'] = 'wrong value'
         try:
             import pysite.__init__  # noqa: F401
@@ -152,7 +152,7 @@ class Utilities(SiteTest):
         raise Exception('Expected a failure due to wrong LOG_LEVEL attribute name')
 
     def test_error_view_runtime_error(self):
-        ''' Check that wrong values for error view setup raises runtime error '''
+        """ Check that wrong values for error view setup raises runtime error """
         import pysite.base_route
 
         ev = pysite.base_route.ErrorView()
@@ -164,9 +164,9 @@ class Utilities(SiteTest):
 
 
 class MixinTests(SiteTest):
-    ''' Test cases for mixins '''
+    """ Test cases for mixins """
     def test_dbmixin_runtime_error(self):
-        ''' Check that wrong values for error view setup raises runtime error '''
+        """ Check that wrong values for error view setup raises runtime error """
         from pysite.mixins import DBMixin
 
         dbm = DBMixin()
@@ -177,7 +177,7 @@ class MixinTests(SiteTest):
         raise Exception('Expected runtime error on setup() when giving wrongful arguments')
 
     def test_dbmixin_table_property(self):
-        ''' Check the table property returns correctly '''
+        """ Check the table property returns correctly """
         from pysite.mixins import DBMixin
 
         try:
@@ -188,7 +188,7 @@ class MixinTests(SiteTest):
             pass
 
     def test_handler_5xx(self):
-        ''' Check error view returns error message '''
+        """ Check error view returns error message """
         from werkzeug.exceptions import InternalServerError
         from pysite.views.error_handlers import http_5xx
 
@@ -197,7 +197,7 @@ class MixinTests(SiteTest):
         self.assertEqual(error_message, ('Internal server error. Please try again later!', 500))
 
     def test_route_view_runtime_error(self):
-        ''' Check that wrong values for route view setup raises runtime error '''
+        """ Check that wrong values for route view setup raises runtime error """
         from pysite.base_route import RouteView
 
         rv = RouteView()
@@ -208,7 +208,7 @@ class MixinTests(SiteTest):
         raise Exception('Expected runtime error on setup() when giving wrongful arguments')
 
     def test_route_manager(self):
-        ''' Check route manager '''
+        """ Check route manager """
         from pysite.route_manager import RouteManager
         os.environ['WEBPAGE_SECRET_KEY'] = 'super_secret'
         rm = RouteManager()
@@ -217,7 +217,7 @@ class MixinTests(SiteTest):
 
 class DecoratorTests(SiteTest):
     def test_decorator_api_json(self):
-        ''' Check the json validation decorator '''
+        """ Check the json validation decorator """
         from pysite.decorators import api_params
         from pysite.constants import ValidationTypes
         from schema import Schema
@@ -234,7 +234,7 @@ class DecoratorTests(SiteTest):
             self.assertEqual(type(error_message), AttributeError)
 
     def test_decorator_params(self):
-        ''' Check the params validation decorator '''
+        """ Check the params validation decorator """
 
         response = self.client.post('/testparams?test=params')
 
@@ -243,7 +243,7 @@ class DecoratorTests(SiteTest):
 
 
 class DatabaseTests(SiteTest):
-    ''' Test cases for the database module '''
+    """ Test cases for the database module """
     def test_table_actions(self):
         import string
         import secrets
@@ -274,9 +274,9 @@ class DatabaseTests(SiteTest):
 
 
 class TestWebsocketEcho(SiteTest):
-    ''' Test cases for the echo endpoint '''
+    """ Test cases for the echo endpoint """
     def testEcho(self):
-        ''' Check rudimentary websockets handlers work '''
+        """ Check rudimentary websockets handlers work """
         from geventwebsocket.websocket import WebSocket
         from pysite.views.ws.echo import EchoWebsocket
         ew = EchoWebsocket(WebSocket)
