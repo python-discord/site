@@ -11,7 +11,7 @@ from flask_sockets import Sockets
 from flask_dance.contrib.discord import make_discord_blueprint
 
 from pysite.base_route import APIView, BaseView, ErrorView, RouteView
-from pysite.constants import CLIENT_ID, CLIENT_SECRET, SCOPE
+from pysite.constants import DISCORD_OAUTH_ID, DISCORD_OAUTH_SECRET, DISCORD_OAUTH_SCOPE
 from pysite.database import RethinkDB
 from pysite.websockets import WS
 
@@ -45,9 +45,9 @@ class RouteManager:
 
         # Load the oauth blueprint
         self.oauth_blueprint = make_discord_blueprint(
-            CLIENT_ID,
-            CLIENT_SECRET,
-            SCOPE,
+            DISCORD_OAUTH_ID,
+            DISCORD_OAUTH_SECRET,
+            DISCORD_OAUTH_SCOPE,
             '/'
         )
         self.log.debug(f"Loading Blueprint: {self.oauth_blueprint.name}")
