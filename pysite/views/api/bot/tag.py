@@ -24,11 +24,11 @@ class TagView(APIView, DBMixin):
         tag_name = request.args.get("tag_name")
 
         if tag_name:
-            data = self.db.get(self.table_name, tag_name) or {}
+            data = self.db.get(self.table_name, tag_name) or {}  # pragma: no cover
         else:
             data = self.db.pluck(self.table_name, "tag_name") or []
 
-        return jsonify(data)
+        return jsonify(data)  # pragma: no cover
 
     @api_key
     def post(self):
@@ -54,4 +54,4 @@ class TagView(APIView, DBMixin):
         else:
             return self.error(ErrorCodes.incorrect_parameters)
 
-        return jsonify({"success": True})
+        return jsonify({"success": True})  # pragma: no cover

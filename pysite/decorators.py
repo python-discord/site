@@ -36,7 +36,6 @@ def api_params(schema: Schema, validation_type: ValidationTypes = ValidationType
     This data will always be a list, and view functions are expected to be able to handle that
     in the case of multiple sets of data being provided by the api.
     """
-
     def inner_decorator(f):
 
         @wraps(f)
@@ -48,7 +47,7 @@ def api_params(schema: Schema, validation_type: ValidationTypes = ValidationType
 
                     data = list(request.get_json())
                 except JSONDecodeError:
-                    return self.error(ErrorCodes.bad_data_format)
+                    return self.error(ErrorCodes.bad_data_format)  # pragma: no cover
 
             elif validation_type == ValidationTypes.params:
                 # I really don't like this section here, but I can't think of a better way to do it
@@ -65,9 +64,9 @@ def api_params(schema: Schema, validation_type: ValidationTypes = ValidationType
                         # First iteration, store it
                         longest = len(items)
 
-                    elif len(items) != longest:
+                    elif len(items) != longest:  # pragma: no cover
                         # At least one key has a different number of values
-                        return self.error(ErrorCodes.bad_data_format)
+                        return self.error(ErrorCodes.bad_data_format)  # pragma: no cover
 
                 for i in range(longest):  # Now we know all keys have the same number of values...
                     obj = {}  # New dict to store this set of values
@@ -78,7 +77,7 @@ def api_params(schema: Schema, validation_type: ValidationTypes = ValidationType
                     data.append(obj)
 
             else:
-                raise ValueError(f"Unknown validation type: {validation_type}")
+                raise ValueError(f"Unknown validation type: {validation_type}")  # pragma: no cover
 
             try:
                 schema.validate(data)
