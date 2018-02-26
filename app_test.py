@@ -29,7 +29,7 @@ class RootEndpoint(SiteTest):
 
     def test_help(self):
         ''' Check the help path responds with 200 OK '''
-        response = self.client.get('/help', 'http://pytest.local/help')
+        response = self.client.get('/help')
         self.assertEqual(response.status_code, 200)
 
     def test_not_found(self):
