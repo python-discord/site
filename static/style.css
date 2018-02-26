@@ -50,3 +50,8 @@
 .uk-article-meta {
     margin-top: 0 !important;
 }
+
+.uk-section {
+    padding-top: 20px;
+    padding-bottom: 30px;
+}
