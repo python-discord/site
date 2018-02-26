@@ -228,11 +228,11 @@ class RethinkDB:
         :return: The document, or None if it wasn't found
         """
 
-        result = self.run(
+        result = self.run(  # pragma: no cover
             self.query(table_name).get(key)
         )
 
-        return dict(result) if result else None
+        return dict(result) if result else None  # pragma: no cover
 
     def get_all(self, table_name: str, *keys: str, index: str="id") -> List[Any]:
         """
@@ -245,7 +245,7 @@ class RethinkDB:
         :return: A list of matching documents; may be empty if no matches were made
         """
 
-        return self.run(
+        return self.run(  # pragma: no cover
             self.query(table_name).get_all(*keys, index=index),
             coerce=list
         )
@@ -262,7 +262,7 @@ class RethinkDB:
         :return: True; but may return False if the timeout was reached
         """
 
-        result = self.run(
+        result = self.run(  # pragma: no cover
             self.query(table_name).wait(wait_for=wait_for, timeout=timeout),
             coerce=dict
         )
@@ -277,12 +277,12 @@ class RethinkDB:
 
         :return: True if the sync was successful; False otherwise
         """
-        result = self.run(
+        result = self.run(  # pragma: no cover
             self.query(table_name).sync(),
             coerce=dict
         )
 
-        return result.get("synced", 0) > 0
+        return result.get("synced", 0) > 0  # pragma: no cover
 
     def changes(self, table_name: str, squash: Union[bool, int]=False, changefeed_queue_size: int=100_000,
                 include_initial: Optional[bool]=None, include_states: bool=False,
@@ -336,7 +336,7 @@ class RethinkDB:
         :return: A special iterator that will iterate over documents in the changefeed as they're sent. If there is
             no document waiting, this will block the function until there is.
         """
-        return self.run(
+        return self.run(  # pragma: no cover
             self.query(table_name).changes(
                 squash=squash, changefeed_queue_size=changefeed_queue_size, include_initial=include_initial,
                 include_states=include_states, include_offsets=False, include_types=include_types
@@ -368,7 +368,7 @@ class RethinkDB:
         :return: A list containing the requested documents, with only the keys requested
         """
 
-        return self.run(
+        return self.run(  # pragma: no cover
             self.query(table_name).pluck(*selectors),
             coerce=list
         )
@@ -388,7 +388,7 @@ class RethinkDB:
         :return: A list containing the requested documents, without the keys requested
         """
 
-        return self.run(
+        return self.run(  # pragma: no cover
             self.query(table_name).without(*selectors)
         )
 
@@ -422,7 +422,7 @@ class RethinkDB:
 
         :return: A list of matched documents; may be empty
         """
-        return self.run(
+        return self.run(  # pragma: no cover
             self.query(table_name).between(lower, upper, index=index, left_bound=left_bound, right_bound=right_bound),
             coerce=list
         )
@@ -449,7 +449,7 @@ class RethinkDB:
         :return: Unknown, needs more testing
         """
 
-        return self.run(
+        return self.run(  # pragma: no cover
             self.query(table_name).map(func),
             coerce=list
         )
@@ -479,7 +479,7 @@ class RethinkDB:
         :return: A list of documents that match the predicate; may be empty
         """
 
-        return self.run(
+        return self.run(  # pragma: no cover
             self.query(table_name).filter(predicate, default=default),
             coerce=list
         )
