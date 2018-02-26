@@ -105,6 +105,34 @@ class RethinkDB:
             self.log.debug(f"Table created: '{table_name}'")
             return True
 
+    def delete(self, table_name: str, primary_key: Union[str, None] = None,
+               durability: str="hard", return_changes: Union[bool, str] = False
+               ) -> Union[Dict[str, Any], None]:
+        """
+        Delete one or all documents from a table. This can only delete
+        either the contents of an entire table, or a single document.
+        For more complex delete operations, please use self.query.
+
+        :param table_name: The name of the table to delete from. This must be provided.
+        :param primary_key: The primary_key to delete from that table. This is optional.
+        :param durability: "hard" (the default) to write the change immediately, "soft" otherwise
+        :param return_changes: Whether to return a list of changed values or not - defaults to False
+        :return: if return_changes is True, returns a dict containing all changes. Else, returns None.
+        """
+
+        if primary_key:
+            query = self.query(table_name).get(primary_key).delete(
+                durability=durability, return_changes=return_changes
+            )
+        else:
+            query = self.query(table_name).delete(
+                durability=durability, return_changes=return_changes
+            )
+
+        if return_changes:
+            return self.run(query, coerce=dict)
+        self.run(query)
+
     def drop_table(self, table_name: str):
         """
         Attempt to drop a table from the database, along with its data
@@ -170,7 +198,7 @@ class RethinkDB:
         :param connect_database: If creating a new connection, whether to connect to the database immediately
         :param coerce: Optionally, an object type to attempt to coerce the result to
 
-        :return: THe result of the operation
+        :return: The result of the operation
         """
 
         if not new_connection:

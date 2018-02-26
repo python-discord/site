@@ -9,6 +9,7 @@ class ErrorCodes(IntEnum):
     invalid_api_key = 2
     incorrect_parameters = 3
     bad_data_format = 4
+    database_error = 5
 
 
 class ValidationTypes(Enum):
