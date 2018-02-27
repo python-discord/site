@@ -58,6 +58,11 @@ class BaseEndpoints(SiteTest):
         response = self.client.get('/datadog')
         self.assertEqual(response.status_code, 302)
 
+    def test_500_easter_egg(self):
+        """Check the status of the /500 page"""
+        response = self.client.get("/500")
+        self.assertEqual(response.status_code, 500)
+
 
 class ApiEndpoints(SiteTest):
     """ test cases for the api subdomain """
