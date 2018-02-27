@@ -1,8 +1,8 @@
 # coding=utf-8
 from flask import Blueprint
 from rethinkdb.ast import Table
-
 from _weakref import ref
+
 from pysite.database import RethinkDB
 
 

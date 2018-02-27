@@ -1,6 +1,5 @@
 # coding=utf-8
 from flask import render_template
-
 from werkzeug.exceptions import NotFound
 
 from pysite.base_route import ErrorView
