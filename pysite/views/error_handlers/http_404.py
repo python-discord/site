@@ -9,4 +9,4 @@ class Error404View(ErrorView):
     error_code = 404
 
     def get(self, _error: NotFound):
-        return render_template("errors/404.html", code="404"), 404
+        return render_template("errors/404.html"), 404
