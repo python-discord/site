@@ -1,5 +1,5 @@
 # coding=utf-8
-from flask import abort
+from werkzeug.exceptions import InternalServerError
 
 from pysite.base_route import RouteView
 
@@ -9,4 +9,4 @@ class EasterEgg500(RouteView):
     name = "500"
 
     def get(self):
-        return abort(500)
+        raise InternalServerError
