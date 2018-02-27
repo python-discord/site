@@ -34,9 +34,9 @@ class BaseEndpoints(SiteTest):
         response = self.client.get('/', 'http://pytest.local')
         self.assertEqual(response.status_code, 200)
 
-    def test_help(self):
-        """ Check the help path responds with 200 OK """
-        response = self.client.get('/help')
+    def test_info_help(self):
+        """ Check the info help path responds with 200 OK """
+        response = self.client.get('/info/help')
         self.assertEqual(response.status_code, 200)
 
     def test_not_found(self):
