@@ -4,7 +4,6 @@ from functools import wraps
 from json import JSONDecodeError
 
 from flask import request
-
 from schema import Schema, SchemaError
 
 from pysite.constants import ErrorCodes, ValidationTypes

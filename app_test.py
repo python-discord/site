@@ -1,11 +1,10 @@
 import json
 import os
 
-from app import manager
-
 from flask import Blueprint
-
 from flask_testing import TestCase
+
+from app import manager
 
 manager.app.tests_blueprint = Blueprint("tests", __name__)
 manager.load_views(manager.app.tests_blueprint, "pysite/views/tests")

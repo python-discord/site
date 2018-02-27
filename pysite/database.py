@@ -1,12 +1,10 @@
 # coding=utf-8
 import logging
 import os
-
 from typing import Any, Callable, Dict, Iterator, List, Optional, Union
 
-from flask import abort
-
 import rethinkdb
+from flask import abort
 from rethinkdb.ast import RqlMethodQuery, Table, UserError
 from rethinkdb.net import DefaultConnection
 

@@ -1,8 +1,9 @@
 # coding=utf-8
+from flask import render_template, request
 from werkzeug.exceptions import HTTPException
 
 from pysite.base_route import ErrorView
-from flask import render_template, request
+
 
 class Error500View(ErrorView):
     name = "error_5xx"

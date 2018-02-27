@@ -3,6 +3,7 @@ from flask import abort
 
 from pysite.base_route import RouteView
 
+
 class EasterEgg500(RouteView):
     path = "/500"
     name = "500"

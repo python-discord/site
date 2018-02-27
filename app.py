@@ -2,7 +2,6 @@
 
 from pysite.route_manager import RouteManager
 
-
 manager = RouteManager()
 app = manager.app
 
