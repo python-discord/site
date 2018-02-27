@@ -5,13 +5,17 @@ python:
 addons:
   rethinkdb: "2.3"
 
+branches:
+  only:
+    - "master"
+
 cache: pip
 
 install:
   - pip install -r requirements.txt
   - pip install -r requirements-ci.txt
 script:
-  - snekchek
+  - flake8
   - py.test app_test.py --cov pysite --cov-report term-missing -v
   - coveralls
 after_success:

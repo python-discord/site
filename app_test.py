@@ -34,6 +34,16 @@ class BaseEndpoints(SiteTest):
         response = self.client.get('/', 'http://pytest.local')
         self.assertEqual(response.status_code, 200)
 
+    def test_info_help(self):
+        """ Check the info help path responds with 200 OK """
+        response = self.client.get('/info/help')
+        self.assertEqual(response.status_code, 200)
+
+    def test_not_found(self):
+        """ Check paths without handlers returns 404 Not Found """
+        response = self.client.get('/nonexistentpath')
+        self.assertEqual(response.status_code, 404)
+
     def test_invite(self):
         """ Check invite redirects """
         response = self.client.get('/invite')
