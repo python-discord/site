@@ -202,9 +202,9 @@ class MixinTests(SiteTest):
         from werkzeug.exceptions import InternalServerError
         from pysite.views.error_handlers import http_5xx
 
-        error_view = http_5xx.Error404View()
+        error_view = http_5xx.Error500View()
         error_message = error_view.get(InternalServerError)
-        self.assertEqual(error_message, ('Internal server error. Please try again later!', 500))
+        self.assertEqual(error_message[1], 500)
 
     def test_route_view_runtime_error(self):
         """ Check that wrong values for route view setup raises runtime error """

@@ -4,6 +4,7 @@ from werkzeug.exceptions import NotFound
 from pysite.base_route import ErrorView
 from flask import render_template
 
+
 class Error404View(ErrorView):
     name = "error_404"
     error_code = 404
