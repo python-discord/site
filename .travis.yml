@@ -5,6 +5,10 @@ python:
 addons:
   rethinkdb: "2.3"
 
+branches:
+  only:
+    - "master"
+
 cache: pip
 
 install:
