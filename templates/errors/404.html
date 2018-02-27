@@ -1,0 +1,15 @@
+{% extends 'main/base.html' %}
+{% block title %} 404 - Page not found! {% endblock %}
+{% block beta_error %}{% endblock %}
+{% block content %}
+    <div class="uk-background-muted">
+        <div class="uk-section">
+            <div class="uk-text-center"><code style="font-size: 170%;">AttributeError: Page not located!</code></div>
+        </div>
+    </div>
+
+    <div class="uk-section uk-text-center">
+        <p>The page you requested does not exist, try go back <a href="/">home</a> and try again, if you think this is
+            an error please open a ticket on our <a href="https://github.com/discord-python/site/issues">GitHub</a>.</p>
+    </div>
+{% endblock %}

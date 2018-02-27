@@ -2,11 +2,11 @@
 from werkzeug.exceptions import HTTPException
 
 from pysite.base_route import ErrorView
+from flask import render_template, request
 
-
-class Error404View(ErrorView):
+class Error500View(ErrorView):
     name = "error_5xx"
     error_code = range(500, 600)
 
     def get(self, error: HTTPException):
-        return "Internal server error. Please try again later!", error.code
+        return render_template("errors/5XX.html", code=error.code, req=request), error.code

@@ -14,7 +14,8 @@
 </head>
 <body class="page-{{ current_page }}">
 {% include "main/navigation.html" %}
-{% if current_page != "index" %}
+{% if current_page != "index"%}
+    {% block beta_error %}
 <div class="uk-container uk-section" style="padding-top: 10px; padding-bottom: 10px;">
     <div class="uk-container uk-container-small">
         <div class="uk-alert-danger" uk-alert>
@@ -25,6 +26,7 @@
         </div>
     </div>
 </div>
+    {% endblock %}
 {% endif %}
 {% block content %}{% endblock %}
 </body>

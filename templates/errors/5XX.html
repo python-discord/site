@@ -1,0 +1,50 @@
+{% extends 'main/base.html' %}
+{% block title %} {{ code }} - Internal server error {% endblock %}
+{% block beta_error %}{% endblock %}
+{% block content %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/TypewriterJS/1.0.0/typewriter.min.js"></script>
+    <div class="uk-section uk-container">
+    <code style="white-space: pre-line" id="error"></code>
+    <script>
+        var app = document.getElementById('error');
+
+        var typewriter = new Typewriter(app, {
+            loop: false,
+            deleteSpeed: 40,
+            typingSpeed: 1
+        });
+
+        typewriter.typeString('Python 3.6.4 (default, Jan  5 2018, 02:35:40)\n')
+            .typeString('[GCC 7.2.1 20171224] on linux\n')
+            .typeString('Type "help", "copyright", "credits" or "license" for more information.\n')
+            .typeString('>>> ')
+            .changeSettings({typingSpeed: 30})
+            .typeString("impor requests")
+            .deleteChars(9)
+            .typeString("t requests\n")
+            .changeSettings({typingSpeed: 1})
+            .typeString(">>> ")
+            .changeSettings({typingSpeed: 30})
+            .typeString("request = requests.{{ request.method.lower() }}('https://pythim")
+            .deleteChars(2)
+            .typeString("ondiscord.con/")
+            .deleteChars(2)
+            .typeString("m{{request.path}}')\n")
+            .changeSettings({typingSpeed: 1})
+            .typeString("<Response [{{ code }}]>\n>>> ")
+            .changeSettings({typingSpeed: 30})
+            .typeString("# hmmmm")
+            .deleteChars(7)
+            .typeString("request.text\n")
+            .changeSettings({typingSpeed: 1})
+            .typeString("There was an error processing your request! Try again in a little while, if the problem persists, report an error on our GitHub issue tracker (https://github.com/discord-python/site/issues)")
+            .start();
+
+
+    </script>
+    <noscript>
+        <h1>There was an issue processing your request</h1>
+        <p>Please try again in a little while, if the problem persists, feel free to open a bug on our <a href="https://github.com/discord-python/site/issues">GitHub issue tracker</a></p>
+    </noscript>
+    </div>
+{% endblock %}
