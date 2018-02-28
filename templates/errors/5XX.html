@@ -2,6 +2,11 @@
 {% block title %} {{ code }} - Internal server error {% endblock %}
 {% block beta_error %}{% endblock %}
 {% block content %}
+    <div class="uk-background-muted">
+        <div class="uk-section">
+            <div class="uk-text-center"><code class="uk-text-large">InternalServerError: Error {{ code }}, the server encountered an error processing this request.</code></div>
+        </div>
+    </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/TypewriterJS/1.0.0/typewriter.min.js"></script>
     <div class="uk-section uk-container">
     <code style="white-space: pre-line" id="error"></code>
