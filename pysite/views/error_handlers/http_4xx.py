@@ -15,7 +15,7 @@ class Error400View(ErrorView):
 
         return render_template("errors/error.html", code=error.code, req=request, error_title=error_desc,
                                error_message=error_desc +
-                               " If you believe we have made a mistake "
+                               " If you believe we have made a mistake, "
                                "please open an issue "
                                "on our GitHub ("
                                "https://github.com"

@@ -18,7 +18,7 @@ class Error500View(ErrorView):
                                              "processing this "
                                              "request, please try "
                                              "again later. "
-                                             "If you believe we have made a mistake "
+                                             "If you believe we have made a mistake, "
                                              "please open an issue "
                                              "on our GitHub ("
                                              "https://github.com"
