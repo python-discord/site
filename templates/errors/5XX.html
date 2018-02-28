@@ -8,357 +8,48 @@
                 encountered an error processing this request.</code></div>
         </div>
     </div>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/TypewriterJS/1.0.0/typewriter.min.js"></script>
+    <script src="/static/js/typewriter.js"></script>
+    <link href="/static/css/window.css" rel="stylesheet" type="text/css"/>
+    <div class="uk-container uk-section">
+        <div class="window">
+            <div class="top">
+                <div class="panel">
+                    <span class="first"></span>
+                    <span class="second"></span>
+                    <span class="third"></span>
+                </div>
+
+                <div class="nav">
+                    <span class="prev active"><i class="fa fa-angle-left"></i></span>
+                    <span class="next"><i class="fa fa-angle-right"></i></span>
+
+
+                </div>
+
+
+            </div>
+
+            <div class="inside">
+                <div class="blok">
+                    <pre id="terminal"><code style="white-space:pre-wrap;" class="python" id="error"></code></pre>
+                </div>
+            </div>
+
+        </div>
+    </div>
 
     <style>
-    .window {
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  border-radius: 4px;
-  -moz-box-shadow: 0 4px 12px rgba(0,0,0,.5);
-  -webkit-box-shadow: 0 4px 12px rgba(0,0,0,.5);
-  box-shadow: 0 4px 12px rgba(0,0,0,.5);
-  width: 800px;
-  margin:auto;
-  margin-top:20px;
-  border:1px solid #C1C2C2;
-        height: 500px;
-        padding-bottom: 20px;
-}
-
-.inside {
-  background:black;
-    padding-right: 20px;
-    height: 100%;
-}
-.inside .blok {
-  width: 100%;
-  background: black;
-}
-.top {
-  padding:7px 0;
-  position:relative;
-  background: #f1f1f1;
-  background: -moz-linear-gradient(top, #E9E9E9 3%, #d8d8d8 100%);
-  background: -webkit-gradient(left top, left bottom,color-stop(3%, #E9E9E9), color-stop(100%, #d8d8d8));
-  background: -webkit-linear-gradient(top, #E9E9E9 3%, #d8d8d8 100%);
-  background: -o-linear-gradient(top, #E9E9E9 3%, #d8d8d8 100%);
-  background: -ms-linear-gradient(top, #E9E9E9 3%, #d8d8d8 100%);
-  background: linear-gradient(to bottom, #E9E9E9 3%, #d8d8d8 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f1f1f1', endColorstr='#d8d8d8', GradientType=0 );
-
-  -webkit-box-shadow: inset 0px 1px 1px 0px rgba(255, 255, 255, 0.76);
-  -moz-box-shadow:    inset 0px 1px 1px 0px rgba(255, 255, 255, 0.76);
-  box-shadow:         inset 0px 1px 1px 0px rgba(255, 255, 255, 0.76);
-
-  overflow:hidden;
-  border-bottom:2px solid #BDBCC1;
-}
-
-.top > div {
-  float:left;
-}
-
-
-.panel {
-  padding-left:9px;
-  padding-top:2px;
-}
-
-.panel > span {
-  display:inline-block;
-  float:left;
-  width:12px;
-  height:12px;
-  margin-right:7px;
-  -webkit-border-radius: 6px;
-  -moz-border-radius: 6px;
-  border-radius: 6px;
-  cursor:pointer;
-
-}
-
-.panel span.first {
-  background:#FF5F4F;
-}
-
-.panel span.second {
-  background:#F9C206;
-}
-
-.panel span.third {
-  background:#19CC32;
-}
-
-
-.nav {
-  overflow:hidden;
-}
-
-.nav > span {
-  display:inline-block;
-  float:left;
-  background:#FBFBFB;
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  border-radius: 4px;
-  height:23px;
-  padding:0 8px;
-  cursor:pointer;
-  color:#B4B4B4;
-  border-bottom:1px solid #CECECE;
-}
-.nav > span:hover {
-  background:#f2f2f2;
-  color:#666;
-}
-.nav > span i.fa {
-    font-size:23px;
-}
-
-.nav span.active {
-  color:#707070;
-}
-
-.nav span.prev {
-  margin-right:1px;
-  margin-left:7px;
-}
-
-.nav span.next {
-  margin-right:7px;
-}
-
-.nav span.set i {
-  font-size:14px;
-  position:relative;
-  top:3px;
-}
-
-.nav span.address {
-  width:400px;
-  margin-left:75px;
-  display:inline-block;
-  background:#fff;
-  line-height:23px;
-  padding:0;
-  text-align:center;
-  position:relative;
-}
-.nav span.address > input {
-  font-size:12px;
-  color:#505050;
-  border:none;
-  background:none;
-  text-align:center;
-  position:relative;
-  width:300px;
-}
-
-.nav span.address > input:focus {
-  outline:none;
-}
-
-.nav span.address > input.class {
-  text-align:left;
-}
-
-
-
-.nav span.address > i.fa {
-  position:absolute;
-  right:5px;
-  top:7px;
-  font-size:11px;
-  color:#010101;
-}
-
-.nav.right {
-  float:right !important;
-  margin-right:35px;
-}
-
-.nav span.share {
-  margin-right:7px;
-}
-.nav span.share > i.fa {
-  font-size:11px;
-  position:relative;
-  top:2px;
-}
-
-.nav span.tabs {
-  position:relative;
-  width:26px;
-  padding:0;
-}
-
-.nav span.tabs span {
-  height:7px;
-  width:7px;
-  border:1px solid #B4B4B4;
-  display:inline-block;
-  position:absolute;
-  background:#FBFBFB;
-}
-
-.nav span.tabs span.front {
-  top:8px;
-  left:6px;
-  z-index:6;
-}
-
-.nav span.tabs span.behind {
-  top:6px;
-  left:8px;
-  z-index:5;
-}
-
-.nav span.tabs:hover span {
-  border:1px solid #666;
-}
-
-span.new {
-  cursor:pointer;
-  position:absolute;
-  right:0;
-  bottom:0;
-  background:#CACACA;
-  width:23px;
-  height:23px;
-  text-align:center;
-  line-height:23px;
-  border-top:1px solid #C1C2C2;
-  border-left:1px solid #C1C2C2;
-}
-
-span.new:hover {
--webkit-box-shadow: inset 0px 1px 1px 0px rgba(0, 0, 0, 0.1);
--moz-box-shadow:    inset 0px 1px 1px 0px rgba(0, 0, 0, 0.1);
-box-shadow:         inset 0px 1px 1px 0px rgba(0, 0, 0, 0.1);
-}
-span.new .plus {
-  position:absolute;
-  background:#b0b0b0;
-  display:inline-block;
-}
-
-span.new .plus.x {
-  height:1px;
-  width:14px;
-  top:12px;
-  right:0;
-  left:0;
-  margin:auto;
-}
-
-span.new .plus.y {
-  height:14px;
-  width:1px;
-  bottom:0;
-  top:0;
-  margin:auto;
-
-}
-
-    #terminal {
-        height: 100%;
-        width: 100%;
-    }
-
-    pre {
-        border: 0;
-        border-radius: 3px;
-    }
-    </style>
-    <!-- Code credit to https://codepen.io/ozer/pen/ckwyd -->
-    <div class="uk-container uk-section">
-    <div class="window">
-  <div class="top">
-    <div class="panel">
-      <span class="first"></span>
-      <span class="second"></span>
-      <span class="third"></span>
-    </div>
-
-    <div class="nav">
-      <span class="prev active"><i class="fa fa-angle-left"></i></span>
-      <span class="next"><i class="fa fa-angle-right"></i></span>
-
-
-
-
-    </div>
-
-
-
-
-  </div>
-
-  <div class="inside">
-    <div class="blok">
-        <pre id="terminal"><code style="white-space:pre-wrap;" class="python" id="error"></code></pre>
-    </div>
-  </div>
-
-</div>
-    </div>
-
-        <style>
         #terminal {
             background-color: black;
             color: white;
         }
-        </style>
-        <script>
-            var app = document.getElementById('error');
+    </style>
 
-            var typewriter = new Typewriter(app, {
-                loop: false,
-                deleteSpeed: 40,
-                typingSpeed: 0,
-                devMode: false
-            });
-
-
-
-            typewriter.typeString('Python 3.6.4 (default, Jan  5 2018, 02:35:40)\n')
-                .typeString('[GCC 7.2.1 20171224] on linux\n')
-                .typeString('Type "help", "copyright", "credits" or "license" for more information.\n')
-                .typeString('>>> ')
-                .changeSettings({typingSpeed: 80})
-                .pauseFor(1000)
-                .typeString("impor requests")
-                .deleteChars(9)
-                .typeString("t requests\n")
-                .changeSettings({typingSpeed: 0})
-                .typeString(">>> ")
-                .pauseFor(750)
-                .changeSettings({typingSpeed: 80})
-                .typeString("response = requests.{{ request.method.lower() }}('https://pythim")
-                .deleteChars(2)
-                .typeString("ondiscord.con/")
-                .deleteChars(2)
-                .typeString("m{{request.path}}')\n")
-                .changeSettings({typingSpeed: 0})
-                .pauseFor(1000)
-                .typeString("<Response [{{ code }}]>\n>>> ")
-                .changeSettings({typingSpeed: 80})
-                .typeString("# hmmmm")
-                .pauseFor(1000)
-                .deleteChars(7)
-                .changeSettings({typingSpeed: 80})
-                .pauseFor(1000)
-                .typeString("response.text\n")
-                .changeSettings({typingSpeed: 0})
-                .typeString("'An error occured while processing this request, please try again later, if this error persists please open an issue on our GitHub (https://github.com/discord-python/site/issues)'\n>>> ")
-                .start();
-
-        </script>
-        <noscript>
-            <h1>There was an issue processing your request</h1>
-            <p>Please try again in a little while, if the problem persists, feel free to open a bug on our <a
-                    href="https://github.com/discord-python/site/issues">GitHub issue tracker</a></p>
-        </noscript>
+    <noscript>
+        <h1>There was an issue processing your request</h1>
+        <p>Please try again in a little while, if the problem persists, feel free to open a bug on our <a
+                href="https://github.com/discord-python/site/issues">GitHub issue tracker</a></p>
+    </noscript>
     </div>
+    <script src="/static/js/500.js"></script>
 {% endblock %}
