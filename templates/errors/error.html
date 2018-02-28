@@ -2,10 +2,15 @@
 {% block title %} {{ code }} - Internal server error {% endblock %}
 {% block beta_error %}{% endblock %}
 {% block content %}
+    <script>
+        window._RequestMethod = "{{ request.method.lower() }}";
+        window._Code = {{ code }};
+        window._ErrorMsg = "{{ error_message }}"
+        window._Path = "{{ request.path }}"
+    </script>
     <div class="uk-background-muted">
         <div class="uk-section">
-            <div class="uk-text-center"><code class="uk-text-large">InternalServerError: Error {{ code }}, the server
-                encountered an error processing this request.</code></div>
+            <div class="uk-text-center"><code class="uk-text-large">{{ error_title }}</code></div>
         </div>
     </div>
     <script src="/static/js/typewriter.js"></script>
