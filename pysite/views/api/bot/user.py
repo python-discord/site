@@ -1,7 +1,6 @@
 # coding=utf-8
 
 from flask import jsonify
-
 from schema import Schema
 
 from pysite.base_route import APIView

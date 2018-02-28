@@ -1,11 +1,10 @@
 import json
 import os
 
-from app import manager
-
 from flask import Blueprint
-
 from flask_testing import TestCase
+
+from app import manager
 
 manager.app.tests_blueprint = Blueprint("tests", __name__)
 manager.load_views(manager.app.tests_blueprint, "pysite/views/tests")
@@ -44,6 +43,11 @@ class BaseEndpoints(SiteTest):
         response = self.client.get('/nonexistentpath')
         self.assertEqual(response.status_code, 404)
 
+    def test_error(self):
+        """ Check the /error/XYZ page """
+        response = self.client.get('/error/418')
+        self.assertEqual(response.status_code, 418)
+
     def test_invite(self):
         """ Check invite redirects """
         response = self.client.get('/invite')
@@ -58,6 +62,11 @@ class BaseEndpoints(SiteTest):
         """ Check datadog path redirects """
         response = self.client.get('/datadog')
         self.assertEqual(response.status_code, 302)
+
+    def test_500_easter_egg(self):
+        """Check the status of the /500 page"""
+        response = self.client.get("/500")
+        self.assertEqual(response.status_code, 500)
 
 
 class ApiEndpoints(SiteTest):
@@ -172,6 +181,20 @@ class Utilities(SiteTest):
             return True
         raise Exception('Expected runtime error on setup() when giving wrongful arguments')
 
+    def test_websocket_callback(self):
+        """ Check that websocket default callbacks work """
+        import pysite.websockets
+
+        class TestWS(pysite.websockets.WS):
+            pass
+
+        try:
+            TestWS(None).on_message("test")
+            return False
+        except NotImplementedError:
+            return True
+
+
 
 class MixinTests(SiteTest):
     """ Test cases for mixins """
@@ -202,9 +225,9 @@ class MixinTests(SiteTest):
         from werkzeug.exceptions import InternalServerError
         from pysite.views.error_handlers import http_5xx
 
-        error_view = http_5xx.Error404View()
+        error_view = http_5xx.Error500View()
         error_message = error_view.get(InternalServerError)
-        self.assertEqual(error_message, ('Internal server error. Please try again later!', 500))
+        self.assertEqual(error_message[1], 500)
 
     def test_route_view_runtime_error(self):
         """ Check that wrong values for route view setup raises runtime error """
