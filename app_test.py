@@ -43,6 +43,11 @@ class BaseEndpoints(SiteTest):
         response = self.client.get('/nonexistentpath')
         self.assertEqual(response.status_code, 404)
 
+    def test_error(self):
+        """ Check the /error/XYZ page """
+        response = self.client.get('/error/418')
+        self.assertEqual(response.status_code, 418)
+
     def test_invite(self):
         """ Check invite redirects """
         response = self.client.get('/invite')
