@@ -176,6 +176,20 @@ class Utilities(SiteTest):
             return True
         raise Exception('Expected runtime error on setup() when giving wrongful arguments')
 
+    def test_websocket_callback(self):
+        """ Check that websocket default callbacks work """
+        import pysite.websockets
+
+        class TestWS(pysite.websockets.WS):
+            pass
+
+        try:
+            TestWS(None).on_message("test")
+            return False
+        except NotImplementedError:
+            return True
+
+
 
 class MixinTests(SiteTest):
     """ Test cases for mixins """

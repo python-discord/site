@@ -1,2 +1,2 @@
 [run]
-omit = /usr/*, gunicorn_config.py, deploy.py, app_test.py, app.py, pysite/websockets.py, pysite/views/*__init__.py, pysite/route_manager.py
+omit = /usr/*, gunicorn_config.py, deploy.py, app_test.py, app.py, pysite/views/*__init__.py, pysite/route_manager.py
