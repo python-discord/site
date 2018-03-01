@@ -17,6 +17,6 @@ class Error400View(ErrorView):
                                error_message=error_desc +
                                " If you believe we have made a mistake, "
                                "please open an issue "
-                               "on our GitHub ("
-                               "https://github.com"
-                               "/discord-python/site/issues)."), error.code
+                               "on our"
+                               " <a href='https://github.com"
+                               "/discord-python/site/issues'>GitHub</a>."), error.code

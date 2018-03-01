@@ -31,7 +31,7 @@ typewriter.appendText('Python 3.6.4 (default, Jan  5 2018, 02:35:40)\n')
     .deleteChars(7)
     .pauseFor(1000)
     .typeString("response.text\n")
-    .appendText("'" + window._ErrorMsg + "'\n>>> ")
+    .appendText("" + window._ErrorMsg + "\n>>> ")
     .start();
 
 function closeWindow(){

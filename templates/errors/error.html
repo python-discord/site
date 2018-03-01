@@ -5,7 +5,7 @@
     <script>
         window._RequestMethod = "{{ request.method.lower() }}";
         window._Code = {{ code }};
-        window._ErrorMsg = "{{ error_message }}"
+        window._ErrorMsg = "{{ error_message | safe }}"
         window._Path = "{{ request.path }}"
     </script>
     <div class="uk-background-muted">
