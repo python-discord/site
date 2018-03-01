@@ -52,7 +52,7 @@
 
     <noscript>
         <h1>There was an issue processing your request</h1>
-        <p>{{ error_message }}</p>
+        <p>{{ error_message | safe }}</p>
     </noscript>
     </div>
     <script src="/static/js/500.js"></script>
