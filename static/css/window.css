@@ -260,3 +260,7 @@ pre {
     border: 0;
     border-radius: 3px;
 }
+
+.uk-background-muted, .error-header {
+    background-color: #d0d0d0 !important;
+}
