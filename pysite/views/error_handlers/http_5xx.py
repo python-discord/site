@@ -20,6 +20,6 @@ class Error500View(ErrorView):
                                              "again later. "
                                              "If you believe we have made a mistake, "
                                              "please "
-                                             " <a href='https://github.com"
+                                             "<a href='https://github.com"
                                              "/discord-python/site/issues'>file an issue on our GitHub"
                                              "</a>."), error.code
