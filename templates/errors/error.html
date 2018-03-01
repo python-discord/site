@@ -9,13 +9,16 @@
         window._Path = "{{ request.path }}"
     </script>
     <div class="uk-background-muted">
-        <div class="uk-section">
-            <div class="uk-text-center"><code class="error-header uk-text-large">{{ error_title }}</code></div>
+    <div class="uk-container">
+        <div class="uk-section uk-text-center uk-panel uk-panel-box">
+           <p style="color: #e84149; font-family: monospace;" class="error-header uk-text-large uk-text-break">{{ error_title }}</p>
         </div>
+    </div>
     </div>
     <script src="/static/js/typewriter.js"></script>
     <link href="/static/css/window.css" rel="stylesheet" type="text/css"/>
-    <div class="uk-container-expand uk-section">
+    <div class="uk-visible@s">
+    <div class="uk-container uk-section">
         <div class="window" id="win">
             <div class="top">
                 <div class="panel">
@@ -41,6 +44,12 @@
             </div>
 
         </div>
+    </div>
+    </div>
+
+    <div class="uk-hidden@s uk-container uk-text-center">
+    <br/>
+        <p>{{ error_message | safe }}</p>
     </div>
 
     <style>
