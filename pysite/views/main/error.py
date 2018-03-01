@@ -9,4 +9,7 @@ class ErrorView(RouteView):
     name = "error"
 
     def get(self, code):
-        return abort(code)
+        try:
+            return abort(code)
+        except LookupError:
+            return abort(500)
