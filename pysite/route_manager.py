@@ -13,6 +13,7 @@ from flask_sockets import Sockets
 from pysite.base_route import APIView, BaseView, ErrorView, RouteView
 from pysite.constants import DISCORD_OAUTH_ID, DISCORD_OAUTH_SCOPE, DISCORD_OAUTH_SECRET
 from pysite.database import RethinkDB
+from pysite.oauth import OauthBackend
 from pysite.websockets import WS
 
 TEMPLATES_PATH = "../templates"
@@ -48,8 +49,9 @@ class RouteManager:
             DISCORD_OAUTH_ID,
             DISCORD_OAUTH_SECRET,
             DISCORD_OAUTH_SCOPE,
-            '/'
+            '/',
         )
+        self.oauth_blueprint.backend = OauthBackend(self)
         self.log.debug(f"Loading Blueprint: {self.oauth_blueprint.name}")
         self.app.register_blueprint(self.oauth_blueprint)
         self.log.debug("")
