@@ -1,6 +1,5 @@
 # coding=utf-8
 from flask import Blueprint
-
 from geventwebsocket.websocket import WebSocket
 
 
