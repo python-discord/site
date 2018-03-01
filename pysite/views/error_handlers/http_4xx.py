@@ -15,8 +15,6 @@ class Error400View(ErrorView):
 
         return render_template("errors/error.html", code=error.code, req=request, error_title=error_desc,
                                error_message=error_desc +
-                               " If you believe we have made a mistake, "
-                               "please open an issue "
-                               "on our"
+                               " If you believe we have made a mistake, please "
                                " <a href='https://github.com"
-                               "/discord-python/site/issues'>GitHub</a>."), error.code
+                               "/discord-python/site/issues'>open an issue on our GitHub</a>."), error.code
