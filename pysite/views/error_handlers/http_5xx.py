@@ -23,3 +23,18 @@ class Error500View(ErrorView):
                                              "<a href='https://github.com"
                                              "/discord-python/site/issues'>file an issue on our GitHub"
                                              "</a>."), error.code
+
+    def post(self, error: HTTPException):
+        error_desc = ERROR_DESCRIPTIONS.get(error.code,
+                                            "We're not really sure what happened there, please try again.")
+
+        return render_template("errors/error.html", code=error.code, req=request, error_title=error_desc,
+                               error_message="An error occurred while "
+                                             "processing this "
+                                             "request, please try "
+                                             "again later. "
+                                             "If you believe we have made a mistake, "
+                                             "please "
+                                             "<a href='https://github.com"
+                                             "/discord-python/site/issues'>file an issue on our GitHub"
+                                             "</a>."), error.code

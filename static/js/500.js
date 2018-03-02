@@ -9,7 +9,7 @@ var typewriter = new Typewriter(app, {
 
 
 typewriter.appendText('Python 3.6.4 (default, Jan  5 2018, 02:35:40)\n')
-    .appendText('[GCC 7.2.1 20171224] on linux\n')
+    .appendText('[GCC 7.2.1 20171224] on darwin\n')
     .appendText('Type "help", "copyright", "credits" or "license" for more information.\n')
     .appendText('>>> ')
     .pauseFor(1000)

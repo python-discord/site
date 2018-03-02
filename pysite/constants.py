@@ -40,6 +40,6 @@ ERROR_DESCRIPTIONS = {
     411: "You forgot to tell us the length of the content.",
     413: "No way! That payload is, like, way too big!",
     415: "The thing you sent has the wrong format.",
-    418: "Sorry, I'm not a server, I'm a teapot.",
+    418: "I'm a teapot, I can't make coffee. (._.)",
     429: "Please don't send us that many requests."
 }
