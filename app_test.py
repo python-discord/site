@@ -13,21 +13,25 @@ app = manager.app
 
 
 class SiteTest(TestCase):
-    """ extend TestCase with flask app instantiation """
+    """ Extend TestCase with flask app instantiation """
+
     def create_app(self):
-        """ add flask app configuration settings """
+        """ Add flask app configuration settings """
         server_name = 'pytest.local'
+
         app.config['TESTING'] = True
         app.config['LIVESERVER_TIMEOUT'] = 10
         app.config['SERVER_NAME'] = server_name
         app.config['API_SUBDOMAIN'] = f'http://api.{server_name}'
         app.config['STAFF_SUBDOMAIN'] = f'http://staff.{server_name}'
         app.allow_subdomain_redirects = True
+
         return app
 
 
-class BaseEndpoints(SiteTest):
-    """ test cases for the base endpoints """
+class RootEndpoint(SiteTest):
+    """ Test cases for the root endpoint and error handling """
+
     def test_index(self):
         """ Check the root path reponds with 200 OK """
         response = self.client.get('/', 'http://pytest.local')
@@ -84,9 +88,10 @@ class ApiEndpoints(SiteTest):
         self.assertEqual(response.status_code, 200)
 
     def test_api_tag(self):
-        """ Check tag api """
+        """ Check tag API """
         os.environ['BOT_API_KEY'] = 'abcdefg'
         headers = {'X-API-Key': 'abcdefg', 'Content-Type': 'application/json'}
+
         good_data = json.dumps({
             'tag_name': 'testing',
             'tag_content': 'testing',

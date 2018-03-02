@@ -49,7 +49,6 @@ class TagsView(APIView, DBMixin):
 
         Data must be provided as JSON.
         API key must be provided as header.
-
         """
 
         data = request.get_json()
@@ -64,7 +63,7 @@ class TagsView(APIView, DBMixin):
                     "tag_name": tag_name,
                     "tag_content": tag_content
                 },
-                conflict="update"  # if it exists, update it.
+                conflict="update"  # If it exists, update it.
             )
         else:
             return self.error(ErrorCodes.incorrect_parameters)
@@ -90,9 +89,14 @@ class TagsView(APIView, DBMixin):
                 return_changes=True
             )
 
-            if changes['deleted'] != 1:
-                return self.error(ErrorCodes.database_error,
-                                  "Database deleted too many or too few records.")
+            if changes['deleted'] > 1:
+                return self.error(
+                    ErrorCodes.database_error,
+                    "Database deleted more than one record. "
+                    "This shouldn't be possible, please investigate. \n"
+                    "The following changes were made: \n"
+                    f"{changes['changes']}"
+                )
         else:
             return self.error(ErrorCodes.incorrect_parameters)
 
