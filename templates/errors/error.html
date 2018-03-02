@@ -5,21 +5,21 @@
     <script>
         window._RequestMethod = "{{ request.method.lower() }}";
         window._Code = {{ code }};
-        window._ErrorMsg = "{{ error_message }}"
+        window._ErrorMsg = "{{ error_message | safe }}"
         window._Path = "{{ request.path }}"
     </script>
     <div class="uk-background-muted">
         <div class="uk-section">
-            <div class="uk-text-center"><code class="uk-text-large">{{ error_title }}</code></div>
+            <div class="uk-text-center"><code class="error-header uk-text-large">{{ error_title }}</code></div>
         </div>
     </div>
     <script src="/static/js/typewriter.js"></script>
     <link href="/static/css/window.css" rel="stylesheet" type="text/css"/>
     <div class="uk-container uk-section">
-        <div class="window">
+        <div class="window" id="win">
             <div class="top">
                 <div class="panel">
-                    <span class="first"></span>
+                    <span class="first" onclick="closeWindow()"></span>
                     <span class="second"></span>
                     <span class="third"></span>
                 </div>
@@ -52,7 +52,7 @@
 
     <noscript>
         <h1>There was an issue processing your request</h1>
-        <p>Try again after a while. If the problem persists, open a bug on our <a href="https://github.com/discord-python/site/issues">GitHub issue tracker</a>.</p>
+        <p>{{ error_message | safe }}</p>
     </noscript>
     </div>
     <script src="/static/js/500.js"></script>
