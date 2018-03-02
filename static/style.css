@@ -51,6 +51,7 @@
     margin-top: 0 !important;
 }
 
-summary::-webkit-details-marker {
-    display: none;
+.uk-section {
+    padding-top: 20px;
+    padding-bottom: 30px;
 }

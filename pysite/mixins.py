@@ -1,14 +1,12 @@
 # coding=utf-8
-from _weakref import ref
-
 from flask import Blueprint
-
 from rethinkdb.ast import Table
+from _weakref import ref
 
 from pysite.database import RethinkDB
 
 
-class DBMixin:
+class DBMixin():
     """
     Mixin for classes that make use of RethinkDB. It can automatically create a table with the specified primary
     key using the attributes set at class-level.
@@ -46,7 +44,7 @@ class DBMixin:
         """
 
         if hasattr(super(), "setup"):
-            super().setup(manager, blueprint)
+            super().setup(manager, blueprint)  # pragma: no cover
 
         if not cls.table_name:
             raise RuntimeError("Routes using DBViewMixin must define `table_name`")

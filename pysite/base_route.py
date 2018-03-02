@@ -160,7 +160,7 @@ class ErrorView(BaseView):
         """
 
         if hasattr(super(), "setup"):
-            super().setup(manager, blueprint)
+            super().setup(manager, blueprint)  # pragma: no cover
 
         if not cls.name or not cls.error_code:
             raise RuntimeError("Error views must have both `name` and `error_code` defined")
@@ -175,4 +175,4 @@ class ErrorView(BaseView):
                 except KeyError:  # This happens if we try to register a handler for a HTTP code that doesn't exist
                     pass
         else:
-            raise RuntimeError("Error views must have an `error_code` that is either an `int` or an iterable")
+            raise RuntimeError("Error views must have an `error_code` that is either an `int` or an iterable")  # pragma: no cover # noqa: E501
