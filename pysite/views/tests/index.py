@@ -2,11 +2,11 @@
 
 from flask import jsonify
 
-from schema import Schema
-
 from pysite.base_route import RouteView
 from pysite.constants import ValidationTypes
 from pysite.decorators import api_params
+
+from schema import Schema
 
 SCHEMA = Schema([{"test": str}])
 

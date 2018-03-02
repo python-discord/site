@@ -1,6 +1,7 @@
-from flask import session, redirect
+from flask import redirect, session
 
 from pysite.base_route import RouteView
+from pysite.oauth import logout
 
 
 class LogoutView(RouteView):
@@ -8,6 +9,7 @@ class LogoutView(RouteView):
     path = "/logout"
 
     def get(self):
-        if session.get("session_id"):
+        if "session_id" in session:
             del session["session_id"]
+            logout()
         return redirect("/")

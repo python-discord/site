@@ -5,9 +5,7 @@ import logging
 import os
 
 from flask import Blueprint, Flask
-
 from flask_dance.contrib.discord import make_discord_blueprint
-
 from flask_sockets import Sockets
 
 from pysite.base_route import APIView, BaseView, ErrorView, RouteView

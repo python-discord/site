@@ -122,6 +122,26 @@ class RethinkDB:
             rethinkdb.db(self.database).table_drop(table_name).run(conn)
             return True
 
+    def delete(self, table_name: str, key: str,
+               durability: str="hard", return_changes: Union[bool, str]=False) -> Union[Dict[str, Any], None]:
+        """
+        Delete a row, indexed by it's key
+        :param table_name: Name of the table to index
+        :param key: They key of the row to delete
+        :param durability: "hard" (the default) to write the change immediately, "soft" otherwise
+        :param return_changes: Whether to return a list of changed values or not - defaults to False
+        :return: If return_changes was set, the result of the deletion
+        """
+
+        query = self.query(table_name).get(key).delete(
+            durability=durability, return_changes=return_changes
+        )
+
+        if return_changes:
+            return self.run(query, coerce=list)
+        else:
+            return self.run(query, coerce=dict)
+
     def query(self, table_name: str) -> Table:
         """
         Get a RethinkDB table object that you can run queries against

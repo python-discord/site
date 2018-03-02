@@ -30,7 +30,7 @@ class SiteTest(TestCase):
 class BaseEndpoints(SiteTest):
     """ test cases for the base endpoints """
     def test_index(self):
-        """ Check the root path reponds with 200 OK """
+        """ Check the root path responds with 200 OK """
         response = self.client.get('/', 'http://pytest.local')
         self.assertEqual(response.status_code, 200)
 
@@ -43,6 +43,21 @@ class BaseEndpoints(SiteTest):
         """ check ws_test responds """
         response = self.client.get('/ws_test')
         self.assertEqual(response.status_code, 200)
+
+    def test_oauth_login(self):
+        """check oauth redirects """
+        response = self.client.get('/discord')
+        self.assertEqual(response.status_code, 302)
+
+    def test_oauth_logout(self):
+        """check oauth redirects """
+        response = self.client.get('/logout')
+        self.assertEqual(response.status_code, 302)
+
+    def test_oauth_authorized(self):
+        """check oauth authorization"""
+        response = self.client.get('/discord/authorized')
+        self.assertEqual(response.status_code, 302)
 
     def test_datadog_redirect(self):
         """ Check datadog path redirects """

@@ -1,16 +1,15 @@
 import logging
-from uuid import uuid4
+from uuid import uuid4, uuid5
 
 from flask import session
 from flask_dance.consumer.backend import BaseBackend
 from flask_dance.contrib.discord import discord
-
 import requests
 
 from pysite.constants import DISCORD_API_ENDPOINT, SERVER_ID
 from pysite.mixins import DBMixin
 
-_MAIN_BACK = None
+_MAIN_BACK = None  # type: pysite.database.RethinkDB
 
 
 class OauthBackend(BaseBackend, DBMixin):
@@ -22,38 +21,35 @@ class OauthBackend(BaseBackend, DBMixin):
 
         super(BaseBackend, self).__init__()
         self.setup(manager, manager.oauth_blueprint)
+        self.key = manager.app.secret_key
         _MAIN_BACK = self
 
     def get(self, *args, **kwargs):
         pass
 
     def set(self, blueprint, token):
-        user = get_user(discord)
-        data = self.db.get("oauth_data", user["id"])
-        if data is None:
-            join_discord(token["access_token"], user["id"])
-            sess_id = int(uuid4())
-            session["session_id"] = sess_id
-            self.db.insert("oauth_data",
-                           {
-                               "id": user["id"],
-                               "username": user["username"],
-                               "discriminator": user["discriminator"],
-                               "email": user["email"],
-                               "access_token": token["access_token"],
-                               "refresh_token": token["refresh_token"],
-                               "expires_at": token["expires_at"],
-                               "session": sess_id
-                           })
-        else:
-            session["session_id"] = data["session"]
+        user = get_user()
+        join_discord(token["access_token"], user["id"])
+        sess_id = str(uuid5(uuid4(), self.key))
+        session["session_id"] = sess_id
+        self.db.insert("oauth_data",
+                       {
+                           "id": sess_id,
+                           "snowflake": user["id"],
+                           "username": user["username"],
+                           "discriminator": user["discriminator"],
+                           "email": user["email"],
+                           "access_token": token["access_token"],
+                           "refresh_token": token["refresh_token"],
+                           "expires_at": token["expires_at"],
+                       })
 
     def delete(self, blueprint):
         pass
 
 
-def get_user(sess: discord) -> dict:
-    resp = sess.get(DISCORD_API_ENDPOINT + "/users/@me")
+def get_user() -> dict:
+    resp = discord.get(DISCORD_API_ENDPOINT + "/users/@me")
     if resp.status_code != 200:
         logging.warning("Unable to get user information: " + resp.json())
     return resp.json()
@@ -75,3 +71,9 @@ def user_data():
     else:
         if not _MAIN_BACK:
             logging.warning("Failed to get user data: _MAIN_BACK not loaded")
+
+
+def logout():
+    sess_id = session.get("session_id")
+    if sess_id and _MAIN_BACK.get("oauth_data", sess_id):
+        _MAIN_BACK.delete("oauth_data", sess_id)
