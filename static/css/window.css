@@ -270,3 +270,8 @@ code, pre {
     word-wrap: break-word;
     overflow-wrap: break-word;
 }
+
+#terminal {
+    background-color: black;
+    color: white;
+}
