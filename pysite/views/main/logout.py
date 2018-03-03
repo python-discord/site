@@ -6,7 +6,7 @@ from pysite.oauth import logout
 
 class LogoutView(RouteView):
     name = "logout"
-    path = "/logout"
+    path = "/auth/logout"
 
     def get(self):
         if "session_id" in session:

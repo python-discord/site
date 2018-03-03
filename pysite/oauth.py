@@ -13,7 +13,6 @@ _MAIN_BACK = None  # type: pysite.database.RethinkDB
 
 
 class OauthBackend(BaseBackend, DBMixin):
-
     table_name = "oauth_data"
 
     def __init__(self, manager):
@@ -32,16 +31,18 @@ class OauthBackend(BaseBackend, DBMixin):
         join_discord(token["access_token"], user["id"])
         sess_id = str(uuid5(uuid4(), self.key))
         session["session_id"] = sess_id
-        self.db.insert("oauth_data",
-                       {
+        self.table.insert({
                            "id": sess_id,
-                           "snowflake": user["id"],
+                           "access_token": token["access_token"],
+                           "refresh_token": token["refresh_token"],
+                           "expires_at": token["expires_at"]
+                       })
+        self.db.insert("users",
+                       {
+                           "user_id": user["id"],
                            "username": user["username"],
                            "discriminator": user["discriminator"],
                            "email": user["email"],
-                           "access_token": token["access_token"],
-                           "refresh_token": token["refresh_token"],
-                           "expires_at": token["expires_at"],
                        })
 
     def delete(self, blueprint):

@@ -26,6 +26,8 @@ SERVER_ID = 267624335836053506
 
 DISCORD_API_ENDPOINT = "https://discordapp.com/api"
 
+DISCORD_OAUTH_REDIRECT = "/auth/discord"
+DISCORD_OAUTH_AUTHORIZED = "/auth/discord/authorized"
 DISCORD_OAUTH_ID = environ.get('DISCORD_OAUTH_ID', '')
 DISCORD_OAUTH_SECRET = environ.get('DISCORD_OAUTH_SECRET', '')
 DISCORD_OAUTH_SCOPE = 'identify email guilds.join'
