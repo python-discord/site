@@ -83,20 +83,12 @@ class TagsView(APIView, DBMixin):
         tag_name = data.get("tag_name")
 
         if tag_name:
-            changes = self.db.delete(
+            self.db.delete(
                 self.table_name,
                 tag_name,
                 return_changes=True
             )
 
-            if changes['deleted'] > 1:
-                return self.error(
-                    ErrorCodes.database_error,
-                    "Database deleted more than one record. "
-                    "This shouldn't be possible, please investigate. \n"
-                    "The following changes were made: \n"
-                    f"{changes['changes']}"
-                )
         else:
             return self.error(ErrorCodes.incorrect_parameters)
 

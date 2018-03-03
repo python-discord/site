@@ -23,7 +23,8 @@ class APIErrorView(ErrorView):
 
     def return_error(self, error: HTTPException):
         """
-        Return a basic JSON object representing the HTTP error, as well as propegating its status code
+        Return a basic JSON object representing the HTTP error,
+        as well as propagating its status code
         """
 
         return jsonify({
