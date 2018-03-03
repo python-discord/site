@@ -31,19 +31,10 @@ class OauthBackend(BaseBackend, DBMixin):
         join_discord(token["access_token"], user["id"])
         sess_id = str(uuid5(uuid4(), self.key))
         session["session_id"] = sess_id
-        self.table.insert({
-                           "id": sess_id,
-                           "access_token": token["access_token"],
-                           "refresh_token": token["refresh_token"],
-                           "expires_at": token["expires_at"]
-                       })
-        self.db.insert("users",
-                       {
-                           "user_id": user["id"],
-                           "username": user["username"],
-                           "discriminator": user["discriminator"],
-                           "email": user["email"],
-                       })
+        self.table.insert({"id": sess_id, "access_token": token["access_token"],
+                           "refresh_token": token["refresh_token"], "expires_at": token["expires_at"]})
+        self.db.insert("users", {"user_id": user["id"], "username": user["username"],
+                                 "discriminator": user["discriminator"], "email": user["email"]})
 
     def delete(self, blueprint):
         pass
