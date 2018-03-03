@@ -1,11 +1,17 @@
+<style>
+    .uk-navbar-nav:first-child {
+        margin-left: -20px;
+    }
+</style>
 <div class="uk-container uk-container-expand uk-background-secondary uk-light" uk-sticky="sel-target: .uk-navbar-container; cls-active: uk-navbar-sticky">
-    <nav data-uk-navbar class="uk-navbar-container uk-navbar-transparent" uk-navbar="boundary-align: true; align: right">
-        <div class="uk-navbar-left">
-            <a href="/" class="uk-navbar-item uk-logo">
-                <img src="/static/logos/logo_banner.png" style="height: 50px;"/>
+    <nav data-uk-navbar class="uk-navbar-container uk-navbar-transparent" uk-navbar="boundary-align: true">
+        <div class="uk-navbar-left uk-padding-remove-left">
+            <a href="/" class="uk-navbar-item uk-logo uk-padding-remove-left">
+                <img src="/static/logos/logo_banner.png" style="margin-left: -10px; padding-left: 3px; height: 50%"/>
             </a>
         </div>
-        <div class="uk-navbar-right">
+
+        <div class="uk-navbar-right uk-visible@m">
             <ul class="uk-navbar-nav">
                 {% if current_page == "index" %}
                     <li class="uk-active"><a href="/"><i class="uk-icon fas fa-home"></i> &nbsp;Home</a></li>
@@ -28,5 +34,17 @@
                 </li>
             </ul>
         </div>
+
+        <div class="uk-navbar-right uk-hidden@m">
+            <button class="uk-button" style="font-size: 2em;"><i class="uk-icon fas fa-angle-down"></i></button>
+<div uk-dropdown>
+    <ul class="uk-nav uk-dropdown-nav">
+        <li class="uk-nav-item"><a href="/"><i class="uk-icon fas fa-home"></i> &nbsp;Home</a></li>
+        <li class="uk-nav-item"><a href="/invite"><i class="uk-icon fab fa-discord"></i> &nbsp;Discord</a></li>
+        <li class="uk-nav-item"><a href="/info/help"><i class="uk-icon fas fa-question"></i> &nbsp;Getting Help</a></li>
+    </ul>
+</div>
+        </div>
+
     </nav>
 </div>
