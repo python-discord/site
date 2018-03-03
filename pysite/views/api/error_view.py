@@ -9,6 +9,18 @@ class APIErrorView(ErrorView):
     name = "api_error_all"
     error_code = range(400, 600)
 
+    def __init__(self):
+
+        # Direct errors for all methods at self.return_error
+        methods = [
+            'get', 'post', 'put',
+            'delete', 'patch', 'connect',
+            'options', 'trace'
+        ]
+
+        for method in methods:
+            setattr(self, method, self.return_error)
+
     def return_error(self, error: HTTPException):
         """
         Return a basic JSON object representing the HTTP error, as well as propegating its status code
@@ -18,12 +30,3 @@ class APIErrorView(ErrorView):
             "error_code": -1,
             "error_message": error.description
         }), error.code
-
-    get = return_error
-    post = return_error
-    put = return_error
-    delete = return_error
-    patch = return_error
-    connect = return_error
-    options = return_error
-    trace = return_error
