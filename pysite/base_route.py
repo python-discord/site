@@ -117,9 +117,6 @@ class APIView(RouteView):
         elif error_code is ErrorCodes.incorrect_parameters:
             data["error_message"] = "Incorrect parameters provided"
             http_code = 400
-        elif error_code is ErrorCodes.database_error:
-            data["error_message"] = f"Database error: {error_info}"
-            http_code = 503
 
         response = jsonify(data)
         response.status_code = http_code
