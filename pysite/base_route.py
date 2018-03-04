@@ -1,6 +1,6 @@
 # coding=utf-8
 from collections import Iterable
-from typing import Any, Dict
+from typing import Any
 
 from flask import Blueprint, Response, jsonify, render_template
 from flask.views import MethodView

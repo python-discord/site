@@ -1,5 +1,5 @@
 # coding=utf-8
-from flask import render_template, request
+from flask import request
 from werkzeug.exceptions import HTTPException
 
 from pysite.base_route import ErrorView
