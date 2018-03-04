@@ -55,3 +55,7 @@
     padding-top: 20px;
     padding-bottom: 30px;
 }
+
+.uk-heading-divider .uk-article-meta {
+    margin-bottom: 0;
+}

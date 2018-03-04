@@ -28,15 +28,19 @@
                         </p>
                     </div>
                 {% else %}
-                    {% for category, items in categories.items() %}
-                        <h2 class="uk-heading-divider hover-title" id="{{ category.replace(" ", "-") }}">
-                            {{ category }}
+                    {% for category_name, category_data in categories.items() %}
+                        <h2 class="uk-heading-divider hover-title" id="{{ category_name.replace(" ", "-").lower() }}">
+                            {{ category_name }}
 
-                            <a href="#{{ category.replace(" ", "-") }}" class="uk-text-primary" title="Permanent link to this header">
+                            <a href="#{{ category_name.replace(" ", "-").lower() }}" class="uk-text-primary" title="Permanent link to this header">
                                 <i class="fas fa-paragraph" data-fa-transform="shrink-8"></i>
                             </a>
+                            <br/>
+                            <p class="uk-article-meta">
+                                {{ category_data.description }}
+                            </p>
                         </h2>
-                        {% for item, data in items.items() %}
+                        {% for item, data in category_data.resources.items() %}
                             <p>
                                 <strong>{{ item }}</strong> &nbsp;<a href="{{ data.url }}"><i class="fas fa-link"></i></a><br />
                                 <span class="uk-text-meta">{{ data.description }}</span>
