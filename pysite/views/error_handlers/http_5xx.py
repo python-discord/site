@@ -1,5 +1,5 @@
 # coding=utf-8
-from flask import render_template, request
+from flask import request
 from werkzeug.exceptions import HTTPException
 
 from pysite.base_route import ErrorView
@@ -13,28 +13,21 @@ class Error500View(ErrorView):
     def get(self, error: HTTPException):
         error_desc = ERROR_DESCRIPTIONS.get(error.code, "We're not really sure what happened there, please try again.")
 
-        return render_template("errors/error.html", code=error.code, req=request, error_title=error_desc,
-                               error_message="An error occurred while "
-                                             "processing this "
-                                             "request, please try "
-                                             "again later. "
-                                             "If you believe we have made a mistake, "
-                                             "please "
-                                             "<a href='https://github.com"
-                                             "/discord-python/site/issues'>file an issue on our GitHub"
-                                             "</a>."), error.code
+        return self.render(
+            "errors/error.html", code=error.code, req=request, error_title=error_desc,
+            error_message="An error occurred while processing this request, please try "
+            "again later. If you believe we have made a mistake, please "
+            "<a href='https://github.com/discord-python/site/issues'>file an issue on our"
+            " GitHub</a>."
+        ), error.code
 
     def post(self, error: HTTPException):
-        error_desc = ERROR_DESCRIPTIONS.get(error.code,
-                                            "We're not really sure what happened there, please try again.")
+        error_desc = ERROR_DESCRIPTIONS.get(error.code, "We're not really sure what happened there, please try again.")
 
-        return render_template("errors/error.html", code=error.code, req=request, error_title=error_desc,
-                               error_message="An error occurred while "
-                                             "processing this "
-                                             "request, please try "
-                                             "again later. "
-                                             "If you believe we have made a mistake, "
-                                             "please "
-                                             "<a href='https://github.com"
-                                             "/discord-python/site/issues'>file an issue on our GitHub"
-                                             "</a>."), error.code
+        return self.render(
+            "errors/error.html", code=error.code, req=request, error_title=error_desc,
+            error_message="An error occurred while processing this request, please try "
+                          "again later. If you believe we have made a mistake, please "
+                          "<a href='https://github.com/discord-python/site/issues'>file an issue on our"
+                          " GitHub</a>."
+        ), error.code
