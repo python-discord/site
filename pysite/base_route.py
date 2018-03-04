@@ -1,6 +1,6 @@
 # coding=utf-8
 from collections import Iterable
-from typing import Any, Dict
+from typing import Any
 
 from flask import Blueprint, Response, jsonify, render_template
 from flask.views import MethodView
@@ -17,7 +17,7 @@ class BaseView(MethodView):
 
     name = None  # type: str
 
-    def render(self, *template_names: str, **context: Dict[str, Any]) -> str:
+    def render(self, *template_names: str, **context: Any) -> str:
         """
         Render some templates and get them back in a form that you can simply return from your view function.
 

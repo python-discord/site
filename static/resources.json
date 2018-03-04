@@ -1,0 +1,45 @@
+{
+  "Learning Resources": {
+    "description": "Tutorials and references for those that are just getting started with python",
+    "resources": {
+      "Automate the Boring Stuff with Python": {
+        "description": "One of the best books out there for Python beginners. You can buy a copy, but there's also a free online version.",
+        "url": "https://automatetheboringstuff.com/"
+      },
+      "Getting Started for Non-Programmers": {
+        "description": "The list of resources for non-programmers from Python's official beginners' guide",
+        "url": "https://wiki.python.org/moin/BeginnersGuide/NonProgrammers"
+      },
+      "Getting Started for Programmers": {
+        "description": "The list of resources for programmers from Python's official beginners' guide",
+        "url": "https://wiki.python.org/moin/BeginnersGuide/Programmers"
+      }
+    }
+  },
+  "Editors": {
+    "description": "Lightweight code editors supporting Python",
+    "resources": {
+      "Visual Studio Code (Free)": {
+        "description": "A fully-featured editor based on Electron, extendable with plugins.",
+        "url": "https://code.visualstudio.com/"
+      },
+      "Sublime Text (Paid, with shareware-style \"trial\")": {
+        "description": "A powerful Python-backed editor with great community support and a wealth of extensions.",
+        "url": "https://www.sublimetext.com/"
+      }
+    }
+  },
+  "IDEs": {
+    "description": "Fully-integrated development environments for serious Python work",
+    "resources": {
+      "PyCharm (Community and Professional editions available)": {
+        "description": "The very best Python IDE, with a wealth of advanced features and convenience functions.",
+        "url": "https://www.jetbrains.com/pycharm/"
+      },
+      "Spyder (Free)": {
+        "description": "The Scientific PYthon Development EnviRonment. Simpler and lighter than PyCharm, but still packs a punch.",
+        "url": "https://pythonhosted.org/spyder/"
+      }
+    }
+  }
+}
