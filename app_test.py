@@ -138,17 +138,17 @@ class ApiEndpoints(SiteTest):
         """ Check insert user """
         os.environ['BOT_API_KEY'] = 'abcdefg'
         headers = {'X-API-Key': 'abcdefg', 'Content-Type': 'application/json'}
-        bad_data = json.dumps({'user_id': 1234, 'role': 5678})
-        good_data = json.dumps([{'user_id': 1234, 'role': 5678}])
+        single_data = json.dumps({'user_id': 1234, 'role': 5678})
+        list_data = json.dumps([{'user_id': 1234, 'role': 5678}])
 
         response = self.client.get('/user', app.config['API_SUBDOMAIN'], headers=headers)
         self.assertEqual(response.status_code, 405)
 
-        response = self.client.post('/user', app.config['API_SUBDOMAIN'], headers=headers, data=bad_data)
-        self.assertEqual(response.json, {'error_code': 3, 'error_message': 'Incorrect parameters provided'})
+        response = self.client.post('/user', app.config['API_SUBDOMAIN'], headers=headers, data=single_data)
+        self.assertTrue("inserted" in response.json)
 
-        response = self.client.post('/user', app.config['API_SUBDOMAIN'], headers=headers, data=good_data)
-        self.assertEqual(True, "inserted" in response.json)
+        response = self.client.post('/user', app.config['API_SUBDOMAIN'], headers=headers, data=list_data)
+        self.assertTrue("inserted" in response.json)
 
     def test_api_route_errors(self):
         """ Check api route errors """
