@@ -1,59 +1,62 @@
 {% extends 'main/base.html' %}
 {% block title %} Error {{ code }} {% endblock %}
 {% block beta_error %}{% endblock %}
-{% block content %}
+
+{% block extra_head %}
+    <link href="/static/css/window.css" rel="stylesheet" type="text/css"/>
+
     <script>
         window._RequestMethod = "{{ request.method.lower() }}";
         window._Code = {{ code }};
-        window._ErrorMsg = "{{ error_message | safe }}"
-        window._Path = "{{ request.path }}"
+        window._ErrorMsg = "{{ error_message | safe }}";
+        window._Path = "{{ request.path }}";
     </script>
+
+    <script src="/static/js/typewriter.js" type="application/javascript"></script>
+    <script src="/static/js/500.js" type="application/javascript"></script>
+{% endblock %}
+
+{% block content %}
     <div class="uk-background-muted">
-        <div class="uk-section">
-            <div class="uk-text-center"><code class="error-header uk-text-large">{{ error_title }}</code></div>
-        </div>
-    </div>
-    <script src="/static/js/typewriter.js"></script>
-    <link href="/static/css/window.css" rel="stylesheet" type="text/css"/>
-    <div class="uk-container uk-section">
-        <div class="window" id="win">
-            <div class="top">
-                <div class="panel">
-                    <span class="first" onclick="closeWindow()"></span>
-                    <span class="second"></span>
-                    <span class="third"></span>
-                </div>
-
-                <div class="nav">
-                    <span class="prev active"><i class="fa fa-angle-left"></i></span>
-                    <span class="next"><i class="fa fa-angle-right"></i></span>
-
-
-                </div>
-
-
+        <div class="uk-container">
+            <div class="uk-section uk-text-center uk-panel uk-panel-box">
+               <p style="color: #e84149; font-family: monospace;" class="error-header uk-text-large uk-text-break">{{ error_title }}</p>
             </div>
-
-            <div class="inside">
-                <div class="blok">
-                    <pre id="terminal"><code style="white-space:pre-wrap;" class="python" id="error"></code></pre>
-                </div>
-            </div>
-
         </div>
     </div>
 
-    <style>
-        #terminal {
-            background-color: black;
-            color: white;
-        }
-    </style>
+    <div class="uk-visible@s">
+        <div class="uk-container uk-section">
+            <div class="window" id="win">
+                <div class="top">
+                    <div class="panel">
+                        <span class="first" id="terminal-close"></span>
+                        <span class="second"></span>
+                        <span class="third"></span>
+                    </div>
+
+                    <div class="nav">
+                        <span class="prev active"><i class="fa fa-angle-left"></i></span>
+                        <span class="next"><i class="fa fa-angle-right"></i></span>
+                    </div>
+                </div>
+
+                <div class="inside">
+                    <div class="blok">
+                        <pre id="terminal"><code style="white-space: pre-wrap;" class="python" id="error"></code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="uk-hidden@s uk-container uk-text-center">
+        <br />
+        <p>{{ error_message | safe }}</p>
+    </div>
 
     <noscript>
         <h1>There was an issue processing your request</h1>
         <p>{{ error_message | safe }}</p>
     </noscript>
-    </div>
-    <script src="/static/js/500.js"></script>
 {% endblock %}

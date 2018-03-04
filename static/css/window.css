@@ -5,7 +5,7 @@
     -moz-box-shadow: 0 4px 12px rgba(0, 0, 0, .5);
     -webkit-box-shadow: 0 4px 12px rgba(0, 0, 0, .5);
     box-shadow: 0 4px 12px rgba(0, 0, 0, .5);
-    width: 800px;
+    width: 100%;
     margin: auto;
     margin-top: 20px;
     border: 1px solid #C1C2C2;
@@ -263,4 +263,15 @@ pre {
 
 .uk-background-muted, .error-header {
     background-color: #e8e8e8 !important;
+}
+
+code, pre {
+    width: 100%;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+#terminal {
+    background-color: black;
+    color: white;
 }
