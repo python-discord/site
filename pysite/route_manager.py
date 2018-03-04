@@ -9,8 +9,9 @@ from flask_dance.contrib.discord import make_discord_blueprint
 from flask_sockets import Sockets
 
 from pysite.base_route import APIView, BaseView, ErrorView, RouteView
-from pysite.constants import DISCORD_OAUTH_ID, DISCORD_OAUTH_SCOPE, \
-    DISCORD_OAUTH_SECRET, DISCORD_OAUTH_REDIRECT, DISCORD_OAUTH_AUTHORIZED
+from pysite.constants import (
+    DISCORD_OAUTH_ID, DISCORD_OAUTH_SCOPE, DISCORD_OAUTH_SECRET, DISCORD_OAUTH_REDIRECT, DISCORD_OAUTH_AUTHORIZED
+)
 from pysite.database import RethinkDB
 from pysite.oauth import OauthBackend
 from pysite.websockets import WS

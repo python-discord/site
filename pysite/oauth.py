@@ -46,7 +46,7 @@ class OauthBackend(BaseBackend, DBMixin):
         sess_id = str(uuid5(uuid4(), self.key))  # Create a session ID, encrypted to protect against timing attacks
         session["session_id"] = sess_id  # Set it
         self.db.insert("oauth_data", {"id": sess_id, "access_token": token["access_token"], "snowflake": user['id'],
-                           "refresh_token": token["refresh_token"], "expires_at": token["expires_at"]})
+                                      "refresh_token": token["refresh_token"], "expires_at": token["expires_at"]})
         self.db.insert("users", {"user_id": user["id"], "username": user["username"],
                                  "discriminator": user["discriminator"], "email": user["email"]})
         # Insert session information into oauth_data, and user information into the user table
