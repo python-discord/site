@@ -1,11 +1,31 @@
 # coding=utf-8
 
-from flask import jsonify, request
+from flask import jsonify
+from schema import Schema, Optional
 
 from pysite.base_route import APIView
-from pysite.constants import ErrorCodes
-from pysite.decorators import api_key
+from pysite.constants import ValidationTypes
+from pysite.decorators import api_key, api_params
 from pysite.mixins import DBMixin
+
+GET_SCHEMA = Schema([
+    {
+        Optional("tag_name"): str
+    }
+])
+
+POST_SCHEMA = Schema([
+    {
+        "tag_name": str,
+        "tag_content": str
+    }
+])
+
+DELETE_SCHEMA = Schema([
+    {
+        "tag_name": str
+    }
+])
 
 
 class TagsView(APIView, DBMixin):
@@ -15,13 +35,17 @@ class TagsView(APIView, DBMixin):
     table_primary_key = "tag_name"
 
     @api_key
-    def get(self):
+    @api_params(schema=GET_SCHEMA, validation_type=ValidationTypes.params)
+    def get(self, params=None):
         """
         Fetches tags from the database.
+
         - If tag_name is provided, it fetches
         that specific tag.
+
         - If tag_category is provided, it fetches
         all tags in that category.
+
         - If nothing is provided, it will
         fetch a list of all tag_names.
 
@@ -29,7 +53,10 @@ class TagsView(APIView, DBMixin):
         API key must be provided as header.
         """
 
-        tag_name = request.args.get("tag_name")
+        tag_name = None
+
+        if params:
+            tag_name = params[0].get("tag_name")
 
         if tag_name:
             data = self.db.get(self.table_name, tag_name) or {}
@@ -39,7 +66,8 @@ class TagsView(APIView, DBMixin):
         return jsonify(data)
 
     @api_key
-    def post(self):
+    @api_params(schema=POST_SCHEMA, validation_type=ValidationTypes.json)
+    def post(self, json_data):
         """
         If the tag_name doesn't exist, this
         saves a new tag in the database.
@@ -51,27 +79,25 @@ class TagsView(APIView, DBMixin):
         API key must be provided as header.
         """
 
-        data = request.get_json()
+        json_data = json_data[0]
 
-        tag_name = data.get("tag_name")
-        tag_content = data.get("tag_content")
+        tag_name = json_data.get("tag_name")
+        tag_content = json_data.get("tag_content")
 
-        if tag_name and tag_content:
-            self.db.insert(
-                self.table_name,
-                {
-                    "tag_name": tag_name,
-                    "tag_content": tag_content
-                },
-                conflict="update"  # If it exists, update it.
-            )
-        else:
-            return self.error(ErrorCodes.incorrect_parameters)
+        self.db.insert(
+            self.table_name,
+            {
+                "tag_name": tag_name,
+                "tag_content": tag_content
+            },
+            conflict="update"  # If it exists, update it.
+        )
 
         return jsonify({"success": True})
 
     @api_key
-    def delete(self):
+    @api_params(schema=DELETE_SCHEMA, validation_type=ValidationTypes.json)
+    def delete(self, data):
         """
         Deletes a tag from the database.
 
@@ -79,17 +105,12 @@ class TagsView(APIView, DBMixin):
         API key must be provided as header.
         """
 
-        data = request.get_json()
-        tag_name = data.get("tag_name")
+        json = data[0]
+        tag_name = json.get("tag_name")
 
-        if tag_name:
-            self.db.delete(
-                self.table_name,
-                tag_name,
-                return_changes=True
-            )
-
-        else:
-            return self.error(ErrorCodes.incorrect_parameters)
+        self.db.delete(
+            self.table_name,
+            tag_name
+        )
 
         return jsonify({"success": True})

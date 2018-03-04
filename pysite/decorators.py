@@ -48,6 +48,7 @@ def api_params(schema: Schema, validation_type: ValidationTypes = ValidationType
 
                     if not isinstance(data, list):
                         data = [data]
+
                 except JSONDecodeError:
                     return self.error(ErrorCodes.bad_data_format)  # pragma: no cover
 

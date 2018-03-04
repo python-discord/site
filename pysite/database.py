@@ -104,7 +104,7 @@ class RethinkDB:
             return True
 
     def delete(self, table_name: str, primary_key: Optional[str] = None,
-               durability: str="hard", return_changes: Union[bool, str] = False
+               durability: str = "hard", return_changes: Union[bool, str] = False
                ) -> Union[Dict[str, Any], None]:
         """
         Delete one or all documents from a table. This can only delete

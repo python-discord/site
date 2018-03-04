@@ -27,7 +27,14 @@ class APIErrorView(ErrorView):
         as well as propagating its status code
         """
 
+        message = str(error)
+        code = 500
+
+        if isinstance(error, HTTPException):
+            message = error.description
+            code = error.code
+
         return jsonify({
             "error_code": -1,
-            "error_message": error.description
-        }), error.code
+            "error_message": message
+        }), code
