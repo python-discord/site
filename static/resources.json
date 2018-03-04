@@ -1,0 +1,12 @@
+{
+  "category": {
+    "name": {
+      "description": "description",
+      "url": "url"
+    },
+    "name2": {
+      "description": "description",
+      "url": "url"
+    }
+  }
+}
