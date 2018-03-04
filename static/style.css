@@ -25,7 +25,7 @@
     top: 45px !important;
 }
 
-.uk-article-title a {
+.hover-title a {
     visibility: hidden;
     opacity: 0;
 
@@ -34,7 +34,7 @@
     -webkit-transition: opacity 200ms ease-in-out;
 }
 
-.uk-article-title:hover a {
+.hover-title:hover a {
     visibility: visible;
     opacity: 1;
 
