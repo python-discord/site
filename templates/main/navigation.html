@@ -11,18 +11,24 @@
             </a>
         </div>
 
-        <div class="uk-navbar-right uk-visible@m">
-            <ul class="uk-navbar-nav">
+        <div class="uk-navbar-right">
+            <ul class="uk-navbar-nav uk-visible@m">
                 {% if current_page == "index" %}
                     <li class="uk-active"><a href="/"><i class="uk-icon fas fa-home"></i> &nbsp;Home</a></li>
                 {% else %}
                     <li><a href="/"><i class="uk-icon fas fa-home"></i> &nbsp;Home</a></li>
                 {% endif %}
                 <li><a href="/invite"><i class="uk-icon fab fa-discord"></i> &nbsp;Discord</a></li>
+            </ul>
+            <ul class="uk-navbar-nav">
                 <li>
                     <a><i class="uk-icon fas fa-chevron-down"></i></a>
                     <div class="uk-navbar-dropdown uk-background-secondary" uk-dropdown>
                         <ul class="uk-nav uk-navbar-dropdown-nav">
+                            <li class="uk-nav-header uk-hidden@m">Navigation</li>
+                            <li class="uk-nav-item uk-hidden@m"><a href="/"><i class="uk-icon fas fa-home"></i> &nbsp;Home</a></li>
+                            <li class="uk-nav-item uk-hidden@m"><a href="/invite"><i class="uk-icon fab fa-discord"></i> &nbsp;Discord</a></li>
+                            <li class="uk-nav-divider uk-hidden@m"></li>
                             {% if current_page.startswith("info") %}
                                 <li class="uk-nav-header uk-active"><a href="/info">Information</a></li>
                             {% else %}
@@ -52,17 +58,5 @@
                 </li>
             </ul>
         </div>
-
-        <div class="uk-navbar-right uk-hidden@m">
-            <button class="uk-button" style="font-size: 2em;"><i class="uk-icon fas fa-angle-down"></i></button>
-                <div uk-dropdown>
-                    <ul class="uk-nav uk-dropdown-nav">
-                        <li class="uk-nav-item"><a href="/"><i class="uk-icon fas fa-home"></i> &nbsp;Home</a></li>
-                        <li class="uk-nav-item"><a href="/invite"><i class="uk-icon fab fa-discord"></i> &nbsp;Discord</a></li>
-                        <li class="uk-nav-item"><a href="/info/help"><i class="uk-icon fas fa-question"></i> &nbsp;Getting Help</a></li>
-                    </ul>
-                </div>
-        </div>
-
     </nav>
 </div>
