@@ -1,11 +1,11 @@
-{% extends "base.html" %}
+{% extends "main/base.html" %}
 {% block title %}WS Test{% endblock %}
 {% block content %}
     <div class="uk-container uk-section">
         <h1>Open your JS console to test</h1>
 
         <script type="application/javascript">
-            let ws = new WebSocket("ws://api.{{ server_name }}/ws/echo");
+            let ws = new WebSocket("wss://api.{{ server_name }}/ws/echo");
 
             ws.onopen = function(event) {
                 console.log("WS opened! Use send() to send a message.");

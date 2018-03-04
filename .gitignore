@@ -45,6 +45,7 @@ nosetests.xml
 coverage.xml
 *.cover
 .hypothesis/
+.pytest_cache/
 
 # Translations
 *.mo
@@ -102,3 +103,6 @@ ENV/
 
 # RethinkDB data
 rethinkdb_data/
+
+# Vagrant
+.vagrant/

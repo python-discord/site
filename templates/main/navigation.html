@@ -1,0 +1,64 @@
+<style>
+    .uk-navbar-nav:first-child {
+        margin-left: -20px;
+    }
+</style>
+<div class="uk-container uk-container-expand uk-background-secondary uk-light" uk-sticky="sel-target: .uk-navbar-container; cls-active: uk-navbar-sticky">
+    <nav data-uk-navbar class="uk-navbar-container uk-navbar-transparent" uk-navbar="boundary-align: true">
+        <div class="uk-navbar-left uk-padding-remove-left">
+            <a href="/" class="uk-navbar-item uk-logo uk-padding-remove-left">
+                <img src="/static/logos/logo_banner.png" style="margin-left: -10px; padding-left: 3px; height: 50%"/>
+            </a>
+        </div>
+
+        <div class="uk-navbar-right">
+            <ul class="uk-navbar-nav uk-visible@m">
+                {% if current_page == "index" %}
+                    <li class="uk-active"><a href="/"><i class="uk-icon fas fa-home"></i> &nbsp;Home</a></li>
+                {% else %}
+                    <li><a href="/"><i class="uk-icon fas fa-home"></i> &nbsp;Home</a></li>
+                {% endif %}
+                <li><a href="/invite"><i class="uk-icon fab fa-discord"></i> &nbsp;Discord</a></li>
+            </ul>
+            <ul class="uk-navbar-nav">
+                <li>
+                    <a><i class="uk-icon fas fa-chevron-down"></i></a>
+                    <div class="uk-navbar-dropdown uk-background-secondary" uk-dropdown>
+                        <ul class="uk-nav uk-navbar-dropdown-nav">
+                            <li class="uk-nav-header uk-hidden@m">Navigation</li>
+                            <li class="uk-nav-item uk-hidden@m"><a href="/"><i class="uk-icon fas fa-home"></i> &nbsp;Home</a></li>
+                            <li class="uk-nav-item uk-hidden@m"><a href="/invite"><i class="uk-icon fab fa-discord"></i> &nbsp;Discord</a></li>
+                            <li class="uk-nav-divider uk-hidden@m"></li>
+
+                            {% if current_page.startswith("info") %}
+                                <li class="uk-nav-header uk-active">Information</li>
+                            {% else %}
+                                <li class="uk-nav-header">Information</li>
+                            {% endif %}
+
+                            {% if current_page == "info/help" %}
+                                <li class="uk-active"><a href="/info/help">Getting Help</a></li>
+                            {% else %}
+                                <li><a href="/info/help">Getting Help</a></li>
+                            {% endif %}
+
+                            {% if current_page == "info/rules" %}
+                                <li class="uk-active"><a href="/info/rules">Server Rules</a></li>
+                            {% else %}
+                                <li><a href="/info/rules">Server Rules</a></li>
+                            {% endif %}
+
+                            {% if current_page == "info/resources" %}
+                                <li class="uk-active"><a href="/info/resources">Resources</a></li>
+                            {% else %}
+                                <li><a href="/info/resources">Resources</a></li>
+                            {% endif %}
+
+                            <li class="uk-nav-divider"></li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>

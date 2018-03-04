@@ -1,12 +1,19 @@
 # coding=utf-8
 import importlib
 import inspect
+import logging
 import os
 
-from flask import Blueprint, Flask, g
+from flask import Blueprint, Flask
+from flask_dance.contrib.discord import make_discord_blueprint
+from flask_sockets import Sockets
 
 from pysite.base_route import APIView, BaseView, ErrorView, RouteView
+from pysite.constants import DISCORD_OAUTH_ID, DISCORD_OAUTH_SCOPE, \
+    DISCORD_OAUTH_SECRET, DISCORD_OAUTH_REDIRECT, DISCORD_OAUTH_AUTHORIZED
 from pysite.database import RethinkDB
+from pysite.oauth import OauthBackend
+from pysite.websockets import WS
 
 TEMPLATES_PATH = "../templates"
 STATIC_PATH = "../static"
@@ -19,38 +26,62 @@ class RouteManager:
         self.app = Flask(
             __name__, template_folder=TEMPLATES_PATH, static_folder=STATIC_PATH, static_url_path="/static",
         )
+        self.sockets = Sockets(self.app)
+
         self.db = RethinkDB()
+        self.log = logging.getLogger()
         self.app.secret_key = os.environ.get("WEBPAGE_SECRET_KEY", "super_secret")
         self.app.config["SERVER_NAME"] = os.environ.get("SERVER_NAME", "pythondiscord.com:8080")
         self.app.before_request(self.db.before_request)
         self.app.teardown_request(self.db.teardown_request)
 
-        # Store the database in the Flask global context
-        with self.app.app_context():
-            g.db = self.db  # type: RethinkDB
-
         # Load the main blueprint
         self.main_blueprint = Blueprint("main", __name__)
-        print(f"Loading Blueprint: {self.main_blueprint.name}")
+        self.log.debug(f"Loading Blueprint: {self.main_blueprint.name}")
         self.load_views(self.main_blueprint, "pysite/views/main")
+        self.load_views(self.main_blueprint, "pysite/views/error_handlers")
         self.app.register_blueprint(self.main_blueprint)
-        print("")
+        self.log.debug("")
+
+        # Load the oauth blueprint
+        self.oauth_blueprint = make_discord_blueprint(
+            DISCORD_OAUTH_ID,
+            DISCORD_OAUTH_SECRET,
+            DISCORD_OAUTH_SCOPE,
+            '/',
+            login_url=DISCORD_OAUTH_REDIRECT,
+            authorized_url=DISCORD_OAUTH_AUTHORIZED
+        )
+        self.oauth_blueprint.backend = OauthBackend(self)
+        self.log.debug(f"Loading Blueprint: {self.oauth_blueprint.name}")
+        self.app.register_blueprint(self.oauth_blueprint)
+        self.log.debug("")
 
         # Load the subdomains
         self.subdomains = ['api', 'staff']
 
         for sub in self.subdomains:
-            self.sub_blueprint = Blueprint(sub, __name__, subdomain=sub)
+            sub_blueprint = Blueprint(sub, __name__, subdomain=sub)
+            self.log.debug(f"Loading Blueprint: {sub_blueprint.name}")
+            self.load_views(sub_blueprint, f"pysite/views/{sub}")
+            self.app.register_blueprint(sub_blueprint)
 
-            print(f"Loading Blueprint: {self.sub_blueprint.name}")
-            self.load_views(self.sub_blueprint, f"pysite/views/{sub}")
-            self.app.register_blueprint(self.sub_blueprint)
-            print("")
+        # Load the websockets
+        self.ws_blueprint = Blueprint("ws", __name__)
+
+        self.log.debug("Loading websocket routes...")
+        self.load_views(self.ws_blueprint, "pysite/views/ws")
+        self.sockets.register_blueprint(self.ws_blueprint, url_prefix="/ws")
 
     def run(self):
-        self.app.run(
-            port=int(os.environ.get("WEBPAGE_PORT", 8080)), debug="FLASK_DEBUG" in os.environ
+        from gevent.pywsgi import WSGIServer
+        from geventwebsocket.handler import WebSocketHandler
+
+        server = WSGIServer(
+            ("", int(os.environ.get("WEBPAGE_PORT", 8080))),
+            self.app, handler_class=WebSocketHandler
         )
+        server.serve_forever()
 
     def load_views(self, blueprint, location="pysite/views"):
         for filename in os.listdir(location):
@@ -69,7 +100,11 @@ class RouteManager:
                             cls is not ErrorView and
                             cls is not RouteView and
                             cls is not APIView and
-                            BaseView in cls.__mro__
+                            cls is not WS and
+                            (
+                                BaseView in cls.__mro__ or
+                                WS in cls.__mro__
+                            )
                     ):
                         cls.setup(self, blueprint)
-                        print(f">> View loaded: {cls.name: <15} ({module.__name__}.{cls_name})")
+                        self.log.debug(f">> View loaded: {cls.name: <15} ({module.__name__}.{cls_name})")

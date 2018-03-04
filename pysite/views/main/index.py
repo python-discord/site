@@ -7,4 +7,4 @@ class IndexView(RouteView):
     name = "index"
 
     def get(self):
-        return self.render("index.html")
+        return self.render("main/index.html")

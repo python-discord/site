@@ -1,11 +1,10 @@
 # coding=utf-8
-
+import logging
 import os
 from typing import Any, Callable, Dict, Iterator, List, Optional, Union
 
-from flask import abort
-
 import rethinkdb
+from flask import abort
 from rethinkdb.ast import RqlMethodQuery, Table, UserError
 from rethinkdb.net import DefaultConnection
 
@@ -16,6 +15,7 @@ class RethinkDB:
         self.host = os.environ.get("RETHINKDB_HOST", "127.0.0.1")
         self.port = os.environ.get("RETHINKDB_PORT", "28016")
         self.database = os.environ.get("RETHINKDB_DATABASE", "pythondiscord")
+        self.log = logging.getLogger()
         self.conn = None
 
         rethinkdb.set_loop_type(loop_type)
@@ -23,9 +23,9 @@ class RethinkDB:
         with self.get_connection(connect_database=False) as conn:
             try:
                 rethinkdb.db_create(self.database).run(conn)
-                print(f"Database created: '{self.database}'")
+                self.log.debug(f"Database created: '{self.database}'")
             except rethinkdb.RqlRuntimeError:
-                print(f"Database found: '{self.database}'")
+                self.log.debug(f"Database found: '{self.database}'")
 
     def get_connection(self, connect_database: bool=True) -> DefaultConnection:
         """
@@ -80,9 +80,10 @@ class RethinkDB:
 
         with self.get_connection() as conn:
             all_tables = rethinkdb.db(self.database).table_list().run(conn)
+            self.log.debug(f"Call to table_list returned the following list of tables: {all_tables}")
 
             if table_name in all_tables:
-                print(f"Table found: '{table_name}' ({len(all_tables)} tables in total)")
+                self.log.debug(f"Table found: '{table_name}' ({len(all_tables)} tables in total)")
                 return False
 
             # Use a kwargs dict because the driver doesn't check the value
@@ -99,8 +100,36 @@ class RethinkDB:
 
             rethinkdb.db(self.database).table_create(table_name, **kwargs).run(conn)
 
-            print(f"Table created: '{table_name}'")
+            self.log.debug(f"Table created: '{table_name}'")
             return True
+
+    def delete(self, table_name: str, primary_key: Union[str, None] = None,
+               durability: str="hard", return_changes: Union[bool, str] = False
+               ) -> Union[Dict[str, Any], None]:
+        """
+        Delete one or all documents from a table. This can only delete
+        either the contents of an entire table, or a single document.
+        For more complex delete operations, please use self.query.
+
+        :param table_name: The name of the table to delete from. This must be provided.
+        :param primary_key: The primary_key to delete from that table. This is optional.
+        :param durability: "hard" (the default) to write the change immediately, "soft" otherwise
+        :param return_changes: Whether to return a list of changed values or not - defaults to False
+        :return: if return_changes is True, returns a dict containing all changes. Else, returns None.
+        """
+
+        if primary_key:
+            query = self.query(table_name).get(primary_key).delete(
+                durability=durability, return_changes=return_changes
+            )
+        else:
+            query = self.query(table_name).delete(
+                durability=durability, return_changes=return_changes
+            )
+
+        if return_changes:
+            return self.run(query, coerce=dict)
+        self.run(query)
 
     def drop_table(self, table_name: str):
         """
@@ -167,7 +196,7 @@ class RethinkDB:
         :param connect_database: If creating a new connection, whether to connect to the database immediately
         :param coerce: Optionally, an object type to attempt to coerce the result to
 
-        :return: THe result of the operation
+        :return: The result of the operation
         """
 
         if not new_connection:
@@ -207,7 +236,7 @@ class RethinkDB:
         """
 
         query = self.query(table_name).insert(
-            *objects, durability=durability, return_changes=return_changes, conflict=conflict
+            objects, durability=durability, return_changes=return_changes, conflict=conflict
         )
 
         if return_changes:
@@ -225,11 +254,11 @@ class RethinkDB:
         :return: The document, or None if it wasn't found
         """
 
-        result = self.run(
+        result = self.run(  # pragma: no cover
             self.query(table_name).get(key)
         )
 
-        return dict(result) if result else None
+        return dict(result) if result else None  # pragma: no cover
 
     def get_all(self, table_name: str, *keys: str, index: str="id") -> List[Any]:
         """
@@ -242,7 +271,7 @@ class RethinkDB:
         :return: A list of matching documents; may be empty if no matches were made
         """
 
-        return self.run(
+        return self.run(  # pragma: no cover
             self.query(table_name).get_all(*keys, index=index),
             coerce=list
         )
@@ -259,7 +288,7 @@ class RethinkDB:
         :return: True; but may return False if the timeout was reached
         """
 
-        result = self.run(
+        result = self.run(  # pragma: no cover
             self.query(table_name).wait(wait_for=wait_for, timeout=timeout),
             coerce=dict
         )
@@ -274,12 +303,12 @@ class RethinkDB:
 
         :return: True if the sync was successful; False otherwise
         """
-        result = self.run(
+        result = self.run(  # pragma: no cover
             self.query(table_name).sync(),
             coerce=dict
         )
 
-        return result.get("synced", 0) > 0
+        return result.get("synced", 0) > 0  # pragma: no cover
 
     def changes(self, table_name: str, squash: Union[bool, int]=False, changefeed_queue_size: int=100_000,
                 include_initial: Optional[bool]=None, include_states: bool=False,
@@ -333,7 +362,7 @@ class RethinkDB:
         :return: A special iterator that will iterate over documents in the changefeed as they're sent. If there is
             no document waiting, this will block the function until there is.
         """
-        return self.run(
+        return self.run(  # pragma: no cover
             self.query(table_name).changes(
                 squash=squash, changefeed_queue_size=changefeed_queue_size, include_initial=include_initial,
                 include_states=include_states, include_offsets=False, include_types=include_types
@@ -365,8 +394,9 @@ class RethinkDB:
         :return: A list containing the requested documents, with only the keys requested
         """
 
-        return self.run(
-            self.query(table_name).pluck(*selectors)
+        return self.run(  # pragma: no cover
+            self.query(table_name).pluck(*selectors),
+            coerce=list
         )
 
     def without(self, table_name: str, *selectors: Union[str, Dict[str, Union[List, Dict]]]):
@@ -384,7 +414,7 @@ class RethinkDB:
         :return: A list containing the requested documents, without the keys requested
         """
 
-        return self.run(
+        return self.run(  # pragma: no cover
             self.query(table_name).without(*selectors)
         )
 
@@ -418,7 +448,7 @@ class RethinkDB:
 
         :return: A list of matched documents; may be empty
         """
-        return self.run(
+        return self.run(  # pragma: no cover
             self.query(table_name).between(lower, upper, index=index, left_bound=left_bound, right_bound=right_bound),
             coerce=list
         )
@@ -445,7 +475,7 @@ class RethinkDB:
         :return: Unknown, needs more testing
         """
 
-        return self.run(
+        return self.run(  # pragma: no cover
             self.query(table_name).map(func),
             coerce=list
         )
@@ -475,7 +505,7 @@ class RethinkDB:
         :return: A list of documents that match the predicate; may be empty
         """
 
-        return self.run(
+        return self.run(  # pragma: no cover
             self.query(table_name).filter(predicate, default=default),
             coerce=list
         )

@@ -1,16 +1,11 @@
 # coding=utf-8
-import os
-import random
-import string
-from functools import wraps
+from collections import Iterable
+from typing import Any
 
-from flask import Blueprint, g, jsonify, render_template, request
+from flask import Blueprint, Response, jsonify, render_template
 from flask.views import MethodView
 
-from rethinkdb.ast import Table
-
 from pysite.constants import ErrorCodes
-from pysite.database import RethinkDB
 
 
 class BaseView(MethodView):
@@ -22,7 +17,14 @@ class BaseView(MethodView):
 
     name = None  # type: str
 
-    def render(self, *template_names, **context):
+    def render(self, *template_names: str, **context: Any) -> str:
+        """
+        Render some templates and get them back in a form that you can simply return from your view function.
+
+        :param template_names: Names of the templates to render
+        :param context: Extra data to pass into the template
+        :return: String representing the rendered templates
+        """
         context["current_page"] = self.name
         context["view"] = self
 
@@ -84,30 +86,13 @@ class APIView(RouteView):
     ...         return self.error(ErrorCodes.unknown_route)
     """
 
-    def validate_key(self, api_key: str):
-        """ Placeholder! """
-        return api_key == os.environ.get("API_KEY")
-
-    def generate_api_key(self):
-        """ Generate a random string of n characters. """
-        pool = random.choices(string.ascii_letters + string.digits, k=32)
-        return "".join(pool)
-
-    def valid_api_key(f):
+    def error(self, error_code: ErrorCodes) -> Response:
         """
-        Decorator to check if X-API-Key is valid.
+        Generate a JSON response for you to return from your handler, for a specific type of API error
+
+        :param error_code: The type of error to generate a response for - see `constants.ErrorCodes` for more
+        :return: A Flask Response object that you can return from your handler
         """
-        @wraps(f)
-        def has_valid_api_key(*args, **kwargs):
-            if not request.headers.get("X-API-Key") == os.environ.get("API_KEY"):
-                resp = jsonify({"error_code": 401, "error_message": "Invalid API-Key"})
-                resp.status_code = 401
-                return resp
-            return f(*args, **kwargs)
-
-        return has_valid_api_key
-
-    def error(self, error_code: ErrorCodes):
 
         data = {
             "error_code": error_code.value,
@@ -125,58 +110,16 @@ class APIView(RouteView):
         elif error_code is ErrorCodes.invalid_api_key:
             data["error_message"] = "Invalid API-key"
             http_code = 401
-        elif error_code is ErrorCodes.missing_parameters:
-            data["error_message"] = "Not all required parameters were provided"
+        elif error_code is ErrorCodes.bad_data_format:
+            data["error_message"] = "Input data in incorrect format"
+            http_code = 400
+        elif error_code is ErrorCodes.incorrect_parameters:
+            data["error_message"] = "Incorrect parameters provided"
+            http_code = 400
 
         response = jsonify(data)
         response.status_code = http_code
         return response
-
-
-class DBViewMixin:
-    """
-    Mixin for views that make use of RethinkDB. It can automatically create a table with the specified primary
-    key using the attributes set at class-level.
-
-    This class is intended to be mixed in alongside one of the other view classes. For example:
-
-    >>> class MyView(APIView, DBViewMixin):
-    ...     name = "my_view"  # Flask internal name for this route
-    ...     path = "/my_view"  # Actual URL path to reach this route
-    ...     table_name = "my_table"  # Name of the table to create
-    ...     table_primary_key = "username"  # Primary key to set for this table
-
-    You may omit `table_primary_key` and it will be defaulted to RethinkDB's default column - "id".
-    """
-
-    table_name = ""  # type: str
-    table_primary_key = "id"  # type: str
-
-    @classmethod
-    def setup(cls: "DBViewMixin", manager: "pysite.route_manager.RouteManager", blueprint: Blueprint):
-        """
-        Set up the view by creating the table specified by the class attributes - this will also deal with multiple
-        inheritance by calling `super().setup()` as appropriate.
-
-        :param manager: Instance of the current RouteManager (used to get a handle for the database object)
-        :param blueprint: Current Flask blueprint
-        """
-
-        if hasattr(super(), "setup"):
-            super().setup(manager, blueprint)
-
-        if not cls.table_name:
-            raise RuntimeError("Routes using DBViewMixin must define `table_name`")
-
-        manager.db.create_table(cls.table_name, primary_key=cls.table_primary_key)
-
-    @property
-    def table(self) -> Table:
-        return self.db.query(self.table_name)
-
-    @property
-    def db(self) -> RethinkDB:
-        return g.db
 
 
 class ErrorView(BaseView):
@@ -189,18 +132,23 @@ class ErrorView(BaseView):
     >>> class MyView(ErrorView):
     ...     name = "my_view"  # Flask internal name for this route
     ...     path = "/my_view"  # Actual URL path to reach this route
-    ...     error_code = 404
+    ...     error_code = 404  # Error code
     ...
-    ...     def get(self):  # Name your function after the relevant HTTP method
+    ...     def get(self, error: HTTPException):  # Name your function after the relevant HTTP method
     ...         return "Replace me with a template, 404 not found", 404
+
+    If you'd like to catch multiple HTTP error codes, feel free to supply an iterable for `error_code`. For example...
+
+    >>> error_code = [401, 403]  # Handle two specific errors
+    >>> error_code = range(500, 600)  # Handle all 5xx errors
     """
 
-    error_code = None  # type: int
+    error_code = None  # type: Union[int, Iterable]
 
     @classmethod
     def setup(cls: "ErrorView", manager: "pysite.route_manager.RouteManager", blueprint: Blueprint):
         """
-        Set up the view by registering it as the error handler for the HTTP status code specified in the class
+        Set up the view by registering it as the error handler for the HTTP status codes specified in the class
         attributes - this will also deal with multiple inheritance by calling `super().setup()` as appropriate.
 
         :param manager: Instance of the current RouteManager
@@ -208,9 +156,19 @@ class ErrorView(BaseView):
         """
 
         if hasattr(super(), "setup"):
-            super().setup(manager, blueprint)
+            super().setup(manager, blueprint)  # pragma: no cover
 
         if not cls.name or not cls.error_code:
             raise RuntimeError("Error views must have both `name` and `error_code` defined")
 
-        blueprint.errorhandler(cls.error_code)(cls.as_view(cls.name))
+        if isinstance(cls.error_code, int):
+            cls.error_code = [cls.error_code]
+
+        if isinstance(cls.error_code, Iterable):
+            for code in cls.error_code:
+                try:
+                    manager.app.errorhandler(code)(cls.as_view(cls.name))
+                except KeyError:  # This happens if we try to register a handler for a HTTP code that doesn't exist
+                    pass
+        else:
+            raise RuntimeError("Error views must have an `error_code` that is either an `int` or an iterable")  # pragma: no cover # noqa: E501

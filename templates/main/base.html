@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block head %}
+        <title>Python | {% block title %}{% endblock %}</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+        <script defer src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.39/js/uikit.min.js"></script>
+        <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+        <link rel="stylesheet" href="/static/uikit_blurple.css"/>
+        <link rel="stylesheet" href="/static/style.css"/>
+
+        <!-- OpenGraph metadata -->
+        <meta property="og:title" content="Python Discord">
+        <meta property="og:description" content="We're a large, friendly community focused around the Python programming language. Our community is open to those who wish to learn the language, as well as those looking to help others.">
+        <meta content="/static/logos/logo_discord.png" property="og:image">
+    {% endblock %}
+    {% block extra_head %}
+
+    {% endblock %}
+</head>
+<body class="page-{{ current_page }}">
+{% include "main/navigation.html" %}
+{% if current_page != "index" %}
+    {% block beta_error %}
+        <div class="uk-container uk-section" style="padding-top: 10px; padding-bottom: 10px;">
+            <div class="uk-container uk-container-small">
+                <div class="uk-alert-danger" uk-alert>
+                    <p>
+                        Please note: this site is under construction. What you see now may be vastly different
+                        from the final project state. Feel free to chat to us on Discord if you're curious!
+                    </p>
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+{% endif %}
+{% block content %}{% endblock %}
+</body>
+</html>

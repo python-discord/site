@@ -10,6 +10,6 @@ class WSTest(RouteView):
 
     def get(self):
         return self.render(
-            "ws_test.html",
+            "main/ws_test.html",
             server_name=os.environ.get("SERVER_NAME", "localhost")
         )
