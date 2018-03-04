@@ -1,4 +1,6 @@
 # coding=utf-8
+from flask import redirect
+
 from pysite.base_route import RouteView
 
 
@@ -7,4 +9,4 @@ class IndexView(RouteView):
     name = "info"
 
     def get(self):
-        return self.render("main/info/index.html")
+        return redirect("/info/resources")
