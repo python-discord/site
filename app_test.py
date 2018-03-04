@@ -82,7 +82,7 @@ class BaseEndpoints(SiteTest):
 
     def test_oauth_login(self):
         """check oauth redirects """
-        response = self.client.get(DISCORD_OAUTH_LOGIN)
+        response = self.client.get(DISCORD_OAUTH_REDIRECT)
         self.assertEqual(response.status_code, 302)
 
     def test_oauth_logout(self):
