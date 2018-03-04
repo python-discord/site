@@ -1,0 +1,56 @@
+{% extends "main/base.html" %}
+{% block title %}Resources{% endblock %}
+{% block content %}
+    <div class="uk-section">
+        <div class="uk-container uk-container-small">
+            <article class="uk-article">
+                <h1 class="uk-article-title hover-title" id="top">
+                    Resources
+
+                    <a href="#top" class="uk-text-primary" title="Permanent link to this header">
+                        <i class="fas fa-paragraph" data-fa-transform="shrink-8"></i>
+                    </a>
+                </h1>
+                <p class="uk-article-meta">
+                    Learn you a Haskell for great- wait, wrong book
+                </p>
+                <p>
+                    This page is intended to be a listing of useful resources for beginner and experienced Python
+                    programmers alike. This page is generated from a JSON file
+                    <a href="https://github.com/discord-python/site/blob/master/static/resources.json">on GitHub</a> -
+                    if there's a great resource that you love and you don't see it on this page, feel free to submit a
+                    pull request!
+                </p>
+
+                {% if categories is none %}
+                    <div class="uk-alert-danger" uk-alert>
+                        <p>
+                            We were unable to load the <code>resources.json</code> file. If you see this, please
+                            notify us!
+                        </p>
+                    </div>
+                {% else %}
+                    {% for category_name, category_data in categories.items() %}
+                        <h2 class="uk-heading-divider hover-title" id="{{ category_name.replace(" ", "-").lower() }}">
+                            {{ category_name }}
+
+                            <a href="#{{ category_name.replace(" ", "-").lower() }}" class="uk-text-primary" title="Permanent link to this header">
+                                <i class="fas fa-paragraph" data-fa-transform="shrink-8"></i>
+                            </a>
+                            <br/>
+                            <p class="uk-article-meta">
+                                {{ category_data.description }}
+                            </p>
+                        </h2>
+                        {% for item, data in category_data.resources.items() %}
+                            <p>
+                                <strong>{{ item }}</strong> &nbsp;<a href="{{ data.url }}"><i class="fas fa-link"></i></a><br />
+                                <span class="uk-text-meta">{{ data.description }}</span>
+                            </p>
+                        {% endfor %}
+                    {% endfor %}
+                {% endif %}
+            </article>
+        </div>
+    </div>
+{% endblock %}

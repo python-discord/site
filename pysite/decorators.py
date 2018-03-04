@@ -44,7 +44,10 @@ def api_params(schema: Schema, validation_type: ValidationTypes = ValidationType
                     if not request.is_json:
                         return self.error(ErrorCodes.bad_data_format)
 
-                    data = list(request.get_json())
+                    data = request.get_json()
+
+                    if not isinstance(data, list):
+                        data = [data]
                 except JSONDecodeError:
                     return self.error(ErrorCodes.bad_data_format)  # pragma: no cover
 
@@ -67,13 +70,14 @@ def api_params(schema: Schema, validation_type: ValidationTypes = ValidationType
                         # At least one key has a different number of values
                         return self.error(ErrorCodes.bad_data_format)  # pragma: no cover
 
-                for i in range(longest):  # Now we know all keys have the same number of values...
-                    obj = {}  # New dict to store this set of values
+                if longest is not None:
+                    for i in range(longest):  # Now we know all keys have the same number of values...
+                        obj = {}  # New dict to store this set of values
 
-                    for key, items in multi.lists():
-                        obj[key] = items[i]  # Store the item at that specific index
+                        for key, items in multi.lists():
+                            obj[key] = items[i]  # Store the item at that specific index
 
-                    data.append(obj)
+                        data.append(obj)
 
             else:
                 raise ValueError(f"Unknown validation type: {validation_type}")  # pragma: no cover
