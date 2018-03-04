@@ -33,8 +33,29 @@ class BaseEndpoints(SiteTest):
         response = self.client.get('/', 'http://pytest.local')
         self.assertEqual(response.status_code, 200)
 
+    def test_info_index(self):
+        """ Check the info index path responds with a 301 """
+        response = self.client.get('/info')
+        self.assertEqual(response.status_code, 301)
+
     def test_info_help(self):
         """ Check the info help path responds with 200 OK """
+        response = self.client.get('/info/help')
+        self.assertEqual(response.status_code, 200)
+
+    def test_info_resources(self):
+        """ Check the info resources path responds with 200 OK """
+        response = self.client.get('/info/resources')
+        self.assertEqual(response.status_code, 200)
+
+    def test_info_resources_json(self):
+        """ Check the resources JSON loads correctly """
+        response = self.client.get('/static/resources.json')
+        self.assertEqual(response.status_code, 200)
+        self.assertIsInstance(json.loads(response.data), dict)
+
+    def test_info_rules(self):
+        """ Check the info rules path responds with 200 OK """
         response = self.client.get('/info/help')
         self.assertEqual(response.status_code, 200)
 
