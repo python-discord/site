@@ -1,6 +1,6 @@
 # To Run Locally:
-1. CD into the directory with the rethinkdb exe
-2. In a command prompt: `retheinkdb --driver-port 28016 --http-port 28010`
+1. CD into the directory with the `rethinkdb.exe`
+2. In a command prompt: `rethinkdb --driver-port 28016 --http-port 28010`
 
 # Python Discord website
 
