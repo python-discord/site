@@ -13,21 +13,25 @@ app = manager.app
 
 
 class SiteTest(TestCase):
-    """ extend TestCase with flask app instantiation """
+    """ Extend TestCase with flask app instantiation """
+
     def create_app(self):
-        """ add flask app configuration settings """
+        """ Add flask app configuration settings """
         server_name = 'pytest.local'
+
         app.config['TESTING'] = True
         app.config['LIVESERVER_TIMEOUT'] = 10
         app.config['SERVER_NAME'] = server_name
         app.config['API_SUBDOMAIN'] = f'http://api.{server_name}'
         app.config['STAFF_SUBDOMAIN'] = f'http://staff.{server_name}'
         app.allow_subdomain_redirects = True
+
         return app
 
 
-class BaseEndpoints(SiteTest):
-    """ test cases for the base endpoints """
+class RootEndpoint(SiteTest):
+    """ Test cases for the root endpoint and error handling """
+
     def test_index(self):
         """ Check the root path reponds with 200 OK """
         response = self.client.get('/', 'http://pytest.local')
@@ -104,35 +108,74 @@ class ApiEndpoints(SiteTest):
         self.assertEqual(response.json, {'status': 'ok'})
         self.assertEqual(response.status_code, 200)
 
-    def test_api_tag(self):
-        """ Check tag api """
+    def test_api_tags(self):
+        """ Check tag API """
         os.environ['BOT_API_KEY'] = 'abcdefg'
         headers = {'X-API-Key': 'abcdefg', 'Content-Type': 'application/json'}
-        good_data = json.dumps({
+
+        post_data = json.dumps({
             'tag_name': 'testing',
-            'tag_content': 'testing',
-            'tag_category': 'testing'})
+            'tag_content': 'testing'
+        })
+
+        get_data = json.dumps({
+            'tag_name': 'testing'
+        })
 
         bad_data = json.dumps({
-            'not_a_valid_key': 'testing',
-            'tag_content': 'testing',
-            'tag_category': 'testing'})
+            'not_a_valid_key': 'gross_faceman'
+        })
 
-        response = self.client.get('/tag', app.config['API_SUBDOMAIN'])
+        # POST method - no headers
+        response = self.client.post('/tags', app.config['API_SUBDOMAIN'])
         self.assertEqual(response.status_code, 401)
 
-        response = self.client.get('/tag', app.config['API_SUBDOMAIN'], headers=headers)
-        self.assertEqual(response.status_code, 200)
-
-        response = self.client.post('/tag', app.config['API_SUBDOMAIN'], headers=headers, data=bad_data)
+        # POST method - no data
+        response = self.client.post('/tags', app.config['API_SUBDOMAIN'], headers=headers)
         self.assertEqual(response.status_code, 400)
 
-        response = self.client.post('/tag', app.config['API_SUBDOMAIN'], headers=headers, data=good_data)
-        self.assertEqual(response.json, {'success': True})
+        # POST method - bad data
+        response = self.client.post('/tags', app.config['API_SUBDOMAIN'], headers=headers, data=bad_data)
+        self.assertEqual(response.status_code, 400)
 
-        response = self.client.get('/tag', app.config['API_SUBDOMAIN'], headers=headers, data=good_data)
-        self.assertEqual(response.json, [{'tag_name': 'testing'}])
+        # POST method - save tag
+        response = self.client.post('/tags', app.config['API_SUBDOMAIN'], headers=headers, data=post_data)
         self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json, {"success": True})
+
+        # GET method - no headers
+        response = self.client.get('/tags', app.config['API_SUBDOMAIN'])
+        self.assertEqual(response.status_code, 401)
+
+        # GET method - get all tags
+        response = self.client.get('/tags', app.config['API_SUBDOMAIN'], headers=headers)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(type(response.json), list)
+
+        # GET method - get specific tag
+        response = self.client.get('/tags?tag_name=testing', app.config['API_SUBDOMAIN'], headers=headers)
+        self.assertEqual(response.json, {
+            'tag_content': 'testing',
+            'tag_name': 'testing'
+        })
+        self.assertEqual(response.status_code, 200)
+
+        # DELETE method - no headers
+        response = self.client.delete('/tags', app.config['API_SUBDOMAIN'])
+        self.assertEqual(response.status_code, 401)
+
+        # DELETE method - no data
+        response = self.client.delete('/tags', app.config['API_SUBDOMAIN'], headers=headers)
+        self.assertEqual(response.status_code, 400)
+
+        # DELETE method - bad data
+        response = self.client.delete('/tags', app.config['API_SUBDOMAIN'], headers=headers, data=bad_data)
+        self.assertEqual(response.status_code, 400)
+
+        # DELETE method - delete the testing tag
+        response = self.client.delete('/tags', app.config['API_SUBDOMAIN'], headers=headers, data=get_data)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json, {"success": True})
 
     def test_api_user(self):
         """ Check insert user """
