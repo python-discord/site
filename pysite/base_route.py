@@ -86,11 +86,12 @@ class APIView(RouteView):
     ...         return self.error(ErrorCodes.unknown_route)
     """
 
-    def error(self, error_code: ErrorCodes) -> Response:
+    def error(self, error_code: ErrorCodes, error_info: str = "") -> Response:
         """
         Generate a JSON response for you to return from your handler, for a specific type of API error
 
         :param error_code: The type of error to generate a response for - see `constants.ErrorCodes` for more
+        :param error_info: An optional message with more information about the error.
         :return: A Flask Response object that you can return from your handler
         """
 
