@@ -32,7 +32,6 @@ DISCORD_OAUTH_ID = environ.get('DISCORD_OAUTH_ID', '')
 DISCORD_OAUTH_SECRET = environ.get('DISCORD_OAUTH_SECRET', '')
 DISCORD_OAUTH_SCOPE = 'identify email guilds.join'
 
-
 ERROR_DESCRIPTIONS = {
     # 5XX
     500: "The server encountered an unexpected error ._.",

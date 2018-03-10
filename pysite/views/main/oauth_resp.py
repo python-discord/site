@@ -1,7 +1,6 @@
 # coding=utf-8
 from flask import redirect
 from flask import request as r
-
 import requests
 
 from pysite.base_route import RouteView

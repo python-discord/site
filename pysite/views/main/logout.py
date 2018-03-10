@@ -10,6 +10,7 @@ class LogoutView(RouteView):
 
     def get(self):
         if "session_id" in session:
+            # remove user's session
             del session["session_id"]
             logout()
         return redirect("/")

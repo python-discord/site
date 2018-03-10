@@ -13,9 +13,9 @@ app = manager.app
 
 
 class SiteTest(TestCase):
-    """ extend TestCase with flask app instantiation """
+    """ Extend TestCase with flask app instantiation """
     def create_app(self):
-        """ add flask app configuration settings """
+        """ Add flask app configuration settings """
         server_name = 'pytest.local'
         app.config['TESTING'] = True
         app.config['LIVESERVER_TIMEOUT'] = 10
@@ -27,7 +27,7 @@ class SiteTest(TestCase):
 
 
 class BaseEndpoints(SiteTest):
-    """ test cases for the base endpoints """
+    """ Test cases for the base endpoints """
     def test_index(self):
         """ Check the root path responds with 200 OK """
         response = self.client.get('/', 'http://pytest.local')
@@ -75,22 +75,22 @@ class BaseEndpoints(SiteTest):
         self.assertEqual(response.status_code, 302)
 
     def test_ws_test(self):
-        """ check ws_test responds """
+        """ Check ws_test responds """
         response = self.client.get('/ws_test')
         self.assertEqual(response.status_code, 200)
 
     def test_oauth_login(self):
-        """check oauth redirects """
+        """ Check oauth redirects """
         response = self.client.get('/discord')
         self.assertEqual(response.status_code, 302)
 
     def test_oauth_logout(self):
-        """check oauth redirects """
+        """ Check oauth redirects """
         response = self.client.get('/logout')
         self.assertEqual(response.status_code, 302)
 
     def test_oauth_authorized(self):
-        """check oauth authorization"""
+        """ Check oauth authorization"""
         response = self.client.get('/discord/authorized')
         self.assertEqual(response.status_code, 302)
 
@@ -100,13 +100,13 @@ class BaseEndpoints(SiteTest):
         self.assertEqual(response.status_code, 302)
 
     def test_500_easter_egg(self):
-        """Check the status of the /500 page"""
+        """ Check the status of the /500 page"""
         response = self.client.get("/500")
         self.assertEqual(response.status_code, 500)
 
 
 class ApiEndpoints(SiteTest):
-    """ test cases for the api subdomain """
+    """ Test cases for the api subdomain """
     def test_api_unknown_route(self):
         """ Check api unknown route """
         response = self.client.get('/', app.config['API_SUBDOMAIN'])
@@ -231,9 +231,9 @@ class Utilities(SiteTest):
             return True
 
 
-
 class MixinTests(SiteTest):
     """ Test cases for mixins """
+
     def test_dbmixin_runtime_error(self):
         """ Check that wrong values for error view setup raises runtime error """
         from pysite.mixins import DBMixin
