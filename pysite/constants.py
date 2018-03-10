@@ -46,5 +46,5 @@ ERROR_DESCRIPTIONS = {
 }
 
 # PaperTrail logging
-PAPERTRAIL_ADDRESS = os.environ.get("PAPERTRAIL_ADDRESS")
-PAPERTRAIL_PORT = int(os.environ.get("PAPERTRAIL_PORT", 0))
+PAPERTRAIL_ADDRESS = os.environ.get("PAPERTRAIL_ADDRESS") or None
+PAPERTRAIL_PORT = int(os.environ.get("PAPERTRAIL_PORT") or 0)
