@@ -69,6 +69,7 @@ export RETHINKDB_PORT="28016"
 export RETHINKDB_DATABASE="database"
 export RETHINKDB_TABLE="table"
 export BOT_API_KEY="abcdefghijklmnopqrstuvwxyz"
+export TEMPLATES_AUTO_RELOAD="yes"
 alias python=python3.6
 EOF
 
