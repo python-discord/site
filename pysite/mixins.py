@@ -6,7 +6,7 @@ from _weakref import ref
 from pysite.database import RethinkDB
 
 
-class DBMixin():
+class DBMixin:
     """
     Mixin for classes that make use of RethinkDB. It can automatically create a table with the specified primary
     key using the attributes set at class-level.

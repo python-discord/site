@@ -5,10 +5,15 @@ import logging
 import os
 
 from flask import Blueprint, Flask
+from flask_dance.contrib.discord import make_discord_blueprint
 from flask_sockets import Sockets
 
 from pysite.base_route import APIView, BaseView, ErrorView, RouteView
+from pysite.constants import (
+    DISCORD_OAUTH_ID, DISCORD_OAUTH_SCOPE, DISCORD_OAUTH_SECRET, DISCORD_OAUTH_REDIRECT, DISCORD_OAUTH_AUTHORIZED
+)
 from pysite.database import RethinkDB
+from pysite.oauth import OauthBackend
 from pysite.websockets import WS
 
 TEMPLATES_PATH = "../templates"
@@ -37,6 +42,20 @@ class RouteManager:
         self.load_views(self.main_blueprint, "pysite/views/main")
         self.load_views(self.main_blueprint, "pysite/views/error_handlers")
         self.app.register_blueprint(self.main_blueprint)
+        self.log.debug("")
+
+        # Load the oauth blueprint
+        self.oauth_blueprint = make_discord_blueprint(
+            DISCORD_OAUTH_ID,
+            DISCORD_OAUTH_SECRET,
+            DISCORD_OAUTH_SCOPE,
+            '/',
+            login_url=DISCORD_OAUTH_REDIRECT,
+            authorized_url=DISCORD_OAUTH_AUTHORIZED
+        )
+        self.oauth_blueprint.backend = OauthBackend(self)
+        self.log.debug(f"Loading Blueprint: {self.oauth_blueprint.name}")
+        self.app.register_blueprint(self.oauth_blueprint)
         self.log.debug("")
 
         # Load the subdomains

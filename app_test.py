@@ -5,6 +5,7 @@ from flask import Blueprint
 from flask_testing import TestCase
 
 from app import manager
+from pysite.constants import DISCORD_OAUTH_REDIRECT, DISCORD_OAUTH_AUTHORIZED
 
 manager.app.tests_blueprint = Blueprint("tests", __name__)
 manager.load_views(manager.app.tests_blueprint, "pysite/views/tests")
@@ -33,7 +34,7 @@ class RootEndpoint(SiteTest):
     """ Test cases for the root endpoint and error handling """
 
     def test_index(self):
-        """ Check the root path reponds with 200 OK """
+        """ Check the root path responds with 200 OK """
         response = self.client.get('/', 'http://pytest.local')
         self.assertEqual(response.status_code, 200)
 
@@ -82,6 +83,21 @@ class RootEndpoint(SiteTest):
         """ check ws_test responds """
         response = self.client.get('/ws_test')
         self.assertEqual(response.status_code, 200)
+
+    def test_oauth_login(self):
+        """check oauth redirects """
+        response = self.client.get(DISCORD_OAUTH_REDIRECT)
+        self.assertEqual(response.status_code, 302)
+
+    def test_oauth_logout(self):
+        """check oauth redirects """
+        response = self.client.get('/auth/logout')
+        self.assertEqual(response.status_code, 302)
+
+    def test_oauth_authorized(self):
+        """check oauth authorization"""
+        response = self.client.get(DISCORD_OAUTH_AUTHORIZED)
+        self.assertEqual(response.status_code, 302)
 
     def test_datadog_redirect(self):
         """ Check datadog path redirects """
