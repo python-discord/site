@@ -38,8 +38,8 @@ services:
       RETHINKDB_DATABASE: "database"
       RETHINKDB_TABLE: "table"
       BOT_API_KEY: "abcdefghijklmnopqrstuvwxyz"
-      TEMPLATES_AUTO_RELOAD: 1
-      DEBUG: 1
+      TEMPLATES_AUTO_RELOAD: "yes"
+
     networks:
       - pdnet
 
