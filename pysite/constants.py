@@ -1,6 +1,7 @@
 # coding=utf-8
 
 from enum import Enum, IntEnum
+import os
 
 
 class ErrorCodes(IntEnum):
@@ -43,3 +44,7 @@ ERROR_DESCRIPTIONS = {
     418: "I'm a teapot, I can't make coffee. (._.)",
     429: "Please don't send us that many requests."
 }
+
+# PaperTrail logging
+PAPERTRAIL_ADDRESS = os.environ.get("PAPERTRAIL_ADDRESS") or None
+PAPERTRAIL_PORT = int(os.environ.get("PAPERTRAIL_PORT") or 0)
