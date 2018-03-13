@@ -48,3 +48,7 @@ ERROR_DESCRIPTIONS = {
 # PaperTrail logging
 PAPERTRAIL_ADDRESS = os.environ.get("PAPERTRAIL_ADDRESS") or None
 PAPERTRAIL_PORT = int(os.environ.get("PAPERTRAIL_PORT") or 0)
+
+# DataDog logging
+DATADOG_ADDRESS = os.environ.get("DATADOG_ADDRESS") or None
+DATADOG_PORT = int(os.environ.get("DATADOG_PORT") or 0)
