@@ -9,4 +9,4 @@ class IndexView(RouteView):
     name = "info"
 
     def get(self):
-        return redirect("/info/resources")
+        return self.render("main/info/index.html")
