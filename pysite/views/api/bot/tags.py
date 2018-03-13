@@ -107,10 +107,13 @@ class TagsView(APIView, DBMixin):
 
         json = data[0]
         tag_name = json.get("tag_name")
+        tag_exists = self.db.get(self.table_name, tag_name)
 
-        self.db.delete(
-            self.table_name,
-            tag_name
-        )
+        if tag_exists:
+            self.db.delete(
+                self.table_name,
+                tag_name
+            )
+            return jsonify({"success": True})
 
-        return jsonify({"success": True})
+        return jsonify({"success": False})
