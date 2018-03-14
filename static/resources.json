@@ -4,15 +4,33 @@
     "resources": {
       "Automate the Boring Stuff with Python": {
         "description": "One of the best books out there for Python beginners. You can buy a copy, but there's also a free online version.",
-        "url": "https://automatetheboringstuff.com/"
+        "url": "https://automatetheboringstuff.com/",
+        "payment": "optional",
+        "payment_description": "A free version is available online, with the option to buy a physical copy"
+      },
+      "Code Combat": {
+        "description": "Learn Python while gaming - an open-source project with thousands of contributors, which teaches you Python through a deep, top-down RPG.",
+        "url": "https://codecombat.com/",
+        "payment": "optional",
+        "payment_description": "A wealth of free content is available, but you can also pay for more"
       },
       "Getting Started for Non-Programmers": {
         "description": "The list of resources for non-programmers from Python's official beginners' guide",
-        "url": "https://wiki.python.org/moin/BeginnersGuide/NonProgrammers"
+        "url": "https://wiki.python.org/moin/BeginnersGuide/NonProgrammers",
+        "payment": "free",
+        "payment_description": null
       },
       "Getting Started for Programmers": {
         "description": "The list of resources for programmers from Python's official beginners' guide",
-        "url": "https://wiki.python.org/moin/BeginnersGuide/Programmers"
+        "url": "https://wiki.python.org/moin/BeginnersGuide/Programmers",
+        "payment": "free",
+        "payment_description": null
+      },
+      "Python Tutorials by Corey Schafer on YouTube": {
+        "description": "An in-depth look at the Python programming language, from one of YouTube's most popular Python tutors.",
+        "url": "https://www.youtube.com/playlist?list=PL-osiE80TeTt2d9bfVyTiXJA-UTHn6WwU",
+        "payment": "free",
+        "payment_description": null
       }
     }
   },
@@ -21,24 +39,32 @@
     "resources": {
       "Visual Studio Code (Free)": {
         "description": "A fully-featured editor based on Electron, extendable with plugins.",
-        "url": "https://code.visualstudio.com/"
+        "url": "https://code.visualstudio.com/",
+        "payment": "free",
+        "payment_description": null
       },
       "Sublime Text (Paid, with shareware-style \"trial\")": {
         "description": "A powerful Python-backed editor with great community support and a wealth of extensions.",
-        "url": "https://www.sublimetext.com/"
+        "url": "https://www.sublimetext.com/",
+        "payment": "optional",
+        "payment_description": "Nagware; will ask you to buy the full version after every X saves"
       }
     }
   },
   "IDEs": {
     "description": "Fully-integrated development environments for serious Python work",
     "resources": {
-      "PyCharm (Community and Professional editions available)": {
+      "PyCharm": {
         "description": "The very best Python IDE, with a wealth of advanced features and convenience functions.",
-        "url": "https://www.jetbrains.com/pycharm/"
+        "url": "https://www.jetbrains.com/pycharm/",
+        "payment": "optional",
+        "payment_description": "There's a free Community Edition and a paid-for Professional Edition with more features available"
       },
       "Spyder (Free)": {
         "description": "The Scientific PYthon Development EnviRonment. Simpler and lighter than PyCharm, but still packs a punch.",
-        "url": "https://pythonhosted.org/spyder/"
+        "url": "https://pythonhosted.org/spyder/",
+        "payment": "free",
+        "payment_description": null
       }
     }
   }
