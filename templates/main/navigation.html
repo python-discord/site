@@ -36,6 +36,12 @@
                                 <li class="uk-nav-header"><a href="/info">Information</a></li>
                             {% endif %}
 
+                            {% if current_page == "info/jams" %}
+                                <li class="uk-active"><a href="/info/jams">Code Jams</a></li>
+                            {% else %}
+                                <li><a href="/info/jams">Code Jams</a></li>
+                            {% endif %}
+
                             {% if current_page == "info/help" %}
                                 <li class="uk-active"><a href="/info/help">Getting Help</a></li>
                             {% else %}
