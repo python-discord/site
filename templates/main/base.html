@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     {% block head %}
-        <title>Python | {% block title %}{% endblock %}</title>
+        <title>Python Discord | {% block title %}{% endblock %}</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
@@ -12,8 +12,8 @@
         <link rel="stylesheet" href="/static/style.css"/>
 
         <!-- OpenGraph metadata -->
-        <meta property="og:title" content="Python Discord">
-        <meta property="og:description" content="We're a large, friendly community focused around the Python programming language. Our community is open to those who wish to learn the language, as well as those looking to help others.">
+        <meta property="og:title" content="Python Discord | {% block og_title %}{% endblock %}">
+        <meta property="og:description" content="{% block og_description %}We're a large, friendly community focused around the Python programming language. Our community is open to those who wish to learn the language, as well as those looking to help others.{% endblock %}">
         <meta content="/static/logos/logo_discord.png" property="og:image">
     {% endblock %}
     {% block extra_head %}
