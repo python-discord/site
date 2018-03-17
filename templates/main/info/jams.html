@@ -18,7 +18,7 @@
                 </p>
 
                 <p>
-                    Every month, we aim to host a server-wide code jam, suitable for all members of the server. In
+                    Every two months or so, we aim to host a server-wide code jam, suitable for all members of the server. In
                     these, we announce a theme and date in advance, and users may sign up via a link provided in the
                     announcements channel on the server. Once the sign-up period is over, users are paired off into
                     teams. On the day of the code jam, we announce a task - each team will then work on a solution
@@ -32,10 +32,10 @@
                     If you'd like to join one of our code jams, feel free to ask a member of staff about the next one.
                 </p>
 
-                <h2 class="uk-article-title hover-title" id="top">
+                <h2 class="uk-article-title hover-title" id="rules">
                     Rules and Guidelines
 
-                    <a href="#top" class="uk-text-primary" title="Permanent link to this header">
+                    <a href="#rules" class="uk-text-primary" title="Permanent link to this header">
                         <i class="fas fa-paragraph" data-fa-transform="shrink-8"></i>
                     </a>
                 </h2>
@@ -67,10 +67,10 @@
                     <li>Communicate with your teammate - Add them as a friend, start a DM, and work together on the problem.</li>
                 </ul>
 
-                <h2 class="uk-article-title hover-title" id="top">
+                <h2 class="uk-article-title hover-title" id="getting-started">
                     Getting Started
 
-                    <a href="#top" class="uk-text-primary" title="Permanent link to this header">
+                    <a href="#getting-started" class="uk-text-primary" title="Permanent link to this header">
                         <i class="fas fa-paragraph" data-fa-transform="shrink-8"></i>
                     </a>
                 </h2>
@@ -84,10 +84,103 @@
                     then open a pull request with their project on the code jam repository.
                 </p>
                 <p>
-                    If you're not familiar with GitHub and Git in general, we're writing a guide just for you!
+                    Once the challenge task has been announced, head to the link provided to reach the challenge repository.
+                    In order to work on the task, you will need to fork the repository - this will create a copy of the
+                    repository under your account, which you will be able to work on with your teammate. To do so,
+                    log into GitHub and click on the "Fork" button on the repository page. Select your username from the
+                    dialogue, and it will be forked to your account.
+                </p>
+                <figure>
+                    <img src="/static/images/jams/jams_1.png" class="uk-align-center uk-border-rounded" />
+                    <img src="/static/images/jams/jams_2.png" class="uk-align-center uk-border-rounded" />
+                </figure>
+                <p>
+                    Once this has been done, you should find yourself looking at your new copy of the repository. Next
+                    up, you'll need to give your teammate access to it! Click on the "Settings" tab, click on
+                    "Collaborators", enter your password if you're prompted for it, and add your teammate as a
+                    collaborator.
+                </p>
+                <figure>
+                    <img src="/static/images/jams/jams_3.png" class="uk-align-center uk-border-rounded" />
+                    <img src="/static/images/jams/jams_4.png" class="uk-align-center uk-border-rounded" />
+                    <img src="/static/images/jams/jams_5.png" class="uk-align-center uk-border-rounded" />
+                </figure>
+                <p>
+                    Now that you've set up your repository, it's time to install Git. If you're on Linux, you can
+                    install Git using your system's package manager. Windows users can install
+                    <a href="https://git-scm.com/download/win">Git for Windows</a>, and Mac users can install Git
+                    using <a href="https://brew.sh">Homebrew</a>. Once you're all installed, open up a terminal
+                    (or open Git Bash if you're on Windows). For the purpose of illustration, we will be working on
+                    Windows, but this will work on any platform.
                 </p>
                 <p>
-                    This page is incomplete - watch this space!
+                    We will use Git to clone the repository to the machine. Simply type <code>git clone &lt;url&gt;</code>
+                    and Git will download a copy of the repository. The URL is the same one you use to get to the
+                    repository page on GitHub. Use <code>cd project-name</code> to change directory to the repository.
+                </p>
+                <figure>
+                    <img src="/static/images/jams/jams_6.png" class="uk-align-center uk-border-rounded" />
+                </figure>
+                <p>
+                    Now, open the newly-cloned repository in your favourite editor and make some edits. We'll be using
+                    <a href="https://code.visualstudio.com/">Visual Studio Code</a> in this example, but use whatever
+                    you prefer. For example, let's create a file named "hello.py", and add a line of code to it.
+                </p>
+                <figure>
+                    <img src="/static/images/jams/jams_7.png" class="uk-align-center uk-border-rounded" />
+                </figure>
+                <p>
+                    Now that we've edited a file, we need to make Git aware of our changes. Head back over to your
+                    terminal, and type <code>git add hello.py</code> to add this file to our changeset.
+                </p>
+                <p>
+                    Next up, we'll need to bundle up our changes into a commit, and push it to GitHub. To do that, we'll
+                    use <code>git commit -am "message"</code>. Make sure you use a descriptive message explaining why
+                    you made your changes and what they are, but try to keep it to a single line of text if you can.
+                    Following this, we can use <code>git push origin master</code> to push our commit up to GitHub.
+                </p>
+                <figure>
+                    <img src="/static/images/jams/jams_8.png" class="uk-align-center uk-border-rounded" />
+                    <img src="/static/images/jams/jams_9.png" class="uk-align-center uk-border-rounded" />
+                </figure>
+                <p>
+                    In order to pull the latest version of the code when the repository was cloned earlier, we can
+                    simply use the <code>git pull</code> command. In order to illustrate this, we will need to enlist
+                    the help of our lovely assistant...
+                </p>
+                <figure>
+                    <img src="/static/images/jams/jams_10.png" class="uk-align-center uk-border-rounded" />
+                    <img src="/static/images/jams/jams_11.png" class="uk-align-center uk-border-rounded" />
+                    <img src="/static/images/jams/jams_12.png" class="uk-align-center uk-border-rounded" />
+                </figure>
+                <p>
+                    Oh boy.
+                </p>
+                <p>
+                    Once you've pushed some code to the repository, you will notice a "Pull request" link. Click on
+                    that to create a pull request, which will let us know that you're working on the task and help us
+                    to keep track of things. Simply click on the "Create pull request" button on the next page, fill
+                    in the "Title" box and finish creating your pull request, and it'll be ready to go.
+                </p>
+                <figure>
+                    <img src="/static/images/jams/jams_13.png" class="uk-align-center uk-border-rounded" />
+                    <img src="/static/images/jams/jams_14.png" class="uk-align-center uk-border-rounded" />
+                    <img src="/static/images/jams/jams_15.png" class="uk-align-center uk-border-rounded" />
+                    <img src="/static/images/jams/jams_16.png" class="uk-align-center uk-border-rounded" />
+                </figure>
+                <p>
+                    Now that your pull request has been created, keep working on your project! Code that you push to
+                    GitHub will automatically be added to your pull request in real-time. As the code jam continues on,
+                    you may find review comments waiting from us. These are just suggestions to help you improve as
+                    a programmer - free advice from us. Feel free to incorporate our suggestions into your project
+                    if you wish.
+                </p>
+                <figure>
+                    <img src="/static/images/jams/jams_17.png" class="uk-align-center uk-border-rounded" />
+                </figure>
+                <p>
+                    That's all there is to it! Keep working at your task, do your best and you might just come out
+                    on top!
                 </p>
             </article>
         </div>
