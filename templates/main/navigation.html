@@ -31,9 +31,15 @@
                             <li class="uk-nav-divider uk-hidden@m"></li>
 
                             {% if current_page.startswith("info") %}
-                                <li class="uk-nav-header uk-active">Information</li>
+                                <li class="uk-nav-header uk-active"><a href="/info">Information</a></li>
                             {% else %}
-                                <li class="uk-nav-header">Information</li>
+                                <li class="uk-nav-header"><a href="/info">Information</a></li>
+                            {% endif %}
+
+                            {% if current_page == "info/jams" %}
+                                <li class="uk-active"><a href="/info/jams">Code Jams</a></li>
+                            {% else %}
+                                <li><a href="/info/jams">Code Jams</a></li>
                             {% endif %}
 
                             {% if current_page == "info/help" %}
@@ -42,16 +48,16 @@
                                 <li><a href="/info/help">Getting Help</a></li>
                             {% endif %}
 
-                            {% if current_page == "info/rules" %}
-                                <li class="uk-active"><a href="/info/rules">Server Rules</a></li>
-                            {% else %}
-                                <li><a href="/info/rules">Server Rules</a></li>
-                            {% endif %}
-
                             {% if current_page == "info/resources" %}
                                 <li class="uk-active"><a href="/info/resources">Resources</a></li>
                             {% else %}
                                 <li><a href="/info/resources">Resources</a></li>
+                            {% endif %}
+
+                            {% if current_page == "info/rules" %}
+                                <li class="uk-active"><a href="/info/rules">Server Rules</a></li>
+                            {% else %}
+                                <li><a href="/info/rules">Server Rules</a></li>
                             {% endif %}
 
                             <li class="uk-nav-divider"></li>

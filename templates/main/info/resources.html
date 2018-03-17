@@ -1,5 +1,7 @@
 {% extends "main/base.html" %}
 {% block title %}Resources{% endblock %}
+{% block og_title %}Resources{% endblock %}
+{% block og_description %}A list of helpful resources for beginner and experienced Python programmers alike{% endblock %}
 {% block content %}
     <div class="uk-section">
         <div class="uk-container uk-container-small">
@@ -20,6 +22,28 @@
                     <a href="https://github.com/discord-python/site/blob/master/static/resources.json">on GitHub</a> -
                     if there's a great resource that you love and you don't see it on this page, feel free to submit a
                     pull request!
+                </p>
+                <p>
+                    Some resources aren't free - the below key will help you figure out whether you need to pay for
+                    a resource or not. You can also hover them for more information on the payment (or tap them on
+                    mobile) where available.
+                </p>
+                <p class="uk-text-center">
+                    <span class="fa-layers fa-fw">
+                        <i class="fas fa-circle" style="color: green"></i>
+                        <i class="fa-inverse fas fa-dollar-sign" data-fa-transform="shrink-6"></i>
+                    </span>
+                    Free
+                    <span class="fa-layers fa-fw">
+                        <i class="fas fa-circle" style="color: darkgoldenrod"></i>
+                        <i class="fa-inverse fas fa-dollar-sign" data-fa-transform="shrink-6"></i>
+                    </span>
+                    Payment Optional
+                    <span class="fa-layers fa-fw">
+                        <i class="fas fa-circle" style="color: darkred"></i>
+                        <i class="fa-inverse fas fa-dollar-sign" data-fa-transform="shrink-6"></i>
+                    </span>
+                    Paid
                 </p>
 
                 {% if categories is none %}
@@ -44,7 +68,24 @@
                         </h2>
                         {% for item, data in category_data.resources.items() %}
                             <p>
-                                <strong>{{ item }}</strong> &nbsp;<a href="{{ data.url }}"><i class="fas fa-link"></i></a><br />
+                                {% if data["payment_description"] %}
+                                    <span class="fa-layers fa-fw" uk-tooltip="{{ data["payment_description"] }}">
+                                {% else %}
+                                    <span class="fa-layers fa-fw">
+                                {% endif %}
+
+                                {% if data["payment"] == "optional" %}
+                                        <i class="fas fa-circle" style="color: darkgoldenrod"></i>
+                                {% elif data["payment"] == "paid" %}
+                                        <i class="fas fa-circle" style="color: darkred"></i>
+                                {% else %}
+                                        <i class="fas fa-circle" style="color: green"></i>
+                                {% endif %}
+                                        <i class="fa-inverse fas fa-dollar-sign" data-fa-transform="shrink-6"></i>
+                                    </span>
+                                <strong>{{ item }}</strong> &nbsp;<a href="{{ data.url }}"><i class="fas fa-link"></i></a>
+
+                                <br />
                                 <span class="uk-text-meta">{{ data.description }}</span>
                             </p>
                         {% endfor %}
