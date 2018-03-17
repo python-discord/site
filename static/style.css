@@ -17,8 +17,18 @@
     background: #222222 !important;
 }
 
-.uk-navbar-container {
+.uk-navbar-container,
+.uk-sticky-placeholder,
+.uk-navbar-nav > li > a,
+.uk-navbar-left > a{
     height: 70px;
+}
+
+.navbar-logo{
+    margin-left: -10px;
+    padding-left: 3px;
+    margin-top: 2px;
+    height: 60%
 }
 
 .uk-navbar-dropdown {
@@ -62,4 +72,12 @@
 
 img.uk-border-rounded {
     border: 1px #25292f solid;
+}
+
+footer div.uk-section {
+    padding: 0 0 0 0;
+}
+
+footer div.uk-section div.uk-text-center {
+    margin-top: 20px;
 }
