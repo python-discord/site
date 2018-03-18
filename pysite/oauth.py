@@ -1,4 +1,5 @@
 import logging
+from json import JSONDecodeError
 from uuid import uuid4, uuid5
 
 from flask import session
@@ -27,6 +28,7 @@ class OauthBackend(BaseBackend, DBMixin):
     Properties:
         key: The app's secret, we use it too make session IDs
     """
+
     table_name = "oauth_data"
 
     def __init__(self, manager):
@@ -47,10 +49,11 @@ class OauthBackend(BaseBackend, DBMixin):
         sess_id = str(uuid5(uuid4(), self.key))
         session["session_id"] = sess_id
 
-        self.table.insert({"id": sess_id,
-                           "access_token": token["access_token"],
-                           "refresh_token": token["refresh_token"],
-                           "expires_at": token["expires_at"]})
+        self.db.insert("oauth_data", {"id": sess_id,
+                                      "access_token": token["access_token"],
+                                      "refresh_token": token["refresh_token"],
+                                      "expires_at": token["expires_at"],
+                                      "snowflake": user["id"]})
 
         self.db.insert("users", {"user_id": user["id"],
                                  "username": user["username"],
@@ -69,16 +72,20 @@ def get_user() -> dict:
 
 
 def join_discord(token: str, snowflake: str) -> None:
-    resp = requests.put(DISCORD_API_ENDPOINT + f"guilds/{SERVER_ID}/members/{snowflake}",
-                        data={"access_token": token})  # Have user join our server
-    if resp.status_code != 201:
-        logging.warning(f"Unable to add user ({snowflake}) to server, {resp.json()}")
+    try:
+        resp = requests.put(DISCORD_API_ENDPOINT + f"guilds/{SERVER_ID}/members/{snowflake}",
+                            data={"access_token": token})  # Have user join our server
+        if resp.status_code != 201:
+            logging.warning(f"Unable to add user ({snowflake}) to server, {resp.json()}")
+    except JSONDecodeError:
+        pass  # User already in server.
 
 
 def user_data():
     id = session.get("session_id")
     if id and _MAIN_BACK:  # If the user is logged in, and backend exists, get the user's information
         creds = _MAIN_BACK.db.get("oauth_data", id)
+        print(creds)
         if creds:
             return _MAIN_BACK.db.get("users", creds["snowflake"])
     elif not _MAIN_BACK:

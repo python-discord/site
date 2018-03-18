@@ -1,7 +1,7 @@
 # coding=utf-8
 
 from enum import Enum, IntEnum
-import os
+from os import environ
 
 
 class ErrorCodes(IntEnum):
@@ -56,9 +56,9 @@ ERROR_DESCRIPTIONS = {
 }
 
 # PaperTrail logging
-PAPERTRAIL_ADDRESS = os.environ.get("PAPERTRAIL_ADDRESS") or None
-PAPERTRAIL_PORT = int(os.environ.get("PAPERTRAIL_PORT") or 0)
+PAPERTRAIL_ADDRESS = environ.get("PAPERTRAIL_ADDRESS") or None
+PAPERTRAIL_PORT = int(environ.get("PAPERTRAIL_PORT") or 0)
 
 # DataDog logging
-DATADOG_ADDRESS = os.environ.get("DATADOG_ADDRESS") or None
-DATADOG_PORT = int(os.environ.get("DATADOG_PORT") or 0)
+DATADOG_ADDRESS = environ.get("DATADOG_ADDRESS") or None
+DATADOG_PORT = int(environ.get("DATADOG_PORT") or 0)
