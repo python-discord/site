@@ -107,8 +107,7 @@ class RethinkDB:
                table_name: str,
                primary_key: Union[str, None] = None,
                durability: str="hard",
-               return_changes: Union[bool, str] = False
-               ) -> Union[Dict[str, Any], None]:
+               return_changes: Union[bool, str] = False) -> dict:
         """
         Delete one or all documents from a table. This can only delete
         either the contents of an entire table, or a single document.
