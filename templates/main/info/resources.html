@@ -26,20 +26,20 @@
                 <p>
                     Some resources aren't free - the below key will help you figure out whether you need to pay for
                     a resource or not. You can also hover them for more information on the payment (or tap them on
-                    mobile) where available.
+                    mobile).
                 </p>
                 <p class="uk-text-center">
-                    <span class="fa-layers fa-fw">
-                        <i class="fas fa-circle" style="color: green"></i>
-                        <i class="fa-inverse fas fa-dollar-sign" data-fa-transform="shrink-6"></i>
+                    <span class="fa-layers fa-fw" uk-tooltip="Free">
+                        <i class="fas fa-dollar-sign" data-fa-transform="shrink-6"></i>
+                        <i class="fas fa-ban" style="color: green"></i>
                     </span>
                     Free
-                    <span class="fa-layers fa-fw">
+                    <span class="fa-layers fa-fw" uk-tooltip="Payment Optional">
                         <i class="fas fa-circle" style="color: darkgoldenrod"></i>
                         <i class="fa-inverse fas fa-dollar-sign" data-fa-transform="shrink-6"></i>
                     </span>
                     Payment Optional
-                    <span class="fa-layers fa-fw">
+                    <span class="fa-layers fa-fw" uk-tooltip="Paid">
                         <i class="fas fa-circle" style="color: darkred"></i>
                         <i class="fa-inverse fas fa-dollar-sign" data-fa-transform="shrink-6"></i>
                     </span>
@@ -71,17 +71,19 @@
                                 {% if data["payment_description"] %}
                                     <span class="fa-layers fa-fw" uk-tooltip="{{ data["payment_description"] }}">
                                 {% else %}
-                                    <span class="fa-layers fa-fw">
+                                    <span class="fa-layers fa-fw" uk-tooltip="{{ data["payment"].title() }}">
                                 {% endif %}
 
                                 {% if data["payment"] == "optional" %}
                                         <i class="fas fa-circle" style="color: darkgoldenrod"></i>
+                                        <i class="fa-inverse fas fa-dollar-sign" data-fa-transform="shrink-6"></i>
                                 {% elif data["payment"] == "paid" %}
                                         <i class="fas fa-circle" style="color: darkred"></i>
-                                {% else %}
-                                        <i class="fas fa-circle" style="color: green"></i>
-                                {% endif %}
                                         <i class="fa-inverse fas fa-dollar-sign" data-fa-transform="shrink-6"></i>
+                                {% else %}
+                                        <i class="fas fa-dollar-sign" data-fa-transform="shrink-6"></i>
+                                        <i class="fas fa-ban" style="color: green"></i>
+                                {% endif %}
                                     </span>
                                 <strong>{{ item }}</strong> &nbsp;<a href="{{ data.url }}"><i class="fas fa-link"></i></a>
 
