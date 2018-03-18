@@ -1,5 +1,7 @@
 {% extends 'main/base.html' %}
-{% block title %} Error {{ code }} {% endblock %}
+{% block title %}Error {{ code }}{% endblock %}
+{% block og_title %}Error {{ code }}{% endblock %}
+{% block og_description %}{{ error_message | safe }}{% endblock %}
 {% block beta_error %}{% endblock %}
 
 {% block extra_head %}

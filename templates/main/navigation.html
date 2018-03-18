@@ -7,7 +7,7 @@
     <nav data-uk-navbar class="uk-navbar-container uk-navbar-transparent" uk-navbar="boundary-align: true">
         <div class="uk-navbar-left uk-padding-remove-left">
             <a href="/" class="uk-navbar-item uk-logo uk-padding-remove-left">
-                <img src="/static/logos/logo_banner.png" style="margin-left: -10px; padding-left: 3px; height: 50%"/>
+                <img src="/static/logos/logo_banner.png" class="navbar-logo"/>
             </a>
         </div>
 
@@ -31,9 +31,15 @@
                             <li class="uk-nav-divider uk-hidden@m"></li>
 
                             {% if current_page.startswith("info") %}
-                                <li class="uk-nav-header uk-active">Information</li>
+                                <li class="uk-nav-header uk-active"><a href="/info">Information</a></li>
                             {% else %}
-                                <li class="uk-nav-header">Information</li>
+                                <li class="uk-nav-header"><a href="/info">Information</a></li>
+                            {% endif %}
+
+                            {% if current_page == "info/jams" %}
+                                <li class="uk-active"><a href="/info/jams">Code Jams</a></li>
+                            {% else %}
+                                <li><a href="/info/jams">Code Jams</a></li>
                             {% endif %}
 
                             {% if current_page == "info/help" %}
@@ -42,16 +48,16 @@
                                 <li><a href="/info/help">Getting Help</a></li>
                             {% endif %}
 
-                            {% if current_page == "info/rules" %}
-                                <li class="uk-active"><a href="/info/rules">Server Rules</a></li>
-                            {% else %}
-                                <li><a href="/info/rules">Server Rules</a></li>
-                            {% endif %}
-
                             {% if current_page == "info/resources" %}
                                 <li class="uk-active"><a href="/info/resources">Resources</a></li>
                             {% else %}
                                 <li><a href="/info/resources">Resources</a></li>
+                            {% endif %}
+
+                            {% if current_page == "info/rules" %}
+                                <li class="uk-active"><a href="/info/rules">Server Rules</a></li>
+                            {% else %}
+                                <li><a href="/info/rules">Server Rules</a></li>
                             {% endif %}
 
                             <li class="uk-nav-divider"></li>

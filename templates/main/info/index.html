@@ -1,0 +1,50 @@
+{% extends "main/base.html" %}
+{% block title %}Information{% endblock %}
+{% block og_title %}Information{% endblock %}
+{% block og_description %}Informational pages, listings and guides{% endblock %}
+{% block content %}
+    <div class="uk-section">
+        <div class="uk-container uk-container-small">
+            <article class="uk-article">
+                <h1 class="uk-article-title hover-title" id="top">
+                    Information
+
+                    <a href="#top" class="uk-text-primary" title="Permanent link to this header">
+                        <i class="fas fa-paragraph" data-fa-transform="shrink-8"></i>
+                    </a>
+                </h1>
+                <p class="uk-article-meta">
+                    What you need, when you need it
+                </p>
+
+                <p>
+                    <strong>Code Jams</strong> &nbsp;
+                    <a href="/info/jams"><i class="fas fa-link"></i></a>
+                    <br />
+                    <span class="uk-text-meta">Information on our monthly code jams, where users are paired into teams to compete with each other</span>
+                </p>
+
+                <p>
+                    <strong>Getting Help</strong> &nbsp;
+                    <a href="/info/help"><i class="fas fa-link"></i></a>
+                    <br />
+                    <span class="uk-text-meta">How to ask for help - and how to interpret the responses</span>
+                </p>
+
+                <p>
+                    <strong>Resources</strong> &nbsp;
+                    <a href="/info/resources"><i class="fas fa-link"></i></a>
+                    <br />
+                    <span class="uk-text-meta">A page full of useful resources for learning and working with Python</span>
+                </p>
+
+                <p>
+                    <strong>Server Rules</strong> &nbsp;
+                    <a href="/info/rules"><i class="fas fa-link"></i></a>
+                    <br />
+                    <span class="uk-text-meta">Rules and infraction information for our server</span>
+                </p>
+            </article>
+        </div>
+    </div>
+{% endblock %}

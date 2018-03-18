@@ -3,8 +3,8 @@ from pysite.base_route import RouteView
 
 
 class IndexView(RouteView):
-    path = "/info/"
-    name = "info"
+    path = "/info/jams"
+    name = "info/jams"
 
     def get(self):
-        return self.render("main/info/index.html")
+        return self.render("main/info/jams.html")
