@@ -15,7 +15,8 @@
                   + "    <span id=\"countdown-title\" class=\"uk-text-center\">"
                   + "        <a href=\"/info/jams\">Code Jam</a> Countdown"
                   + "    </span>"
-                  + "    <p class='uk-text-large' id=\"countdown-remaining\"></p>"
+                  + "    <p class='uk-text-large' id=\"countdown-remaining\">...</p>"
+                  + "<small style='font-size: 0.6em;'>(Tap/click to dismiss)</small>"
                   + "</div>",
                 pos: "bottom-right",
                 timeout: endjam - now
