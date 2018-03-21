@@ -1,8 +1,4 @@
 var heading = document.getElementById("countdown-title");
-var daysDisplay = document.getElementById("days");
-var hoursDisplay = document.getElementById("hours");
-var minutesDisplay = document.getElementById("minutes");
-var secondsDisplay = document.getElementById("seconds");
 var startjam = new Date(Date.UTC(2018, 2, 23));
 var endjam = new Date(Date.UTC(2018, 2, 26));
 var goal;
@@ -42,9 +38,7 @@ if (now+1000 >= endjam.getTime()) {
         if (seconds < 10) {
             seconds = "0"+seconds;
         }
-        daysDisplay.innerHTML = days;
-        hoursDisplay.innerHTML = hours;
-        minutesDisplay.innerHTML = minutes;
-        secondsDisplay.innerHTML = seconds;
+        let formatted = `${days}:${hours}:${minutes}:${seconds}`
+        document.getElementById('remaining').innerHTML = formatted;
     }, 100);
 }

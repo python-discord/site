@@ -2,33 +2,41 @@
 {% block title %}Home{% endblock %}
 {% block og_title %}Home{% endblock %}
 {% block content %}
-    <div class="uk-section uk-section-primary">
-        <div class="uk-container uk-text-center">
-            <h1 class="uk-header">
-                Python Discord
-            </h1>
-            <p class="uk-text-lead">
-                We're a large, friendly community focused around the Python programming language,
-                open to those who wish to learn the language or improve their skills, as well as
-                those looking to help others.
-            </p>
+<div class="uk-section uk-section-primary">
+    <div class="uk-container uk-text-center">
+        <h1 class="uk-header">
+            Python Discord
+        </h1>
+        <p class="uk-text-lead">
+            We're a large, friendly community focused around the Python programming language,
+            open to those who wish to learn the language or improve their skills, as well as
+            those looking to help others.
+        </p>
+        <p>
+            We organise regular community events and have a dedicated staff of talented Python developers
+            available to assist around the clock. Whether you're looking to learn the language or working
+            on a complex project, we've got someone who can help you if you get stuck.
+        </p>
+        <div class="uk-container uk-align-center">
+            <a href="/invite" class="uk-button uk-button-default uk-button-large ">
+                Join us on &nbsp;<i class="uk-icon fab fa-discord"></i>
+            </a>
+        </div>
+        <hr class="uk-divider-icon"/>
+        <div class="uk-container uk-container-small uk-text-meta">
             <p>
-                We organise regular community events and have a dedicated staff of talented Python developers
-                available to assist around the clock. Whether you're looking to learn the language or working
-                on a complex project, we've got someone who can help you if you get stuck.
+                Please note: this site is under construction. What you see now may be vastly different
+                from the final project state. Feel free to chat to us on Discord if you're curious!
             </p>
-            <div class="uk-container uk-align-center">
-                    <a href="/invite" class="uk-button uk-button-default uk-button-large ">
-                        Join us on &nbsp;<i class="uk-icon fab fa-discord"></i>
-                    </a>
-            </div>
-            <hr class="uk-divider-icon" />
-            <div class="uk-container uk-container-small uk-text-meta">
-                <p>
-                    Please note: this site is under construction. What you see now may be vastly different
-                    from the final project state. Feel free to chat to us on Discord if you're curious!
-                </p>
+        </div>
+
+    </div>
+</div>
+        <div class="uk-align-center uk-text-center">
+            <a href="/info/jams"><h1 id="countdown-title" class="uk-text-center">Code Jam Countdown</h1></a>
+            <div class="uk-text-center">
+                <h1 id="remaining"></h1>
             </div>
         </div>
-    </div>
+<script src='/static/js/countdown.js'></script>
 {% endblock %}

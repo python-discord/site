@@ -2,29 +2,21 @@
 {% block title %}Countdown{% endblock %}
 {% block og_title %}Countdown{% endblock %}
 {% block og_description %}Countdown for Code Jams.{% endblock %}
+{% block beta_error %}{% endblock %}
 {% block content %}
-<h1 id="countdown-title" class="uk-heading-primary uk-text-center">Code Jam Countdown</h1>
-<div class="uk-section uk-section-muted">
-    <div class="uk-container">
-        <div class="uk-column-1 uk-column-1-2@s uk-column-1-4@m">
-            <div class="uk-tile uk-padding-small">
-                <h1 style="text-align: center">Days</h1>
-                <h1 id="days" class="uk-text-center" style="font-size: 200px">--</h1>
-            </div>
-            <div class="uk-tile uk-padding-small">
-                <h1 style="text-align: center">Hours</h1>
-                <h1 id="hours" class="uk-text-center" style="font-size: 200px">--</h1>
-            </div>
-            <div class="uk-tile uk-padding-small">
-                <h1 style="text-align: center">Minutes</h1>
-                <h1 id="minutes" class="uk-text-center" style="font-size: 200px">--</h1>
-            </div>
-            <div class="uk-tile uk-padding-small">
-                <h1 style="text-align: center">Seconds</h1>
-                <h1 id="seconds" class="uk-text-center" style="font-size: 200px">--</h1>
-            </div>
-        </div>
-    </div>
+<div class="uk-section-primary">
+
+
+
+
+<div class="uk-container uk-align-center">
+    <h1 id="countdown-title" class="uk-heading-primary uk-text-center">Code Jam Countdown</h1>
+<div class="uk-text-center">
+    <h1 id="remaining"></h1>
 </div>
+</div>
+</div>
+
+
 <script src="/static/js/countdown.js"></script>
 {% endblock %}
