@@ -3,8 +3,8 @@ var daysDisplay = document.getElementById("days");
 var hoursDisplay = document.getElementById("hours");
 var minutesDisplay = document.getElementById("minutes");
 var secondsDisplay = document.getElementById("seconds");
-var startjam = new Date(Date.UTC(2018, 2, 20));
-var endjam = new Date(Date.UTC(2018, 2, 21));
+var startjam = new Date(Date.UTC(2018, 2, 24));
+var endjam = new Date(Date.UTC(2018, 2, 26));
 var goal;
 var now = Date.now();
 if (now+1000 >= endjam.getTime()) {
