@@ -1,3 +1,17 @@
+html {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.uk-offcanvas-content {
+    flex: 1 0 auto;
+}
+
 .uk-background-secondary .uk-navbar-dropdown-nav .uk-active a {
     color: white !important;
 }
@@ -72,6 +86,10 @@
 
 img.uk-border-rounded {
     border: 1px #25292f solid;
+}
+
+footer {
+    flex-shrink: 0;
 }
 
 footer div.uk-section {
