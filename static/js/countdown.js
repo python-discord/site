@@ -10,13 +10,13 @@
     if (now+1000 < endjam.getTime()) {  // Only do anything if the jam hasn't ended
         UIkit.notification(  // Spawn the notification
             {
-                message:
-                "<div class='uk-text-center'>" +
-                "    <span id=\"countdown-title\" class=\"uk-text-center\">" +
-                "        <a href=\"/info/jams\">Code Jam</a> Countdown" +
-                "    </span>" +
-                "    <p class='uk-text-large' id=\"countdown-remaining\"></p>" +
-                "</div>",
+                message: ""
+                  + "<div class='uk-text-center'>"
+                  + "    <span id=\"countdown-title\" class=\"uk-text-center\">"
+                  + "        <a href=\"/info/jams\">Code Jam</a> Countdown"
+                  + "    </span>"
+                  + "    <p class='uk-text-large' id=\"countdown-remaining\"></p>"
+                  + "</div>",
                 pos: "bottom-right",
                 timeout: endjam - now
             }
