@@ -21,7 +21,11 @@
         {% endblock %}
     </head>
     <body class="page-{{ current_page }}">
+        {% if current_page == "index" %}
+        <div class="uk-offcanvas-content uk-section-primary">
+        {% else %}
         <div class="uk-offcanvas-content">
+        {% endif %}
             {% include "main/navigation.html" %}
             {% if current_page != "index" %}
                 {% block beta_error %}
