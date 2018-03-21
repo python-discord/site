@@ -32,6 +32,11 @@ class SiteTest(TestCase):
 class RootEndpoint(SiteTest):
     """ Test cases for the root endpoint and error handling """
 
+    def test_countdown(self):
+        """ Check the countdown path responds with 200 OK """
+        response = self.client.get('/countdown', "http://pytest.local")
+        self.assertEqual(response.status_code, 200)
+
     def test_index(self):
         """ Check the root path reponds with 200 OK """
         response = self.client.get('/', 'http://pytest.local')
