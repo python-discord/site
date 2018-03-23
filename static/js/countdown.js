@@ -26,7 +26,7 @@
         const heading = document.getElementById("countdown-title");
 
         if (now > startjam.getTime()) {  // Jam's already started
-            heading.innerHTML = "<a href=\"/info/jams\">code jam</a> Countdown ends in...";
+            heading.innerHTML = "Current <a href=\"/info/jams\">code jam</a> ends in...";
             goal = endjam.getTime();
         } else {
             heading.innerHTML = "Next <a href=\"/info/jams\">code jam</a> starts in...";
