@@ -69,7 +69,18 @@ export RETHINKDB_PORT="28016"
 export RETHINKDB_DATABASE="database"
 export RETHINKDB_TABLE="table"
 export BOT_API_KEY="abcdefghijklmnopqrstuvwxyz"
+export TEMPLATES_AUTO_RELOAD="yes"
 alias python=python3.6
 EOF
+
+
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+apt-get update
+apt-get install -y docker-ce
+
+curl -L https://github.com/docker/compose/releases/download/1.20.0-rc1/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
+chmod +x /usr/local/bin/docker-compose
+
 
 echo 'docs: https://github.com/discord-python/site/wiki/Development-Environment-(Vagrant)'
