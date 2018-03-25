@@ -26,6 +26,12 @@
         "payment": "free",
         "payment_description": null
       },
+      "Programming Foundations with Python": {
+        "description": "Learn the Python programming foundations with one of the internet's best courses.",
+        "url": "https://eu.udacity.com/course/programming-foundations-with-python--ud036",
+        "payment": "free",
+        "payment_description": null
+      },
       "Python Tutorials by Corey Schafer on YouTube": {
         "description": "An in-depth look at the Python programming language, from one of YouTube's most popular Python tutors.",
         "url": "https://www.youtube.com/playlist?list=PL-osiE80TeTt2d9bfVyTiXJA-UTHn6WwU",
