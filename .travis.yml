@@ -9,8 +9,6 @@ branches:
   only:
     - "master"
 
-cache: pip
-
 install:
   - pip install -r requirements.txt
   - pip install -r requirements-ci.txt
@@ -20,3 +18,8 @@ script:
   - coveralls
 after_success:
   - python deploy.py
+
+cache: pip
+
+notifications:
+  email: false

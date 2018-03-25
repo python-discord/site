@@ -1,3 +1,17 @@
+html {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.uk-offcanvas-content {
+    flex: 1 0 auto;
+}
+
 .uk-background-secondary .uk-navbar-dropdown-nav .uk-active a {
     color: white !important;
 }
@@ -17,8 +31,18 @@
     background: #222222 !important;
 }
 
-.uk-navbar-container {
+.uk-navbar-container,
+.uk-sticky-placeholder,
+.uk-navbar-nav > li > a,
+.uk-navbar-left > a{
     height: 70px;
+}
+
+.navbar-logo{
+    margin-left: -10px;
+    padding-left: 3px;
+    margin-top: 2px;
+    height: 60%
 }
 
 .uk-navbar-dropdown {
@@ -62,4 +86,25 @@
 
 img.uk-border-rounded {
     border: 1px #25292f solid;
+}
+
+footer {
+    flex-shrink: 0;
+}
+
+footer div.uk-section {
+    padding: 0 0 0 0;
+}
+
+footer div.uk-section div.uk-text-center {
+    margin-top: 20px;
+}
+
+.uk-button-darkish {
+    background: rgba(0, 0, 0, 0.11);
+    border: 1px solid rgba(34, 34, 34, 0.09);
+}
+
+.uk-button-darkish:hover {
+    background: rgba(0, 0, 0, 0.22);
 }
