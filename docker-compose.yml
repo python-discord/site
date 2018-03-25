@@ -1,0 +1,51 @@
+version: '3'
+services:
+  pdrdb:
+    hostname: "pdrdb"
+    image: inveracity/pdrdb-base:latest
+    volumes:
+      - "rdb:/data"
+    ports:
+      - "28016:28016"
+      - "28011:28011"
+    expose:
+      - "28016"
+      - "28011"
+    entrypoint: su-exec daemon:daemon rethinkdb -n pdrdb -d /data --bind 0.0.0.0 --server-tag default --http-port 28011 --driver-port 28016
+    networks:
+      - pdnet
+
+  pdweb:
+    depends_on:
+      - pdrdb
+    hostname: "pdweb"
+    image: inveracity/pdweb-base:latest
+    working_dir: "/site"
+    volumes:
+       - ".:/site"
+    ports:
+       - "80:80"
+    expose:
+      - "80"
+    entrypoint: /sbin/tini -- gunicorn -w 1 -b 0.0.0.0:80 --log-level info -k geventwebsocket.gunicorn.workers.GeventWebSocketWorker --reload --max-requests 1 app:app
+    environment:
+      LOG_LEVEL: DEBUG
+      SERVER_NAME: "pysite.local"
+      WEBPAGE_PORT: "80"
+      WEBPAGE_SECRET_KEY: "123456789abcdefghijklmn"
+      RETHINKDB_HOST: "pdrdb"
+      RETHINKDB_PORT: "28016"
+      RETHINKDB_DATABASE: "database"
+      RETHINKDB_TABLE: "table"
+      BOT_API_KEY: "abcdefghijklmnopqrstuvwxyz"
+      TEMPLATES_AUTO_RELOAD: "yes"
+
+    networks:
+      - pdnet
+
+volumes:
+    rdb:
+    web:
+
+networks:
+  pdnet:
