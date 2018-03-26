@@ -59,3 +59,25 @@ class DBMixin:
     @property
     def db(self) -> RethinkDB:
         return self._db()
+
+
+class OauthMixin:
+
+    @classmethod
+    def setup(cls: "DBMixin", manager: "pysite.route_manager.RouteManager", blueprint: Blueprint):
+
+        if hasattr(super(), "setup"):
+            super().setup(manager, blueprint)  # pragma: no cover
+
+        cls._oauth = ref(manager.oauth_backend)
+
+    @property
+    def logged_in(self) -> bool:
+        return self.user_data is not None
+
+    @property
+    def user_data(self) -> dict:
+        return self._oauth().user_data()
+
+    def logout(self):
+        self._oauth().logout()

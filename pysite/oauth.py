@@ -7,13 +7,11 @@ from flask_dance.consumer.backend import BaseBackend
 from flask_dance.contrib.discord import discord
 import requests
 
+
 from pysite.constants import DISCORD_API_ENDPOINT, SERVER_ID
-from pysite.mixins import DBMixin
-
-_MAIN_BACK = None  # type: pysite.database.RethinkDB
 
 
-class OauthBackend(BaseBackend, DBMixin):
+class OauthBackend(BaseBackend):
     """
     This is the backend for the oauth
 
@@ -29,23 +27,18 @@ class OauthBackend(BaseBackend, DBMixin):
         key: The app's secret, we use it too make session IDs
     """
 
-    table_name = "oauth_data"
-
     def __init__(self, manager):
-        global _MAIN_BACK
-
         super(BaseBackend, self).__init__()
-        self.setup(manager, manager.oauth_blueprint)
+        self.db = manager.db
         self.key = manager.app.secret_key
-        _MAIN_BACK = self
 
     def get(self, *args, **kwargs):  # Not used
         pass
 
     def set(self, blueprint, token):
 
-        user = get_user()
-        join_discord(token["access_token"], user["id"])
+        user = self.get_user()
+        self.join_discord(token["access_token"], user["id"])
         sess_id = str(uuid5(uuid4(), self.key))
         session["session_id"] = sess_id
 
@@ -63,36 +56,29 @@ class OauthBackend(BaseBackend, DBMixin):
     def delete(self, blueprint):  # Not used
         pass
 
+    def get_user(self) -> dict:
+        resp = discord.get(DISCORD_API_ENDPOINT + "/users/@me")  # 'discord' is a request.Session with oauth information
+        if resp.status_code != 200:
+            logging.warning("Unable to get user information: " + str(resp.json()))
+        return resp.json()
 
-def get_user() -> dict:
-    resp = discord.get(DISCORD_API_ENDPOINT + "/users/@me")  # 'discord' is a request.Session with oauth information
-    if resp.status_code != 200:
-        logging.warning("Unable to get user information: " + str(resp.json()))
-    return resp.json()
+    def join_discord(self, token: str, snowflake: str) -> None:
+        try:
+            resp = requests.put(DISCORD_API_ENDPOINT + f"guilds/{SERVER_ID}/members/{snowflake}",
+                                data={"access_token": token})  # Have user join our server
+            if resp.status_code != 201:
+                logging.warning(f"Unable to add user ({snowflake}) to server, {resp.json()}")
+        except JSONDecodeError:
+            pass  # User already in server.
 
+    def user_data(self):
+        id = session.get("session_id")
+        if id:  # If the user is logged in, get user info.
+            creds = self.db.get("oauth_data", id)
+            if creds:
+                return self.db.get("users", creds["snowflake"])
 
-def join_discord(token: str, snowflake: str) -> None:
-    try:
-        resp = requests.put(DISCORD_API_ENDPOINT + f"guilds/{SERVER_ID}/members/{snowflake}",
-                            data={"access_token": token})  # Have user join our server
-        if resp.status_code != 201:
-            logging.warning(f"Unable to add user ({snowflake}) to server, {resp.json()}")
-    except JSONDecodeError:
-        pass  # User already in server.
-
-
-def user_data():
-    id = session.get("session_id")
-    if id and _MAIN_BACK:  # If the user is logged in, and backend exists, get the user's information
-        creds = _MAIN_BACK.db.get("oauth_data", id)
-        print(creds)
-        if creds:
-            return _MAIN_BACK.db.get("users", creds["snowflake"])
-    elif not _MAIN_BACK:
-        logging.warning("Failed to get user data: _MAIN_BACK not loaded")
-
-
-def logout():
-    sess_id = session.get("session_id")
-    if sess_id and _MAIN_BACK.db.get("oauth_data", sess_id):  # If user exists in db,
-        _MAIN_BACK.delete("oauth_data", sess_id)              # remove them (at least, their session)
+    def logout(self):
+        sess_id = session.get("session_id")
+        if sess_id and self.db.get("oauth_data", sess_id):  # If user exists in db,
+            self.db.delete("oauth_data", sess_id)              # remove them (at least, their session)
