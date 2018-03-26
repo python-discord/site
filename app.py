@@ -5,6 +5,7 @@ from os import environ
 from pysite.route_manager import RouteManager
 
 manager = RouteManager()
+app = manager.app
 
 debug = environ.get('TEMPLATES_AUTO_RELOAD', "no")
 if debug == "yes":
