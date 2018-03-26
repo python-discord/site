@@ -29,8 +29,10 @@ class SiteTest(TestCase):
 
         return app
 
+
 class BaseEndpoints(SiteTest):
     """ Test cases for the base endpoints """
+
 
 class RootEndpoint(SiteTest):
     """ Test cases for the root endpoint and error handling """
@@ -85,17 +87,6 @@ class RootEndpoint(SiteTest):
         """ Check ws_test responds """
         response = self.client.get('/ws_test')
         self.assertEqual(response.status_code, 200)
-
-    def test_oauth_login(self):
-
-        """ Check oauth redirects """
-        response = self.client.get('/discord')
-        self.assertEqual(response.status_code, 302)
-
-    def test_oauth_logout(self):
-        """ Check oauth redirects """
-        response = self.client.get('/logout')
-        self.assertEqual(response.status_code, 302)
 
     def test_oauth_authorized(self):
         """check oauth redirects """
@@ -309,7 +300,7 @@ class MixinTests(SiteTest):
         try:
             dbm = DBMixin()
             dbm.table_name = 'Table'
-            self.assertEquals(dbm.table, 'Table')
+            self.assertEqual(dbm.table, 'Table')
         except AttributeError:
             pass
 
@@ -381,22 +372,22 @@ class DatabaseTests(SiteTest):
         rdb = RethinkDB()
         # Create table name and expect it to work
         result = rdb.create_table(generated_table_name)
-        self.assertEquals(result, True)
+        self.assertEqual(result, True)
 
         # Create the same table name and expect it to already exist
         result = rdb.create_table(generated_table_name)
-        self.assertEquals(result, False)
+        self.assertEqual(result, False)
 
         # Drop table and expect it to work
         result = rdb.drop_table(generated_table_name)
-        self.assertEquals(result, True)
+        self.assertEqual(result, True)
 
         # Drop the same table and expect it to already be gone
         result = rdb.drop_table(generated_table_name)
-        self.assertEquals(result, False)
+        self.assertEqual(result, False)
 
         # This is to get some more code coverage
-        self.assertEquals(rdb.teardown_request('_'), None)
+        self.assertEqual(rdb.teardown_request('_'), None)
 
 
 class TestWebsocketEcho(SiteTest):
