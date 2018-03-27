@@ -30,10 +30,6 @@ class SiteTest(TestCase):
         return app
 
 
-class BaseEndpoints(SiteTest):
-    """ Test cases for the base endpoints """
-
-
 class RootEndpoint(SiteTest):
     """ Test cases for the root endpoint and error handling """
 
@@ -260,7 +256,7 @@ class Utilities(SiteTest):
 
         ev = pysite.base_route.ErrorView()
         try:
-            ev.setup('sdf', 'sdfsdf')
+            ev.setup(manager, 'sdfsdf')
         except RuntimeError:
             return True
         raise Exception('Expected runtime error on setup() when giving wrongful arguments')
@@ -319,7 +315,7 @@ class MixinTests(SiteTest):
 
         rv = RouteView()
         try:
-            rv.setup('sdf', 'sdfsdf')
+            rv.setup(manager, 'sdfsdf')
         except RuntimeError:
             return True
         raise Exception('Expected runtime error on setup() when giving wrongful arguments')
@@ -327,9 +323,53 @@ class MixinTests(SiteTest):
     def test_route_manager(self):
         """ Check route manager """
         from pysite.route_manager import RouteManager
+
         os.environ['WEBPAGE_SECRET_KEY'] = 'super_secret'
         rm = RouteManager()
         self.assertEqual(rm.app.secret_key, 'super_secret')
+
+    def test_oauth_property(self):
+        """ Make sure the oauth property works"""
+        from flask import Blueprint
+
+        from pysite.route_manager import RouteView
+        from pysite.oauth import OauthBackend
+
+        class TestRoute(RouteView):
+            name = "test"
+            path = "/test"
+
+        tr = TestRoute()
+        tr.setup(manager, Blueprint("test", "test_name"))
+        self.assertIsInstance(tr.oauth, OauthBackend)
+
+    def test_user_data_property(self):
+        """ Make sure the user_data property works"""
+        from flask import Blueprint
+
+        from pysite.route_manager import RouteView
+
+        class TestRoute(RouteView):
+            name = "test"
+            path = "/test"
+
+        tr = TestRoute()
+        tr.setup(manager, Blueprint("test", "test_name"))
+        self.assertIs(tr.user_data, None)
+
+    def test_logged_in_property(self):
+        """ Make sure the user_data property works"""
+        from flask import Blueprint
+
+        from pysite.route_manager import RouteView
+
+        class TestRoute(RouteView):
+            name = "test"
+            path = "/test"
+
+        tr = TestRoute()
+        tr.setup(manager, Blueprint("test", "test_name"))
+        self.assertIs(tr.logged_in, False)
 
 
 class DecoratorTests(SiteTest):

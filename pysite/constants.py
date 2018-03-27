@@ -31,6 +31,7 @@ DISCORD_OAUTH_AUTHORIZED = "/auth/discord/authorized"
 DISCORD_OAUTH_ID = environ.get('DISCORD_OAUTH_ID', '')
 DISCORD_OAUTH_SECRET = environ.get('DISCORD_OAUTH_SECRET', '')
 DISCORD_OAUTH_SCOPE = 'identify email guilds.join'
+OAUTH_DATABASE = "oauth_data"
 
 ERROR_DESCRIPTIONS = {
     # 5XX

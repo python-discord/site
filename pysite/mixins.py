@@ -64,7 +64,7 @@ class DBMixin:
 class OauthMixin:
 
     @classmethod
-    def setup(cls: "DBMixin", manager: "pysite.route_manager.RouteManager", blueprint: Blueprint):
+    def setup(cls: "OauthMixin", manager: "pysite.route_manager.RouteManager", blueprint: Blueprint):
 
         if hasattr(super(), "setup"):
             super().setup(manager, blueprint)  # pragma: no cover
@@ -77,7 +77,8 @@ class OauthMixin:
 
     @property
     def user_data(self) -> dict:
-        return self._oauth().user_data()
+        return self.oauth.user_data()
 
-    def logout(self):
-        self._oauth().logout()
+    @property
+    def oauth(self):
+        return self._oauth()
