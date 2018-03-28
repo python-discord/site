@@ -451,7 +451,7 @@ class TestOauthBackend(SiteTest):
 
     def test_delete(self):
         """ Make sure the delete function returns nothing"""
-        self.assertIs(manager.oauth_backend.get(), None)
+        self.assertIs(manager.oauth_backend.delete(), None)
 
     def test_logout(self):
         """ Make sure at least apart of logout is working :/"""
