@@ -31,6 +31,12 @@
         "url": "https://www.youtube.com/playlist?list=PL-osiE80TeTt2d9bfVyTiXJA-UTHn6WwU",
         "payment": "free",
         "payment_description": null
+      },
+      "Get Started with Flask Web Development": {
+        "description": "A fully featured mega-tutorial for learning how to create web applications with the Flask framework.",
+        "url": "https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world",
+        "payment": "free",
+        "payment_description": null
       }
     }
   },
