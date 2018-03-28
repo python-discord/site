@@ -64,11 +64,11 @@ class RouteView(BaseView):
         :param blueprint: Current Flask blueprint to register this route to
         """
 
-        if not cls.path or not cls.name:
-            raise RuntimeError("Route views must have both `path` and `name` defined")
-
         if hasattr(super(), "setup"):
             super().setup(manager, blueprint)
+
+        if not cls.path or not cls.name:
+            raise RuntimeError("Route views must have both `path` and `name` defined")
 
         blueprint.add_url_rule(cls.path, view_func=cls.as_view(cls.name))
 
