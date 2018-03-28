@@ -1,14 +1,12 @@
 import logging
-from json import JSONDecodeError
 from uuid import uuid4, uuid5
 
 from flask import session
 from flask_dance.consumer.backend import BaseBackend
 from flask_dance.contrib.discord import discord
-import requests
 
 
-from pysite.constants import DISCORD_API_ENDPOINT, SERVER_ID, OAUTH_DATABASE
+from pysite.constants import DISCORD_API_ENDPOINT, OAUTH_DATABASE
 
 
 class OauthBackend(BaseBackend):
@@ -65,17 +63,6 @@ class OauthBackend(BaseBackend):
         if resp.status_code != 200:
             logging.warning("Unable to get user information: " + str(resp.json()))
         return resp.json()
-
-    def join_discord(self, token: str, snowflake: str) -> None:
-        try:
-            resp = requests.put(DISCORD_API_ENDPOINT + f"guilds/{SERVER_ID}/members/{snowflake}",
-                                data={"access_token": token})  # Have user join our server
-            if resp.status_code != 201:
-                logging.warning(f"Unable to add user ({snowflake}) to server, {resp.json()}")
-            else:
-                session["added_to_server"] = True
-        except JSONDecodeError:
-            pass  # User already in server.
 
     def user_data(self):
         user_id = session.get("session_id")
