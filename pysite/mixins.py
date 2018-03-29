@@ -6,7 +6,7 @@ from _weakref import ref
 from pysite.database import RethinkDB
 
 
-class DBMixin():
+class DBMixin:
     """
     Mixin for classes that make use of RethinkDB. It can automatically create a table with the specified primary
     key using the attributes set at class-level.
@@ -59,3 +59,49 @@ class DBMixin():
     @property
     def db(self) -> RethinkDB:
         return self._db()
+
+
+class OauthMixin:
+    """
+    Mixin for the classes that need access to a logged in user's information. This class should be used
+    to grant route's access to user information, such as name, email, id, ect.
+
+    There will almost never be a need for someone to inherit this, as BaseView does that for you.
+
+    This class will add 3 properties to your route:
+
+        * logged_in (bool): True if user is registered with the site, False else wise.
+
+        * user_data (dict): A dict that looks like this:
+
+        {
+            "user_id": Their discord ID,
+            "username": Their discord username (without discriminator),
+            "discriminator": Their discord discriminator,
+            "email": Their email, in which is connected to discord
+        }
+
+        user_data returns None, if the user isn't logged in.
+
+        * oauth (OauthBackend): The instance of pysite.oauth.OauthBackend, connected to the RouteManager.
+    """
+
+    @classmethod
+    def setup(cls: "OauthMixin", manager: "pysite.route_manager.RouteManager", blueprint: Blueprint):
+
+        if hasattr(super(), "setup"):
+            super().setup(manager, blueprint)  # pragma: no cover
+
+        cls._oauth = ref(manager.oauth_backend)
+
+    @property
+    def logged_in(self) -> bool:
+        return self.user_data is not None
+
+    @property
+    def user_data(self) -> dict:
+        return self.oauth.user_data()
+
+    @property
+    def oauth(self):
+        return self._oauth()

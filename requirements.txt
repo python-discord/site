@@ -7,4 +7,5 @@ wsaccel
 ujson
 schema
 flask_sockets
+Flask-Dance
 logmatic-python
