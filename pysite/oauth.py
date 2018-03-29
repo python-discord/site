@@ -46,16 +46,28 @@ class OauthBackend(BaseBackend):
     def add_user(self, token_data: dict, user_data: dict, session_id: str):
         session["session_id"] = session_id
 
-        self.db.insert(OAUTH_DATABASE, {"id": session_id,
-                                        "access_token": token_data["access_token"],
-                                        "refresh_token": token_data["refresh_token"],
-                                        "expires_at": token_data["expires_at"],
-                                        "snowflake": user_data["id"]})
+        self.db.insert(
+            OAUTH_DATABASE,
+            {
+                "id": session_id,
+                "access_token": token_data["access_token"],
+                "refresh_token": token_data["refresh_token"],
+                "expires_at": token_data["expires_at"],
+                "snowflake": int(user_data["id"])
+            },
+            conflict="replace"
+        )
 
-        self.db.insert("users", {"user_id": user_data["id"],
-                                 "username": user_data["username"],
-                                 "discriminator": user_data["discriminator"],
-                                 "email": user_data["email"]})
+        self.db.insert(
+            "users",
+            {
+                "user_id": int(user_data["id"]),
+                "username": user_data["username"],
+                "discriminator": user_data["discriminator"],
+                "email": user_data["email"]
+            },
+            conflict="update"
+        )
 
     def get_user(self) -> dict:
         resp = discord.get(DISCORD_API_ENDPOINT + "/users/@me")  # 'discord' is a request.Session with oauth information
