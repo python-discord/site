@@ -37,7 +37,6 @@ class OauthBackend(BaseBackend):
     def set(self, blueprint, token):
 
         user = self.get_user()
-        self.join_discord(token["access_token"], user["id"])
         sess_id = str(uuid5(uuid4(), self.key))
         self.add_user(token, user, sess_id)
 
