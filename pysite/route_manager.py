@@ -4,7 +4,7 @@ import inspect
 import logging
 import os
 
-from flask import Blueprint, Flask
+from flask import Blueprint, Flask, _request_ctx_stack
 from flask_dance.contrib.discord import make_discord_blueprint
 from flask_sockets import Sockets
 
@@ -75,6 +75,17 @@ class RouteManager:
         self.log.debug("Loading websocket routes...")
         self.load_views(self.ws_blueprint, "pysite/views/ws")
         self.sockets.register_blueprint(self.ws_blueprint, url_prefix="/ws")
+
+        self.app.before_request(self.https_fixing_hook)  # Try to fix HTTPS issues
+
+    def https_fixing_hook(self):
+        """
+        Attempt to fix HTTPS issues by modifying the request context stack
+        """
+
+        if _request_ctx_stack is not None:
+            reqctx = _request_ctx_stack.top
+            reqctx.url_adapter.url_scheme = PREFERRED_URL_SCHEME
 
     def run(self):
         from gevent.pywsgi import WSGIServer
