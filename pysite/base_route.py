@@ -2,7 +2,7 @@
 from collections import Iterable
 from typing import Any
 
-from flask import Blueprint, Response, jsonify, render_template
+from flask import Blueprint, Response, jsonify, render_template, url_for
 from flask.views import MethodView
 from werkzeug.exceptions import default_exceptions
 
@@ -31,8 +31,12 @@ class BaseView(MethodView, OauthMixin):
         context["view"] = self
         context["logged_in"] = self.logged_in
         context["login_url"] = DISCORD_OAUTH_REDIRECT
+        context["static_file"] = self._static_file
 
         return render_template(template_names, **context)
+
+    def _static_file(self, filename):
+        return url_for("static", filename=filename)
 
 
 class RouteView(BaseView):

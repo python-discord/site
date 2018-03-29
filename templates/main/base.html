@@ -7,9 +7,9 @@
             <meta name="viewport" content="width=device-width, initial-scale=1">
             <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.39/js/uikit.min.js"></script>
-            <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
-            <link rel="stylesheet" href="{{ url_for('static', filename='uikit_blurple.css') }}"/>
-            <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"/>
+            <link rel="shortcut icon" href="{{ static_file('favicon.ico') }}">
+            <link rel="stylesheet" href="{{ static_file('uikit_blurple.css') }}"/>
+            <link rel="stylesheet" href="{{ static_file('style.css') }}"/>
 
             <!-- OpenGraph metadata -->
             <meta property="og:title" content="Python Discord | {% block og_title %}{% endblock %}">

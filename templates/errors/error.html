@@ -5,7 +5,7 @@
 {% block beta_error %}{% endblock %}
 
 {% block extra_head %}
-    <link href="{{ url_for('static', filename='css/window.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ static_file('css/window.css') }}" rel="stylesheet" type="text/css"/>
 
     <script>
         window._RequestMethod = "{{ request.method.lower() }}";
@@ -14,8 +14,8 @@
         window._Path = "{{ request.path }}";
     </script>
 
-    <script src="{{ url_for('static', filename='js/typewriter.js') }}" type="application/javascript"></script>
-    <script src="{{ url_for('static', filename='js/500.js') }}" type="application/javascript"></script>
+    <script src="{{ static_file('js/typewriter.js') }}" type="application/javascript"></script>
+    <script src="{{ static_file('js/500.js') }}" type="application/javascript"></script>
 {% endblock %}
 
 {% block content %}
