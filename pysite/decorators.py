@@ -61,7 +61,7 @@ def api_params(schema: Schema, validation_type: ValidationTypes = ValidationType
                 data = []
                 longest = None
 
-                for key, items in multi.lists():
+                for _key, items in multi.lists():
                     # Make sure every key has the same number of values
                     if longest is None:
                         # First iteration, store it
