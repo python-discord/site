@@ -70,6 +70,7 @@ export RETHINKDB_DATABASE="database"
 export RETHINKDB_TABLE="table"
 export BOT_API_KEY="abcdefghijklmnopqrstuvwxyz"
 export TEMPLATES_AUTO_RELOAD="yes"
+export PREFERRED_URL_SCHEME="http"
 alias python=python3.6
 EOF
 
