@@ -148,6 +148,7 @@ class ErrorView(BaseView):
     """
 
     error_code = None  # type: Union[int, Iterable]
+    register_on_app = True
 
     @classmethod
     def setup(cls: "ErrorView", manager: "pysite.route_manager.RouteManager", blueprint: Blueprint):
@@ -171,7 +172,10 @@ class ErrorView(BaseView):
         if isinstance(cls.error_code, Iterable):
             for code in cls.error_code:
                 try:
-                    manager.app.errorhandler(code)(cls.as_view(cls.name))
+                    if cls.register_on_app:
+                        manager.app.errorhandler(code)(cls.as_view(cls.name))
+                    else:
+                        blueprint.errorhandler(code)(cls.as_view(cls.name))
                 except KeyError:  # This happens if we try to register a handler for a HTTP code that doesn't exist
                     pass
         else:
