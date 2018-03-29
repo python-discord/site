@@ -23,7 +23,7 @@ REQUIRED_KEYS = [
 
 class UserView(APIView, DBMixin):
     path = "/user"
-    name = "user"
+    name = "api.bot.user"
     table_name = "users"
     table_primary_key = "user_id"
 

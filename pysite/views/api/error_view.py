@@ -6,7 +6,7 @@ from pysite.base_route import ErrorView
 
 
 class APIErrorView(ErrorView):
-    name = "api_error_all"
+    name = "api.error_all"
     error_code = range(400, 600)
 
     def __init__(self):

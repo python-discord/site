@@ -8,7 +8,7 @@ from pysite.websockets import WS
 
 class EchoWebsocket(WS):
     path = "/echo"
-    name = "ws_echo"
+    name = "ws.echo"
 
     def __init__(self, socket: WebSocket):
         super().__init__(socket)

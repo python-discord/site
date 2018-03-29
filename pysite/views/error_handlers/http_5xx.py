@@ -7,7 +7,7 @@ from pysite.constants import ERROR_DESCRIPTIONS
 
 
 class Error500View(ErrorView):
-    name = "error_5xx"
+    name = "errors.5xx"
     error_code = range(500, 600)
 
     def __init__(self):

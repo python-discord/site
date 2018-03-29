@@ -30,7 +30,7 @@ DELETE_SCHEMA = Schema([
 
 class TagsView(APIView, DBMixin):
     path = "/tags"
-    name = "tags"
+    name = "api.bot.tags"
     table_name = "tags"
     table_primary_key = "tag_name"
 

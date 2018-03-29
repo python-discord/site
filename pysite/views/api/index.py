@@ -5,7 +5,7 @@ from pysite.constants import ErrorCodes
 
 class IndexView(APIView):
     path = "/"
-    name = "index"
+    name = "api.index"
 
     def get(self):
         return self.error(ErrorCodes.unknown_route)
