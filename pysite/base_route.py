@@ -6,7 +6,7 @@ from flask import Blueprint, Response, jsonify, render_template, url_for
 from flask.views import MethodView
 from werkzeug.exceptions import default_exceptions
 
-from pysite.constants import DISCORD_OAUTH_REDIRECT, ErrorCodes
+from pysite.constants import ErrorCodes
 from pysite.mixins import OauthMixin
 
 
@@ -30,7 +30,6 @@ class BaseView(MethodView, OauthMixin):
         context["current_page"] = self.name
         context["view"] = self
         context["logged_in"] = self.logged_in
-        context["login_url"] = DISCORD_OAUTH_REDIRECT
         context["static_file"] = self._static_file
 
         return render_template(template_names, **context)

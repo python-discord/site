@@ -4,8 +4,8 @@ from pysite.base_route import RouteView
 
 
 class LogoutView(RouteView):
-    name = "logout"
     path = "/auth/logout"
+    name = "logout"
 
     def get(self):
         if self.logged_in:
