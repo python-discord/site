@@ -1,7 +1,5 @@
 # coding=utf-8
-from collections import Iterable
-
-from flask import jsonify, Blueprint
+from flask import jsonify
 from werkzeug.exceptions import HTTPException
 
 from pysite.base_route import ErrorView

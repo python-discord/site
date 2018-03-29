@@ -66,12 +66,12 @@ class RouteManager:
         for sub in self.subdomains:
             sub_blueprint = Blueprint(sub, __name__, subdomain=sub)
             self.log.debug(f"Loading Blueprint: {sub_blueprint.name}")
+            self.load_views(sub_blueprint, f"pysite/views/{sub}")
             try:
                 self.app.register_blueprint(sub_blueprint)
             except Exception:
                 logging.getLogger(__name__).exception(f"Failed to register blueprint for subdomain: {sub}")
-            else:
-                self.load_views(sub_blueprint, f"pysite/views/{sub}")
+                # exit(1)
 
         # Load the websockets
         self.ws_blueprint = Blueprint("ws", __name__)

@@ -4,6 +4,7 @@ from typing import Any
 
 from flask import Blueprint, Response, jsonify, render_template
 from flask.views import MethodView
+from werkzeug.exceptions import default_exceptions
 
 from pysite.constants import DISCORD_OAUTH_REDIRECT, ErrorCodes
 from pysite.mixins import OauthMixin
@@ -171,12 +172,12 @@ class ErrorView(BaseView):
 
         if isinstance(cls.error_code, Iterable):
             for code in cls.error_code:
-                try:
-                    if cls.register_on_app:
-                        manager.app.errorhandler(code)(cls.as_view(cls.name))
-                    else:
-                        blueprint.errorhandler(code)(cls.as_view(cls.name))
-                except KeyError:  # This happens if we try to register a handler for a HTTP code that doesn't exist
-                    pass
+                if isinstance(code, int) and code not in default_exceptions:
+                    continue  # Otherwise we'll possibly get an exception thrown during blueprint registration
+
+                if cls.register_on_app:
+                    manager.app.errorhandler(code)(cls.as_view(cls.name))
+                else:
+                    blueprint.errorhandler(code)(cls.as_view(cls.name))
         else:
             raise RuntimeError("Error views must have an `error_code` that is either an `int` or an iterable")  # pragma: no cover # noqa: E501
