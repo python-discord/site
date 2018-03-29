@@ -31,9 +31,9 @@
                             <li class="uk-nav-divider uk-hidden@m"></li>
 
                             {% if logged_in %}
-                                <li class="uk-active"><a href="/auth/logout">Logout</a></li>
+                                <li class="uk-active"><a href="/auth/logout"><i class="uk-icon fas fa-unlock"></i> &nbsp;Logout</a></li>
                             {% else %}
-                                <li class="uk-active"><a href={{ login_url }}>Connect to Discord</a></li>
+                                <li class="uk-active"><a href={{ login_url }}><i class="uk-icon fas fa-lock"></i> &nbsp;Login with Discord</a></li>
                             {% endif %}
 
                             {% if current_page.startswith("info") %}
