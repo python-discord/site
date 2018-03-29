@@ -103,9 +103,11 @@ class RethinkDB:
             self.log.debug(f"Table created: '{table_name}'")
             return True
 
-    def delete(self, table_name: str, primary_key: Optional[str] = None,
-               durability: str = "hard", return_changes: Union[bool, str] = False
-               ) -> Union[Dict[str, Any], None]:
+    def delete(self,
+               table_name: str,
+               primary_key: Union[str, None] = None,
+               durability: str="hard",
+               return_changes: Union[bool, str] = False) -> dict:
         """
         Delete one or all documents from a table. This can only delete
         either the contents of an entire table, or a single document.

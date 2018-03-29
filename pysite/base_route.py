@@ -6,9 +6,10 @@ from flask import Blueprint, Response, jsonify, render_template
 from flask.views import MethodView
 
 from pysite.constants import ErrorCodes
+from pysite.mixins import OauthMixin
 
 
-class BaseView(MethodView):
+class BaseView(MethodView, OauthMixin):
     """
     Base view class with functions and attributes that should be common to all view classes.
 
@@ -27,6 +28,7 @@ class BaseView(MethodView):
         """
         context["current_page"] = self.name
         context["view"] = self
+        context["logged_in"] = self.logged_in
 
         return render_template(template_names, **context)
 
