@@ -1,5 +1,7 @@
 # coding=utf-8
-from flask import jsonify
+from collections import Iterable
+
+from flask import jsonify, Blueprint
 from werkzeug.exceptions import HTTPException
 
 from pysite.base_route import ErrorView
@@ -8,6 +10,7 @@ from pysite.base_route import ErrorView
 class APIErrorView(ErrorView):
     name = "api.error_all"
     error_code = range(400, 600)
+    register_on_app = False
 
     def __init__(self):
 
