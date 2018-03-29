@@ -84,18 +84,18 @@ class RootEndpoint(SiteTest):
         response = self.client.get('/ws_test')
         self.assertEqual(response.status_code, 200)
 
-    def test_oauth_authorized(self):
-        """check oauth redirects """
+    def test_oauth_redirects(self):
+        """ Check oauth redirects """
         response = self.client.get(DISCORD_OAUTH_REDIRECT)
         self.assertEqual(response.status_code, 302)
 
     def test_oauth_logout(self):
-        """check oauth redirects """
+        """ Check oauth redirects """
         response = self.client.get('/auth/logout')
         self.assertEqual(response.status_code, 302)
 
     def test_oauth_authorized(self):
-        """check oauth authorization"""
+        """ Check oauth authorization """
         response = self.client.get(DISCORD_OAUTH_AUTHORIZED)
         self.assertEqual(response.status_code, 302)
 
@@ -443,22 +443,22 @@ class TestWebsocketEcho(SiteTest):
 
 
 class TestOauthBackend(SiteTest):
-    """ Test cases for the oauth.py file"""
+    """ Test cases for the oauth.py file """
 
     def test_get(self):
-        """ Make sure the get function returns nothing"""
+        """ Make sure the get function returns nothing """
         self.assertIs(manager.oauth_backend.get(), None)
 
     def test_delete(self):
-        """ Make sure the delete function returns nothing"""
+        """ Make sure the delete function returns nothing """
         self.assertIs(manager.oauth_backend.delete(None), None)
 
     def test_logout(self):
-        """ Make sure at least apart of logout is working :/"""
+        """ Make sure at least apart of logout is working :/ """
         self.assertIs(manager.oauth_backend.logout(), None)
 
     def test_add_user(self):
-        """ Make sure function adds values to database and session"""
+        """ Make sure function adds values to database and session """
         from flask import session
 
         from pysite.constants import OAUTH_DATABASE
