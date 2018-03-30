@@ -54,6 +54,12 @@
         "url": "https://www.sublimetext.com/",
         "payment": "optional",
         "payment_description": "Nagware; will ask you to buy the full version after every X saves"
+      },
+      "Atom (Free)": {
+          "description": "A free Electron based editor, a \"hackable text editor for the 21st century\".",
+          "url": "https://atom.io/",
+          "payment": "free",
+          "payment_description": null
       }
     }
   },
