@@ -1,5 +1,5 @@
 # coding=utf-8
-from _weakref import ref
+from weakref import ref
 
 from flask import Blueprint
 from rethinkdb.ast import Table

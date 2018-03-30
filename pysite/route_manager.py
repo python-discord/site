@@ -10,7 +10,7 @@ from flask_sockets import Sockets
 
 from pysite.base_route import APIView, BaseView, ErrorView, RouteView
 from pysite.constants import (
-    DISCORD_OAUTH_ID, DISCORD_OAUTH_SCOPE, DISCORD_OAUTH_SECRET, DISCORD_OAUTH_REDIRECT, DISCORD_OAUTH_AUTHORIZED,
+    DISCORD_OAUTH_AUTHORIZED, DISCORD_OAUTH_ID, DISCORD_OAUTH_REDIRECT, DISCORD_OAUTH_SCOPE, DISCORD_OAUTH_SECRET,
     PREFERRED_URL_SCHEME)
 from pysite.database import RethinkDB
 from pysite.oauth import OauthBackend
@@ -95,7 +95,7 @@ class RouteManager:
         from geventwebsocket.handler import WebSocketHandler
 
         server = WSGIServer(
-            ("", int(os.environ.get("WEBPAGE_PORT", 8080))),
+            ("0.0.0.0", int(os.environ.get("WEBPAGE_PORT", 8080))),
             self.app, handler_class=WebSocketHandler
         )
         server.serve_forever()

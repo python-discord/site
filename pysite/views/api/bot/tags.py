@@ -1,7 +1,7 @@
 # coding=utf-8
 
 from flask import jsonify
-from schema import Schema, Optional
+from schema import Optional, Schema
 
 from pysite.base_route import APIView
 from pysite.constants import ValidationTypes
