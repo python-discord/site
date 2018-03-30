@@ -43,6 +43,12 @@
   "Editors": {
     "description": "Lightweight code editors supporting Python",
     "resources": {
+      "Atom (Free)": {
+        "description": "A free Electron-based editor, a \"hackable text editor for the 21st century\",  maintained by the GitHub team.",
+        "url": "https://atom.io/",
+        "payment": "free",
+        "payment_description": null
+      },
       "Visual Studio Code (Free)": {
         "description": "A fully-featured editor based on Electron, extendable with plugins.",
         "url": "https://code.visualstudio.com/",
@@ -54,12 +60,6 @@
         "url": "https://www.sublimetext.com/",
         "payment": "optional",
         "payment_description": "Nagware; will ask you to buy the full version after every X saves"
-      },
-      "Atom (Free)": {
-          "description": "A free Electron based editor, a \"hackable text editor for the 21st century\".",
-          "url": "https://atom.io/",
-          "payment": "free",
-          "payment_description": null
       }
     }
   },
