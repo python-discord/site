@@ -2,12 +2,32 @@
 import os
 from functools import wraps
 from json import JSONDecodeError
-from typing import List
 
-from flask import request
+from flask import request, redirect, url_for
 from schema import Schema, SchemaError
+from werkzeug.exceptions import Forbidden
 
+from pysite.base_route import APIView, BaseView
 from pysite.constants import ErrorCodes, ValidationTypes
+
+
+def require_roles(*roles: int):
+    def inner_decorator(f):
+
+        @wraps(f)
+        def inner(self: BaseView, *args, **kwargs):
+            data = self.user_data
+
+            if data:
+                for role in roles:
+                    if role in data["roles"]:
+                        return f(self, *args, **kwargs)
+
+                raise Forbidden()
+            return redirect(url_for("discord.login"))
+        return inner
+
+    return inner_decorator
 
 
 def api_key(f):
@@ -18,7 +38,7 @@ def api_key(f):
     """
 
     @wraps(f)
-    def inner(self, *args, **kwargs):
+    def inner(self: APIView, *args, **kwargs):
         if not request.headers.get("X-API-Key") == os.environ.get("BOT_API_KEY"):
             return self.error(ErrorCodes.invalid_api_key)
         return f(self, *args, **kwargs)
@@ -39,7 +59,7 @@ def api_params(schema: Schema, validation_type: ValidationTypes = ValidationType
     def inner_decorator(f):
 
         @wraps(f)
-        def inner(self, *args, **kwargs):
+        def inner(self: BaseView, *args, **kwargs):
             if validation_type == ValidationTypes.json:
                 try:
                     if not request.is_json:
