@@ -7,7 +7,6 @@ from pysite.base_route import RouteView
 from pysite.constants import ValidationTypes
 from pysite.decorators import api_params
 
-
 SCHEMA = Schema([{"test": str}])
 
 REQUIRED_KEYS = ["test"]

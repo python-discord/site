@@ -1,9 +1,9 @@
 # coding=utf-8
 import logging
 import os
+import sys
 from logging import StreamHandler
 from logging.handlers import SysLogHandler
-import sys
 
 from logmatic import JsonFormatter
 

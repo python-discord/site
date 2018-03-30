@@ -4,7 +4,6 @@ from logging import getLogger
 
 from pysite.base_route import RouteView
 
-
 try:
     with open("static/resources.json") as fh:
         categories = json.load(fh)

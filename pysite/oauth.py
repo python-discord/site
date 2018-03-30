@@ -5,7 +5,6 @@ from flask import session
 from flask_dance.consumer.backend import BaseBackend
 from flask_dance.contrib.discord import discord
 
-
 from pysite.constants import DISCORD_API_ENDPOINT, OAUTH_DATABASE
 
 

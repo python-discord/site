@@ -2,6 +2,7 @@
 import os
 from functools import wraps
 from json import JSONDecodeError
+from typing import List
 
 from flask import request
 from schema import Schema, SchemaError
