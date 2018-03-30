@@ -12,14 +12,11 @@ from pysite.mixins import DBMixin
 SCHEMA = Schema([
     {
         "user_id": int,
-        "roles": [int]
+        "roles": [int],
+        "username": str,
+        "discriminator": str
     }
 ])
-
-REQUIRED_KEYS = [
-    "user_id",
-    "roles"
-]
 
 
 class UserView(APIView, DBMixin):

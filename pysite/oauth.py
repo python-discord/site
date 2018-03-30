@@ -59,12 +59,7 @@ class OauthBackend(BaseBackend):
 
         self.db.insert(
             "users",
-            {
-                "user_id": int(user_data["id"]),
-                "username": user_data["username"],
-                "discriminator": user_data["discriminator"],
-                "email": user_data["email"]
-            },
+            {"email": user_data["email"]},
             conflict="update"
         )
 

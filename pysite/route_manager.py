@@ -95,7 +95,7 @@ class RouteManager:
         from geventwebsocket.handler import WebSocketHandler
 
         server = WSGIServer(
-            ("0.0.0.0", int(os.environ.get("WEBPAGE_PORT", 8080))),  # noqa: S104
+            ("0.0.0.0", int(os.environ.get("WEBPAGE_PORT", 8080))),  # noqa: B104, S104
             self.app, handler_class=WebSocketHandler
         )
         server.serve_forever()
