@@ -49,17 +49,17 @@
         "payment": "free",
         "payment_description": null
       },
-      "Visual Studio Code (Free)": {
-        "description": "A fully-featured editor based on Electron, extendable with plugins.",
-        "url": "https://code.visualstudio.com/",
-        "payment": "free",
-        "payment_description": null
-      },
       "Sublime Text (Paid, with shareware-style \"trial\")": {
         "description": "A powerful Python-backed editor with great community support and a wealth of extensions.",
         "url": "https://www.sublimetext.com/",
         "payment": "optional",
         "payment_description": "Nagware; will ask you to buy the full version after every X saves"
+      },
+      "Visual Studio Code (Free)": {
+        "description": "A fully-featured editor based on Electron, extendable with plugins.",
+        "url": "https://code.visualstudio.com/",
+        "payment": "free",
+        "payment_description": null
       }
     }
   },
