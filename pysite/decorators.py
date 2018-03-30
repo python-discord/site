@@ -3,7 +3,7 @@ import os
 from functools import wraps
 from json import JSONDecodeError
 
-from flask import request, redirect, url_for
+from flask import redirect, request, url_for
 from schema import Schema, SchemaError
 from werkzeug.exceptions import Forbidden
 
