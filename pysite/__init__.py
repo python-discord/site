@@ -34,7 +34,7 @@ if DATADOG_ADDRESS:
 logging_handlers.append(StreamHandler(stream=sys.stderr))
 
 logging.basicConfig(
-    format="%(asctime)s pd.beardfist.com Site: | %(name)30s | %(levelname)8s | %(message)s",
+    format="%(asctime)s pd.beardfist.com Site: | %(name)35s | %(levelname)8s | %(message)s",
     datefmt="%b %d %H:%M:%S",
     level=log_level,
     handlers=logging_handlers

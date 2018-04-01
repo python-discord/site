@@ -30,7 +30,7 @@ class RouteManager:
         self.sockets = Sockets(self.app)
 
         self.db = RethinkDB()
-        self.log = logging.getLogger()
+        self.log = logging.getLogger(__name__)
         self.app.secret_key = os.environ.get("WEBPAGE_SECRET_KEY", "super_secret")
         self.app.config["SERVER_NAME"] = os.environ.get("SERVER_NAME", "pythondiscord.local:8080")
         self.app.config["PREFERRED_URL_SCHEME"] = PREFERRED_URL_SCHEME
