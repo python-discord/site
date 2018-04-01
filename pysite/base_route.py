@@ -23,6 +23,27 @@ class BaseView(MethodView, OauthMixin):
         """
         Render some templates and get them back in a form that you can simply return from your view function.
 
+        Here's what's inserted:
+        * "current_page" - the "name" attribute from the view class
+        * "view" - the view class instance
+        * "logged_in" - a boolean, True if the user is logged in
+        * "static_file(filename)", a function used to get the URL for a given static file
+        * "csrf_token()", a function returning the CSRF token stored in the current session
+
+        For XSS protection, a CSRF token must be used. The "csrf_token()" function returns the correct token
+        to be used in the current rendering context - if your view methods are to be protected from XSS
+        exploits, the following steps must be taken:
+
+        1. Apply the "csrf" decorator to the view method
+        2. For forms, a hidden input must be declared in the template, with the name "csrf_token", and the value set to
+           the CSRF token.
+        3. For any AJAX work, the CSRF token should be stored in a variable, and sent as part of the request headers.
+           You can set the "X-CSRFToken" header to the CSRF token for this.
+
+        Any API call or form submission not protected by an API key must not be vulnerable to XSS, unless the API
+        call is intended to be a completely public feature. Public API methods must not be account-bound, and they
+        must never return information on a current user or perform any action. Only data retrieval is permissible.
+
         :param template_names: Names of the templates to render
         :param context: Extra data to pass into the template
         :return: String representing the rendered templates

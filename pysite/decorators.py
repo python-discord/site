@@ -8,7 +8,21 @@ from schema import Schema, SchemaError
 from werkzeug.exceptions import Forbidden
 
 from pysite.base_route import APIView, BaseView
-from pysite.constants import ErrorCodes, ValidationTypes
+from pysite.constants import ErrorCodes, ValidationTypes, CSRF
+
+
+def csrf(f):
+    """
+    Apply CSRF protection to a specific view function.
+    """
+
+    @wraps(f)
+    def inner_decorator(*args, **kwargs):
+        CSRF.protect()
+
+        return f(*args, **kwargs)
+
+    return inner_decorator
 
 
 def require_roles(*roles: int):
@@ -41,12 +55,12 @@ def api_key(f):
     """
 
     @wraps(f)
-    def inner(self: APIView, *args, **kwargs):
+    def inner_decorator(self: APIView, *args, **kwargs):
         if not request.headers.get("X-API-Key") == os.environ.get("BOT_API_KEY"):
             return self.error(ErrorCodes.invalid_api_key)
         return f(self, *args, **kwargs)
 
-    return inner
+    return inner_decorator
 
 
 def api_params(schema: Schema, validation_type: ValidationTypes = ValidationTypes.json):
@@ -59,6 +73,7 @@ def api_params(schema: Schema, validation_type: ValidationTypes = ValidationType
     This data will always be a list, and view functions are expected to be able to handle that
     in the case of multiple sets of data being provided by the api.
     """
+
     def inner_decorator(f):
 
         @wraps(f)

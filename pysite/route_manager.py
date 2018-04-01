@@ -10,8 +10,8 @@ from flask_sockets import Sockets
 
 from pysite.base_route import APIView, BaseView, ErrorView, RouteView
 from pysite.constants import (
-    DISCORD_OAUTH_AUTHORIZED, DISCORD_OAUTH_ID, DISCORD_OAUTH_REDIRECT, DISCORD_OAUTH_SCOPE, DISCORD_OAUTH_SECRET,
-    PREFERRED_URL_SCHEME)
+    CSRF, DISCORD_OAUTH_AUTHORIZED, DISCORD_OAUTH_ID, DISCORD_OAUTH_REDIRECT, DISCORD_OAUTH_SCOPE,
+    DISCORD_OAUTH_SECRET, PREFERRED_URL_SCHEME)
 from pysite.database import RethinkDB
 from pysite.oauth import OauthBackend
 from pysite.websockets import WS
@@ -34,6 +34,7 @@ class RouteManager:
         self.app.secret_key = os.environ.get("WEBPAGE_SECRET_KEY", "super_secret")
         self.app.config["SERVER_NAME"] = os.environ.get("SERVER_NAME", "pythondiscord.local:8080")
         self.app.config["PREFERRED_URL_SCHEME"] = PREFERRED_URL_SCHEME
+        self.app.config["WTF_CSRF_CHECK_DEFAULT "] = False  # We only want to protect specific routes
         self.app.before_request(self.db.before_request)
         self.app.teardown_request(self.db.teardown_request)
 
@@ -80,6 +81,7 @@ class RouteManager:
         self.sockets.register_blueprint(self.ws_blueprint, url_prefix="/ws")
 
         self.app.before_request(self.https_fixing_hook)  # Try to fix HTTPS issues
+        CSRF.init_app(self.app)  # Set up CSRF protection
 
     def https_fixing_hook(self):
         """

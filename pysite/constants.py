@@ -3,6 +3,8 @@
 from enum import Enum, IntEnum
 from os import environ
 
+from flask_wtf import CSRFProtect
+
 
 class ErrorCodes(IntEnum):
     unknown_route = 0
@@ -68,3 +70,7 @@ PAPERTRAIL_PORT = int(environ.get("PAPERTRAIL_PORT") or 0)
 # DataDog logging
 DATADOG_ADDRESS = environ.get("DATADOG_ADDRESS") or None
 DATADOG_PORT = int(environ.get("DATADOG_PORT") or 0)
+
+# CSRF
+
+CSRF = CSRFProtect()
