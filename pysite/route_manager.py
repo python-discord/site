@@ -34,7 +34,6 @@ class RouteManager:
         self.app.secret_key = os.environ.get("WEBPAGE_SECRET_KEY", "super_secret")
         self.app.config["SERVER_NAME"] = os.environ.get("SERVER_NAME", "pythondiscord.local:8080")
         self.app.config["PREFERRED_URL_SCHEME"] = PREFERRED_URL_SCHEME
-        self.app.config["WTF_CSRF_CHECK_DEFAULT "] = False  # We only want to protect specific routes
         self.app.before_request(self.db.before_request)
         self.app.teardown_request(self.db.teardown_request)
 
@@ -73,6 +72,9 @@ class RouteManager:
             except Exception:
                 logging.getLogger(__name__).exception(f"Failed to register blueprint for subdomain: {sub}")
 
+            # if sub == "api":
+            #     CSRF.exempt(sub_blueprint)
+
         # Load the websockets
         self.ws_blueprint = Blueprint("ws", __name__)
 
@@ -81,7 +83,9 @@ class RouteManager:
         self.sockets.register_blueprint(self.ws_blueprint, url_prefix="/ws")
 
         self.app.before_request(self.https_fixing_hook)  # Try to fix HTTPS issues
+
         CSRF.init_app(self.app)  # Set up CSRF protection
+        self.app.config["WTF_CSRF_CHECK_DEFAULT "] = False  # We only want to protect specific routes
 
     def https_fixing_hook(self):
         """

@@ -12,6 +12,8 @@ manager.load_views(manager.app.tests_blueprint, "pysite/views/tests")
 manager.app.register_blueprint(manager.app.tests_blueprint)
 app = manager.app
 
+app.config["WTF_CSRF_CHECK_DEFAULT"] = False
+
 
 class SiteTest(TestCase):
     """ Extend TestCase with flask app instantiation """
