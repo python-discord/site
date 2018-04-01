@@ -23,6 +23,9 @@ def require_roles(*roles: int):
                     if role in data["roles"]:
                         return f(self, *args, **kwargs)
 
+                if isinstance(self, APIView):
+                    return self.error(ErrorCodes.unauthorized)
+
                 raise Forbidden()
             return redirect(url_for("discord.login"))
         return inner
