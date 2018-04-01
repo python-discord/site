@@ -8,7 +8,7 @@ from schema import Schema, SchemaError
 from werkzeug.exceptions import Forbidden
 
 from pysite.base_route import APIView, BaseView
-from pysite.constants import ErrorCodes, ValidationTypes, CSRF
+from pysite.constants import CSRF, ErrorCodes, ValidationTypes
 
 
 def csrf(f):
