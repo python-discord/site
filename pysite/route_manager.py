@@ -61,13 +61,13 @@ class RouteManager:
         self.log.debug("")
 
         # Load the subdomains
-        self.subdomains = ['api', 'staff']
+        self.subdomains = ["api", "staff", "wiki"]
 
         for sub in self.subdomains:
-            sub_blueprint = Blueprint(sub, __name__, subdomain=sub)
-            self.log.debug(f"Loading Blueprint: {sub_blueprint.name}")
-            self.load_views(sub_blueprint, f"pysite/views/{sub}")
             try:
+                sub_blueprint = Blueprint(sub, __name__, subdomain=sub)
+                self.log.debug(f"Loading Blueprint: {sub_blueprint.name}")
+                self.load_views(sub_blueprint, f"pysite/views/{sub}")
                 self.app.register_blueprint(sub_blueprint)
             except Exception:
                 logging.getLogger(__name__).exception(f"Failed to register blueprint for subdomain: {sub}")
