@@ -6,7 +6,7 @@ from pysite.decorators import require_roles
 
 class StaffView(RouteView):
     path = "/"
-    name = "staff.index"
+    name = "index"
 
     @require_roles(*ALL_STAFF_ROLES)
     def get(self):
