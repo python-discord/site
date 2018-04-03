@@ -84,7 +84,7 @@ class RouteManager:
 
         self.app.before_request(self.https_fixing_hook)  # Try to fix HTTPS issues
 
-        CSRF.init_app(self.app)  # Set up CSRF protection
+        # CSRF.init_app(self.app)  # Set up CSRF protection
         self.app.config["WTF_CSRF_CHECK_DEFAULT "] = False  # We only want to protect specific routes
 
     def https_fixing_hook(self):
