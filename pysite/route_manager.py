@@ -69,11 +69,11 @@ class RouteManager:
                 self.log.debug(f"Loading Blueprint: {sub_blueprint.name}")
                 self.load_views(sub_blueprint, f"pysite/views/{sub}")
                 self.app.register_blueprint(sub_blueprint)
+
+                if sub == "api":
+                    CSRF.exempt(sub_blueprint)  # TODO: Gotta make this work properly, this is just a kludge for now
             except Exception:
                 logging.getLogger(__name__).exception(f"Failed to register blueprint for subdomain: {sub}")
-
-            # if sub == "api":
-            #     CSRF.exempt(sub_blueprint)
 
         # Load the websockets
         self.ws_blueprint = Blueprint("ws", __name__)
