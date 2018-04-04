@@ -34,8 +34,12 @@ class RouteManager:
         self.app.secret_key = os.environ.get("WEBPAGE_SECRET_KEY", "super_secret")
         self.app.config["SERVER_NAME"] = os.environ.get("SERVER_NAME", "pythondiscord.local:8080")
         self.app.config["PREFERRED_URL_SCHEME"] = PREFERRED_URL_SCHEME
+        self.app.config["WTF_CSRF_CHECK_DEFAULT "] = False  # We only want to protect specific routes
+
         self.app.before_request(self.db.before_request)
         self.app.teardown_request(self.db.teardown_request)
+
+        CSRF.init_app(self.app)  # Set up CSRF protection
 
         # Load the oauth blueprint
         self.oauth_backend = OauthBackend(self)
@@ -69,9 +73,6 @@ class RouteManager:
                 self.log.debug(f"Loading Blueprint: {sub_blueprint.name}")
                 self.load_views(sub_blueprint, f"pysite/views/{sub}")
                 self.app.register_blueprint(sub_blueprint)
-
-                if sub == "api":
-                    CSRF.exempt(sub_blueprint)  # TODO: Gotta make this work properly, this is just a kludge for now
             except Exception:
                 logging.getLogger(__name__).exception(f"Failed to register blueprint for subdomain: {sub}")
 
@@ -83,9 +84,6 @@ class RouteManager:
         self.sockets.register_blueprint(self.ws_blueprint, url_prefix="/ws")
 
         self.app.before_request(self.https_fixing_hook)  # Try to fix HTTPS issues
-
-        # CSRF.init_app(self.app)  # Set up CSRF protection
-        self.app.config["WTF_CSRF_CHECK_DEFAULT "] = False  # We only want to protect specific routes
 
     def https_fixing_hook(self):
         """
