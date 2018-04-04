@@ -10,3 +10,4 @@ flask_sockets
 Flask-Dance
 logmatic-python
 flask-wtf
+docutils
