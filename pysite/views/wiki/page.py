@@ -1,5 +1,5 @@
 # coding=utf-8
-from flask import url_for, redirect
+from flask import redirect, url_for
 
 from pysite.base_route import RouteView
 from pysite.constants import ALL_STAFF_ROLES
