@@ -1,6 +1,6 @@
 # coding=utf-8
 from flask import request
-from werkzeug.exceptions import HTTPException
+from werkzeug.exceptions import HTTPException, InternalServerError
 
 from pysite.base_route import ErrorView
 from pysite.constants import ERROR_DESCRIPTIONS
@@ -23,6 +23,14 @@ class Error500View(ErrorView):
             setattr(self, method, self.error)
 
     def error(self, error: HTTPException):
+
+        # We were sometimes recieving errors from RethinkDB, which were not originating from Werkzeug.
+        # To fix this, this section checks whether they have a code (which werkzeug adds) and if not
+        # change the error to a Werkzeug InternalServerError.
+
+        if not hasattr(error, "code"):
+            error = InternalServerError()
+
         error_desc = ERROR_DESCRIPTIONS.get(error.code, "We're not really sure what happened there, please try again.")
 
         return self.render(
