@@ -36,6 +36,11 @@ class RouteManager:
         self.app.config["PREFERRED_URL_SCHEME"] = PREFERRED_URL_SCHEME
         self.app.config["WTF_CSRF_CHECK_DEFAULT"] = False  # We only want to protect specific routes
 
+        # We make the token valid for the lifetime of the session because of the wiki - you might spend some
+        # time editing an article, and it seems that session lifetime is a good analogue for how long you have
+        # to edit
+        self.app.config["WTF_CSRF_TIME_LIMIT"] = None
+
         self.app.before_request(self.db.before_request)
         self.app.teardown_request(self.db.teardown_request)
 

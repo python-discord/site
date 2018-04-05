@@ -21,7 +21,11 @@ class RSTWebsocket(WS):
 
     def on_message(self, message):
         self.log.debug(f"RST | Message: {message}")
-        self.send(publish_parts(source=message, writer_name="html5")["html_body"])
+        self.send(
+            publish_parts(
+                source=message, writer_name="html5", settings_overrides={"traceback": True}
+            )["html_body"]
+        )
 
     def on_close(self):
         self.log.debug("RST | WS closed.")
