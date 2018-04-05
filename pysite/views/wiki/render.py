@@ -5,7 +5,7 @@ from schema import Schema
 
 from pysite.base_route import APIView
 from pysite.constants import ALL_STAFF_ROLES, ValidationTypes
-from pysite.decorators import csrf, require_roles, api_params
+from pysite.decorators import api_params, csrf, require_roles
 
 SCHEMA = Schema([{
     "data": str
