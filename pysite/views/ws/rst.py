@@ -24,7 +24,7 @@ class RSTWebsocket(WS):
 
         try:
             data = publish_parts(
-                source=message, writer_name="html5", settings_overrides={"traceback": True}
+                source=message, writer_name="html5", settings_overrides={"traceback": True, "halt": 2}
             )["html_body"]
         except Exception as e:
             self.log.exception("Parsing error")
