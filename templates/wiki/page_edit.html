@@ -4,8 +4,48 @@
 {% block og_description %}Landing page for the wiki{% endblock %}
 {% block content %}
     <div class="uk-container uk-section">
-    <h1 class="uk-title uk-text-center">
-        Placeholder text.
-    </h1>
+        <form action="{{ url_for("wiki.edit", page=page) }}" method="post">
+            <label for="title">Title: </label>
+            <input name="title" id="title" value="{{ title }}" class="uk-input" />
+            <label for="rst">Document: </label>
+            <textarea name="rst" id="rst" class="uk-textarea">{{ rst }}</textarea>
+            <button value="Preview" id="preview">Preview</button>
+            <button type="submit" value="Save">Save</button>
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+        </form>
+
+        <div id="preview-div" style="border: 1px solid grey;">
+            <p>Preview will appear here.</p>
+        </div>
     </div>
+
+    <script type="application/javascript">
+        "use strict";
+
+        let csrf_token = "{{ csrf_token() }}";
+
+        document.getElementById("preview").onclick = function(event) {
+            let oReq = new XMLHttpRequest();
+            let data = document.getElementById("rst").value;
+
+            oReq.addEventListener("load", function() {
+                let response = JSON.parse(this.responseText);
+
+                if (response.error !== undefined) {
+                    console.log("Error: " + response.error)
+                } else {
+                    document.getElementById("preview-div").innerHTML = response.data;
+                }
+            });
+
+            oReq.open("POST", "/render");
+
+            oReq.setRequestHeader("Content-type", "application/json");
+            oReq.setRequestHeader("X-CSRFToken", csrf_token);
+
+            oReq.send(JSON.stringify({"data": data}));
+
+            return false;
+        }
+    </script>
 {% endblock %}

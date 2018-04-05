@@ -34,7 +34,7 @@ def require_roles(*roles: int):
 
             if data:
                 for role in roles:
-                    if role in data["roles"]:
+                    if role in data.get("roles", []):
                         return f(self, *args, **kwargs)
 
                 if isinstance(self, APIView):

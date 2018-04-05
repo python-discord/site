@@ -27,7 +27,7 @@ class PageView(RouteView, DBMixin):
         if not self.logged_in:
             return False
 
-        roles = self.user_data["roles"]
+        roles = self.user_data.get("roles", [])
 
         for role in roles:
             if role in ALL_STAFF_ROLES:
