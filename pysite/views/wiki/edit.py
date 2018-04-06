@@ -1,5 +1,5 @@
 # coding=utf-8
-from flask import url_for, request
+from flask import url_for
 from werkzeug.utils import redirect
 
 from pysite.base_route import RouteView
@@ -32,11 +32,11 @@ class EditView(RouteView, DBMixin):
     @csrf
     def post(self, page):
         # rst = request.form["rst"]
-        obj = {
-            "slug": page,
-            "title": request.form["title"],
-            "rst": request.form["rst"],
-            "html": ""
-        }
+        # obj = {
+        #     "slug": page,
+        #     "title": request.form["title"],
+        #     "rst": request.form["rst"],
+        #     "html": ""
+        # }
 
         return redirect(url_for("wiki.page", page=page), code=303)  # Redirect, ensuring a GET
