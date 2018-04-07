@@ -41,7 +41,7 @@ class RethinkDB:
     def create_tables(self) -> int:
         created = 0
 
-        for table, primary_key in ALL_TABLES.values():
+        for table, primary_key in ALL_TABLES.items():
             if self.create_table(table, primary_key):
                 created += 1
 
