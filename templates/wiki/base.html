@@ -29,14 +29,14 @@
                         {% if can_edit and current_page == "page" %}
                             <li>
                                 <a href="{{ url_for("wiki.edit", page=page) }}">
-                                    <i class="fas fa-pencil-alt"></i> &nbsp;Edit Page
+                                    <i class="fas fa-pencil-alt"></i> &nbsp;Edit
                                 </a>
                             </li>
                             <li class="uk-nav-divider"></li>
                         {% elif current_page == "edit" %}
                             <li>
                                 <a href="{{ url_for("wiki.page", page=page) }}">
-                                    <i class="fas fa-arrow-left fa-fw"></i> &nbsp;View Page
+                                    <i class="fas fa-arrow-left fa-fw"></i> &nbsp;Back
                                 </a>
                             </li>
                             <li class="uk-nav-divider"></li>
