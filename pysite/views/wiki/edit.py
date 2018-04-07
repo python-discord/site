@@ -4,7 +4,7 @@ from flask import request, url_for
 from werkzeug.utils import redirect
 
 from pysite.base_route import RouteView
-from pysite.constants import ALL_STAFF_ROLES
+from pysite.constants import EDITOR_ROLES
 from pysite.decorators import csrf, require_roles
 from pysite.mixins import DBMixin
 
@@ -16,7 +16,7 @@ class EditView(RouteView, DBMixin):
     table_name = "wiki"
     table_primary_key = "slug"
 
-    @require_roles(*ALL_STAFF_ROLES)
+    @require_roles(*EDITOR_ROLES)
     def get(self, page):
         rst = ""
         title = ""
@@ -31,7 +31,7 @@ class EditView(RouteView, DBMixin):
 
         return self.render("wiki/page_edit.html", page=page, rst=rst, title=title, preview=preview)
 
-    @require_roles(*ALL_STAFF_ROLES)
+    @require_roles(*EDITOR_ROLES)
     @csrf
     def post(self, page):
         rst = request.form["rst"]

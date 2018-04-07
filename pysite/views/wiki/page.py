@@ -3,7 +3,7 @@ from flask import redirect, url_for
 from werkzeug.exceptions import NotFound
 
 from pysite.base_route import RouteView
-from pysite.constants import ALL_STAFF_ROLES
+from pysite.constants import EDITOR_ROLES
 from pysite.mixins import DBMixin
 
 
@@ -31,7 +31,7 @@ class PageView(RouteView, DBMixin):
         roles = self.user_data.get("roles", [])
 
         for role in roles:
-            if role in ALL_STAFF_ROLES:
+            if role in EDITOR_ROLES:
                 return True
 
         return False
