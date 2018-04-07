@@ -1,6 +1,6 @@
 {% extends "wiki/base.html" %}
-{% block title %}Wiki | Home{% endblock %}
-{% block og_title %}Wiki | Home{% endblock %}
+{% block title %}Wiki | Edit: {{ page }}{% endblock %}
+{% block og_title %}Wiki | Edit: {{ page }}{% endblock %}
 {% block og_description %}Landing page for the wiki{% endblock %}
 {% block extra_head %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.3.3/ace.js" type="application/javascript"></script>
@@ -17,17 +17,17 @@
             <input class="uk-button uk-button-primary" type="submit" value="Save" />
         </div>
         <div class="uk-width-1-1">
-            <div id="editor" class="uk-textarea" style="resize: vertical; min-height: 10rem;">{{ rst }}</div>
+            <div id="editor" class="uk-textarea" style="resize: vertical; min-height: 15rem;">{{ rst }}</div>
             <input type="hidden" name="rst" id="rst" />
         </div>
 
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
     </form>
 
-    <h2 class="uk-h2">Preview</h2>
+    <h2>Preview</h2>
 
-    <div id="preview-div">
-        <p>Preview will appear here.</p>
+    <div class="uk-alert preview-div" style="padding: 1rem 1rem 0.1rem;">
+        {{ preview | safe }}
     </div>
 
     <script type="application/javascript">
@@ -69,7 +69,11 @@
         let timer;
 
         editor.session.setMode("ace/mode/rst");
+        editor.session.setUseWrapMode(true);
+
         editor.setTheme("ace/theme/iplastic");
+        editor.setShowPrintMargin(false);
+
         editor.on("input", function() {
             document.getElementById("rst").value = editor.getValue();
 

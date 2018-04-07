@@ -19,10 +19,10 @@ class PageView(RouteView, DBMixin):
 
         if obj is None:
             if self.is_staff():
-                return redirect(url_for("wiki.edit", page=page))
+                return redirect(url_for("wiki.edit", page=page, can_edit=False))
 
             raise NotFound()
-        return self.render("wiki/page_view.html", page=page, data=obj)
+        return self.render("wiki/page_view.html", page=page, data=obj, can_edit=self.is_staff())
 
     def is_staff(self):
         if not self.logged_in:

@@ -20,14 +20,16 @@ class EditView(RouteView, DBMixin):
     def get(self, page):
         rst = ""
         title = ""
+        preview = "<p>Preview will appear here.</p>"
 
         obj = self.db.get(self.table_name, page)
 
         if obj:
             rst = obj["rst"]
             title = obj["title"]
+            preview = obj["html"]
 
-        return self.render("wiki/page_edit.html", page=page, rst=rst, title=title)
+        return self.render("wiki/page_edit.html", page=page, rst=rst, title=title, preview=preview)
 
     @require_roles(*ALL_STAFF_ROLES)
     @csrf
