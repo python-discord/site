@@ -9,16 +9,27 @@ from rethinkdb.ast import RqlMethodQuery, Table, UserError
 from rethinkdb.net import DefaultConnection
 
 
+ALL_TABLES = {
+    # table: primary_key
+
+    "oauth_data": "id",
+    "tags": "tag_name",
+    "users": "user_id",
+    "wiki": "slug",
+}
+
+
 class RethinkDB:
 
-    def __init__(self, loop_type: str = "gevent"):
+    def __init__(self, loop_type: Optional[str] = "gevent"):
         self.host = os.environ.get("RETHINKDB_HOST", "127.0.0.1")
         self.port = os.environ.get("RETHINKDB_PORT", "28016")
         self.database = os.environ.get("RETHINKDB_DATABASE", "pythondiscord")
         self.log = logging.getLogger()
         self.conn = None
 
-        rethinkdb.set_loop_type(loop_type)
+        if loop_type:
+            rethinkdb.set_loop_type(loop_type)
 
         with self.get_connection(connect_database=False) as conn:
             try:
@@ -26,6 +37,15 @@ class RethinkDB:
                 self.log.debug(f"Database created: '{self.database}'")
             except rethinkdb.RqlRuntimeError:
                 self.log.debug(f"Database found: '{self.database}'")
+
+    def create_tables(self) -> int:
+        created = 0
+
+        for table, primary_key in ALL_TABLES.values():
+            if self.create_table(table, primary_key):
+                created += 1
+
+        return created
 
     def get_connection(self, connect_database: bool=True) -> DefaultConnection:
         """
@@ -169,6 +189,9 @@ class RethinkDB:
         :param table_name: Name of the table to query against
         :return: The RethinkDB table object for the table
         """
+
+        if table_name not in ALL_TABLES:
+            self.log.warning(f"Table not declared in database.py: {table_name}")
 
         return rethinkdb.table(table_name)
 
