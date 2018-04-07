@@ -1,5 +1,6 @@
 # coding=utf-8
-from flask import url_for
+from docutils.core import publish_parts
+from flask import request, url_for
 from werkzeug.utils import redirect
 
 from pysite.base_route import RouteView
@@ -31,12 +32,20 @@ class EditView(RouteView, DBMixin):
     @require_roles(*ALL_STAFF_ROLES)
     @csrf
     def post(self, page):
-        # rst = request.form["rst"]
-        # obj = {
-        #     "slug": page,
-        #     "title": request.form["title"],
-        #     "rst": request.form["rst"],
-        #     "html": ""
-        # }
+        rst = request.form["rst"]
+        obj = {
+            "slug": page,
+            "title": request.form["title"],
+            "rst": rst,
+            "html": publish_parts(
+                source=rst, writer_name="html5", settings_overrides={"halt_level": 2}
+            )["html_body"]
+        }
+
+        self.db.insert(
+            self.table_name,
+            obj,
+            conflict="replace"
+        )
 
         return redirect(url_for("wiki.page", page=page), code=303)  # Redirect, ensuring a GET

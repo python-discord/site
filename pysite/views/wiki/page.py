@@ -1,5 +1,6 @@
 # coding=utf-8
 from flask import redirect, url_for
+from werkzeug.exceptions import NotFound
 
 from pysite.base_route import RouteView
 from pysite.constants import ALL_STAFF_ROLES
@@ -20,7 +21,7 @@ class PageView(RouteView, DBMixin):
             if self.is_staff():
                 return redirect(url_for("wiki.edit", page=page))
 
-            return self.render("wiki/page_missing.html", page=page)
+            raise NotFound()
         return self.render("wiki/page_view.html", page=page, data=obj)
 
     def is_staff(self):

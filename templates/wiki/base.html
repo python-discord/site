@@ -21,27 +21,37 @@
         {% endblock %}
     </head>
     <body class="page-{{ current_page }}">
-        {% if current_page == "index" %}
-        <div class="uk-offcanvas-content uk-section-primary">
-        {% else %}
         <div class="uk-offcanvas-content">
-        {% endif %}
             {% include "main/navigation.html" %}
-            {% if current_page != "index" %}
-                {% block beta_error %}
-                    <div class="uk-container uk-section" style="padding-top: 10px; padding-bottom: 10px;">
-                        <div class="uk-container uk-container-small">
-                            <div class="uk-alert-danger" uk-alert>
-                                <p>
-                                    Please note: this site is under construction. What you see now may be vastly different
-                                    from the final project state. Feel free to chat to us on Discord if you're curious!
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                {% endblock %}
-            {% endif %}
-            {% block content %}{% endblock %}
+            <div class="uk-flex uk-flex-row" style="height: 100%;">
+                <div class="uk-card uk-card-body uk-flex-left uk-flex">
+                    <ul class="uk-nav-default uk-nav-parent-icon" uk-nav>
+                        <li class="uk-active"><a href="#">Placeholder</a></li>
+                        <li class="uk-parent">
+                            <a href="#">Parent</a>
+                            <ul class="uk-nav-sub">
+                                <li><a href="#">Sub item</a></li>
+                                <li><a href="#">Sub item</a></li>
+                            </ul>
+                        </li>
+                        <li class="uk-parent">
+                            <a href="#">Parent</a>
+                            <ul class="uk-nav-sub">
+                                <li><a href="#">Sub item</a></li>
+                                <li><a href="#">Sub item</a></li>
+                            </ul>
+                        </li>
+                        <li class="uk-nav-header">Header</li>
+                        <li><a href="#"><span class="uk-margin-small-right" uk-icon="icon: table"></span> Item</a></li>
+                        <li><a href="#"><span class="uk-margin-small-right" uk-icon="icon: thumbnails"></span> Item</a></li>
+                        <li class="uk-nav-divider"></li>
+                        <li><a href="#"><span class="uk-margin-small-right" uk-icon="icon: trash"></span> Item</a></li>
+                    </ul>
+                </div>
+                <div class="uk-section" style="flex-grow: 1; margin: 0 1rem 1rem;">
+                    {% block content %}{% endblock %}
+                </div>
+            </div>
         </div>
 
         <footer>
