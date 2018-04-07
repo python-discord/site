@@ -9,6 +9,9 @@ branches:
   only:
     - "master"
 
+env:
+  - FLASK_DEBUG=1
+
 install:
   - pip install -r requirements.txt
   - pip install -r requirements-ci.txt
