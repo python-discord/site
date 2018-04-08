@@ -3,7 +3,7 @@ from flask import redirect, url_for
 from werkzeug.exceptions import NotFound
 
 from pysite.base_route import RouteView
-from pysite.constants import EDITOR_ROLES
+from pysite.constants import DEBUG_MODE, EDITOR_ROLES
 from pysite.mixins import DBMixin
 
 
@@ -25,6 +25,8 @@ class PageView(RouteView, DBMixin):
         return self.render("wiki/page_view.html", page=page, data=obj, can_edit=self.is_staff())
 
     def is_staff(self):
+        if DEBUG_MODE:
+            return True
         if not self.logged_in:
             return False
 

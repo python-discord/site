@@ -26,7 +26,7 @@
             <div class="uk-flex uk-flex-row" style="height: 100%;">
                 <div class="uk-card uk-card-body uk-flex-left uk-flex">
                     <ul class="uk-nav-default uk-nav-parent-icon" uk-nav>
-                        {% if can_edit and current_page == "page" %}
+                        {% if (can_edit or debug) and current_page == "page" %}
                             <li>
                                 <a href="{{ url_for("wiki.edit", page=page) }}">
                                     <i class="fas fa-pencil-alt"></i> &nbsp;Edit

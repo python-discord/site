@@ -11,7 +11,6 @@ class Error400View(ErrorView):
     error_code = range(400, 430)
 
     def __init__(self):
-
         # Direct errors for all methods at self.return_error
         methods = [
             'get', 'post', 'put',
@@ -27,7 +26,6 @@ class Error400View(ErrorView):
 
         return self.render(
             "errors/error.html", code=error.code, req=request, error_title=error_desc,
-            error_message=error_desc +
-            " If you believe we have made a mistake, please "
-            "<a href='https://github.com/discord-python/site/issues'>open an issue on our GitHub</a>."
+            error_message=f"{error_desc} If you believe we have made a mistake, please "
+                          "<a href='https://github.com/discord-python/site/issues'>open an issue on our GitHub</a>."
         ), error.code
