@@ -15,7 +15,3 @@ def when_ready(server=None):
     created = db.create_tables()
 
     output(f"Created {created} tables.")
-
-
-if __name__ == "__main__":
-    when_ready()
