@@ -6,7 +6,7 @@ from flask import Blueprint, Response, jsonify, render_template, url_for
 from flask.views import MethodView
 from werkzeug.exceptions import default_exceptions
 
-from pysite.constants import ErrorCodes
+from pysite.constants import DEBUG_MODE, ErrorCodes
 from pysite.mixins import OauthMixin
 
 
@@ -52,6 +52,7 @@ class BaseView(MethodView, OauthMixin):
         context["view"] = self
         context["logged_in"] = self.logged_in
         context["static_file"] = self._static_file
+        context["debug"] = DEBUG_MODE
 
         return render_template(template_names, **context)
 
@@ -204,4 +205,5 @@ class ErrorView(BaseView):
                 else:
                     blueprint.errorhandler(code)(cls.as_view(cls.name))
         else:
-            raise RuntimeError("Error views must have an `error_code` that is either an `int` or an iterable")  # pragma: no cover # noqa: E501
+            raise RuntimeError(
+                "Error views must have an `error_code` that is either an `int` or an iterable")  # pragma: no cover # noqa: E501

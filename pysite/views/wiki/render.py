@@ -7,7 +7,7 @@ from flask import jsonify
 from schema import Schema
 
 from pysite.base_route import APIView
-from pysite.constants import ALL_STAFF_ROLES, ValidationTypes
+from pysite.constants import EDITOR_ROLES, ValidationTypes
 from pysite.decorators import api_params, csrf, require_roles
 
 SCHEMA = Schema([{
@@ -22,7 +22,7 @@ class RenderView(APIView):
     name = "render"
 
     @csrf
-    @require_roles(*ALL_STAFF_ROLES)
+    @require_roles(*EDITOR_ROLES)
     @api_params(schema=SCHEMA, validation_type=ValidationTypes.json)
     def post(self, data):
         if not len(data):

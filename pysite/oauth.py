@@ -84,4 +84,4 @@ class OauthBackend(BaseBackend):
     def logout(self):
         sess_id = session.get("session_id")
         if sess_id and self.db.get(OAUTH_DATABASE, sess_id):  # If user exists in db,
-            self.db.delete(OAUTH_DATABASE, sess_id)           # remove them (at least, their session)
+            self.db.delete(OAUTH_DATABASE, sess_id)  # remove them (at least, their session)

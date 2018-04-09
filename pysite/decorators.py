@@ -8,7 +8,7 @@ from schema import Schema, SchemaError
 from werkzeug.exceptions import Forbidden
 
 from pysite.base_route import APIView, BaseView
-from pysite.constants import CSRF, ErrorCodes, ValidationTypes
+from pysite.constants import CSRF, DEBUG_MODE, ErrorCodes, ValidationTypes
 
 
 def csrf(f):
@@ -32,9 +32,11 @@ def require_roles(*roles: int):
         def inner(self: BaseView, *args, **kwargs):
             data = self.user_data
 
-            if data:
+            if DEBUG_MODE:
+                return f(self, *args, **kwargs)
+            elif data:
                 for role in roles:
-                    if role in data.get("roles", []):
+                    if DEBUG_MODE or role in data.get("roles", []):
                         return f(self, *args, **kwargs)
 
                 if isinstance(self, APIView):
@@ -42,6 +44,7 @@ def require_roles(*roles: int):
 
                 raise Forbidden()
             return redirect(url_for("discord.login"))
+
         return inner
 
     return inner_decorator
@@ -128,5 +131,7 @@ def api_params(schema: Schema, validation_type: ValidationTypes = ValidationType
                 return self.error(ErrorCodes.incorrect_parameters)
 
             return f(self, data, *args, **kwargs)
+
         return inner
+
     return inner_decorator

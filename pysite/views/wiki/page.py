@@ -1,8 +1,9 @@
 # coding=utf-8
 from flask import redirect, url_for
+from werkzeug.exceptions import NotFound
 
 from pysite.base_route import RouteView
-from pysite.constants import ALL_STAFF_ROLES
+from pysite.constants import DEBUG_MODE, EDITOR_ROLES
 from pysite.mixins import DBMixin
 
 
@@ -18,19 +19,21 @@ class PageView(RouteView, DBMixin):
 
         if obj is None:
             if self.is_staff():
-                return redirect(url_for("wiki.edit", page=page))
+                return redirect(url_for("wiki.edit", page=page, can_edit=False))
 
-            return self.render("wiki/page_missing.html", page=page)
-        return self.render("wiki/page_view.html", page=page, data=obj)
+            raise NotFound()
+        return self.render("wiki/page_view.html", page=page, data=obj, can_edit=self.is_staff())
 
     def is_staff(self):
+        if DEBUG_MODE:
+            return True
         if not self.logged_in:
             return False
 
         roles = self.user_data.get("roles", [])
 
         for role in roles:
-            if role in ALL_STAFF_ROLES:
+            if role in EDITOR_ROLES:
                 return True
 
         return False
