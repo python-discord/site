@@ -38,6 +38,12 @@
         "payment": "free",
         "payment_description": null
       },
+      "Python Cheat Sheet": {
+        "description": "A Python 3 cheat sheet with useful information and tips, as well as common pitfalls for beginners.",
+        "url": "https://perso.limsi.fr/pointal/_media/python:cours:mementopython3-english.pdf",
+        "payment": "free",
+        "payment_description": null
+      },
       "Python Tutorials by Corey Schafer on YouTube": {
         "description": "An in-depth look at the Python programming language, from one of YouTube's most popular Python tutors.",
         "url": "https://www.youtube.com/playlist?list=PL-osiE80TeTt2d9bfVyTiXJA-UTHn6WwU",
