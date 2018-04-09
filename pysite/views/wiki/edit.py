@@ -1,5 +1,4 @@
 # coding=utf-8
-from docutils.core import publish_parts
 from flask import request, url_for
 from werkzeug.utils import redirect
 
@@ -7,6 +6,7 @@ from pysite.base_route import RouteView
 from pysite.constants import EDITOR_ROLES
 from pysite.decorators import csrf, require_roles
 from pysite.mixins import DBMixin
+from pysite.rst import render
 
 
 class EditView(RouteView, DBMixin):
@@ -39,9 +39,7 @@ class EditView(RouteView, DBMixin):
             "slug": page,
             "title": request.form["title"],
             "rst": rst,
-            "html": publish_parts(
-                source=rst, writer_name="html5", settings_overrides={"halt_level": 2}
-            )["html_body"]
+            "html": render(rst)
         }
 
         self.db.insert(

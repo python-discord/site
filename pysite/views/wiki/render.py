@@ -1,7 +1,6 @@
 # coding=utf-8
 import re
 
-from docutils.core import publish_parts
 from docutils.utils import SystemMessage
 from flask import jsonify
 from schema import Schema
@@ -9,6 +8,7 @@ from schema import Schema
 from pysite.base_route import APIView
 from pysite.constants import EDITOR_ROLES, ValidationTypes
 from pysite.decorators import api_params, csrf, require_roles
+from pysite.rst import render
 
 SCHEMA = Schema([{
     "data": str
@@ -30,9 +30,7 @@ class RenderView(APIView):
 
         data = data[0]["data"]
         try:
-            html = publish_parts(
-                source=data, writer_name="html5", settings_overrides={"halt_level": 2}
-            )["html_body"]
+            html = render(data)
 
             return jsonify({"data": html})
         except SystemMessage as e:
@@ -60,6 +58,7 @@ class RenderView(APIView):
                         }
                     )
 
+            print(data)
             return jsonify(data)
         except Exception as e:
             return jsonify({"error": str(e)})

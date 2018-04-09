@@ -1,9 +1,9 @@
 # coding=utf-8
 import logging
 
-from docutils.core import publish_parts
 from geventwebsocket.websocket import WebSocket
 
+from pysite.rst import render
 from pysite.websockets import WS
 
 
@@ -23,9 +23,7 @@ class RSTWebsocket(WS):
         self.log.debug(f"RST | Message: {message}")
 
         try:
-            data = publish_parts(
-                source=message, writer_name="html5", settings_overrides={"traceback": True, "halt_level": 2}
-            )["html_body"]
+            data = render(message)
         except Exception as e:
             self.log.exception("Parsing error")
             data = str(e)
