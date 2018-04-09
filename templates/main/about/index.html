@@ -1,0 +1,28 @@
+{% extends "main/base.html" %}
+{% block title %}About{% endblock %}
+{% block og_title %}About{% endblock %}
+{% block og_description %}Partners links, and information about the server{% endblock %}
+{% block content %}
+    <div class="uk-section">
+        <div class="uk-container uk-container-small">
+            <article class="uk-article">
+                <h1 class="uk-article-title hover-title" id="top">
+                    About
+
+                    <a href="#top" class="uk-text-primary" title="Permanent link to this header">
+                        <i class="fas fa-paragraph" data-fa-transform="shrink-8"></i>
+                    </a>
+                </h1>
+                <p class="uk-article-meta">
+                    Learn about the server, find links to our Partners, and more!
+                </p>
+                <p>
+                    <strong>Server Partners</strong> &nbsp;
+                    <a href="{{ url_for('main.about.partners') }}"><i class="fas fa-link"></i></a>
+                    <br />
+                    <span class="uk-text-meta">Links to our Partner servers!</span>
+                </p>
+            </article>
+        </div>
+    </div>
+{% endblock %}

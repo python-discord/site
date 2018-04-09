@@ -72,6 +72,18 @@
                                 <li><a href="{{ url_for('main.info.rules') }}">Server Rules</a></li>
                             {% endif %}
 
+                            {% if current_page.startswith("about") %}
+                                <li class="uk-nav-header uk-active"><a href="{{ url_for('main.about.index') }}">About</a></li>
+                            {% else %}
+                                <li class="uk-nav-header"><a href="{{ url_for('main.about.index') }}">About</a></li>
+                            {% endif %}
+
+                            {% if current_page == "about/partners" %}
+                                <li class="uk-active"><a href="{{ url_for('main.about.partners') }}">Partners</a></li>
+                            {% else %}
+                                <li><a href="{{ url_for('main.about.partners') }}">Partners</a></li>
+                            {% endif %}
+
                             <li class="uk-nav-divider"></li>
                         </ul>
                     </div>
