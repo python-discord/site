@@ -32,6 +32,12 @@
         "payment": "free",
         "payment_description": null
       },
+      "A Simple Guide to Git": {
+        "description": "A simple, no-nonsense guide to the basics of using Git.",
+        "url": "http://rogerdudler.github.io/git-guide/",
+        "payment": "free",
+        "payment_description": null
+      },
       "Python Tutorials by Corey Schafer on YouTube": {
         "description": "An in-depth look at the Python programming language, from one of YouTube's most popular Python tutors.",
         "url": "https://www.youtube.com/playlist?list=PL-osiE80TeTt2d9bfVyTiXJA-UTHn6WwU",
