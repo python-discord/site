@@ -32,7 +32,7 @@ class RouteManager:
         self.db = RethinkDB()
         self.log = logging.getLogger(__name__)
         self.app.secret_key = os.environ.get("WEBPAGE_SECRET_KEY", "super_secret")
-        self.app.config["SERVER_NAME"] = os.environ.get("SERVER_NAME", "pythondiscord.local:8080")
+        self.app.config["SERVER_NAME"] = os.environ.get("SERVER_NAME", "pythondiscord.local")
         self.app.config["PREFERRED_URL_SCHEME"] = PREFERRED_URL_SCHEME
         self.app.config["WTF_CSRF_CHECK_DEFAULT"] = False  # We only want to protect specific routes
 
@@ -104,7 +104,7 @@ class RouteManager:
         from geventwebsocket.handler import WebSocketHandler
 
         server = WSGIServer(
-            ("0.0.0.0", int(os.environ.get("WEBPAGE_PORT", 8080))),  # noqa: B104, S104
+            ("0.0.0.0", int(os.environ.get("WEBPAGE_PORT", 80))),  # noqa: B104, S104
             self.app, handler_class=WebSocketHandler
         )
         server.serve_forever()
