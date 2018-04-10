@@ -68,7 +68,7 @@ body {
 }
 
 .uk-article-title {
-    margin-bottom: 0 !important;
+    margin-bottom: 0 !important;https://pythondiscord.com/
 }
 
 .uk-article-meta {
@@ -114,8 +114,7 @@ footer div.uk-section div.uk-text-center {
     display: none;
 }
 
-div.navbar-padding {
+.uk-navbar-container {
     padding-left: 40px;
     padding-right: 40px;
-    box-sizing: content-box;
 }
