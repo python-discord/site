@@ -72,16 +72,16 @@
                                 <li class="uk-nav-header"><a href="{{ url_for('main.about.index') }}">About</a></li>
                             {% endif %}
 
-                            {% if current_page == "about/rules" %}
-                                <li class="uk-active"><a href="{{ url_for('main.about.rules') }}">Server Rules</a></li>
-                            {% else %}
-                                <li><a href="{{ url_for('main.about.rules') }}">Server Rules</a></li>
-                            {% endif %}
-
                             {% if current_page == "about/partners" %}
                                 <li class="uk-active"><a href="{{ url_for('main.about.partners') }}">Partners</a></li>
                             {% else %}
                                 <li><a href="{{ url_for('main.about.partners') }}">Partners</a></li>
+                            {% endif %}
+
+                            {% if current_page == "about/rules" %}
+                                <li class="uk-active"><a href="{{ url_for('main.about.rules') }}">Server Rules</a></li>
+                            {% else %}
+                                <li><a href="{{ url_for('main.about.rules') }}">Server Rules</a></li>
                             {% endif %}
 
                             <li class="uk-nav-divider"></li>
