@@ -81,3 +81,39 @@ def url_for_role(_role: str, rawtext: str, text: str, lineno: int, inliner: Inli
             prb = inliner.problematic(text, rawtext, msg)
 
             return [prb], [msg]
+
+
+def page_role(_role: str, rawtext: str, text: str, lineno: int, inliner: Inliner,
+              options: dict = None, _content: dict = None):
+    if options is None:
+        options = {}
+
+    set_classes(options)
+
+    if "/" in text:
+        parts = [escape(x) for x in text.split("/")]
+    else:
+        msg = inliner.reporter.error("Page specification must be in the form <page_slug>/<text>", line=lineno)
+        prb = inliner.problematic(text, rawtext, msg)
+
+        return [prb], [msg]
+
+    if len(parts) != 2:
+        msg = inliner.reporter.error("Page specification must be in the form <page_slug>/<text>", line=lineno)
+        prb = inliner.problematic(text, rawtext, msg)
+
+        return [prb], [msg]
+    else:
+        try:
+            url = url_for("wiki.page", page=parts[0])
+            name = parts[1]
+
+            html = f"""<a href="{url}">{name}</a>"""
+
+            node = nodes.raw(html, html, format="html", **options)
+            return [node], []
+        except Exception as e:
+            msg = inliner.reporter.error(str(e), line=lineno)
+            prb = inliner.problematic(text, rawtext, msg)
+
+            return [prb], [msg]
