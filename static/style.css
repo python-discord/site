@@ -108,3 +108,14 @@ footer div.uk-section div.uk-text-center {
 .uk-button-darkish:hover {
     background: rgba(0, 0, 0, 0.22);
 }
+
+/* Flash of Unstyled Content fixes */
+.prevent_fouc {
+    display: none;
+}
+
+div.navbar-padding {
+    padding-left: 40px;
+    padding-right: 40px;
+    box-sizing: content-box;
+}
