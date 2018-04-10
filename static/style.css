@@ -68,7 +68,7 @@ body {
 }
 
 .uk-article-title {
-    margin-bottom: 0 !important;
+    margin-bottom: 0 !important;https://pythondiscord.com/
 }
 
 .uk-article-meta {
@@ -107,4 +107,14 @@ footer div.uk-section div.uk-text-center {
 
 .uk-button-darkish:hover {
     background: rgba(0, 0, 0, 0.22);
+}
+
+/* Flash of Unstyled Content fixes */
+.prevent_fouc {
+    display: none;
+}
+
+.uk-navbar-container {
+    padding-left: 40px;
+    padding-right: 40px;
 }

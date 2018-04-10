@@ -104,9 +104,9 @@ class RootEndpoint(SiteTest):
         response = self.client.get(DISCORD_OAUTH_AUTHORIZED)
         self.assertEqual(response.status_code, 302)
 
-    def test_datadog_redirect(self):
-        """ Check datadog path redirects """
-        response = self.client.get('/datadog')
+    def test_stats_redirect(self):
+        """ Check stats path redirects """
+        response = self.client.get('/stats')
         self.assertEqual(response.status_code, 302)
 
     def test_500_easter_egg(self):

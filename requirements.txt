@@ -11,3 +11,4 @@ Flask-Dance
 logmatic-python
 flask-wtf
 docutils
+pygments
