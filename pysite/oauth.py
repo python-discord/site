@@ -52,7 +52,7 @@ class OauthBackend(BaseBackend):
                 "access_token": token_data["access_token"],
                 "refresh_token": token_data["refresh_token"],
                 "expires_at": token_data["expires_at"],
-                "snowflake": int(user_data["id"])
+                "snowflake": user_data["id"]
             },
             conflict="replace"
         )
@@ -60,7 +60,7 @@ class OauthBackend(BaseBackend):
         self.db.insert(
             "users",
             {
-                "user_id": int(user_data["id"]),
+                "user_id": user_data["id"],
                 "username": user_data["username"],
                 "discriminator": user_data["discriminator"],
                 "email": user_data["email"]

@@ -11,8 +11,8 @@ from pysite.mixins import DBMixin
 
 SCHEMA = Schema([
     {
-        "user_id": int,
-        "roles": [int],
+        "user_id": str,
+        "roles": [str],
         "username": str,
         "discriminator": str
     }
