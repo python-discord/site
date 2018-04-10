@@ -24,10 +24,12 @@
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
     </form>
 
-    <h2>Preview</h2>
+    <div class="uk-container uk-container-small" style="padding: 1rem 1rem 0.1rem;">
+        <h2 id="preview-title">{{ title }}</h2>
 
-    <div class="uk-alert" id="preview-div" style="padding: 1rem 1rem 0.1rem;">
-        {{ preview | safe }}
+        <div id="preview-div">
+            {{ preview | safe }}
+        </div>
     </div>
 
     <script type="application/javascript">
@@ -85,6 +87,10 @@
                 clearTimeout(timer);
             }
             timer = setTimeout(function() {document.getElementById("preview").click()}, 1000);
-        })
+        });
+
+        document.getElementById("title").oninput = function() {
+            document.getElementById("preview-title").textContent = document.getElementById("title").value;
+        }
     </script>
 {% endblock %}

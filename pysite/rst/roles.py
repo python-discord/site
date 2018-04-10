@@ -48,7 +48,7 @@ def icon_role(_role: str, rawtext: str, text: str, lineno: int, inliner: Inliner
 
 
 def url_for_role(_role: str, rawtext: str, text: str, lineno: int, inliner: Inliner,
-              options: dict = None, _content: dict = None):
+                 options: dict = None, _content: dict = None):
     if options is None:
         options = {}
 
