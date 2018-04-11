@@ -75,6 +75,11 @@
       }
     }
   },
+  "Books": {
+    "description": "The best books for learning Python or Python Frameworks",
+    "resources": {
+    }
+  },
   "IDEs": {
     "description": "Fully-integrated development environments for serious Python work",
     "resources": {
