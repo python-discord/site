@@ -78,6 +78,21 @@
   "Books": {
     "description": "The best books for learning Python or Python Frameworks",
     "resources": {
+      "Fluent Python": {
+        "description": "Clear, Concise, and Effective Programming",
+        "url": "https://www.safaribooksonline.com/library/view/fluent-python/9781491946237/",
+        "payment": "paid",
+      },
+      "Effective Python": {
+        "description": "59 Specific Ways to Write Better Python",
+        "url": "https://effectivepython.com/",
+        "payment": "paid",
+      },
+      "A Byte of Python": {
+        "description": "A free book on programming using the Python language. It serves as a tutorial or guide to the Python language for a beginner audience. If all you know about computers is how to save text files, then this is the book for you.",
+        "url": "https://python.swaroopch.com/",
+        "payment": "free",
+      }
     }
   },
   "IDEs": {
