@@ -80,7 +80,6 @@ class EditView(RouteView, DBMixin):
         gist = requests.post("https://api.github.com/gists",
                              json=gist_payload,
                              headers={"Authorization": f"token {GITHUB_TOKEN}"})
-        print(gist.text)
 
         audit_payload = {
             "username": "Wiki Updates",
@@ -98,6 +97,6 @@ class EditView(RouteView, DBMixin):
             ]
         }
 
-        print(requests.post(WIKI_AUDIT_WEBHOOK, json=audit_payload).text)
+        requests.post(WIKI_AUDIT_WEBHOOK, json=audit_payload).text
 
         return redirect(url_for("wiki.page", page=page), code=303)  # Redirect, ensuring a GET
