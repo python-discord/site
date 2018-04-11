@@ -2,22 +2,6 @@
   "Learning Resources": {
     "description": "Tutorials and references for those that are just getting started with python",
     "resources": {
-      "Automate the Boring Stuff with Python": {
-        "description": "One of the best books out there for Python beginners. You can buy a copy, but there's also a free online version.",
-        "urls": [
-          {
-            "title": "Website",
-            "url": "https://automatetheboringstuff.com/",
-            "icon": "regular/link"
-          }, {
-            "title": "Amazon",
-            "url": "http://www.amazon.com/gp/product/1593275994/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=1593275994&linkCode=as2&tag=playwithpyth-20&linkId=HDM7V3T6RHC5VVN4",
-            "icon": "branding/amazon"
-          }
-        ],
-        "payment": "optional",
-        "payment_description": "A free version is available online, with the option to buy a physical copy"
-      },
       "Code Combat": {
         "description": "Learn Python while gaming - an open-source project with thousands of contributors, which teaches you Python through a deep, top-down RPG.",
         "urls": [
@@ -158,6 +142,22 @@
   "Books": {
     "description": "The best books for learning Python or Python Frameworks",
     "resources": {
+      "Automate the Boring Stuff with Python": {
+        "description": "One of the best books out there for Python beginners. You can buy a copy, but there's also a free online version.",
+        "urls": [
+          {
+            "title": "Website",
+            "url": "https://automatetheboringstuff.com/",
+            "icon": "regular/link"
+          }, {
+            "title": "Amazon",
+            "url": "http://www.amazon.com/gp/product/1593275994/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=1593275994&linkCode=as2&tag=playwithpyth-20&linkId=HDM7V3T6RHC5VVN4",
+            "icon": "branding/amazon"
+          }
+        ],
+        "payment": "optional",
+        "payment_description": "A free version is available online, with the option to buy a physical copy"
+      },
       "Fluent Python": {
         "description": "Clear, Concise, and Effective Programming",
         "url": "https://www.safaribooksonline.com/library/view/fluent-python/9781491946237/",
@@ -177,12 +177,6 @@
         "description": "This book is chock-full of material that will help you with your Django projects.",
         "url": "https://twoscoopspress.com/products/two-scoops-of-django-1-11",
         "payment": "paid"
-      },
-      "Automate the Boring Stuff": {
-        "description": "Practical programming for total beginners. Written by Al Sweigart.",
-        "url": "https://automatetheboringstuff.com/",
-        "payment": "optional",
-        "payment_description": "Print and e-book versions can be purchased to support the author"
       },
       "Flask Web Development": {
         "description": "Developing Web Applications with Python by Miguel Grinberg",
