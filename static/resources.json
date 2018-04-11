@@ -81,17 +81,38 @@
       "Fluent Python": {
         "description": "Clear, Concise, and Effective Programming",
         "url": "https://www.safaribooksonline.com/library/view/fluent-python/9781491946237/",
-        "payment": "paid",
+        "payment": "paid"
       },
       "Effective Python": {
         "description": "59 Specific Ways to Write Better Python",
         "url": "https://effectivepython.com/",
-        "payment": "paid",
+        "payment": "paid"
       },
       "A Byte of Python": {
         "description": "A free book on programming using the Python language. It serves as a tutorial or guide to the Python language for a beginner audience. If all you know about computers is how to save text files, then this is the book for you.",
         "url": "https://python.swaroopch.com/",
-        "payment": "free",
+        "payment": "free"
+      },
+      "Two Scoops of Django": {
+        "description": "This book is chock-full of material that will help you with your Django projects.",
+        "url": "https://twoscoopspress.com/products/two-scoops-of-django-1-11",
+        "payment": "paid"
+      },
+      "Automate the Boring Stuff": {
+        "description": "Practical programming for total beginners. Written by Al Sweigart.",
+        "url": "https://automatetheboringstuff.com/",
+        "payment": "optional",
+        "payment_description": "Print and e-book versions can be purchased to support the author"
+      },
+      "Flask Web Development": {
+        "description": "Developing Web Applications with Python by Miguel Grinberg",
+        "url": "http://shop.oreilly.com/product/0636920031116.do",
+        "payment": "paid"
+      },
+      "Python Cookbook": {
+        "description": "Complete with 'recipes' for various Python topics, including moving from Python 2 to Python 3.3",
+        "url": "http://shop.oreilly.com/product/0636920027072.do",
+        "payment": "paid"
       }
     }
   },
