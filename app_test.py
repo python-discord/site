@@ -115,7 +115,13 @@ class RootEndpoint(SiteTest):
         self.assertEqual(response.status_code, 500)
 
     def test_wiki_edit(self):
-        response = self.client.get("/edit/page")
+        """Test that the wiki edit page works"""
+        response = self.client.get("/edit/page", "http://wiki.pytest.local")
+        self.assertEqual(response.status_code, 200)
+
+    def test_wiki_get(self):
+        """Test that a non-existant page redirects"""
+        response = self.client.get("/wiki/page", "http://wiki.pytest.local")
         self.assertEqual(response.status_code, 302)
 
 
@@ -240,7 +246,6 @@ class StaffEndpoints(SiteTest):
         from pysite.views.staff.index import StaffView
         sv = StaffView()
         result = sv.get()
-        print(repr(result.data))
         self.assertEqual(result.status_code, 302)  # TODO: Do this correctly
 
         response = self.client.get('/', app.config['STAFF_SUBDOMAIN'])
