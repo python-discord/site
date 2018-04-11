@@ -97,6 +97,6 @@ class EditView(RouteView, DBMixin):
             ]
         }
 
-        requests.post(WIKI_AUDIT_WEBHOOK, json=audit_payload).text
+        requests.post(WIKI_AUDIT_WEBHOOK, json=audit_payload)
 
         return redirect(url_for("wiki.page", page=page), code=303)  # Redirect, ensuring a GET
