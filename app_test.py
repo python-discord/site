@@ -114,6 +114,10 @@ class RootEndpoint(SiteTest):
         response = self.client.get("/500")
         self.assertEqual(response.status_code, 500)
 
+    def test_wiki_edit(self):
+        response = self.client.get("/edit/page")
+        self.assertEqual(response.status_code, 302)
+
 
 class ApiEndpoints(SiteTest):
     """ Test cases for the api subdomain """
