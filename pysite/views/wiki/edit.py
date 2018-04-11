@@ -1,12 +1,13 @@
 # coding=utf-8
-import difflib
 import datetime
+import difflib
+
 import requests
 from flask import request, url_for
 from werkzeug.utils import redirect
 
 from pysite.base_route import RouteView
-from pysite.constants import EDITOR_ROLES, WIKI_AUDIT_WEBHOOK, GITHUB_TOKEN
+from pysite.constants import EDITOR_ROLES, GITHUB_TOKEN, WIKI_AUDIT_WEBHOOK
 from pysite.decorators import csrf, require_roles
 from pysite.mixins import DBMixin
 from pysite.rst import render
@@ -43,7 +44,7 @@ class EditView(RouteView, DBMixin):
         else:
             before = before["rst"].splitlines(keepends=True)
             if not before[-1].endswith("\n"):
-                before[-1] += "\n" # difflib makes the output look weird if there isn't a newline on the last line
+                before[-1] += "\n"  # difflib makes the output look weird if there isn't a newline on the last line
 
         rst = request.form["rst"]
         obj = {
@@ -61,7 +62,7 @@ class EditView(RouteView, DBMixin):
 
         after = obj['rst'].splitlines(keepends=True) or []
         if not after[-1].endswith("\n"):
-            after[-1] += "\n" # Does same thing as L41
+            after[-1] += "\n"  # Does same thing as L41
 
         diff = difflib.unified_diff(before, after, fromfile="before.rst", tofile="after.rst")
         diff = "".join(diff)
@@ -76,7 +77,9 @@ class EditView(RouteView, DBMixin):
             }
         }
 
-        gist = requests.post("https://api.github.com/gists", json=gist_payload, headers={"Authorization": f"token {GITHUB_TOKEN}"})
+        gist = requests.post("https://api.github.com/gists",
+                             json=gist_payload,
+                             headers={"Authorization": f"token {GITHUB_TOKEN}"})
         print(gist.text)
 
         audit_payload = {
@@ -84,7 +87,8 @@ class EditView(RouteView, DBMixin):
             "embeds": [
                 {
                     "title": "Page Edit",
-                    "description": f"**{obj['title']}** was edited by **Joseph**.\n\n[View diff]({gist.json().get('html_url')})",
+                    "description": f"**{obj['title']}** was edited by **Joseph**"
+                                   f".\n\n[View diff]({gist.json().get('html_url')})",
                     "color": 4165079,
                     "timestamp": datetime.datetime.utcnow().isoformat(),
                     "thumbnail": {
