@@ -115,9 +115,9 @@ class RootEndpoint(SiteTest):
         self.assertEqual(response.status_code, 500)
 
     def test_wiki_edit(self):
-        """Test that the wiki edit page works"""
+        """Test that the wiki edit page redirects to login"""
         response = self.client.get("/edit/page", "http://wiki.pytest.local")
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 302)
 
     def test_wiki_get(self):
         """Test that a non-existant page redirects"""
