@@ -79,7 +79,10 @@ class EditView(RouteView, DBMixin):
 
         gist = requests.post("https://api.github.com/gists",
                              json=gist_payload,
-                             headers={"Authorization": f"token {GITHUB_TOKEN}"})
+                             headers={
+                                "Authorization": f"token {GITHUB_TOKEN}",
+                                "User-Agent": "Discord Python Wiki (https://github.com/discord-python)"
+                             })
 
         audit_payload = {
             "username": "Wiki Updates",
