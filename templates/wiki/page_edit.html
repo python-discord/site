@@ -92,5 +92,23 @@
         document.getElementById("title").oninput = function() {
             document.getElementById("preview-title").textContent = document.getElementById("title").value;
         }
+
+        function refreshLock(){
+            console.log("Refreshing lock")
+            let xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState === 4 && this.status === 204) {
+                    console.log("Lock refreshed")
+                } else if(this.readyState === 4 && this.status !== 204) {
+                    console.log("Could not refresh lock")
+                }
+            };
+
+            xhttp.open("PATCH", document.location.pathname, true);
+            xhttp.send();
+        }
+
+        // Lock refreshing
+        setInterval(refreshLock, (60 * 4) * 1000)
     </script>
 {% endblock %}
