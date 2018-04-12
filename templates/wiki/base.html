@@ -50,8 +50,8 @@
                                         <li><a href="{{ header.id }}">{{ header.title }}</a></li>
                                     {% endif %}
                                 {% endfor %}
+                                <li class="uk-nav-divider"></li>
                             {% endif %}
-                            <li class="uk-nav-divider"></li>
                         {% endif %}
                         <li><a href="{{ url_for("wiki.page", page="home") }}">
                             <i class="uk-icon fas fa-fw fa-home"></i> &nbsp;Home
