@@ -35,11 +35,14 @@ class EditView(RouteView, DBMixin):
     @csrf
     def post(self, page):
         rst = request.form["rst"]
+        rendered = render(rst)
+
         obj = {
             "slug": page,
             "title": request.form["title"],
             "rst": rst,
-            "html": render(rst)
+            "html": rendered["html"],
+            "headers": rendered["headers"]
         }
 
         self.db.insert(
