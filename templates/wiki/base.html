@@ -34,7 +34,7 @@
                 <div class="uk-card uk-card-body uk-flex-left uk-flex uk-card-primary">
                     <ul class="uk-nav-default uk-nav-parent-icon" uk-nav>
                         {% if data is defined %}
-                            {% if "headers" in data %}
+                            {% if "headers" in data and data.headers %}
                                 <li class="uk-nav-header">Contents</li>
                                 {% for header in data.headers %}
                                     {%  if "sub_headers" in header %}
