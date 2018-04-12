@@ -33,41 +33,74 @@
             <div class="uk-flex uk-flex-row uk-flex-1">
                 <div class="uk-card uk-card-body uk-flex-left uk-flex uk-card-primary">
                     <ul class="uk-nav-default uk-nav-parent-icon" uk-nav>
-                        {% if (can_edit or debug) and current_page == "page" %}
+                        {% if data is defined %}
+                            {% if "headers" in data %}
+                                <li class="uk-nav-header">Contents</li>
+                                {% for header in data.headers %}
+                                    {%  if "sub_headers" in header %}
+                                        <li class="uk-parent">
+                                            <a href="{{ header.id }}">{{ header.title }}</a>
+                                            <ul class="uk-nav-sub">
+                                                {% for sub in header.sub_headers %}
+                                                    <li><a href="{{ sub.id }}"><i class="uk-icon fas fa-diamond fa-fw" style="font-size: 0.5rem; vertical-align: 1px"></i> &nbsp;{{ sub.title }}</a></li>
+                                                {% endfor %}
+                                            </ul>
+                                        </li>
+                                    {% else %}
+                                        <li><a href="{{ header.id }}">{{ header.title }}</a></li>
+                                    {% endif %}
+                                {% endfor %}
+                                <li class="uk-nav-divider"></li>
+                            {% endif %}
+                        {% endif %}
+                        <li><a href="{{ url_for("wiki.page", page="home") }}">
+                            <i class="uk-icon fas fa-fw fa-home"></i> &nbsp;Home
+                        </a></li>
+                        <li><a href="{{ url_for("wiki.page", page="jams") }}">
+                            <i class="uk-icon fas fa-fw fa-star-exclamation"></i> &nbsp;Code Jams</a>
+                        </li>
+                        <li><a href="{{ url_for("wiki.page", page="contributing") }}">
+                            <i class="uk-icon fas fa-fw fa-code-branch"></i> &nbsp;Contributing
+                        </a></li>
+{#                        <li class="uk-active"><a href="#">active</a></li>#}
+{#                        <li class="uk-parent">#}
+{#                            <a href="#">Contributing</a>#}
+{#                            <ul class="uk-nav-sub">#}
+{#                                <li><a href="#">Sub item</a></li>#}
+{#                                <li><a href="#">Sub item</a></li>#}
+{#                            </ul>#}
+{#                        </li>#}
+                        <li class="uk-nav-divider"></li>
+
+                        {% if (can_edit or debug) and current_page != "edit" %}
                             <li>
                                 <a href="{{ url_for("wiki.edit", page=page) }}">
-                                    <i class="fas fa-pencil-alt"></i> &nbsp;Edit
+                                    <i class="uk-icon fas fa-fw fa-pencil-alt"></i> &nbsp;Edit
                                 </a>
                             </li>
-                            <li class="uk-nav-divider"></li>
                         {% elif current_page == "edit" %}
                             <li>
                                 <a href="{{ url_for("wiki.page", page=page) }}">
-                                    <i class="fas fa-arrow-left fa-fw"></i> &nbsp;Back
+                                    <i class="uk-icon fas fa-fw fa-arrow-left"></i> &nbsp;Back
                                 </a>
                             </li>
-                            <li class="uk-nav-divider"></li>
                         {% endif %}
-                        <li class="uk-active"><a href="#">Placeholder</a></li>
-                        <li class="uk-parent">
-                            <a href="#">Parent</a>
-                            <ul class="uk-nav-sub">
-                                <li><a href="#">Sub item</a></li>
-                                <li><a href="#">Sub item</a></li>
-                            </ul>
-                        </li>
-                        <li class="uk-parent">
-                            <a href="#">Parent</a>
-                            <ul class="uk-nav-sub">
-                                <li><a href="#">Sub item</a></li>
-                                <li><a href="#">Sub item</a></li>
-                            </ul>
-                        </li>
-                        <li class="uk-nav-header">Header</li>
-                        <li><a href="#"><span class="uk-margin-small-right" uk-icon="icon: table"></span> Item</a></li>
-                        <li><a href="#"><span class="uk-margin-small-right" uk-icon="icon: thumbnails"></span> Item</a></li>
+
+                        {% if current_page != "source" %}
+                            <li>
+                                <a href="{{ url_for("wiki.source", page=page) }}">
+                                    <i class="uk-icon fas fa-fw fa-code"></i> &nbsp;Source
+                                </a>
+                            </li>
+                        {% else %}
+                            <li>
+                                <a href="{{ url_for("wiki.page", page=page) }}">
+                                    <i class="uk-icon fas fa-fw fa-arrow-left"></i> &nbsp;Back
+                                </a>
+                            </li>
+                        {% endif %}
                         <li class="uk-nav-divider"></li>
-                        <li><a href="#"><span class="uk-margin-small-right" uk-icon="icon: trash"></span> Item</a></li>
+                        <li><a href="{{ url_for("wiki.page", page="help") }}"><i class="fas fa-fw fa-question-circle"></i> &nbsp;Help</a></li>
                     </ul>
                 </div>
                 <div class="uk-section" style="flex-grow: 1; margin: 0 1rem 1rem;">
