@@ -17,7 +17,9 @@ HREF_REGEX = re.compile(r"""<a class=\"reference internal\" href=\"(.*?)\".*?>(.
 def render(rst: str):
     rst = RST_TEMPLATE.format(rst)
     html = publish_parts(
-        source=rst, writer_name="html5", settings_overrides={"halt_level": 2, "syntax_highlight": "short"}
+        source=rst, writer_name="html5", settings_overrides={
+            "halt_level": 2, "syntax_highlight": "short", "initial_header_level": 3
+        }
     )["html_body"]
 
     data = {
