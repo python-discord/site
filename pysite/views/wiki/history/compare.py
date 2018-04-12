@@ -1,10 +1,10 @@
 # coding=utf-8
 import difflib
 
-from pygments import highlight
-from pygments.lexers import DiffLexer
-from pygments.formatters import HtmlFormatter
 from flask import abort
+from pygments import highlight
+from pygments.formatters import HtmlFormatter
+from pygments.lexers import DiffLexer
 
 from pysite.base_route import RouteView
 from pysite.mixins import DBMixin
