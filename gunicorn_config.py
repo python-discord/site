@@ -12,6 +12,7 @@ def when_ready(server=None):
     from pysite.database import RethinkDB
 
     db = RethinkDB(loop_type=None)
+    db.conn = db.get_connection()
 
     # Create any table that doesn't exist
     created = db.create_tables()
