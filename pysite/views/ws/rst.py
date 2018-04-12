@@ -23,7 +23,7 @@ class RSTWebsocket(WS):
         self.log.debug(f"RST | Message: {message}")
 
         try:
-            data = render(message)
+            data = render(message)["html"]
         except Exception as e:
             self.log.exception("Parsing error")
             data = str(e)

@@ -4,6 +4,7 @@ import difflib
 
 import requests
 from flask import request, url_for
+from werkzeug.exceptions import BadRequest
 from werkzeug.utils import redirect
 
 from pysite.base_route import RouteView
@@ -69,11 +70,18 @@ class EditView(RouteView, DBMixin):
                         before[-1] += "\n"  # difflib sometimes messes up if a newline is missing on last line
 
         rst = request.form["rst"]
+
+        if not rst.strip():
+            raise BadRequest()
+
+        rendered = render(rst)
+
         obj = {
             "slug": page,
             "title": request.form["title"],
             "rst": rst,
-            "html": render(rst)
+            "html": rendered["html"],
+            "headers": rendered["headers"]
         }
 
         self.db.insert(
