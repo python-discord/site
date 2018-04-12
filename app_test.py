@@ -119,6 +119,11 @@ class RootEndpoint(SiteTest):
         response = self.client.get("/edit/page", "http://wiki.pytest.local")
         self.assertEqual(response.status_code, 302)
 
+    def test_wiki_edit_post_empty_request(self):
+        """Empty request should error"""
+        response = self.client.post("/edit/page", "http://wiki.pytest.local")
+        self.assertEqual(response.status_code, 400)
+
 
 class ApiEndpoints(SiteTest):
     """ Test cases for the api subdomain """
