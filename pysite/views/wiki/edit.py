@@ -20,6 +20,7 @@ class EditView(RouteView, DBMixin):
 
     table_name = "wiki"
     table_primary_key = "slug"
+    revision_table_name = "revisions"
 
     @require_roles(*EDITOR_ROLES)
     def get(self, page):
@@ -30,9 +31,9 @@ class EditView(RouteView, DBMixin):
         obj = self.db.get(self.table_name, page)
 
         if obj:
-            rst = obj.get("rst")
-            title = obj.get("title")
-            preview = obj.get("html")
+            rst = obj.get("rst", "")
+            title = obj.get("title", "")
+            preview = obj.get("html", preview)
 
             if obj.get("lock_expiry") and obj.get("lock_user") != self.user_data.get("user_id"):
                 lock_time = datetime.datetime.fromtimestamp(obj["lock_expiry"])
@@ -137,6 +138,18 @@ class EditView(RouteView, DBMixin):
 
         if WIKI_AUDIT_WEBHOOK:
             requests.post(WIKI_AUDIT_WEBHOOK, json=audit_payload)
+
+        # Add the post to the revisions table
+        revision_payload = {
+            "slug": page,
+            "post": obj,
+            "date": datetime.datetime.utcnow().timestamp(),
+            "user": self.user_data.get("user_id")
+        }
+
+        del revision_payload["post"]["slug"]
+
+        self.db.insert(self.revision_table_name, revision_payload)
 
         return redirect(url_for("wiki.page", page=page), code=303)  # Redirect, ensuring a GET
 
