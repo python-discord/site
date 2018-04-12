@@ -29,9 +29,25 @@ class EditView(RouteView, DBMixin):
         obj = self.db.get(self.table_name, page)
 
         if obj:
-            rst = obj["rst"]
-            title = obj["title"]
-            preview = obj["html"]
+            rst = obj.get("rst")
+            title = obj.get("title")
+            preview = obj.get("html")
+
+            if obj.get("lock_expiry") and obj.get("lock_user") != self.user_data.get("user_id"):
+                lock_time = datetime.datetime.fromtimestamp(obj["lock_expiry"])
+                if datetime.datetime.utcnow() < lock_time:
+                    return self.render("wiki/page_in_use.html", page=page)
+
+        lock_expiry = datetime.datetime.utcnow() + datetime.timedelta(minutes=5)
+
+        # When debug mode is enabled, login is bypassed, meaning that user_data is not present.
+        if self.user_data:
+            self.db.insert(self.table_name, {
+                           "slug": page,
+                           "lock_expiry": lock_expiry.timestamp(),
+                           "lock_user": self.user_data.get("user_id")
+                           },
+                           conflict="update")
 
         return self.render("wiki/page_edit.html", page=page, rst=rst, title=title, preview=preview)
 
@@ -42,9 +58,15 @@ class EditView(RouteView, DBMixin):
         if not before:
             before = []
         else:
-            before = before["rst"].splitlines(keepends=True)
-            if not before[-1].endswith("\n"):
-                before[-1] += "\n"  # difflib makes the output look weird if there isn't a newline on the last line
+            if before.get("rst") is None:
+                before = []
+            else:
+                before = before["rst"].splitlines(keepends=True)
+                if len(before) == 0:
+                    pass
+                else:
+                    if not before[-1].endswith("\n"):
+                        before[-1] += "\n"  # difflib sometimes messes up if a newline is missing on last line
 
         rst = request.form["rst"]
         obj = {
@@ -61,8 +83,11 @@ class EditView(RouteView, DBMixin):
         )
 
         after = obj['rst'].splitlines(keepends=True) or []
+        if len(after) == 0:
+            return redirect(url_for("wiki.edit", page=page), code=303)
+
         if not after[-1].endswith("\n"):
-            after[-1] += "\n"  # Does same thing as L41
+            after[-1] += "\n"  # Does the same thing as L57
 
         diff = difflib.unified_diff(before, after, fromfile="before.rst", tofile="after.rst")
         diff = "".join(diff)
@@ -102,6 +127,19 @@ class EditView(RouteView, DBMixin):
             ]
         }
 
-        requests.post(WIKI_AUDIT_WEBHOOK, json=audit_payload)
+        if WIKI_AUDIT_WEBHOOK:
+            requests.post(WIKI_AUDIT_WEBHOOK, json=audit_payload)
 
         return redirect(url_for("wiki.page", page=page), code=303)  # Redirect, ensuring a GET
+
+    def patch(self, page):
+        current = self.db.get(self.table_name, page)
+        if current.get("lock_expiry"):
+            if current["lock_user"] != self.user_data.get("user_id"):
+                return "", 400
+            new_lock = datetime.datetime.utcnow() + datetime.timedelta(minutes=5)
+            self.db.insert(self.table_name, {
+                "slug": page,
+                "lock_expiry": new_lock.timestamp()
+            }, conflict="update")
+        return "", 204
