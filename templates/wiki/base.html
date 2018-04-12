@@ -33,21 +33,33 @@
             <div class="uk-flex uk-flex-row uk-flex-1">
                 <div class="uk-card uk-card-body uk-flex-left uk-flex uk-card-primary">
                     <ul class="uk-nav-default uk-nav-parent-icon" uk-nav>
-                        {% if (can_edit or debug) and current_page == "page" %}
+                        {% if (can_edit or debug) and current_page != "edit" %}
                             <li>
                                 <a href="{{ url_for("wiki.edit", page=page) }}">
-                                    <i class="fas fa-pencil-alt"></i> &nbsp;Edit
+                                    <i class="fas fa-fw fa-pencil-alt"></i> &nbsp;Edit
                                 </a>
                             </li>
-                            <li class="uk-nav-divider"></li>
-                        {% elif current_page == "edit" %}
+                        {% else %}
                             <li>
                                 <a href="{{ url_for("wiki.page", page=page) }}">
-                                    <i class="fas fa-arrow-left fa-fw"></i> &nbsp;Back
+                                    <i class="fas fa-fw fa-arrow-left"></i> &nbsp;Back
                                 </a>
                             </li>
-                            <li class="uk-nav-divider"></li>
                         {% endif %}
+                        {% if current_page != "source" %}
+                            <li>
+                                <a href="{{ url_for("wiki.source", page=page) }}">
+                                    <i class="fas fa-fw fa-code"></i> &nbsp;Source
+                                </a>
+                            </li>
+                        {% else %}
+                            <li>
+                                <a href="{{ url_for("wiki.page", page=page) }}">
+                                    <i class="fas fa-fw fa-arrow-left"></i> &nbsp;Back
+                                </a>
+                            </li>
+                        {% endif %}
+                        <li class="uk-nav-divider"></li>
                         <li class="uk-active"><a href="#">Placeholder</a></li>
                         <li class="uk-parent">
                             <a href="#">Parent</a>
