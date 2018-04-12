@@ -120,9 +120,9 @@ class RootEndpoint(SiteTest):
         self.assertEqual(response.status_code, 302)
 
     def test_wiki_edit_post_empty_request(self):
-        """Empty request should error"""
+        """Empty request should redirect to login"""
         response = self.client.post("/edit/page", "http://wiki.pytest.local")
-        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.status_code, 302)
 
 
 class ApiEndpoints(SiteTest):
