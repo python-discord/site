@@ -1,10 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends "wiki/base.html" %}
+{% block title %}Wiki | Comparing {{ title }}{% endblock %}
+{% block og_title %}Wiki | Comparing {{ title }}{% endblock %}
+{% block og_description %}{% endblock %}
+{% block content %}
+    <div class="uk-container uk-container-small">
+        <h2 class="uk-title">
+            Revision comparison for {{ title }}
+        </h2>
+
+        {{ diff|safe }}
+    </div>
+{% endblock %}
