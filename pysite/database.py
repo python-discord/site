@@ -15,6 +15,7 @@ ALL_TABLES = {
     "tags": "tag_name",
     "users": "user_id",
     "wiki": "slug",
+    "revisions": "id"
 }
 
 
