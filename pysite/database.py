@@ -1,4 +1,5 @@
 # coding=utf-8
+import json
 import logging
 import os
 from typing import Any, Callable, Dict, Iterator, List, Optional, Union
@@ -8,13 +9,16 @@ from flask import abort
 from rethinkdb.ast import RqlMethodQuery, Table, UserError
 from rethinkdb.net import DefaultConnection
 
+from pysite.constants import DEBUG_MODE
+
 ALL_TABLES = {
     # table: primary_key
-
     "oauth_data": "id",
     "tags": "tag_name",
     "users": "user_id",
     "wiki": "slug",
+    "hiphoppers": "hophop_name",
+    "hiphopify": "user_id"
 }
 
 
@@ -30,21 +34,73 @@ class RethinkDB:
         if loop_type:
             rethinkdb.set_loop_type(loop_type)
 
-        with self.get_connection(connect_database=False) as conn:
+        with self.get_connection() as self.conn:
             try:
-                rethinkdb.db_create(self.database).run(conn)
+                rethinkdb.db_create(self.database).run(self.conn)
                 self.log.debug(f"Database created: '{self.database}'")
             except rethinkdb.RqlRuntimeError:
                 self.log.debug(f"Database found: '{self.database}'")
 
-    def create_tables(self) -> int:
-        created = 0
+            if DEBUG_MODE:
+                # Create any table that doesn't exist
+                created = self.create_tables()
+                if created:
+                    tables = ", ".join([f"{table}" for table in created])
+                    self.log.debug(f"Created the following tables: {tables}")
+
+                # Init the tables that require initialization
+                initialized = self.init_tables()
+                if initialized:
+                    tables = ", ".join([f"{table} ({count} items)" for table, count in initialized.items()])
+                    self.log.debug(f"Initialized the following tables: {tables}")
+
+    def create_tables(self) -> List[str]:
+        """
+        Creates whichever tables exist in the ALL_TABLES
+        constant if they don't already exist in the database.
+
+        :return: a list of the tables that were created.
+        """
+        created = []
 
         for table, primary_key in ALL_TABLES.items():
             if self.create_table(table, primary_key):
-                created += 1
+                created.append(table)
 
         return created
+
+    def init_tables(self) -> Dict[str, int]:
+        """
+        If the table is empty, and there is a corresponding JSON file with data,
+        then we fill the table with the data in the JSON file.
+
+        The JSON files are contained inside of pysite/database/table_init/
+        :return:
+        """
+
+        initialized = {}
+
+        for table, primary_key in ALL_TABLES.items():
+
+            # If the table is empty
+            if not self.pluck(table, primary_key):
+
+                # And a corresponding JSON file exists
+                if os.path.isfile(f"pysite/database/table_init/{table}.json"):
+
+                    # Load in all the data in that file.
+                    with open(f"pysite/database/table_init/{table}.json") as json_file:
+                        table_data = json.load(json_file)
+
+                        for row in table_data:
+                            self.insert(
+                                table,
+                                row
+                            )
+
+                    initialized[table] = len(table_data)
+
+        return initialized
 
     def get_connection(self, connect_database: bool = True) -> DefaultConnection:
         """

@@ -23,7 +23,6 @@ class UserView(APIView, DBMixin):
     path = "/user"
     name = "api.bot.user"
     table_name = "users"
-    table_primary_key = "user_id"
 
     @api_key
     @api_params(schema=SCHEMA, validation_type=ValidationTypes.json)

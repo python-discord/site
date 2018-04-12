@@ -13,9 +13,7 @@ from pysite.rst import render
 class EditView(RouteView, DBMixin):
     path = "/edit/<path:page>"  # "path" means that it accepts slashes
     name = "edit"
-
     table_name = "wiki"
-    table_primary_key = "slug"
 
     @require_roles(*EDITOR_ROLES)
     def get(self, page):

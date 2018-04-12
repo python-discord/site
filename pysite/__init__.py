@@ -13,7 +13,7 @@ from pysite.logs import NonPicklingSocketHandler
 # region Logging
 # Get the log level from environment
 
-log_level = os.environ.get("LOG_LEVEL", "info").upper()
+log_level = os.environ.get("LOG_LEVEL", "debug").upper()
 
 if hasattr(logging, log_level):
     log_level = getattr(logging, log_level)
