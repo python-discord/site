@@ -126,7 +126,7 @@ class EditView(RouteView, DBMixin):
                         if not before[-1].endswith("\n"):
                             before[-1] += "\n"  # difflib sometimes messes up if a newline is missing on last line
 
-            after = obj['rst'].splitlines(keepends=True) or []
+            after = obj['rst'].splitlines(keepends=True) or [""]
 
             if not after[-1].endswith("\n"):
                 after[-1] += "\n"  # Does the same thing as L57
