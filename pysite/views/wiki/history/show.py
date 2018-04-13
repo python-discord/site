@@ -1,7 +1,7 @@
 # coding=utf-8
 import datetime
 
-from flask import abort
+from werkzeug.exceptions import NotFound
 
 from pysite.base_route import RouteView
 from pysite.mixins import DBMixin
@@ -17,7 +17,7 @@ class RevisionsListView(RouteView, DBMixin):
     def get(self, page):
         results = self.db.filter(self.table_name, lambda revision: revision["slug"] == page)
         if len(results) == 0:
-            abort(404)
+            raise NotFound()
 
         for result in results:
             ts = datetime.datetime.fromtimestamp(result["date"])

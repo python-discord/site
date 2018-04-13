@@ -1,10 +1,10 @@
 # coding=utf-8
 import difflib
 
-from flask import abort
 from pygments import highlight
 from pygments.formatters import HtmlFormatter
 from pygments.lexers import DiffLexer
+from werkzeug.exceptions import BadRequest, NotFound
 
 from pysite.base_route import RouteView
 from pysite.mixins import DBMixin
@@ -22,7 +22,13 @@ class CompareView(RouteView, DBMixin):
         after = self.db.get(self.table_name, second_rev)
 
         if not before or not after:
-            abort(404)
+            raise NotFound()
+
+        if before["date"] > after["date"]: # Check whether the before was created after the after
+            raise BadRequest()
+
+        if before["id"] == after["id"]: # The same revision has been requested
+            raise BadRequest()
 
         before_text = before["post"]["rst"]
         after_text = after["post"]["rst"]
@@ -37,7 +43,7 @@ class CompareView(RouteView, DBMixin):
         after_text = after_text.splitlines(keepends=True)
 
         if not before["slug"] == after["slug"]:
-            abort(400)  # The revisions are not from the same post
+            raise BadRequest()  # The revisions are not from the same post
 
         diff = difflib.unified_diff(before_text, after_text, fromfile=f"{first_rev}.rst", tofile=f"{second_rev}.rst")
         diff = "".join(diff)
