@@ -13,12 +13,12 @@ from pysite.constants import DEBUG_MODE
 
 ALL_TABLES = {
     # table: primary_key
+    "hiphopify": "user_id",
+    "hiphopify_namelist": "name",
     "oauth_data": "id",
     "tags": "tag_name",
     "users": "user_id",
-    "wiki": "slug",
-    "hiphoppers": "hophop_name",
-    "hiphopify": "user_id"
+    "wiki": "slug"
 }
 
 
