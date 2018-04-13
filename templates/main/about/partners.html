@@ -15,103 +15,36 @@
                 </h1>
                 <div class="uk-column-1-2@m uk-column-divider">
 
-                    <!-- DYEP Partner card -->
-                    <div class="uk-card uk-card-hover uk-card-default" style="margin-top: 2em">
-                        <div class="uk-card-media-top">
-                            <img src="/static/images/partners/dyep.png" alt="">
-                        </div>
-                        <div class="uk-card-body">
-                            <p style="text-align:center">
-                                Do You Even Python? is a server for discussions and learning about Python where you can
-                                come and chat with beginners and experienced Pythonistas alike, come and join us!
-                            </p>
-                        </div>
-                        <div class="uk-card-footer" style="text-align:center">
-                            <a href="https://discord.gg/jQtfh66" class="uk-button uk-button-text">
-                                Join the server
-                            </a>
-                        </div>
+                    {% if partners is none %}
+                    <div class="uk-alert-danger" uk-alert>
+                        <p>
+                            We were unable to load the <code>partners.json</code> file. If you see this, please
+                            notify us!
+                        </p>
                     </div>
-
-                    <!-- STEM Partner card -->
-                    <div class="uk-card uk-card-hover uk-card-default" style="margin-top: 2em">
-                        <div class="uk-card-media-top">
-                            <img src="/static/images/partners/stem.png" alt="">
-                        </div>
-                        <div class="uk-card-body">
-                            <p style="text-align:center">
-                                STEM is a growing server dedicated to discussion and education pertaining to subjects
-                                within the fields of Science, Technology, Engineering, and Mathematics. We aim to
-                                provide our members with an engaged, skilled, friendly community.
-                                We hope to see you soon!
-                            </p>
-                        </div>
-                        <div class="uk-card-footer" style="text-align:center">
-                            <a href="https://discord.gg/XBGetGp" class="uk-button uk-button-text">
-                                Join the server
-                            </a>
-                        </div>
-                    </div>
-
-                    <!-- Code Monkeys Partner card -->
-                    <div class="uk-flex uk-flex-center">
-                        <div class="uk-card uk-card-hover uk-card-default" style="margin-top: 2em">
-                            <div class="uk-card-media-top">
-                                <img src="/static/images/partners/code monkeys.png" alt="">
+                    {% else %}
+                        {% for partner_name, partner_data in partners.items() %}
+                            <div style="display: flex">
+                                <div class="uk-card uk-card-hover uk-card-default" id="{{ partner_name.replace(' ', '-').lower() }}" style="margin-top: 2em">
+                                    <div class="uk-card-media-top">
+                                        <a href="{{ partner_data['invite'] }}">
+                                            <img src="{{ partner_data['banner'] }}" alt="{{ partner_name }}">
+                                        </a>
+                                    </div>
+                                    <div class="uk-card-body">
+                                        <p style="text-align:center">
+                                            {{ partner_data['description'] }}
+                                        </p>
+                                    </div>
+                                    <div class="uk-card-footer" style="text-align:center">
+                                        <a href="{{ partner_data['invite'] }}" class="uk-button uk-button-text">
+                                            Join the server
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="uk-card-body">
-                                <p style="text-align:center">
-                                    We at Code Monkeys are dedicated to provide a friendly environment for programmers and
-                                    tech enthusiasts alike. The community here is dedicated to giving and receiving great
-                                    help and advice for a variety of programming languages.
-                                    Help us build a large and friendly community at Code Monkeys by joining today!
-                                </p>
-                            </div>
-                            <div class="uk-card-footer" style="text-align:center">
-                                <a href="https://discord.gg/vywQPxd" class="uk-button uk-button-text">
-                                    Join the server
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Programming Partner card -->
-                    <div class="uk-card uk-card-hover uk-card-default uk-width-3-3@m" style="margin-top: 2em">
-                        <div class="uk-card-media-top">
-                            <img src="/static/images/partners/programming.png" alt="">
-                        </div>
-                        <div class="uk-card-body">
-                            <p style="text-align:center">
-                                Programming was created in 2016, and is an active community around various programming
-                                languages, operating systems, as well as hardware, security, and low-level programming.
-                            </p>
-                        </div>
-                        <div class="uk-card-footer" style="text-align:center">
-                            <a href="https://discord.gg/010z0Kw1A9ql5c1Qe" class="uk-button uk-button-text">
-                                Join the server
-                            </a>
-                        </div>
-                    </div>
-
-                    <!-- Hacking - Coding Partner card -->
-                    <div class="uk-card uk-card-hover uk-card-default uk-width-3-3@m" style="margin-top: 2em">
-                        <div class="uk-card-media-top">
-                            <img src="/static/images/partners/hacking-coding.png" alt="">
-                        </div>
-                        <div class="uk-card-body">
-                            <p style="text-align:center">
-                                Hacking-Coding is a server for discussions about ethical hacking, programming, and
-                                infosec in general. We have over 5,000 members. People of all skill levels are welcome
-                                to join.
-                            </p>
-                        </div>
-                        <div class="uk-card-footer" style="text-align:center">
-                            <a href="https://discord.gg/0kvPIGKKEACoKQ8C" class="uk-button uk-button-text">
-                                Join the server
-                            </a>
-                        </div>
-                    </div>
-
+                        {% endfor %}
+                    {% endif %}
                 </div>
             </article>
         </div>
