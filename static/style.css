@@ -119,18 +119,12 @@ footer div.uk-section div.uk-text-center {
     padding-right: 40px;
 }
 
-/*
-Rendered document fixes
- */
-
+/* Rendered document fixes */
 .document li p {
     margin-bottom: 0;
 }
 
-/*
-Styling for Partners page cards
- */
-
+/* Styling for Partners page cards */
 .uk-card {
     margin-top: 2em;
     text-align:center;
