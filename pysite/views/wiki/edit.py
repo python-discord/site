@@ -70,13 +70,13 @@ class EditView(RouteView, DBMixin):
             "headers": rendered["headers"]
         }
 
+        self.audit_log(page, obj)
+
         self.db.insert(
             self.table_name,
             obj,
             conflict="replace"
         )
-
-        self.audit_log(page, obj)
 
         # Add the post to the revisions table
         revision_payload = {
@@ -159,7 +159,7 @@ class EditView(RouteView, DBMixin):
                 "embeds": [
                     {
                         "title": "Page Edit",
-                        "description": f"**{obj['title']}** was edited by **Joseph**"
+                        "description": f"**{obj['title']}** was edited by **{self.user_data.get('username')}**"
                                        f".\n\n[View diff]({gist.json().get('html_url')})",
                         "color": 4165079,
                         "timestamp": datetime.datetime.utcnow().isoformat(),
