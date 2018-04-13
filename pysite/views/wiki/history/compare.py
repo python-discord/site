@@ -14,7 +14,7 @@ class CompareView(RouteView, DBMixin):
     path = "/history/compare/<string:first_rev>/<string:second_rev>"
     name = "history.compare"
 
-    table_name = "revisions"
+    table_name = "wiki_revisions"
     table_primary_key = "id"
 
     def get(self, first_rev, second_rev):

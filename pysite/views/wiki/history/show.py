@@ -11,7 +11,7 @@ class RevisionsListView(RouteView, DBMixin):
     path = "/history/show/<string:page>"
     name = "history.show"
 
-    table_name = "revisions"
+    table_name = "wiki_revisions"
     table_primary_key = "id"
 
     def get(self, page):

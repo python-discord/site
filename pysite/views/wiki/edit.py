@@ -20,7 +20,7 @@ class EditView(RouteView, DBMixin):
 
     table_name = "wiki"
     table_primary_key = "slug"
-    revision_table_name = "revisions"
+    revision_table_name = "wiki_revisions"
 
     @require_roles(*EDITOR_ROLES)
     def get(self, page):
