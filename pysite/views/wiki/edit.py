@@ -70,7 +70,7 @@ class EditView(RouteView, DBMixin):
                     if not before[-1].endswith("\n"):
                         before[-1] += "\n"  # difflib sometimes messes up if a newline is missing on last line
 
-        rst = request.form["rst"]
+        rst = request.form.get("rst")
 
         if not rst.strip():
             raise BadRequest()
