@@ -42,7 +42,7 @@ class EditView(RouteView, DBMixin):
 
         lock_expiry = datetime.datetime.utcnow() + datetime.timedelta(minutes=5)
 
-        if not DEBUG_MODE: # If we are in debug mode we have no user logged in, therefore we can skip locking
+        if not DEBUG_MODE:  # If we are in debug mode we have no user logged in, therefore we can skip locking
             self.db.insert(self.table_name, {
                            "slug": page,
                            "lock_expiry": lock_expiry.timestamp(),
@@ -92,7 +92,6 @@ class EditView(RouteView, DBMixin):
 
         return redirect(url_for("wiki.page", page=page), code=303)  # Redirect, ensuring a GET
 
-
     @require_roles(*EDITOR_ROLES)
     @csrf
     def patch(self, page):
@@ -101,9 +100,11 @@ class EditView(RouteView, DBMixin):
             return "", 404
 
         if current.get("lock_expiry"):  # If there is a lock present
-            if current["lock_user"] != self.user_data.get("user_id"):  # If the user patching is not the user editing end here
+
+            # If user patching is not the user with the lock end here
+            if current["lock_user"] != self.user_data.get("user_id"):
                 return "", 400
-            new_lock = datetime.datetime.utcnow() + datetime.timedelta(minutes=5)  # Create the new lock time (5 minutes in future)
+            new_lock = datetime.datetime.utcnow() + datetime.timedelta(minutes=5)  # New lock time, 5 minutes in future
             self.db.insert(self.table_name, {
                 "slug": page,
                 "lock_expiry": new_lock.timestamp()
@@ -168,5 +169,5 @@ class EditView(RouteView, DBMixin):
                     }
                 ]
             }
-            
+
             requests.post(WIKI_AUDIT_WEBHOOK, json=audit_payload)

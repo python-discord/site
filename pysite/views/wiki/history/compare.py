@@ -24,10 +24,10 @@ class CompareView(RouteView, DBMixin):
         if not before or not after:
             raise NotFound()
 
-        if before["date"] > after["date"]: # Check whether the before was created after the after
+        if before["date"] > after["date"]:  # Check whether the before was created after the after
             raise BadRequest()
 
-        if before["id"] == after["id"]: # The same revision has been requested
+        if before["id"] == after["id"]:  # The same revision has been requested
             raise BadRequest()
 
         before_text = before["post"]["rst"]
