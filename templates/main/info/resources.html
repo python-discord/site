@@ -29,20 +29,11 @@
                     mobile).
                 </p>
                 <p class="uk-text-center">
-                    <span class="fa-layers fa-fw" uk-tooltip="Free">
-                        <i class="fas fa-dollar-sign" data-fa-transform="shrink-6"></i>
-                        <i class="fas fa-ban" style="color: green"></i>
-                    </span>
+                    <img src="{{ static_file("images/payment_icons/green.svg") }}" style="height: 2rem;" uk-tooltip="Free" />
                     Free
-                    <span class="fa-layers fa-fw" uk-tooltip="Payment Optional">
-                        <i class="fas fa-circle" style="color: #FF8000"></i>
-                        <i class="fas fa-dollar-sign fa-inverse" data-fa-transform="shrink-6"></i>
-                    </span>
+                    <img src="{{ static_file("images/payment_icons/yellow.svg") }}" style="height: 2rem;" uk-tooltip="Payment Optional" />
                     Payment Optional
-                    <span class="fa-layers fa-fw" uk-tooltip="Paid">
-                        <i class="fas fa-circle" style="color: #cc0000"></i>
-                        <i class="fa-inverse fas fa-dollar-sign" data-fa-transform="shrink-6"></i>
-                    </span>
+                    <img src="{{ static_file("images/payment_icons/red.svg") }}" style="height: 2rem;" uk-tooltip="Paid" />
                     Paid
                 </p>
 
@@ -68,26 +59,31 @@
                         </h2>
                         {% for item, data in category_data.resources.items() %}
                             <p>
-                                {% if data["payment_description"] %}
-                                    <span class="fa-layers fa-fw" uk-tooltip="{{ data["payment_description"] }}">
-                                {% else %}
-                                    <span class="fa-layers fa-fw" uk-tooltip="{{ data["payment"].title() }}">
-                                {% endif %}
-
                                 {% if data["payment"] == "optional" %}
-                                        <i class="fas fa-circle" style="color: #FF8000"></i>
-                                        <i class="fas fa-dollar-sign fa-inverse" data-fa-transform="shrink-6"></i>
+                                    {% set file_path = static_file("images/payment_icons/yellow.svg") %}
                                 {% elif data["payment"] == "paid" %}
-                                        <i class="fas fa-circle" style="color: #cc0000"></i>
-                                        <i class="fa-inverse fas fa-dollar-sign" data-fa-transform="shrink-6"></i>
+                                    {% set file_path = static_file("images/payment_icons/red.svg") %}
                                 {% else %}
-                                        <i class="fas fa-dollar-sign" data-fa-transform="shrink-6"></i>
-                                        <i class="fas fa-ban" style="color: green"></i>
+                                    {% set file_path = static_file("images/payment_icons/green.svg") %}
                                 {% endif %}
-                                    </span>
-                                <strong>{{ item }}</strong> &nbsp;<a href="{{ data.url }}"><i class="fas fa-link"></i></a>
 
-                                <br />
+                                {% if data["payment_description"] %}
+                                    <img class="uk-float-left" style="height: 3.7rem; vertical-align: text-bottom; margin-right: 0.5rem;" uk-tooltip="{{ data["payment_description"] }}" src="{{ file_path }}" />
+                                {% else %}
+                                    <img class="uk-float-left" style="height: 3.7rem; vertical-align: text-bottom; margin-right: 0.5rem;" uk-tooltip="{{ data["payment"].title() }}" src="{{ file_path }}" />
+                                {% endif %}
+                                <div style="margin-bottom: -1rem;">
+                                    <strong>{{ item }}</strong> <br />
+                                    <div class="uk-button-group" style="padding-bottom: 0;">
+                                        {% for url in data.urls %}
+                                        <a class="uk-button uk-button-default uk-button-small"
+                                            uk-tooltip="title: {{ url.title }}; pos: bottom"
+                                           href="{{ url.url }}"><i class="{{ url.classes }}"></i></a>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+
+                                <br class="uk-float-" />
                                 <span class="uk-text-meta">{{ data.description }}</span>
                             </p>
                         {% endfor %}

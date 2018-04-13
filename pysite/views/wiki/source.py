@@ -1,5 +1,8 @@
 # coding=utf-8
 from flask import redirect, url_for
+from pygments import highlight
+from pygments.formatters.html import HtmlFormatter
+from pygments.lexers import get_lexer_by_name
 from werkzeug.exceptions import NotFound
 
 from pysite.base_route import RouteView
@@ -8,8 +11,8 @@ from pysite.mixins import DBMixin
 
 
 class PageView(RouteView, DBMixin):
-    path = "/wiki/<path:page>"  # "path" means that it accepts slashes
-    name = "page"
+    path = "/source/<path:page>"  # "path" means that it accepts slashes
+    name = "source"
 
     table_name = "wiki"
     table_primary_key = "slug"
@@ -19,10 +22,13 @@ class PageView(RouteView, DBMixin):
 
         if obj is None:
             if self.is_staff():
-                return redirect(url_for("wiki.edit", page=page))
+                return redirect(url_for("wiki.edit", page=page, can_edit=False))
 
             raise NotFound()
-        return self.render("wiki/page_view.html", page=page, data=obj, can_edit=self.is_staff())
+
+        rst = obj["rst"]
+        rst = highlight(rst, get_lexer_by_name("rst"), HtmlFormatter(preclass="code", linenos="inline"))
+        return self.render("wiki/page_source.html", page=page, data=obj, rst=rst, can_edit=self.is_staff())
 
     def is_staff(self):
         if DEBUG_MODE:

@@ -1,5 +1,6 @@
 # coding=utf-8
 from flask import request, url_for
+from werkzeug.exceptions import BadRequest
 from werkzeug.utils import redirect
 
 from pysite.base_route import RouteView
@@ -35,11 +36,18 @@ class EditView(RouteView, DBMixin):
     @csrf
     def post(self, page):
         rst = request.form["rst"]
+
+        if not rst.strip():
+            raise BadRequest()
+
+        rendered = render(rst)
+
         obj = {
             "slug": page,
             "title": request.form["title"],
             "rst": rst,
-            "html": render(rst)
+            "html": rendered["html"],
+            "headers": rendered["headers"]
         }
 
         self.db.insert(
