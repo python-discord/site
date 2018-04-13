@@ -23,27 +23,29 @@
                         </p>
                     </div>
                     {% else %}
-                        {% for partner_name, partner_data in partners.items() %}
-                            <div style="display: flex">
-                                <div class="uk-card uk-card-hover uk-card-default" id="{{ partner_name.replace(' ', '-').lower() }}" style="margin-top: 2em">
-                                    <div class="uk-card-media-top">
-                                        <a href="{{ partner_data['invite'] }}">
-                                            <img src="{{ partner_data['banner'] }}" alt="{{ partner_name }}">
-                                        </a>
-                                    </div>
-                                    <div class="uk-card-body">
-                                        <p style="text-align:center">
-                                            {{ partner_data['description'] }}
-                                        </p>
-                                    </div>
-                                    <div class="uk-card-footer" style="text-align:center">
-                                        <a href="{{ partner_data['invite'] }}" class="uk-button uk-button-text">
-                                            Join the server
-                                        </a>
+                        <div class="uk-flex-column">
+                            {% for partner_name, partner_data in partners.items() %}
+                                <div class="uk-flex">
+                                    <div class="uk-card uk-card-hover uk-card-default" style="margin-top: 2em">
+                                        <div class="uk-card-media-top">
+                                            <a href="{{ partner_data['invite'] }}">
+                                                <img src="{{ partner_data['banner'] }}" alt="{{ partner_name }}">
+                                            </a>
+                                        </div>
+                                        <div class="uk-card-body">
+                                            <p style="text-align:center">
+                                                {{ partner_data['description'] }}
+                                            </p>
+                                        </div>
+                                        <div class="uk-card-footer" style="text-align:center">
+                                            <a href="{{ partner_data['invite'] }}" class="uk-button uk-button-text">
+                                                Join the server
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        {% endfor %}
+                            {% endfor %}
+                        </div>
                     {% endif %}
                 </div>
             </article>
