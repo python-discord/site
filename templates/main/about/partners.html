@@ -14,31 +14,31 @@
                 </h1>
                 <div class="uk-column-1-2@m uk-column-divider">
                     {% if partners is none %}
-                    <div class="uk-alert-danger" uk-alert>
-                        <p>
-                            We were unable to load the <code>partners.json</code> file. If you see this, please
-                            notify us!
-                        </p>
-                    </div>
+                        <div class="uk-alert-danger" uk-alert>
+                            <p>
+                                We were unable to load the <code>partners.json</code> file. If you see this, please
+                                notify us!
+                            </p>
+                        </div>
                     {% else %}
                         {% for partner_name, partner_data in partners.items() %}
-                        <div class="uk-inline">
-                            <div class="uk-card uk-card-hover uk-card-default">
-                                <div class="uk-card-media-top">
-                                    <a href="{{ partner_data['invite'] }}">
-                                        <img src="{{ partner_data['banner'] }}" alt="{{ partner_name }}">
-                                    </a>
-                                </div>
-                                <div class="uk-card-body">
-                                    <p>{{ partner_data['description'] }}</p>
-                                </div>
-                                <div class="uk-card-footer">
-                                    <a href="{{ partner_data['invite'] }}" class="uk-button uk-button-text">
-                                        Join the server
-                                    </a>
+                            <div class="uk-inline">
+                                <div class="uk-card uk-card-hover uk-card-default" id="partner-card">
+                                    <div class="uk-card-media-top">
+                                        <a href="{{ partner_data['invite'] }}">
+                                            <img src="{{ partner_data['banner'] }}" alt="{{ partner_name }}"/>
+                                        </a>
+                                    </div>
+                                    <div class="uk-card-body">
+                                        <p>{{ partner_data['description'] }}</p>
+                                    </div>
+                                    <div class="uk-card-footer">
+                                        <a href="{{ partner_data['invite'] }}" class="uk-button uk-button-text">
+                                            Join the server
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
                         {% endfor %}
                     {% endif %}
                 </div>

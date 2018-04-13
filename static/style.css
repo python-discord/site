@@ -125,7 +125,7 @@ footer div.uk-section div.uk-text-center {
 }
 
 /* Styling for Partners page cards */
-.uk-card {
+#partner-card {
     margin-top: 2em;
     text-align:center;
 }
