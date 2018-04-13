@@ -118,3 +118,11 @@ footer div.uk-section div.uk-text-center {
     padding-left: 40px;
     padding-right: 40px;
 }
+
+/*
+Rendered document fixes
+ */
+
+.document li p {
+    margin-bottom: 0;
+}
