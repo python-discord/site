@@ -8,13 +8,11 @@
             <article class="uk-article">
                 <h1 class="uk-article-title hover-title" id="top">
                     Partners
-
                     <a href="#top" class="uk-text-primary" title="Permanent link to this header">
                         <i class="fas fa-paragraph" data-fa-transform="shrink-8"></i>
                     </a>
                 </h1>
                 <div class="uk-column-1-2@m uk-column-divider">
-
                     {% if partners is none %}
                     <div class="uk-alert-danger" uk-alert>
                         <p>
@@ -24,19 +22,17 @@
                     </div>
                     {% else %}
                         {% for partner_name, partner_data in partners.items() %}
-                        <div style="display: inline-block">
-                            <div class="uk-card uk-card-hover uk-card-default" style="margin-top: 2em">
+                        <div class="uk-inline">
+                            <div class="uk-card uk-card-hover uk-card-default">
                                 <div class="uk-card-media-top">
                                     <a href="{{ partner_data['invite'] }}">
                                         <img src="{{ partner_data['banner'] }}" alt="{{ partner_name }}">
                                     </a>
                                 </div>
                                 <div class="uk-card-body">
-                                    <p style="text-align:center">
-                                        {{ partner_data['description'] }}
-                                    </p>
+                                    <p>{{ partner_data['description'] }}</p>
                                 </div>
-                                <div class="uk-card-footer" style="text-align:center">
+                                <div class="uk-card-footer">
                                     <a href="{{ partner_data['invite'] }}" class="uk-button uk-button-text">
                                         Join the server
                                     </a>

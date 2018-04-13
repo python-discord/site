@@ -126,3 +126,12 @@ Rendered document fixes
 .document li p {
     margin-bottom: 0;
 }
+
+/*
+Styling for Partners page cards
+ */
+
+.uk-card {
+    margin-top: 2em;
+    text-align:center;
+}
