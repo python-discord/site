@@ -30,7 +30,7 @@ class RenderView(APIView):
 
         data = data[0]["data"]
         try:
-            html = render(data)
+            html = render(data)["html"]
 
             return jsonify({"data": html})
         except SystemMessage as e:
@@ -51,7 +51,7 @@ class RenderView(APIView):
                 if match:
                     data["error_lines"].append(
                         {
-                            "row": int(match.group(1)) - 1,
+                            "row": int(match.group(1)) - 3,
                             "column": 0,
                             "type": "error",
                             "text": match.group(2)
