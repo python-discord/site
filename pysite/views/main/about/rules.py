@@ -3,8 +3,8 @@ from pysite.base_route import RouteView
 
 
 class RulesView(RouteView):
-    path = "/info/rules"
-    name = "info.rules"
+    path = "/about/rules"
+    name = "about.rules"
 
     def get(self):
-        return self.render("main/info/rules.html")
+        return self.render("main/about/rules.html")
