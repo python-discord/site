@@ -12,7 +12,7 @@
                         <i class="fas fa-paragraph" data-fa-transform="shrink-8"></i>
                     </a>
                 </h1>
-                <div class="uk-column-1-2@m uk-column-divider">
+                <div class="uk-column-1-2@m uk-column-divider" id="partner-cards">
                     {% if partners is none %}
                         <div class="uk-alert-danger" uk-alert>
                             <p>
@@ -22,21 +22,19 @@
                         </div>
                     {% else %}
                         {% for partner_name, partner_data in partners.items() %}
-                            <div class="uk-inline">
-                                <div class="uk-card uk-card-hover uk-card-default" id="partner-card">
-                                    <div class="uk-card-media-top">
-                                        <a href="{{ partner_data['invite'] }}">
-                                            <img src="{{ partner_data['banner'] }}" alt="{{ partner_name }}"/>
-                                        </a>
-                                    </div>
-                                    <div class="uk-card-body">
-                                        <p>{{ partner_data['description'] }}</p>
-                                    </div>
-                                    <div class="uk-card-footer">
-                                        <a href="{{ partner_data['invite'] }}" class="uk-button uk-button-text">
-                                            Join the server
-                                        </a>
-                                    </div>
+                            <div class="uk-card-default uk-card-hover uk-inline">
+                                <div class="uk-card-media-top">
+                                    <a href="{{ partner_data['invite'] }}">
+                                        <img src="{{ partner_data['banner'] }}" alt="{{ partner_name }}"/>
+                                    </a>
+                                </div>
+                                <div class="uk-card-body">
+                                    <p>{{ partner_data['description'] }}</p>
+                                </div>
+                                <div class="uk-card-footer">
+                                    <a href="{{ partner_data['invite'] }}" class="uk-button uk-button-text">
+                                        Join the server
+                                    </a>
                                 </div>
                             </div>
                         {% endfor %}
