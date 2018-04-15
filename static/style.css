@@ -129,3 +129,8 @@ div#partner-cards div.uk-card-default {
     margin-top: 2em;
     text-align:center;
 }
+
+/* Resize navbar to correct proportions */
+img.navbar-logo {
+    max-width: 110%;
+}
