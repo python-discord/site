@@ -13,9 +13,7 @@ from pysite.mixins import DBMixin
 class PageView(RouteView, DBMixin):
     path = "/source/<path:page>"  # "path" means that it accepts slashes
     name = "source"
-
     table_name = "wiki"
-    table_primary_key = "slug"
 
     def get(self, page):
         obj = self.db.get(self.table_name, page)

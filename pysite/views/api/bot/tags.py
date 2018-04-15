@@ -32,7 +32,6 @@ class TagsView(APIView, DBMixin):
     path = "/tags"
     name = "api.bot.tags"
     table_name = "tags"
-    table_primary_key = "tag_name"
 
     @api_key
     @api_params(schema=GET_SCHEMA, validation_type=ValidationTypes.params)
