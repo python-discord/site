@@ -1,6 +1,5 @@
 # coding=utf-8
 import logging
-import os
 import sys
 from logging import Logger, StreamHandler
 from logging.handlers import SysLogHandler
@@ -31,8 +30,7 @@ def monkeypatch_trace(self, msg, *args, **kwargs):
 
 
 Logger.trace = monkeypatch_trace
-
-log_level = os.environ.get("LOG_LEVEL", "debug").upper()
+log_level = "TRACE"
 
 if hasattr(logging, log_level):
     log_level = getattr(logging, log_level)
