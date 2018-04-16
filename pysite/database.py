@@ -89,7 +89,7 @@ class RethinkDB:
             if not self.pluck(table, primary_key):
 
                 self.log.trace(f"{table} appears to be empty. Checking if there is a json file at {os.getcwd()}"
-                               f"pysite/database/table_init/{table}.json")
+                               f"/pysite/database/table_init/{table}.json")
 
                 # And a corresponding JSON file exists
                 if os.path.isfile(f"pysite/database/table_init/{table}.json"):
