@@ -30,13 +30,7 @@ def monkeypatch_trace(self, msg, *args, **kwargs):
 
 
 Logger.trace = monkeypatch_trace
-log_level = "TRACE"
-
-if hasattr(logging, log_level):
-    log_level = getattr(logging, log_level)
-else:
-    raise RuntimeError(f"LOG_LEVEL environment variable has invalid value: {log_level}")
-
+log_level = logging.TRACE
 logging_handlers = []
 
 if PAPERTRAIL_ADDRESS:

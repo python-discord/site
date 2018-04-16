@@ -245,17 +245,6 @@ class StaffEndpoints(SiteTest):
 
 class Utilities(SiteTest):
     """ Test cases for internal utility code """
-    def test_logging_runtime_error(self):
-        """ Check that a wrong value for log level raises runtime error """
-        os.environ['LOG_LEVEL'] = 'wrong value'
-        try:
-            import pysite.__init__  # noqa: F401
-        except RuntimeError:
-            return True
-        finally:
-            os.environ['LOG_LEVEL'] = 'info'
-        raise Exception('Expected a failure due to wrong LOG_LEVEL attribute name')
-
     def test_error_view_runtime_error(self):
         """ Check that wrong values for error view setup raises runtime error """
         import pysite.base_route
