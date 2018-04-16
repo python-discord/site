@@ -2,7 +2,7 @@
 import logging
 import os
 import sys
-from logging import StreamHandler
+from logging import Logger, StreamHandler
 from logging.handlers import SysLogHandler
 
 from logmatic import JsonFormatter
@@ -12,6 +12,25 @@ from pysite.logs import NonPicklingSocketHandler
 
 # region Logging
 # Get the log level from environment
+
+logging.TRACE = 5
+logging.addLevelName(logging.TRACE, "TRACE")
+
+
+def monkeypatch_trace(self, msg, *args, **kwargs):
+    """
+    Log 'msg % args' with severity 'TRACE'.
+
+    To pass exception information, use the keyword argument exc_info with
+    a true value, e.g.
+
+    logger.trace("Houston, we have an %s", "interesting problem", exc_info=1)
+    """
+    if self.isEnabledFor(logging.TRACE):
+        self._log(logging.TRACE, msg, args, **kwargs)
+
+
+Logger.trace = monkeypatch_trace
 
 log_level = os.environ.get("LOG_LEVEL", "debug").upper()
 
