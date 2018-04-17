@@ -21,7 +21,7 @@ class CompareView(RouteView, DBMixin):
         before = self.db.get(self.table_name, first_rev)
         after = self.db.get(self.table_name, second_rev)
 
-        if not before or not after:
+        if not (before and after):
             raise NotFound()
 
         if before["date"] > after["date"]:  # Check whether the before was created after the after
