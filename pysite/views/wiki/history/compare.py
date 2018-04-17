@@ -7,6 +7,7 @@ from pygments.lexers import DiffLexer
 from werkzeug.exceptions import BadRequest, NotFound
 
 from pysite.base_route import RouteView
+from pysite.constants import DEBUG_MODE, EDITOR_ROLES
 from pysite.mixins import DBMixin
 
 
@@ -48,4 +49,21 @@ class CompareView(RouteView, DBMixin):
         diff = difflib.unified_diff(before_text, after_text, fromfile=f"{first_rev}.rst", tofile=f"{second_rev}.rst")
         diff = "".join(diff)
         diff = highlight(diff, DiffLexer(), HtmlFormatter())
-        return self.render("wiki/compare_revision.html", title=after["post"]["title"], diff=diff, slug=before["slug"])
+        return self.render("wiki/compare_revision.html",
+                           title=after["post"]["title"],
+                           diff=diff, slug=before["slug"],
+                           can_edit=self.is_staff())
+
+    def is_staff(self):
+        if DEBUG_MODE:
+            return True
+        if not self.logged_in:
+            return False
+
+        roles = self.user_data.get("roles", [])
+
+        for role in roles:
+            if role in EDITOR_ROLES:
+                return True
+
+        return False

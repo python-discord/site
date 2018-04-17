@@ -4,6 +4,7 @@ import datetime
 from werkzeug.exceptions import NotFound
 
 from pysite.base_route import RouteView
+from pysite.constants import DEBUG_MODE, EDITOR_ROLES
 from pysite.mixins import DBMixin
 
 
@@ -25,3 +26,17 @@ class RevisionsListView(RouteView, DBMixin):
 
         results = sorted(results, key=lambda revision: revision["date"], reverse=True)
         return self.render("wiki/revision_list.html", page=page, revisions=results), 200
+
+    def is_staff(self):
+        if DEBUG_MODE:
+            return True
+        if not self.logged_in:
+            return False
+
+        roles = self.user_data.get("roles", [])
+
+        for role in roles:
+            if role in EDITOR_ROLES:
+                return True
+
+        return False
