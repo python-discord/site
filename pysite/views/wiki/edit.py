@@ -42,14 +42,14 @@ class EditView(RouteView, DBMixin):
 
         if not DEBUG_MODE:  # If we are in debug mode we have no user logged in, therefore we can skip locking
             self.db.insert(
-    			self.table_name,
-    			{
-        			"slug": page,
-        			"lock_expiry": lock_expiry.timestamp(),
-        			"lock_user": self.user_data.get("user_id")
-    			},
-    			conflict="update"
-			)
+                self.table_name,
+                {
+                    "slug": page,
+                    "lock_expiry": lock_expiry.timestamp(),
+                    "lock_user": self.user_data.get("user_id")
+                },
+                conflict="update"
+            )
 
         return self.render("wiki/page_edit.html", page=page, rst=rst, title=title, preview=preview)
 
@@ -59,7 +59,7 @@ class EditView(RouteView, DBMixin):
         rst = request.form.get("rst")
 
         if not rst:
-        	raise BadRequest()
+            raise BadRequest()
 
         if not rst.strip():
             raise BadRequest()
