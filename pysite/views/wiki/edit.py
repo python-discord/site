@@ -3,9 +3,8 @@ import datetime
 import difflib
 
 import requests
-from flask import request, url_for
+from flask import redirect, request, url_for
 from werkzeug.exceptions import BadRequest
-from werkzeug.utils import redirect
 
 from pysite.base_route import RouteView
 from pysite.constants import DEBUG_MODE, EDITOR_ROLES, GITHUB_TOKEN, WIKI_AUDIT_WEBHOOK
