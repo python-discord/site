@@ -418,7 +418,7 @@ class RethinkDB:
             coerce=list
         )
 
-    def get(self, table_name: str, key: str) -> Union[Dict[str, Any], None]:
+    def get(self, table_name: str, key: str) -> Optional[Dict[str, Any]]:
         """
         Get a single document from a table by primary key
 
@@ -509,7 +509,7 @@ class RethinkDB:
             coerce=list
         )
 
-    def pluck(self, table_name: str, *selectors: Union[str, Dict[str, Union[List, Dict]]]):
+    def pluck(self, table_name: str, *selectors: Union[str, Dict[str, Union[List, Dict]]]) -> List[Dict[str, Any]]:
         """
         Get a list of values for a specific set of keys for every document in the table; this can include
         nested values
@@ -535,6 +535,22 @@ class RethinkDB:
 
         return self.run(  # pragma: no cover
             self.query(table_name).pluck(*selectors),
+            coerce=list
+        )
+
+    def sample(self, table_name: str, sample_size: int) -> List[Dict[str, Any]]:
+        """
+        Select a given number of elements from a table at random.
+
+        :param table_name: The name of the table to select from.
+        :param sample_size: The number of elements to select.
+            If this number is higher than the total amount of items in
+            the table, this will return the entire table in random order.
+
+        :return: A list of items from the table.
+        """
+        return self.run(  # pragma: no cover
+            self.query(table_name).sample(sample_size),
             coerce=list
         )
 
