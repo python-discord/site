@@ -48,4 +48,4 @@ class CompareView(RouteView, DBMixin):
         diff = difflib.unified_diff(before_text, after_text, fromfile=f"{first_rev}.rst", tofile=f"{second_rev}.rst")
         diff = "".join(diff)
         diff = highlight(diff, DiffLexer(), HtmlFormatter())
-        return self.render("wiki/compare_revision.html", title=after["post"]["title"], diff=diff)
+        return self.render("wiki/compare_revision.html", title=after["post"]["title"], diff=diff, slug=before["slug"])

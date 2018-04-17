@@ -86,15 +86,33 @@
                             </li>
                         {% endif %}
 
+                        {% if current_page != "history.show" %}
+                            {% if current_page == "history.compare" %}
+                                <li>
+                                    <a href="{{ url_for("wiki.history.show", page=slug) }}">
+                                        <i class="uk-icon fas fa-fw fa-arrow-left"></i> &nbsp;Back
+                                    </a>
+                                </li>
+                            {% else %}
+                                <li>
+                                    <a href="{{ url_for("wiki.history.show", page=page) }}">
+                                        <i class="uk-icon fas fa-fw fa-history"></i> &nbsp;Revisions
+                                    </a>
+                                </li>
+                            {% endif %}
+                        {% else %}
+                            <li>
+                                <a href="{{ url_for("wiki.page", page=page) }}">
+                                    <i class="uk-icon fas fa-fw fa-arrow-left"></i> &nbsp;Back
+                                </a>
+                            </li>
+                        {% endif %}
+
+
                         {% if current_page != "source" %}
                             <li>
                                 <a href="{{ url_for("wiki.source", page=page) }}">
                                     <i class="uk-icon fas fa-fw fa-code"></i> &nbsp;Source
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ url_for("wiki.history.show", page=page) }}">
-                                    <i class="uk-icon fas fa-fw fa-history"></i> &nbsp;Revisions
                                 </a>
                             </li>
                         {% else %}
