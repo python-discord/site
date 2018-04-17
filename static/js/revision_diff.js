@@ -5,7 +5,7 @@ let buttons = document.querySelectorAll("td input"); // Fetch all radio buttons
 let id_reg = /compare-(before|after)-([\w|-]+)/; // Matches compare-after/before-ID
 
 
-function getRevisionId(element
+function getRevisionId(element){
     let e = element.id.match(id_reg); // Match ID with RegExp
     return [e[1], e[2]]; // e is in format of [full id, after/before, ID] we only want ID & mode
 }
