@@ -2,12 +2,13 @@
 import datetime
 
 from flask import jsonify
-from schema import Schema
+from schema import Optional, Schema
 
 from pysite.base_route import APIView
 from pysite.constants import ValidationTypes
 from pysite.decorators import api_key, api_params
 from pysite.mixins import DBMixin
+from pysite.utils.time import parse_duration
 
 GET_SCHEMA = Schema([
     {
@@ -17,8 +18,9 @@ GET_SCHEMA = Schema([
 
 POST_SCHEMA = Schema([
     {
-        "tag_name": str,
-        "tag_content": str
+        "user_id": str,
+        "duration": str,
+        Optional("forced_nick"): str
     }
 ])
 
@@ -70,11 +72,30 @@ class HiphopifyView(APIView, DBMixin):
         API key must be provided as header.
         """
 
-        pass
+        user_id = json_data[0].get("user_id")
+        duration = json_data[0].get("duration")
+        forced_nick = json_data[0].get("forced_nick")
 
-        # user_id = json_data[0].get("user_id")
-        # duration = json_data[0].get("duration")
-        # forced_nick = json_data[0].get("forced_nick")
+        # Convert duration to valid timestamp
+        try:
+            end_timestamp = parse_duration(duration)
+        except ValueError:
+            return jsonify({
+                "success": False,
+                "error": "Invalid duration"
+            })
+
+        self.db.insert(
+            self.prison_table,
+            {
+                "user_id": user_id,
+                "end_timestamp": end_timestamp,
+                "forced_nick": forced_nick
+            },
+            conflict="update"  # If it exists, update it.
+        )
+
+        return jsonify({"success": True})
 
     @api_key
     @api_params(schema=DELETE_SCHEMA, validation_type=ValidationTypes.json)
