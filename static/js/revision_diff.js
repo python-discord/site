@@ -1,6 +1,6 @@
 "use strict";
 
-function(){
+(function() {
 let buttons = document.querySelectorAll("td input"); // Fetch all radio buttons
 let id_reg = /compare-(before|after)-([\w|-]+)/; // Matches compare-after/before-ID
 
@@ -72,4 +72,4 @@ buttons.forEach(function(button){
         radioButtonChecked(button);
     }
 });
-}();
+})();
