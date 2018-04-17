@@ -18,7 +18,6 @@ class EditView(RouteView, DBMixin):
     path = "/edit/<path:page>"  # "path" means that it accepts slashes
     name = "edit"
     table_name = "wiki"
-    
     revision_table_name = "wiki_revisions"
 
     @require_roles(*EDITOR_ROLES)
