@@ -114,6 +114,26 @@ class RootEndpoint(SiteTest):
         response = self.client.get("/500")
         self.assertEqual(response.status_code, 500)
 
+    def test_wiki_edit(self):
+        """Test that the wiki edit page redirects to login"""
+        response = self.client.get("/edit/page", "http://wiki.pytest.local")
+        self.assertEqual(response.status_code, 302)
+
+    def test_wiki_edit_post_empty_request(self):
+        """Empty request should redirect to login"""
+        response = self.client.post("/edit/page", "http://wiki.pytest.local")
+        self.assertEqual(response.status_code, 302)
+
+    def test_wiki_history(self):
+        """Test the history show"""
+        response = self.client.get("/history/show/blahblah-non-existant-page", "http://wiki.pytest.local")
+        self.assertEqual(response.status_code, 404) # Test that unknown routes 404
+
+    def test_wiki_diff(self):
+        """Test whether invalid revision IDs error"""
+        response = self.client.get("/history/compare/ABC/XYZ", "http://wiki.pytest.local")
+        self.assertEqual(response.status_code, 404) # Test that unknown revisions 404
+
 
 class ApiEndpoints(SiteTest):
     """ Test cases for the api subdomain """
@@ -236,7 +256,6 @@ class StaffEndpoints(SiteTest):
         from pysite.views.staff.index import StaffView
         sv = StaffView()
         result = sv.get()
-        print(repr(result.data))
         self.assertEqual(result.status_code, 302)  # TODO: Do this correctly
 
         response = self.client.get('/', app.config['STAFF_SUBDOMAIN'])

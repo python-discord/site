@@ -18,7 +18,8 @@ ALL_TABLES = {
     "oauth_data": "id",
     "tags": "tag_name",
     "users": "user_id",
-    "wiki": "slug"
+    "wiki": "slug",
+    "wiki_revisions": "id"
 }
 
 
