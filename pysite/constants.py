@@ -44,7 +44,7 @@ DISCORD_OAUTH_SECRET = environ.get('DISCORD_OAUTH_SECRET', '')
 DISCORD_OAUTH_SCOPE = 'identify email guilds.join'
 OAUTH_DATABASE = "oauth_data"
 
-PREFERRED_URL_SCHEME = environ.get("PREFERRED_URL_SCHEME", "https")  # Change this in testing to "http"
+PREFERRED_URL_SCHEME = environ.get("PREFERRED_URL_SCHEME", "http")  # Change this in testing to "http"
 
 ERROR_DESCRIPTIONS = {
     # 5XX

@@ -1,5 +1,6 @@
 # coding=utf-8
 import datetime
+import logging
 
 from flask import jsonify
 from schema import Optional, Schema
@@ -9,6 +10,8 @@ from pysite.constants import ValidationTypes
 from pysite.decorators import api_key, api_params
 from pysite.mixins import DBMixin
 from pysite.utils.time import parse_duration
+
+log = logging.getLogger(__name__)
 
 GET_SCHEMA = Schema([
     {
@@ -26,7 +29,7 @@ POST_SCHEMA = Schema([
 
 DELETE_SCHEMA = Schema([
     {
-        "tag_name": str
+        "user_id": str
     }
 ])
 
@@ -109,7 +112,13 @@ class HiphopifyView(APIView, DBMixin):
 
         user_id = json_data[0].get("user_id")
         prisoner_data = self.db.get(self.prison_table, user_id)
-        sentence_expired = datetime.datetime.now() > prisoner_data.get("end_datetime")
+        sentence_expired = None
+
+        if prisoner_data:
+            sentence_expired = datetime.datetime.now() > prisoner_data.get("end_datetime")
+
+        log.debug(f"prisoner_data = {prisoner_data}")
+        log.debug(f"sentence_expired = {sentence_expired}")
 
         if prisoner_data and not sentence_expired:
             self.db.delete(
@@ -120,10 +129,10 @@ class HiphopifyView(APIView, DBMixin):
         elif not prisoner_data:
             return jsonify({
                 "success": False,
-                "error": "Prisoner not found!"
+                "error_message": "Prisoner not found!"
             })
         elif sentence_expired:
             return jsonify({
                 "success": False,
-                "error": "Prisoner has already been released!"
+                "error_message": "Prisoner has already been released!"
             })
