@@ -79,13 +79,17 @@ class HiphopifyView(APIView, DBMixin):
         duration = json_data[0].get("duration")
         forced_nick = json_data[0].get("forced_nick")
 
+        # Get random name if no forced_nick was provided.
+        if not forced_nick:
+            forced_nick = self.db.sample(self.name_table, 1)[0]
+
         # Convert duration to valid timestamp
         try:
             end_timestamp = parse_duration(duration)
         except ValueError:
             return jsonify({
                 "success": False,
-                "error": "Invalid duration"
+                "error_message": "Invalid duration"
             })
 
         self.db.insert(
@@ -98,7 +102,11 @@ class HiphopifyView(APIView, DBMixin):
             conflict="update"  # If it exists, update it.
         )
 
-        return jsonify({"success": True})
+        return jsonify({
+            "success": True,
+            "end_timestamp": end_timestamp,
+            "forced_nick": forced_nick
+        })
 
     @api_key
     @api_params(schema=DELETE_SCHEMA, validation_type=ValidationTypes.json)
@@ -114,7 +122,7 @@ class HiphopifyView(APIView, DBMixin):
         prisoner_data = self.db.get(self.prison_table, user_id)
         sentence_expired = None
 
-        if prisoner_data:
+        if prisoner_data and prisoner_data.get("end_datetime"):
             sentence_expired = datetime.datetime.now() > prisoner_data.get("end_datetime")
 
         log.debug(f"prisoner_data = {prisoner_data}")
@@ -122,17 +130,17 @@ class HiphopifyView(APIView, DBMixin):
 
         if prisoner_data and not sentence_expired:
             self.db.delete(
-                self.table_name,
+                self.prison_table,
                 user_id
             )
             return jsonify({"success": True})
         elif not prisoner_data:
             return jsonify({
                 "success": False,
-                "error_message": "Prisoner not found!"
+                "error_message": "User is not currently in hiphop-prison!"
             })
         elif sentence_expired:
             return jsonify({
                 "success": False,
-                "error_message": "Prisoner has already been released!"
+                "error_message": "User has already been released from hiphop-prison!"
             })

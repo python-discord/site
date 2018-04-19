@@ -1,5 +1,7 @@
 from datetime import datetime, timedelta
 
+from rethinkdb import make_timezone
+
 
 UNITS = {
     's': lambda value: value,
@@ -44,4 +46,4 @@ def parse_duration(duration: str) -> datetime:
         value += UNITS[char](int(digits))
         digits = ''
 
-    return datetime.utcnow() + timedelta(seconds=value + 1)
+    return datetime.now(make_timezone("00:00")) + timedelta(seconds=value + 1)
