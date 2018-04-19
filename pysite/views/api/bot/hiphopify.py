@@ -84,9 +84,20 @@ class HiphopifyView(APIView, DBMixin):
         duration = json_data[0].get("duration")
         forced_nick = json_data[0].get("forced_nick")
 
-        # Get random name if no forced_nick was provided.
+        # Get random name and picture if no forced_nick was provided.
         if not forced_nick:
-            forced_nick = self.db.sample(self.name_table, 1)[0].get('name')
+            rapper_data = self.db.sample(self.name_table, 1)[0]
+            forced_nick = rapper_data.get('name')
+
+        # If forced nick was provided, try to look up the forced_nick in the database.
+        # If a match cannot be found, just default to Lil' Jon for the image.
+        else:
+            rapper_data = (
+                self.db.get(self.name_table, forced_nick)
+                or self.db.get(self.name_table, "Lil' Joseph")
+            )
+
+        image_url = rapper_data.get('image_url')
 
         # Convert duration to valid timestamp
         try:
@@ -110,7 +121,8 @@ class HiphopifyView(APIView, DBMixin):
         return jsonify({
             "success": True,
             "end_timestamp": end_timestamp,
-            "forced_nick": forced_nick
+            "forced_nick": forced_nick,
+            "image_url": image_url
         })
 
     @api_key
