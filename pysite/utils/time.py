@@ -47,3 +47,16 @@ def parse_duration(duration: str) -> datetime:
         digits = ''
 
     return datetime.now(make_timezone("00:00")) + timedelta(seconds=value + 1)
+
+
+def is_expired(rdb_datetime: datetime) -> bool:
+    """
+    Takes a rethinkdb datetime (timezone aware) and
+    figures out if it has expired yet.
+
+    Always compares with UTC 00:00
+
+    :param rdb_timestamp: A datetime as stored in rethinkdb.
+    :return: True if the datetime is in the past.
+    """
+    return datetime.now(make_timezone("00:00")) > rdb_datetime

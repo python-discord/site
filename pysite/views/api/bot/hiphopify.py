@@ -9,7 +9,7 @@ from pysite.base_route import APIView
 from pysite.constants import ValidationTypes
 from pysite.decorators import api_key, api_params
 from pysite.mixins import DBMixin
-from pysite.utils.time import parse_duration
+from pysite.utils.time import is_expired, parse_duration
 
 log = logging.getLogger(__name__)
 
@@ -59,6 +59,11 @@ class HiphopifyView(APIView, DBMixin):
         user_id = params[0].get("user_id")
         data = self.db.get(self.prison_table, user_id) or {}
 
+        if data and data.get("end_timestamp"):
+            end_time = data.get("end_timestamp")
+            if is_expired(end_time):
+                data = {}  # Return nothing if the sentence has expired.
+
         return jsonify(data)
 
     @api_key
@@ -81,7 +86,7 @@ class HiphopifyView(APIView, DBMixin):
 
         # Get random name if no forced_nick was provided.
         if not forced_nick:
-            forced_nick = self.db.sample(self.name_table, 1)[0]
+            forced_nick = self.db.sample(self.name_table, 1)[0].get('name')
 
         # Convert duration to valid timestamp
         try:
