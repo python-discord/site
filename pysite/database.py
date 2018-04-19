@@ -18,7 +18,8 @@ ALL_TABLES = {
     "oauth_data": "id",
     "tags": "tag_name",
     "users": "user_id",
-    "wiki": "slug"
+    "wiki": "slug",
+    "wiki_revisions": "id"
 }
 
 
@@ -78,12 +79,18 @@ class RethinkDB:
         :return:
         """
 
+        self.log.debug("Initializing tables")
         initialized = {}
 
         for table, primary_key in ALL_TABLES.items():
 
+            self.log.trace(f"Checking if {table} is empty.")
+
             # If the table is empty
             if not self.pluck(table, primary_key):
+
+                self.log.trace(f"{table} appears to be empty. Checking if there is a json file at {os.getcwd()}"
+                               f"/pysite/database/table_init/{table}.json")
 
                 # And a corresponding JSON file exists
                 if os.path.isfile(f"pysite/database/table_init/{table}.json"):
@@ -91,6 +98,9 @@ class RethinkDB:
                     # Load in all the data in that file.
                     with open(f"pysite/database/table_init/{table}.json") as json_file:
                         table_data = json.load(json_file)
+
+                        self.log.trace(f"Loading the json file into the table. "
+                                       f"The json file contains {len(table_data)} rows.")
 
                         for row in table_data:
                             self.insert(
