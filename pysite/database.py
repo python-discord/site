@@ -100,7 +100,7 @@ class RethinkDB:
                         table_data = json.load(json_file)
 
                         self.log.trace(f"Loading the json file into the table. "
-                                       f"The json file contains {len(table_data)} rows.")
+                                       f"The json file contains {len(table_data)} items.")
 
                         for row in table_data:
                             self.insert(
