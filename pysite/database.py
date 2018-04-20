@@ -100,7 +100,7 @@ class RethinkDB:
                         table_data = json.load(json_file)
 
                         self.log.trace(f"Loading the json file into the table. "
-                                       f"The json file contains {len(table_data)} rows.")
+                                       f"The json file contains {len(table_data)} items.")
 
                         for row in table_data:
                             self.insert(
@@ -302,103 +302,41 @@ class RethinkDB:
 
     # region: RethinkDB wrapper functions
 
-    def insert(self, table_name: str, *objects: Dict[str, Any],
-               durability: str = "hard",
-               return_changes: Union[bool, str] = False,
-               conflict: Union[  # Any of...
-                   str, Callable[  # ...str, or a callable that...
-                       [Dict[str, Any], Dict[str, Any]],  # ...takes two dicts with string keys and any values...
-                       Dict[str, Any]  # ...and returns a dict with string keys and any values
-                   ]
-               ] = "error") -> Union[List, Dict]:  # flake8: noqa
+    def between(self, table_name: str, *, lower: Any = rethinkdb.minval, upper: Any = rethinkdb.maxval,
+                index: Optional[str] = None, left_bound: str = "closed", right_bound: str = "open") -> List[
+        Dict[str, Any]]:
         """
-        Insert an object or a set of objects into a table
+        Get all documents between two keys
 
-        :param table_name: The name of the table to insert into
-        :param objects: The objects to be inserted into the table
-        :param durability: "hard" (the default) to write the change immediately, "soft" otherwise
-        :param return_changes: Whether to return a list of changed values or not - defaults to False
-        :param conflict: What to do in the event of a conflict - "error", "replace" and "update" are included, but
-            you can also provide your own function in order to handle conflicts yourself. If you do this, the function
-            should take two arguments (the old document and the new one), and return a single document to replace both.
+        >>> db = RethinkDB()
+        >>> db.between("users", upper=10, index="conquests")
+        [
+            {"username": "gdude", "conquests": 2},
+            {"username": "joseph", "conquests": 5}
+        ]
+        >>> db.between("users", lower=10, index="conquests")
+        [
+            {"username": "lemon", "conquests": 15}
+        ]
+        >>> db.between("users", lower=2, upper=10, index="conquests" left_bound="open")
+        [
+            {"username": "gdude", "conquests": 2},
+            {"username": "joseph", "conquests": 5}
+        ]
 
-        :return: A list of changes if `return_changes` is True; a dict detailing the operations run otherwise
+        :param table_name: The table to get documents from
+        :param lower: The lower-bounded value, leave blank to ignore
+        :param upper: The upper-bounded value, leave blank to ignore
+        :param index: The key or index to check on each document
+        :param left_bound: "open" to include documents that exactly match the lower bound, "closed" otherwise
+        :param right_bound: "open" to include documents that exactly match the upper bound, "closed" otherwise
+
+        :return: A list of matched documents; may be empty
         """
-
-        query = self.query(table_name).insert(
-            objects, durability=durability, return_changes=return_changes, conflict=conflict
-        )
-
-        if return_changes:
-            return self.run(query, coerce=list)
-        else:
-            return self.run(query, coerce=dict)
-
-    def get(self, table_name: str, key: str) -> Union[Dict[str, Any], None]:
-        """
-        Get a single document from a table by primary key
-
-        :param table_name: The name of the table to get the document from
-        :param key: The value of the primary key belonging to the document you want
-
-        :return: The document, or None if it wasn't found
-        """
-
-        result = self.run(  # pragma: no cover
-            self.query(table_name).get(key)
-        )
-
-        return dict(result) if result else None  # pragma: no cover
-
-    def get_all(self, table_name: str, *keys: str, index: str = "id") -> List[Any]:
-        """
-        Get a list of documents matching a set of keys, on a specific index
-
-        :param table_name: The name of the table to get documents from
-        :param keys: The key values to match against
-        :param index: The name of the key or index to match on
-
-        :return: A list of matching documents; may be empty if no matches were made
-        """
-
         return self.run(  # pragma: no cover
-            self.query(table_name).get_all(*keys, index=index),
+            self.query(table_name).between(lower, upper, index=index, left_bound=left_bound, right_bound=right_bound),
             coerce=list
         )
-
-    def wait(self, table_name: str, wait_for: str = "all_replicas_ready", timeout: int = 0) -> bool:
-        """
-        Wait until an operation has happened on a specific table; will block the current function
-
-        :param table_name: The name of the table to wait against
-        :param wait_for: The operation to wait for; may be "ready_for_outdated_reads",
-            "ready_for_reads", "ready_for_writes" or "all_replicas_ready", which is the default
-        :param timeout: How long to wait before returning; defaults to 0 (forever)
-
-        :return: True; but may return False if the timeout was reached
-        """
-
-        result = self.run(  # pragma: no cover
-            self.query(table_name).wait(wait_for=wait_for, timeout=timeout),
-            coerce=dict
-        )
-
-        return result.get("ready", 0) > 0
-
-    def sync(self, table_name: str) -> bool:
-        """
-        Following a set of edits with durability set to "soft", this must be called to save those edits
-
-        :param table_name: The name of the table to sync
-
-        :return: True if the sync was successful; False otherwise
-        """
-        result = self.run(  # pragma: no cover
-            self.query(table_name).sync(),
-            coerce=dict
-        )
-
-        return result.get("synced", 0) > 0  # pragma: no cover
 
     def changes(self, table_name: str, squash: Union[bool, int] = False, changefeed_queue_size: int = 100_000,
                 include_initial: Optional[bool] = None, include_states: bool = False,
@@ -460,117 +398,6 @@ class RethinkDB:
             new_connection=True
         )
 
-    def pluck(self, table_name: str, *selectors: Union[str, Dict[str, Union[List, Dict]]]):
-        """
-        Get a list of values for a specific set of keys for every document in the table; this can include
-        nested values
-
-        >>> db = RethinkDB()
-        >>> db.pluck("users", "username", "password")  # Select a flat document
-        [
-            {"username": "lemon", "password": "hunter2"}
-        ]
-        >>> db.pluck("users", {"posts": ["title"]})  # Select from nested documents
-        [
-            {
-                "posts": [
-                    {"title": "New website!"}
-                ]
-            }
-        ]
-
-        :param table_name: The table to get values from
-        :param selectors: The set of keys to get values for
-        :return: A list containing the requested documents, with only the keys requested
-        """
-
-        return self.run(  # pragma: no cover
-            self.query(table_name).pluck(*selectors),
-            coerce=list
-        )
-
-    def without(self, table_name: str, *selectors: Union[str, Dict[str, Union[List, Dict]]]):
-        """
-        The functional opposite of `pluck()`, returning full documents without the specified selectors
-
-        >>> db = RethinkDB()
-        >>> db.without("users", "posts")
-        [
-            {"username": "lemon", "password": "hunter2}
-        ]
-
-        :param table_name: The table to get values from
-        :param selectors: The set of keys to exclude
-        :return: A list containing the requested documents, without the keys requested
-        """
-
-        return self.run(  # pragma: no cover
-            self.query(table_name).without(*selectors)
-        )
-
-    def between(self, table_name: str, *, lower: Any = rethinkdb.minval, upper: Any = rethinkdb.maxval,
-                index: Optional[str] = None, left_bound: str = "closed", right_bound: str = "open") -> List[
-        Dict[str, Any]]:
-        """
-        Get all documents between two keys
-
-        >>> db = RethinkDB()
-        >>> db.between("users", upper=10, index="conquests")
-        [
-            {"username": "gdude", "conquests": 2},
-            {"username": "joseph", "conquests": 5}
-        ]
-        >>> db.between("users", lower=10, index="conquests")
-        [
-            {"username": "lemon", "conquests": 15}
-        ]
-        >>> db.between("users", lower=2, upper=10, index="conquests" left_bound="open")
-        [
-            {"username": "gdude", "conquests": 2},
-            {"username": "joseph", "conquests": 5}
-        ]
-
-        :param table_name: The table to get documents from
-        :param lower: The lower-bounded value, leave blank to ignore
-        :param upper: The upper-bounded value, leave blank to ignore
-        :param index: The key or index to check on each document
-        :param left_bound: "open" to include documents that exactly match the lower bound, "closed" otherwise
-        :param right_bound: "open" to include documents that exactly match the upper bound, "closed" otherwise
-
-        :return: A list of matched documents; may be empty
-        """
-        return self.run(  # pragma: no cover
-            self.query(table_name).between(lower, upper, index=index, left_bound=left_bound, right_bound=right_bound),
-            coerce=list
-        )
-
-    def map(self, table_name: str, func: Callable):
-        """
-        Map a function over every document in a table, with the possibility of modifying it
-
-        r.table('users').map(
-        lambda doc: doc.merge({'user_id': doc['id']}).without('id')).run(conn)
-
-        As an example, you could do the following to rename the "id" field to "user_id" for all documents
-        in the "users" table.
-
-        >>> db = RethinkDB()
-        >>> db.map(
-        ...     "users",
-        ...     lambda doc: doc.merge({"user_id": doc["id"]}).without("id")
-        ... )
-
-        :param table_name: The name of the table to map the function over
-        :param func: A callable that takes a single argument
-
-        :return: Unknown, needs more testing
-        """
-
-        return self.run(  # pragma: no cover
-            self.query(table_name).map(func),
-            coerce=list
-        )
-
     def filter(self, table_name: str, predicate: Callable[[Dict[str, Any]], bool],
                default: Union[bool, UserError] = False) -> List[Dict[str, Any]]:
         """
@@ -601,4 +428,192 @@ class RethinkDB:
             coerce=list
         )
 
+    def get(self, table_name: str, key: str) -> Optional[Dict[str, Any]]:
+        """
+        Get a single document from a table by primary key
+
+        :param table_name: The name of the table to get the document from
+        :param key: The value of the primary key belonging to the document you want
+
+        :return: The document, or None if it wasn't found
+        """
+
+        result = self.run(  # pragma: no cover
+            self.query(table_name).get(key)
+        )
+
+        return dict(result) if result else None  # pragma: no cover
+
+    def get_all(self, table_name: str, *keys: str, index: str = "id") -> List[Any]:
+        """
+        Get a list of documents matching a set of keys, on a specific index
+
+        :param table_name: The name of the table to get documents from
+        :param keys: The key values to match against
+        :param index: The name of the key or index to match on
+
+        :return: A list of matching documents; may be empty if no matches were made
+        """
+
+        return self.run(  # pragma: no cover
+            self.query(table_name).get_all(*keys, index=index),
+            coerce=list
+        )
+
+    def insert(self, table_name: str, *objects: Dict[str, Any],
+               durability: str = "hard",
+               return_changes: Union[bool, str] = False,
+               conflict: Union[  # Any of...
+                   str, Callable[  # ...str, or a callable that...
+                       [Dict[str, Any], Dict[str, Any]],  # ...takes two dicts with string keys and any values...
+                       Dict[str, Any]  # ...and returns a dict with string keys and any values
+                   ]
+               ] = "error") -> Union[List, Dict]:  # flake8: noqa
+        """
+        Insert an object or a set of objects into a table
+
+        :param table_name: The name of the table to insert into
+        :param objects: The objects to be inserted into the table
+        :param durability: "hard" (the default) to write the change immediately, "soft" otherwise
+        :param return_changes: Whether to return a list of changed values or not - defaults to False
+        :param conflict: What to do in the event of a conflict - "error", "replace" and "update" are included, but
+            you can also provide your own function in order to handle conflicts yourself. If you do this, the function
+            should take two arguments (the old document and the new one), and return a single document to replace both.
+
+        :return: A list of changes if `return_changes` is True; a dict detailing the operations run otherwise
+        """
+
+        query = self.query(table_name).insert(
+            objects, durability=durability, return_changes=return_changes, conflict=conflict
+        )
+
+        if return_changes:
+            return self.run(query, coerce=list)
+        else:
+            return self.run(query, coerce=dict)
+
+    def map(self, table_name: str, func: Callable):
+        """
+        Map a function over every document in a table, with the possibility of modifying it
+
+        r.table('users').map(
+        lambda doc: doc.merge({'user_id': doc['id']}).without('id')).run(conn)
+
+        As an example, you could do the following to rename the "id" field to "user_id" for all documents
+        in the "users" table.
+
+        >>> db = RethinkDB()
+        >>> db.map(
+        ...     "users",
+        ...     lambda doc: doc.merge({"user_id": doc["id"]}).without("id")
+        ... )
+
+        :param table_name: The name of the table to map the function over
+        :param func: A callable that takes a single argument
+
+        :return: Unknown, needs more testing
+        """
+
+        return self.run(  # pragma: no cover
+            self.query(table_name).map(func),
+            coerce=list
+        )
+
+    def pluck(self, table_name: str, *selectors: Union[str, Dict[str, Union[List, Dict]]]) -> List[Dict[str, Any]]:
+        """
+        Get a list of values for a specific set of keys for every document in the table; this can include
+        nested values
+
+        >>> db = RethinkDB()
+        >>> db.pluck("users", "username", "password")  # Select a flat document
+        [
+            {"username": "lemon", "password": "hunter2"}
+        ]
+        >>> db.pluck("users", {"posts": ["title"]})  # Select from nested documents
+        [
+            {
+                "posts": [
+                    {"title": "New website!"}
+                ]
+            }
+        ]
+
+        :param table_name: The table to get values from
+        :param selectors: The set of keys to get values for
+        :return: A list containing the requested documents, with only the keys requested
+        """
+
+        return self.run(  # pragma: no cover
+            self.query(table_name).pluck(*selectors),
+            coerce=list
+        )
+
+    def sample(self, table_name: str, sample_size: int) -> List[Dict[str, Any]]:
+        """
+        Select a given number of elements from a table at random.
+
+        :param table_name: The name of the table to select from.
+        :param sample_size: The number of elements to select.
+            If this number is higher than the total amount of items in
+            the table, this will return the entire table in random order.
+
+        :return: A list of items from the table.
+        """
+        return self.run(  # pragma: no cover
+            self.query(table_name).sample(sample_size),
+            coerce=list
+        )
+
+    def sync(self, table_name: str) -> bool:
+        """
+        Following a set of edits with durability set to "soft", this must be called to save those edits
+
+        :param table_name: The name of the table to sync
+
+        :return: True if the sync was successful; False otherwise
+        """
+        result = self.run(  # pragma: no cover
+            self.query(table_name).sync(),
+            coerce=dict
+        )
+
+        return result.get("synced", 0) > 0  # pragma: no cover
+
+    def wait(self, table_name: str, wait_for: str = "all_replicas_ready", timeout: int = 0) -> bool:
+        """
+        Wait until an operation has happened on a specific table; will block the current function
+
+        :param table_name: The name of the table to wait against
+        :param wait_for: The operation to wait for; may be "ready_for_outdated_reads",
+            "ready_for_reads", "ready_for_writes" or "all_replicas_ready", which is the default
+        :param timeout: How long to wait before returning; defaults to 0 (forever)
+
+        :return: True; but may return False if the timeout was reached
+        """
+
+        result = self.run(  # pragma: no cover
+            self.query(table_name).wait(wait_for=wait_for, timeout=timeout),
+            coerce=dict
+        )
+
+        return result.get("ready", 0) > 0
+
+    def without(self, table_name: str, *selectors: Union[str, Dict[str, Union[List, Dict]]]):
+        """
+        The functional opposite of `pluck()`, returning full documents without the specified selectors
+
+        >>> db = RethinkDB()
+        >>> db.without("users", "posts")
+        [
+            {"username": "lemon", "password": "hunter2"}
+        ]
+
+        :param table_name: The table to get values from
+        :param selectors: The set of keys to exclude
+        :return: A list containing the requested documents, without the keys requested
+        """
+
+        return self.run(  # pragma: no cover
+            self.query(table_name).without(*selectors)
+        )
     # endregion
