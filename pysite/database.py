@@ -605,7 +605,7 @@ class RethinkDB:
         >>> db = RethinkDB()
         >>> db.without("users", "posts")
         [
-            {"username": "lemon", "password": "hunter2}
+            {"username": "lemon", "password": "hunter2"}
         ]
 
         :param table_name: The table to get values from

@@ -58,7 +58,7 @@ class HiphopifyView(APIView, DBMixin):
 
         user_id = params[0].get("user_id")
 
-        log.debug(f"Checkin if user ({user_id}) is permitted to change their nickname.")
+        log.debug(f"Checking if user ({user_id}) is permitted to change their nickname.")
         data = self.db.get(self.prison_table, user_id) or {}
 
         if data and data.get("end_timestamp"):
@@ -119,7 +119,7 @@ class HiphopifyView(APIView, DBMixin):
                 "error_message": "Invalid duration"
             })
 
-        log.debug(f"Everything seems to be in order, inserting the data into the prison_table.")
+        log.debug("Everything seems to be in order, inserting the data into the prison_table.")
         self.db.insert(
             self.prison_table,
             {
@@ -158,7 +158,7 @@ class HiphopifyView(APIView, DBMixin):
             sentence_expired = datetime.datetime.now() > prisoner_data.get("end_datetime")
 
         if prisoner_data and not sentence_expired:
-            log.debug(f"User is currently in hiphop-prison. Deleting the record and releasing the prisoner.")
+            log.debug("User is currently in hiphop-prison. Deleting the record and releasing the prisoner.")
             self.db.delete(
                 self.prison_table,
                 user_id
