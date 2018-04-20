@@ -4,7 +4,6 @@ from weakref import ref
 from flask import Blueprint
 from rethinkdb.ast import Table
 
-from pysite.constants import DEBUG_MODE
 from pysite.database import RethinkDB
 
 
@@ -52,9 +51,6 @@ class DBMixin:
             raise RuntimeError("Routes using DBViewMixin must define `table_name`")
 
         cls._db = ref(manager.db)
-
-        if DEBUG_MODE:
-            manager.db.create_table(cls.table_name, primary_key=cls.table_primary_key)
 
     @property
     def table(self) -> Table:

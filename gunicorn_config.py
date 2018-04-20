@@ -12,6 +12,16 @@ def when_ready(server=None):
     from pysite.database import RethinkDB
 
     db = RethinkDB(loop_type=None)
-    created = db.create_tables()
+    db.conn = db.get_connection()
 
-    output(f"Created {created} tables.")
+    # Create any table that doesn't exist
+    created = db.create_tables()
+    if created:
+        tables = ", ".join([f"{table}" for table in created])
+        output(f"Created the following tables: {tables}")
+
+    # Init the tables that require initialization
+    initialized = db.init_tables()
+    if initialized:
+        tables = ", ".join([f"{table} ({count} items)" for table, count in initialized.items()])
+        output(f"Initialized the following tables: {tables}")

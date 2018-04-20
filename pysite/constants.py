@@ -80,3 +80,9 @@ DATADOG_PORT = int(environ.get("DATADOG_PORT") or 0)
 # CSRF
 
 CSRF = CSRFProtect()
+
+# GitHub Token
+GITHUB_TOKEN = environ.get("GITHUB_TOKEN") or None
+
+# Audit Webhook
+WIKI_AUDIT_WEBHOOK = environ.get("WIKI_AUDIT_WEBHOOK") or None
