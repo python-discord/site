@@ -16,6 +16,7 @@ ALL_TABLES = {
     "hiphopify": "user_id",
     "hiphopify_namelist": "name",
     "oauth_data": "id",
+    "pydoc_links": "package",
     "tags": "tag_name",
     "users": "user_id",
     "wiki": "slug",
