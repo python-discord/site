@@ -1,4 +1,3 @@
-# coding=utf-8
 from flask import request
 from werkzeug.exceptions import HTTPException
 
