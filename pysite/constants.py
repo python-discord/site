@@ -22,7 +22,6 @@ class ValidationTypes(Enum):
 DEBUG_MODE = "FLASK_DEBUG" in environ
 
 # All snowflakes should be strings as RethinkDB rounds them as ints
-
 OWNER_ROLE = "267627879762755584"
 ADMIN_ROLE = "267628507062992896"
 MODERATOR_ROLE = "267629731250176001"
@@ -44,7 +43,7 @@ DISCORD_OAUTH_SECRET = environ.get('DISCORD_OAUTH_SECRET', '')
 DISCORD_OAUTH_SCOPE = 'identify email guilds.join'
 OAUTH_DATABASE = "oauth_data"
 
-PREFERRED_URL_SCHEME = environ.get("PREFERRED_URL_SCHEME", "https")  # Change this in testing to "http"
+PREFERRED_URL_SCHEME = environ.get("PREFERRED_URL_SCHEME", "http")
 
 ERROR_DESCRIPTIONS = {
     # 5XX
@@ -78,7 +77,6 @@ DATADOG_ADDRESS = environ.get("DATADOG_ADDRESS") or None
 DATADOG_PORT = int(environ.get("DATADOG_PORT") or 0)
 
 # CSRF
-
 CSRF = CSRFProtect()
 
 # GitHub Token

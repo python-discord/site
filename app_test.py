@@ -292,28 +292,6 @@ class Utilities(SiteTest):
 class MixinTests(SiteTest):
     """ Test cases for mixins """
 
-    def test_dbmixin_runtime_error(self):
-        """ Check that wrong values for error view setup raises runtime error """
-        from pysite.mixins import DBMixin
-
-        dbm = DBMixin()
-        try:
-            dbm.setup('sdf', 'sdfsdf')
-        except RuntimeError:
-            return True
-        raise Exception('Expected runtime error on setup() when giving wrongful arguments')
-
-    def test_dbmixin_table_property(self):
-        """ Check the table property returns correctly """
-        from pysite.mixins import DBMixin
-
-        try:
-            dbm = DBMixin()
-            dbm.table_name = 'Table'
-            self.assertEqual(dbm.table, 'Table')
-        except AttributeError:
-            pass
-
     def test_handler_5xx(self):
         """ Check error view returns error message """
         from werkzeug.exceptions import InternalServerError

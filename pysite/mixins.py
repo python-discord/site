@@ -47,9 +47,6 @@ class DBMixin:
         if hasattr(super(), "setup"):
             super().setup(manager, blueprint)  # pragma: no cover
 
-        if not cls.table_name:
-            raise RuntimeError("Routes using DBViewMixin must define `table_name`")
-
         cls._db = ref(manager.db)
 
     @property
