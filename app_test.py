@@ -256,7 +256,12 @@ class ApiEndpoints(SiteTest):
         # GET - unknown package
         response = self.client.get('/docs?package=whatever', app.config['API_SUBDOMAIN'], headers=headers)
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.json, {})
+        self.assertEqual(response.json, [])
+
+        # GET - multiple unknown packages
+        response = self.client.get('/docs?package=whatever&package=everwhat', app.config['API_SUBDOMAIN'], headers=headers)
+        self.assertEqual(response.status_code, 200)
+        self.assertIsInstance(response.json, list)
 
         # POST - no data
         response = self.client.post('/docs', app.config['API_SUBDOMAIN'], headers=headers)
@@ -281,7 +286,14 @@ class ApiEndpoints(SiteTest):
             f'/docs?package={valid_data["package"]}', app.config['API_SUBDOMAIN'], headers=headers
         )
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.json, valid_data)
+        self.assertEqual(response.json, [valid_data])
+
+        # GET - added package is the only package for query with another unknown package
+        response = self.client.get(
+            f'/docs?package={valid_data["package"]}&package=whatever', app.config['API_SUBDOMAIN'], headers=headers
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json, [valid_data])
 
         # DELETE - missing request body
         response = self.client.delete('/docs', app.config['API_SUBDOMAIN'], headers=headers)
@@ -290,12 +302,12 @@ class ApiEndpoints(SiteTest):
         # DELETE - unknown package
         response = self.client.delete('/docs', app.config['API_SUBDOMAIN'], headers=headers, data=unknown_package_json)
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.json, {"success": False})
+        self.assertEqual(response.json['deleted'], 0)
 
         # DELETE - added package
         response = self.client.delete('/docs', app.config['API_SUBDOMAIN'], headers=headers, data=delete_data_json)
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.json, {"success": True})
+        self.assertEqual(response.json['deleted'], 1)
 
         # GET - added package is no longer in all entries
         response = self.client.get('/docs', app.config['API_SUBDOMAIN'], headers=headers)

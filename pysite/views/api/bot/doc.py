@@ -39,8 +39,8 @@ class DocView(APIView, DBMixin):
         """
         Fetches documentation metadata from the database.
 
-        - If `package` is provided, fetch metadata
-        for the given package, or `{}` if not found.
+        - If `package` parameters are provided, fetch metadata
+        for the given packages, or `[]` if none matched.
 
         - If `package` is not provided, return all
         packages known to the database.
@@ -50,8 +50,8 @@ class DocView(APIView, DBMixin):
         """
 
         if params:
-            package = params[0].get("package")
-            data = self.db.get(self.table_name, package) or {}
+            packages = (param['package'] for param in params if 'package' in param)
+            data = self.db.get_all(self.table_name, *packages, index='package') or []
         else:
             data = self.db.pluck(self.table_name, ("package", "base_url", "inventory_url")) or []
 
@@ -61,7 +61,7 @@ class DocView(APIView, DBMixin):
     @api_params(schema=POST_SCHEMA, validation_type=ValidationTypes.json)
     def post(self, json_data):
         """
-        Adds a new documentation metadata object.
+        Adds one or more new documentation metadata objects.
 
         If the `package` passed in the data
         already exists, it will be updated instead.
@@ -70,22 +70,16 @@ class DocView(APIView, DBMixin):
         API key must be provided as header.
         """
 
-        json_data = json_data[0]
-
-        package = json_data["package"]
-        base_url = json_data["base_url"]
-        inventory_url = json_data["inventory_url"]
-
-        self.db.insert(
-            self.table_name,
+        packages_to_insert = (
             {
-                "package": package,
-                "base_url": base_url,
-                "inventory_url": inventory_url
-            },
-            conflict="update"
+                "package": json_object["package"],
+                "base_url": json_object["base_url"],
+                "inventory_url": json_object["inventory_url"]
+            }
+            for json_object in json_data
         )
 
+        self.db.insert(self.table_name, *packages_to_insert, conflict="update")
         return jsonify({"success": True})
 
     @api_key
@@ -100,11 +94,6 @@ class DocView(APIView, DBMixin):
         API key must be provided as header.
         """
 
-        package = json_data[0]["package"]
-        documentation_metadata = self.db.get(self.table_name, package)
-
-        if documentation_metadata is not None:
-            self.db.delete(self.table_name, package)
-            return jsonify({"success": True})
-
-        return jsonify({"success": False})
+        packages = (json_object["package"]for json_object in json_data)
+        changes = self.db.delete(self.table_name, *packages, return_changes=True)
+        return jsonify(changes)
