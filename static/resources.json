@@ -2,22 +2,6 @@
   "Learning Resources": {
     "description": "Tutorials and references for those that are just getting started with python",
     "resources": {
-      "Automate the Boring Stuff with Python": {
-        "description": "One of the best books out there for Python beginners. You can buy a copy, but there's also a free online version.",
-        "urls": [
-          {
-            "title": "Website",
-            "url": "https://automatetheboringstuff.com/",
-            "icon": "regular/link"
-          }, {
-            "title": "Amazon",
-            "url": "http://www.amazon.com/gp/product/1593275994/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=1593275994&linkCode=as2&tag=playwithpyth-20&linkId=HDM7V3T6RHC5VVN4",
-            "icon": "branding/amazon"
-          }
-        ],
-        "payment": "optional",
-        "payment_description": "A free version is available online, with the option to buy a physical copy"
-      },
       "Code Combat": {
         "description": "Learn Python while gaming - an open-source project with thousands of contributors, which teaches you Python through a deep, top-down RPG.",
         "urls": [
@@ -152,6 +136,144 @@
         ],
         "payment": "free",
         "payment_description": null
+      }
+    }
+  },
+  "Books": {
+    "description": "The best books for learning Python or Python Frameworks",
+    "resources": {
+      "Automate the Boring Stuff with Python": {
+        "description": "One of the best books out there for Python beginners. You can buy a copy, but there's also a free online version.",
+        "urls": [
+          {
+            "title": "Website",
+            "url": "https://automatetheboringstuff.com/",
+            "icon": "regular/link"
+          },
+          {
+            "title": "Amazon",
+            "url": "http://www.amazon.com/gp/product/1593275994/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=1593275994&linkCode=as2&tag=playwithpyth-20&linkId=HDM7V3T6RHC5VVN4",
+            "icon": "branding/amazon"
+          }
+        ],
+        "payment": "optional",
+        "payment_description": "A free version is available online, with the option to buy a physical copy"
+      },
+      "Fluent Python": {
+        "description": "Clear, Concise, and Effective Programming",
+        "urls": [
+          {
+            "title": "Website",
+            "url": "https://www.safaribooksonline.com/library/view/fluent-python/9781491946237/",
+            "icon": "regular/link"
+          },
+          {
+            "title": "Amazon",
+            "url": "https://www.amazon.com/Fluent-Python-Concise-Effective-Programming/dp/1491946008",
+            "icon": "branding/amazon"
+          },
+          {
+            "title": "GitHub",
+            "url": "https://github.com/fluentpython",
+            "icon": "branding/github"
+          }
+        ],
+        "payment": "paid"
+      },
+      "Effective Python": {
+        "description": "59 Specific Ways to Write Better Python",
+        "urls": [
+          {
+            "title": "Website",
+            "url": "https://effectivepython.com/",
+            "icon": "regular/link"
+          },
+          {
+            "title": "Amazon",
+            "url": "https://www.amazon.com/Effective-Python-Specific-Software-Development/dp/0134034287",
+            "icon": "branding/amazon"
+          },
+          {
+            "title": "GitHub",
+            "url": "https://github.com/bslatkin/effectivepython",
+            "icon": "branding/github"
+          }
+        ],
+        "payment": "paid"
+      },
+      "A Byte of Python": {
+        "description": "A free book on programming using the Python language. It serves as a tutorial or guide to the Python language for a beginner audience. If all you know about computers is how to save text files, then this is the book for you.",
+        "urls": [
+          {
+            "title": "Website",
+            "url": "https://python.swaroopch.com/",
+            "icon": "regular/link"
+          }
+        ],
+        "payment": "free"
+      },
+      "Two Scoops of Django": {
+        "description": "This book is chock-full of material that will help you with your Django projects.",
+        "urls": [
+          {
+            "title": "Website",
+            "url": "https://twoscoopspress.com/products/two-scoops-of-django-1-11",
+            "icon": "regular/link"
+          },
+          {
+            "title": "Amazon",
+            "url": "https://www.amazon.com/Two-Scoops-Django-Best-Practices/dp/0981467342",
+            "icon": "branding/amazon"
+          },
+          {
+            "title": "GitHub",
+            "url": "https://github.com/twoscoops/two-scoops-of-django-2.0-code-examples",
+            "icon": "branding/github"
+          }
+        ],
+        "payment": "paid"
+      },
+      "Flask Web Development": {
+        "description": "Developing Web Applications with Python by Miguel Grinberg",
+        "urls": [
+          {
+            "title": "Website",
+            "url": "http://shop.oreilly.com/product/0636920031116.do",
+            "icon": "regular/link"
+          },
+          {
+            "title": "Amazon",
+            "url": "https://www.amazon.com/Flask-Web-Development-Developing-Applications/dp/1449372627",
+            "icon": "branding/amazon"
+          },
+          {
+            "title": "GitHub",
+            "url": "https://github.com/miguelgrinberg/flasky",
+            "icon": "branding/github"
+          }
+        ],
+        "payment": "paid"
+      },
+      "Python Cookbook": {
+        "description": "Complete with 'recipes' for various Python topics, including moving from Python 2 to Python 3.3",
+        "urls": [
+          {
+            "title": "Website",
+            "url": "http://shop.oreilly.com/product/0636920027072.do",
+            "icon": "regular/link"
+          },
+          {
+            "title": "Amazon",
+            "url": "https://www.amazon.com/Python-Cookbook-Third-David-Beazley/dp/1449340377",
+            "icon": "branding/amazon"
+          },
+          {
+            "title": "GitHub",
+            "url": "https://github.com/dabeaz/python-cookbook",
+            "icon": "branding/github"
+          }
+        ],
+        "payment": "paid"
       }
     }
   },
