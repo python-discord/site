@@ -1,4 +1,3 @@
-# coding=utf-8
 from flask import jsonify
 from werkzeug.exceptions import HTTPException
 
