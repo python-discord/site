@@ -1,4 +1,3 @@
-# coding=utf-8
 from flask import abort
 
 from pysite.base_route import RouteView
