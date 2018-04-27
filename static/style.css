@@ -138,3 +138,12 @@ img.navbar-logo {
 #wiki-nav uk-nav-divider {
     min-width: 7rem;
 }
+
+/* Resource page styling */
+div.payment-icon img {
+    height: 2em;
+}
+
+div.payment-icon {
+    margin-right: 1em;
+}
