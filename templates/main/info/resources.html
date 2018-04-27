@@ -28,15 +28,22 @@
                     a resource or not. You can also hover them for more information on the payment (or tap them on
                     mobile).
                 </p>
-                <p class="uk-text-center">
-                    <img src="{{ static_file("images/payment_icons/green.svg") }}" style="height: 2rem;" uk-tooltip="Free" />
-                    Free
-                    <img src="{{ static_file("images/payment_icons/yellow.svg") }}" style="height: 2rem;" uk-tooltip="Payment Optional" />
-                    Payment Optional
-                    <img src="{{ static_file("images/payment_icons/red.svg") }}" style="height: 2rem;" uk-tooltip="Paid" />
-                    Paid
-                </p>
+                <div class="uk-text-center uk-flex uk-flex-center">
+                    <div class="payment-icon">
+                        <img src="{{ static_file("images/payment_icons/green.svg") }}" uk-tooltip="Free" />
+                        <span>Free</span>
+                    </div>
 
+                    <div class="payment-icon">
+                        <img src="{{ static_file("images/payment_icons/yellow.svg") }}" uk-tooltip="Payment Optional" />
+                        <span>Payment optional</span>
+                    </div>
+
+                    <div class="payment-icon">
+                        <img src="{{ static_file("images/payment_icons/red.svg") }}" uk-tooltip="Paid" />
+                        <span>Paid</span>
+                    </div>
+                </div>
                 {% if categories is none %}
                     <div class="uk-alert-danger" uk-alert>
                         <p>
