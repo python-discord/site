@@ -75,8 +75,7 @@ class DocView(APIView, DBMixin):
                 "package": json_object["package"],
                 "base_url": json_object["base_url"],
                 "inventory_url": json_object["inventory_url"]
-            }
-            for json_object in json_data
+            } for json_object in json_data
         )
 
         self.db.insert(self.table_name, *packages_to_insert, conflict="update")
