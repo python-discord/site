@@ -1,192 +1,376 @@
 {
-  "Learning Resources": {
-    "description": "Tutorials and references for those that are just getting started with python",
-    "resources": {
-      "Automate the Boring Stuff with Python": {
-        "description": "One of the best books out there for Python beginners. You can buy a copy, but there's also a free online version.",
-        "urls": [
-          {
-            "title": "Website",
-            "url": "https://automatetheboringstuff.com/",
-            "icon": "regular/link"
-          }, {
-            "title": "Amazon",
-            "url": "http://www.amazon.com/gp/product/1593275994/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=1593275994&linkCode=as2&tag=playwithpyth-20&linkId=HDM7V3T6RHC5VVN4",
-            "icon": "branding/amazon"
-          }
-        ],
-        "payment": "optional",
-        "payment_description": "A free version is available online, with the option to buy a physical copy"
-      },
-      "Code Combat": {
-        "description": "Learn Python while gaming - an open-source project with thousands of contributors, which teaches you Python through a deep, top-down RPG.",
-        "urls": [
-          {
-            "title": "Website",
-            "url": "https://codecombat.com/",
-            "icon": "regular/link"
-          },
-          {
-            "title": "GitHub",
-            "url": "https://github.com/codecombat/codecombat",
-            "icon": "branding/github"
-          }
-        ],
-        "payment": "optional",
-        "payment_description": "A wealth of free content is available, but you can also pay for more"
-      },
-      "Get Started with Flask Web Development": {
-        "description": "A fully featured mega-tutorial for learning how to create web applications with the Flask framework.",
-        "urls": [
-          {
-            "title": "Website",
-            "url": "https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world",
-            "icon": "regular/link"
-          }
-        ],
-        "payment": "free",
-        "payment_description": null
-      },
-      "Getting Started for Non-Programmers": {
-        "description": "The list of resources for non-programmers from Python's official beginners' guide",
-        "urls": [
-          {
-            "title": "Python Wiki",
-            "url": "https://wiki.python.org/moin/BeginnersGuide/NonProgrammers",
-            "icon": "regular/link"
-          }
-        ],
-        "payment": "free",
-        "payment_description": null
-      },
-      "Getting Started for Programmers": {
-        "description": "The list of resources for programmers from Python's official beginners' guide",
-        "urls": [
-          {
-            "title": "Python Wiki",
-            "url": "https://wiki.python.org/moin/BeginnersGuide/Programmers",
-            "icon": "regular/link"
-          }
-        ],
-        "payment": "free",
-        "payment_description": null
-      },
-      "A Simple Guide to Git": {
-        "description": "A simple, no-nonsense guide to the basics of using Git.",
-        "urls": [
-          {
-            "title": "Website",
-            "url": "http://rogerdudler.github.io/git-guide/",
-            "icon": "regular/link"
-          }
-        ],
-        "payment": "free",
-        "payment_description": null
-      },
-      "Python Cheat Sheet": {
-        "description": "A Python 3 cheat sheet with useful information and tips, as well as common pitfalls for beginners. This is a PDF.",
-        "urls": [
-          {
-            "title": "Website",
-            "url": "https://perso.limsi.fr/pointal/_media/python:cours:mementopython3-english.pdf",
-            "icon": "regular/link"
-          }
-        ],
-        "payment": "free",
-        "payment_description": null
-      },
-      "Python Tutorials by Corey Schafer on YouTube": {
-        "description": "An in-depth look at the Python programming language, from one of YouTube's most popular Python tutors.",
-        "urls": [
-          {
-            "title": "YouTube",
-            "url": "https://www.youtube.com/playlist?list=PL-osiE80TeTt2d9bfVyTiXJA-UTHn6WwU",
-            "icon": "branding/youtube"
-          }
-        ],
-        "payment": "free",
-        "payment_description": null
-      }
+  "Tutorials": {
+        "description": "Tutorials and references for those that are just getting started with python",
+        "resources": {
+            "A Simple Guide to Git": {
+                "description": "A simple, no-nonsense guide to the basics of using Git.",
+                "payment": "free",
+                "payment_description": null,
+                "urls": [
+                    {
+                        "icon": "regular/link",
+                        "title": "Website",
+                        "url": "http://rogerdudler.github.io/git-guide/"
+                    }
+                ]
+            },
+            "Get Started with Flask Web Development": {
+                "description": "A fully featured mega-tutorial for learning how to create web applications with the Flask framework.",
+                "payment": "free",
+                "payment_description": null,
+                "urls": [
+                    {
+                        "icon": "regular/link",
+                        "title": "Website",
+                        "url": "https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world"
+                    }
+                ]
+            },
+            "Getting Started with Python": {
+                "description": "The list of resources for programmers and non-programmers from Python's official beginners' guide",
+                "payment": "free",
+                "payment_description": null,
+                "urls": [
+                    {
+                        "icon": "regular/link",
+                        "title": "Beginners Guide for Non-Programmers",
+                        "url": "https://wiki.python.org/moin/BeginnersGuide/NonProgrammers"
+                    },
+                    {
+                        "icon": "regular/link",
+                        "title": "Beginners Guide for Programmers",
+                        "url": "https://wiki.python.org/moin/BeginnersGuide/Programmers"
+                    }
+                ]
+            },
+            "Python Cheat Sheet": {
+                "description": "A Python 3 cheat sheet with useful information and tips, as well as common pitfalls for beginners. This is a PDF.",
+                "payment": "free",
+                "payment_description": null,
+                "urls": [
+                    {
+                        "icon": "regular/link",
+                        "title": "Website",
+                        "url": "https://perso.limsi.fr/pointal/_media/python:cours:mementopython3-english.pdf"
+                    }
+                ]
+            }
+        }
+    },
+    "Books": {
+        "description": "The best books for learning Python or Python Frameworks",
+        "resources": {
+            "A Byte of Python": {
+                "description": "A free book on programming using the Python language. It serves as a tutorial or guide to the Python language for a beginner audience. If all you know about computers is how to save text files, then this is the book for you.",
+                "payment": "optional",
+                "payment_description": "A free e-book is available online, a paper version can be bought from lulu.com.",
+                "urls": [
+                    {
+                        "icon": "regular/link",
+                        "title": "E-book",
+                        "url": "https://python.swaroopch.com/"
+                    },
+                    {
+                        "icon": "regular/book",
+                        "title": "Buy the book",
+                        "url": "http://www.lulu.com/shop/swaroop-c-h/a-byte-of-python/paperback/product-21142968.html"
+                    },
+                    {
+                        "icon": "regular/tablet-alt",
+                        "title": "Kindle edition",
+                        "url": "https://www.amazon.com/Byte-Python-Swaroop-C-H-ebook/dp/B00FJ7S2JU/ref=sr_1_1?ie=UTF8&qid=1524816076&sr=8-1&keywords=a+byte+of+python"
+                    }
+                ]
+            },
+            "Automate the Boring Stuff with Python": {
+                "description": "One of the best books out there for Python beginners. This book will teach you the basics of Python, while also teaching invaluable automation tools and techniques for solving common problems. You'll learn how to go about scraping the web, manipulating files and automating keyboard and mouse input. Ideal for an office worker who wants to make himself more useful.",
+                "payment": "optional",
+                "payment_description": "A free e-book is available on the website, but you can buy it on Amazon if you want to support the author.",
+                "urls": [
+                    {
+                        "icon": "regular/link",
+                        "title": "E-book",
+                        "url": "https://automatetheboringstuff.com/"
+                    },
+                    {
+                        "icon": "branding/amazon",
+                        "title": "Amazon",
+                        "url": "http://www.amazon.com/gp/product/1593275994/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=1593275994&linkCode=as2&tag=playwithpyth-20&linkId=HDM7V3T6RHC5VVN4"
+                    }
+                ]
+            },
+            "Effective Python": {
+                "description": "A book that gives 59 best practices for writing excellent Python. Great for intermediates.",
+                "payment": "paid",
+                "urls": [
+                    {
+                        "icon": "regular/link",
+                        "title": "Website",
+                        "url": "https://effectivepython.com/"
+                    },
+                    {
+                        "icon": "branding/amazon",
+                        "title": "Amazon",
+                        "url": "https://www.amazon.com/Effective-Python-Specific-Software-Development/dp/0134034287"
+                    },
+                    {
+                        "icon": "branding/github",
+                        "title": "GitHub",
+                        "url": "https://github.com/bslatkin/effectivepython"
+                    }
+                ]
+            },
+            "Flask Web Development": {
+                "description": "A comprehensive Flask walkthrough that has you building a complete social blogging application from scratch.",
+                "payment": "paid",
+                "urls": [
+                    {
+                        "icon": "regular/link",
+                        "title": "Website",
+                        "url": "http://shop.oreilly.com/product/0636920031116.do"
+                    },
+                    {
+                        "icon": "branding/amazon",
+                        "title": "Amazon",
+                        "url": "https://www.amazon.com/Flask-Web-Development-Developing-Applications/dp/1449372627"
+                    },
+                    {
+                        "icon": "branding/github",
+                        "title": "GitHub",
+                        "url": "https://github.com/miguelgrinberg/flasky"
+                    }
+                ]
+            },
+            "Fluent Python": {
+                "description": "A veritable tome of intermediate and advanced Python information. A must-read for any Python professional.",
+                "payment": "paid",
+                "urls": [
+                    {
+                        "icon": "regular/link",
+                        "title": "Website",
+                        "url": "https://www.safaribooksonline.com/library/view/fluent-python/9781491946237/"
+                    },
+                    {
+                        "icon": "branding/amazon",
+                        "title": "Amazon",
+                        "url": "https://www.amazon.com/Fluent-Python-Concise-Effective-Programming/dp/1491946008"
+                    },
+                    {
+                        "icon": "branding/github",
+                        "title": "GitHub",
+                        "url": "https://github.com/fluentpython"
+                    }
+                ]
+            },
+            "Python Cookbook": {
+                "description": "Complete with 'recipes' for various Python topics, including moving from Python 2 to Python 3.3",
+                "payment": "paid",
+                "urls": [
+                    {
+                        "icon": "regular/link",
+                        "title": "Website",
+                        "url": "http://shop.oreilly.com/product/0636920027072.do"
+                    },
+                    {
+                        "icon": "branding/amazon",
+                        "title": "Amazon",
+                        "url": "https://www.amazon.com/Python-Cookbook-Third-David-Beazley/dp/1449340377"
+                    },
+                    {
+                        "icon": "branding/github",
+                        "title": "GitHub",
+                        "url": "https://github.com/dabeaz/python-cookbook"
+                    }
+                ]
+            },
+            "Two Scoops of Django": {
+                "description": "This book is chock-full of material that will help you with your Django projects.",
+                "payment": "paid",
+                "urls": [
+                    {
+                        "icon": "regular/link",
+                        "title": "Website",
+                        "url": "https://twoscoopspress.com/products/two-scoops-of-django-1-11"
+                    },
+                    {
+                        "icon": "branding/amazon",
+                        "title": "Amazon",
+                        "url": "https://www.amazon.com/Two-Scoops-Django-Best-Practices/dp/0981467342"
+                    },
+                    {
+                        "icon": "branding/github",
+                        "title": "GitHub",
+                        "url": "https://github.com/twoscoops/two-scoops-of-django-2.0-code-examples"
+                    }
+                ]
+            }
+        }
+    },
+    "Courses": {
+        "description": "Online courses that relate to Python.",
+        "resources": {
+            "Python Tutorials by Corey Schafer on YouTube": {
+                "description": "An in-depth look at the Python programming language, from one of YouTube's most popular Python tutors.",
+                "payment": "free",
+                "payment_description": null,
+                "urls": [
+                    {
+                        "icon": "branding/youtube",
+                        "title": "YouTube",
+                        "url": "https://www.youtube.com/playlist?list=PL-osiE80TeTt2d9bfVyTiXJA-UTHn6WwU"
+                    }
+                ]
+            },
+            "Code Combat": {
+                "description": "Learn Python while gaming - an open-source project with thousands of contributors, which teaches you Python through a deep, top-down RPG.",
+                "payment": "optional",
+                "payment_description": "A wealth of free content is available, but you can also pay for more",
+                "urls": [
+                    {
+                        "icon": "regular/link",
+                        "title": "Website",
+                        "url": "https://codecombat.com/"
+                    },
+                    {
+                        "icon": "branding/github",
+                        "title": "GitHub",
+                        "url": "https://github.com/codecombat/codecombat"
+                    }
+                ]
+            },
+            "MIT: Introduction to Computer Science and Programming Using Python": {
+                "description": "This MITx offering teaches computer science with Python. It covers computational thinking, algorithms, data structures and the Python programming language itself.",
+                "payment": "optional",
+                "payment_description": "You can pay to enroll for a graded certificate, or choose to take the full course for free.",
+                "urls": [
+                    {
+                        "icon": "regular/graduation-cap",
+                        "title": "edX Course",
+                        "url": "https://www.edx.org/course/introduction-computer-science-mitx-6-00-1x-11"
+                    }
+                ]
+            },
+            "University of Michigan: Programming for Everybody": {
+                "description": "A 5-part specialization course that teaches Python from scratch. The course has no pre-requisites and avoids all but the simplest mathematics.",
+                "payment": "optional",
+                "payment_description": "You can pay to enroll for a graded certificate and a capstone project, or choose to audit for free.",
+                "urls": [
+                    {
+                        "icon": "regular/graduation-cap",
+                        "title": "Python for Everyone Specialization",
+                        "url": "https://www.coursera.org/learn/python"
+                    }
+                ]
+            },
+            "University of Toronto: Learn to Program": {
+                "description": "A 2-part course that teaches Python. Primarily intended for high school students and first-year university students who want to learn programming.",
+                "payment": "optional",
+                "payment_description": "You can pay to enroll for a graded certificate, or choose to audit for free.",
+                "urls": [
+                    {
+                        "icon": "regular/graduation-cap",
+                        "title": "Part 1: The Fundamentals",
+                        "url": "https://www.coursera.org/learn/learn-to-program"
+                    },
+                    {
+                        "icon": "regular/graduation-cap",
+                        "title": "Part 2: Crafting Quality Code",
+                        "url": "https://www.coursera.org/learn/program-code"
+                    }
+                ]
+            },
+            "Automate the Boring Stuff with Python": {
+                "description": "The interactive course version of Al Sweigart's excellent book for beginners, taught by the author himself. This link has a discounted version of the course which will always cost 10 dollars. Thanks, Al!",
+                "payment": "paid",
+                "payment_description": "You can pay to enroll for a graded certificate, or choose to take the full course for free.",
+                "urls": [
+                    {
+                        "icon": "regular/graduation-cap",
+                        "title": "Udemy Course",
+                        "url": "https://www.udemy.com/automate/?couponCode=FOR_LIKE_10_BUCKS"
+                    }
+                ]
+            }
+        }
+    },
+    "Editors": {
+        "description": "Lightweight code editors supporting Python",
+        "resources": {
+            "Atom": {
+                "description": "A free Electron-based editor, a \"hackable text editor for the 21st century\",  maintained by the GitHub team.",
+                "payment": "free",
+                "payment_description": null,
+                "urls": [
+                    {
+                        "icon": "regular/link",
+                        "title": "Website",
+                        "url": "https://atom.io/"
+                    },
+                    {
+                        "icon": "branding/github",
+                        "title": "GitHub",
+                        "url": "https://github.com/atom/atom"
+                    }
+                ]
+            },
+            "Visual Studio Code": {
+                "description": "A fully-featured editor based on Electron, extendable with plugins.",
+                "payment": "free",
+                "payment_description": null,
+                "urls": [
+                    {
+                        "icon": "regular/link",
+                        "title": "Website",
+                        "url": "https://code.visualstudio.com/"
+                    }
+                ]
+            },
+            "Sublime Text": {
+                "description": "A powerful Python-backed editor with great community support and a wealth of extensions.",
+                "payment": "optional",
+                "payment_description": "Nagware; will ask you to buy the full version after every X saves",
+                "urls": [
+                    {
+                        "icon": "regular/link",
+                        "title": "Website",
+                        "url": "https://www.sublimetext.com/"
+                    }
+                ]
+            }
+        }
+    },
+    "IDEs": {
+        "description": "Fully-integrated development environments for serious Python work",
+        "resources": {
+            "Spyder": {
+                "description": "The Scientific PYthon Development EnviRonment. Simpler and lighter than PyCharm, but still packs a punch.",
+                "payment": "free",
+                "payment_description": null,
+                "urls": [
+                    {
+                        "icon": "regular/link",
+                        "title": "Website",
+                        "url": "https://pythonhosted.org/spyder/"
+                    },
+                    {
+                        "icon": "branding/github",
+                        "title": "GitHub",
+                        "url": "https://github.com/spyder-ide/spyder"
+                    }
+                ]
+            },
+            "PyCharm": {
+                "description": "The very best Python IDE, with a wealth of advanced features and convenience functions.",
+                "payment": "optional",
+                "payment_description": "There's a free Community Edition and a paid-for Professional Edition with more features available",
+                "urls": [
+                    {
+                        "icon": "regular/link",
+                        "title": "Website",
+                        "url": "https://www.jetbrains.com/pycharm/"
+                    }
+                ]
+            }
+        }
     }
-  },
-  "Editors": {
-    "description": "Lightweight code editors supporting Python",
-    "resources": {
-      "Atom": {
-        "description": "A free Electron-based editor, a \"hackable text editor for the 21st century\",  maintained by the GitHub team.",
-        "urls": [
-          {
-            "title": "Website",
-            "url": "https://atom.io/",
-            "icon": "regular/link"
-          },
-          {
-            "title": "GitHub",
-            "url": "https://github.com/atom/atom",
-            "icon": "branding/github"
-          }
-        ],
-        "payment": "free",
-        "payment_description": null
-      },
-      "Sublime Text": {
-        "description": "A powerful Python-backed editor with great community support and a wealth of extensions.",
-        "urls": [
-          {
-            "title": "Website",
-            "url": "https://www.sublimetext.com/",
-            "icon": "regular/link"
-          }
-        ],
-        "payment": "optional",
-        "payment_description": "Nagware; will ask you to buy the full version after every X saves"
-      },
-      "Visual Studio Code": {
-        "description": "A fully-featured editor based on Electron, extendable with plugins.",
-        "urls": [
-          {
-            "title": "Website",
-            "url": "https://code.visualstudio.com/",
-            "icon": "regular/link"
-          }
-        ],
-        "payment": "free",
-        "payment_description": null
-      }
-    }
-  },
-  "IDEs": {
-    "description": "Fully-integrated development environments for serious Python work",
-    "resources": {
-      "PyCharm": {
-        "description": "The very best Python IDE, with a wealth of advanced features and convenience functions.",
-        "urls": [
-          {
-            "title": "Website",
-            "url": "https://www.jetbrains.com/pycharm/",
-            "icon": "regular/link"
-          }
-        ],
-        "payment": "optional",
-        "payment_description": "There's a free Community Edition and a paid-for Professional Edition with more features available"
-      },
-      "Spyder": {
-        "description": "The Scientific PYthon Development EnviRonment. Simpler and lighter than PyCharm, but still packs a punch.",
-        "urls": [
-          {
-            "title": "Website",
-            "url": "https://pythonhosted.org/spyder/",
-            "icon": "regular/link"
-          },
-          {
-            "title": "GitHub",
-            "url": "https://github.com/spyder-ide/spyder",
-            "icon": "branding/github"
-          }
-        ],
-        "payment": "free",
-        "payment_description": null
-      }
-    }
-  }
 }
