@@ -134,3 +134,7 @@ div#partner-cards div.uk-card-default {
 img.navbar-logo {
     max-width: 110%;
 }
+
+#wiki-nav uk-nav-divider {
+    min-width: 7rem;
+}
