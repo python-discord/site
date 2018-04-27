@@ -1,4 +1,3 @@
-# coding=utf-8
 from docutils import nodes
 from docutils.parsers.rst.roles import set_classes
 from docutils.parsers.rst.states import Inliner

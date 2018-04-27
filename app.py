@@ -1,5 +1,3 @@
-# coding=utf-8
-
 from os import environ
 
 from pysite.route_manager import RouteManager
