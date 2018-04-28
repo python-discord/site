@@ -1,0 +1,5 @@
+FROM python:3.6-alpine
+
+RUN apk add --update tini
+RUN apk add --update git
+RUN apk add --update build-base

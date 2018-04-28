@@ -1,0 +1,36 @@
+[[source]]
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+flask = "==0.12.*"
+rethinkdb = "*"
+requests = "*"
+gevent = "*"
+"gevent-websocket" = "*"
+wsaccel = "*"
+ujson = "*"
+schema = "*"
+"flask_sockets" = "*"
+"Flask-Dance" = "*"
+"logmatic-python" = "*"
+"Flask-WTF" = "*"
+docutils = "*"
+pygments = "*"
+
+[dev-packages]
+"flake8" = "*"
+"flake8-bugbear" = "*"
+"flake8-bandit" = "*"
+"flake8-import-order" = "*"
+"flake8-tidy-imports" = "*"
+"flake8-string-format" = "*"
+requests = "*"
+"Flask-Testing" = "*"
+pytest = "*"
+pytest-cov = "*"
+python-coveralls = "*"
+
+[requires]
+python_version = "3.6"
