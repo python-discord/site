@@ -18,6 +18,7 @@ schema = "*"
 "Flask-WTF" = "*"
 docutils = "*"
 pygments = "*"
+gunicorn = "*"
 
 [dev-packages]
 "flake8" = "*"

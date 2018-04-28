@@ -5,6 +5,7 @@ RUN pip install pipenv
 RUN mkdir /site
 COPY . /site
 WORKDIR /site
+ENV PYTHONPATH=/site
 
 RUN pipenv sync
 
