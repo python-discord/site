@@ -23,9 +23,9 @@ install:
   - pip install pipenv
   - pipenv sync --dev --three
 script:
-  - pipenv run python -m flake8
-  - pipenv run python gunicorn_config.py
-  - pipenv run py.test app_test.py --cov pysite --cov-report term-missing -v
+  - pipenv run lint
+  - python gunicorn_config.py
+  - pipenv run test
   - pipenv run coveralls
 after_success:
   - bash scripts/deploy.sh

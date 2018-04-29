@@ -37,5 +37,7 @@ python-coveralls = "*"
 python_version = "3.6"
 
 [scripts]
-
 start = "gunicorn -w 12 -b 0.0.0.0:10012 -c gunicorn_config.py --log-level info -k geventwebsocket.gunicorn.workers.GeventWebSocketWorker app:app"
+lint = "python -m flake8"
+test = "py.test app_test.py --cov pysite --cov-report term-missing -v"
+clean = "rm -rf __pycache__ htmlcov .coverage .pytest_cache"
