@@ -35,3 +35,7 @@ python-coveralls = "*"
 
 [requires]
 python_version = "3.6"
+
+[scripts]
+
+start = "gunicorn -w 12 -b 0.0.0.0:10012 -c gunicorn_config.py --log-level info -k geventwebsocket.gunicorn.workers.GeventWebSocketWorker app:app"
