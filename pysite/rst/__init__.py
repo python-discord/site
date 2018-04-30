@@ -67,12 +67,23 @@ def render(rst: str):
 
                 if depth == 1:  # Top-level header, so just store it in the current header
                     current_header["id"] = match.group(1)
-                    current_header["title"] = match.group(2)
+
+                    title = match.group(2)
+
+                    if title.startswith("<i"):  # We've found an icon, which needs to have a space after it
+                        title = title.replace("</i> ", "</i> &nbsp;")
+
+                    current_header["title"] = title
                 else:  # Second-level (or deeper) header, should be stored in a list of sub-headers under the current
                     sub_headers = current_header.get("sub_headers", [])
+                    title = match.group(2)
+
+                    if title.startswith("<i"):  # We've found an icon, which needs to have a space after it
+                        title = title.replace("</i> ", "</i> &nbsp;")
+
                     sub_headers.append({
                         "id": match.group(1),
-                        "title": match.group(2)
+                        "title": title
                     })
                     current_header["sub_headers"] = sub_headers
 
