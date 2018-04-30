@@ -47,7 +47,7 @@
                                             </ul>
                                         </li>
                                     {% else %}
-                                        <li><a href="{{ header.id }}">{{ header.title }}</a></li>
+                                        <li><a href="{{ header.id }}">{{ header.title | safe }}</a></li>
                                     {% endif %}
                                 {% endfor %}
                                 <li class="uk-nav-divider"></li>
