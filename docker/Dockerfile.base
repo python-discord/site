@@ -1,4 +1,8 @@
-FROM pythondiscord/site-base:latest
+FROM python:3.6-alpine
+
+RUN apk add --update tini
+RUN apk add --update git
+RUN apk add --update build-base
 
 ENV PIPENV_VENV_IN_PROJECT=1
 ENV PIPENV_IGNORE_VIRTUALENVS=1
@@ -7,14 +11,10 @@ ENV PIPENV_HIDE_EMOJIS=1
 
 RUN pip install pipenv
 
-COPY . /site
+RUN mkdir -p /site
+COPY Pipfile /site
+COPY Pipfile.lock /site
 WORKDIR /site
 ENV PYTHONPATH=/site
 
-RUN pipenv clean
 RUN pipenv sync
-
-EXPOSE 10012
-
-ENTRYPOINT ["/sbin/tini", "--"]
-CMD ["pipenv", "run", "start"]
