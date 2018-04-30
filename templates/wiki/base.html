@@ -39,10 +39,14 @@
                                 {% for header in data.headers %}
                                     {%  if "sub_headers" in header %}
                                         <li class="uk-parent">
-                                            <a href="{{ header.id }}">{{ header.title | safe }}</a>
+                                            <a href="{{ header.id }}">
+                                                {{ header.title | safe }}
+                                            </a>
                                             <ul class="uk-nav-sub">
                                                 {% for sub in header.sub_headers %}
-                                                    <li><a href="{{ sub.id }}">{{ sub.title | safe }}</a></li>
+                                                    <li><a href="{{ sub.id }}">
+                                                        {{ sub.title | safe }}
+                                                    </a></li>
                                                 {% endfor %}
                                             </ul>
                                         </li>
