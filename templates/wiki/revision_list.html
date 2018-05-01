@@ -30,7 +30,7 @@
         <a href="#" id="compare-submit" class="uk-button uk-button-primary">Compare selections</a>
     </div>
     <script>
-        let revisions = {{ revisions | tojson }}
+        let revisions = {{ revisions | tojson }};
     </script>
     <script src="{{ static_file("js/revision_diff.js") }}"></script>
 {% endblock %}

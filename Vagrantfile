@@ -18,7 +18,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         type: "virtualbox",
         mount_options: ["dmode=775,fmode=775"]
     end
-    config.vm.provision "shell", path: "Vagrant_bootstrap.sh"
+    config.vm.provision "shell", path: "scripts/vagrant_bootstrap.sh"
   end
 
 end

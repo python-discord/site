@@ -8,7 +8,7 @@ from pysite.mixins import DBMixin
 
 
 class RevisionsListView(RouteView, DBMixin):
-    path = "/history/show/<string:page>"
+    path = "/history/show/<path:page>"
     name = "history.show"
 
     table_name = "wiki_revisions"

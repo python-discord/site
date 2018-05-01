@@ -9,16 +9,26 @@ branches:
   only:
     - "master"
 
+sudo: required
+
+services:
+  - docker
+
+env:
+  global:
+    - PIPENV_VENV_IN_PROJECT=1
+    - PIPENV_IGNORE_VIRTUALENVS=1
+
 install:
-  - pip install -r requirements.txt
-  - pip install -r requirements-ci.txt
+  - pip install pipenv
+  - pipenv sync --dev --three
 script:
-  - flake8
+  - pipenv run lint
   - python gunicorn_config.py
-  - py.test app_test.py --cov pysite --cov-report term-missing -v
-  - coveralls
+  - pipenv run test
+  - pipenv run coveralls
 after_success:
-  - python deploy.py
+  - bash scripts/deploy.sh
 
 cache: pip
 
