@@ -1,4 +1,3 @@
-# coding=utf-8
 from flask import redirect, url_for
 from pygments import highlight
 from pygments.formatters.html import HtmlFormatter

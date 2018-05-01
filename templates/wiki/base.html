@@ -32,22 +32,26 @@
             {% include "main/navigation.html" %}
             <div class="uk-flex uk-flex-row uk-flex-1">
                 <div class="uk-card uk-card-body uk-flex-left uk-flex uk-card-primary">
-                    <ul class="uk-nav-default uk-nav-parent-icon" uk-nav>
+                    <ul class="uk-nav-default uk-nav-parent-icon" uk-nav id="wiki-nav">
                         {% if data is defined %}
                             {% if "headers" in data and data.headers %}
                                 <li class="uk-nav-header">Contents</li>
                                 {% for header in data.headers %}
                                     {%  if "sub_headers" in header %}
                                         <li class="uk-parent">
-                                            <a href="{{ header.id }}">{{ header.title }}</a>
+                                            <a href="{{ header.id }}">
+                                                {{ header.title | safe }}
+                                            </a>
                                             <ul class="uk-nav-sub">
                                                 {% for sub in header.sub_headers %}
-                                                    <li><a href="{{ sub.id }}"><i class="uk-icon fas fa-diamond fa-fw" style="font-size: 0.5rem; vertical-align: 1px"></i> &nbsp;{{ sub.title }}</a></li>
+                                                    <li><a href="{{ sub.id }}">
+                                                        {{ sub.title | safe }}
+                                                    </a></li>
                                                 {% endfor %}
                                             </ul>
                                         </li>
                                     {% else %}
-                                        <li><a href="{{ header.id }}">{{ header.title }}</a></li>
+                                        <li><a href="{{ header.id }}">{{ header.title | safe }}</a></li>
                                     {% endif %}
                                 {% endfor %}
                                 <li class="uk-nav-divider"></li>
@@ -61,6 +65,9 @@
                         </li>
                         <li><a href="{{ url_for("wiki.page", page="contributing") }}">
                             <i class="uk-icon fas fa-fw fa-code-branch"></i> &nbsp;Contributing
+                        </a></li>
+                        <li><a href="{{ url_for("wiki.page", page="minecraft") }}">
+                            <i class="uk-icon fas fa-fw fa-cube"></i> &nbsp;Minecraft
                         </a></li>
 {#                        <li class="uk-active"><a href="#">active</a></li>#}
 {#                        <li class="uk-parent">#}

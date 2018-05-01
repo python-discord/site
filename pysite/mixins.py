@@ -1,4 +1,3 @@
-# coding=utf-8
 from weakref import ref
 
 from flask import Blueprint

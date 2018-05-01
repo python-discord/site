@@ -1,4 +1,3 @@
-# coding=utf-8
 from docutils import nodes
 from docutils.parsers.rst.roles import set_classes
 from docutils.parsers.rst.states import Inliner
@@ -41,7 +40,7 @@ def icon_role(_role: str, rawtext: str, text: str, lineno: int, inliner: Inliner
 
             return [prb], [msg]
 
-        html = f"""<i class="uk-icon {weight} fa-{parts[1]}"></i>"""
+        html = f"""<i class="uk-icon fa-fw {weight} fa-{parts[1]}"></i>"""
 
         node = nodes.raw(html, html, format="html", **options)
         return [node], []
