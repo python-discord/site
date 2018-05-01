@@ -124,6 +124,10 @@ footer div.uk-section div.uk-text-center {
     margin-bottom: 0;
 }
 
+.document img {
+    margin-bottom: 20px;
+}
+
 /* Styling for Partners page cards */
 div#partner-cards div.uk-card-default {
     margin-top: 2em;
