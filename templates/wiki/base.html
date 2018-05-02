@@ -69,14 +69,7 @@
                         <li><a href="{{ url_for("wiki.page", page="minecraft") }}">
                             <i class="uk-icon fas fa-fw fa-cube"></i> &nbsp;Minecraft
                         </a></li>
-{#                        <li class="uk-active"><a href="#">active</a></li>#}
-{#                        <li class="uk-parent">#}
-{#                            <a href="#">Contributing</a>#}
-{#                            <ul class="uk-nav-sub">#}
-{#                                <li><a href="#">Sub item</a></li>#}
-{#                                <li><a href="#">Sub item</a></li>#}
-{#                            </ul>#}
-{#                        </li>#}
+
                         <li class="uk-nav-divider"></li>
 
                         {% if (can_edit or debug) and current_page != "edit" %}
@@ -115,7 +108,6 @@
                             </li>
                         {% endif %}
 
-
                         {% if current_page != "source" %}
                             <li>
                                 <a href="{{ url_for("wiki.source", page=page) }}">
@@ -129,8 +121,14 @@
                                 </a>
                             </li>
                         {% endif %}
+
                         <li class="uk-nav-divider"></li>
-                        <li><a href="{{ url_for("wiki.page", page="help") }}"><i class="fas fa-fw fa-question-circle"></i> &nbsp;Help</a></li>
+                        <li><a href="{{ url_for("wiki.special") }}">
+                            <i class="uk-icon fas fa-fw fa-ellipsis-h"></i> &nbsp;Special Pages
+                        </a></li>
+                        <li><a href="{{ url_for("wiki.page", page="help") }}">
+                            <i class="fas fa-fw fa-question-circle"></i> &nbsp;Help
+                        </a></li>
                     </ul>
                 </div>
                 <div class="uk-section" style="flex-grow: 1; margin: 0 1rem 1rem;">
