@@ -14,6 +14,9 @@ class PageView(RouteView, DBMixin):
         letters = {}
 
         for page in pages:
+            if "title" not in page:
+                page["title"] = "No Title"
+
             letter = page["title"][0].upper()
 
             if letter not in letters:
