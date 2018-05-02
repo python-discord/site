@@ -1,0 +1,26 @@
+{% extends "wiki/base.html" %}
+{% block title %}Wiki | Delete: {{ page }}{% endblock %}
+{% block og_title %}Wiki | Delete: {{ page }}{% endblock %}
+{% block og_description %}{% endblock %}
+{% block extra_head %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.3.3/ace.js" type="application/javascript"></script>
+{% endblock %}
+{% block content %}
+    <div uk-alert class="uk-alert-danger">
+        <h3>Delete Page: {{ page }}</h3>
+        <p>
+            Are you sure you want to delete this page?
+        </p>
+
+        <form uk-grid class="uk-grid-small" action="{{ url_for("wiki.delete", page=page) }}" method="post">
+            <div class="uk-width-1-2">
+                <a href="{{ url_for("wiki.page", page=page) }}" class="uk-button uk-button-primary uk-width-1-1" type="button" value="Cancel" id="cancel">Cancel</a>
+            </div>
+            <div class="uk-width-1-2">
+                <input class="uk-button uk-button-secondary uk-width-1-1" type="submit" id="delete" value="Delete" />
+            </div>
+
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+        </form>
+    </div>
+{% endblock %}
