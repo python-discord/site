@@ -1,5 +1,3 @@
-from operator import itemgetter
-
 from pysite.base_route import RouteView
 from pysite.mixins import DBMixin
 
@@ -11,7 +9,7 @@ class PageView(RouteView, DBMixin):
 
     def get(self):
         pages = self.db.pluck(self.table_name, "title", "slug")
-        pages = sorted(pages, key=itemgetter("title"))
+        pages = sorted(pages, key=lambda d: d.get("title", "No Title"))
 
         letters = {}
 
