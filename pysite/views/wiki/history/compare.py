@@ -50,7 +50,9 @@ class CompareView(RouteView, DBMixin):
         diff = highlight(diff, DiffLexer(), HtmlFormatter())
         return self.render("wiki/compare_revision.html",
                            title=after["post"]["title"],
-                           diff=diff, slug=before["slug"],
+                           page=before["slug"],
+                           diff=diff,
+                           slug=before["slug"],
                            can_edit=self.is_staff())
 
     def is_staff(self):

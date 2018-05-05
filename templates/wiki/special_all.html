@@ -1,0 +1,26 @@
+{% extends "wiki/base.html" %}
+{% block title %}Wiki | Special: All Pages{% endblock %}
+{% block og_title %}Wiki | Special: All Pages{% endblock %}
+{% block og_description %}A listing for all pages on the wiki{% endblock %}
+{% block content %}
+    <div class="uk-container uk-container-small">
+        <h2 class="uk-title">
+            Special: All Pages
+        </h2>
+        <p class="uk-text-meta">
+            A listing for all pages on the wiki
+        </p>
+
+        {% for letter, pages in letters.items() %}
+            <h3 class="uk-heading-divider">{{ letter }}</h3>
+
+            <ul>
+            {% for page in pages %}
+                <li><a href="{{ url_for("wiki.page", page=page.slug) }}">
+                    {{ page.title }} (<span style="font-family: monospace;">{{ page.slug }}</span>)
+                </a></li>
+            {% endfor %}
+            </ul>
+        {% endfor %}
+    </div>
+{% endblock %}

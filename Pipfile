@@ -41,3 +41,7 @@ start = "gunicorn -w 12 -b 0.0.0.0:10012 -c gunicorn_config.py --log-level info 
 lint = "python -m flake8"
 test = "py.test app_test.py --cov pysite --cov-report term-missing -v"
 clean = "rm -rf __pycache__ htmlcov .coverage .pytest_cache"
+build = "docker build -t pythondiscord/site:latest -f docker/Dockerfile ."
+push = "docker push pythondiscord/site:latest"
+buildbase = "docker build -t pythondiscord/site-base:latest -f docker/Dockerfile.base ."
+pushbase = "docker push pythondiscord/site-base:latest"

@@ -69,32 +69,48 @@
                         <li><a href="{{ url_for("wiki.page", page="minecraft") }}">
                             <i class="uk-icon fas fa-fw fa-cube"></i> &nbsp;Minecraft
                         </a></li>
-{#                        <li class="uk-active"><a href="#">active</a></li>#}
-{#                        <li class="uk-parent">#}
-{#                            <a href="#">Contributing</a>#}
-{#                            <ul class="uk-nav-sub">#}
-{#                                <li><a href="#">Sub item</a></li>#}
-{#                                <li><a href="#">Sub item</a></li>#}
-{#                            </ul>#}
-{#                        </li>#}
-                        <li class="uk-nav-divider"></li>
 
-                        {% if (can_edit or debug) and current_page != "edit" %}
-                            <li>
-                                <a href="{{ url_for("wiki.edit", page=page) }}">
-                                    <i class="uk-icon fas fa-fw fa-pencil-alt"></i> &nbsp;Edit
-                                </a>
-                            </li>
-                        {% elif current_page == "edit" %}
-                            <li>
-                                <a href="{{ url_for("wiki.page", page=page) }}">
-                                    <i class="uk-icon fas fa-fw fa-arrow-left"></i> &nbsp;Back
-                                </a>
-                            </li>
-                        {% endif %}
+                        {% set ACTIONABLE_PAGES = ["page", "edit", "history.show", "history.compare", "source", "delete"] %}
+                        {% set actionable = current_page in ACTIONABLE_PAGES %}
 
-                        {% if current_page != "history.show" %}
-                            {% if current_page == "history.compare" %}
+                        {% if actionable %}
+                            <li class="uk-nav-divider"></li>
+
+                            {% if current_page == "edit" %}
+                                <li>
+                                    <a href="{{ url_for("wiki.page", page=page) }}">
+                                        <i class="uk-icon fas fa-fw fa-arrow-left"></i> &nbsp;Back
+                                    </a>
+                                </li>
+                            {% else %}
+                                <li>
+                                    <a href="{{ url_for("wiki.edit", page=page) }}">
+                                        <i class="uk-icon fas fa-fw fa-pencil-alt"></i> &nbsp;Edit
+                                    </a>
+                                </li>
+                            {% endif %}
+
+                            {% if current_page == "delete" %}
+                                <li>
+                                    <a href="{{ url_for("wiki.page", page=page) }}">
+                                        <i class="uk-icon fas fa-fw fa-arrow-left"></i> &nbsp;Back
+                                    </a>
+                                </li>
+                            {% else %}
+                                <li>
+                                    <a href="{{ url_for("wiki.delete", page=page) }}">
+                                        <i class="uk-icon fas fa-fw fa-trash"></i> &nbsp;Delete
+                                    </a>
+                                </li>
+                            {% endif %}
+
+                            {% if current_page == "history.show" %}
+                                <li>
+                                    <a href="{{ url_for("wiki.page", page=page) }}">
+                                        <i class="uk-icon fas fa-fw fa-arrow-left"></i> &nbsp;Back
+                                    </a>
+                                </li>
+                            {% elif current_page == "history.compare" %}
                                 <li>
                                     <a href="{{ url_for("wiki.history.show", page=slug) }}">
                                         <i class="uk-icon fas fa-fw fa-arrow-left"></i> &nbsp;Back
@@ -107,30 +123,29 @@
                                     </a>
                                 </li>
                             {% endif %}
-                        {% else %}
-                            <li>
-                                <a href="{{ url_for("wiki.page", page=page) }}">
-                                    <i class="uk-icon fas fa-fw fa-arrow-left"></i> &nbsp;Back
-                                </a>
-                            </li>
+
+                            {% if current_page == "source" %}
+                                <li>
+                                    <a href="{{ url_for("wiki.page", page=page) }}">
+                                        <i class="uk-icon fas fa-fw fa-arrow-left"></i> &nbsp;Back
+                                    </a>
+                                </li>
+                            {% else %}
+                                <li>
+                                    <a href="{{ url_for("wiki.source", page=page) }}">
+                                        <i class="uk-icon fas fa-fw fa-code"></i> &nbsp;Source
+                                    </a>
+                                </li>
+                            {% endif %}
                         {% endif %}
 
-
-                        {% if current_page != "source" %}
-                            <li>
-                                <a href="{{ url_for("wiki.source", page=page) }}">
-                                    <i class="uk-icon fas fa-fw fa-code"></i> &nbsp;Source
-                                </a>
-                            </li>
-                        {% else %}
-                            <li>
-                                <a href="{{ url_for("wiki.page", page=page) }}">
-                                    <i class="uk-icon fas fa-fw fa-arrow-left"></i> &nbsp;Back
-                                </a>
-                            </li>
-                        {% endif %}
                         <li class="uk-nav-divider"></li>
-                        <li><a href="{{ url_for("wiki.page", page="help") }}"><i class="fas fa-fw fa-question-circle"></i> &nbsp;Help</a></li>
+                        <li><a href="{{ url_for("wiki.special") }}">
+                            <i class="uk-icon fas fa-fw fa-ellipsis-h"></i> &nbsp;Special Pages
+                        </a></li>
+                        <li><a href="{{ url_for("wiki.page", page="help") }}">
+                            <i class="fas fa-fw fa-question-circle"></i> &nbsp;Help
+                        </a></li>
                     </ul>
                 </div>
                 <div class="uk-section" style="flex-grow: 1; margin: 0 1rem 1rem;">
