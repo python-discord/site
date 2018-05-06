@@ -104,6 +104,20 @@
                                 </li>
                             {% endif %}
 
+                            {% if current_page == "move" %}
+                                <li>
+                                    <a href="{{ url_for("wiki.page", page=page) }}">
+                                        <i class="uk-icon fas fa-fw fa-arrow-left"></i> &nbsp;Back
+                                    </a>
+                                </li>
+                            {% else %}
+                                <li>
+                                    <a href="{{ url_for("wiki.move", page=page) }}">
+                                        <i class="uk-icon fas fa-fw fa-arrow-right"></i> &nbsp;Move
+                                    </a>
+                                </li>
+                            {% endif %}
+
                             {% if current_page == "history.show" %}
                                 <li>
                                     <a href="{{ url_for("wiki.page", page=page) }}">
