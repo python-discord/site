@@ -1,8 +1,8 @@
 import datetime
 
 import requests
-from flask import redirect, url_for, request
-from werkzeug.exceptions import NotFound, BadRequest
+from flask import redirect, request, url_for
+from werkzeug.exceptions import BadRequest, NotFound
 
 from pysite.base_route import RouteView
 from pysite.constants import EDITOR_ROLES, WIKI_AUDIT_WEBHOOK
