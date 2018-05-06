@@ -31,7 +31,7 @@ class SearchView(RouteView, DBMixin):
 
         pages = self.db.filter(
             self.table_name,
-            lambda doc: doc["text"].match(query)
+            lambda doc: doc["text"].match(f"(?i){query}")
         )
 
         if len(pages) == 1:
@@ -41,7 +41,7 @@ class SearchView(RouteView, DBMixin):
         for obj in pages:
             text = obj["text"]
 
-            matches = re.finditer(query, text)
+            matches = re.finditer(query, text, flags=re.IGNORECASE)
             snippets = []
 
             for match in matches:
@@ -56,7 +56,7 @@ class SearchView(RouteView, DBMixin):
                     end = len(text)
 
                 match_text = text[start:end]
-                match_text = re.sub(query, r"<strong>\1</strong>", html.escape(match_text))
+                match_text = re.sub(query, r"<strong>\1</strong>", html.escape(match_text), flags=re.IGNORECASE)
 
                 snippets.append(match_text.replace("\n", "<br />"))
 
