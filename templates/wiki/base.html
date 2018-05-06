@@ -154,12 +154,31 @@
                         {% endif %}
 
                         <li class="uk-nav-divider"></li>
+{#                        <li><a href="{{ url_for("wiki.search") }}">#}
+{#                            <i class="uk-icon fas fa-fw fa-search"></i> &nbsp;Search#}
+{#                        </a></li>#}
                         <li><a href="{{ url_for("wiki.special") }}">
                             <i class="uk-icon fas fa-fw fa-ellipsis-h"></i> &nbsp;Special Pages
                         </a></li>
                         <li><a href="{{ url_for("wiki.page", page="help") }}">
-                            <i class="fas fa-fw fa-question-circle"></i> &nbsp;Help
+                            <i class="uk-icon fas fa-fw fa-question-circle"></i> &nbsp;Help
                         </a></li>
+
+                        <li>
+                            <form action="{{ url_for("wiki.search") }}" method="post">
+                                {% if query is undefined %}
+                                <input type="text" class="uk-input" placeholder="Search (BETA)" id="query" name="query" style="padding-right: 0; margin-top: 5px; border-left: 0; border-right: 0;" required>
+                                {% else %}
+                                <input type="text" class="uk-input" placeholder="Search (BETA)" id="query" name="query" value="{{ query }}" style="padding-right: 0; margin-top: 5px; border-left: 0; border-right: 0;" required>
+                                {% endif %}
+                                <br />
+                                <button class="uk-button uk-button-darkish uk-button-small" type="submit" id="search" title="Search" style="width: 100%; border: 0;">
+                                    <i class="uk-icon fas fa-fw fa-search"></i>
+                                </button>
+
+                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                            </form>
+                        </li>
                     </ul>
                 </div>
                 <div class="uk-section" style="flex-grow: 1; margin: 0 1rem 1rem;">

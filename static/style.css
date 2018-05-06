@@ -151,3 +151,10 @@ div.payment-icon img {
 div.payment-icon {
     margin-right: 1em;
 }
+
+div.quote {
+    border-left: 3px solid #7289DA;
+    color: #99AAB5;
+    padding-left: 20px;
+    margin-bottom: 1rem;
+}

@@ -1,3 +1,10 @@
+import html
+import re
+
+STRIP_REGEX = re.compile(r"<[^<]+?>")
+WIKI_TABLE = "wiki"
+
+
 def when_ready(server=None):
     """ server hook that only runs when the gunicorn master process loads """
 
@@ -24,3 +31,11 @@ def when_ready(server=None):
     if initialized:
         tables = ", ".join([f"{table} ({count} items)" for table, count in initialized.items()])
         output(f"Initialized the following tables: {tables}")
+
+    output("Adding plain-text version of any wiki articles that don't have one...")
+
+    for article in db.pluck(WIKI_TABLE, "html", "text", "slug"):
+        if "text" not in article:
+            article["text"] = html.unescape(STRIP_REGEX.sub("", article["html"]).strip())
+
+            db.insert(WIKI_TABLE, article, conflict="update")

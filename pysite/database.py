@@ -1,8 +1,10 @@
 # coding=utf-8
+import html
 import json
 import logging
 import os
 from typing import Any, Callable, Dict, Iterator, List, Optional, Union
+import re
 
 import rethinkdb
 from flask import abort
@@ -21,6 +23,9 @@ ALL_TABLES = {
     "wiki": "slug",
     "wiki_revisions": "id"
 }
+
+STRIP_REGEX = re.compile(r"<[^<]+?>")
+WIKI_TABLE = "wiki"
 
 
 class RethinkDB:
@@ -54,6 +59,13 @@ class RethinkDB:
                 if initialized:
                     tables = ", ".join([f"{table} ({count} items)" for table, count in initialized.items()])
                     self.log.debug(f"Initialized the following tables: {tables}")
+
+                # Upgrade wiki articles
+                for article in self.pluck(WIKI_TABLE, "html", "text", "slug"):
+                    if "text" not in article:
+                        article["text"] = html.unescape(STRIP_REGEX.sub("", article["html"]).strip())
+
+                    self.insert(WIKI_TABLE, article, conflict="update")
 
     def create_tables(self) -> List[str]:
         """
@@ -495,9 +507,6 @@ class RethinkDB:
     def map(self, table_name: str, func: Callable):
         """
         Map a function over every document in a table, with the possibility of modifying it
-
-        r.table('users').map(
-        lambda doc: doc.merge({'user_id': doc['id']}).without('id')).run(conn)
 
         As an example, you could do the following to rename the "id" field to "user_id" for all documents
         in the "users" table.
