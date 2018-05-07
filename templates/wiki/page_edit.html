@@ -37,7 +37,7 @@
 
         let csrf_token = "{{ csrf_token() }}";
 
-        function do_preview() {
+        function do_preview(_) {
             let oReq = new XMLHttpRequest();
 
             oReq.addEventListener("load", function() {
@@ -90,6 +90,7 @@
         editor.setShowPrintMargin(false);
 
         editor.on("input", function() {
+            document.getElementById("submit").disabled = true;
             document.getElementById("rst").value = editor.getValue();
 
             if (timer !== undefined) {
@@ -113,7 +114,7 @@
             timer = setTimeout(do_preview, 1000);
         };
 
-        function refreshLock(){
+        function refreshLock() {
             console.log("Refreshing lock");
             let xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function() {

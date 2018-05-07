@@ -61,7 +61,7 @@ class EditView(RouteView, DBMixin):
         rst = request.form.get("rst")
         title = request.form["title"]
 
-        if not rst or not not rst.strip():
+        if not rst or not rst.strip():
             raise BadRequest()
 
         if not title or not title.strip():
