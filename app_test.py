@@ -1,13 +1,14 @@
+
 import json
 import os
 
 from flask import Blueprint
 from flask_testing import TestCase
 
+os.environ["BOT_API_KEY"] = "abcdefg"  # This is a constant, must be done first
+
 from app import manager
 from gunicorn_config import when_ready
-
-os.environ["BOT_API_KEY"] = "abcdefg"  # This is a constant, must be done first
 
 from pysite.constants import DISCORD_OAUTH_REDIRECT, DISCORD_OAUTH_AUTHORIZED
 
@@ -33,6 +34,7 @@ class SiteTest(TestCase):
         app.config['SERVER_NAME'] = server_name
         app.config['API_SUBDOMAIN'] = f'http://api.{server_name}'
         app.config['STAFF_SUBDOMAIN'] = f'http://staff.{server_name}'
+        app.config['WIKI_SUBDOMAIN'] = f'http://wiki.{server_name}'
         app.allow_subdomain_redirects = True
 
         return app
@@ -117,24 +119,27 @@ class RootEndpoint(SiteTest):
         response = self.client.get("/500")
         self.assertEqual(response.status_code, 500)
 
+
+class WikiEndpoints(SiteTest):
+    """ Test cases for the wiki subdomain """
     def test_wiki_edit(self):
         """Test that the wiki edit page redirects to login"""
-        response = self.client.get("/edit/page", "http://wiki.pytest.local")
-        self.assertEqual(response.status_code, 302)
+        response = self.client.get("/edit/page", app.config['WIKI_SUBDOMAIN'])
+        self.assertEqual(response.status_code, 200)
 
     def test_wiki_edit_post_empty_request(self):
         """Empty request should redirect to login"""
-        response = self.client.post("/edit/page", "http://wiki.pytest.local")
-        self.assertEqual(response.status_code, 302)
+        response = self.client.post("/edit/page", app.config['WIKI_SUBDOMAIN'])
+        self.assertEqual(response.status_code, 400)
 
     def test_wiki_history(self):
         """Test the history show"""
-        response = self.client.get("/history/show/blahblah-non-existant-page", "http://wiki.pytest.local")
+        response = self.client.get("/history/show/blahblah-non-existant-page", app.config['WIKI_SUBDOMAIN'])
         self.assertEqual(response.status_code, 404) # Test that unknown routes 404
 
     def test_wiki_diff(self):
         """Test whether invalid revision IDs error"""
-        response = self.client.get("/history/compare/ABC/XYZ", "http://wiki.pytest.local")
+        response = self.client.get("/history/compare/ABC/XYZ", app.config['WIKI_SUBDOMAIN'])
         self.assertEqual(response.status_code, 404) # Test that unknown revisions 404
 
 
@@ -152,90 +157,91 @@ class ApiEndpoints(SiteTest):
         self.assertEqual(response.json, {'status': 'ok'})
         self.assertEqual(response.status_code, 200)
 
-    # def test_api_tags(self):
-    #     """ Check tag API """
-    #     os.environ['BOT_API_KEY'] = 'abcdefg'
-    #     headers = {'X-API-Key': 'abcdefg', 'Content-Type': 'application/json'}
-    #
-    #     post_data = json.dumps({
-    #         'tag_name': 'testing',
-    #         'tag_content': 'testing'
-    #     })
-    #
-    #     get_data = json.dumps({
-    #         'tag_name': 'testing'
-    #     })
-    #
-    #     bad_data = json.dumps({
-    #         'not_a_valid_key': 'gross_faceman'
-    #     })
-    #
-    #     # POST method - no headers
-    #     response = self.client.post('/tags', app.config['API_SUBDOMAIN'])
-    #     self.assertEqual(response.status_code, 401)
-    #
-    #     # POST method - no data
-    #     response = self.client.post('/tags', app.config['API_SUBDOMAIN'], headers=headers)
-    #     self.assertEqual(response.status_code, 400)
-    #
-    #     # POST method - bad data
-    #     response = self.client.post('/tags', app.config['API_SUBDOMAIN'], headers=headers, data=bad_data)
-    #     self.assertEqual(response.status_code, 400)
-    #
-    #     # POST method - save tag
-    #     response = self.client.post('/tags', app.config['API_SUBDOMAIN'], headers=headers, data=post_data)
-    #     self.assertEqual(response.status_code, 200)
-    #     self.assertEqual(response.json, {"success": True})
-    #
-    #     # GET method - no headers
-    #     response = self.client.get('/tags', app.config['API_SUBDOMAIN'])
-    #     self.assertEqual(response.status_code, 401)
-    #
-    #     # GET method - get all tags
-    #     response = self.client.get('/tags', app.config['API_SUBDOMAIN'], headers=headers)
-    #     self.assertEqual(response.status_code, 200)
-    #     self.assertEqual(type(response.json), list)
-    #
-    #     # GET method - get specific tag
-    #     response = self.client.get('/tags?tag_name=testing', app.config['API_SUBDOMAIN'], headers=headers)
-    #     self.assertEqual(response.json, {
-    #         'tag_content': 'testing',
-    #         'tag_name': 'testing'
-    #     })
-    #     self.assertEqual(response.status_code, 200)
-    #
-    #     # DELETE method - no headers
-    #     response = self.client.delete('/tags', app.config['API_SUBDOMAIN'])
-    #     self.assertEqual(response.status_code, 401)
-    #
-    #     # DELETE method - no data
-    #     response = self.client.delete('/tags', app.config['API_SUBDOMAIN'], headers=headers)
-    #     self.assertEqual(response.status_code, 400)
-    #
-    #     # DELETE method - bad data
-    #     response = self.client.delete('/tags', app.config['API_SUBDOMAIN'], headers=headers, data=bad_data)
-    #     self.assertEqual(response.status_code, 400)
-    #
-    #     # DELETE method - delete the testing tag
-    #     response = self.client.delete('/tags', app.config['API_SUBDOMAIN'], headers=headers, data=get_data)
-    #     self.assertEqual(response.status_code, 200)
-    #     self.assertEqual(response.json, {"success": True})
-    #
-    # def test_api_user(self):
-    #     """ Check insert user """
-    #     os.environ['BOT_API_KEY'] = 'abcdefg'
-    #     headers = {'X-API-Key': 'abcdefg', 'Content-Type': 'application/json'}
-    #     single_data = json.dumps({'user_id': "1234", 'roles': ["5678"], "username": "test", "discriminator": "0000"})
-    #     list_data = json.dumps([{'user_id': "1234", 'roles': ["5678"], "username": "test", "discriminator": "0000"}])
-    #
-    #     response = self.client.get('/user', app.config['API_SUBDOMAIN'], headers=headers)
-    #     self.assertEqual(response.status_code, 405)
-    #
-    #     response = self.client.post('/user', app.config['API_SUBDOMAIN'], headers=headers, data=single_data)
-    #     self.assertTrue("inserted" in response.json)
-    #
-    #     response = self.client.post('/user', app.config['API_SUBDOMAIN'], headers=headers, data=list_data)
-    #     self.assertTrue("inserted" in response.json)
+    def test_api_tags(self):
+        """ Check tag API """
+        os.environ['BOT_API_KEY'] = 'abcdefg'
+        headers = {'X-API-Key': 'abcdefg', 'Content-Type': 'application/json'}
+
+        post_data = json.dumps({
+            'tag_name': 'testing',
+            'tag_content': 'testing'
+        })
+
+        get_data = json.dumps({
+            'tag_name': 'testing'
+        })
+
+        bad_data = json.dumps({
+            'not_a_valid_key': 'gross_faceman'
+        })
+
+        # POST method - no headers
+        response = self.client.post('/tags', app.config['API_SUBDOMAIN'])
+        self.assertEqual(response.status_code, 401)
+
+        # POST method - no data
+        response = self.client.post('/tags', app.config['API_SUBDOMAIN'], headers=headers)
+        self.assertEqual(response.status_code, 400)
+
+        # POST method - bad data
+        response = self.client.post('/tags', app.config['API_SUBDOMAIN'], headers=headers, data=bad_data)
+        self.assertEqual(response.status_code, 400)
+
+        # POST method - save tag
+        response = self.client.post('/tags', app.config['API_SUBDOMAIN'], headers=headers, data=post_data)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json, {"success": True})
+
+        # GET method - no headers
+        response = self.client.get('/tags', app.config['API_SUBDOMAIN'])
+        self.assertEqual(response.status_code, 401)
+
+        # GET method - get all tags
+        response = self.client.get('/tags', app.config['API_SUBDOMAIN'], headers=headers)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(type(response.json), list)
+
+        # GET method - get specific tag
+        response = self.client.get('/tags?tag_name=testing', app.config['API_SUBDOMAIN'], headers=headers)
+        self.assertEqual(response.json, {
+            'tag_content': 'testing',
+            'tag_name': 'testing'
+        })
+        self.assertEqual(response.status_code, 200)
+
+        # DELETE method - no headers
+        response = self.client.delete('/tags', app.config['API_SUBDOMAIN'])
+        self.assertEqual(response.status_code, 401)
+
+        # DELETE method - no data
+        response = self.client.delete('/tags', app.config['API_SUBDOMAIN'], headers=headers)
+        self.assertEqual(response.status_code, 400)
+
+        # DELETE method - bad data
+        response = self.client.delete('/tags', app.config['API_SUBDOMAIN'], headers=headers, data=bad_data)
+        self.assertEqual(response.status_code, 400)
+
+        # DELETE method - delete the testing tag
+        response = self.client.delete('/tags', app.config['API_SUBDOMAIN'], headers=headers, data=get_data)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json, {"success": True})
+
+    def test_api_user(self):
+        """ Check insert user """
+
+        os.environ['BOT_API_KEY'] = 'abcdefg'
+        headers = {'X-API-Key': 'abcdefg', 'Content-Type': 'application/json'}
+        single_data = json.dumps({'user_id': "1234", 'roles': ["5678"], "username": "test", "discriminator": "0000"})
+        list_data = json.dumps([{'user_id': "1234", 'roles': ["5678"], "username": "test", "discriminator": "0000"}])
+
+        response = self.client.get('/user', app.config['API_SUBDOMAIN'], headers=headers)
+        self.assertEqual(response.status_code, 405)
+
+        response = self.client.post('/user', app.config['API_SUBDOMAIN'], headers=headers, data=single_data)
+        self.assertTrue("inserted" in response.json)
+
+        response = self.client.post('/user', app.config['API_SUBDOMAIN'], headers=headers, data=list_data)
+        self.assertTrue("inserted" in response.json)
 
     def test_api_route_errors(self):
         """ Check api route errors """
@@ -256,13 +262,8 @@ class StaffEndpoints(SiteTest):
     """ Test cases for staff subdomain """
     def test_staff_view(self):
         """ Check staff view renders """
-        from pysite.views.staff.index import StaffView
-        sv = StaffView()
-        result = sv.get()
-        self.assertEqual(result.status_code, 302)  # TODO: Do this correctly
-
         response = self.client.get('/', app.config['STAFF_SUBDOMAIN'])
-        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.status_code, 200)
 
 
 class Utilities(SiteTest):
