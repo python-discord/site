@@ -7,9 +7,9 @@ from typing import Any, Callable, Dict, Iterator, List, Optional, Union
 import re
 
 import rethinkdb
-from flask import abort
 from rethinkdb.ast import RqlMethodQuery, Table, UserError
 from rethinkdb.net import DefaultConnection
+from werkzeug.exceptions import ServiceUnavailable
 
 from pysite.constants import DEBUG_MODE
 
@@ -144,7 +144,7 @@ class RethinkDB:
         try:
             self.conn = self.get_connection()
         except rethinkdb.RqlDriverError:
-            abort(503, "Database connection could not be established.")
+            raise ServiceUnavailable("Database connection could not be established.")
 
     def teardown_request(self, _):
         """
