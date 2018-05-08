@@ -125,12 +125,12 @@ class WikiEndpoints(SiteTest):
     def test_wiki_edit(self):
         """Test that the wiki edit page redirects to login"""
         response = self.client.get("/edit/page", app.config['WIKI_SUBDOMAIN'])
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 302)
 
     def test_wiki_edit_post_empty_request(self):
         """Empty request should redirect to login"""
         response = self.client.post("/edit/page", app.config['WIKI_SUBDOMAIN'])
-        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.status_code, 302)
 
     def test_wiki_history(self):
         """Test the history show"""
@@ -261,9 +261,9 @@ class ApiEndpoints(SiteTest):
 class StaffEndpoints(SiteTest):
     """ Test cases for staff subdomain """
     def test_staff_view(self):
-        """ Check staff view renders """
+        """ Check staff view redirects """
         response = self.client.get('/', app.config['STAFF_SUBDOMAIN'])
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 302)
 
 
 class Utilities(SiteTest):
