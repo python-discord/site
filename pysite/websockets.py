@@ -74,6 +74,8 @@ class WS:
         if not cls.path or not cls.name:
             raise RuntimeError("Websockets must have both `path` and `name` defined")
 
+        cls.manager = manager
+
         def handle(socket: WebSocket):
             """
             Wrap the current WS class, dispatching events to it as necessary. We're using gevent, so there's
