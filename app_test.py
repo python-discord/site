@@ -6,6 +6,7 @@ from flask_testing import TestCase
 
 from app import manager
 from gunicorn_config import when_ready
+from pysite import constants
 from pysite.constants import DISCORD_OAUTH_REDIRECT, DISCORD_OAUTH_AUTHORIZED
 
 when_ready()
@@ -151,7 +152,7 @@ class ApiEndpoints(SiteTest):
 
     def test_api_tags(self):
         """ Check tag API """
-        os.environ['BOT_API_KEY'] = 'abcdefg'
+        constants.BOT_API_KEY = 'abcdefg'
         headers = {'X-API-Key': 'abcdefg', 'Content-Type': 'application/json'}
 
         post_data = json.dumps({
@@ -220,7 +221,7 @@ class ApiEndpoints(SiteTest):
 
     def test_api_user(self):
         """ Check insert user """
-        os.environ['BOT_API_KEY'] = 'abcdefg'
+        constants.BOT_API_KEY = 'abcdefg'
         headers = {'X-API-Key': 'abcdefg', 'Content-Type': 'application/json'}
         single_data = json.dumps({'user_id': "1234", 'roles': ["5678"], "username": "test", "discriminator": "0000"})
         list_data = json.dumps([{'user_id': "1234", 'roles': ["5678"], "username": "test", "discriminator": "0000"}])
