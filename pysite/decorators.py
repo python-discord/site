@@ -6,7 +6,7 @@ from schema import Schema, SchemaError
 from werkzeug.exceptions import Forbidden
 
 from pysite.base_route import APIView, BaseView
-from pysite.constants import CSRF, DEBUG_MODE, ErrorCodes, ValidationTypes, BOT_API_KEY
+from pysite.constants import BOT_API_KEY, CSRF, DEBUG_MODE, ErrorCodes, ValidationTypes
 
 
 def csrf(f):
