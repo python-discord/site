@@ -6,7 +6,10 @@ from flask import Blueprint
 from flask_testing import TestCase
 
 os.environ["BOT_API_KEY"] = "abcdefg"  # This is a constant, must be done first
-del os.environ["FLASK_DEBUG"]  # Some unit tests fail if this is set
+try:
+    del os.environ["FLASK_DEBUG"]  # Some unit tests fail if this is set
+except KeyError:
+    pass
 
 from app import manager
 from gunicorn_config import when_ready
