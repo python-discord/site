@@ -96,31 +96,43 @@ class RethinkDB:
 
         for table, primary_key in ALL_TABLES.items():
 
-            self.log.trace(f"Checking if {table} is empty.")
+            if os.path.isfile(f"pysite/database/table_init/{table}.json"):
 
-            # If the table is empty
-            if not self.pluck(table, primary_key):
-
-                self.log.trace(f"{table} appears to be empty. Checking if there is a json file at {os.getcwd()}"
+                self.log.trace(f"JSON file discovered at {os.getcwd()}"
                                f"/pysite/database/table_init/{table}.json")
 
-                # And a corresponding JSON file exists
-                if os.path.isfile(f"pysite/database/table_init/{table}.json"):
+                # Load in all the data in that file.
+                with open(f"pysite/database/table_init/{table}.json") as json_file:
 
-                    # Load in all the data in that file.
-                    with open(f"pysite/database/table_init/{table}.json") as json_file:
-                        table_data = json.load(json_file)
+                    # Get the data we need
+                    json_data = json.load(json_file)
+                    json_pks = [item[primary_key] for item in json_data]
+                    table_data = [item[primary_key] for item in self.pluck(table, primary_key)]
 
-                        self.log.trace(f"Loading the json file into the table. "
-                                       f"The json file contains {len(table_data)} items.")
+                    # Sort out what data we need to add and remove
+                    add_data = [item for item in json_data if item[primary_key] not in table_data]
+                    remove_data = [item for item in table_data if item not in json_pks]
 
-                        for row in table_data:
+                    self.log.trace("Checking if there are any changes in the JSON files...")
+                    if add_data or remove_data:
+                        self.log.trace(
+                            f"New changes found! Removing {len(remove_data)} items, "
+                            f"and adding {len(add_data)} new items to the table."
+                        )
+
+                        for item in add_data:
                             self.insert(
                                 table,
-                                row
+                                item
                             )
 
-                    initialized[table] = len(table_data)
+                        for item in remove_data:
+                            self.delete(
+                                table,
+                                item
+                            )
+
+                        initialized[table] = len(json_data)
 
         return initialized
 
