@@ -1,15 +1,18 @@
-import html
 import re
+
+from pysite.migrations.runner import run_migrations
 
 STRIP_REGEX = re.compile(r"<[^<]+?>")
 WIKI_TABLE = "wiki"
 
 
-def when_ready(server=None):
+def when_ready(server=None, output_func=None):
     """ server hook that only runs when the gunicorn master process loads """
 
     if server:
         output = server.log.info
+    elif output_func:
+        output = output_func
     else:
         output = print
 
@@ -26,16 +29,4 @@ def when_ready(server=None):
         tables = ", ".join([f"{table}" for table in created])
         output(f"Created the following tables: {tables}")
 
-    # Init the tables that require initialization
-    initialized = db.init_tables()
-    if initialized:
-        tables = ", ".join([f"{table} ({count} items)" for table, count in initialized.items()])
-        output(f"Initialized the following tables: {tables}")
-
-    output("Adding plain-text version of any wiki articles that don't have one...")
-
-    for article in db.pluck(WIKI_TABLE, "html", "text", "slug"):
-        if "text" not in article:
-            article["text"] = html.unescape(STRIP_REGEX.sub("", article["html"]).strip())
-
-            db.insert(WIKI_TABLE, article, conflict="update")
+    run_migrations(db, output=output)

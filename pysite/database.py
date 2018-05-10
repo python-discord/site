@@ -21,7 +21,8 @@ ALL_TABLES = {
     "tags": "tag_name",
     "users": "user_id",
     "wiki": "slug",
-    "wiki_revisions": "id"
+    "wiki_revisions": "id",
+    "_versions": "table"
 }
 
 STRIP_REGEX = re.compile(r"<[^<]+?>")
@@ -47,26 +48,6 @@ class RethinkDB:
             except rethinkdb.RqlRuntimeError:
                 self.log.debug(f"Database found: '{self.database}'")
 
-            if DEBUG_MODE:
-                # Create any table that doesn't exist
-                created = self.create_tables()
-                if created:
-                    tables = ", ".join([f"{table}" for table in created])
-                    self.log.debug(f"Created the following tables: {tables}")
-
-                # Init the tables that require initialization
-                initialized = self.init_tables()
-                if initialized:
-                    tables = ", ".join([f"{table} ({count} items)" for table, count in initialized.items()])
-                    self.log.debug(f"Initialized the following tables: {tables}")
-
-                # Upgrade wiki articles
-                for article in self.pluck(WIKI_TABLE, "html", "text", "slug"):
-                    if "text" not in article:
-                        article["text"] = html.unescape(STRIP_REGEX.sub("", article["html"]).strip())
-
-                    self.insert(WIKI_TABLE, article, conflict="update")
-
     def create_tables(self) -> List[str]:
         """
         Creates whichever tables exist in the ALL_TABLES
@@ -81,48 +62,6 @@ class RethinkDB:
                 created.append(table)
 
         return created
-
-    def init_tables(self) -> Dict[str, int]:
-        """
-        If the table is empty, and there is a corresponding JSON file with data,
-        then we fill the table with the data in the JSON file.
-
-        The JSON files are contained inside of pysite/database/table_init/
-        :return:
-        """
-
-        self.log.debug("Initializing tables")
-        initialized = {}
-
-        for table, primary_key in ALL_TABLES.items():
-
-            self.log.trace(f"Checking if {table} is empty.")
-
-            # If the table is empty
-            if not self.pluck(table, primary_key):
-
-                self.log.trace(f"{table} appears to be empty. Checking if there is a json file at {os.getcwd()}"
-                               f"/pysite/database/table_init/{table}.json")
-
-                # And a corresponding JSON file exists
-                if os.path.isfile(f"pysite/database/table_init/{table}.json"):
-
-                    # Load in all the data in that file.
-                    with open(f"pysite/database/table_init/{table}.json") as json_file:
-                        table_data = json.load(json_file)
-
-                        self.log.trace(f"Loading the json file into the table. "
-                                       f"The json file contains {len(table_data)} items.")
-
-                        for row in table_data:
-                            self.insert(
-                                table,
-                                row
-                            )
-
-                    initialized[table] = len(table_data)
-
-        return initialized
 
     def get_connection(self, connect_database: bool = True) -> DefaultConnection:
         """
