@@ -1,0 +1,103 @@
+{% extends "main/base.html" %}
+{% block title %}Staff | Home{% endblock %}
+{% block og_title %}Staff | Home{% endblock %}
+{% block og_description %}Landing page for the staff management area{% endblock %}
+{% block content %}
+    <div class="uk-container uk-section uk-container-small">
+        <a class="uk-button uk-button-default" href="{{ url_for("staff.tables.index") }}"><i class="uk-icon fa-fw fas fa-arrow-left"></i> &nbsp;Back</a>
+        <a class="uk-button uk-button-primary" href="{{ url_for("staff.tables.edit", table=table) }}"><i class="uk-icon fa-fw fas fa-plus"></i> &nbsp;Add</a>
+        <h1 class="uk-title uk-text-center">
+            <span style="font-family: monospace">{{ table }}</span>
+        </h1>
+        <ul class="uk-pagination uk-flex-center" uk-margin>
+            {% if page > 1 %}
+                <li><a href="{{ url_for("staff.tables.table", table=table, page=page - 1) }}"><span uk-pagination-previous></span></a></li>
+            {% else %}
+                <li class="uk-disabled"><a><span uk-pagination-previous></span></a></li>
+            {% endif %}
+
+            {% if page == 1 %}
+                <li class="uk-active"><a href="{{ url_for("staff.tables.table", table=table, page=1) }}">1</a></li>
+            {% else %}
+                <li><a href="{{ url_for("staff.tables.table", table=table, page=1) }}">1</a></li>
+            {% endif %}
+
+            {% if pages > 5 %}
+            <li class="uk-disabled"><a>...</a></li>
+            {% endif %}
+
+            {% set current_page = page - 2 %}
+
+            {% for num in range(5) %}
+                {% if current_page + num > 1 and current_page + num < pages %}
+                    {% if current_page + num == page %}
+                        <li class="uk-active"><a href="{{ url_for("staff.tables.table", table=table, page=current_page + num) }}">{{ current_page + num }}</a></li>
+                    {% else %}
+                        <li><a href="{{ url_for("staff.tables.table", table=table, page=current_page + num) }}">{{ current_page + num }}</a></li>
+                    {% endif %}
+                {% endif %}
+                {% set current_page = current_page - 1 %}
+            {% endfor %}
+
+            {% if pages > 5 %}
+            <li class="uk-disabled"><a>...</a></li>
+            {% endif %}
+
+            {% if pages != 1 %}
+                {% if page == pages %}
+                    <li class="uk-active"><a href="{{ url_for("staff.tables.table", table=table, page=pages) }}">{{ pages }}</a></li>
+                {% else %}
+                    <li><a href="{{ url_for("staff.tables.table", table=table, page=pages) }}">{{ pages }}</a></li>
+                {% endif %}
+            {% endif %}
+
+            {% if page < pages %}
+                <li><a href="{{ url_for("staff.tables.table", table=table, page=page + 1) }}"><span uk-pagination-next></span></a></li>
+            {% else %}
+                <li class="uk-disabled"><a><span uk-pagination-next></span></a></li>
+            {% endif %}
+        </ul>
+
+        {% if documents %}
+            <table class="uk-table uk-table-striped uk-overflow-auto">
+                <thead>
+                    <tr>
+                        <th class="uk-table-shrink uk-text-center">
+                            <i class="uk-icon fa-fw fas fa-pencil"></i>
+                        </th>
+
+                        {% for key in documents[0] %}
+                        <th class="uk-text-truncate" title="{{ key }}">
+                            {% if key == primary_key %}
+                                <strong>{{ key }}</strong>
+                            {% else %}
+                                {{ key }}
+                            {% endif %}
+                        </th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for doc in documents %}
+                    <tr>
+                        <td class="uk-table-shrink">
+                            <a href="{{ url_for("staff.tables.edit", table=table, key=doc[primary_key]) }}"><i class="uk-icon fa-fw fas fa-pencil"></i></a>
+                        </td>
+                        {% for key, value in doc.items() %}
+                            <td class="uk-text-truncate" style="font-family: monospace" title="{{ value }}">
+                                {% if key == primary_key %}
+                                    <strong>{{ value }}</strong>
+                                {% else %}
+                                    {{ value }}
+                                {% endif %}
+                            </td>
+                        {% endfor %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+    {% else %}
+            <p class="uk-text-center">No documents found</p>
+    {% endif %}
+    </div>
+{% endblock %}

@@ -1,6 +1,4 @@
 # coding=utf-8
-import html
-import json
 import logging
 import os
 from typing import Any, Callable, Dict, Iterator, List, Optional, Union
@@ -10,8 +8,6 @@ import rethinkdb
 from rethinkdb.ast import RqlMethodQuery, Table, UserError
 from rethinkdb.net import DefaultConnection
 from werkzeug.exceptions import ServiceUnavailable
-
-from pysite.constants import DEBUG_MODE
 
 ALL_TABLES = {
     # table: primary_key
@@ -23,6 +19,17 @@ ALL_TABLES = {
     "wiki": "slug",
     "wiki_revisions": "id",
     "_versions": "table"
+}
+
+TABLE_KEYS = {
+    "hiphopify": {"user_id", "end_timestamp", "forced_nick"},
+    "hiphopify_namelist": {"name", "image_url"},
+    "oauth_data": {"access_token", "expires_at", "id", "refresh_token", "snowflake"},
+    "tags": {"tag_name", "tag_content"},
+    "users": {"roles", "user_id", "username"},
+    "wiki": {"headers", "html", "rst", "slug", "text", "title"},
+    "wiki_revisions": {"date", "id", "post", "slug", "user"},
+    "_versions": {"table", "version"}
 }
 
 STRIP_REGEX = re.compile(r"<[^<]+?>")
@@ -211,7 +218,7 @@ class RethinkDB:
 
         return rethinkdb.table(table_name)
 
-    def run(self, query: RqlMethodQuery, *, new_connection: bool = False,
+    def run(self, query: Union[RqlMethodQuery, Table], *, new_connection: bool = False,
             connect_database: bool = True, coerce: type = None) -> Union[rethinkdb.Cursor, List, Dict, object]:
         """
         Run a query using a table object obtained from a call to `query()`
@@ -406,10 +413,16 @@ class RethinkDB:
         :return: A list of matching documents; may be empty if no matches were made
         """
 
-        return self.run(  # pragma: no cover
-            self.query(table_name).get_all(*keys, index=index),
-            coerce=list
-        )
+        if keys:
+            return self.run(  # pragma: no cover
+                self.query(table_name).get_all(*keys, index=index),
+                coerce=list
+            )
+        else:
+            return self.run(
+                self.query(table_name),
+                coerce=list
+            )
 
     def insert(self, table_name: str, *objects: Dict[str, Any],
                durability: str = "hard",
@@ -439,7 +452,7 @@ class RethinkDB:
         )
 
         if return_changes:
-            return self.run(query, coerce=list)
+            return self.run(query, coerce=dict)
         else:
             return self.run(query, coerce=dict)
 
