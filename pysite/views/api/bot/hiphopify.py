@@ -35,7 +35,7 @@ DELETE_SCHEMA = Schema([
 
 class HiphopifyView(APIView, DBMixin):
     path = "/hiphopify"
-    name = "hiphopify"
+    name = "api.bot.hiphopify"
     prison_table = "hiphopify"
     name_table = "hiphopify_namelist"
 

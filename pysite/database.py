@@ -18,6 +18,7 @@ ALL_TABLES = {
     "hiphopify": "user_id",
     "hiphopify_namelist": "name",
     "oauth_data": "id",
+    "snake_quiz": "id",
     "tags": "tag_name",
     "users": "user_id",
     "wiki": "slug",
