@@ -24,7 +24,7 @@ install:
   - pipenv sync --dev --three
 script:
   - pipenv run lint
-  - python gunicorn_config.py
+  - pipenv run python gunicorn_config.py
   - pipenv run test
   - pipenv run coveralls
 after_success:
