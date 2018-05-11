@@ -8,28 +8,7 @@ from rethinkdb.ast import RqlMethodQuery, Table, UserError
 from rethinkdb.net import DefaultConnection
 from werkzeug.exceptions import ServiceUnavailable
 
-ALL_TABLES = {
-    # table: primary_key
-    "hiphopify": "user_id",
-    "hiphopify_namelist": "name",
-    "oauth_data": "id",
-    "tags": "tag_name",
-    "users": "user_id",
-    "wiki": "slug",
-    "wiki_revisions": "id",
-    "_versions": "table"
-}
-
-TABLE_KEYS = {
-    "hiphopify": {"user_id", "end_timestamp", "forced_nick"},
-    "hiphopify_namelist": {"name", "image_url"},
-    "oauth_data": {"access_token", "expires_at", "id", "refresh_token", "snowflake"},
-    "tags": {"tag_name", "tag_content"},
-    "users": {"roles", "user_id", "username"},
-    "wiki": {"headers", "html", "rst", "slug", "text", "title"},
-    "wiki_revisions": {"date", "id", "post", "slug", "user"},
-    "_versions": {"table", "version"}
-}
+from pysite.tables import TABLES
 
 STRIP_REGEX = re.compile(r"<[^<]+?>")
 WIKI_TABLE = "wiki"
@@ -56,15 +35,15 @@ class RethinkDB:
 
     def create_tables(self) -> List[str]:
         """
-        Creates whichever tables exist in the ALL_TABLES
+        Creates whichever tables exist in the TABLES
         constant if they don't already exist in the database.
 
         :return: a list of the tables that were created.
         """
         created = []
 
-        for table, primary_key in ALL_TABLES.items():
-            if self.create_table(table, primary_key):
+        for table, obj in TABLES.items():
+            if self.create_table(table, obj.primary_key):
                 created.append(table)
 
         return created
@@ -212,8 +191,8 @@ class RethinkDB:
         :return: The RethinkDB table object for the table
         """
 
-        if table_name not in ALL_TABLES:
-            self.log.warning(f"Table not declared in database.py: {table_name}")
+        if table_name not in TABLES:
+            self.log.warning(f"Table not declared in tables.py: {table_name}")
 
         return rethinkdb.table(table_name)
 

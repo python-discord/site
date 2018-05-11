@@ -1,5 +1,5 @@
-def run(db, table, primary_key):
-    for document in db.pluck(table, primary_key, "title"):
+def run(db, table, table_obj):
+    for document in db.pluck(table, table_obj.primary_key, "title"):
         if not document.get("title"):
             document["title"] = "No Title"
 

@@ -4,9 +4,9 @@ from werkzeug.exceptions import BadRequest, NotFound
 
 from pysite.base_route import RouteView
 from pysite.constants import TABLE_MANAGER_ROLES
-from pysite.database import ALL_TABLES
 from pysite.decorators import require_roles
 from pysite.mixins import DBMixin
+from pysite.tables import TABLES
 
 
 class TableView(RouteView, DBMixin):
@@ -15,7 +15,9 @@ class TableView(RouteView, DBMixin):
 
     @require_roles(*TABLE_MANAGER_ROLES)
     def get(self, table, page):
-        if table not in ALL_TABLES:
+        obj = TABLES.get(table)
+
+        if not obj:
             raise NotFound()
 
         count = self.db.run(self.db.query(table).count(), coerce=int)  # All documents in table
@@ -28,12 +30,14 @@ class TableView(RouteView, DBMixin):
         documents = self.db.run(  # Get only the documents for this page
             self.db.query(table)
                 .skip((page - 1) * 10)
-                .limit(page * 10),
+                .limit(10),
             coerce=list
         )
 
+        documents = [dict(sorted(d.items())) for d in documents]
+
         return self.render(
             "staff/tables/table.html",
-            table=table, documents=documents, primary_key=ALL_TABLES[table],
+            table=table, documents=documents, table_obj=obj,
             page=page, pages=pages
         )

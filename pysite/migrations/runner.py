@@ -3,7 +3,8 @@ import json
 import os
 from typing import Callable
 
-from pysite.database import ALL_TABLES, RethinkDB
+from pysite.database import RethinkDB
+from pysite.tables import TABLES
 
 TABLES_DIR = os.path.abspath("./pysite/migrations/tables")
 VERSIONS_TABLE = "_versions"
@@ -28,7 +29,7 @@ def get_migrations(table_path, table):
 
 
 def run_migrations(db: RethinkDB, output: Callable[[str], None]=None):
-    for table, primary_key in ALL_TABLES.items():  # All _defined_ tables
+    for table, obj in TABLES.items():  # All _defined_ tables
         table_path = os.path.join(TABLES_DIR, table)
 
         if not os.path.exists(table_path):  # Check whether we actually have any migration data for this table at all
@@ -38,6 +39,9 @@ def run_migrations(db: RethinkDB, output: Callable[[str], None]=None):
         with db.get_connection() as conn:  # Make sure we have an active connection
             try:
                 if not db.query(table).count().run(conn):  # If there are no documents in the table...
+                    # Table's empty, so we'll have to run migrations again anyway
+                    db.delete(VERSIONS_TABLE, table)
+
                     json_path = os.path.join(table_path, "initial_data.json")
 
                     if os.path.exists(json_path):  # We have initial data to insert, so let's do that
@@ -72,7 +76,7 @@ def run_migrations(db: RethinkDB, output: Callable[[str], None]=None):
                     current_version += 1
 
                     module = importlib.import_module(migrations[current_version])
-                    module.run(db, table, primary_key)
+                    module.run(db, table, obj)
                     output(f"Table upgraded to version {current_version}/{final_version}: {table}")
 
                     # Make sure the versions table is kept up to date, so we don't ever migrate twice

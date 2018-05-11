@@ -12,8 +12,20 @@
             Click one of the tables below to manage its data:
         </p>
         <ul>
-            {% for table in tables %}
-                <li><a href="{{ url_for("staff.tables.table", table=table, page=1) }}">{{ table }}</a></li>
+            {% for table, obj in tables.items() %}
+                {% if obj.locked %}
+                    <li>
+                        <a href="{{ url_for("staff.tables.table", table=table, page=1) }}" title="Table locked for editing">
+                            <i class="uk-icon fa-fw fas fa-lock"></i> &nbsp;{{ table }}
+                        </a>
+                    </li>
+                {% else %}
+                    <li>
+                        <a href="{{ url_for("staff.tables.table", table=table, page=1) }}">
+                            <i class="uk-icon fa-fw fas fa-pencil"></i> &nbsp;{{ table }}
+                        </a>
+                    </li>
+                {% endif %}
             {% endfor %}
         </ul>
     </div>
