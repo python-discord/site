@@ -1,7 +1,7 @@
 import json
 
 from flask import redirect, request, url_for
-from werkzeug.exceptions import NotFound, BadRequest
+from werkzeug.exceptions import BadRequest, NotFound
 
 from pysite.base_route import RouteView
 from pysite.constants import TABLE_MANAGER_ROLES
