@@ -22,7 +22,7 @@
                 <li><a href="{{ url_for("staff.tables.table", table=table, page=1) }}">1</a></li>
             {% endif %}
 
-            {% if pages > 5 %}
+            {% if page >= 5 %}
             <li class="uk-disabled"><a>...</a></li>
             {% endif %}
 
@@ -39,7 +39,7 @@
                 {% set current_page = current_page - 1 %}
             {% endfor %}
 
-            {% if pages > 5 %}
+            {% if pages - page > 3 %}
             <li class="uk-disabled"><a>...</a></li>
             {% endif %}
 
