@@ -72,7 +72,7 @@ class TableEditView(RouteView, DBMixin):
 
         try:
             data = json.loads(data)
-        except Exception as e:
+        except json.JSONDecodeError as e:
             # Invalid JSON
             return self.render(
                 "staff/tables/edit.html", table=table, primary_key=primary_key, document=data,

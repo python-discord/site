@@ -1,6 +1,3 @@
-# coding=utf-8
-
-
 def run(db, table, primary_key):
     for document in db.pluck(table, primary_key, "title"):
         if not document.get("title"):

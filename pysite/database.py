@@ -1,4 +1,3 @@
-# coding=utf-8
 import logging
 import os
 from typing import Any, Callable, Dict, Iterator, List, Optional, Union
@@ -432,7 +431,7 @@ class RethinkDB:
                        [Dict[str, Any], Dict[str, Any]],  # ...takes two dicts with string keys and any values...
                        Dict[str, Any]  # ...and returns a dict with string keys and any values
                    ]
-               ] = "error") -> Union[List, Dict]:  # flake8: noqa
+               ] = "error") -> Dict[str, Any]:  # flake8: noqa
         """
         Insert an object or a set of objects into a table
 
@@ -451,10 +450,7 @@ class RethinkDB:
             objects, durability=durability, return_changes=return_changes, conflict=conflict
         )
 
-        if return_changes:
-            return self.run(query, coerce=dict)
-        else:
-            return self.run(query, coerce=dict)
+        return self.run(query, coerce=dict)
 
     def map(self, table_name: str, func: Callable):
         """
