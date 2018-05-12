@@ -18,10 +18,12 @@ ALL_TABLES = {
     "hiphopify": "user_id",
     "hiphopify_namelist": "name",
     "oauth_data": "id",
+    "snake_facts": "fact",
+    "snake_quiz": "id",
     "tags": "tag_name",
     "users": "user_id",
     "wiki": "slug",
-    "wiki_revisions": "id"
+    "wiki_revisions": "id",
 }
 
 STRIP_REGEX = re.compile(r"<[^<]+?>")
