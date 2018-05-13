@@ -88,8 +88,8 @@ def run_migrations(db: RethinkDB, output: Callable[[str], None]=None):
                         conflict="replace",
                         durability="soft"
                     )
-            except Exception as e:
-                # TODO: Should this fail hard and just raise?
-                output(f"Failed to migrate table: {table} - {e}")
+            except Exception:
+                output(f"Failed to migrate table: {table}")
+                raise
             finally:
                 db.sync(VERSIONS_TABLE)

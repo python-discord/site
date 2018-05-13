@@ -9,8 +9,6 @@ from pysite.decorators import csrf, require_roles
 from pysite.mixins import DBMixin
 from pysite.tables import TABLES
 
-DEFAULT_OLD_PRIMARY = "!None!"
-
 
 class TableEditView(RouteView, DBMixin):
     path = "/tables/<table>/edit"
@@ -29,7 +27,7 @@ class TableEditView(RouteView, DBMixin):
 
         key = request.args.get("key")
 
-        old_primary = DEFAULT_OLD_PRIMARY
+        old_primary = None
 
         if key:
             db_obj = self.db.get(table, key)
@@ -93,7 +91,7 @@ class TableEditView(RouteView, DBMixin):
                 message=f"Please provide a value for the primary key: {obj.primary_key}", old_primary=old_primary
             )
 
-        if old_primary == DEFAULT_OLD_PRIMARY:
+        if old_primary is None:
             self.db.insert(  # This is a new object, so just insert it
                 table, data
             )
