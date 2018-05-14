@@ -1,6 +1,3 @@
-# coding=utf-8
-import html
-import json
 import logging
 import os
 from typing import Any, Callable, Dict, Iterator, List, Optional, Union
@@ -11,18 +8,7 @@ from rethinkdb.ast import RqlMethodQuery, Table, UserError
 from rethinkdb.net import DefaultConnection
 from werkzeug.exceptions import ServiceUnavailable
 
-from pysite.constants import DEBUG_MODE
-
-ALL_TABLES = {
-    # table: primary_key
-    "hiphopify": "user_id",
-    "hiphopify_namelist": "name",
-    "oauth_data": "id",
-    "tags": "tag_name",
-    "users": "user_id",
-    "wiki": "slug",
-    "wiki_revisions": "id"
-}
+from pysite.tables import TABLES
 
 STRIP_REGEX = re.compile(r"<[^<]+?>")
 WIKI_TABLE = "wiki"
@@ -47,82 +33,20 @@ class RethinkDB:
             except rethinkdb.RqlRuntimeError:
                 self.log.debug(f"Database found: '{self.database}'")
 
-            if DEBUG_MODE:
-                # Create any table that doesn't exist
-                created = self.create_tables()
-                if created:
-                    tables = ", ".join([f"{table}" for table in created])
-                    self.log.debug(f"Created the following tables: {tables}")
-
-                # Init the tables that require initialization
-                initialized = self.init_tables()
-                if initialized:
-                    tables = ", ".join([f"{table} ({count} items)" for table, count in initialized.items()])
-                    self.log.debug(f"Initialized the following tables: {tables}")
-
-                # Upgrade wiki articles
-                for article in self.pluck(WIKI_TABLE, "html", "text", "slug"):
-                    if "text" not in article:
-                        article["text"] = html.unescape(STRIP_REGEX.sub("", article["html"]).strip())
-
-                    self.insert(WIKI_TABLE, article, conflict="update")
-
     def create_tables(self) -> List[str]:
         """
-        Creates whichever tables exist in the ALL_TABLES
+        Creates whichever tables exist in the TABLES
         constant if they don't already exist in the database.
 
         :return: a list of the tables that were created.
         """
         created = []
 
-        for table, primary_key in ALL_TABLES.items():
-            if self.create_table(table, primary_key):
+        for table, obj in TABLES.items():
+            if self.create_table(table, obj.primary_key):
                 created.append(table)
 
         return created
-
-    def init_tables(self) -> Dict[str, int]:
-        """
-        If the table is empty, and there is a corresponding JSON file with data,
-        then we fill the table with the data in the JSON file.
-
-        The JSON files are contained inside of pysite/database/table_init/
-        :return:
-        """
-
-        self.log.debug("Initializing tables")
-        initialized = {}
-
-        for table, primary_key in ALL_TABLES.items():
-
-            self.log.trace(f"Checking if {table} is empty.")
-
-            # If the table is empty
-            if not self.pluck(table, primary_key):
-
-                self.log.trace(f"{table} appears to be empty. Checking if there is a json file at {os.getcwd()}"
-                               f"/pysite/database/table_init/{table}.json")
-
-                # And a corresponding JSON file exists
-                if os.path.isfile(f"pysite/database/table_init/{table}.json"):
-
-                    # Load in all the data in that file.
-                    with open(f"pysite/database/table_init/{table}.json") as json_file:
-                        table_data = json.load(json_file)
-
-                        self.log.trace(f"Loading the json file into the table. "
-                                       f"The json file contains {len(table_data)} items.")
-
-                        for row in table_data:
-                            self.insert(
-                                table,
-                                row
-                            )
-
-                    initialized[table] = len(table_data)
-
-        return initialized
 
     def get_connection(self, connect_database: bool = True) -> DefaultConnection:
         """
@@ -267,12 +191,12 @@ class RethinkDB:
         :return: The RethinkDB table object for the table
         """
 
-        if table_name not in ALL_TABLES:
-            self.log.warning(f"Table not declared in database.py: {table_name}")
+        if table_name not in TABLES:
+            self.log.warning(f"Table not declared in tables.py: {table_name}")
 
         return rethinkdb.table(table_name)
 
-    def run(self, query: RqlMethodQuery, *, new_connection: bool = False,
+    def run(self, query: Union[RqlMethodQuery, Table], *, new_connection: bool = False,
             connect_database: bool = True, coerce: type = None) -> Union[rethinkdb.Cursor, List, Dict, object]:
         """
         Run a query using a table object obtained from a call to `query()`
@@ -467,10 +391,16 @@ class RethinkDB:
         :return: A list of matching documents; may be empty if no matches were made
         """
 
-        return self.run(  # pragma: no cover
-            self.query(table_name).get_all(*keys, index=index),
-            coerce=list
-        )
+        if keys:
+            return self.run(  # pragma: no cover
+                self.query(table_name).get_all(*keys, index=index),
+                coerce=list
+            )
+        else:
+            return self.run(
+                self.query(table_name),
+                coerce=list
+            )
 
     def insert(self, table_name: str, *objects: Dict[str, Any],
                durability: str = "hard",
@@ -480,7 +410,7 @@ class RethinkDB:
                        [Dict[str, Any], Dict[str, Any]],  # ...takes two dicts with string keys and any values...
                        Dict[str, Any]  # ...and returns a dict with string keys and any values
                    ]
-               ] = "error") -> Union[List, Dict]:  # flake8: noqa
+               ] = "error") -> Dict[str, Any]:  # flake8: noqa
         """
         Insert an object or a set of objects into a table
 
@@ -492,17 +422,14 @@ class RethinkDB:
             you can also provide your own function in order to handle conflicts yourself. If you do this, the function
             should take two arguments (the old document and the new one), and return a single document to replace both.
 
-        :return: A list of changes if `return_changes` is True; a dict detailing the operations run otherwise
+        :return: A dict detailing the operations run
         """
 
         query = self.query(table_name).insert(
             objects, durability=durability, return_changes=return_changes, conflict=conflict
         )
 
-        if return_changes:
-            return self.run(query, coerce=list)
-        else:
-            return self.run(query, coerce=dict)
+        return self.run(query, coerce=dict)
 
     def map(self, table_name: str, func: Callable):
         """

@@ -3,12 +3,20 @@
 {% block og_title %}Staff | Home{% endblock %}
 {% block og_description %}Landing page for the staff management area{% endblock %}
 {% block content %}
-    <div class="uk-container uk-section">
-    <h1 class="uk-title uk-text-center">
-        App config
-    </h1>
-    <pre>
-{{ app_config | safe }}
-    </pre>
+    <div class="uk-container uk-container-small uk-section">
+        <h1 class="uk-text-center">
+            Management links
+        </h1>
+        {% if manager %}
+            <a class="uk-button uk-button-primary" href="{{ url_for("staff.tables.index") }}">Table Management</a>
+        {% else %}
+            <p>Nothing for you yet, I'm afraid.</p>
+        {% endif %}
+        <h1 class="uk-title uk-text-center">
+            App config
+        </h1>
+        <pre>
+    {{ app_config | safe }}
+        </pre>
     </div>
 {% endblock %}

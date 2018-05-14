@@ -6,11 +6,12 @@ import os
 from flask import Blueprint, Flask, _request_ctx_stack
 from flask_dance.contrib.discord import make_discord_blueprint
 from flask_sockets import Sockets
+from gunicorn_config import when_ready
 
 from pysite.base_route import APIView, BaseView, ErrorView, RouteView
 from pysite.constants import (
-    CSRF, DISCORD_OAUTH_AUTHORIZED, DISCORD_OAUTH_ID, DISCORD_OAUTH_REDIRECT, DISCORD_OAUTH_SCOPE,
-    DISCORD_OAUTH_SECRET, PREFERRED_URL_SCHEME)
+    CSRF, DEBUG_MODE, DISCORD_OAUTH_AUTHORIZED, DISCORD_OAUTH_ID, DISCORD_OAUTH_REDIRECT,
+    DISCORD_OAUTH_SCOPE, DISCORD_OAUTH_SECRET, PREFERRED_URL_SCHEME)
 from pysite.database import RethinkDB
 from pysite.oauth import OauthBackend
 from pysite.websockets import WS
@@ -39,6 +40,10 @@ class RouteManager:
         # time editing an article, and it seems that session lifetime is a good analogue for how long you have
         # to edit
         self.app.config["WTF_CSRF_TIME_LIMIT"] = None
+
+        if DEBUG_MODE:
+            # Migrate the database, as we would in prod
+            when_ready(output_func=self.db.log.info)
 
         self.app.before_request(self.db.before_request)
         self.app.teardown_request(self.db.teardown_request)

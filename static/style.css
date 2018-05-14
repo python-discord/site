@@ -109,6 +109,16 @@ footer div.uk-section div.uk-text-center {
     background: rgba(0, 0, 0, 0.22);
 }
 
+.uk-button-dark {
+    background: rgba(0, 0, 0, 0.95);
+    border: 1px solid rgba(34, 34, 34, 0.93);
+    color: white;
+}
+
+.uk-button-dark:hover {
+    background: rgba(0, 0, 0, 0.70);
+}
+
 /* Flash of Unstyled Content fixes */
 .prevent_fouc {
     display: none;
@@ -161,4 +171,12 @@ div.quote {
 
 .uk-article-meta {
     margin-left: 2px;
+}
+
+select {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    -webkit-appearance: unset !important;
+    opacity: 1 !important;
 }
