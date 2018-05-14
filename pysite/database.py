@@ -422,7 +422,7 @@ class RethinkDB:
             you can also provide your own function in order to handle conflicts yourself. If you do this, the function
             should take two arguments (the old document and the new one), and return a single document to replace both.
 
-        :return: A list of changes if `return_changes` is True; a dict detailing the operations run otherwise
+        :return: A dict detailing the operations run
         """
 
         query = self.query(table_name).insert(

@@ -20,12 +20,12 @@ def get_migrations(table_path, table):
     migrations = {}
     final_version = 0
 
-    for filename in os.listdir(table_path):
+    for filename in sorted(os.listdir(table_path)):
         if filename.startswith("v") and filename.endswith(".py"):
             final_version = int(filename[1:-3])
             migrations[final_version] = f"pysite.migrations.tables.{table}.v{final_version}"
 
-    return dict(sorted(migrations.items())), final_version
+    return migrations, final_version
 
 
 def run_migrations(db: RethinkDB, output: Callable[[str], None]=None):
