@@ -1,4 +1,4 @@
-from flask import redirect, url_for
+from flask import redirect, request, url_for
 from werkzeug.exceptions import NotFound
 
 from pysite.base_route import RouteView
@@ -17,4 +17,14 @@ class TableView(RouteView, DBMixin):
         if table not in TABLES:
             raise NotFound()
 
-        return redirect(url_for("staff.tables.table", table=table, page=1))
+        search = request.args.get("search")
+
+        args = {
+            "table": table,
+            "page": 1
+        }
+
+        if search is not None:
+            args["search"] = search
+
+        return redirect(url_for("staff.tables.table", **args))
