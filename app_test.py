@@ -12,7 +12,7 @@ except KeyError:
     pass
 
 from app import manager
-from gunicorn_config import when_ready
+from gunicorn_config import _when_ready as when_ready
 
 from pysite.constants import DISCORD_OAUTH_REDIRECT, DISCORD_OAUTH_AUTHORIZED
 

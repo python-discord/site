@@ -6,7 +6,11 @@ STRIP_REGEX = re.compile(r"<[^<]+?>")
 WIKI_TABLE = "wiki"
 
 
-def when_ready(server=None, output_func=None):
+def when_ready(server=None):
+    _when_ready(server=server)
+
+
+def _when_ready(server=None, output_func=None):
     """ server hook that only runs when the gunicorn master process loads """
 
     if server:
