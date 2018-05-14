@@ -29,9 +29,9 @@
         <form action="{{ url_for("staff.tables.table", table=table, page="all") }}" method="get" class="uk-form-horizontal uk-width-1-1">
             <div class="uk-form-custom uk-width-1-1 uk-flex">
                 {% if search %}
-                    <input class="uk-input uk-width-expand" name="search" type="text" placeholder="Search (RE2)" value="{{ search }}" />
+                    <input class="uk-input uk-width-expand" name="search" type="text" placeholder="Search (RE2, primary key only)" value="{{ search }}" />
                 {% else %}
-                    <input class="uk-input uk-width-expand" name="search" type="text" placeholder="Search (RE2)" />
+                    <input class="uk-input uk-width-expand" name="search" type="text" placeholder="Search (RE2, primary key only)" />
                 {% endif %}
                 <button class="uk-button uk-button-primary uk-width-auto" type="submit"><i class="uk-icon fas fa-search"></i></button>
                 <a class="uk-button uk-button-dark uk-width-auto" target="_blank" href="https://github.com/google/re2/wiki/Syntax"><i class="uk-icon fas fa-question-circle"></i></a>
