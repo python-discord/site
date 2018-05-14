@@ -26,13 +26,29 @@
             </span>
         </h1>
 
-        <form action="{{ url_for("staff.tables.table", table=table, page="all") }}" method="get" class="uk-form-horizontal uk-width-1-1">
+        <form action="{{ url_for("staff.tables.table", table=table, page="all") }}" method="get" class="uk-width-1-1">
             <div class="uk-form-custom uk-width-1-1 uk-flex">
                 {% if search %}
-                    <input class="uk-input uk-width-expand" name="search" type="text" placeholder="Search (RE2, primary key only)" value="{{ search }}" />
+                    <input class="uk-input uk-width-expand" name="search" type="text" placeholder="Search (RE2)" value="{{ search }}" />
                 {% else %}
-                    <input class="uk-input uk-width-expand" name="search" type="text" placeholder="Search (RE2, primary key only)" />
+                    <input class="uk-input uk-width-expand" name="search" type="text" placeholder="Search (RE2)" />
                 {% endif %}
+
+                <div class="uk-width-auto uk-flex-auto">
+                    <select class="uk-select uk-width-1-1" name="search-key" title="Table Key">
+                        <option style="font-weight: bold;">{{ table_obj.primary_key }}</option>
+                        {% for key in table_obj.keys %}
+                            {% if key != table_obj.primary_key %}
+                                {% if search_key == key %}
+                                    <option selected>{{ key }}</option>
+                                {% else %}
+                                    <option>{{ key }}</option>
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+
                 <button class="uk-button uk-button-primary uk-width-auto" type="submit"><i class="uk-icon fas fa-search"></i></button>
                 <a class="uk-button uk-button-dark uk-width-auto" target="_blank" href="https://github.com/google/re2/wiki/Syntax"><i class="uk-icon fas fa-question-circle"></i></a>
             </div>

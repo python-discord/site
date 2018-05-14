@@ -17,6 +17,7 @@ class TableView(RouteView, DBMixin):
     @require_roles(*TABLE_MANAGER_ROLES)
     def get(self, table, page):
         search = request.args.get("search")
+        search_key = request.args.get("search-key")
 
         pages = page
         obj = TABLES.get(table)
@@ -26,7 +27,9 @@ class TableView(RouteView, DBMixin):
 
         if search:
             new_search = f"(?i){search}"  # Case-insensitive search
-            query = self.db.query(table).filter(lambda d: d[obj.primary_key].match(new_search))
+            search_key = search_key or obj.primary_key
+
+            query = self.db.query(table).filter(lambda d: d[search_key].match(new_search))
         else:
             query = self.db.query(table)
 
@@ -56,5 +59,5 @@ class TableView(RouteView, DBMixin):
         return self.render(
             "staff/tables/table.html",
             table=table, documents=documents, table_obj=obj,
-            page=page, pages=pages, search=search
+            page=page, pages=pages, search=search, search_key=search_key
         )

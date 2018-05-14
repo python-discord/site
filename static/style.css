@@ -172,3 +172,11 @@ div.quote {
 .uk-article-meta {
     margin-left: 2px;
 }
+
+select {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    -webkit-appearance: unset !important;
+    opacity: 1 !important;
+}
