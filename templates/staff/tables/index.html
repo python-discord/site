@@ -1,0 +1,32 @@
+{% extends "main/base.html" %}
+{% block title %}Staff | Tables{% endblock %}
+{% block og_title %}Staff | Tables{% endblock %}
+{% block og_description %}Table management and editor{% endblock %}
+{% block content %}
+    <div class="uk-container uk-section uk-container-small">
+        <a class="uk-button uk-button-default" href="{{ url_for("staff.staff_index") }}"><i class="uk-icon fa-fw fas fa-arrow-left"></i> &nbsp;Back</a>
+        <h1 class="uk-title uk-text-center">
+            Table manager
+        </h1>
+        <p>
+            Click one of the tables below to manage its data:
+        </p>
+        <ul>
+            {% for table, obj in tables.items() %}
+                {% if obj.locked %}
+                    <li>
+                        <a href="{{ url_for("staff.tables.table", table=table, page=1) }}" title="Table locked for editing">
+                            <i class="uk-icon fa-fw fas fa-lock"></i> &nbsp;{{ table }}
+                        </a>
+                    </li>
+                {% else %}
+                    <li>
+                        <a href="{{ url_for("staff.tables.table", table=table, page=1) }}">
+                            <i class="uk-icon fa-fw fas fa-pencil"></i> &nbsp;{{ table }}
+                        </a>
+                    </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}
