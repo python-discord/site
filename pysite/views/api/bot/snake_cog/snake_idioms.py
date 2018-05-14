@@ -9,20 +9,20 @@ from pysite.mixins import DBMixin
 log = logging.getLogger(__name__)
 
 
-class SnakeQuizView(APIView, DBMixin):
-    path = "/snake_quiz"
-    name = "api.bot.snake_quiz"
-    table = "snake_quiz"
+class SnakeIdiomView(APIView, DBMixin):
+    path = "/snake_idioms"
+    name = "api.bot.snake_idioms"
+    table = "snake_idioms"
 
     @api_key
     def get(self):
         """
-        Returns a random question from the snake_quiz table.
+        Returns a random idiom from the snake_idioms table.
 
         API key must be provided as header.
         """
 
-        log.trace("Fetching a random question from the snake_quiz database")
-        question = self.db.sample(self.table, 1)[0]
+        log.trace("Fetching a random idiom from the snake_idioms database")
+        question = self.db.sample(self.table, 1)[0]["idiom"]
 
         return jsonify(question)

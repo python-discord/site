@@ -37,6 +37,50 @@ TABLES = {
         ])
     ),
 
+    "snake_facts": Table(  # Snake facts
+        primary_key="fact",
+        keys=sorted([
+            "fact"
+        ]),
+        locked=False
+    ),
+
+    "snake_idioms": Table(  # Snake idioms
+        primary_key="idiom",
+        keys=sorted([
+            "idiom"
+        ]),
+        locked=False
+    ),
+
+    "snake_movies": Table(  # Snake movies
+        primary_key="movie",
+        keys=sorted([
+            "movie"
+        ]),
+        locked=False
+    ),
+
+    "snake_names": Table(  # Snake names
+        primary_key="name",
+        keys=sorted([
+            "name",
+            "scientific"
+        ]),
+        locked=False
+    ),
+
+    "snake_quiz": Table(  # Snake questions and answers
+        primary_key="id",
+        keys=sorted([
+            "id",
+            "question",
+            "options",
+            "answerkey"
+        ]),
+        locked=False
+    ),
+
     "tags": Table(  # Tag names and values
         primary_key="tag_name",
         keys=sorted([
