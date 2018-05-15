@@ -28,9 +28,9 @@ document.onreadystatechange = function () {
     if (document.readyState == "interactive") {
         removeClass('html', 'prevent_fouc');
         getScript(
-            'https://pro.fontawesome.com/releases/v5.0.9/js/all.js',
-            'sha384-DtPgXIYsUR6lLmJK14ZNUi11aAoezQtw4ut26Zwy9/6QXHH8W3+gjrRDT+lHiiW4',
-            'anonymous'
+            'https://pro.fontawesome.com/releases/v5.0.13/js/all.js',  // URL
+            'sha384-d84LGg2pm9KhR4mCAs3N29GQ4OYNy+K+FBHX8WhimHpPm86c839++MDABegrZ3gn',  // Integrity
+            'anonymous'  // Cross-origin
         )
     }
 }
