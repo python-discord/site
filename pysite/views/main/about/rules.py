@@ -1,9 +1,7 @@
-from pysite.base_route import RouteView
+from pysite.base_route import TemplateView
 
 
-class RulesView(RouteView):
+class RulesView(TemplateView):
     path = "/about/rules"
     name = "about.rules"
-
-    def get(self):
-        return self.render("main/about/rules.html")
+    template = "main/about/rules.html"

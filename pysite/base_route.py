@@ -206,3 +206,40 @@ class ErrorView(BaseView):
         else:
             raise RuntimeError(
                 "Error views must have an `error_code` that is either an `int` or an iterable")  # pragma: no cover # noqa: E501
+
+
+class TemplateView(RouteView):
+    """
+    An easy view for routes that simply render a template with no extra information.
+
+    This class is intended to be subclassed - use it as a base class for your own views, and set the class-level
+    attributes as appropriate. For example:
+
+    >>> class MyView(TemplateView):
+    ...     name = "my_view"  # Flask internal name for this route
+    ...     path = "/my_view"  # Actual URL path to reach this route
+    ...     template = "my_view.html"  # Template to use
+
+    Note that this view only handles GET requests. If you need any other verbs, you can implement them yourself
+    or just use one of the more customizable base view classes.
+    """
+
+    template = None  # type: str
+
+    @classmethod
+    def setup(cls: "TemplateView", manager: "pysite.route_manager.RouteManager", blueprint: Blueprint):
+        """
+        Set up the view, deferring most setup to the superclasses but checking for the template attribute.
+
+        :param manager: Instance of the current RouteManager
+        :param blueprint: Current Flask blueprint to register the error handler for
+        """
+
+        if hasattr(super(), "setup"):
+            super().setup(manager, blueprint)  # pragma: no cover
+
+        if not cls.template:
+            raise RuntimeError("Template views must have `template` defined")
+
+    def get(self, *_):
+        return self.render(self.template)

@@ -1,9 +1,7 @@
-from pysite.base_route import RouteView
+from pysite.base_route import TemplateView
 
 
-class IndexView(RouteView):
+class IndexView(TemplateView):
     path = "/about/"
     name = "about.index"
-
-    def get(self):
-        return self.render("main/about/index.html")
+    template = "main/about/index.html"
