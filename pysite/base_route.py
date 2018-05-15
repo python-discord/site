@@ -1,7 +1,7 @@
 from collections import Iterable
 from typing import Any
 
-from flask import Blueprint, Response, jsonify, render_template, url_for, redirect
+from flask import Blueprint, Response, jsonify, redirect, render_template, url_for
 from flask.views import MethodView
 from werkzeug.exceptions import default_exceptions
 
