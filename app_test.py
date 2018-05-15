@@ -174,11 +174,6 @@ class ApiEndpoints(SiteTest):
         os.environ['BOT_API_KEY'] = 'abcdefg'
         headers = {'X-API-Key': 'abcdefg', 'Content-Type': 'application/json'}
 
-        # GET method - get snake movie
-        response = self.client.get('/snake_movies', app.config['API_SUBDOMAIN'], headers=headers)
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(type(response.json), str)
-
         # GET method - get snake fact
         response = self.client.get('/snake_facts', app.config['API_SUBDOMAIN'], headers=headers)
         self.assertEqual(response.status_code, 200)

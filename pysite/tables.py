@@ -53,14 +53,6 @@ TABLES = {
         locked=False
     ),
 
-    "snake_movies": Table(  # Snake movies
-        primary_key="movie",
-        keys=sorted([
-            "movie"
-        ]),
-        locked=False
-    ),
-
     "snake_names": Table(  # Snake names
         primary_key="name",
         keys=sorted([
