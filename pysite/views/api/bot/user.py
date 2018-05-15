@@ -52,7 +52,7 @@ class UserView(APIView, DBMixin):
         all_oauth_data = self.db.run(self.db.query(self.oauth_table_name), coerce=list)
 
         for item in all_oauth_data:
-            if item["id"] not in user_ids:
+            if item["snowflake"] not in user_ids:
                 self.db.delete(self.oauth_table_name, item["id"], durability="soft")
                 oauth_deletions += 1
 
@@ -94,7 +94,7 @@ class UserView(APIView, DBMixin):
 
         oauth_deletions = self.db.run(
             self.db.query(self.oauth_table_name)
-            .get_all(*user_ids)
+            .get_all(*user_ids, index="snowflake")
             .delete()
         ).get("deleted", 0)
 
