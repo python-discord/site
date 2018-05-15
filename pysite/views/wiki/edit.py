@@ -86,17 +86,18 @@ class EditView(RouteView, DBMixin):
             conflict="replace"
         )
 
-        # Add the post to the revisions table
-        revision_payload = {
-            "slug": page,
-            "post": obj,
-            "date": datetime.datetime.utcnow().timestamp(),
-            "user": self.user_data.get("user_id")
-        }
+        if not DEBUG_MODE:
+            # Add the post to the revisions table
+            revision_payload = {
+                "slug": page,
+                "post": obj,
+                "date": datetime.datetime.utcnow().timestamp(),
+                "user": self.user_data.get("user_id")
+            }
 
-        del revision_payload["post"]["slug"]
+            del revision_payload["post"]["slug"]
 
-        self.db.insert(self.revision_table_name, revision_payload)
+            self.db.insert(self.revision_table_name, revision_payload)
 
         return redirect(url_for("wiki.page", page=page), code=303)  # Redirect, ensuring a GET
 
