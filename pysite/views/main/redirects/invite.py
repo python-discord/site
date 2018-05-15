@@ -1,11 +1,7 @@
-from flask import redirect
-
-from pysite.base_route import RouteView
+from pysite.base_route import RedirectView
 
 
-class InviteView(RouteView):
+class InviteView(RedirectView):
     path = "/invite"
     name = "invite"
-
-    def get(self):
-        return redirect("https://discord.gg/8NWhsvT")
+    page = "https://discord.gg/8NWhsvT"

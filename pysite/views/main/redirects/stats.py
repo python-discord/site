@@ -1,11 +1,7 @@
-from flask import redirect
-
-from pysite.base_route import RouteView
+from pysite.base_route import RedirectView
 
 
-class StatsView(RouteView):
+class StatsView(RedirectView):
     path = "/stats"
     name = "stats"
-
-    def get(self):
-        return redirect("https://p.datadoghq.com/sb/ac8680a8c-c01b556f01b96622fd4f57545b81d568")
+    page = "https://p.datadoghq.com/sb/ac8680a8c-c01b556f01b96622fd4f57545b81d568"

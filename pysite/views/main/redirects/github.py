@@ -1,11 +1,7 @@
-from flask import redirect
-
-from pysite.base_route import RouteView
+from pysite.base_route import RedirectView
 
 
-class GitHubView(RouteView):
+class GitHubView(RedirectView):
     path = "/github"
     name = "github"
-
-    def get(self):
-        return redirect("https://github.com/discord-python/")
+    page = "https://github.com/discord-python/"

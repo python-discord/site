@@ -1,7 +1,7 @@
 from collections import Iterable
 from typing import Any
 
-from flask import Blueprint, Response, jsonify, render_template, url_for
+from flask import Blueprint, Response, jsonify, render_template, url_for, redirect
 from flask.views import MethodView
 from werkzeug.exceptions import default_exceptions
 
@@ -243,3 +243,50 @@ class TemplateView(RouteView):
 
     def get(self, *_):
         return self.render(self.template)
+
+
+class RedirectView(RouteView):
+    """
+    An easy view for routes that simply redirect to another page or view.
+
+    This class is intended to be subclassed - use it as a base class for your own views, and set the class-level
+    attributes as appropriate. For example:
+
+    >>> class MyView(RedirectView):
+    ...     name = "my_view"  # Flask internal name for this route
+    ...     path = "/my_view"  # Actual URL path to reach this route
+    ...     code = 303  # HTTP status code to use for the redirect; 303 by default
+    ...     page = "staff.index"  # Page to redirect to
+    ...     kwargs = {}  # Any extra keyword args to pass to the url_for call, if redirecting to another view
+
+    You can specify a full URL, including the protocol, eg "http://google.com" or a Flask internal route name,
+    eg "main.index". Nothing else is supported.
+
+    Note that this view only handles GET requests. If you need any other verbs, you can implement them yourself
+    or just use one of the more customizable base view classes.
+    """
+
+    code = 303  # type: int
+    page = None  # type: str
+    kwargs = {}  # type: Optional[dict]
+
+    @classmethod
+    def setup(cls: "RedirectView", manager: "pysite.route_manager.RouteManager", blueprint: Blueprint):
+        """
+        Set up the view, deferring most setup to the superclasses but checking for the template attribute.
+
+        :param manager: Instance of the current RouteManager
+        :param blueprint: Current Flask blueprint to register the error handler for
+        """
+
+        if hasattr(super(), "setup"):
+            super().setup(manager, blueprint)  # pragma: no cover
+
+        if not cls.page or not cls.code:
+            raise RuntimeError("Redirect views must have both `code` and `page` defined")
+
+    def get(self, *_):
+        if "://" in self.page:
+            return redirect(self.page, code=self.code)
+
+        return redirect(url_for(self.page, **self.kwargs), code=self.code)
