@@ -1,7 +1,7 @@
 import logging
 
 from flask import jsonify, request
-from schema import Schema, Optional
+from schema import Optional, Schema
 
 from pysite.base_route import APIView
 from pysite.constants import ValidationTypes
@@ -70,7 +70,7 @@ class UserView(APIView, DBMixin):
         return jsonify(changes)  # pragma: no cover
 
     @api_key
-    @api_params(schema=SCHEMA, validation_type=ValidationTypes.json)
+    @api_params(schema=DELETE_SCHEMA, validation_type=ValidationTypes.json)
     def delete(self, data):
         user_ids = [user["user_id"] for user in data]
 
