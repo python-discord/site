@@ -1,7 +1,7 @@
 import logging
 
 from flask import jsonify, request
-from schema import Schema
+from schema import Schema, Optional
 
 from pysite.base_route import APIView
 from pysite.constants import ValidationTypes
@@ -17,6 +17,15 @@ SCHEMA = Schema([
     }
 ])
 
+DELETE_SCHEMA = Schema([
+    {
+        "user_id": str,
+        Optional("roles"): [str],
+        Optional("username"): str,
+        Optional("discriminator"): str
+    }
+])
+
 
 class UserView(APIView, DBMixin):
     path = "/user"
@@ -27,9 +36,48 @@ class UserView(APIView, DBMixin):
     @api_params(schema=SCHEMA, validation_type=ValidationTypes.json)
     def post(self, data):
         logging.getLogger(__name__).debug(f"Size of request: {len(request.data)} bytes")
+
+        deletions = 0
+
+        user_ids = [user["user_id"] for user in data]
+        all_users = self.db.run(self.db.query(self.table_name), coerce=list)
+
+        for user in all_users:
+            if user["user_id"] not in user_ids:
+                self.db.delete(self.table_name, user["user_id"], durability="soft")
+                deletions += 1
+
+        changes = self.db.insert(
+            self.table_name, *data,
+            conflict="update",
+            durability="soft"
+        )
+
+        self.db.sync(self.table_name)
+
+        changes["deleted"] = deletions
+
+        return jsonify(changes)  # pragma: no cover
+
+    @api_key
+    @api_params(schema=SCHEMA, validation_type=ValidationTypes.json)
+    def put(self, data):
         changes = self.db.insert(
             self.table_name, *data,
             conflict="update"
+        )
+
+        return jsonify(changes)  # pragma: no cover
+
+    @api_key
+    @api_params(schema=SCHEMA, validation_type=ValidationTypes.json)
+    def delete(self, data):
+        user_ids = [user["user_id"] for user in data]
+
+        changes = self.db.run(
+            self.db.query(self.table_name)
+            .get_all(*user_ids)
+            .delete()
         )
 
         return jsonify(changes)  # pragma: no cover
