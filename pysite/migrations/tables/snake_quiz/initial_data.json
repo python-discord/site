@@ -3,12 +3,10 @@
     "id": 0,
     "question": "How long have snakes been roaming the Earth for?",
     "options": {
-    "options": {
           "a": "3 million years",
           "b": "30 million years",
           "c": "130 million years",
           "d": "200 million years"
-    },
     },
     "answerkey": "c"
   },
@@ -19,7 +17,7 @@
         "a": "They are carnivoes",
         "b": "They are all programming languages",
         "c": "They're all cold-blooded",
-        "d": "They are both carnivores and cold-blooded",
+        "d": "They are both carnivores and cold-blooded"
     },
     "answerkey": "c"
   },
@@ -30,7 +28,7 @@
         "a": "With small ears",
         "b": "Through their skin",
         "c": "Through their tail",
-        "d": "They don't use their ears at all",
+        "d": "They don't use their ears at all"
     },
     "answerkey": "b"
   },
@@ -41,7 +39,7 @@
         "a": "Colour",
         "b": "Light",
         "c": "Both of the above",
-        "d": "Other snakes",
+        "d": "Other snakes"
     },
     "answerkey": "a"
   },
@@ -52,7 +50,7 @@
         "a": "Night vision",
         "b": "Infrared vision",
         "c": "See through walls",
-        "d": "They don't have vision",
+        "d": "They don't have vision"
     },
     "answerkey": "b"
   },
@@ -63,7 +61,7 @@
         "a": "Quite pleasant",
         "b": "Through its nose",
         "c": "Through its tongues",
-        "d": "Both through its nose and its tongues",
+        "d": "Both through its nose and its tongues"
     },
     "answerkey": "d"
   },
@@ -74,7 +72,7 @@
         "a": "Mouth",
         "b": "Tail",
         "c": "Stomach",
-        "d": "Liver",
+        "d": "Liver"
     },
     "answerkey": "a"
   },
@@ -85,7 +83,7 @@
         "a": "A diaphragm",
         "b": "Intestines",
         "c": "Lungs",
-        "d": "Kidney",
+        "d": "Kidney"
     },
     "answerkey": "a"
   },
@@ -96,7 +94,7 @@
         "a": "An elongated right lung",
         "b": "A small left lung",
         "c": "Both of the above",
-        "d": "None of the above",
+        "d": "None of the above"
     },
     "answerkey": "c"
   },
@@ -107,7 +105,7 @@
         "a": "They're a myth!",
         "b": "They rarely survive in the wild",
         "c": "They're very dangerous",
-        "d": "They can kiss each other",
+        "d": "They can kiss each other"
     },
     "answerkey": "b"
   },
@@ -118,7 +116,7 @@
         "a": "Calcium",
         "b": "Keratin",
         "c": "Copper",
-        "d": "Iron",
+        "d": "Iron"
     },
     "answerkey": "b"
   },
@@ -129,7 +127,7 @@
         "a": "Copperhead",
         "b": "Cornsnake",
         "c": "Kingsnake",
-        "d": "Flower pot snake",
+        "d": "Flower pot snake"
     },
     "answerkey": "d"
   },
@@ -140,7 +138,7 @@
         "a": "Green anaconda",
         "b": "Reticulated python",
         "c": "King cobra",
-        "d": "Kingsnake",
+        "d": "Kingsnake"
     },
     "answerkey": "b"
   },
@@ -151,7 +149,7 @@
         "a": "Africa, Asia and Australia",
         "b": "Africa, Australia and Europe",
         "c": "Africa, Australia and South America",
-        "d": "Africa, Asia and South America",
+        "d": "Africa, Asia and South America"
     },
     "answerkey": "a"
   },
@@ -162,7 +160,7 @@
         "a": "Pythons suffocate their prey, anacondas crush them",
         "b": "Pythons lay eggs, anacondas give birth to live young",
         "c": "Pythons grow longer, anacondas grow heavier",
-        "d": "Pythons generally spend less time in water than anacondas do",
+        "d": "Pythons generally spend less time in water than anacondas do"
     },
     "answerkey": "a"
   },
@@ -173,7 +171,7 @@
         "a": "The python's stomach pressure is reduced, so prey is sucked in",
         "b": "An extra set of upper teeth 'walk' along the prey",
         "c": "The python holds its head up, so prey falls into its stomach",
-        "d": "Prey is pushed against a barrier and is forced down the python's throat",
+        "d": "Prey is pushed against a barrier and is forced down the python's throat"
     },
     "answerkey": "b"
   },
@@ -184,7 +182,7 @@
         "a": "To store sperm",
         "b": "To release pheromones",
         "c": "To grip females during mating",
-        "d": "To fight off rival males",
+        "d": "To fight off rival males"
     },
     "answerkey": "c"
   },
@@ -195,7 +193,7 @@
         "a": "Their spine is too inflexible",
         "b": "They move too slowly",
         "c": "The scales on their backs are too rigid",
-        "d": "They are too heavy",
+        "d": "They are too heavy"
     },
     "answerkey": "d"
   }
