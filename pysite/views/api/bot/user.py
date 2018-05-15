@@ -31,6 +31,7 @@ class UserView(APIView, DBMixin):
     path = "/user"
     name = "api.bot.user"
     table_name = "users"
+    oauth_table_name = "oauth_data"
 
     @api_key
     @api_params(schema=SCHEMA, validation_type=ValidationTypes.json)
@@ -38,14 +39,24 @@ class UserView(APIView, DBMixin):
         logging.getLogger(__name__).debug(f"Size of request: {len(request.data)} bytes")
 
         deletions = 0
-
+        oauth_deletions = 0
         user_ids = [user["user_id"] for user in data]
+
         all_users = self.db.run(self.db.query(self.table_name), coerce=list)
 
         for user in all_users:
             if user["user_id"] not in user_ids:
                 self.db.delete(self.table_name, user["user_id"], durability="soft")
                 deletions += 1
+
+        all_oauth_data = self.db.run(self.db.query(self.oauth_table_name), coerce=list)
+
+        for item in all_oauth_data:
+            if item["id"] not in user_ids:
+                self.db.delete(self.oauth_table_name, item["id"], durability="soft")
+                oauth_deletions += 1
+
+        del user_ids
 
         changes = self.db.insert(
             self.table_name, *data,
@@ -56,6 +67,7 @@ class UserView(APIView, DBMixin):
         self.db.sync(self.table_name)
 
         changes["deleted"] = deletions
+        changes["deleted_oauth"] = oauth_deletions
 
         return jsonify(changes)  # pragma: no cover
 
@@ -79,5 +91,13 @@ class UserView(APIView, DBMixin):
             .get_all(*user_ids)
             .delete()
         )
+
+        oauth_deletions = self.db.run(
+            self.db.query(self.oauth_table_name)
+            .get_all(*user_ids)
+            .delete()
+        ).get("deleted", 0)
+
+        changes["deleted_oauth"] = oauth_deletions
 
         return jsonify(changes)  # pragma: no cover
