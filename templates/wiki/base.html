@@ -158,9 +158,7 @@
                         {% endif %}
 
                         <li class="uk-nav-divider"></li>
-{#                        <li><a href="{{ url_for("wiki.search") }}">#}
-{#                            <i class="uk-icon fas fa-fw fa-search"></i> &nbsp;Search#}
-{#                        </a></li>#}
+
                         <li><a href="{{ url_for("wiki.special") }}">
                             <i class="uk-icon fas fa-fw fa-ellipsis-h"></i> &nbsp;Special Pages
                         </a></li>
@@ -193,11 +191,13 @@
 
         <footer>
             <div class="uk-section uk-section-secondary uk-container-medium uk-text-meta">
-                <div class="uk-text-center">
+                <div class="uk-text-center uk-text-meta">
                     <p>
                         This website uses <a href="https://python.org">Python</a> and
                         <a href="http://flask.pocoo.org/">Flask</a>, and was developed collaboratively on
                         <a href="https://github.com/discord-python/site">GitHub</a>.
+                        <br />
+                        For privacy &amp; GDPR-related info, please <a href="{{ url_for("main.about.privacy") }}">see this page</a>.
                     </p>
                 </div>
             </div>
