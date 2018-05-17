@@ -4,4 +4,4 @@ from pysite.base_route import TemplateView
 class JamsIndexView(TemplateView):
     path = "/jams"
     name = "jams.index"
-    template = "main/jams/info.html"
+    template = "main/jams/index.html"
