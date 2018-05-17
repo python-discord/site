@@ -28,14 +28,14 @@
 
         {% endblock %}
     </head>
-    <body class="page-{{ current_page }}">
-        {% if current_page == "index" %}
+    <body class="page-{{ current_page.replace(".", "-") }}">
+        {% if current_page == "main.index" %}
         <div class="uk-offcanvas-content uk-section-primary">
         {% else %}
         <div class="uk-offcanvas-content">
         {% endif %}
             {% include "main/navigation.html" %}
-            {% if current_page != "index" %}
+            {% if current_page != "main.index" %}
                 {% block beta_error %}
                     <div class="uk-container uk-section" style="padding-top: 10px; padding-bottom: 10px;">
                         <div class="uk-container uk-container-small">

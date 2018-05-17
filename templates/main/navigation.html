@@ -13,7 +13,7 @@
 
         <div class="uk-navbar-right">
             <ul class="uk-navbar-nav uk-visible@m">
-                {% if current_page == "index" %}
+                {% if current_page == "main.index" %}
                     <li class="uk-active"><a href="{{ url_for('main.index') }}"><i class="uk-icon fas fa-home"></i> &nbsp;Home</a></li>
                 {% else %}
                     <li><a href="{{ url_for('main.index') }}"><i class="uk-icon fas fa-home fa-fw"></i> &nbsp;Home</a></li>
@@ -42,51 +42,63 @@
                                 <li class="uk-active"><a style="color: #7289DA !important"><i class="uk-icon fas fa-exclamation-triangle"></i> &nbsp;Debug mode</a></li>
                             {% endif %}
 
-                            {% if current_page.startswith("info") %}
+                            {% if current_page.startswith("main.info") %}
                                 <li class="uk-nav-header uk-active"><a href="{{ url_for('main.info.index') }}">Information</a></li>
                             {% else %}
                                 <li class="uk-nav-header"><a href="{{ url_for('main.info.index') }}">Information</a></li>
                             {% endif %}
 
-                            {% if current_page == "info.jams" %}
-                                <li class="uk-active"><a href="{{ url_for('main.info.jams') }}">Code Jams</a></li>
-                            {% else %}
-                                <li><a href="{{ url_for('main.info.jams') }}">Code Jams</a></li>
-                            {% endif %}
-
-                            {% if current_page == "info.help" %}
+                            {% if current_page == "main.info.help" %}
                                 <li class="uk-active"><a href="{{ url_for('main.info.help') }}">Getting Help</a></li>
                             {% else %}
                                 <li><a href="{{ url_for('main.info.help') }}">Getting Help</a></li>
                             {% endif %}
 
-                            {% if current_page == "info.resources" %}
+                            {% if current_page == "main.info.resources" %}
                                 <li class="uk-active"><a href="{{ url_for('main.info.resources') }}">Resources</a></li>
                             {% else %}
                                 <li><a href="{{ url_for('main.info.resources') }}">Resources</a></li>
                             {% endif %}
 
-                            {% if current_page.startswith("about") %}
+                            {% if current_page.startswith("main.about") %}
                                 <li class="uk-nav-header uk-active"><a href="{{ url_for('main.about.index') }}">About</a></li>
                             {% else %}
                                 <li class="uk-nav-header"><a href="{{ url_for('main.about.index') }}">About</a></li>
                             {% endif %}
 
-                            {% if current_page == "about.partners" %}
+                            {% if current_page == "main.about.partners" %}
                                 <li class="uk-active"><a href="{{ url_for('main.about.partners') }}">Partners</a></li>
                             {% else %}
                                 <li><a href="{{ url_for('main.about.partners') }}">Partners</a></li>
                             {% endif %}
 
-                            {% if current_page == "about.rules" %}
+                            {% if current_page == "main.about.rules" %}
                                 <li class="uk-active"><a href="{{ url_for('main.about.rules') }}">Server Rules</a></li>
                             {% else %}
                                 <li><a href="{{ url_for('main.about.rules') }}">Server Rules</a></li>
                             {% endif %}
 
+                            {% if current_page.startswith("main.jams") %}
+                                <li class="uk-nav-header uk-active"><a href="{{ url_for('main.jams.index') }}">Code Jams</a></li>
+                            {% else %}
+                                <li class="uk-nav-header"><a href="{{ url_for('main.jams.index') }}">Code Jams</a></li>
+                            {% endif %}
+
+                            {% if current_page == "main.jams.index" %}
+                                <li class="uk-active"><a href="{{ url_for('main.jams.index') }}">Info</a></li>
+                            {% else %}
+                                <li><a href="{{ url_for('main.jams.index') }}">Info</a></li>
+                            {% endif %}
+
+                            {% if current_page == "main.jams.signup" %}
+                                <li class="uk-active"><a href="{{ url_for('main.jams.signup') }}">Sign Up</a></li>
+                            {% else %}
+                                <li><a href="{{ url_for('main.jams.signup') }}">Sign Up</a></li>
+                            {% endif %}
+
                             <li class="uk-nav-divider"></li>
 
-                            {% if current_page.startswith("about.privacy") %}
+                            {% if current_page.startswith("main.about.privacy") %}
                                 <li class="uk-active"><a href="{{ url_for('main.about.privacy') }}">Privacy</a></li>
                             {% else %}
                                 <li><a href="{{ url_for('main.about.privacy') }}">Privacy</a></li>

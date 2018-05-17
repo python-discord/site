@@ -1,7 +1,7 @@
-from pysite.base_route import TemplateView
+from pysite.base_route import RedirectView
 
 
-class IndexView(TemplateView):
+class JamsView(RedirectView):
     path = "/info/jams"
     name = "info.jams"
-    template = "main/info/jams.html"
+    page = "main.jams.index"
