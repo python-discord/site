@@ -14,11 +14,17 @@
         <div class="uk-navbar-right">
             <ul class="uk-navbar-nav uk-visible@m">
                 {% if current_page == "main.index" %}
-                    <li class="uk-active"><a href="{{ url_for('main.index') }}"><i class="uk-icon fas fa-home"></i> &nbsp;Home</a></li>
+                    <li class="uk-active"><a href="{{ url_for('main.index') }}"><i class="uk-icon fas fa-home fa-fw"></i> &nbsp;Home</a></li>
                 {% else %}
                     <li><a href="{{ url_for('main.index') }}"><i class="uk-icon fas fa-home fa-fw"></i> &nbsp;Home</a></li>
                 {% endif %}
-                <li><a href="{{ url_for('wiki.index') }}"><i class="uk-icon fas fa-book fa-fw"></i> &nbsp;Wiki</a></li>
+
+                {% if current_page.startswith("wiki.") %}
+                    <li class="uk-active"><a href="{{ url_for('wiki.index') }}"><i class="uk-icon fas fa-book fa-fw"></i> &nbsp;Wiki</a></li>
+                {% else %}
+                    <li><a href="{{ url_for('wiki.index') }}"><i class="uk-icon fas fa-book fa-fw"></i> &nbsp;Wiki</a></li>
+                {% endif %}
+
                 <li><a href="{{ url_for('main.invite') }}"><i class="uk-icon fab fa-discord fa-fw"></i> &nbsp;Discord</a></li>
             </ul>
             <ul class="uk-navbar-nav">
@@ -27,8 +33,19 @@
                     <div class="uk-navbar-dropdown uk-background-secondary" uk-dropdown>
                         <ul class="uk-nav uk-navbar-dropdown-nav">
                             <li class="uk-nav-header uk-hidden@m">Navigation</li>
-                            <li class="uk-nav-item uk-hidden@m"><a href="{{ url_for('main.index') }}"><i class="uk-icon fas fa-home fa-fw"></i> &nbsp;Home</a></li>
-                            <li class="uk-nav-item uk-hidden@m"><a href="{{ url_for('wiki.index') }}"><i class="uk-icon fas fa-book fa-fw"></i> &nbsp;Wiki</a></li>
+
+                            {% if current_page == "main.index" %}
+                                <li class="uk-nav-item uk-active uk-hidden@m"><a href="{{ url_for('main.index') }}"><i class="uk-icon fas fa-home fa-fw"></i> &nbsp;Home</a></li>
+                            {% else %}
+                                <li class="uk-nav-item uk-hidden@m"><a href="{{ url_for('main.index') }}"><i class="uk-icon fas fa-home fa-fw"></i> &nbsp;Home</a></li>
+                            {% endif %}
+
+                            {% if current_page.startswith("wiki.") %}
+                                <li class="uk-nav-item uk-active uk-hidden@m"><a href="{{ url_for('wiki.index') }}"><i class="uk-icon fas fa-book fa-fw"></i> &nbsp;Wiki</a></li>
+                            {% else %}
+                                <li class="uk-nav-item uk-hidden@m"><a href="{{ url_for('wiki.index') }}"><i class="uk-icon fas fa-book fa-fw"></i> &nbsp;Wiki</a></li>
+                            {% endif %}
+
                             <li class="uk-nav-item uk-hidden@m"><a href="{{ url_for('main.invite') }}"><i class="uk-icon fab fa-discord fa-fw"></i> &nbsp;Discord</a></li>
                             <li class="uk-nav-divider uk-hidden@m"></li>
 

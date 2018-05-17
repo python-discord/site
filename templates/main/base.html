@@ -35,30 +35,18 @@
         <div class="uk-offcanvas-content">
         {% endif %}
             {% include "main/navigation.html" %}
-            {% if current_page != "main.index" %}
-                {% block beta_error %}
-                    <div class="uk-container uk-section" style="padding-top: 10px; padding-bottom: 10px;">
-                        <div class="uk-container uk-container-small">
-                            <div class="uk-alert-danger" uk-alert>
-                                <p>
-                                    Please note: this site is under construction. What you see now may be vastly different
-                                    from the final project state. Feel free to chat to us on Discord if you're curious!
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                {% endblock %}
-            {% endif %}
             {% block content %}{% endblock %}
         </div>
 
         <footer>
             <div class="uk-section uk-section-secondary uk-container-medium uk-text-meta">
-                <div class="uk-text-center">
+                <div class="uk-text-center uk-text-meta">
                     <p>
                         This website uses <a href="https://python.org">Python</a> and
                         <a href="http://flask.pocoo.org/">Flask</a>, and was developed collaboratively on
                         <a href="https://github.com/discord-python/site">GitHub</a>.
+                        <br />
+                        For privacy &amp; GDPR-related info, please <a href="{{ url_for("main.about.privacy") }}">see this page</a>.
                     </p>
                 </div>
             </div>
