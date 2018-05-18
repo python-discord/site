@@ -1,10 +1,7 @@
-from pysite.base_route import RouteView
-from pysite.mixins import DBMixin
+from pysite.base_route import TemplateView
 
 
-class PageView(RouteView, DBMixin):
+class PageView(TemplateView):
     path = "/special"
     name = "special"
-
-    def get(self):
-        return self.render("wiki/special.html")
+    template = "wiki/special.html"

@@ -8,7 +8,7 @@ from flask_dance.contrib.discord import make_discord_blueprint
 from flask_sockets import Sockets
 from gunicorn_config import _when_ready as when_ready
 
-from pysite.base_route import APIView, BaseView, ErrorView, RouteView
+from pysite.base_route import APIView, BaseView, ErrorView, RedirectView, RouteView, TemplateView
 from pysite.constants import (
     CSRF, DEBUG_MODE, DISCORD_OAUTH_AUTHORIZED, DISCORD_OAUTH_ID, DISCORD_OAUTH_REDIRECT,
     DISCORD_OAUTH_SCOPE, DISCORD_OAUTH_SECRET, PREFERRED_URL_SCHEME)
@@ -131,6 +131,8 @@ class RouteManager:
                             cls is not RouteView and
                             cls is not APIView and
                             cls is not WS and
+                            cls is not TemplateView and
+                            cls is not RedirectView and
                             (
                                 BaseView in cls.__mro__ or
                                 WS in cls.__mro__

@@ -67,6 +67,14 @@ ERROR_DESCRIPTIONS = {
     429: "Please don't send us that many requests."
 }
 
+JAM_STATES = [
+    "planning",
+    "announced",
+    "running",
+    "judging",
+    "finished"
+]
+
 # PaperTrail logging
 PAPERTRAIL_ADDRESS = environ.get("PAPERTRAIL_ADDRESS") or None
 PAPERTRAIL_PORT = int(environ.get("PAPERTRAIL_PORT") or 0)
