@@ -73,6 +73,16 @@ TABLES = {
         locked=False
     ),
 
+    "special_snakes": Table(  # Special case snakes for the snake converter
+        primary_key="name",
+        keys=sorted([
+            "name",
+            "info",
+            "image_list",
+        ]),
+        locked=False
+    ),
+
     "tags": Table(  # Tag names and values
         primary_key="tag_name",
         keys=sorted([

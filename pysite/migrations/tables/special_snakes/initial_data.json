@@ -1,0 +1,24 @@
+[
+    {
+        "name": "Python",
+        "info": "Python is a species of programming language, commonly used by coding beginners and experts alike. It was first discovered in 1989 by Guido van Rossum in the Netherlands, and was released to the wild two years later.",
+        "image_list": [
+            "https://www.python.org/static/community_logos/python-logo-master-v3-TM-flattened.png"
+        ]
+    },
+    {
+        "name": "Bob Ross",
+        "info": "Robert Norman Ross (October 29, 1942 – July 4, 1995) was an American painter, art instructor, and television host. He was the creator and host of The Joy of Painting, an instructional television program that aired from 1983 to 1994 on PBS in the United States, and also aired in Canada, Latin America, and Europe.",
+        "image_list": [
+            "https://images05.military.com/sites/default/files/styles/full/public/media/people/2013/05/"
+            "bobrosspainting.jpg?itok=A3G_e8MM"
+        ]
+    },
+    {
+        "name": "Mystery Snake",
+        "info": "The Mystery Snake is rumored to be a thin, serpentine creature that hides in spaghetti dinners. It has yellow, pasta-like scales with a completely smooth texture, and is quite glossy. ",
+        "image_list": [
+            "https://img.thrfun.com/img/080/349/spaghetti_dinner_l1.jpg"
+        ]
+    }
+]
