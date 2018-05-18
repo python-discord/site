@@ -19,8 +19,8 @@ GET_SCHEMA = Schema([
 
 
 class SnakeNamesView(APIView, DBMixin):
-    path = "/snake_names"
-    name = "api.bot.snake_names"
+    path = "/bot/snake_names"
+    name = "bot.snake_names"
     table = "snake_names"
 
     @api_key

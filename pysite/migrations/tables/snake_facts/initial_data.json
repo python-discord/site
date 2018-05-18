@@ -1,79 +1,233 @@
 [
-   {"fact": "The decapitated head of a dead snake can still bite, even hours after death. These types of bites usually contain huge amounts of venom."},
-   {"fact": "What is considered the most “dangerous” snake depends on both a specific country’s health care and the availability of antivenom following a bite. Based on these criteria, the most dangerous snake in the world is the saw-scaled viper, which bites and kills more people each year than any other snake."},
-   {"fact": "Snakes live on everywhere on Earth except Ireland, Iceland, New Zealand, and the North and South Poles.a"},
-   {"fact": "Of the approximately 725 species of venomous snakes worldwide, 250 can kill a human with one bite."},
-   {"fact": "Snakes evolved from a four-legged reptilian ancestor—most likely a small, burrowing, land-bound lizard—about 100 million years ago. Some snakes, such as pythons and boas, still have traces of back legs."},
-   {"fact": "The fear of snakes (ophiophobia or herpetophobia) is one of the most common phobias worldwide. Approximately 1/3 of all adult humans areophidiophobic , which suggests that humans have an innate, evolutionary fear of snakes."},
-   {"fact": "The top 5 most venomous snakes in the world are the inland taipan, the eastern brown snake, the coastal taipan, the tiger snake, and the black tiger snake."},
-   {"fact": "The warmer a snake’s body, the more quickly it can digest its prey. Typically, it takes 3–5 days for a snake to digest its meal. For very large snakes, such as the anaconda, digestion can take weeks."},
-   {"fact": "Some animals, such as the Mongoose, are immune to snake venom."},
-   {"fact": "To avoid predators, some snakes can poop whenever they want. They make themselves so dirty and smelly that predators will run away."},
-   {"fact": "The heaviest snake in the world is the anaconda. It weighs over 595 pounds (270 kg) and can grow to over 30 feet (9m) long. It has been known to eat caimans, capybaras, and jaguars."},
-   {"fact": "The Brahminy Blind Snake, or flowerpot snake, is the only snake species made up of solely females and, as such, does not need a mate to reproduce. It is also the most widespread terrestrial snake in the world."},
-   {"fact": "If a person suddenly turned into a snake, they would be about 4 times longer than they are now and only a few inches thick. While humans have 24 ribs, some snakes can have more than 400."},
-   {"fact": "The most advanced snake species in the world is believed to be the black mamba. It has the most highly evolved venom delivery system of any snake on Earth. It can strike up to 12 times in a row, though just one bite is enough to kill a grown man.o"},
-   {"fact": "The inland taipan is the world’s most toxic snake, meaning it has both the most toxic venom and it injects the most venom when it bites. Its venom sacs hold enough poison to kill up to 80 people."},
-   {"fact": "The death adder has the fastest strike of any snake in the world. It can attack, inject venom, and go back to striking position in under 0.15 seconds."},
-   {"fact": "While snakes do not have external ears or eardrums, their skin, muscles, and bones carry sound vibrations to their inner ears."},
-   {"fact": "Some snakes have been known to explode after eating a large meal. For example, a 13-foot python blew up after it tried to eat a 6-foot alligator. The python was found with the alligator’s tail protruding from its midsection. Its head was missing."},
-   {"fact": "The word “snake” is from the Proto-Indo-European root *sneg -, meaning “to crawl, creeping thing.” The word “serpent” is from the Proto-Indo-European root *serp -, meaning “to crawl, creep.”"},
-   {"fact": "Rattlesnake rattles are made of rings of keratin, which is the same material as human hair and fingernails. A rattler will add a new ring each time it sheds its skin."},
-   {"fact": "Some snakes have over 200 teeth. The teeth aren’t used for chewing but they point backward to prevent prey from escaping the snake’s throat."},
-   {"fact": "There are about 500 genera and 3,000 different species of snakes. All of them are predators."},
-   {"fact": "Naturalist Paul Rosolie attempted to be the first person to survive being swallowed by an anaconda in 2014. Though he was wearing a specially designed carbon fiber suit equipped with a breathing system, cameras, and a communication system, he ultimately called off his stunt when he felt like the anaconda was breaking his arm as it tightened its grip around his body."},
-   {"fact": "There are five recognized species of flying snakes. Growing up to 4 feet, some types can glide up to 330 feet through the air."},
-   {"fact": "Scales cover every inch of a snake’s body, even its eyes. Scales are thick, tough pieces of skin made from keratin, which is the same material human nails and hair are made from."},
-   {"fact": "The most common snake in North America is the garter (gardener) snake. This snake is also Massachusetts’s state reptile. While previously thought to be nonvenomous, garter snakes do, in fact, produce a mild neurotoxic venom that is harmless to humans."},
-   {"fact": "Snakes do not lap up water like mammals do. Instead, they dunk their snouts underwater and use their throats to pump water into their stomachs."},
-   {"fact": "A snake’s fangs usually last about 6–10 weeks. When a fang wears out, a new one grows in its place."},
-   {"fact": "Because the end of a snake’s tongue is forked, the two tips taste different amounts of chemicals. Essentially, a snake “smells in stereo” and can even tell which direction a smell is coming from. It identifies scents on its tongue using pits in the roof of its mouth called the Jacobson’s organ."},
-   {"fact": "The amount of food a snake eats determines how many offspring it will have. The Arafura file snake eats the least and lays just one egg every decade."},
-   {"fact": "While smaller snakes, such a tree- or- ground-dwelling snakes, use their tongues to follow the scent trails of prey (such as spiders, birds, and other snakes). Larger snakes, such as boas, have heat-sensing organs called labial (lip) pits in their snouts."},
-   {"fact": "Snakes typically need to eat only 6–30 meals each year to be healthy."},
-   {"fact": "Snakes like to lie on roads and rocky areas because stones and rocks absorb heat from the sun, which warms them. Basking on these surfaces warms a snake quickly so it can move. If the temperature reaches below 50° Fahrenheit, a snake’s body does not work properly."},
-   {"fact": "The Mozambique spitting cobra can spit venom over 8 feet away. It can spit from any position, including lying on the ground or raised up. It prefers to aim for its victim’s eyes."},
-   {"fact": "Snakes cannot chew, so they must swallow their food whole. They are able to stretch their mouths very wide because they have a very flexible lower jaw. Snakes can eat other animals that are 75%–100% bigger than their own bodies."},
-   {"fact": "To keep from choking on large prey, a snake will push the end of its trachea, or windpipe, out of its mouth, similar to the way a snorkel works."},
-   {"fact": "The Gaboon viper has the longest fangs of any snake, reaching about 2 inches (5 cm) long."},
-   {"fact": "Anacondas can hold their breath for up to 10 minutes under water. Additionally, similar to crocodiles, anacondas have eyes and nostrils that can poke above the water’s surface to increase their stealth and hunting prowess."},
-   {"fact": "The longest snake ever recorded is the reticulated python. It can reach over 33 feet long, which is big enough to swallow a pig, a deer, or even a person."},
-   {"fact": "Sea snakes with their paddle-shaped tails can dive over 300 feet into the ocean."},
-   {"fact": "If a snake is threatened soon after a meal, it will often regurgitate its food so it can quickly escape the perceived threat. A snake’s digestive system can dissolve everything but a prey’s hair, feathers, and claws."},
-   {"fact": "Snakes do not have eyelids; rather, a single transparent scale called a brille protects their eyes. Most snakes see very well, especially if the object is moving."},
-   {"fact": "The world’s longest venomous snake is the king cobra from Asia. It can grow up to 18 feet, rear almost as high as a person, growl loudly, and inject enough venom to kill an elephant."},
-   {"fact": "The king cobra is thought to be one of the most intelligent of all snakes. Additionally, unlike most snakes, who do not care for their young, king cobras are careful parents who defend and protect their eggs from enemies."},
-   {"fact": "Not all snakes have fangs—only those that kill their prey with venom have them. When their fangs are not in use, they fold them back into the roof of the mouth (except for the coral snake, whose fangs do not fold back)."},
-   {"fact": "Some venomous snakes have died after biting and poisoning themselves by mistake."},
-   {"fact": "Elephant trunk snakes are almost completely aquatic. They cannot slither because they lack the broad scales in the belly that help other snakes move on land. Rather, elephant trunk snakes have large knobby scales to hold onto slippery fish and constrict them underwater."},
-   {"fact": "The shortest known snake is the thread snake. It is about 4 inches long and lives on the island of Barbados in the Caribbean. It is said to be as “thin as spaghetti” and it feeds primarily on termites and larvae."},
-   {"fact": "In 2009, a farm worker in East Africa survived an epic 3-hour battle with a 12-foot python after accidentally stepping on the large snake. It coiled around the man and carried him into a tree. The man wrapped his shirt over the snake’s mouth to prevent it from swallowing him, and he was finally rescued by police after calling for help on his cell phone."},
-   {"fact": "The venom from a Brazilian pit viper is used in a drug to treat high blood pressure."},
-   {"fact": "The word “cobra” means “hooded.” Some cobras have large spots on the back of their hood that look like eyes to make them appear intimating even from behind."},
-   {"fact": "Some desert snakes, such as the African rock python, sleep during the hottest parts of the desert summer. This summer sleep is similar to hibernation and is called “aestivation.”"},
-   {"fact": "The black mamba is the world’s fastest snake and the world’s second-longest venomous snake in the world, after the king cobra. Found in East Africa, it can reach speeds of up to 12 mph (19kph). It’s named not from the color of its scales, which is olive green, but from the inside of its mouth, which is inky black. Its venom is highly toxic, and without anti-venom, death in humans usually occurs within 7–15 hours."},
-   {"fact": "Although a snake’s growth rate slows as it gets older, a snake never stops growing."},
-   {"fact": "While a snake cannot hear the music of a snake charmer, the snake responds to the vibrations of the charmer’s tapping foot or to the movement of the flute."},
-   {"fact": "Most snakes are not harmful to humans and they help balance the ecosystem by keeping the population of rats, mice, and birds under control."},
-   {"fact": "The largest snake fossil ever found is the Titanoboa. It lived over 60 million years ago and reached over 50 feet (15 meters) long. It weighed more than 20 people and ate crocodiles and giant tortoises."},
-   {"fact": "Two-headed snakes are similar to conjoined twins: an embryo begins to split to create identical twins, but the process does not finish. Such snakes rarely survive in the wild because the two heads have duplicate senses, they fight over food, and one head may try to eat the other head."},
-   {"fact": "Snakes can be grouped into two sections: primitive snakes and true (typical) snakes. Primitive snakes—such as blind snakes, worm snakes, and thread snakes—represent the earliest forms of snakes. True snakes, such as rat snakes and king snakes, are more evolved and more active."},
-   {"fact": "The oldest written record that describes snakes is in the Brooklyn Papyrus, which is a medical papyrus dating from ancient Egypt (450 B.C.)."},
-   {"fact": "Approximately 70% of snakes lay eggs. Those that lay eggs are called oviparous. The other 30% of snakes live in colder climates and give birth to live young because it is too cold for eggs outside the body to develop and hatch."},
-   {"fact": "Most snakes have an elongated right lung, many have a smaller left lung, and a few even have a third lung. They do not have a sense of taste, and most of their organs are organized linearly."},
-   {"fact": "The most rare and endangered snake is the St. Lucia racer. There are only 18 to 100 of these snakes left."},
-   {"fact": "Snakes kill over 40,000 people a year—though, with unreported incidents, the total may be over 100,000. About half of these deaths are in India."},
-   {"fact": "In some cultures, eating snakes is considered a delicacy. For example, snake soup has been a popular Cantonese delicacy for over 2,000 years."},
-   {"fact": "In some Asian countries, it is believed that drinking the blood of snakes, particularly the cobra, will increase sexual virility. The blood is usually drained from a live snake and then mixed with liquor."},
-   {"fact": "In the United States, fewer than 1 in 37,500 people are bitten by venomous snakes each year (7,000–8,000 bites per year), and only 1 in 50 million people will die from snake bite (5–6 fatalities per year). In the U.S., a person is 9 times more likely to die from being struck by lightening than to die from a venomous snakebite."},
-   {"fact": "Some members of the U.S. Army Special Forces are taught to kill and eat snakes during their survival training, which has earned them the nickname “Snake Eaters.”"},
-   {"fact": "One of the great feats of the legendary Greek hero Perseus was to kill Medusa, a female monster whose hair consisted of writhing, venomous snakes."},
-   {"fact": "The symbol of the snake is one of the most widespread and oldest cultural symbols in history. Snakes often represent the duality of good and evil and of life and death."},
-   {"fact": "Because snakes shed their skin, they are often symbols of rebirth, transformation, and healing. For example, Asclepius, the god of medicine, carries a staff encircled by a snake."},
-   {"fact": "The snake has held various meanings throughout history. For example, The Egyptians viewed the snake as representing royalty and deity. In the Jewish rabbinical tradition and in Hinduism, it represents sexual passion and desire. And the Romans interpreted the snake as a symbol of eternal love."},
-   {"fact": "Anacondas mate in a huge “breeding ball.” The ball consists of 1 female and nearly 12 males. They stay in a “mating ball” for up to a month."},
-   {"fact": "Depending on the species, snakes can live from 4 to over 25 years."},
-   {"fact": "Snakes that are poisonous have pupils that are shaped like a diamond. Nonpoisonous snakes have round pupils."},
-   {"fact": "Endangered snakes include the San Francisco garter snake, eastern indigo snake, the king cobra, and Dumeril’s boa."},
-   {"fact": "A mysterious, new “mad snake disease” causes captive pythons and boas to tie themselves in knots. Other symptoms include “stargazing,” which is when snakes stare upwards for long periods of time. Snake experts believe a rodent virus causes the fatal disease."}
+    {
+        "fact": "The decapitated head of a dead snake can still bite, even hours after death. These types of bites usually contain huge amounts of venom."
+    },
+    {
+        "fact": "What is considered the most “dangerous” snake depends on both a specific country’s health care and the availability of antivenom following a bite. Based on these criteria, the most dangerous snake in the world is the saw-scaled viper, which bites and kills more people each year than any other snake."
+    },
+    {
+        "fact": "Snakes live on everywhere on Earth except Ireland, Iceland, New Zealand, and the North and South Poles.a"
+    },
+    {
+        "fact": "Of the approximately 725 species of venomous snakes worldwide, 250 can kill a human with one bite."
+    },
+    {
+        "fact": "Snakes evolved from a four-legged reptilian ancestor—most likely a small, burrowing, land-bound lizard—about 100 million years ago. Some snakes, such as pythons and boas, still have traces of back legs."
+    },
+    {
+        "fact": "The fear of snakes (ophiophobia or herpetophobia) is one of the most common phobias worldwide. Approximately 1/3 of all adult humans areophidiophobic , which suggests that humans have an innate, evolutionary fear of snakes."
+    },
+    {
+        "fact": "The top 5 most venomous snakes in the world are the inland taipan, the eastern brown snake, the coastal taipan, the tiger snake, and the black tiger snake."
+    },
+    {
+        "fact": "The warmer a snake’s body, the more quickly it can digest its prey. Typically, it takes 3–5 days for a snake to digest its meal. For very large snakes, such as the anaconda, digestion can take weeks."
+    },
+    {
+        "fact": "Some animals, such as the Mongoose, are immune to snake venom."
+    },
+    {
+        "fact": "To avoid predators, some snakes can poop whenever they want. They make themselves so dirty and smelly that predators will run away."
+    },
+    {
+        "fact": "The heaviest snake in the world is the anaconda. It weighs over 595 pounds (270 kg) and can grow to over 30 feet (9m) long. It has been known to eat caimans, capybaras, and jaguars."
+    },
+    {
+        "fact": "The Brahminy Blind Snake, or flowerpot snake, is the only snake species made up of solely females and, as such, does not need a mate to reproduce. It is also the most widespread terrestrial snake in the world."
+    },
+    {
+        "fact": "If a person suddenly turned into a snake, they would be about 4 times longer than they are now and only a few inches thick. While humans have 24 ribs, some snakes can have more than 400."
+    },
+    {
+        "fact": "The most advanced snake species in the world is believed to be the black mamba. It has the most highly evolved venom delivery system of any snake on Earth. It can strike up to 12 times in a row, though just one bite is enough to kill a grown man.o"
+    },
+    {
+        "fact": "The inland taipan is the world’s most toxic snake, meaning it has both the most toxic venom and it injects the most venom when it bites. Its venom sacs hold enough poison to kill up to 80 people."
+    },
+    {
+        "fact": "The death adder has the fastest strike of any snake in the world. It can attack, inject venom, and go back to striking position in under 0.15 seconds."
+    },
+    {
+        "fact": "While snakes do not have external ears or eardrums, their skin, muscles, and bones carry sound vibrations to their inner ears."
+    },
+    {
+        "fact": "Some snakes have been known to explode after eating a large meal. For example, a 13-foot python blew up after it tried to eat a 6-foot alligator. The python was found with the alligator’s tail protruding from its midsection. Its head was missing."
+    },
+    {
+        "fact": "The word “snake” is from the Proto-Indo-European root *sneg -, meaning “to crawl, creeping thing.” The word “serpent” is from the Proto-Indo-European root *serp -, meaning “to crawl, creep.”"
+    },
+    {
+        "fact": "Rattlesnake rattles are made of rings of keratin, which is the same material as human hair and fingernails. A rattler will add a new ring each time it sheds its skin."
+    },
+    {
+        "fact": "Some snakes have over 200 teeth. The teeth aren’t used for chewing but they point backward to prevent prey from escaping the snake’s throat."
+    },
+    {
+        "fact": "There are about 500 genera and 3,000 different species of snakes. All of them are predators."
+    },
+    {
+        "fact": "Naturalist Paul Rosolie attempted to be the first person to survive being swallowed by an anaconda in 2014. Though he was wearing a specially designed carbon fiber suit equipped with a breathing system, cameras, and a communication system, he ultimately called off his stunt when he felt like the anaconda was breaking his arm as it tightened its grip around his body."
+    },
+    {
+        "fact": "There are five recognized species of flying snakes. Growing up to 4 feet, some types can glide up to 330 feet through the air."
+    },
+    {
+        "fact": "Scales cover every inch of a snake’s body, even its eyes. Scales are thick, tough pieces of skin made from keratin, which is the same material human nails and hair are made from."
+    },
+    {
+        "fact": "The most common snake in North America is the garter (gardener) snake. This snake is also Massachusetts’s state reptile. While previously thought to be nonvenomous, garter snakes do, in fact, produce a mild neurotoxic venom that is harmless to humans."
+    },
+    {
+        "fact": "Snakes do not lap up water like mammals do. Instead, they dunk their snouts underwater and use their throats to pump water into their stomachs."
+    },
+    {
+        "fact": "A snake’s fangs usually last about 6–10 weeks. When a fang wears out, a new one grows in its place."
+    },
+    {
+        "fact": "Because the end of a snake’s tongue is forked, the two tips taste different amounts of chemicals. Essentially, a snake “smells in stereo” and can even tell which direction a smell is coming from. It identifies scents on its tongue using pits in the roof of its mouth called the Jacobson’s organ."
+    },
+    {
+        "fact": "The amount of food a snake eats determines how many offspring it will have. The Arafura file snake eats the least and lays just one egg every decade."
+    },
+    {
+        "fact": "While smaller snakes, such a tree- or- ground-dwelling snakes, use their tongues to follow the scent trails of prey (such as spiders, birds, and other snakes). Larger snakes, such as boas, have heat-sensing organs called labial (lip) pits in their snouts."
+    },
+    {
+        "fact": "Snakes typically need to eat only 6–30 meals each year to be healthy."
+    },
+    {
+        "fact": "Snakes like to lie on roads and rocky areas because stones and rocks absorb heat from the sun, which warms them. Basking on these surfaces warms a snake quickly so it can move. If the temperature reaches below 50° Fahrenheit, a snake’s body does not work properly."
+    },
+    {
+        "fact": "The Mozambique spitting cobra can spit venom over 8 feet away. It can spit from any position, including lying on the ground or raised up. It prefers to aim for its victim’s eyes."
+    },
+    {
+        "fact": "Snakes cannot chew, so they must swallow their food whole. They are able to stretch their mouths very wide because they have a very flexible lower jaw. Snakes can eat other animals that are 75%–100% bigger than their own bodies."
+    },
+    {
+        "fact": "To keep from choking on large prey, a snake will push the end of its trachea, or windpipe, out of its mouth, similar to the way a snorkel works."
+    },
+    {
+        "fact": "The Gaboon viper has the longest fangs of any snake, reaching about 2 inches (5 cm) long."
+    },
+    {
+        "fact": "Anacondas can hold their breath for up to 10 minutes under water. Additionally, similar to crocodiles, anacondas have eyes and nostrils that can poke above the water’s surface to increase their stealth and hunting prowess."
+    },
+    {
+        "fact": "The longest snake ever recorded is the reticulated python. It can reach over 33 feet long, which is big enough to swallow a pig, a deer, or even a person."
+    },
+    {
+        "fact": "Sea snakes with their paddle-shaped tails can dive over 300 feet into the ocean."
+    },
+    {
+        "fact": "If a snake is threatened soon after a meal, it will often regurgitate its food so it can quickly escape the perceived threat. A snake’s digestive system can dissolve everything but a prey’s hair, feathers, and claws."
+    },
+    {
+        "fact": "Snakes do not have eyelids; rather, a single transparent scale called a brille protects their eyes. Most snakes see very well, especially if the object is moving."
+    },
+    {
+        "fact": "The world’s longest venomous snake is the king cobra from Asia. It can grow up to 18 feet, rear almost as high as a person, growl loudly, and inject enough venom to kill an elephant."
+    },
+    {
+        "fact": "The king cobra is thought to be one of the most intelligent of all snakes. Additionally, unlike most snakes, who do not care for their young, king cobras are careful parents who defend and protect their eggs from enemies."
+    },
+    {
+        "fact": "Not all snakes have fangs—only those that kill their prey with venom have them. When their fangs are not in use, they fold them back into the roof of the mouth (except for the coral snake, whose fangs do not fold back)."
+    },
+    {
+        "fact": "Some venomous snakes have died after biting and poisoning themselves by mistake."
+    },
+    {
+        "fact": "Elephant trunk snakes are almost completely aquatic. They cannot slither because they lack the broad scales in the belly that help other snakes move on land. Rather, elephant trunk snakes have large knobby scales to hold onto slippery fish and constrict them underwater."
+    },
+    {
+        "fact": "The shortest known snake is the thread snake. It is about 4 inches long and lives on the island of Barbados in the Caribbean. It is said to be as “thin as spaghetti” and it feeds primarily on termites and larvae."
+    },
+    {
+        "fact": "In 2009, a farm worker in East Africa survived an epic 3-hour battle with a 12-foot python after accidentally stepping on the large snake. It coiled around the man and carried him into a tree. The man wrapped his shirt over the snake’s mouth to prevent it from swallowing him, and he was finally rescued by police after calling for help on his cell phone."
+    },
+    {
+        "fact": "The venom from a Brazilian pit viper is used in a drug to treat high blood pressure."
+    },
+    {
+        "fact": "The word “cobra” means “hooded.” Some cobras have large spots on the back of their hood that look like eyes to make them appear intimating even from behind."
+    },
+    {
+        "fact": "Some desert snakes, such as the African rock python, sleep during the hottest parts of the desert summer. This summer sleep is similar to hibernation and is called “aestivation.”"
+    },
+    {
+        "fact": "The black mamba is the world’s fastest snake and the world’s second-longest venomous snake in the world, after the king cobra. Found in East Africa, it can reach speeds of up to 12 mph (19kph). It’s named not from the color of its scales, which is olive green, but from the inside of its mouth, which is inky black. Its venom is highly toxic, and without anti-venom, death in humans usually occurs within 7–15 hours."
+    },
+    {
+        "fact": "Although a snake’s growth rate slows as it gets older, a snake never stops growing."
+    },
+    {
+        "fact": "While a snake cannot hear the music of a snake charmer, the snake responds to the vibrations of the charmer’s tapping foot or to the movement of the flute."
+    },
+    {
+        "fact": "Most snakes are not harmful to humans and they help balance the ecosystem by keeping the population of rats, mice, and birds under control."
+    },
+    {
+        "fact": "The largest snake fossil ever found is the Titanoboa. It lived over 60 million years ago and reached over 50 feet (15 meters) long. It weighed more than 20 people and ate crocodiles and giant tortoises."
+    },
+    {
+        "fact": "Two-headed snakes are similar to conjoined twins: an embryo begins to split to create identical twins, but the process does not finish. Such snakes rarely survive in the wild because the two heads have duplicate senses, they fight over food, and one head may try to eat the other head."
+    },
+    {
+        "fact": "Snakes can be grouped into two sections: primitive snakes and true (typical) snakes. Primitive snakes—such as blind snakes, worm snakes, and thread snakes—represent the earliest forms of snakes. True snakes, such as rat snakes and king snakes, are more evolved and more active."
+    },
+    {
+        "fact": "The oldest written record that describes snakes is in the Brooklyn Papyrus, which is a medical papyrus dating from ancient Egypt (450 B.C.)."
+    },
+    {
+        "fact": "Approximately 70% of snakes lay eggs. Those that lay eggs are called oviparous. The other 30% of snakes live in colder climates and give birth to live young because it is too cold for eggs outside the body to develop and hatch."
+    },
+    {
+        "fact": "Most snakes have an elongated right lung, many have a smaller left lung, and a few even have a third lung. They do not have a sense of taste, and most of their organs are organized linearly."
+    },
+    {
+        "fact": "The most rare and endangered snake is the St. Lucia racer. There are only 18 to 100 of these snakes left."
+    },
+    {
+        "fact": "Snakes kill over 40,000 people a year—though, with unreported incidents, the total may be over 100,000. About half of these deaths are in India."
+    },
+    {
+        "fact": "In some cultures, eating snakes is considered a delicacy. For example, snake soup has been a popular Cantonese delicacy for over 2,000 years."
+    },
+    {
+        "fact": "In some Asian countries, it is believed that drinking the blood of snakes, particularly the cobra, will increase sexual virility. The blood is usually drained from a live snake and then mixed with liquor."
+    },
+    {
+        "fact": "In the United States, fewer than 1 in 37,500 people are bitten by venomous snakes each year (7,000–8,000 bites per year), and only 1 in 50 million people will die from snake bite (5–6 fatalities per year). In the U.S., a person is 9 times more likely to die from being struck by lightening than to die from a venomous snakebite."
+    },
+    {
+        "fact": "Some members of the U.S. Army Special Forces are taught to kill and eat snakes during their survival training, which has earned them the nickname “Snake Eaters.”"
+    },
+    {
+        "fact": "One of the great feats of the legendary Greek hero Perseus was to kill Medusa, a female monster whose hair consisted of writhing, venomous snakes."
+    },
+    {
+        "fact": "The symbol of the snake is one of the most widespread and oldest cultural symbols in history. Snakes often represent the duality of good and evil and of life and death."
+    },
+    {
+        "fact": "Because snakes shed their skin, they are often symbols of rebirth, transformation, and healing. For example, Asclepius, the god of medicine, carries a staff encircled by a snake."
+    },
+    {
+        "fact": "The snake has held various meanings throughout history. For example, The Egyptians viewed the snake as representing royalty and deity. In the Jewish rabbinical tradition and in Hinduism, it represents sexual passion and desire. And the Romans interpreted the snake as a symbol of eternal love."
+    },
+    {
+        "fact": "Anacondas mate in a huge “breeding ball.” The ball consists of 1 female and nearly 12 males. They stay in a “mating ball” for up to a month."
+    },
+    {
+        "fact": "Depending on the species, snakes can live from 4 to over 25 years."
+    },
+    {
+        "fact": "Snakes that are poisonous have pupils that are shaped like a diamond. Nonpoisonous snakes have round pupils."
+    },
+    {
+        "fact": "Endangered snakes include the San Francisco garter snake, eastern indigo snake, the king cobra, and Dumeril’s boa."
+    },
+    {
+        "fact": "A mysterious, new “mad snake disease” causes captive pythons and boas to tie themselves in knots. Other symptoms include “stargazing,” which is when snakes stare upwards for long periods of time. Snake experts believe a rodent virus causes the fatal disease."
+    }
 ]

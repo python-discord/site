@@ -10,8 +10,8 @@ log = logging.getLogger(__name__)
 
 
 class SnakeIdiomView(APIView, DBMixin):
-    path = "/snake_idioms"
-    name = "api.bot.snake_idioms"
+    path = "/bot/snake_idioms"
+    name = "bot.snake_idioms"
     table = "snake_idioms"
 
     @api_key

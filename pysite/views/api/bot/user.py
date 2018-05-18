@@ -19,8 +19,8 @@ SCHEMA = Schema([
 
 
 class UserView(APIView, DBMixin):
-    path = "/user"
-    name = "api.bot.user"
+    path = "/bot/users"
+    name = "bot.users"
     table_name = "users"
 
     @api_key

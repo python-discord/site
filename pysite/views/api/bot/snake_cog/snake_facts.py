@@ -10,8 +10,8 @@ log = logging.getLogger(__name__)
 
 
 class SnakeFactsView(APIView, DBMixin):
-    path = "/snake_facts"
-    name = "api.bot.snake_facts"
+    path = "/bot/snake_facts"
+    name = "bot.snake_facts"
     table = "snake_facts"
 
     @api_key
