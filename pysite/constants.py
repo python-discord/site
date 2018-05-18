@@ -75,6 +75,16 @@ JAM_STATES = [
     "finished"
 ]
 
+JAM_QUESTION_TYPES = [
+    "email",
+    "number",
+    "radio",
+    "range",
+    "text",
+    "textarea",
+    "slider"
+]
+
 # PaperTrail logging
 PAPERTRAIL_ADDRESS = environ.get("PAPERTRAIL_ADDRESS") or None
 PAPERTRAIL_PORT = int(environ.get("PAPERTRAIL_PORT") or 0)

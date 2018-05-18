@@ -65,8 +65,11 @@ TABLES = {
     "code_jam_questions": Table(  # Application form questions
         primary_key="id",
         keys=sorted([
+            "data",  # dict
             "id",  # uuid
-            ""  # TODO
+            "optional",  # bool
+            "title",  # str
+            "type",  # str
         ])
     ),
 
@@ -76,6 +79,7 @@ TABLES = {
             "id",  # uuid
             "jam",  # int
             "answers",  # dict {question, answer, metadata}
+            "approved"  # bool
         ])
     ),
 

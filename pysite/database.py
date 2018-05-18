@@ -364,7 +364,7 @@ class RethinkDB:
             coerce=list
         )
 
-    def get(self, table_name: str, key: str) -> Optional[Dict[str, Any]]:
+    def get(self, table_name: str, key: Any) -> Optional[Dict[str, Any]]:
         """
         Get a single document from a table by primary key
 
