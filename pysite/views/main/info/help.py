@@ -1,9 +1,7 @@
-from pysite.base_route import RouteView
+from pysite.base_route import TemplateView
 
 
-class HelpView(RouteView):
+class HelpView(TemplateView):
     path = "/info/help"
     name = "info.help"
-
-    def get(self):
-        return self.render("main/info/help.html")
+    template = "main/info/help.html"

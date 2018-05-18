@@ -1,0 +1,131 @@
+{% extends "main/base.html" %}
+{% block title %}Privacy{% endblock %}
+{% block og_title %}Privacy{% endblock %}
+{% block og_description %}Our privacy policy, and compliance information{% endblock %}
+{% block content %}
+    <div class="uk-section">
+        <div class="uk-container uk-container-small">
+            <article class="uk-article">
+                <h1 class="uk-article-title hover-title" id="top">
+                    Privacy
+
+                    <a href="#top" class="uk-text-primary" title="Permanent link to this header">
+                        <i class="fas fa-paragraph" data-fa-transform="shrink-8"></i>
+                    </a>
+                </h1>
+                <p class="uk-article-meta">
+                    Stay safe out there
+                </p>
+
+                <p>
+                    We take every step to ensure that your data is used ethically and that includes making sure that
+                    you know exactly what data we collect, and what we do with it. That means that instead of a
+                    bunch of legal mumbo-jumbo, we've provided this information in an easy, human-readable form below.
+                </p>
+
+                <h1 class="uk-article-title hover-title" id="data-collected">
+                    What We Collect
+
+                    <a href="#data-collected" class="uk-text-primary" title="Permanent link to this header">
+                        <i class="fas fa-paragraph" data-fa-transform="shrink-8"></i>
+                    </a>
+                </h1>
+                <p class="uk-article-meta">
+                    Cherry-picking from the firehose of data
+                </p>
+                <p>
+                    During your time on the discord server, we collect...
+                </p>
+
+                <ul>
+                    <li>Your Discord user ID</li>
+                    <li>Your Discord username and discriminator</li>
+                    <li>The list of roles you're assigned on Discord</li>
+                    <li>Any messages you send on the server</li>
+                </ul>
+
+                <p>
+                    Should you click the login button on the site, we additionally collect...
+                </p>
+
+                <ul>
+                    <li>Your email address, supplied by Discord</li>
+                    <li>An access token and refresh token</li>
+                </ul>
+
+                <h1 class="uk-article-title hover-title" id="usage">
+                    How We Use Your Data
+
+                    <a href="#usage" class="uk-text-primary" title="Permanent link to this header">
+                        <i class="fas fa-paragraph" data-fa-transform="shrink-8"></i>
+                    </a>
+                </h1>
+                <p class="uk-article-meta">
+                    Keeping secrets
+                </p>
+
+                <p>
+                    We use your data for the daily maintainance of the server and website. In short: We only collect
+                    what we need. To explain this in more detail:
+                </p>
+                <ul>
+                    <li>
+                        Your Discord account details are useful for statistics - However, the storage of your assigned
+                        roles in our database also allows our site to use a Discord account-based authorization system.
+                        That means that all we have to do is assign the correct roles to you on Discord to give you
+                        access to the relevant parts of the site.
+                    </li>
+                    <li>
+                        While we currently do not use your email address for anything, we do have projects in the works
+                        that will make use of it. Don't worry, your email address will never leave our network, and we
+                        won't send anything to you without your consent!
+                    </li>
+                    <li>
+                        Your messages are not stored in our database - they're stored temporarily in memory during
+                        processing, and may also be written to a logfile.
+                    </li>
+                    <li>
+                        We are a completely non-profit community. We have no interest in selling your data, or
+                        shipping it off to third parties. Our community is entirely volunteer-run and it does not have
+                        any form of monetary income whatsoever - and we believe that this is how it should be.
+                    </li>
+                </ul>
+
+                <h1 class="uk-article-title hover-title" id="gdpr">
+                    GDPR
+
+                    <a href="#gdpr" class="uk-text-primary" title="Permanent link to this header">
+                        <i class="fas fa-paragraph" data-fa-transform="shrink-8"></i>
+                    </a>
+                </h1>
+                <p class="uk-article-meta">
+                    Keeping your data under your control
+                </p>
+
+                <p>
+                    The data we collect is required for the daily operation of this website, our bot and the Discord
+                    server. That said, we intend to fully comply with GDPR. Here's how we do this, and how you can
+                    contact us with any questions you have:
+                </p>
+                <ul>
+                    <li>
+                        When you join the server, we require that you accept our rules and terms by running a command
+                        in the <code>#checkpoint</code> channel. In doing so, you agree that you will abide by our rules -
+                        and you also agree to our data collection and usage policies (as detailed above).
+                    </li>
+                    <li>
+                        Should you change your mind at any point, we cannot selectively remove data and keep your
+                        membership on the server. If you'd like us to remove your data, there's only one thing you need
+                        to do: Leave the Discord server. In doing that, all of your data will automatically be removed
+                        from our systems. It's that simple!
+                    </li>
+                    <li>
+                        If you'd like a copy of the data we have belonging to you or you have any other questions about
+                        our data and GDPR handling, feel free to send a message to our GDPR officer on Discord,
+                        <code>gdude#2002</code> - or any other admin if he's not around.
+                    </li>
+                </ul>
+            </article>
+        </div>
+    </div>
+{% endblock %}

@@ -1,12 +1,8 @@
-from flask import url_for
-from werkzeug.utils import redirect
-
-from pysite.base_route import RouteView
+from pysite.base_route import RedirectView
 
 
-class WikiView(RouteView):
+class WikiView(RedirectView):
     path = "/"
     name = "index"
-
-    def get(self):
-        return redirect(url_for("wiki.page", page="home"))
+    page = "wiki.page"
+    kwargs = {"page": "home"}

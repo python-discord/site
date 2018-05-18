@@ -1,7 +1,7 @@
 from collections import Iterable
 from typing import Any
 
-from flask import Blueprint, Response, jsonify, render_template, url_for
+from flask import Blueprint, Response, jsonify, redirect, render_template, url_for
 from flask.views import MethodView
 from werkzeug.exceptions import default_exceptions
 
@@ -17,6 +17,7 @@ class BaseView(MethodView, OauthMixin):
     """
 
     name = None  # type: str
+    blueprint = None  # type: str
 
     def render(self, *template_names: str, **context: Any) -> str:
         """
@@ -52,6 +53,7 @@ class BaseView(MethodView, OauthMixin):
         context["logged_in"] = self.logged_in
         context["static_file"] = self._static_file
         context["debug"] = DEBUG_MODE
+        context["format_datetime"] = lambda dt: dt.strftime("%b %d %Y, %H:%M:%S")
 
         return render_template(template_names, **context)
 
@@ -98,6 +100,8 @@ class RouteView(BaseView):
 
         blueprint.add_url_rule(cls.path, view_func=cls.as_view(cls.name))
 
+        cls.name = f"{blueprint.name}.{cls.name}"  # Add blueprint to page name
+
 
 class APIView(RouteView):
     """
@@ -125,25 +129,25 @@ class APIView(RouteView):
 
         data = {
             "error_code": error_code.value,
-            "error_message": "Unknown error"
+            "error_message": error_info or "Unknown error"
         }
 
         http_code = 200
 
         if error_code is ErrorCodes.unknown_route:
-            data["error_message"] = "Unknown API route"
+            data["error_message"] = error_info or "Unknown API route"
             http_code = 404
         elif error_code is ErrorCodes.unauthorized:
-            data["error_message"] = "Unauthorized"
+            data["error_message"] = error_info or "Unauthorized"
             http_code = 401
         elif error_code is ErrorCodes.invalid_api_key:
-            data["error_message"] = "Invalid API-key"
+            data["error_message"] = error_info or "Invalid API-key"
             http_code = 401
         elif error_code is ErrorCodes.bad_data_format:
-            data["error_message"] = "Input data in incorrect format"
+            data["error_message"] = error_info or "Input data in incorrect format"
             http_code = 400
         elif error_code is ErrorCodes.incorrect_parameters:
-            data["error_message"] = "Incorrect parameters provided"
+            data["error_message"] = error_info or "Incorrect parameters provided"
             http_code = 400
 
         response = jsonify(data)
@@ -206,3 +210,87 @@ class ErrorView(BaseView):
         else:
             raise RuntimeError(
                 "Error views must have an `error_code` that is either an `int` or an iterable")  # pragma: no cover # noqa: E501
+
+
+class TemplateView(RouteView):
+    """
+    An easy view for routes that simply render a template with no extra information.
+
+    This class is intended to be subclassed - use it as a base class for your own views, and set the class-level
+    attributes as appropriate. For example:
+
+    >>> class MyView(TemplateView):
+    ...     name = "my_view"  # Flask internal name for this route
+    ...     path = "/my_view"  # Actual URL path to reach this route
+    ...     template = "my_view.html"  # Template to use
+
+    Note that this view only handles GET requests. If you need any other verbs, you can implement them yourself
+    or just use one of the more customizable base view classes.
+    """
+
+    template = None  # type: str
+
+    @classmethod
+    def setup(cls: "TemplateView", manager: "pysite.route_manager.RouteManager", blueprint: Blueprint):
+        """
+        Set up the view, deferring most setup to the superclasses but checking for the template attribute.
+
+        :param manager: Instance of the current RouteManager
+        :param blueprint: Current Flask blueprint to register the error handler for
+        """
+
+        if hasattr(super(), "setup"):
+            super().setup(manager, blueprint)  # pragma: no cover
+
+        if not cls.template:
+            raise RuntimeError("Template views must have `template` defined")
+
+    def get(self, *_):
+        return self.render(self.template)
+
+
+class RedirectView(RouteView):
+    """
+    An easy view for routes that simply redirect to another page or view.
+
+    This class is intended to be subclassed - use it as a base class for your own views, and set the class-level
+    attributes as appropriate. For example:
+
+    >>> class MyView(RedirectView):
+    ...     name = "my_view"  # Flask internal name for this route
+    ...     path = "/my_view"  # Actual URL path to reach this route
+    ...     code = 303  # HTTP status code to use for the redirect; 303 by default
+    ...     page = "staff.index"  # Page to redirect to
+    ...     kwargs = {}  # Any extra keyword args to pass to the url_for call, if redirecting to another view
+
+    You can specify a full URL, including the protocol, eg "http://google.com" or a Flask internal route name,
+    eg "main.index". Nothing else is supported.
+
+    Note that this view only handles GET requests. If you need any other verbs, you can implement them yourself
+    or just use one of the more customizable base view classes.
+    """
+
+    code = 303  # type: int
+    page = None  # type: str
+    kwargs = {}  # type: Optional[dict]
+
+    @classmethod
+    def setup(cls: "RedirectView", manager: "pysite.route_manager.RouteManager", blueprint: Blueprint):
+        """
+        Set up the view, deferring most setup to the superclasses but checking for the template attribute.
+
+        :param manager: Instance of the current RouteManager
+        :param blueprint: Current Flask blueprint to register the error handler for
+        """
+
+        if hasattr(super(), "setup"):
+            super().setup(manager, blueprint)  # pragma: no cover
+
+        if not cls.page or not cls.code:
+            raise RuntimeError("Redirect views must have both `code` and `page` defined")
+
+    def get(self, *_):
+        if "://" in self.page:
+            return redirect(self.page, code=self.code)
+
+        return redirect(url_for(self.page, **self.kwargs), code=self.code)

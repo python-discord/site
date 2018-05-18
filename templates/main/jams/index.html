@@ -1,0 +1,104 @@
+{% extends "main/base.html" %}
+{% block title %}Home{% endblock %}
+{% block og_title %}Home{% endblock %}
+{% block content %}
+<div class="uk-section">
+    <div class="uk-container uk-container-small">
+        <article class="uk-article">
+            <div uk-grid class="uk-grid-large">
+                <div class="uk-width-expand">
+                    <h1 class="uk-article-title hover-title" id="top">
+                        Code Jams
+
+                        <a href="#top" class="uk-text-primary" title="Permanent link to this header">
+                            <i class="fas fa-paragraph" data-fa-transform="shrink-8"></i>
+                        </a>
+                    </h1>
+                    <p class="uk-article-meta">
+                        We jammin'
+                    </p>
+
+                    <p>
+                        Every three months or so, we aim to host a server-wide code jam, suitable for all members of the server. In
+                        these, we announce a theme and date in advance, and users may sign up via a link provided in the
+                        announcements channel on the server. Once the sign-up period is over, users are grouped into
+                        teams. On the day of the code jam, we announce a task - each team will then work on a solution
+                        to this task.
+                    </p>
+                    <p>
+                        Once the code jam is over, our staff team will review and test each submission. Once that's done,
+                        a winner will be decided!
+                    </p>
+                    <p>
+                        If you'd like to join one of our code jams, feel free to ask a member of staff about the next one.
+                    </p>
+                </div>
+
+                <figure class="jetbrains uk-width-1-4@l uk-width-1-4@m uk-width-1-1@s">
+                    <h1 class="uk-article-title">
+                        Sponsors
+                    </h1>
+                    <p class="uk-article-meta">
+                        Our generous benefactors
+                    </p>
+
+                    <a href="https://jetbrains.com">
+                        <img src="{{ static_file("images/jetbrains.png") }}" />
+                    </a>
+                </figure>
+            </div>
+
+            <h2 class="uk-article-title hover-title" id="rules">
+                Rules and Guidelines
+
+                <a href="#rules" class="uk-text-primary" title="Permanent link to this header">
+                    <i class="fas fa-paragraph" data-fa-transform="shrink-8"></i>
+                </a>
+            </h2>
+            <p class="uk-article-meta">
+                Keeping the fight clean
+            </p>
+            <p>
+                In order to keep things fair and on-topic, the following rules must be adhered to. Failure to
+                follow these rules will result in disqualification.
+            </p>
+            <ul>
+                <li>
+                    Projects must be strongly Python-oriented.
+
+                    <ul>
+                        <li>You may mix in other languages, but the project must be Python-based.</li>
+                    </ul>
+                </li>
+                <li>You may not write any code in advance.</li>
+                <li>You may not write any code after the deadline.</li>
+                <li>The work must be your own - don't copy another team's work.</li>
+            </ul>
+            <p>
+                Additionally, the following suggestions could be helpful for all teams.
+            </p>
+            <ul>
+                <li>All team members should contribute to the project in some way. Work together!</li>
+                <li>Open your pull request early - that way, you know it'll be there by the deadline.</li>
+                <li>Lint your code - we lint each pull request using Flake8, and your code should validate.</li>
+                <li>Communicate with your teammates - Add them as a friend, start a group DM, and work together on the problem.</li>
+            </ul>
+
+            <h2 class="uk-article-title hover-title" id="further-reading">
+                Further Reading
+
+                <a href="#further-reading" class="uk-text-primary" title="Permanent link to this header">
+                    <i class="fas fa-paragraph" data-fa-transform="shrink-8"></i>
+                </a>
+            </h2>
+            <p class="uk-article-meta">
+                Need some support?
+            </p>
+            <p>
+                We're currently working on some better documentation for our code jams. In the meantime, you can always
+                read over our <a href="{{ url_for("main.jams.info") }}">old Getting Started guide</a>.
+            </p>
+        </article>
+    </div>
+</div>
+{% endblock %}
