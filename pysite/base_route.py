@@ -53,6 +53,7 @@ class BaseView(MethodView, OauthMixin):
         context["logged_in"] = self.logged_in
         context["static_file"] = self._static_file
         context["debug"] = DEBUG_MODE
+        context["format_datetime"] = lambda dt: dt.strftime("%b %d %Y, %H:%M:%S")
 
         return render_template(template_names, **context)
 
@@ -128,25 +129,25 @@ class APIView(RouteView):
 
         data = {
             "error_code": error_code.value,
-            "error_message": "Unknown error"
+            "error_message": error_info or "Unknown error"
         }
 
         http_code = 200
 
         if error_code is ErrorCodes.unknown_route:
-            data["error_message"] = "Unknown API route"
+            data["error_message"] = error_info or "Unknown API route"
             http_code = 404
         elif error_code is ErrorCodes.unauthorized:
-            data["error_message"] = "Unauthorized"
+            data["error_message"] = error_info or "Unauthorized"
             http_code = 401
         elif error_code is ErrorCodes.invalid_api_key:
-            data["error_message"] = "Invalid API-key"
+            data["error_message"] = error_info or "Invalid API-key"
             http_code = 401
         elif error_code is ErrorCodes.bad_data_format:
-            data["error_message"] = "Input data in incorrect format"
+            data["error_message"] = error_info or "Input data in incorrect format"
             http_code = 400
         elif error_code is ErrorCodes.incorrect_parameters:
-            data["error_message"] = "Incorrect parameters provided"
+            data["error_message"] = error_info or "Incorrect parameters provided"
             http_code = 400
 
         response = jsonify(data)
