@@ -8,6 +8,14 @@ class Table(NamedTuple):
 
 
 TABLES = {
+    "bot_events": Table(  # Events to be sent to the bot via websocket
+        primary_key="id",
+        keys=sorted([
+            "id",
+            "data"
+        ])
+    ),
+
     "hiphopify": Table(  # Users in hiphop prison
         primary_key="user_id",
         keys=sorted([
@@ -24,6 +32,81 @@ TABLES = {
             "image_url"
         ]),
         locked=False
+    ),
+
+    "code_jams": Table(  # Information about each code jam
+        primary_key="number",
+        keys=sorted([
+            "date_end",  # datetime
+            "date_start",  # datetime
+            "end_html",  # str
+            "end_rst",  # str
+            "number",  # int
+            "participants",  # list[int]
+            "repo",  # str
+            "state",  # str
+            "task_html",  # str
+            "task_rst",  # str
+            "teams",  # list[int]
+            "theme",  # str
+            "title",  # str
+            "winners"  # list[int]
+        ])
+    ),
+
+    "code_jam_forms": Table(  # Application forms for each jam
+        primary_key="number",
+        keys=sorted([
+            "number",  # int
+            "questions"  # list[dict[str, str]]  {title, type, input_type, options?}
+        ])
+    ),
+
+    "code_jam_questions": Table(  # Application form questions
+        primary_key="id",
+        keys=sorted([
+            "id",  # uuid
+            ""  # TODO
+        ])
+    ),
+
+    "code_jam_responses": Table(  # Application form responses
+        primary_key="id",
+        keys=sorted([
+            "id",  # uuid
+            "jam",  # int
+            "answers",  # dict {question, answer, metadata}
+        ])
+    ),
+
+    "code_jam_teams": Table(  # Teams for each jam
+        primary_key="id",
+        keys=sorted([
+            "id",  # uuid
+            "name",  # str
+            "members"  # list[int]
+        ])
+    ),
+
+    "code_jam_infractions": Table(  # Individual infractions for each user
+        primary_key="id",
+        keys=sorted([
+            "snowflake",  # int
+            "participant",  # int
+            "reason",  # str
+            "number"  # int (optionally -1 for permanent)
+        ])
+    ),
+
+    "code_jam_participants": Table(  # Info for each participant
+        primary_key="id",
+        keys=sorted([
+            "snowflake",  # int
+            "skill_level",  # str
+            "age",  # str
+            "github_username",  # str
+            "timezone"  # str
+        ])
     ),
 
     "oauth_data": Table(  # OAuth login information
@@ -70,7 +153,8 @@ TABLES = {
     ),
 
     "wiki_revisions": Table(  # Revisions of wiki articles
-        primary_key="id", keys=sorted([
+        primary_key="id",
+        keys=sorted([
             "id",
             "date",
             "post",

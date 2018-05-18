@@ -9,12 +9,12 @@ from pysite.decorators import require_roles
 
 class StaffView(RouteView):
     path = "/"
-    name = "staff_index"
+    name = "index"
 
     @require_roles(*ALL_STAFF_ROLES)
     def get(self):
         return self.render(
-            "staff/staff.html", manager=self.is_table_editor(),
+            "staff/index.html", manager=self.is_table_editor(),
             app_config=pformat(current_app.config, indent=4, width=120)
         )
 
