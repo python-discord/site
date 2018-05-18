@@ -1,16 +1,9 @@
 [
     {
-        "name": "Python",
-        "info": "Python is a species of programming language, commonly used by coding beginners and experts alike. It was first discovered in 1989 by Guido van Rossum in the Netherlands, and was released to the wild two years later.",
-        "image_list": [
-            "https://www.python.org/static/community_logos/python-logo-master-v3-TM-flattened.png"
-        ]
-    },
-    {
         "name": "Bob Ross",
         "info": "Robert Norman Ross (October 29, 1942 – July 4, 1995) was an American painter, art instructor, and television host. He was the creator and host of The Joy of Painting, an instructional television program that aired from 1983 to 1994 on PBS in the United States, and also aired in Canada, Latin America, and Europe.",
         "image_list": [
-            "https://images05.military.com/sites/default/files/styles/full/public/media/people/2013/05/bobrosspainting.jpg?itok=A3G_e8MM"
+            "https://d3atagt0rnqk7k.cloudfront.net/wp-content/uploads/2016/09/23115633/bob-ross-1-1280x800.jpg"
         ]
     },
     {
