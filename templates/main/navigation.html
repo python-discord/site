@@ -102,9 +102,15 @@
                             {% endif %}
 
                             {% if current_page == "main.jams.index" %}
-                                <li class="uk-active"><a href="{{ url_for('main.jams.index') }}">Info</a></li>
+                                <li class="uk-active"><a href="{{ url_for('main.jams.index') }}">All Jams</a></li>
                             {% else %}
-                                <li><a href="{{ url_for('main.jams.index') }}">Info</a></li>
+                                <li><a href="{{ url_for('main.jams.index') }}">All Jams</a></li>
+                            {% endif %}
+
+                            {% if current_page == "main.jams.profile" %}
+                                <li class="uk-active"><a href="{{ url_for('main.jams.profile') }}">My Profile</a></li>
+                            {% else %}
+                                <li><a href="{{ url_for('main.jams.profile') }}">My Profile</a></li>
                             {% endif %}
 
                             <li class="uk-nav-divider"></li>
