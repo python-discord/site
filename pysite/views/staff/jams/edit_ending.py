@@ -8,6 +8,7 @@ from pysite.mixins import DBMixin
 from pysite.rst import render
 
 REQUIRED_KEYS = ["end_rst"]
+ALLOWED_STATES = ["judging", "finished"]
 
 
 class StaffView(RouteView, DBMixin):
@@ -22,7 +23,7 @@ class StaffView(RouteView, DBMixin):
         if not jam_obj:
             return NotFound()
 
-        if not jam_obj["state"] == "judging":
+        if not jam_obj["state"] in ALLOWED_STATES:
             return BadRequest()
 
         return self.render("staff/jams/edit_ending.html", jam=jam_obj)
@@ -35,7 +36,7 @@ class StaffView(RouteView, DBMixin):
         if not jam_obj:
             return NotFound()
 
-        if not jam_obj["state"] == "judging":
+        if not jam_obj["state"] in ALLOWED_STATES:
             return BadRequest()
 
         print(request.form)
