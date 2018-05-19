@@ -79,8 +79,9 @@ TABLES = {
         primary_key="id",
         keys=sorted([
             "id",  # uuid
+            "snowflake",  # str
             "jam",  # int
-            "answers",  # dict {question, answer, metadata}
+            "answers",  # list [{question, answer, metadata}]
             "approved"  # bool
         ])
     ),
@@ -100,14 +101,15 @@ TABLES = {
             "id",  # uuid
             "participant",  # str
             "reason",  # str
-            "number"  # int (optionally -1 for permanent)
+            "number",  # int (optionally -1 for permanent)
+            "decremented_for"  # list[int]
         ])
     ),
 
     "code_jam_participants": Table(  # Info for each participant
         primary_key="id",
         keys=sorted([
-            "snowflake",  # int
+            "id",  # str
             "skill_level",  # str
             "age",  # str
             "github_username",  # str

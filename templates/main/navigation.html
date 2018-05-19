@@ -107,12 +107,6 @@
                                 <li><a href="{{ url_for('main.jams.index') }}">Info</a></li>
                             {% endif %}
 
-                            {% if current_page == "main.jams.signup" %}
-                                <li class="uk-active"><a href="{{ url_for('main.jams.signup') }}">Sign Up</a></li>
-                            {% else %}
-                                <li><a href="{{ url_for('main.jams.signup') }}">Sign Up</a></li>
-                            {% endif %}
-
                             <li class="uk-nav-divider"></li>
 
                             {% if current_page.startswith("main.about.privacy") %}

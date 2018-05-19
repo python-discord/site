@@ -4,6 +4,7 @@ from flask import Blueprint
 from rethinkdb.ast import Table
 
 from pysite.database import RethinkDB
+from pysite.oauth import OauthBackend
 
 
 class DBMixin:
@@ -98,5 +99,5 @@ class OauthMixin:
         return self.oauth.user_data()
 
     @property
-    def oauth(self):
+    def oauth(self) -> OauthBackend:
         return self._oauth()

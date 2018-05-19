@@ -1,0 +1,357 @@
+{% extends "main/base.html" %}
+{% block title %}Code Jams | Join{% endblock %}
+{% block og_title %}Code Jams | Join{% endblock %}
+
+{% macro show_question(question) %}
+    <div id="div-{{ question.id }}">
+        <div class="uk-form-label">
+            {% if question.optional %}
+                <label class="uk-form-label" style="margin-top: 0" for="{{ question.id }}">
+                    <strong>{{ question.title }}</strong>
+                    <br />
+                    <span class="uk-text-meta">You may skip this question</span>
+                </label>
+            {% else %}
+                <label class="uk-form-label" style="margin-top: 0" for="{{ question.id }}">
+                    <strong>{{ question.title }}</strong>
+                    <br />
+                    <span class="uk-text-meta">This question is required</span>
+                </label>
+            {% endif %}
+        </div>
+        <div class="uk-form-controls uk-form-controls-text">
+            {% if question.type == "checkbox" %}
+                {% if question.optional %}
+                    <input class="uk-checkbox" type="checkbox" name="{{ question.id }}" id="{{ question.id }}">
+                    <label for="{{ question.id }}" style="padding-left: 0.7rem;">Confirm</label>
+                {% else %}
+                    <input class="uk-checkbox" type="checkbox" name="{{ question.id }}" id="{{ question.id }}" required>
+                    <label for="{{ question.id }}" style="padding-left: 0.7rem;">Confirm</label>
+                {% endif %}
+
+            {% elif question.type == "email" %}
+                {% if question.optional %}
+                    <input class="uk-input" type="email" name="{{ question.id }}" id="{{ question.id }}" placeholder="me@myemail.com">
+                {% else %}
+                    <input class="uk-input" type="email" name="{{ question.id }}" id="{{ question.id }}" placeholder="me@myemail.com" required>
+                {% endif %}
+
+            {% elif question.type == "number" %}
+                {% if question.optional %}
+                    <input class="uk-input" type="number" max="{{ question.data.max }}" min="{{ question.data.min }}" name="{{ question.id }}" id="{{ question.id }}" value="{{ question.data.min }}">
+                {% else %}
+                    <input class="uk-input" type="number" max="{{ question.data.max }}" min="{{ question.data.min }}" name="{{ question.id }}" id="{{ question.id }}" value="{{ question.data.min }}" required>
+                {% endif %}
+
+            {% elif question.type == "radio" %}
+                {% if question.optional %}
+                    {% for option in question.data.options %}
+                        <input class="uk-radio radio-{{ question.id }}" type="radio" name="{{ question.id }}" id="{{ question.id }}-{{ option }}" value="{{ option }}">
+                        <label style="padding-left: 0.7rem; padding-right: 1rem;" for="{{ question.id }}-{{ option }}">{{ option }}</label>
+                    {% endfor %}
+                {% else %}
+                    {% for option in question.data.options %}
+                        <input class="uk-radio radio-{{ question.id }}" type="radio" name="{{ question.id }}" id="{{ question.id }}-{{ option }}" value="{{ option }}" required>
+                        <label style="padding-left: 0.7rem; padding-right: 1rem;" for="{{ question.id }}-{{ option }}">{{ option }}</label>
+                    {% endfor %}
+                {% endif %}
+
+            {% elif question.type == "range" %}
+                <div class="uk-flex uk-flex-between">
+                    {% if question.optional %}
+                        {% for num in range(question.data.min, question.data.max + 1) %}
+                            <span>
+                                <input class="uk-radio radio-{{ question.id }}" type="radio" name="{{ question.id }}" id="{{ question.id }}-{{ num }}" value="{{ num }}">
+                                <label style="padding-left: 0.3rem;" for="{{ question.id }}-{{ num }}">{{ num }}</label>
+                            </span>
+                        {% endfor %}
+                    {% else %}
+                        {% for num in range(question.data.min, question.data.max + 1) %}
+                            <span>
+                                <input class="uk-radio radio-{{ question.id }}" type="radio" name="{{ question.id }}" id="{{ question.id }}-{{ num }}" value="{{ num }}" required>
+                                <label style="padding-left: 0.3rem;" for="{{ question.id }}-{{ num }}">{{ num }}</label>
+                            </span>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+
+            {% elif question.type == "text" %}
+                {% if question.optional %}
+                    <input class="uk-input" type="text" name="{{ question.id }}" id="{{ question.id }}">
+                {% else %}
+                    <input class="uk-input" type="text" name="{{ question.id }}" id="{{ question.id }}" required>
+                {% endif %}
+
+            {% elif question.type == "textarea" %}
+                {% if question.optional %}
+                    <textarea class="uk-input uk-textarea" name="{{ question.id }}" id="{{ question.id }}" style="resize: vertical; min-height: 15rem; font-family: monospace;"></textarea>
+                {% else %}
+                    <textarea class="uk-input uk-textarea" name="{{ question.id }}" id="{{ question.id }}" style="resize: vertical; min-height: 15rem; font-family: monospace;" required></textarea>
+                {% endif %}
+
+            {% elif question.type == "slider" %}
+                <div class="uk-flex uk-flex-between">
+                    <label class="uk-label" style="margin-right: 1rem;" for="{{ question.id }}" id="{{ question.id }}-slider-value">{{ question.data.min }}</label>
+                    <input class="uk-range range-slider" name="{{ question.id }}" id="{{ question.id }}" min="{{ question.data.min }}" max="{{ question.data.max }}" step="1" value="{{ question.data.min }}" type="range">
+                </div>
+
+            {% endif %}
+        </div>
+    </div>
+{% endmacro %}
+
+{% block content %}
+<div class="uk-section">
+    <div class="uk-container uk-container-small">
+        <h1 class="uk-header uk-article-title">
+            Code Jam {{ jam.number }}: {{ jam.title }}
+        </h1>
+        <p class="uk-article-meta">
+            Bring the thunder!
+        </p>
+        <p>
+            Please fill out the form below to apply for this code jam. Once you've submitted your application and the
+            application window has closed, we'll review it and let you know whether you've been entered!
+        </p>
+        <p>
+            Please note that you will not be able to edit your application after you've submitted it.
+        </p>
+        <hr class="uk-divider-icon" />
+
+        {% if jam.state != "announced" %}
+            <p class="uk-alert uk-alert-primary">
+                Unfortunately, we're not accepting applications for this code jam right now - but we appreciate your
+                interest. Keep an eye on <code>#announcements</code> on Discord for information on the next jam!
+            </p>
+        {% else %}
+            <form action="{{ url_for("main.jams.join", jam=jam.number) }}" method="post" class="uk-form-horizontal">
+                {% for question in questions %}
+                    {{ show_question(question) }}
+                    <br />
+                {% endfor %}
+                <br />
+
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+
+                <div class="uk-text-center">
+                    <a class="uk-button uk-button-default" href="{{ url_for("main.jams.index") }}">
+                        <i class="uk-icon fa-fw far fa-arrow-left"></i> &nbsp;Back
+                    </a>
+                    <button type="submit" class="uk-button uk-button-primary" name="submit" id="submit" disabled>
+                        <i class="uk-icon fa-fw far fa-check"></i> &nbsp;Apply
+                    </button>
+                </div>
+            </form>
+
+        {% endif %}
+    </div>
+</div>
+
+<script type="application/javascript">
+    "use strict";
+
+    // noinspection JSAnnotator (It thinks I'm not assigning this for some reason)
+    const questions = {{ questions | tojson }};
+    const button = document.getElementById("submit");
+
+    function validateEmail(email) {
+        let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(String(email).toLowerCase());
+    }
+
+    function isNum(value) {
+        return !isNaN(parseInt(value));
+    }
+
+    function checkInputs() {
+        let input, inputs, div;
+        let disabled = false;
+
+        for (let question of questions) {
+            div = document.getElementById("div-" + question.id);
+
+            switch (question.type) {
+                case "checkbox":
+                    if (!question.optional) {
+                        let input = document.getElementById(question.id);
+
+                        if (!input.checked) {
+                            disabled = true;
+                            div.classList.add("danger-input");
+                        } else {
+                            div.classList.remove("danger-input");
+                        }
+                    }
+                    break;
+                case "email":
+                    input = document.getElementById(question.id);
+
+                    if (!question.optional || input.value.length > 0) {
+                        if (input.value.length < 5 || !validateEmail(input.value)) {
+                            disabled = true;
+                            div.classList.add("danger-input");
+                        } else {
+                            div.classList.remove("danger-input");
+                        }
+                    } else {
+                        div.classList.remove("danger-input");
+                    }
+                    break;
+                case "number":
+                    input = document.getElementById(question.id);
+
+                    if (!question.optional || input.value.length > 0) {
+                        if (input.value.length < 1 || !isNum(input.value)) {
+                            disabled = true;
+                            div.classList.add("danger-input");
+                        } else {
+                            let val = parseInt(input.value);
+
+                            if (val < question.data.min || val > question.data.max) {
+                                disabled = true;
+                                div.classList.add("danger-input");
+                            } else {
+                                div.classList.remove("danger-input");
+                            }
+                        }
+                    }
+                    break;
+                case "radio":
+                    if (! question.optional) {
+                        inputs = document.getElementsByClassName("radio-" + question.id);
+                        let selected = null;
+
+                        for (let inner of inputs) {
+                            if (inner.checked) {
+                                selected = inner;
+                            }
+                        }
+
+                        if (selected === null) {
+                            disabled = true;
+                            div.classList.add("danger-input");
+                        } else {
+                            div.classList.remove("danger-input");
+                        }
+                    }
+
+                    break;
+                case "range":
+                    if (! question.optional) {
+                        inputs = document.getElementsByClassName("radio-" + question.id);
+                        let selected = null;
+
+                        for (let inner of inputs) {
+                            if (inner.checked) {
+                                selected = inner;
+                            }
+                        }
+
+                        if (selected === null) {
+                            disabled = true;
+
+                            div.classList.add("danger-input");
+                        } else {
+                            div.classList.remove("danger-input");
+                        }
+                    }
+
+                    break;
+                case "text":
+                    if (!question.optional) {
+                        input = document.getElementById(question.id);
+
+                        if (input.value.length < 1) {
+                            disabled = true;
+                            div.classList.add("danger-input");
+                        } else {
+                            div.classList.remove("danger-input");
+                        }
+                    }
+
+                    break;
+                case "textarea":
+                    if (!question.optional) {
+                        input = document.getElementById(question.id);
+
+                        if (input.value.length < 1) {
+                            disabled = true;
+                            div.classList.add("danger-input");
+                        } else {
+                            div.classList.remove("danger-input");
+                        }
+                    }
+
+                    break;
+                case "slider":
+                    break;
+            }
+        }
+
+        button.disabled = disabled;
+    }
+
+    function setUpChecks() {
+        let input, inputs, label;
+
+        for (let question of questions) {
+            switch (question.type) {
+                case "checkbox":
+                    input = document.getElementById(question.id);
+                    input.onchange = checkInputs;
+
+                    break;
+                case "email":
+                    input = document.getElementById(question.id);
+                    input.oninput = checkInputs;
+
+                    break;
+                case "number":
+                    input = document.getElementById(question.id);
+                    input.oninput = checkInputs;
+                    input.onchange = checkInputs;
+
+                    break;
+                case "radio":
+                    inputs = document.getElementsByClassName("radio-" + question.id);
+
+                    for (let inner of inputs) {
+                        inner.onchange = checkInputs;
+                    }
+
+                    break;
+                case "range":
+                    inputs = document.getElementsByClassName("radio-" + question.id);
+
+                    for (let inner of inputs) {
+                        inner.onchange = checkInputs;
+                    }
+
+                    break;
+                case "text":
+                    input = document.getElementById(question.id);
+                    input.oninput = checkInputs;
+
+                    break;
+                case "textarea":
+                    input = document.getElementById(question.id);
+                    input.oninput = checkInputs;
+
+                    break;
+                case "slider":
+                    input = document.getElementById(question.id);
+                    label = document.getElementById(question.id + "-slider-value");
+
+                    input.oninput = function() {
+                        label.textContent = this.value;
+                        checkInputs();
+                    };
+                    break;
+            }
+        }
+    }
+
+    setUpChecks();
+    checkInputs();
+</script>
+{% endblock %}

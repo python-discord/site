@@ -180,3 +180,14 @@ select {
     -webkit-appearance: unset !important;
     opacity: 1 !important;
 }
+
+div.danger-input * {
+    /*border-radius: 5px;*/
+    /*padding: 0.8rem;*/
+    /*min-height: 3.5rem;*/
+    color: red;
+    border-color: red !important;
+
+    transition: color 0.5s ease,
+                border-color 0.5s ease;
+}
