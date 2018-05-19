@@ -51,7 +51,7 @@ class JamsJoinView(RouteView, DBMixin, OauthMixin):
         participant = self.db.get(self.participants_table, self.user_data["user_id"])
 
         if not participant:
-            return redirect(url_for("info.jams.profile"))
+            return redirect(url_for("main.jams.profile"))
 
         if self.get_response(jam, self.user_data["user_id"]):
             return self.render("main/jams/already.html", jam=jam_obj)
@@ -101,7 +101,7 @@ class JamsJoinView(RouteView, DBMixin, OauthMixin):
         participant = self.db.get(self.participants_table, self.user_data["user_id"])
 
         if not participant:
-            return redirect(url_for("info.jams.profile"))
+            return redirect(url_for("main.jams.profile"))
 
         if self.get_response(jam, self.user_data["user_id"]):
             return self.render("main/jams/already.html", jam=jam_obj)
