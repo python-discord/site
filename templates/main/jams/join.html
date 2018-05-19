@@ -128,7 +128,7 @@
                 interest. Keep an eye on <code>#announcements</code> on Discord for information on the next jam!
             </p>
         {% else %}
-            <form action="{{ url_for("main.jams.join", jam=jam.number) }}" method="post" class="uk-form-horizontal">
+            <form action="{{ url_for("main.jams.join", jam=jam.number) }}" method="post" class="uk-form-horizontal uk-flex uk-flex-column">
                 {% for question in questions %}
                     {{ show_question(question) }}
                     <br />
