@@ -41,6 +41,8 @@ TABLES = {
             "date_start",  # datetime
             "end_html",  # str
             "end_rst",  # str
+            "info_rst",  # str
+            "info_html",  # str
             "number",  # int
             "participants",  # list[int]
             "repo",  # str
@@ -65,8 +67,11 @@ TABLES = {
     "code_jam_questions": Table(  # Application form questions
         primary_key="id",
         keys=sorted([
+            "data",  # dict
             "id",  # uuid
-            ""  # TODO
+            "optional",  # bool
+            "title",  # str
+            "type",  # str
         ])
     ),
 
@@ -76,6 +81,7 @@ TABLES = {
             "id",  # uuid
             "jam",  # int
             "answers",  # dict {question, answer, metadata}
+            "approved"  # bool
         ])
     ),
 
@@ -91,8 +97,8 @@ TABLES = {
     "code_jam_infractions": Table(  # Individual infractions for each user
         primary_key="id",
         keys=sorted([
-            "snowflake",  # int
-            "participant",  # int
+            "id",  # uuid
+            "participant",  # str
             "reason",  # str
             "number"  # int (optionally -1 for permanent)
         ])

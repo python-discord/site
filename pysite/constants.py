@@ -70,9 +70,21 @@ ERROR_DESCRIPTIONS = {
 JAM_STATES = [
     "planning",
     "announced",
+    "preparing",
     "running",
     "judging",
     "finished"
+]
+
+JAM_QUESTION_TYPES = [
+    "checkbox",
+    "email",
+    "number",
+    "radio",
+    "range",
+    "text",
+    "textarea",
+    "slider"
 ]
 
 # PaperTrail logging

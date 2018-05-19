@@ -49,17 +49,19 @@ class Actions {
         let oReq = new XMLHttpRequest();
 
         oReq.addEventListener("load", function() {
+            let result;
+
             try {
-                data = JSON.parse(this.responseText);
+                result = JSON.parse(this.responseText);
             } catch (e) {
                 return callback(false);
             }
 
-            if ("error_code" in data) {
-                return callback(false, data);
+            if ("error_code" in result) {
+                return callback(false, result);
             }
 
-            return callback(true, data);
+            return callback(true, result);
         });
 
         data["action"] = action;
@@ -70,6 +72,35 @@ class Actions {
         oReq.open(method, url);
         oReq.setRequestHeader("X-CSRFToken", this.csrf_token);
         oReq.send();
+    }
+
+    send_json(action, method, data, callback) {
+        let oReq = new XMLHttpRequest();
+
+        oReq.addEventListener("load", function() {
+            let result;
+
+            try {
+                result = JSON.parse(this.responseText);
+            } catch (e) {
+                return callback(false);
+            }
+
+            if ("error_code" in result) {
+                return callback(false, result);
+            }
+
+            return callback(true, result);
+        });
+
+        data = JSON.stringify(data);
+
+        let params = this.get_params({"action": action});
+        let url = this.url + "?" + params;
+
+        oReq.open(method, url);
+        oReq.setRequestHeader("X-CSRFToken", this.csrf_token);
+        oReq.send(data);
     }
 
     get_params(data) {  // https://stackoverflow.com/a/12040639
@@ -88,5 +119,82 @@ class Actions {
             },
             callback
         );
+    }
+
+    get_questions(callback) {
+        this.send(
+            "questions",
+            "GET",
+            {},
+            callback
+        );
+    }
+
+    create_question(data, callback) {
+        this.send_json(
+            "questions",
+            "POST",
+            data,
+            callback
+        )
+    }
+
+    delete_question(id, callback) {
+        this.send(
+            "question",
+            "DELETE",
+            {
+                "id": id
+            },
+            callback
+        )
+    }
+
+    associate_question(form, question, callback) {
+        this.send(
+            "associate_question",
+            "POST",
+            {
+                "form": form,
+                "question": question,
+            },
+            callback
+        )
+    }
+
+    disassociate_question(form, question, callback) {
+        this.send(
+            "disassociate_question",
+            "POST",
+            {
+                "form": form,
+                "question": question,
+            },
+            callback
+        )
+    }
+
+    create_infraction(id, reason, number, callback) {
+        this.send(
+            "infraction",
+            "POST",
+            {
+                "participant": id,
+                "reason": reason,
+                "number": number
+            },
+            callback
+        )
+    }
+
+    delete_infraction(id, callback) {
+        this.send(
+            "infraction",
+            "DELETE",
+            {
+                "id": id,
+            },
+            callback
+        )
     }
 }

@@ -19,7 +19,7 @@
                     <div id="editor" class="uk-textarea" style="resize: vertical; min-height: 15rem;">{{ jam.end_rst }}</div>
                 </div>
 
-                <input type="hidden" name="end_rst" id="end_rst" />
+                <input type="hidden" name="end_rst" id="end_rst" value="{{ jam.end_rst }}" />
             </div>
 
             <input type="hidden" name="csrf_token" id="csrf_token" value="{{ csrf_token() }}"/>
