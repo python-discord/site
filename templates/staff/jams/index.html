@@ -36,6 +36,12 @@
                             <i class="uk-icon uk-text-primary fa-fw far fa-bullhorn state-{{ jam.number }}" hidden="hidden" title="State: {{ jam.state }}" id="state-{{ jam.number }}-announced"></i>
                         {% endif %}
 
+                        {% if jam.state == "preparing" %}
+                            <i class="uk-icon uk-text-muted fa-fw far fa-pause state-{{ jam.number }}" title="State: {{ jam.state }}" id="state-{{ jam.number }}-preparing"></i>
+                        {% else %}
+                            <i class="uk-icon uk-text-muted fa-fw far fa-pause state-{{ jam.number }}" hidden="hidden" title="State: {{ jam.state }}" id="state-{{ jam.number }}-preparing"></i>
+                        {% endif %}
+
                         {% if jam.state == "running" %}
                             <i class="uk-icon uk-text-success fa-fw far fa-play state-{{ jam.number }}" title="State: {{ jam.state }}" id="state-{{ jam.number }}-running"></i>
                         {% else %}
@@ -82,7 +88,7 @@
                             </a>
                         {% endif %}
 
-                        {% if jam.state in ["planning", "announced"] %}
+                        {% if jam.state in ["planning", "preparing", "announced"] %}
                             <a class="uk-button uk-button-default uk-width-expand" data-jam="{{ jam.number }}" id="jam-{{ jam.number }}-button-info" href="{{ url_for("staff.jams.edit.info", jam=jam.number) }}">
                                 <i class="uk-icon fa-fw far fa-pencil"></i> &nbsp;Info
                             </a>
@@ -190,7 +196,6 @@
                             });
 
                             for (let icon of document.getElementsByClassName("state-" + jam)) {
-                                console.log(icon);
                                 icon.setAttribute("hidden", "hidden");
                             }
 
@@ -199,6 +204,13 @@
                                     document.getElementById("state-" + jam + "-planning").removeAttribute("hidden");
 
                                     document.getElementById("jam-" + jam + "-button-basics").removeAttribute("hidden");
+                                    document.getElementById("jam-" + jam + "-button-info").removeAttribute("hidden");
+                                    document.getElementById("jam-" + jam + "-button-ending").setAttribute("hidden", "hidden");
+                                    break;
+                                case "preparing":
+                                    document.getElementById("state-" + jam + "-preparing").removeAttribute("hidden");
+
+                                    document.getElementById("jam-" + jam + "-button-basics").setAttribute("hidden", "hidden");
                                     document.getElementById("jam-" + jam + "-button-info").removeAttribute("hidden");
                                     document.getElementById("jam-" + jam + "-button-ending").setAttribute("hidden", "hidden");
                                     break;

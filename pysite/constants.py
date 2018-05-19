@@ -70,6 +70,7 @@ ERROR_DESCRIPTIONS = {
 JAM_STATES = [
     "planning",
     "announced",
+    "preparing",
     "running",
     "judging",
     "finished"
