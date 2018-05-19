@@ -40,4 +40,6 @@ class StaffView(RouteView, DBMixin):
         form_obj["preamble_rst"] = preamble_rst
         form_obj["preamble_html"] = render(preamble_rst, link_headers=False)["html"]
 
+        self.db.insert(self.table_name, form_obj, conflict="replace")
+
         return redirect(url_for("staff.jams.forms.view", jam=jam))
