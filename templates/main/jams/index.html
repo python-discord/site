@@ -7,12 +7,8 @@
         <article class="uk-article">
             <div uk-grid class="uk-grid-large">
                 <div class="uk-width-expand">
-                    <h1 class="uk-article-title hover-title" id="top">
+                    <h1 class="uk-article-title">
                         Code Jams
-
-                        <a href="#top" class="uk-text-primary" title="Permanent link to this header">
-                            <i class="fas fa-paragraph" data-fa-transform="shrink-8"></i>
-                        </a>
                     </h1>
                     <p class="uk-article-meta">
                         We jammin'
@@ -43,61 +39,83 @@
                     </p>
 
                     <a href="https://jetbrains.com">
-                        <img src="{{ static_file("images/jetbrains.png") }}" />
+                        <img src="{{ static_file("images/jetbrains.png") }}" style="max-width: 15rem;" />
                     </a>
                 </figure>
             </div>
 
-            <h2 class="uk-article-title hover-title" id="rules">
-                Rules and Guidelines
+            <br />
+            <a href="{{ url_for("wiki.page", page="jams") }}" class="uk-button uk-button-secondary">
+                <i class="uk-icon fa-fw far fa-book"></i> &nbsp;Wiki
+            </a>
+            <a href="{{ url_for("wiki.page", page="jams") }}" class="uk-button uk-button-secondary">
+                <i class="uk-icon fa-fw far fa-list"></i> &nbsp;Rules &amp; Guidelines
+            </a>
+            <a href="{{ url_for("main.jams.info") }}" class="uk-button uk-button-secondary">
+                <i class="uk-icon fa-fw far fa-code-branch"></i> &nbsp;Git Primer
+            </a>
 
-                <a href="#rules" class="uk-text-primary" title="Permanent link to this header">
-                    <i class="fas fa-paragraph" data-fa-transform="shrink-8"></i>
-                </a>
-            </h2>
-            <p class="uk-article-meta">
-                Keeping the fight clean
-            </p>
-            <p>
-                In order to keep things fair and on-topic, the following rules must be adhered to. Failure to
-                follow these rules will result in disqualification.
-            </p>
-            <ul>
-                <li>
-                    Projects must be strongly Python-oriented.
+            {% if jams %}
+                {% for jam in jams %}
+                    <h1 class="uk-article-title uk-heading-divider">
+                        Code Jam {{ jam.number }}: {{ jam.title }}
+                        <span class="uk-float-right">
+                            {% if jam.state == "announced" %}
+                                <a class="uk-button uk-button-primary" target="_blank" href="{{ jam.repo }}">
+                                    <i class="uk-icon fa-fw far fa-plus"></i> &nbsp;Join
+                                </a>
+                            {% else %}
+                                <a class="uk-button uk-button-default" target="_blank" href="{{ jam.repo }}">
+                                    <i class="uk-icon fa-fw fab fa-github"></i> &nbsp;Repository
+                                </a>
+                            {% endif %}
+                        </span>
+                        <p class="uk-article-meta">
+                            State: {{ jam.state.title() }}
+                        </p>
+                    </h1>
 
-                    <ul>
-                        <li>You may mix in other languages, but the project must be Python-based.</li>
-                    </ul>
-                </li>
-                <li>You may not write any code in advance.</li>
-                <li>You may not write any code after the deadline.</li>
-                <li>The work must be your own - don't copy another team's work.</li>
-            </ul>
-            <p>
-                Additionally, the following suggestions could be helpful for all teams.
-            </p>
-            <ul>
-                <li>All team members should contribute to the project in some way. Work together!</li>
-                <li>Open your pull request early - that way, you know it'll be there by the deadline.</li>
-                <li>Lint your code - we lint each pull request using Flake8, and your code should validate.</li>
-                <li>Communicate with your teammates - Add them as a friend, start a group DM, and work together on the problem.</li>
-            </ul>
+                    <p>
+                        {% if jam.participants %}
+                            <span class="uk-label uk-label">
+                                {{ jam.participants | length }} participants
+                            </span>
+                        {% endif %}
+                        <span class="uk-label uk-label-success">
+                            {{ format_datetime(jam.date_start) }} UTC
+                        </span>
 
-            <h2 class="uk-article-title hover-title" id="further-reading">
-                Further Reading
+                        <span style="vertical-align: middle">
+                            <i class="uk-icon fa-fw far fa-arrow-right" ></i>
+                        </span>
 
-                <a href="#further-reading" class="uk-text-primary" title="Permanent link to this header">
-                    <i class="fas fa-paragraph" data-fa-transform="shrink-8"></i>
-                </a>
-            </h2>
-            <p class="uk-article-meta">
-                Need some support?
-            </p>
-            <p>
-                We're currently working on some better documentation for our code jams. In the meantime, you can always
-                read over our <a href="{{ url_for("main.jams.info") }}">old Getting Started guide</a>.
-            </p>
+                        <span class="uk-label uk-label-danger">
+                            {{ format_datetime(jam.date_end) }} UTC
+                        </span>
+                    <p>
+
+                    </p>
+
+                    {{ jam.info_html | safe }}
+
+                    {% if jam.state in ["running", "judging", "finished"] %}
+                    <br />
+
+                    {{ jam.task_html | safe }}
+                    {% endif %}
+
+                    {% if jam.state == "finished" %}
+                    <br />
+
+                    {{ jam.end_html | safe }}
+                    {% endif %}
+
+                {% endfor %}
+            {% else %}
+                <p>
+                    Looking for our code jams? There's nothing here just yet!
+                </p>
+            {% endif %}
         </article>
     </div>
 </div>

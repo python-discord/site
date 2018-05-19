@@ -25,6 +25,7 @@ class StaffView(RouteView, DBMixin):
 
         if not jam_obj["state"] in ALLOWED_STATES:
             return BadRequest()
+
         return self.render("staff/jams/edit_info.html", jam=jam_obj)
 
     @require_roles(*ALL_STAFF_ROLES)
