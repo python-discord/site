@@ -24,6 +24,8 @@ class StaffView(RouteView, DBMixin):
         if not question_obj:
             return NotFound()
 
+        question_obj["data"] = question_obj.get("data", {})
+
         return self.render(
             "staff/jams/forms/questions_edit.html", question=question_obj
         )

@@ -7,7 +7,7 @@
 {% endblock %}
 {% block content %}
     <div class="uk-container uk-container-small uk-section">
-        <h1>Question Edit: {{ question.id }}</h1>
+        <h1>Question Edit</h1>
 
         <form class="uk-form-horizontal" method="post" action="{{ url_for("staff.jams.forms.questions.edit", question=question.id) }}">
             <div>

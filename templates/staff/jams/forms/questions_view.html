@@ -221,7 +221,7 @@
         const no_questions_paragraph = document.getElementById("no-questions-paragraph");
 
         let all_questions = {{ question_ids | safe }};
-        const question_edit_url = "{{ url_for("staff.jams.forms.questions.edit", question="{NONE}") }}";
+        const question_edit_url = "{{ url_for("staff.jams.forms.questions.edit", question="NONE") }}";
 
         const add_button = document.getElementById("add-button");
         const modal = UIkit.modal(document.getElementById("question-modal"));
@@ -575,7 +575,7 @@
             }
 
             let type = toTitleCase(question.type);
-            let q_url = question_edit_url.replace("{NONE}", question.id);
+            let q_url = question_edit_url.replace("NONE", question.id);
 
             const row = `
     <td class="uk-table-shrink">
