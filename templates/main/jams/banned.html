@@ -18,7 +18,7 @@
                 permanently banned from participating in our code jams.
                 <br />
                 <br />
-                The reason given is: <span style="font-family: monospace">{{ infraction.reason }}</span>
+                The reason given is: <strong>{{ infraction.reason }}</strong>
                 <br />
                 <br />
                 If you feel that this is a mistake, please feel free to contact one of the admins on Discord.
@@ -29,12 +29,12 @@
                 temporarily banned from participating in our code jams.
                 <br />
                 <br />
-                The reason given is: <span style="font-family: monospace">{{ infraction.reason }}</span>
+                The reason given is: <strong>{{ infraction.reason }}</strong>
                 <br />
                 <br />
                 If you feel that this is a mistake, please feel free to contact one of the admins on Discord.
             </p>
-        {% endif
+        {% endif %}
 
         <a class="uk-button uk-button-secondary uk-align-center" href="{{ url_for("main.jams.index") }}">
             <i class="uk-icon fa-fw far fa-arrow-left"></i> &nbsp;Back to all code jams

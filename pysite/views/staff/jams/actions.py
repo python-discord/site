@@ -183,7 +183,8 @@ class ActionView(APIView, DBMixin):
             result = self.db.insert(self.infractions_table, {
                 "participant": participant,
                 "reason": reason,
-                "number": number
+                "number": number,
+                "decremented_for": []
             })
 
             return jsonify({"id": result["generated_keys"][0]})

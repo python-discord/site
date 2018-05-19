@@ -28,9 +28,6 @@ class JamsJoinView(RouteView, DBMixin, OauthMixin):
         if not self.user_data:
             return redirect(url_for("discord.login"))
 
-        if self.get_response(jam, self.user_data["user_id"]):
-            return self.render("main/jams/already.html", jam=jam_obj)
-
         infractions = self.get_infractions(self.user_data["user_id"])
 
         for infraction in infractions:
@@ -50,6 +47,9 @@ class JamsJoinView(RouteView, DBMixin, OauthMixin):
             if jam in infraction["decremented_for"]:
                 # They already tried to apply for this jam
                 return self.render("main/jams/banned.html", infraction=infraction, jam=jam_obj)
+
+        if self.get_response(jam, self.user_data["user_id"]):
+            return self.render("main/jams/already.html", jam=jam_obj)
 
         form_obj = self.db.get(self.forms_table, jam)
         questions = []
@@ -73,9 +73,6 @@ class JamsJoinView(RouteView, DBMixin, OauthMixin):
         if not self.user_data:
             return redirect(url_for("discord.login"))
 
-        if self.get_response(jam, self.user_data["user_id"]):
-            return self.render("main/jams/already.html", jam=jam_obj)
-
         infractions = self.get_infractions(self.user_data["user_id"])
 
         for infraction in infractions:
@@ -95,6 +92,9 @@ class JamsJoinView(RouteView, DBMixin, OauthMixin):
             if jam in infraction["decremented_for"]:
                 # They already tried to apply for this jam
                 return self.render("main/jams/banned.html", infraction=infraction, jam=jam_obj)
+
+        if self.get_response(jam, self.user_data["user_id"]):
+            return self.render("main/jams/already.html", jam=jam_obj)
 
         form_obj = self.db.get(self.forms_table, jam)
 
@@ -162,14 +162,12 @@ class JamsJoinView(RouteView, DBMixin, OauthMixin):
             "answers": answers
         }
 
-        print(response)
         self.db.insert(self.responses_table, response)
         return self.render("main/jams/thanks.html", jam=jam_obj)
 
     def get_response(self, jam, user_id):
         query = self.db.query(self.responses_table).filter({"jam": jam, "snowflake": user_id})
         result = self.db.run(query, coerce=list)
-        print(result)
 
         if result:
             return result[0]

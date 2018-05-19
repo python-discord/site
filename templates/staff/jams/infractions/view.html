@@ -51,9 +51,11 @@
                                 <td class="uk-text-truncate" title="{{ infraction.id }}">{{ infraction.id }}</td>
                                 <td class="uk-table-shrink">
                                     {% if infraction.participant is not string %}
-                                        {{ infraction.participant.username }}#{{ infraction.participant.discriminator }} ({{ infraction.participant.id }})
+                                        <code>{{ infraction.participant.user_id }}</code>
+                                        <br />
+                                        ({{ infraction.participant.username }}#{{ infraction.participant.discriminator }})
                                     {% else %}
-                                        {{ infraction.participant }}
+                                        <code>{{ infraction.participant.user_id }}</code>
                                     {% endif %}
                                 </td>
                                 <td title="{{ infraction.reason }}">{{ infraction.reason }}</td>
@@ -314,10 +316,10 @@
             }
             const row = `
     <td class="uk-table-shrink">
-        <button class="uk-button-small uk-button uk-button-danger delete-infraction-button" style="padding-left: 5px; padding-right: 5px;" data-question-id="${infraction.id}"><i class="uk-icon fa-fw far fa-times"></i></button>
+        <button class="uk-button-small uk-button uk-button-danger delete-infraction-button" style="padding-left: 5px; padding-right: 5px;" data-infraction-id="${infraction.id}"><i class="uk-icon fa-fw far fa-trash"></i></button>
     </td>
     <td class="uk-text-truncate" title="${infraction.id}">${infraction.id}</td>
-    <td class="uk-table-shrink">${participant}</td>
+    <td class="uk-table-shrink"><code>${participant}</code></td>
     <td title="${infraction.reason}">${infraction.reason}</td>
     <td class="uk-table-shrink">${infraction.number}</td>
                         `;
