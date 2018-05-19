@@ -32,6 +32,7 @@ class UserView(APIView, DBMixin):
     name = "api.bot.user"
     table_name = "users"
     oauth_table_name = "oauth_data"
+    participants_table = "code_jam_participants"
 
     @api_key
     @api_params(schema=SCHEMA, validation_type=ValidationTypes.json)
@@ -40,6 +41,8 @@ class UserView(APIView, DBMixin):
 
         deletions = 0
         oauth_deletions = 0
+        profile_deletions = 0
+
         user_ids = [user["user_id"] for user in data]
 
         all_users = self.db.run(self.db.query(self.table_name), coerce=list)
@@ -54,7 +57,9 @@ class UserView(APIView, DBMixin):
         for item in all_oauth_data:
             if item["snowflake"] not in user_ids:
                 self.db.delete(self.oauth_table_name, item["id"], durability="soft")
+                self.db.delete(self.participants_table, item["id"], durability="soft")
                 oauth_deletions += 1
+                profile_deletions += 1
 
         del user_ids
 
@@ -68,6 +73,7 @@ class UserView(APIView, DBMixin):
 
         changes["deleted"] = deletions
         changes["deleted_oauth"] = oauth_deletions
+        changes["deleted_jam_profiles"] = profile_deletions
 
         return jsonify(changes)  # pragma: no cover
 
@@ -98,6 +104,13 @@ class UserView(APIView, DBMixin):
             .delete()
         ).get("deleted", 0)
 
+        profile_deletions = self.db.run(
+            self.db.query(self.participants_table)
+            .get_all(*user_ids)
+            .delete()
+        )
+
         changes["deleted_oauth"] = oauth_deletions
+        changes["deleted_jam_profiles"] = profile_deletions
 
         return jsonify(changes)  # pragma: no cover
