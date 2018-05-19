@@ -23,8 +23,16 @@ class JamsProfileView(RouteView, DBMixin, OauthMixin):
         if not participant:
             participant = {"id": self.user_data["user_id"]}
 
+        form = request.args.get("form")
+
+        if form:
+            try:
+                form = int(form)
+            except ValueError:
+                pass  # Someone trying to have some fun I guess
+
         return self.render(
-            "main/jams/profile.html", participant=participant
+            "main/jams/profile.html", participant=participant, form=form
         )
 
     @csrf
@@ -53,6 +61,16 @@ class JamsProfileView(RouteView, DBMixin, OauthMixin):
         participant["timezone"] = timezone
 
         self.db.insert(self.table_name, participant, conflict="replace")
+
+        form = request.args.get("form")
+
+        if form:
+            try:
+                form = int(form)
+            except ValueError:
+                pass  # Someone trying to have some fun I guess
+            else:
+                return redirect(url_for("main.jams.join", jam=form))
 
         return self.render(
             "main/jams/profile.html", participant=participant, done=True

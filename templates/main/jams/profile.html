@@ -28,7 +28,11 @@
             </p>
         {% endif %}
 
-        <form class="uk-form-horizontal" action="{{ url_for("main.jams.profile") }}" method="post">
+        {% if form %}
+            <form class="uk-form-horizontal" action="{{ url_for("main.jams.profile", form=form) }}" method="post">
+        {% else %}
+            <form class="uk-form-horizontal" action="{{ url_for("main.jams.profile") }}" method="post">
+        {% endif %}
             <div>
                 <div class="uk-form-label">
                     <label class="uk-form-label" for="dob">Date of Birth</label>
