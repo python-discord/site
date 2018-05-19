@@ -1,3 +1,5 @@
+from werkzeug.exceptions import NotFound
+
 from pysite.base_route import RouteView
 from pysite.constants import ALL_STAFF_ROLES
 from pysite.decorators import require_roles
