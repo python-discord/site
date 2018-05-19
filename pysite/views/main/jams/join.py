@@ -1,7 +1,7 @@
 from email.utils import parseaddr
 
-from flask import request, redirect, url_for
-from werkzeug.exceptions import NotFound, BadRequest
+from flask import redirect, request, url_for
+from werkzeug.exceptions import BadRequest, NotFound
 
 from pysite.base_route import RouteView
 from pysite.decorators import csrf
@@ -48,6 +48,11 @@ class JamsJoinView(RouteView, DBMixin, OauthMixin):
                 # They already tried to apply for this jam
                 return self.render("main/jams/banned.html", infraction=infraction, jam=jam_obj)
 
+        participant = self.db.get(self.participants_table, self.user_data["user_id"])
+
+        if not participant:
+            return redirect(url_for("info.jams.profile"))
+
         if self.get_response(jam, self.user_data["user_id"]):
             return self.render("main/jams/already.html", jam=jam_obj)
 
@@ -92,6 +97,11 @@ class JamsJoinView(RouteView, DBMixin, OauthMixin):
             if jam in infraction["decremented_for"]:
                 # They already tried to apply for this jam
                 return self.render("main/jams/banned.html", infraction=infraction, jam=jam_obj)
+
+        participant = self.db.get(self.participants_table, self.user_data["user_id"])
+
+        if not participant:
+            return redirect(url_for("info.jams.profile"))
 
         if self.get_response(jam, self.user_data["user_id"]):
             return self.render("main/jams/already.html", jam=jam_obj)
