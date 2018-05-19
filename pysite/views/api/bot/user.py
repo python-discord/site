@@ -28,8 +28,8 @@ DELETE_SCHEMA = Schema([
 
 
 class UserView(APIView, DBMixin):
-    path = "/user"
-    name = "api.bot.user"
+    path = "/bot/users"
+    name = "bot.users"
     table_name = "users"
     oauth_table_name = "oauth_data"
     participants_table = "code_jam_participants"
