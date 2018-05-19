@@ -97,8 +97,8 @@ TABLES = {
     "code_jam_infractions": Table(  # Individual infractions for each user
         primary_key="id",
         keys=sorted([
-            "snowflake",  # int
-            "participant",  # int
+            "id",  # uuid
+            "participant",  # str
             "reason",  # str
             "number"  # int (optionally -1 for permanent)
         ])

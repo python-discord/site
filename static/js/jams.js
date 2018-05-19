@@ -173,4 +173,28 @@ class Actions {
             callback
         )
     }
+
+    create_infraction(id, reason, number, callback) {
+        this.send(
+            "infraction",
+            "POST",
+            {
+                "participant": id,
+                "reason": reason,
+                "number": number
+            },
+            callback
+        )
+    }
+
+    delete_infraction(id, callback) {
+        this.send(
+            "infraction",
+            "DELETE",
+            {
+                "id": id,
+            },
+            callback
+        )
+    }
 }

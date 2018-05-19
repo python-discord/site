@@ -1,11 +1,11 @@
 import json
 
-from flask import request, redirect, url_for
-from werkzeug.exceptions import NotFound, BadRequest
+from flask import redirect, request, url_for
+from werkzeug.exceptions import BadRequest, NotFound
 
 from pysite.base_route import RouteView
 from pysite.constants import ALL_STAFF_ROLES
-from pysite.decorators import require_roles, csrf
+from pysite.decorators import csrf, require_roles
 from pysite.mixins import DBMixin
 
 REQUIRED_KEYS = ["title", "date_start", "date_end"]

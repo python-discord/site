@@ -6,8 +6,8 @@ from pysite.decorators import csrf, require_roles
 from pysite.mixins import DBMixin
 
 GET_ACTIONS = ["questions"]
-POST_ACTIONS = ["associate_question", "disassociate_question", "questions", "state"]
-DELETE_ACTIONS = ["question"]
+POST_ACTIONS = ["associate_question", "disassociate_question", "infraction", "questions", "state"]
+DELETE_ACTIONS = ["infraction", "question"]
 KEYS = ["action"]
 
 QUESTION_KEYS = ["optional", "title", "type"]
@@ -19,6 +19,7 @@ class ActionView(APIView, DBMixin):
 
     table_name = "code_jams"
     forms_table = "code_jam_forms"
+    infractions_table = "code_jam_infractions"
     questions_table = "code_jam_questions"
 
     @csrf
@@ -168,6 +169,25 @@ class ActionView(APIView, DBMixin):
 
             return jsonify({"id": result["generated_keys"][0]})
 
+        if action == "infraction":
+            participant = request.args.get("participant")
+            reason = request.args.get("reason")
+
+            if not participant or not reason or "number" not in request.args:
+                return self.error(
+                    ErrorCodes.incorrect_parameters, "Infractions must have a participant, reason and number"
+                )
+
+            number = int(request.args.get("number"))
+
+            result = self.db.insert(self.infractions_table, {
+                "participant": participant,
+                "reason": reason,
+                "number": number
+            })
+
+            return jsonify({"id": result["generated_keys"][0]})
+
     @csrf
     @require_roles(*ALL_STAFF_ROLES)
     def delete(self):
@@ -195,3 +215,18 @@ class ActionView(APIView, DBMixin):
                     self.db.insert(self.forms_table, form_obj, conflict="replace")
 
             return jsonify({"id": question})
+
+        if action == "infraction":
+            infraction = request.args.get("id")
+
+            if not infraction:
+                return self.error(ErrorCodes.incorrect_parameters, "Missing key id")
+
+            infraction_obj = self.db.get(self.infractions_table, infraction)
+
+            if not infraction_obj:
+                return self.error(ErrorCodes.incorrect_parameters, f"Unknown infraction: {infraction}")
+
+            self.db.delete(self.infractions_table, infraction)
+
+            return jsonify({"id": infraction_obj["id"]})
