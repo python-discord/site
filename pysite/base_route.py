@@ -1,4 +1,5 @@
 from collections import Iterable
+from datetime import datetime
 from typing import Any
 
 from flask import Blueprint, Response, jsonify, redirect, render_template, url_for
@@ -53,7 +54,7 @@ class BaseView(MethodView, OauthMixin):
         context["logged_in"] = self.logged_in
         context["static_file"] = self._static_file
         context["debug"] = DEBUG_MODE
-        context["format_datetime"] = lambda dt: dt.strftime("%b %d %Y, %H:%M")
+        context["format_datetime"] = lambda dt: dt.strftime("%b %d %Y, %H:%M") if isinstance(dt, datetime) else dt
 
         return render_template(template_names, **context)
 
