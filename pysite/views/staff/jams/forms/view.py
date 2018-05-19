@@ -28,7 +28,9 @@ class StaffView(RouteView, DBMixin):
         if not form_obj:
             form_obj = {
                 "number": jam,
-                "questions": []
+                "questions": [],
+                "preamble_rst": "",
+                "preamble_html": ""
             }
 
             self.db.insert(self.forms_table, form_obj)

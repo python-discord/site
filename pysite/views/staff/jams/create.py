@@ -1,3 +1,5 @@
+import datetime
+
 from flask import redirect, request, url_for
 from werkzeug.exceptions import BadRequest
 
@@ -34,6 +36,16 @@ class StaffView(RouteView, DBMixin):
 
         data["state"] = "planning"
         data["number"] = self.get_next_number()
+
+        # Convert given datetime strings into actual objects, adding timezones to keep rethinkdb happy
+        date_start = datetime.datetime.strptime(data["date_start"], "%Y-%m-%d %H:%M")
+        date_start = date_start.replace(tzinfo=datetime.timezone.utc)
+
+        date_end = datetime.datetime.strptime(data["date_end"], "%Y-%m-%d %H:%M")
+        date_end = date_end.replace(tzinfo=datetime.timezone.utc)
+
+        data["date_start"] = date_start
+        data["date_end"] = date_end
 
         self.db.insert(self.table_name, data)
 

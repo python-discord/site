@@ -60,6 +60,8 @@ TABLES = {
         primary_key="number",
         keys=sorted([
             "number",  # int
+            "preamble_rst",  # str
+            "preamble_html",  # str
             "questions"  # list[dict[str, str]]  {title, type, input_type, options?}
         ])
     ),
