@@ -1,13 +1,13 @@
 {% extends "main/base.html" %}
-{% block title %}Staff | Jams | Edit (Basics){% endblock %}
-{% block og_title %}Staff | Jams | Edit (Basics){% endblock %}
+{% block title %}Staff | Jams | Edit (Info){% endblock %}
+{% block og_title %}Staff | Jams | Edit (Info){% endblock %}
 {% block og_description %}Edit the basic info for a code jam{% endblock %}
 {% block extra_head %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.3.3/ace.js" type="application/javascript"></script>
 {% endblock %}
 {% block content %}
     <div class="uk-container uk-container-small uk-section">
-        <h1 class="uk-text-center">Code Jam: Edit (Basics)</h1>
+        <h1 class="uk-text-center">Code Jam: Edit (Info)</h1>
 
         <form action="{{ url_for("staff.jams.edit.info", jam=jam.number) }}" method="post" class="uk-form-horizontal">
             <div>
