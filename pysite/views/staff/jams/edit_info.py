@@ -7,7 +7,7 @@ from pysite.decorators import csrf, require_roles
 from pysite.mixins import DBMixin
 from pysite.rst import render
 
-REQUIRED_KEYS = ["repo", "task_rst", "theme"]
+REQUIRED_KEYS = ["info_rst", "repo", "task_rst", "theme"]
 ALLOWED_STATES = ["planning", "info"]
 
 
@@ -48,6 +48,7 @@ class StaffView(RouteView, DBMixin):
             jam_obj[key] = arg
 
         jam_obj["task_html"] = render(jam_obj["task_rst"], link_headers=False)["html"]
+        jam_obj["info_html"] = render(jam_obj["info_rst"], link_headers=False)["html"]
 
         self.db.insert(self.table_name, jam_obj, conflict="replace")
 

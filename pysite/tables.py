@@ -41,6 +41,8 @@ TABLES = {
             "date_start",  # datetime
             "end_html",  # str
             "end_rst",  # str
+            "info_rst",  # str
+            "info_html",  # str
             "number",  # int
             "participants",  # list[int]
             "repo",  # str
