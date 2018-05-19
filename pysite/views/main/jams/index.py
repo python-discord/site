@@ -16,6 +16,6 @@ class JamsIndexView(RouteView, DBMixin):
             .order_by(rethinkdb.desc("number"))
             .limit(5)
         )
-        jams = self.db.run(query,coerce=list)
+        jams = self.db.run(query, coerce=list)
         print(jams)
         return self.render("main/jams/index.html", jams=jams)

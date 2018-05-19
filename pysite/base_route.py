@@ -53,7 +53,7 @@ class BaseView(MethodView, OauthMixin):
         context["logged_in"] = self.logged_in
         context["static_file"] = self._static_file
         context["debug"] = DEBUG_MODE
-        context["format_datetime"] = lambda dt: dt.strftime("%b %d %Y, %H:%M:%S")
+        context["format_datetime"] = lambda dt: dt.strftime("%b %d %Y, %H:%M")
 
         return render_template(template_names, **context)
 
