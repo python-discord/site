@@ -10,9 +10,12 @@ class JamsIndexView(RouteView, DBMixin):
     table_name = "code_jams"
 
     def get(self):
-        jams = self.db.run(
-            self.db.query(self.table_name).filter(rethinkdb.row["state"] != "planning").order_by("number").limit(5),
-            coerce=list
+        query = (
+            self.db.query(self.table_name)
+            .filter(rethinkdb.row["state"] != "planning")
+            .order_by(rethinkdb.desc("number"))
+            .limit(5)
         )
+        jams = self.db.run(query,coerce=list)
         print(jams)
         return self.render("main/jams/index.html", jams=jams)
