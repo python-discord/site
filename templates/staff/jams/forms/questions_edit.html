@@ -1,0 +1,357 @@
+{% extends "main/base.html" %}
+{% block title %}Staff | Jams | Question Edit{% endblock %}
+{% block og_title %}Staff | Jams | Question Edit{% endblock %}
+{% block og_description %}Edit a question{% endblock %}
+{% block extra_head %}
+    <script src="{{ static_file('js/jams.js') }}"></script>
+{% endblock %}
+{% block content %}
+    <div class="uk-container uk-container-small uk-section">
+        <h1>Question Edit: {{ question.id }}</h1>
+
+        <form class="uk-form-horizontal" method="post" action="{{ url_for("staff.jams.forms.questions.edit", question=question.id) }}">
+            <div>
+                <div class="uk-form-label">
+                    <label class="uk-form-label" for="title">Title</label>
+                </div>
+                <div class="uk-form-controls-text uk-form-controls">
+                    <input type="text" id="title" name="title" class="uk-input" value="{{ question.title }}">
+                </div>
+            </div>
+            <div>
+                <div class="uk-form-label">
+                    <label class="uk-form-label" for="optional">Optional</label>
+                </div>
+                <div class="uk-form-controls-text uk-form-controls">
+                    <select class="uk-select" id="optional" name="optional">
+                        {% if question.optional %}
+                            <option value="optional" selected>Optional</option>
+                            <option value="required">Required</option>
+                        {% else %}
+                            <option value="optional">Optional</option>
+                            <option value="required" selected>Required</option>
+                        {% endif %}
+                    </select>
+                </div>
+            </div>
+            <div>
+                <div class="uk-form-label">
+                    <label class="uk-form-label" for="type">Type</label>
+                </div>
+                <div class="uk-form-controls-text uk-form-controls">
+                    <select class="uk-select" id="type" name="type">
+                        {% if question.type == "checkbox" %}
+                            <option value="checkbox" selected>Checkbox</option>
+                        {% else %}
+                            <option value="checkbox">Checkbox</option>
+                        {% endif %}
+
+                        {% if question.type == "email" %}
+                            <option value="email" selected>Email</option>
+                        {% else %}
+                            <option value="email">Email</option>
+                        {% endif %}
+
+                        {% if question.type == "number" %}
+                            <option value="number" selected>Number</option>
+                        {% else %}
+                            <option value="number">Number</option>
+                        {% endif %}
+
+                        {% if question.type == "radio" %}
+                            <option value="radio" selected>Radio</option>
+                        {% else %}
+                            <option value="radio">Radio</option>
+                        {% endif %}
+
+                        {% if question.type == "range" %}
+                            <option value="range" selected>Range</option>
+                        {% else %}
+                            <option value="range">Range</option>
+                        {% endif %}
+
+                        {% if question.type == "slider" %}
+                            <option value="slider" selected>Slider</option>
+                        {% else %}
+                            <option value="slider">Slider</option>
+                        {% endif %}
+
+                        {% if question.type == "textarea" %}
+                            <option value="textarea" selected>Text (Block)</option>
+                        {% else %}
+                            <option value="textarea">Text (Block)</option>
+                        {% endif %}
+
+                        {% if question.type == "text" %}
+                            <option value="text" selected>Text (Line)</option>
+                        {% else %}
+                            <option value="text">Text (Line)</option>
+                        {% endif %}
+                    </select>
+                </div>
+            </div>
+
+            {% if question.type == "radio" %}
+                <div id="radio-section">
+            {% else %}
+                <div id="radio-section" hidden="hidden">
+            {% endif %}
+                <br />
+                <div>
+                    <div class="uk-form-label">
+                        <button type="button" class="uk-button uk-button-primary uk-width-1-1" id="radio-add-button"><i class="uk-icon fa-fw far fa-plus"></i> &nbsp;Add</button>
+                    </div>
+                    <div class="uk-form-controls-text uk-form-controls">
+                        <input type="text" id="radio-add-input" class="uk-input" placeholder="Item">
+                    </div>
+                </div>
+                <div>
+                    <div class="uk-form-label">
+                        <button type="button" class="uk-button uk-button-danger uk-width-1-1" id="radio-remove-button"><i class="uk-icon fa-fw far fa-minus"></i> &nbsp;Remove</button>
+                    </div>
+                    <div class="uk-form-controls-text uk-form-controls">
+                        <select class="uk-select" id="radio-options">
+                            <option hidden="hidden" disabled selected value="none"></option>
+
+                            {% for option in question.data.options %}
+                            <option value="{{ option }}">{{ option }}</option>
+                            {% endfor %}
+                        </select>
+                        {% if question.data.options %}
+                            <input type="hidden" id="options" name="options" value="{{ "{\"options\": " + question.data.options.__str__() + "}" | safe }}">
+                        {% else %}
+                            <input type="hidden" id="options" name="options" value="{{ "{\"options\": []}" }}">
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            {% if question.type in ["number", "range", "slider"] %}
+            <div id="number-section">
+            {% else %}
+            <div id="number-section" hidden="hidden">
+            {% endif %}
+                <br />
+                <div>
+                    <div class="uk-form-label">
+                        <label class="uk-form-label" for="min">Min Value</label>
+                    </div>
+                    <div class="uk-form-controls-text uk-form-controls">
+                        <input type="text" id="min" name="min" class="uk-input" value="{{ question.data.min }}">
+                    </div>
+                </div>
+                <div>
+                    <div class="uk-form-label">
+                        <label class="uk-form-label" for="max">Max Value</label>
+                    </div>
+                    <div class="uk-form-controls-text uk-form-controls">
+                        <input type="text" id="max" name="max" class="uk-input" value="{{ question.data.max }}">
+                    </div>
+                </div>
+            </div>
+
+            <br />
+
+            <div>
+                <input type="hidden" name="csrf_token" id="csrf_token" value="{{ csrf_token() }}"/>
+
+                <a class="uk-button uk-button-danger uk-modal-close" href="{{ url_for("staff.jams.forms.questions") }}">
+                    <i class="uk-icon fa-fw far fa-times"></i> &nbsp;Cancel
+                </a>
+                <button class="uk-button uk-button-primary" type="submit" id="question-submit">
+                    <i class="uk-icon fa-fw far fa-check"></i> &nbsp;Save
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <script type="application/javascript">
+        "use strict";
+        const new_question_title = document.getElementById("title");
+        const new_question_optional = document.getElementById("optional");
+        const new_question_type = document.getElementById("type");
+
+        const radio_section = document.getElementById("radio-section");
+
+        const radio_add_button = document.getElementById("radio-add-button");
+        const radio_add_input = document.getElementById("radio-add-input");
+        const radio_remove_button = document.getElementById("radio-remove-button");
+        const radio_options = document.getElementById("radio-options");
+        const hidden_radio_options = document.getElementById("options");
+
+        const number_section = document.getElementById("number-section");
+
+        const number_min = document.getElementById("min");
+        const number_max = document.getElementById("max");
+
+        const submit_button = document.getElementById("question-submit");
+
+        let current_radio_options;
+
+        {% if question.data.options %}
+            current_radio_options = {{ question.data.options | safe }};
+        {% else %}
+            current_radio_options = Array();
+        {% endif %}
+
+        new_question_type.onchange = function() {
+            if (this.value === "checkbox") {
+                radio_section.setAttribute("hidden", "hidden");
+                number_section.setAttribute("hidden", "hidden");
+            } else if (this.value === "email") {
+                radio_section.setAttribute("hidden", "hidden");
+                number_section.setAttribute("hidden", "hidden");
+            } else if (this.value === "number") {
+                radio_section.setAttribute("hidden", "hidden");
+                number_section.removeAttribute("hidden");
+            } else if (this.value === "radio") {
+                radio_section.removeAttribute("hidden");
+                number_section.setAttribute("hidden", "hidden");
+            } else if (this.value === "range") {
+                radio_section.setAttribute("hidden", "hidden");
+                number_section.removeAttribute("hidden");
+            } else if (this.value === "slider") {
+                radio_section.setAttribute("hidden", "hidden");
+                number_section.removeAttribute("hidden");
+            } else if (this.value === "textarea") {
+                radio_section.setAttribute("hidden", "hidden");
+                number_section.setAttribute("hidden", "hidden");
+            } else if (this.value === "text") {
+                radio_section.setAttribute("hidden", "hidden");
+                number_section.setAttribute("hidden", "hidden");
+            } else {
+                radio_section.setAttribute("hidden", "hidden");
+                number_section.setAttribute("hidden", "hidden");
+            }
+
+            checkValid();
+        };
+
+        new_question_title.oninput = checkValid;
+        new_question_optional.onchange = checkValid;
+
+        radio_add_input.onkeyup = function(event) {
+            event.preventDefault();
+
+            if (event.which === 13 || event.keyCode === 13) {
+                radio_add_button.onclick(undefined);
+            }
+        };
+
+        radio_add_button.onclick = function() {
+            let value = radio_add_input.value;
+
+            if (value.length < 1) {
+                radio_add_input.classList.add("uk-form-danger");
+                radio_add_input.focus();
+            } else {
+                let index = current_radio_options.indexOf(value);
+
+                if (index > -1 || value === "none") {
+                    radio_add_input.classList.add("uk-form-danger");
+                    radio_add_input.focus();
+                } else {
+                    radio_add_input.classList.remove("uk-form-danger");
+                    radio_add_input.value = "";
+
+                    let element = document.createElement("option");
+                    element.value = value;
+                    element.text = value;
+
+                    radio_options.appendChild(element);
+                    current_radio_options.push(value);
+                    hidden_radio_options.value = JSON.stringify({"options": current_radio_options});
+                }
+            }
+
+            checkValid();
+        };
+
+        radio_remove_button.onclick = function() {
+            let value = radio_options.value;
+
+            if (value === "none") {
+                return;
+            }
+
+            let index = current_radio_options.indexOf(value);
+
+            if (index < 0) { // We have a problem!
+                console.log("Unable to remove value from radio values because it doesn't exist: " + value)
+            } else {
+                current_radio_options.splice(index, 1);
+            }
+
+            for (let element of radio_options.getElementsByTagName("option")) {
+                if (element.value === "none") {
+                    continue;
+                }
+
+                if (element.value === value) {
+                    radio_options.removeChild(element);
+                }
+            }
+
+            hidden_radio_options.value = JSON.stringify({"options": current_radio_options});
+            radio_options.value = "none";
+            radio_add_input.focus();
+            checkValid();
+        };
+
+        number_min.oninput = function() {
+            if (this.value.length > 0 && isNaN(parseInt(this.value))) {
+                this.classList.add("uk-form-danger")
+            } else {
+                this.classList.remove("uk-form-danger")
+            }
+
+            checkValid();
+        };
+
+        number_max.oninput = function() {
+            if (this.value.length > 0 && isNaN(parseInt(this.value))) {
+                this.classList.add("uk-form-danger")
+            } else {
+                this.classList.remove("uk-form-danger")
+            }
+
+            checkValid();
+        };
+
+        function checkValid() {
+            if (new_question_title.value.length < 1) {
+                return setButtonEnabled(false);
+            }
+
+            let question_type = new_question_type.value;
+
+            if (question_type === "radio") {
+                if (current_radio_options.length < 1) {
+                    return setButtonEnabled(false);
+                }
+            }
+
+            if (   question_type === "number"
+                || question_type === "range"
+                || question_type === "slider"
+            ) {
+                if (isNaN(parseInt(number_min.value))) {
+                    return setButtonEnabled(false);
+                }
+                if (isNaN(parseInt(number_max.value))) {
+                    return setButtonEnabled(false);
+                }
+
+                if (number_min.value.length < 1 || number_max.value.length < 1) {
+                    return setButtonEnabled(false);
+                }
+            }
+
+            return setButtonEnabled(true);
+        }
+
+        function setButtonEnabled(enabled) {
+            submit_button.disabled = !enabled;
+        }
+    </script>
+{% endblock %}

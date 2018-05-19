@@ -76,6 +76,7 @@ JAM_STATES = [
 ]
 
 JAM_QUESTION_TYPES = [
+    "checkbox",
     "email",
     "number",
     "radio",

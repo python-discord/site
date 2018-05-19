@@ -7,6 +7,7 @@ from pysite.mixins import DBMixin
 
 GET_ACTIONS = ["questions"]
 POST_ACTIONS = ["associate_question", "disassociate_question", "questions", "state"]
+DELETE_ACTIONS = ["question"]
 KEYS = ["action"]
 
 QUESTION_KEYS = ["optional", "title", "type"]
@@ -166,3 +167,31 @@ class ActionView(APIView, DBMixin):
                 )
 
             return jsonify({"id": result["generated_keys"][0]})
+
+    @csrf
+    @require_roles(*ALL_STAFF_ROLES)
+    def delete(self):
+        action = request.args.get("action")
+
+        if action not in DELETE_ACTIONS:
+            return self.error(ErrorCodes.incorrect_parameters)
+
+        if action == "question":
+            question = request.args.get("id")
+
+            if not question:
+                return self.error(ErrorCodes.incorrect_parameters, f"Missing key: id")
+
+            question_obj = self.db.get(self.questions_table, question)
+
+            if not question_obj:
+                return self.error(ErrorCodes.incorrect_parameters, f"Unknown question: {question}")
+
+            self.db.delete(self.questions_table, question)
+
+            for form_obj in self.db.get_all(self.forms_table):
+                if question in form_obj["questions"]:
+                    form_obj["questions"].remove(question)
+                    self.db.insert(self.forms_table, form_obj, conflict="replace")
+
+            return jsonify({"id": question})

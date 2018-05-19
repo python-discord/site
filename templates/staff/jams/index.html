@@ -11,6 +11,7 @@
 
         <a class="uk-button uk-button-default" href="{{ url_for("staff.index") }}"><i class="uk-icon fa-fw far fa-arrow-left"></i> &nbsp;Back</a>
         <a class="uk-button uk-button-primary" href="{{ url_for("staff.jams.create") }}"><i class="uk-icon fa-fw far fa-plus"></i> &nbsp;Create</a>
+        <a class="uk-button uk-button-primary" href="{{ url_for("staff.jams.forms.questions") }}"><i class="uk-icon fa-fw far fa-list"></i> &nbsp;Questions</a>
 
         {% if not jams %}
             <p>

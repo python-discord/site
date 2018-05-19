@@ -139,6 +139,17 @@ class Actions {
         )
     }
 
+    delete_question(id, callback) {
+        this.send(
+            "question",
+            "DELETE",
+            {
+                "id": id
+            },
+            callback
+        )
+    }
+
     associate_question(form, question, callback) {
         this.send(
             "associate_question",

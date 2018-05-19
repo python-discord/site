@@ -1,0 +1,596 @@
+{% extends "main/base.html" %}
+{% block title %}Staff | Jams | Questions{% endblock %}
+{% block og_title %}Staff | Jams | Questions{% endblock %}
+{% block og_description %}Manage all created questions{% endblock %}
+{% block extra_head %}
+    <script src="{{ static_file('js/jams.js') }}"></script>
+{% endblock %}
+{% block content %}
+    <div class="uk-container uk-container-small uk-section">
+        <h1>Questions List</h1>
+
+        <a class="uk-button uk-button-default" href="{{ url_for("staff.jams.index") }}"><i class="uk-icon fa-fw far fa-arrow-left"></i> &nbsp;Back</a>
+        <button class="uk-button uk-button-primary" id="add-button"><i class="uk-icon fa-fw far fa-plus"></i> &nbsp;Add Question</button>
+     {# <a class="uk-button uk-button-secondary" target="_blank" href="{{ url_for("staff.index") }}"><i class="uk-icon fa-fw far fa-eye"></i> &nbsp;Preview</a>  #}
+
+        {% if not questions %}
+            <p id="no-questions-paragraph">No questions found. Add one above!</p>
+            <table class="uk-table uk-table-divider uk-table-striped uk-border" id="table" hidden="hidden">
+                <thead>
+                    <tr>
+                        <th class="uk-table-shrink">&nbsp;</th>
+                        <th><strong>ID</strong></th>
+                        <th class="uk-table-shrink">Optional</th>
+                        <th>Title</th>
+                        <th class="uk-table-shrink">Type</th>
+                        <th>Data</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body">
+                </tbody>
+            </table>
+        {% else %}
+            <p id="no-questions-paragraph" hidden="hidden">No questions found. Add one above!</p>
+
+            <div class="uk-overflow-auto">
+                <br />
+                <table class="uk-table uk-table-divider uk-table-striped uk-border" id="table">
+                    <thead>
+                        <tr>
+                            <th class="uk-table-shrink">&nbsp;</th>
+                            <th><strong>ID</strong></th>
+                            <th class="uk-table-shrink">Optional</th>
+                            <th>Title</th>
+                            <th class="uk-table-shrink">Type</th>
+                            <th>Data</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-body">
+                        {% for question in questions %}
+                            <tr id="row-{{ question.id }}">
+                                <td class="uk-table-shrink">
+                                    <button class="uk-button-small uk-button uk-button-danger delete-question-button" style="padding-left: 5px; padding-right: 5px;" data-question-id="{{ question.id }}"><i class="uk-icon fa-fw far fa-trash"></i></button>
+                                    <a href="{{ url_for("staff.jams.forms.questions.edit", question=question.id) }}" class="uk-button-small uk-button uk-button-primary edit-question-button" style="padding-left: 5px; padding-right: 5px;"><i class="uk-icon fa-fw far fa-pencil"></i></a>
+                                </td>
+                                <td class="uk-text-truncate" title="{{ question.id }}">{{ question.id }}</td>
+                                <td class="uk-table-shrink">
+                                    {% if question.optional %}
+                                        <i class="uk-icon uk-text-success fa-fw far fa-check"></i>
+                                    {% else %}
+                                        <i class="uk-icon uk-text-danger fa-fw far fa-times"></i>
+                                    {% endif %}
+                                </td>
+                                <td title="{{ question.title }}">{{ question.title }}</td>
+                                <td class="uk-table-shrink" title="{{ question.type.title() }}">{{ question.type.title() }}</td>
+                                <td>
+                                    {% if question.type == "text" %}
+
+                                    {% elif question.type == "number" %}
+                                        <i class="uk-icon fa-fw far fa-arrow-up" title="Max value"></i> &nbsp;{{ question.data.max }}
+                                        <br />
+                                        <i class="uk-icon fa-fw far fa-arrow-down" title="Min value"></i> &nbsp;{{ question.data.min }}
+                                    {% elif question.type == "checkbox" %}
+
+                                    {% elif question.type == "email" %}
+
+                                    {% elif question.type == "textarea" %}
+
+                                    {% elif question.type == "radio" %}
+                                        <ul>
+                                            {% for option in question.data.options %}
+                                                <li>{{ option }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    {% elif question.type == "range" %}
+                                        <i class="uk-icon fa-fw far fa-arrow-up" title="Max value"></i> &nbsp;{{ question.data.max }}
+                                        <br />
+                                        <i class="uk-icon fa-fw far fa-arrow-down" title="Min value"></i> &nbsp;{{ question.data.min }}
+                                    {% elif question.type == "slider" %}
+                                        <i class="uk-icon fa-fw far fa-arrow-up" title="Max value"></i> &nbsp;{{ question.data.max }}
+                                        <br />
+                                        <i class="uk-icon fa-fw far fa-arrow-down" title="Min value"></i> &nbsp;{{ question.data.min }}
+                                    {% else %}
+                                        {{ question.data }}
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endif %}
+    </div>
+
+    <div id="question-modal" class="uk-flex-top" uk-modal>
+        <div class="uk-modal-dialog">
+            <button class="uk-modal-close-default" type="button" uk-close></button>
+
+            <div class="uk-modal-header">
+                <h2 class="uk-modal-title">Add Question</h2>
+            </div>
+
+            <div class="uk-modal-body">
+                <form class="uk-form-horizontal">
+                    <div id="loading-spinner" class="uk-text-center uk-margin-small-top" hidden="hidden">
+                        <div uk-spinner></div>
+                    </div>
+                    <div id="new-question-section">
+                        <div>
+                            <div class="uk-form-label">
+                                <label class="uk-form-label" for="new-question-title">Title</label>
+                            </div>
+                            <div class="uk-form-controls-text uk-form-controls">
+                                <input type="text" id="new-question-title" class="uk-input">
+                            </div>
+                        </div>
+                        <div>
+                            <div class="uk-form-label">
+                                <label class="uk-form-label" for="new-question-optional">Optional</label>
+                            </div>
+                            <div class="uk-form-controls-text uk-form-controls">
+                                <select class="uk-select" id="new-question-optional">
+                                    <option hidden="hidden" disabled selected value="none"></option>
+                                    <option value="optional">Optional</option>
+                                    <option value="required">Required</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="uk-form-label">
+                                <label class="uk-form-label" for="new-question-type">Type</label>
+                            </div>
+                            <div class="uk-form-controls-text uk-form-controls">
+                                <select class="uk-select" id="new-question-type">
+                                    <option hidden="hidden" disabled selected value="none"></option>
+                                    <option value="checkbox">Checkbox</option>
+                                    <option value="email">Email</option>
+                                    <option value="number">Number</option>
+                                    <option value="radio">Radio</option>
+                                    <option value="range">Range</option>
+                                    <option value="slider">Slider</option>
+                                    <option value="textarea">Text (Block)</option>
+                                    <option value="text">Text (Line)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="radio-section" hidden="hidden">
+                        <br />
+                        <div>
+                            <div class="uk-form-label">
+                                <button type="button" class="uk-button uk-button-primary uk-width-1-1" id="radio-add-button"><i class="uk-icon fa-fw far fa-plus"></i> &nbsp;Add</button>
+                            </div>
+                            <div class="uk-form-controls-text uk-form-controls">
+                                <input type="text" id="radio-add-input" class="uk-input" placeholder="Item">
+                            </div>
+                        </div>
+                        <div>
+                            <div class="uk-form-label">
+                                <button type="button" class="uk-button uk-button-danger uk-width-1-1" id="radio-remove-button"><i class="uk-icon fa-fw far fa-minus"></i> &nbsp;Remove</button>
+                            </div>
+                            <div class="uk-form-controls-text uk-form-controls">
+                                <select class="uk-select" id="radio-options">
+                                    <option hidden="hidden" disabled selected value="none"></option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="number-section" hidden="hidden">
+                        <br />
+                        <div>
+                            <div class="uk-form-label">
+                                <label class="uk-form-label" for="number-min">Min Value</label>
+                            </div>
+                            <div class="uk-form-controls-text uk-form-controls">
+                                <input type="text" id="number-min" class="uk-input">
+                            </div>
+                        </div>
+                        <div>
+                            <div class="uk-form-label">
+                                <label class="uk-form-label" for="number-max">Max Value</label>
+                            </div>
+                            <div class="uk-form-controls-text uk-form-controls">
+                                <input type="text" id="number-max" class="uk-input">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="uk-modal-footer">
+                <div class="uk-text-center">
+                    <button class="uk-button uk-button-danger uk-modal-close" type="button" id="state-cancel">
+                        <i class="uk-icon fa-fw far fa-times"></i> &nbsp;Cancel
+                    </button>
+                    <button class="uk-button uk-button-primary" type="button" id="question-submit" disabled>
+                        <i class="uk-icon fa-fw far fa-check"></i> &nbsp;Save
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="application/javascript">
+        "use strict";
+
+        const actions = new Actions("{{ url_for("staff.jams.action") }}", "{{ csrf_token() }}");
+        const table_body = document.getElementById("table-body");
+        const table = document.getElementById("table");
+        const no_questions_paragraph = document.getElementById("no-questions-paragraph");
+
+        let all_questions = {{ question_ids | safe }};
+        const question_edit_url = "{{ url_for("staff.jams.forms.questions.edit", question="{NONE}") }}";
+
+        const add_button = document.getElementById("add-button");
+        const modal = UIkit.modal(document.getElementById("question-modal"));
+        const loading_spinner = document.getElementById("loading-spinner");
+
+        const new_question_section = document.getElementById("new-question-section");
+        const new_question_title = document.getElementById("new-question-title");
+        const new_question_optional = document.getElementById("new-question-optional");
+        const new_question_type = document.getElementById("new-question-type");
+
+        const radio_section = document.getElementById("radio-section");
+
+        const radio_add_button = document.getElementById("radio-add-button");
+        const radio_add_input = document.getElementById("radio-add-input");
+        const radio_remove_button = document.getElementById("radio-remove-button");
+        const radio_options = document.getElementById("radio-options");
+
+        const number_section = document.getElementById("number-section");
+
+        const number_min = document.getElementById("number-min");
+        const number_max = document.getElementById("number-max");
+
+        const submit_button = document.getElementById("question-submit");
+
+        let current_radio_options = Array();
+
+        add_button.onclick = function() {
+            clearModal();
+            checkModal();
+            modal.show();
+        };
+
+        new_question_type.onchange = function() {
+            if (this.value === "checkbox") {
+                radio_section.setAttribute("hidden", "hidden");
+                number_section.setAttribute("hidden", "hidden");
+            } else if (this.value === "email") {
+                radio_section.setAttribute("hidden", "hidden");
+                number_section.setAttribute("hidden", "hidden");
+            } else if (this.value === "number") {
+                radio_section.setAttribute("hidden", "hidden");
+                number_section.removeAttribute("hidden");
+            } else if (this.value === "radio") {
+                radio_section.removeAttribute("hidden");
+                number_section.setAttribute("hidden", "hidden");
+            } else if (this.value === "range") {
+                radio_section.setAttribute("hidden", "hidden");
+                number_section.removeAttribute("hidden");
+            } else if (this.value === "slider") {
+                radio_section.setAttribute("hidden", "hidden");
+                number_section.removeAttribute("hidden");
+            } else if (this.value === "textarea") {
+                radio_section.setAttribute("hidden", "hidden");
+                number_section.setAttribute("hidden", "hidden");
+            } else if (this.value === "text") {
+                radio_section.setAttribute("hidden", "hidden");
+                number_section.setAttribute("hidden", "hidden");
+            } else {
+                radio_section.setAttribute("hidden", "hidden");
+                number_section.setAttribute("hidden", "hidden");
+            }
+
+            checkModal();
+        };
+
+        new_question_title.oninput = checkModal;
+        new_question_optional.onchange = checkModal;
+
+        radio_add_input.onkeyup = function(event) {
+            event.preventDefault();
+
+            if (event.which === 13 || event.keyCode === 13) {
+                radio_add_button.onclick(undefined);
+            }
+        };
+
+        radio_add_button.onclick = function() {
+            let value = radio_add_input.value;
+
+            if (value.length < 1) {
+                radio_add_input.classList.add("uk-form-danger");
+                radio_add_input.focus();
+            } else {
+                let index = current_radio_options.indexOf(value);
+
+                if (index > -1 || value === "none") {
+                    radio_add_input.classList.add("uk-form-danger");
+                    radio_add_input.focus();
+                } else {
+                    radio_add_input.classList.remove("uk-form-danger");
+                    radio_add_input.value = "";
+
+                    let element = document.createElement("option");
+                    element.value = value;
+                    element.text = value;
+
+                    radio_options.appendChild(element);
+                    current_radio_options.push(value);
+                }
+            }
+
+            checkModal();
+        };
+
+        radio_remove_button.onclick = function() {
+            let value = radio_options.value;
+
+            if (value === "none") {
+                return;
+            }
+
+            let index = current_radio_options.indexOf(value);
+
+            if (index < 0) { // We have a problem!
+                console.log("Unable to remove value from radio values because it doesn't exist: " + value)
+            } else {
+                current_radio_options.splice(index, 1);
+            }
+
+            for (let element of radio_options.getElementsByTagName("option")) {
+                if (element.value === "none") {
+                    continue;
+                }
+
+                if (element.value === value) {
+                    radio_options.removeChild(element);
+                }
+            }
+
+            radio_options.value = "none";
+            radio_add_input.focus();
+            checkModal();
+        };
+
+        number_min.oninput = function() {
+            if (this.value.length > 0 && isNaN(parseInt(this.value))) {
+                this.classList.add("uk-form-danger")
+            } else {
+                this.classList.remove("uk-form-danger")
+            }
+
+            checkModal();
+        };
+
+        number_max.oninput = function() {
+            if (this.value.length > 0 && isNaN(parseInt(this.value))) {
+                this.classList.add("uk-form-danger")
+            } else {
+                this.classList.remove("uk-form-danger")
+            }
+
+            checkModal();
+        };
+
+        submit_button.onclick = function () {
+            let type = new_question_type.value;
+            let optional = new_question_optional.value === "optional";
+            let title = new_question_title.value;
+
+            let question_data = {
+                "type": type,
+                "optional": optional,
+                "title": title
+            };
+
+            if (type === "radio") {
+                question_data.data = {"options": current_radio_options};
+            } else if (type === "number"
+                    || type === "range"
+                    || type === "slider") {
+                question_data.data = {
+                    "max": parseInt(number_max.value),
+                    "min": parseInt(number_min.value)
+                };
+            }
+
+            number_section.setAttribute("hidden", "hidden");
+            new_question_section.setAttribute("hidden", "hidden");
+            radio_section.setAttribute("hidden", "hidden");
+            loading_spinner.removeAttribute("hidden");
+
+            actions.create_question(question_data, function(result, data) {
+                if (result) {
+                    question_data["id"] = data.id;
+                    addToTable(question_data);
+                    modal.hide();
+                    clearModal();
+
+                    UIkit.notification({
+                        "message": "Question added",
+                        "status": "success",
+                        "pos": "bottom-center",
+                        "timeout": 5000,
+                    });
+                } else {
+                    console.log(data);
+                    UIkit.notification({
+                        "message": "Failed to create question",
+                        "status": "danger",
+                        "pos": "bottom-center",
+                        "timeout": 5000,
+                    });
+                }
+            })
+        };
+
+        const toTitleCase = (str) => str.replace(/\b\S/g, t => t.toUpperCase());
+
+        function hookUpDeleteButtons() {
+            for (let element of document.getElementsByClassName("delete-question-button")) {
+                element.onclick = function() {
+                    let question_id = this.getAttribute("data-question-id");
+                    let row = document.getElementById("row-" + question_id);
+
+                    actions.delete_question(question_id, function(result, data) {
+                        if (result) {
+                            document.getElementById("table-body").removeChild(row);
+                            UIkit.notification({
+                                "message": "Question deleted",
+                                "status": "success",
+                                "pos": "bottom-center",
+                                "timeout": 5000,
+                            });
+                        } else {
+                            console.log(data);
+                            UIkit.notification({
+                                "message": "Failed to delete question",
+                                "status": "danger",
+                                "pos": "bottom-center",
+                                "timeout": 5000,
+                            });
+                        }
+                    })
+                }
+            }
+        }
+
+        function clearModal() {
+            // Existing question section
+            loading_spinner.setAttribute("hidden", "hidden");
+
+            new_question_section.removeAttribute("hidden");
+
+            // New question section
+            new_question_title.value = "";
+            new_question_optional.value = "none";
+            new_question_type.value = "none";
+
+            // Radio question section
+            radio_section.setAttribute("hidden", "hidden");
+
+            radio_add_input.value = "";
+            radio_options.innerHTML = "<option hidden=\"hidden\" disabled selected value=\"none\"></option>";
+            radio_options.value = "none";
+
+            current_radio_options = Array();
+
+            // Number question section
+            number_section.setAttribute("hidden", "hidden");
+        }
+
+        function checkModal() {
+            if (new_question_title.value.length < 1) {
+                return setButtonEnabled(false);
+            }
+
+            if (new_question_optional.value === "none") {
+                return setButtonEnabled(false);
+            }
+
+            let question_type = new_question_type.value;
+
+            if (question_type === "none") {
+                return setButtonEnabled(false);
+            }
+
+            if (question_type === "radio") {
+                if (current_radio_options.length < 1) {
+                    return setButtonEnabled(false);
+                }
+            }
+
+            if (   question_type === "number"
+                || question_type === "range"
+                || question_type === "slider"
+            ) {
+                if (isNaN(parseInt(number_min.value))) {
+                    return setButtonEnabled(false);
+                }
+                if (isNaN(parseInt(number_max.value))) {
+                    return setButtonEnabled(false);
+                }
+
+                if (number_min.value.length < 1 || number_max.value.length < 1) {
+                    return setButtonEnabled(false);
+                }
+            }
+
+            return setButtonEnabled(true);
+        }
+
+        function setButtonEnabled(enabled) {
+            submit_button.disabled = !enabled;
+        }
+
+        function addToTable(question) {
+            console.log(question);
+            if (all_questions.indexOf(question.id) === -1) {
+                all_questions.push(question.id);
+
+                let element = document.createElement("tr");
+                element.id = "row-" + question.id;
+                element.innerHTML = getRowHTML(question);
+
+                table_body.appendChild(element);
+            }
+
+            if (all_questions.length > 0) {
+                table.removeAttribute("hidden");
+                no_questions_paragraph.setAttribute("hidden", "hidden");
+            }
+            hookUpDeleteButtons();
+        }
+
+        function getRowHTML(question) {
+            let optional;
+            let data;
+
+            if (question.optional) {
+                optional = "<i class=\"uk-icon uk-text-success fa-fw far fa-check\"></i>"
+            } else {
+                optional = "<i class=\"uk-icon uk-text-danger fa-fw far fa-times\"></i>"
+            }
+
+            if (question.type === "number" || question.type === "range" || question.type === "slider") {
+                data = `
+<i class="uk-icon fa-fw far fa-arrow-up" title="Max value"></i> &nbsp;${question.data.max}
+<br />
+<i class="uk-icon fa-fw far fa-arrow-down" title="Min value"></i> &nbsp;${question.data.min}
+                `
+
+            } else if (question.type === "radio") {
+                data = "<ul>";
+
+                for (let option of question.data.options) {
+                    data = data + `<li>${option}</li>`
+                }
+                data = data + "</ul>";
+            } else {
+                data = ""
+            }
+
+            let type = toTitleCase(question.type);
+            let q_url = question_edit_url.replace("{NONE}", question.id);
+
+            const row = `
+    <td class="uk-table-shrink">
+        <button class="uk-button-small uk-button uk-button-danger delete-question-button" style="padding-left: 5px; padding-right: 5px;" data-question-id="${question.id}"><i class="uk-icon fa-fw far fa-trash"></i></button>
+        <a href="${q_url}" class="uk-button-small uk-button uk-button-primary edit-question-button" style="padding-left: 5px; padding-right: 5px;"><i class="uk-icon fa-fw far fa-pencil"></i></a>
+    </td>
+    <td class="uk-text-truncate" title="${question.id}">${question.id}</td>
+    <td class="uk-table-shrink">${optional}</td>
+    <td title="${question.title}">${question.title}</td>
+    <td class="uk-table-shrink" title="${type}">${type}</td>
+    <td>${data}</td>
+                        `;
+            return row
+        }
+
+        hookUpDeleteButtons();
+    </script>
+{% endblock %}
