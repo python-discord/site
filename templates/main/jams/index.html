@@ -92,6 +92,12 @@
                         <span class="uk-label uk-label-danger">
                             {{ format_datetime(jam.date_end) }} UTC
                         </span>
+
+                        {% if jam.state in ["running", "judging", "finished"] %}
+                            <span class="uk-label uk-align-right">
+                            Theme: {{ jam.theme }}
+                            </span>
+                        {% endif %}
                     <p>
 
                     </p>

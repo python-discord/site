@@ -77,15 +77,9 @@
                             <i class="uk-icon fa-fw far fa-pencil"></i> &nbsp;State
                         </a>
 
-                        {% if jam.state == "planning" %}
-                            <a class="uk-button uk-button-default uk-width-expand" data-jam="{{ jam.number }}" id="jam-{{ jam.number }}-button-basics" href="{{ url_for("staff.jams.edit.basics", jam=jam.number) }}">
-                                <i class="uk-icon fa-fw far fa-pencil"></i> &nbsp;Basics
-                            </a>
-                        {% else %}
-                            <a class="uk-button uk-button-default uk-width-expand" hidden="hidden" data-jam="{{ jam.number }}" id="jam-{{ jam.number }}-button-basics" href="{{ url_for("staff.jams.edit.basics", jam=jam.number) }}">
-                                <i class="uk-icon fa-fw far fa-pencil"></i> &nbsp;Basics
-                            </a>
-                        {% endif %}
+                        <a class="uk-button uk-button-default uk-width-expand" data-jam="{{ jam.number }}" id="jam-{{ jam.number }}-button-basics" href="{{ url_for("staff.jams.edit.basics", jam=jam.number) }}">
+                            <i class="uk-icon fa-fw far fa-pencil"></i> &nbsp;Basics
+                        </a>
 
                         {% if jam.state in ["planning", "preparing", "announced"] %}
                             <a class="uk-button uk-button-default uk-width-expand" data-jam="{{ jam.number }}" id="jam-{{ jam.number }}-button-info" href="{{ url_for("staff.jams.edit.info", jam=jam.number) }}">
@@ -202,49 +196,42 @@
                                 case "planning":
                                     document.getElementById("state-" + jam + "-planning").removeAttribute("hidden");
 
-                                    document.getElementById("jam-" + jam + "-button-basics").removeAttribute("hidden");
                                     document.getElementById("jam-" + jam + "-button-info").removeAttribute("hidden");
                                     document.getElementById("jam-" + jam + "-button-ending").setAttribute("hidden", "hidden");
                                     break;
                                 case "announced":
                                     document.getElementById("state-" + jam + "-announced").removeAttribute("hidden");
 
-                                    document.getElementById("jam-" + jam + "-button-basics").setAttribute("hidden", "hidden");
                                     document.getElementById("jam-" + jam + "-button-info").removeAttribute("hidden");
                                     document.getElementById("jam-" + jam + "-button-ending").setAttribute("hidden", "hidden");
                                     break;
                                 case "preparing":
                                     document.getElementById("state-" + jam + "-preparing").removeAttribute("hidden");
 
-                                    document.getElementById("jam-" + jam + "-button-basics").setAttribute("hidden", "hidden");
                                     document.getElementById("jam-" + jam + "-button-info").removeAttribute("hidden");
                                     document.getElementById("jam-" + jam + "-button-ending").setAttribute("hidden", "hidden");
                                     break;
                                 case "running":
                                     document.getElementById("state-" + jam + "-running").removeAttribute("hidden");
 
-                                    document.getElementById("jam-" + jam + "-button-basics").setAttribute("hidden", "hidden");
                                     document.getElementById("jam-" + jam + "-button-info").setAttribute("hidden", "hidden");
                                     document.getElementById("jam-" + jam + "-button-ending").setAttribute("hidden", "hidden");
                                     break;
                                 case "judging":
                                     document.getElementById("state-" + jam + "-judging").removeAttribute("hidden");
 
-                                    document.getElementById("jam-" + jam + "-button-basics").setAttribute("hidden", "hidden");
                                     document.getElementById("jam-" + jam + "-button-info").setAttribute("hidden", "hidden");
                                     document.getElementById("jam-" + jam + "-button-ending").removeAttribute("hidden");
                                     break;
                                 case "finished":
                                     document.getElementById("state-" + jam + "-finished").removeAttribute("hidden");
 
-                                    document.getElementById("jam-" + jam + "-button-basics").setAttribute("hidden", "hidden");
                                     document.getElementById("jam-" + jam + "-button-info").setAttribute("hidden", "hidden");
                                     document.getElementById("jam-" + jam + "-button-ending").setAttribute("hidden", "hidden");
                                     break;
                                 default:
                                     document.getElementById("state-" + jam + "-unknown").removeAttribute("hidden");
 
-                                    document.getElementById("jam-" + jam + "-button-basics").setAttribute("hidden", "hidden");
                                     document.getElementById("jam-" + jam + "-button-info").setAttribute("hidden", "hidden");
                                     document.getElementById("jam-" + jam + "-button-ending").setAttribute("hidden", "hidden");
                                     break;

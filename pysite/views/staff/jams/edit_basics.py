@@ -32,9 +32,6 @@ class StaffView(RouteView, DBMixin):
         if not jam_obj:
             return NotFound()
 
-        if not jam_obj["state"] == "planning":
-            return BadRequest()
-
         for key in REQUIRED_KEYS:
             arg = request.form.get(key)
 
