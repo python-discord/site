@@ -66,10 +66,10 @@ class UserView(APIView, DBMixin):
                 user_id = item["snowflake"]
 
                 oauth_deletions += self.db.delete(
-                    self.oauth_table_name, item["id"], durability="soft"
+                    self.oauth_table_name, item["id"], durability="soft", return_changes=True
                 ).get("deleted", 0)
                 profile_deletions += self.db.delete(
-                    self.participants_table, user_id, durability="soft"
+                    self.participants_table, user_id, durability="soft", return_changes=True
                 ).get("deleted", 0)
 
                 banned = False
