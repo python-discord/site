@@ -1,5 +1,4 @@
 #!/bin/bash
-set -e
 
 # Build and deploy on master branch
 if [[ $TRAVIS_BRANCH == 'master' && $TRAVIS_PULL_REQUEST == 'false' ]]; then
