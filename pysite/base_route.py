@@ -109,8 +109,6 @@ class RouteView(BaseView):
             "kwargs": kwargs
         }
 
-        print(session["redirect_target"])
-
         return redirect(url_for("discord.login"))
 
 

@@ -8,8 +8,6 @@ class AuthDoneView(RouteView):
     name = "auth.done"
 
     def get(self):
-        print(session["redirect_target"])
-
         if self.logged_in:
             target = session.get("redirect_target")
 
