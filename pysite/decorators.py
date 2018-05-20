@@ -1,4 +1,3 @@
-import os
 from functools import wraps
 from json import JSONDecodeError
 
@@ -7,7 +6,7 @@ from schema import Schema, SchemaError
 from werkzeug.exceptions import Forbidden
 
 from pysite.base_route import APIView, BaseView
-from pysite.constants import CSRF, DEBUG_MODE, ErrorCodes, ValidationTypes
+from pysite.constants import BOT_API_KEY, CSRF, DEBUG_MODE, ErrorCodes, ValidationTypes
 
 
 def csrf(f):
@@ -58,7 +57,7 @@ def api_key(f):
 
     @wraps(f)
     def inner_decorator(self: APIView, *args, **kwargs):
-        if not request.headers.get("X-API-Key") == os.environ.get("BOT_API_KEY"):
+        if not request.headers.get("X-API-Key") == BOT_API_KEY:
             return self.error(ErrorCodes.invalid_api_key)
         return f(self, *args, **kwargs)
 

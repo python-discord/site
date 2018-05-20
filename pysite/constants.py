@@ -28,6 +28,7 @@ HELPER_ROLE = "267630620367257601"
 CONTRIB_ROLE = "295488872404484098"
 
 ALL_STAFF_ROLES = (OWNER_ROLE, ADMIN_ROLE, MODERATOR_ROLE, DEVOPS_ROLE)
+TABLE_MANAGER_ROLES = (OWNER_ROLE, ADMIN_ROLE, DEVOPS_ROLE)
 EDITOR_ROLES = ALL_STAFF_ROLES + (HELPER_ROLE, CONTRIB_ROLE)
 
 SERVER_ID = 267624335836053506
@@ -66,6 +67,26 @@ ERROR_DESCRIPTIONS = {
     429: "Please don't send us that many requests."
 }
 
+JAM_STATES = [
+    "planning",
+    "announced",
+    "preparing",
+    "running",
+    "judging",
+    "finished"
+]
+
+JAM_QUESTION_TYPES = [
+    "checkbox",
+    "email",
+    "number",
+    "radio",
+    "range",
+    "text",
+    "textarea",
+    "slider"
+]
+
 # PaperTrail logging
 PAPERTRAIL_ADDRESS = environ.get("PAPERTRAIL_ADDRESS") or None
 PAPERTRAIL_PORT = int(environ.get("PAPERTRAIL_PORT") or 0)
@@ -82,3 +103,6 @@ GITHUB_TOKEN = environ.get("GITHUB_TOKEN") or None
 
 # Audit Webhook
 WIKI_AUDIT_WEBHOOK = environ.get("WIKI_AUDIT_WEBHOOK") or None
+
+# Bot key
+BOT_API_KEY = environ.get("BOT_API_KEY") or None

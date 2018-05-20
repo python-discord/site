@@ -1,0 +1,26 @@
+{% extends "main/base.html" %}
+{% block title %}Code Jams | Already applied{% endblock %}
+{% block og_title %}Code Jams | Already applied{% endblock %}
+
+{% block content %}
+<div class="uk-section">
+    <div class="uk-container uk-container-small">
+        <h1 class="uk-header uk-article-title">
+            Code Jam {{ jam.number }}: {{ jam.title }}
+        </h1>
+        <p class="uk-article-meta">
+            Bring the thunder!
+        </p>
+
+        <p class="uk-alert uk-alert-danger">
+            Thanks for your interest in this code jam! It looks like we already have an application here for you,
+            so please just sit back, relax, and we'll let you know whether you've been selected for this code
+            jam when the time comes.
+        </p>
+
+        <a class="uk-button uk-button-secondary uk-align-center" href="{{ url_for("main.jams.index") }}">
+            <i class="uk-icon fa-fw far fa-arrow-left"></i> &nbsp;Back to all code jams
+        </a>
+    </div>
+</div>
+{% endblock %}

@@ -1,5 +1,7 @@
 import datetime
 import difflib
+import html
+import re
 
 import requests
 from flask import redirect, request, url_for
@@ -10,6 +12,8 @@ from pysite.constants import DEBUG_MODE, EDITOR_ROLES, GITHUB_TOKEN, WIKI_AUDIT_
 from pysite.decorators import csrf, require_roles
 from pysite.mixins import DBMixin
 from pysite.rst import render
+
+STRIP_REGEX = re.compile(r"<[^<]+?>")
 
 
 class EditView(RouteView, DBMixin):
@@ -55,11 +59,12 @@ class EditView(RouteView, DBMixin):
     @csrf
     def post(self, page):
         rst = request.form.get("rst")
+        title = request.form["title"]
 
-        if not rst:
+        if not rst or not rst.strip():
             raise BadRequest()
 
-        if not rst.strip():
+        if not title or not title.strip():
             raise BadRequest()
 
         rendered = render(rst)
@@ -69,6 +74,7 @@ class EditView(RouteView, DBMixin):
             "title": request.form["title"],
             "rst": rst,
             "html": rendered["html"],
+            "text": html.unescape(STRIP_REGEX.sub("", rendered["html"]).strip()),
             "headers": rendered["headers"]
         }
 
@@ -80,17 +86,18 @@ class EditView(RouteView, DBMixin):
             conflict="replace"
         )
 
-        # Add the post to the revisions table
-        revision_payload = {
-            "slug": page,
-            "post": obj,
-            "date": datetime.datetime.utcnow().timestamp(),
-            "user": self.user_data.get("user_id")
-        }
+        if not DEBUG_MODE:
+            # Add the post to the revisions table
+            revision_payload = {
+                "slug": page,
+                "post": obj,
+                "date": datetime.datetime.utcnow().timestamp(),
+                "user": self.user_data.get("user_id")
+            }
 
-        del revision_payload["post"]["slug"]
+            del revision_payload["post"]["slug"]
 
-        self.db.insert(self.revision_table_name, revision_payload)
+            self.db.insert(self.revision_table_name, revision_payload)
 
         return redirect(url_for("wiki.page", page=page), code=303)  # Redirect, ensuring a GET
 

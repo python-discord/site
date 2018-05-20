@@ -1,0 +1,255 @@
+{% extends "main/base.html" %}
+{% block title %}Staff | Code Jams{% endblock %}
+{% block og_title %}Staff | Code Jams{% endblock %}
+{% block extra_head %}
+    <script src="{{ static_file('js/jams.js') }}"></script>
+{% endblock %}
+{% block content %}
+    <div class="uk-container uk-container-small uk-section">
+        <h1>Code Jams</h1>
+
+        <a class="uk-button uk-button-default" href="{{ url_for("staff.index") }}"><i class="uk-icon fa-fw far fa-arrow-left"></i> &nbsp;Back</a>
+        <a class="uk-button uk-button-secondary" href="{{ url_for("staff.jams.forms.questions") }}"><i class="uk-icon fa-fw far fa-list"></i> &nbsp;Questions</a>
+        <a class="uk-button uk-button-secondary" href="{{ url_for("staff.jams.infractions") }}"><i class="uk-icon fa-fw far fa-exclamation-triangle"></i> &nbsp;Infractions</a>
+        <a class="uk-button uk-button-primary" href="{{ url_for("staff.jams.create") }}"><i class="uk-icon fa-fw far fa-plus"></i> &nbsp;Create</a>
+
+        {% if not jams %}
+            <p>
+                No code jams found. Create one above!
+            </p>
+        {% else %}
+            {% for jam in jams %}
+                <h2 class="uk-heading-divider">
+                    Code Jam {{ jam.number }}: {{ jam.title }}
+
+                    <span class="uk-align-right">
+                        {% if jam.state == "planning" %}
+                            <i class="uk-icon uk-text-muted fa-fw far fa-edit state-{{ jam.number }}" title="State: {{ jam.state }}" id="state-{{ jam.number }}-planning"></i>
+                        {% else %}
+                            <i class="uk-icon uk-text-muted fa-fw far fa-edit state-{{ jam.number }}" style="display: none;" title="State: {{ jam.state }}" id="state-{{ jam.number }}-planning"></i>
+                        {% endif %}
+
+                        {% if jam.state == "announced" %}
+                            <i class="uk-icon uk-text-primary fa-fw far fa-bullhorn state-{{ jam.number }}" title="State: {{ jam.state }}" id="state-{{ jam.number }}-announced"></i>
+                        {% else %}
+                            <i class="uk-icon uk-text-primary fa-fw far fa-bullhorn state-{{ jam.number }}" hidden="hidden" title="State: {{ jam.state }}" id="state-{{ jam.number }}-announced"></i>
+                        {% endif %}
+
+                        {% if jam.state == "preparing" %}
+                            <i class="uk-icon uk-text-muted fa-fw far fa-pause state-{{ jam.number }}" title="State: {{ jam.state }}" id="state-{{ jam.number }}-preparing"></i>
+                        {% else %}
+                            <i class="uk-icon uk-text-muted fa-fw far fa-pause state-{{ jam.number }}" hidden="hidden" title="State: {{ jam.state }}" id="state-{{ jam.number }}-preparing"></i>
+                        {% endif %}
+
+                        {% if jam.state == "running" %}
+                            <i class="uk-icon uk-text-success fa-fw far fa-play state-{{ jam.number }}" title="State: {{ jam.state }}" id="state-{{ jam.number }}-running"></i>
+                        {% else %}
+                            <i class="uk-icon uk-text-success fa-fw far fa-play state-{{ jam.number }}" hidden="hidden" title="State: {{ jam.state }}" id="state-{{ jam.number }}-running"></i>
+                        {% endif %}
+
+                        {% if jam.state == "judging" %}
+                            <i class="uk-icon uk-text-primary fa-fw far fa-balance-scale state-{{ jam.number }}" title="State: {{ jam.state }}" id="state-{{ jam.number }}-judging"></i>
+                        {% else %}
+                            <i class="uk-icon uk-text-primary fa-fw far fa-balance-scale state-{{ jam.number }}" hidden="hidden" title="State: {{ jam.state }}" id="state-{{ jam.number }}-judging"></i>
+                        {% endif %}
+
+                        {% if jam.state == "finished" %}
+                            <i class="uk-icon uk-text-success fa-fw far fa-check-square state-{{ jam.number }}" title="State: {{ jam.state }}" id="state-{{ jam.number }}-finished"></i>
+                        {% else %}
+                            <i class="uk-icon uk-text-success fa-fw far fa-check-square state-{{ jam.number }}" hidden="hidden" title="State: {{ jam.state }}" id="state-{{ jam.number }}-finished"></i>
+                        {% endif %}
+
+                        {% if not jam.state in states %}
+                            <i class="uk-icon uk-text-danger fa-fw far fa-question-square" title="Unknown state: {{ jam.state }}" id="state-{{ jam.number }}-unknown"></i>
+                        {% else %}
+                            <i class="uk-icon uk-text-danger fa-fw far fa-question-square" hidden="hidden" title="Unknown state: {{ jam.state }}" id="state-{{ jam.number }}-unknown"></i>
+                        {% endif %}
+                    </span>
+                </h2>
+
+                <span class="uk-label">Participants: {{ jam.participants | length }}</span>
+                <span class="uk-label uk-label-success">Start: {{ format_datetime(jam.date_start) }} (UTC)</span>
+                <span class="uk-label uk-label-danger">End: {{ format_datetime(jam.date_end)  }} (UTC)</span>
+
+                <section class="uk-section">
+                    <div class="uk-button-group uk-width-1-1">
+                        <a class="uk-button uk-button-default uk-width-expand state-button" data-jam="{{ jam.number }}" id="jam-{{ jam.number }}-button-state">
+                            <i class="uk-icon fa-fw far fa-pencil"></i> &nbsp;State
+                        </a>
+
+                        <a class="uk-button uk-button-default uk-width-expand" data-jam="{{ jam.number }}" id="jam-{{ jam.number }}-button-basics" href="{{ url_for("staff.jams.edit.basics", jam=jam.number) }}">
+                            <i class="uk-icon fa-fw far fa-pencil"></i> &nbsp;Basics
+                        </a>
+
+                        {% if jam.state in ["planning", "announced", "finished"] %}
+                            <a class="uk-button uk-button-default uk-width-expand" data-jam="{{ jam.number }}" id="jam-{{ jam.number }}-button-info" href="{{ url_for("staff.jams.edit.info", jam=jam.number) }}">
+                                <i class="uk-icon fa-fw far fa-pencil"></i> &nbsp;Info
+                            </a>
+                        {% else %}
+                            <a class="uk-button uk-button-default uk-width-expand" hidden="hidden" data-jam="{{ jam.number }}" id="jam-{{ jam.number }}-button-info" href="{{ url_for("staff.jams.edit.info", jam=jam.number) }}">
+                                <i class="uk-icon fa-fw far fa-pencil"></i> &nbsp;Info
+                            </a>
+                        {% endif %}
+
+                        {% if jam.state in ["judging", "finished"] %}
+                            <a class="uk-button uk-button-default uk-width-expand" data-jam="{{ jam.number }}" id="jam-{{ jam.number }}-button-ending" href="{{ url_for("staff.jams.edit.ending", jam=jam.number) }}">
+                                <i class="uk-icon fa-fw far fa-pencil"></i> &nbsp;Ending
+                            </a>
+                        {% else %}
+                            <a class="uk-button uk-button-default uk-width-expand" hidden="hidden" data-jam="{{ jam.number }}" id="jam-{{ jam.number }}-button-ending" href="{{ url_for("staff.jams.edit.ending", jam=jam.number) }}">
+                                <i class="uk-icon fa-fw far fa-pencil"></i> &nbsp;Ending
+                            </a>
+                        {% endif %}
+                    </div>
+                    <br/>
+                    <div class="uk-button-group uk-width-1-1">
+                        <a class="uk-button uk-button-danger uk-width-expand" href="{{ url_for("staff.jams.forms.view", jam=jam.number) }}">
+                            <i class="uk-icon fa-fw far fa-list"></i> &nbsp;Form
+                        </a>
+                        <a class="uk-button uk-button-secondary uk-width-expand" href="# TODO">
+                            <i class="uk-icon fa-fw far fa-user"></i> &nbsp;Participants
+                        </a>
+                        <a class="uk-button uk-button-primary uk-width-expand" href="# TODO">
+                            <i class="uk-icon fa-fw far fa-users"></i> &nbsp;Teams
+                        </a>
+                    </div>
+                </section>
+            {% endfor %}
+        {% endif %}
+    </div>
+
+    <div id="state-modal" class="uk-flex-top" uk-modal>
+        <div class="uk-modal-dialog">
+            <button class="uk-modal-close-default" type="button" uk-close></button>
+
+            <div class="uk-modal-header">
+                <h2 class="uk-modal-title">Set State</h2>
+            </div>
+
+            <div class="uk-modal-body">
+                <form class="uk-form-horizontal">
+                    <div>
+                        <div class="uk-form-label">
+                            <label class="uk-form-label" for="state">State</label>
+                        </div>
+
+                        <div class="uk-form-controls uk-form-controls-text">
+                            <select class="uk-select" name="state" id="state">
+                                {% for state in states %}
+                                    <option value="{{ state }}">{{ state.title() }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="uk-modal-footer">
+                <div class="uk-text-center">
+                    <button class="uk-button uk-button-default uk-modal-close" type="button" id="state-cancel">
+                        <i class="uk-icon fa-fw far fa-arrow-left"></i> &nbsp;Cancel
+                    </button>
+                    <a class="uk-button uk-button-primary" type="button" id="state-submit">
+                        <i class="uk-icon fa-fw far fa-check"></i> &nbsp;Save
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="application/javascript">
+        "use strict";
+        const actions = new Actions("{{ url_for("staff.jams.action") }}", "{{ csrf_token() }}");
+
+        // State modal objects
+        const state_modal = UIkit.modal(document.getElementById("state-modal"));
+        const state_input = document.getElementById("state");
+        const state_cancel = document.getElementById("state-cancel");
+        const state_submit = document.getElementById("state-submit");
+
+        state_cancel.onclick = function() {
+            state_modal.hide();
+        };
+
+        for (let button of document.getElementsByClassName("state-button")) {
+            button.onclick = function() {
+                state_modal.show();
+
+                state_submit.onclick = function() {
+                    let jam = parseInt(button.getAttribute("data-jam"));
+                    let state = state_input.value;
+
+                    actions.set_state(jam, state, function(success, data) {
+                        if (success) {
+                            UIkit.notification({
+                                "message": "State set successfully",
+                                "status": "success",
+                                "pos": "bottom-center",
+                                "timeout": 5000,
+                            });
+
+                            for (let icon of document.getElementsByClassName("state-" + jam)) {
+                                icon.setAttribute("hidden", "hidden");
+                            }
+
+                            switch (state) {  // Set the state on the page too so there's no reloading
+                                case "planning":
+                                    document.getElementById("state-" + jam + "-planning").removeAttribute("hidden");
+
+                                    document.getElementById("jam-" + jam + "-button-info").removeAttribute("hidden");
+                                    document.getElementById("jam-" + jam + "-button-ending").setAttribute("hidden", "hidden");
+                                    break;
+                                case "announced":
+                                    document.getElementById("state-" + jam + "-announced").removeAttribute("hidden");
+
+                                    document.getElementById("jam-" + jam + "-button-info").removeAttribute("hidden");
+                                    document.getElementById("jam-" + jam + "-button-ending").setAttribute("hidden", "hidden");
+                                    break;
+                                case "preparing":
+                                    document.getElementById("state-" + jam + "-preparing").removeAttribute("hidden");
+
+                                    document.getElementById("jam-" + jam + "-button-info").setAttribute("hidden", "hidden");
+                                    document.getElementById("jam-" + jam + "-button-ending").setAttribute("hidden", "hidden");
+                                    break;
+                                case "running":
+                                    document.getElementById("state-" + jam + "-running").removeAttribute("hidden");
+
+                                    document.getElementById("jam-" + jam + "-button-info").setAttribute("hidden", "hidden");
+                                    document.getElementById("jam-" + jam + "-button-ending").setAttribute("hidden", "hidden");
+                                    break;
+                                case "judging":
+                                    document.getElementById("state-" + jam + "-finished").removeAttribute("hidden");
+
+                                    document.getElementById("jam-" + jam + "-button-info").setAttribute("hidden", "hidden");
+                                    document.getElementById("jam-" + jam + "-button-ending").removeAttribute("hidden");
+                                    break;
+                                case "finished":
+                                    document.getElementById("state-" + jam + "-finished").removeAttribute("hidden");
+
+                                    document.getElementById("jam-" + jam + "-button-info").removeAttribute("hidden");
+                                    document.getElementById("jam-" + jam + "-button-ending").removeAttribute("hidden");
+                                    break;
+                                default:
+                                    document.getElementById("state-" + jam + "-unknown").removeAttribute("hidden");
+
+                                    document.getElementById("jam-" + jam + "-button-info").setAttribute("hidden", "hidden");
+                                    document.getElementById("jam-" + jam + "-button-ending").setAttribute("hidden", "hidden");
+                                    break;
+                            }
+
+                            state_modal.hide();
+                        } else {
+                            console.log(data);
+                            UIkit.notification({
+                                "message": "Failed to set state",
+                                "status": "danger",
+                                "pos": "bottom-center",
+                                "timeout": 5000
+                            })
+                        }
+                    });
+                };
+            }
+        }
+    </script>
+{% endblock %}

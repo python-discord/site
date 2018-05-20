@@ -1,0 +1,47 @@
+[[source]]
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+flask = "==0.12.2"
+rethinkdb = "*"
+requests = "*"
+gevent = "==1.2.2"
+gevent-websocket = "*"
+wsaccel = "*"
+ujson = "*"
+schema = "*"
+flask-sockets = "*"
+flask-dance = "*"
+logmatic-python = "*"
+flask-wtf = "*"
+docutils = "*"
+pygments = "*"
+gunicorn = "*"
+
+[dev-packages]
+"flake8" = "*"
+"flake8-bugbear" = "*"
+"flake8-bandit" = "*"
+"flake8-import-order" = "*"
+"flake8-tidy-imports" = "*"
+"flake8-string-format" = "*"
+requests = "*"
+flask-testing = "*"
+pytest = "*"
+pytest-cov = "*"
+python-coveralls = "*"
+
+[requires]
+python_version = "3.6"
+
+[scripts]
+start = "gunicorn -w 12 -b 0.0.0.0:10012 -c gunicorn_config.py --log-level info -k geventwebsocket.gunicorn.workers.GeventWebSocketWorker app:app"
+lint = "python -m flake8"
+test = "py.test app_test.py --cov pysite --cov-report term-missing -v"
+clean = "rm -rf __pycache__ htmlcov .coverage .pytest_cache"
+build = "docker build -t pythondiscord/site:latest -f docker/Dockerfile ."
+push = "docker push pythondiscord/site:latest"
+buildbase = "docker build -t pythondiscord/site-base:latest -f docker/Dockerfile.base ."
+pushbase = "docker push pythondiscord/site-base:latest"

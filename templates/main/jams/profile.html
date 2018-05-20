@@ -1,0 +1,110 @@
+{% extends "main/base.html" %}
+{% block title %}Code Jams | My Profile{% endblock %}
+{% block og_title %}Code Jams | My Profile{% endblock %}
+
+{% block extra_head %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.min.js" type="application/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.17/moment-timezone.min.js" type="application/javascript"></script>
+{% endblock %}
+
+{% block content %}
+<div class="uk-section">
+    <div class="uk-container uk-container-small">
+        <h1 class="uk-header uk-article-title">
+            Code Jams: My Profile
+        </h1>
+
+        {% if done %}
+            <p class="uk-alert uk-alert-success">
+                Thanks - your data has been saved!
+            </p>
+        {% else %}
+            <p class="uk-alert uk-alert-primary">
+                Please make sure you've filled this out correctly, as we do use this data when evaluating your code jam
+                application.
+                <br />
+                <br />
+                You may come back here and edit your data at any time.
+            </p>
+        {% endif %}
+
+        {% if form %}
+            <form class="uk-form-horizontal" action="{{ url_for("main.jams.profile", form=form) }}" method="post">
+        {% else %}
+            <form class="uk-form-horizontal" action="{{ url_for("main.jams.profile") }}" method="post">
+        {% endif %}
+            <div>
+                <div class="uk-form-label">
+                    <label class="uk-form-label" for="dob">Date of Birth</label>
+                </div>
+                <div class="uk-form-controls-text uk-form-controls">
+                    <input class="uk-input" type="text" name="dob" id="dob" value="{{ participant.dob }}" required>
+                </div>
+            </div>
+            <div>
+                <div class="uk-form-label">
+                    <label class="uk-form-label" for="github_username">GitHub Username</label>
+                </div>
+                <div class="uk-form-controls-text uk-form-controls">
+                    <input class="uk-input" type="text" name="github_username" id="github_username" value="{{ participant.github_username }}" required>
+                </div>
+            </div>
+            <div>
+                <div class="uk-form-label">
+                    <label class="uk-form-label" for="timezone">Timezone</label>
+                </div>
+                <div class="uk-form-controls-text uk-form-controls">
+                    <input class="uk-input" type="text" name="timezone" id="timezone" value="{{ participant.timezone }}" required>
+                </div>
+            </div>
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+            <br />
+
+            <div class="uk-text-center">
+                <a class="uk-button uk-button-default" href="{{ url_for("main.jams.index") }}">
+                    <i class="uk-icon fa-fw far fa-arrow-left"></i> &nbsp;Back
+                </a>
+                <button type="submit" class="uk-button uk-button-primary" id="submit">
+                    <i class="uk-icon fa-fw far fa-check"></i> &nbsp;Save
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+<script type="application/javascript">
+    const date = flatpickr("#dob", {enableTime: false, altInput: true});
+    const tz = moment().format("Z");
+
+    const dob_input = document.getElementById("dob");
+    const github_input = document.getElementById("github_username");
+    const tz_input = document.getElementById("timezone");
+
+    const submit_button = document.getElementById("submit");
+
+    function checkInputs() {
+        if (dob_input.value.length < 1)
+            return submit_button.disabled = true;
+
+        if (github_input.value.length < 1)
+            return submit_button.disabled = true;
+
+        if (tz_input.value.length < 1)
+            return submit_button.disabled = true;
+
+        submit_button.disabled = false;
+    }
+
+    dob_input.oninput = checkInputs;
+    github_input.oninput = checkInputs;
+    tz_input.oninput = checkInputs;
+
+    if (tz_input.value.length < 1) {
+        document.getElementById("timezone").value = "UTC" + tz;
+    }
+
+    checkInputs();
+</script>
+{% endblock %}

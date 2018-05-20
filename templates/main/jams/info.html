@@ -1,72 +1,11 @@
 {% extends "main/base.html" %}
-{% block title %}Code Jams{% endblock %}
-{% block og_title %}Code Jams{% endblock %}
+{% block title %}Code Jams | Git Primer{% endblock %}
+{% block og_title %}Code Jams | Git Primer{% endblock %}
 {% block og_description %}Information about our code jams - monthly events where users are grouped into pairs to solve a Python task{% endblock %}
 {% block content %}
     <div class="uk-section">
         <div class="uk-container uk-container-small">
             <article class="uk-article">
-                <h1 class="uk-article-title hover-title" id="top">
-                    Code Jams
-
-                    <a href="#top" class="uk-text-primary" title="Permanent link to this header">
-                        <i class="fas fa-paragraph" data-fa-transform="shrink-8"></i>
-                    </a>
-                </h1>
-                <p class="uk-article-meta">
-                    We jammin'
-                </p>
-
-                <p>
-                    Every two months or so, we aim to host a server-wide code jam, suitable for all members of the server. In
-                    these, we announce a theme and date in advance, and users may sign up via a link provided in the
-                    announcements channel on the server. Once the sign-up period is over, users are paired off into
-                    teams. On the day of the code jam, we announce a task - each team will then work on a solution
-                    to this task.
-                </p>
-                <p>
-                    Once the code jam is over, our staff team will review and test each submission. Once that's done,
-                    a winner will be decided!
-                </p>
-                <p>
-                    If you'd like to join one of our code jams, feel free to ask a member of staff about the next one.
-                </p>
-
-                <h2 class="uk-article-title hover-title" id="rules">
-                    Rules and Guidelines
-
-                    <a href="#rules" class="uk-text-primary" title="Permanent link to this header">
-                        <i class="fas fa-paragraph" data-fa-transform="shrink-8"></i>
-                    </a>
-                </h2>
-                <p class="uk-article-meta">
-                    Keeping the fight clean
-                </p>
-                <p>
-                    In order to keep things fair and on-topic, the following rules must be adhered to. Failure to
-                    follow these rules will result in disqualification.
-                </p>
-                <ul>
-                    <li>
-                        Projects must be strongly Python-oriented.
-                        <ul>
-                            <li>You may mix in other languages, but the project must be Python-based.</li>
-                        </ul>
-                    </li>
-                    <li>You may not write any code in advance.</li>
-                    <li>You may not write any code after the deadline.</li>
-                    <li>Both team members must contribute to the project in some way.</li>
-                    <li>The work must be your own - don't copy another team's work.</li>
-                </ul>
-                <p>
-                    Additionally, the following suggestions could be helpful for all teams.
-                </p>
-                <ul>
-                    <li>Open your pull request early - that way, you know it'll be there by the deadline.</li>
-                    <li>Lint your code - we lint each pull request using Flake8, and your code should validate.</li>
-                    <li>Communicate with your teammate - Add them as a friend, start a DM, and work together on the problem.</li>
-                </ul>
-
                 <h2 class="uk-article-title hover-title" id="getting-started">
                     Getting Started
 
@@ -86,7 +25,7 @@
                 <p>
                     Once the challenge task has been announced, head to the link provided to reach the challenge repository.
                     In order to work on the task, you will need to fork the repository - this will create a copy of the
-                    repository under your account, which you will be able to work on with your teammate. To do so,
+                    repository under your account, which you will be able to work on with your teammates. To do so,
                     log into GitHub and click on the "Fork" button on the repository page. Select your username from the
                     dialogue, and it will be forked to your account.
                 </p>
@@ -96,9 +35,9 @@
                 </figure>
                 <p>
                     Once this has been done, you should find yourself looking at your new copy of the repository. Next
-                    up, you'll need to give your teammate access to it! Click on the "Settings" tab, click on
-                    "Collaborators", enter your password if you're prompted for it, and add your teammate as a
-                    collaborator.
+                    up, you'll need to give your teammates access to it! Click on the "Settings" tab, click on
+                    "Collaborators", enter your password if you're prompted for it, and add your teammates as
+                    collaborators.
                 </p>
                 <figure>
                     <img src="{{ static_file('images/jams/jams_3.png') }}" class="uk-align-center uk-border-rounded" />
@@ -110,7 +49,7 @@
                     install Git using your system's package manager. Windows users can install
                     <a href="https://git-scm.com/download/win">Git for Windows</a>, and Mac users can install Git
                     using <a href="https://brew.sh">Homebrew</a>. Once you're all installed, open up a terminal
-                    (or open Git Bash if you're on Windows). For the purpose of illustration, we will be working on
+                    (or open Git Bash if you're on Windows). For the purpose of illustration we will be working on
                     Windows, but this will work on any platform.
                 </p>
                 <p>

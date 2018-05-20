@@ -1,14 +1,14 @@
 {% extends "wiki/base.html" %}
 {% block title %}Wiki | Edit: {{ page }}{% endblock %}
 {% block og_title %}Wiki | Edit: {{ page }}{% endblock %}
-{% block og_description %}Landing page for the wiki{% endblock %}
+{% block og_description %}{% endblock %}
 {% block extra_head %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.3.3/ace.js" type="application/javascript"></script>
 {% endblock %}
 {% block content %}
     <form uk-grid class="uk-grid-small" action="{{ url_for("wiki.edit", page=page) }}" method="post">
         <div class="uk-width-expand">
-            <input name="title" id="title" placeholder="Page Title" value="{{ title }}" class="uk-input" />
+            <input name="title" id="title" placeholder="Page Title" value="{{ title }}" class="uk-input" required />
         </div>
         <div class="uk-width-auto">
             <button class="uk-button uk-button-secondary" type="button" value="Preview" id="preview">Preview</button>
@@ -37,7 +37,7 @@
 
         let csrf_token = "{{ csrf_token() }}";
 
-        document.getElementById("preview").onclick = function(event) {
+        function do_preview(_) {
             let oReq = new XMLHttpRequest();
 
             oReq.addEventListener("load", function() {
@@ -63,7 +63,7 @@
 
             let data = editor.getValue();
 
-            if (data.replace("\s", "").length < 1) {
+            if (data.replace("\s", "").length < 1 || document.getElementById("title").value.length < 1) {
                 document.getElementById("submit").disabled = true;
                 return false;
             }
@@ -76,7 +76,9 @@
             oReq.send(JSON.stringify({"data": editor.getValue()}));
 
             return false;
-        };
+        }
+
+        document.getElementById("preview").onclick = do_preview;
 
         let editor = ace.edit("editor");
         let timer;
@@ -88,20 +90,32 @@
         editor.setShowPrintMargin(false);
 
         editor.on("input", function() {
+            document.getElementById("submit").disabled = true;
             document.getElementById("rst").value = editor.getValue();
 
             if (timer !== undefined) {
                 clearTimeout(timer);
             }
-            timer = setTimeout(function() {document.getElementById("preview").click()}, 1000);
+            timer = setTimeout(do_preview, 1000);
         });
 
         document.getElementById("title").oninput = function() {
-            document.getElementById("preview-title").textContent = document.getElementById("title").value;
-        }
+            if (document.getElementById("title").value.length < 1) {
+                document.getElementById("submit").disabled = true;
+            }
 
-        function refreshLock(){
-            console.log("Refreshing lock")
+            document.getElementById("preview-title").textContent = document.getElementById("title").value;
+
+            document.getElementById("rst").value = editor.getValue();
+
+            if (timer !== undefined) {
+                clearTimeout(timer);
+            }
+            timer = setTimeout(do_preview, 1000);
+        };
+
+        function refreshLock() {
+            console.log("Refreshing lock");
             let xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function() {
                 if (this.readyState === 4 && this.status === 204) {

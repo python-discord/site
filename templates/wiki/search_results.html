@@ -1,0 +1,39 @@
+{% extends "wiki/base.html" %}
+{% block title %}Wiki | Search Results{% endblock %}
+{% block og_title %}Wiki | Search Results{% endblock %}
+{% block og_description %}Search results{% endblock %}
+{% block content %}
+    <div class="uk-container uk-container-small">
+        {% if not pages %}
+            <h2 class="uk-title">
+                Search
+            </h2>
+            <div class="uk-alert uk-alert-warning uk-text-center">
+                <p>
+                    Sorry, no results were found. Please check your query and try again.
+                </p>
+            </div>
+        {% else %}
+            <h2 class="uk-title">
+                Search Results
+            </h2>
+
+            {% for page in pages %}
+                <h4>
+                    <a href="{{ url_for("wiki.page", page=page["slug"]) }}">{{ page.title }}</a>
+                    (<span style="font-family: monospace;">{{ page.slug }}</span>)
+                </h4>
+
+                {% for snippet in page["matches"] %}
+                    <div class="quote">
+                        <i class="uk-icon far fa-ellipsis-h"></i>
+                        <br />
+                        {{ snippet | safe }}
+                        <br />
+                        <i class="uk-icon far fa-ellipsis-h"></i>
+                    </div>
+                {% endfor %}
+            {% endfor %}
+        {% endif %}
+    </div>
+{% endblock %}

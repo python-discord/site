@@ -1,0 +1,331 @@
+{% extends "main/base.html" %}
+{% block title %}Staff | Jams | Infractions{% endblock %}
+{% block og_title %}Staff | Jams | Infractions{% endblock %}
+{% block og_description %}Manage infractions{% endblock %}
+{% block extra_head %}
+    <script src="{{ static_file('js/jams.js') }}"></script>
+{% endblock %}
+{% block content %}
+    <div class="uk-container uk-container-small uk-section">
+        <h1>Infractions</h1>
+
+        <a class="uk-button uk-button-default" href="{{ url_for("staff.jams.index") }}"><i class="uk-icon fa-fw far fa-arrow-left"></i> &nbsp;Back</a>
+        <button class="uk-button uk-button-primary" id="add-button"><i class="uk-icon fa-fw far fa-plus"></i> &nbsp;Add Infraction</button>
+
+        {% if not infractions %}
+            <p id="no-infractions-paragraph">No infractions found.</p>
+            <table class="uk-table uk-table-divider uk-table-striped uk-border" id="table" hidden="hidden">
+                <thead>
+                    <tr>
+                        <th class="uk-table-shrink">&nbsp;</th>
+                        <th class="uk-table-shrink"><strong>ID</strong></th>
+                        <th class="uk-table-shrink">Participant</th>
+                        <th>Reason</th>
+                        <th class="uk-table-shrink">Number</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body">
+                </tbody>
+            </table>
+        {% else %}
+            <p id="no-infractions-paragraph" hidden="hidden">No questions found.</p>
+
+            <div class="uk-overflow-auto">
+                <br />
+                <table class="uk-table uk-table-divider uk-table-striped uk-border" id="table">
+                    <thead>
+                    <tr>
+                        <th class="uk-table-shrink">&nbsp;</th>
+                        <th class="uk-table-shrink"><strong>ID</strong></th>
+                        <th class="uk-table-shrink">Participant</th>
+                        <th>Reason</th>
+                        <th class="uk-table-shrink">Number</th>
+                    </tr>
+                </thead>
+                    <tbody id="table-body">
+                        {% for infraction in infractions %}
+                            <tr id="row-{{ infraction.id }}">
+                                <td class="uk-table-shrink">
+                                    <button class="uk-button-small uk-button uk-button-danger delete-infraction-button" style="padding-left: 5px; padding-right: 5px;" data-infraction-id="{{ infraction.id }}"><i class="uk-icon fa-fw far fa-trash"></i></button>
+                                </td>
+                                <td class="uk-text-truncate" title="{{ infraction.id }}">{{ infraction.id }}</td>
+                                <td class="uk-table-shrink">
+                                    {% if infraction.participant is not string %}
+                                        <code>{{ infraction.participant.user_id }}</code>
+                                        <br />
+                                        ({{ infraction.participant.username }}#{{ infraction.participant.discriminator }})
+                                    {% else %}
+                                        <code>{{ infraction.participant }}</code>
+                                    {% endif %}
+                                </td>
+                                <td title="{{ infraction.reason }}">{{ infraction.reason }}</td>
+                                <td class="uk-table-shrink">{{ infraction.number }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endif %}
+    </div>
+
+    <div id="add-modal" class="uk-flex-top" uk-modal>
+        <div class="uk-modal-dialog">
+            <button class="uk-modal-close-default" type="button" uk-close></button>
+
+            <div class="uk-modal-header">
+                <h2 class="uk-modal-title">Add Infraction</h2>
+            </div>
+
+            <div class="uk-modal-body">
+                <form class="uk-form-horizontal">
+                    <div>
+                        <div class="uk-form-label">
+                            <label class="uk-form-label" for="user-id">User ID</label>
+                        </div>
+                        <div class="uk-form-controls-text uk-form-controls">
+                            <input class="uk-input" id="user-id" name="user-id">
+                        </div>
+                    </div>
+                    <div>
+                        <div class="uk-form-label">
+                            <label class="uk-form-label" for="reason">Reason</label>
+                        </div>
+                        <div class="uk-form-controls-text uk-form-controls">
+                            <input class="uk-input" id="reason" name="reason">
+                        </div>
+                    </div>
+                    <div>
+                        <div class="uk-form-label">
+                            <label class="uk-form-label" for="number">
+                                Number of jams
+                            </label>
+                        </div>
+                        <div class="uk-form-controls-text uk-form-controls">
+                            <input class="uk-input" id="number" name="number" placeholder="Jams to ban for / -1 for infinite">
+                        </div>
+                    </div>
+                    <div id="loading-spinner" class="uk-text-center uk-margin-small-top" hidden="hidden">
+                        <div uk-spinner></div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="uk-modal-footer">
+                <div class="uk-text-center">
+                    <button class="uk-button uk-button-danger uk-modal-close" type="button" id="state-cancel">
+                        <i class="uk-icon fa-fw far fa-times"></i> &nbsp;Cancel
+                    </button>
+                    <button class="uk-button uk-button-primary" type="button" id="state-submit" disabled>
+                        <i class="uk-icon fa-fw far fa-check"></i> &nbsp;Save
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="application/javascript">
+        "use strict";
+        const actions = new Actions("{{ url_for("staff.jams.action") }}", "{{ csrf_token() }}");
+
+        const table_body = document.getElementById("table-body");
+        const table = document.getElementById("table");
+        const no_infractions_paragraph = document.getElementById("no-infractions-paragraph");
+
+        let all_infractions = {{ infraction_ids | safe }};
+
+        const add_button = document.getElementById("add-button");
+        const modal = UIkit.modal(document.getElementById("add-modal"));
+        const loading_spinner = document.getElementById("loading-spinner");
+
+        const input_user_id = document.getElementById("user-id");
+        const input_reason = document.getElementById("reason");
+        const input_number = document.getElementById("number");
+
+        const submit_button = document.getElementById("state-submit");
+
+        add_button.onclick = function() {
+            clearModal();
+            checkModal();
+            modal.show();
+        };
+
+        input_user_id.oninput = function() {
+            if (isNaN(parseInt(this.value))) {
+                this.classList.add("uk-form-danger");
+            } else {
+                this.classList.remove("uk-form-danger");
+            }
+
+            checkModal();
+        };
+
+        input_reason.oninput = function() {
+            checkModal();
+        };
+
+        input_number.oninput = function() {
+            if (isNaN(parseInt(this.value))) {
+                this.classList.add("uk-form-danger");
+            } else {
+                this.classList.remove("uk-form-danger");
+            }
+
+            checkModal();
+        };
+
+        submit_button.onclick = function () {
+            loading_spinner.removeAttribute("hidden");
+
+            let user_id = input_user_id.value;
+            let reason = input_reason.value;
+            let number = input_number.value;
+
+            actions.create_infraction(user_id, reason, number, function(result, data) {
+                if (result) {
+                    let infraction = {
+                        "id": data.id,
+                        "participant": user_id,
+                        "reason": reason,
+                        "number": number
+                    };
+
+                    addToTable(infraction);
+                    modal.hide();
+                    clearModal();
+
+                    UIkit.notification({
+                        "message": "Infraction added",
+                        "status": "success",
+                        "pos": "bottom-center",
+                        "timeout": 5000,
+                    });
+                } else {
+                    console.log(data);
+                    UIkit.notification({
+                        "message": "Failed to add infraction",
+                        "status": "danger",
+                        "pos": "bottom-center",
+                        "timeout": 5000,
+                    });
+                }
+            });
+        };
+
+        function hookUpDeleteButtons() {
+            for (let element of document.getElementsByClassName("delete-infraction-button")) {
+                element.onclick = function() {
+                    let infraction_id = this.getAttribute("data-infraction-id");
+                    let row = document.getElementById("row-" + infraction_id);
+
+                    actions.delete_infraction(infraction_id, function(result, data) {
+                        if (result) {
+                            table_body.removeChild(row);
+
+                            let index = all_infractions.indexOf(infraction_id);
+
+                            if (index < 0) { // We have a problem!
+                                console.log("Unable to remove infraction from memory because it doesn't exist: " + infraction_id)
+                            } else {
+                                all_infractions.splice(index, 1);
+                            }
+
+                            if (all_infractions.length < 1) {
+                                table.setAttribute("hidden", "hidden");
+                                no_infractions_paragraph.removeAttribute("hidden");
+                            }
+
+                            UIkit.notification({
+                                "message": "Infraction removed",
+                                "status": "success",
+                                "pos": "bottom-center",
+                                "timeout": 5000,
+                            });
+                        } else {
+                            console.log(data);
+                            UIkit.notification({
+                                "message": "Failed to remove infraction",
+                                "status": "danger",
+                                "pos": "bottom-center",
+                                "timeout": 5000,
+                            });
+                        }
+                     })
+                }
+            }
+        }
+
+        function clearModal() {
+
+            // Existing question section
+            loading_spinner.setAttribute("hidden", "hidden");
+
+            input_number.value = "";
+            input_reason.value = "";
+            input_user_id.value = "";
+        }
+
+        function checkModal() {
+            if (input_reason.value.length < 1
+             || input_number.value.length < 1
+             || input_user_id.value.length < 1) {
+                return setButtonEnabled(false);
+            }
+
+            if (isNaN(parseInt(input_number.value))) {
+                return setButtonEnabled(false);
+            }
+
+            if (isNaN(parseInt(input_user_id.value))) {
+                return setButtonEnabled(false);
+            }
+
+            return setButtonEnabled(true);
+        }
+
+        function setButtonEnabled(enabled) {
+            submit_button.disabled = !enabled;
+        }
+
+        function addToTable(infraction) {
+            console.log(infraction);
+            if (all_infractions.indexOf(infraction.id) === -1) {
+                all_infractions.push(infraction.id);
+
+                let element = document.createElement("tr");
+                element.id = "row-" + infraction.id;
+                element.innerHTML = getRowHTML(infraction);
+
+                table_body.appendChild(element);
+            }
+
+            if (all_infractions.length > 0) {
+                table.removeAttribute("hidden");
+                no_infractions_paragraph.setAttribute("hidden", "hidden");
+            }
+            hookUpDeleteButtons();
+        }
+
+        function getRowHTML(infraction) {
+            let participant;
+
+            if (typeof infraction.participant === 'string' || infraction.participant instanceof String) {
+                participant = infraction.participant;
+            } else {
+                participant = infraction.participant;
+                participant = `${participant.username}#${participant.discrminiator} (${participant.id})`
+            }
+            const row = `
+    <td class="uk-table-shrink">
+        <button class="uk-button-small uk-button uk-button-danger delete-infraction-button" style="padding-left: 5px; padding-right: 5px;" data-infraction-id="${infraction.id}"><i class="uk-icon fa-fw far fa-trash"></i></button>
+    </td>
+    <td class="uk-text-truncate" title="${infraction.id}">${infraction.id}</td>
+    <td class="uk-table-shrink"><code>${participant}</code></td>
+    <td title="${infraction.reason}">${infraction.reason}</td>
+    <td class="uk-table-shrink">${infraction.number}</td>
+                        `;
+            return row
+        }
+
+        hookUpDeleteButtons();
+    </script>
+{% endblock %}

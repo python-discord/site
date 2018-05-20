@@ -1,0 +1,307 @@
+{% extends "main/base.html" %}
+{% block title %}Staff | Jams | Edit (Info){% endblock %}
+{% block og_title %}Staff | Jams | Edit (Info){% endblock %}
+{% block og_description %}Edit the basic info for a code jam{% endblock %}
+{% block extra_head %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.3.3/ace.js" type="application/javascript"></script>
+{% endblock %}
+{% block content %}
+    <div class="uk-container uk-container-small uk-section">
+        <h1 class="uk-text-center">Code Jam: Edit (Info)</h1>
+
+        <form action="{{ url_for("staff.jams.edit.info", jam=jam.number) }}" method="post" class="uk-form-horizontal">
+            <div>
+                <div class="uk-form-label">
+                    <label class="uk-form-label" for="repo">Repo URL</label>
+                </div>
+
+                <div class="uk-form-controls uk-form-controls-text">
+                    <input class="uk-input" name="repo" id="repo" type="text" value="{{ jam.repo }}" required />
+                </div>
+            </div>
+            <div>
+                <div class="uk-form-label">
+                    <label class="uk-form-label" for="theme">Theme</label>
+                </div>
+
+                <div class="uk-form-controls uk-form-controls-text">
+                    <input class="uk-input" name="theme" id="theme" type="text" value="{{ jam.theme }}" required />
+                </div>
+            </div>
+
+            <div>
+                <div class="uk-form-label">
+                    <label class="uk-form-label">
+                        Info (RST)
+                        <br />
+                        <span class="uk-text-meta">Will be available as soon as the jam state is "Announced"</span>
+                        <br />
+                        <br />
+                        <button class="uk-button uk-button-secondary" type="button" id="preview-info-button">
+                            <i class="uk-icon fa-fw far fa-eye"></i> &nbsp;Preview
+                        </button>
+                    </label>
+                </div>
+
+                <div class="uk-form-controls uk-form-controls-text">
+                    <div id="info_editor" class="uk-textarea" style="resize: vertical; min-height: 15rem;">{{ jam.info_rst }}</div>
+                </div>
+
+                <input type="hidden" name="info_rst" id="info_rst" value="{{ jam.info_rst }}" />
+            </div>
+
+            <div>
+                <div class="uk-form-label">
+                    <label class="uk-form-label">
+                        Task (RST)
+                        <br/>
+                        <span class="uk-text-meta">Will not be available until the jam state is "Running"</span>
+                        <br />
+                        <br />
+                        <button class="uk-button uk-button-secondary" type="button" id="preview-task-button">
+                            <i class="uk-icon fa-fw far fa-eye"></i> &nbsp;Preview
+                        </button>
+                    </label>
+                </div>
+
+                <div class="uk-form-controls uk-form-controls-text">
+                    <div id="task_editor" class="uk-textarea" style="resize: vertical; min-height: 15rem;">{{ jam.task_rst }}</div>
+                </div>
+
+                <input type="hidden" name="task_rst" id="task_rst" value="{{ jam.task_rst }}" />
+            </div>
+
+            <input type="hidden" name="csrf_token" id="csrf_token" value="{{ csrf_token() }}"/>
+
+            <div class="uk-align-center uk-text-center">
+                <a id="back" class="uk-button uk-button-default" href="{{ url_for("staff.jams.index") }}">
+                    <i class="uk-icon fa-fw far fa-arrow-left"></i> &nbsp;Back
+                </a>
+                <button id="done" class="uk-button uk-button-primary" type="submit" disabled>
+                    <i class="uk-icon fa-fw far fa-check"></i> &nbsp;Done
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <div id="preview-info-modal" class="uk-flex-top" uk-modal>
+        <div class="uk-modal-dialog">
+            <button class="uk-modal-close-default" type="button" uk-close></button>
+
+            <div class="uk-modal-body">
+                <h2>Code Jam {{ jam.number }}: {{ jam.title }} <a href="{{ jam.repo }}" id="preview-info-url"><i class="uk-icon fa-fw fab fa-github"></i></a></h2>
+                <p class="uk-text-meta">Theme: <span id="preview-info-theme">{{ jam.theme }}</span></p>
+
+                <div id="preview-info-div">
+                    {{ jam.task_html | safe }}
+                </div>
+            </div>
+
+            <div class="uk-modal-footer">
+                <div class="uk-text-center">
+                    <button class="uk-button uk-button-default uk-modal-close" type="button" id="state-cancel">
+                        <i class="uk-icon fa-fw far fa-arrow-left"></i> &nbsp;Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+     <div id="preview-task-modal" class="uk-flex-top" uk-modal>
+        <div class="uk-modal-dialog">
+            <button class="uk-modal-close-default" type="button" uk-close></button>
+
+            <div class="uk-modal-body">
+                <h2>Code Jam {{ jam.number }}: {{ jam.title }} <a href="{{ jam.repo }}" id="preview-task-url"><i class="uk-icon fa-fw fab fa-github"></i></a></h2>
+                <p class="uk-text-meta">Theme: <span id="preview-task-theme">{{ jam.theme }}</span></p>
+
+                <div id="preview-task-div">
+                    {{ jam.task_html | safe }}
+                </div>
+            </div>
+
+            <div class="uk-modal-footer">
+                <div class="uk-text-center">
+                    <button class="uk-button uk-button-default uk-modal-close" type="button" id="state-cancel">
+                        <i class="uk-icon fa-fw far fa-arrow-left"></i> &nbsp;Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="application/javascript">
+        "use strict";
+
+        let csrf_token = "{{ csrf_token() }}";
+        let info_modal = UIkit.modal(document.getElementById("preview-info-modal"));
+        let task_modal = UIkit.modal(document.getElementById("preview-task-modal"));
+        let preview_url = "{{ url_for("staff.render") }}";
+
+        function do_preview_info(callback) {
+            let oReq = new XMLHttpRequest();
+
+            oReq.addEventListener("load", function() {
+                let response = JSON.parse(this.responseText);
+
+                if (response.error !== undefined) {
+                    document.getElementById("done").disabled = true;
+
+                    if (response.error_lines !== undefined) {
+                        info_editor.session.setAnnotations(response.error_lines);
+                        document.getElementById("preview-info-div").innerHTML ="<h3>Error - see editor margin</h3>";
+                    } else {
+                        console.log("Error: " + response.error);
+                        document.getElementById("preview-info-div").innerHTML ="<h3>Error</h3><p>" + response.error + "<p>";
+                    }
+                } else {
+                    document.getElementById("done").disabled = false;
+                    document.getElementById("preview-info-div").innerHTML = response.data;
+
+                    info_editor.session.setAnnotations([]);
+                }
+
+                if (callback !== undefined) {
+                    callback();
+                }
+            });
+
+            let data = info_editor.getValue();
+
+            if (data.replace("\s", "").length < 1) {
+                document.getElementById("done").disabled = true;
+
+                if (callback !== undefined) {
+                    UIkit.notification({
+                        "message": "Please enter some text to preview",
+                        "status": "danger",
+                        "pos": "bottom-center",
+                        "timeout": 5000
+                    });
+                }
+                return false;
+            }
+
+            oReq.open("POST", preview_url);
+
+            oReq.setRequestHeader("Content-type", "application/json");
+            oReq.setRequestHeader("X-CSRFToken", csrf_token);
+
+            oReq.send(JSON.stringify({"data": data}));
+
+            return false;
+        }
+
+        function do_preview_task(callback) {
+            let oReq = new XMLHttpRequest();
+
+            oReq.addEventListener("load", function() {
+                let response = JSON.parse(this.responseText);
+
+                if (response.error !== undefined) {
+                    document.getElementById("done").disabled = true;
+
+                    if (response.error_lines !== undefined) {
+                        task_editor.session.setAnnotations(response.error_lines);
+                        document.getElementById("preview-task-div").innerHTML ="<h3>Error - see editor margin</h3>";
+                    } else {
+                        console.log("Error: " + response.error);
+                        document.getElementById("preview-task-div").innerHTML ="<h3>Error</h3><p>" + response.error + "<p>";
+                    }
+                } else {
+                    document.getElementById("done").disabled = false;
+                    document.getElementById("preview-task-div").innerHTML = response.data;
+
+                    task_editor.session.setAnnotations([]);
+                }
+
+                if (callback !== undefined) {
+                    callback();
+                }
+            });
+
+            let data = task_editor.getValue();
+
+            if (data.replace("\s", "").length < 1) {
+                document.getElementById("done").disabled = true;
+
+                if (callback !== undefined) {
+                    UIkit.notification({
+                        "message": "Please enter some text to preview",
+                        "status": "danger",
+                        "pos": "bottom-center",
+                        "timeout": 5000
+                    });
+                }
+                return false;
+            }
+
+            oReq.open("POST", preview_url);
+
+            oReq.setRequestHeader("Content-type", "application/json");
+            oReq.setRequestHeader("X-CSRFToken", csrf_token);
+
+            oReq.send(JSON.stringify({"data": data}));
+
+            return false;
+        }
+
+        document.getElementById("preview-task-button").onclick = function() {
+            do_preview_task(function() {
+                task_modal.show();
+            })
+        };
+
+        document.getElementById("preview-info-button").onclick = function() {
+            do_preview_info(function() {
+                info_modal.show();
+            })
+        };
+
+        document.getElementById("theme").oninput = function() {
+            document.getElementById("preview-task-theme").textContent = this.value;
+            document.getElementById("preview-info-theme").textContent = this.value;
+        };
+
+        document.getElementById("repo").oninput = function() {
+            document.getElementById("preview-task-url").href = this.value;
+            document.getElementById("preview-info-url").href = this.value;
+        };
+
+        let info_editor = ace.edit("info_editor");
+        let task_editor = ace.edit("task_editor");
+        let info_timer, task_timer;
+
+        info_editor.session.setMode("ace/mode/rst");
+        info_editor.session.setUseWrapMode(true);
+
+        info_editor.setTheme("ace/theme/iplastic");
+        info_editor.setShowPrintMargin(false);
+
+        info_editor.on("input", function() {
+            document.getElementById("done").disabled = true;
+            document.getElementById("info_rst").value = info_editor.getValue();
+
+            if (info_timer !== undefined) {
+                clearTimeout(info_timer);
+            }
+            info_timer = setTimeout(do_preview_info, 1000);
+        });
+
+        task_editor.session.setMode("ace/mode/rst");
+        task_editor.session.setUseWrapMode(true);
+
+        task_editor.setTheme("ace/theme/iplastic");
+        task_editor.setShowPrintMargin(false);
+
+        task_editor.on("input", function() {
+            document.getElementById("done").disabled = true;
+            document.getElementById("task_rst").value = task_editor.getValue();
+
+            if (task_timer !== undefined) {
+                clearTimeout(task_timer);
+            }
+            task_timer = setTimeout(do_preview_task, 1000);
+        });
+    </script>
+{% endblock %}

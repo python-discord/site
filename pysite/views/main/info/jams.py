@@ -1,9 +1,7 @@
-from pysite.base_route import RouteView
+from pysite.base_route import RedirectView
 
 
-class IndexView(RouteView):
+class JamsView(RedirectView):
     path = "/info/jams"
     name = "info.jams"
-
-    def get(self):
-        return self.render("main/info/jams.html")
+    page = "main.jams.index"

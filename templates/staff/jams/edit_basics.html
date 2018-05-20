@@ -1,0 +1,75 @@
+{% extends "main/base.html" %}
+{% block title %}Staff | Jams | Edit (Basics){% endblock %}
+{% block og_title %}Staff | Jams | Edit (Basics){% endblock %}
+{% block og_description %}Edit the basic info for a code jam{% endblock %}
+{% block content %}
+    <div class="uk-container uk-container-small uk-section">
+        <h1 class="uk-text-center">Code Jam: Edit (Basics)</h1>
+
+        <form action="{{ url_for("staff.jams.edit.basics", jam=jam.number) }}" method="post" class="uk-form-horizontal">
+            <div>
+                <div class="uk-form-label">
+                    <label class="uk-form-label" for="title">Title</label>
+                </div>
+
+                <div class="uk-form-controls uk-form-controls-text">
+                    <input class="uk-input" name="title" id="title" type="text" value="{{ jam.title }}" required />
+                </div>
+            </div>
+            <div>
+                <div class="uk-form-label">
+                    <label class="uk-form-label" for="number">Number</label>
+                </div>
+
+                <div class="uk-form-controls uk-form-controls-text">
+                    <input class="uk-input" name="number" id="number" type="text" value="{{ jam.number }}" disabled />
+                </div>
+            </div>
+            <div>
+                <div class="uk-form-label">
+                    <label class="uk-form-label" for="date_start">Starting date (UTC)</label>
+                </div>
+
+                <div class="uk-form-controls uk-form-controls-text">
+                    <input class="uk-input" name="date_start" id="date_start" type="text" value="{{ jam.date_start }}" required />
+                </div>
+            </div>
+            <div>
+                <div class="uk-form-label">
+                    <label class="uk-form-label" for="date_end">Ending date (UTC)</label>
+                </div>
+
+                <div class="uk-form-controls uk-form-controls-text">
+                    <input class="uk-input" name="date_end" id="date_end" type="text" value="{{ jam.date_end }}" required />
+                </div>
+            </div>
+            <div>
+                <div class="uk-form-label">
+                    <label class="uk-form-label" for="state">State</label>
+                </div>
+
+                <div class="uk-form-controls uk-form-controls-text">
+                    <select class="uk-select" name="state" id="state" disabled>
+                        <option value="{{ jam.state }}" selected>{{ jam.state.title() }}</option>
+                    </select>
+                </div>
+            </div>
+
+            <input type="hidden" name="csrf_token" id="csrf_token" value="{{ csrf_token() }}"/>
+
+            <div class="uk-align-center uk-text-center">
+                <a id="back" class="uk-button uk-button-default" href="{{ url_for("staff.jams.index") }}">
+                    <i class="uk-icon fa-fw far fa-arrow-left"></i> &nbsp;Back
+                </a>
+                <button id="done" class="uk-button uk-button-primary" type="submit">
+                    <i class="uk-icon fa-fw far fa-check"></i> &nbsp;Done
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <script type="application/javascript">
+        const date_start = flatpickr("#date_start", {enableTime: true, altInput: true});
+        const date_end = flatpickr("#date_end", {enableTime: true, altInput: true});
+    </script>
+{% endblock %}

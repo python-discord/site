@@ -109,6 +109,16 @@ footer div.uk-section div.uk-text-center {
     background: rgba(0, 0, 0, 0.22);
 }
 
+.uk-button-dark {
+    background: rgba(0, 0, 0, 0.95);
+    border: 1px solid rgba(34, 34, 34, 0.93);
+    color: white;
+}
+
+.uk-button-dark:hover {
+    background: rgba(0, 0, 0, 0.70);
+}
+
 /* Flash of Unstyled Content fixes */
 .prevent_fouc {
     display: none;
@@ -124,6 +134,10 @@ footer div.uk-section div.uk-text-center {
     margin-bottom: 0;
 }
 
+.document img {
+    margin-bottom: 20px;
+}
+
 /* Styling for Partners page cards */
 div#partner-cards div.uk-card-default {
     margin-top: 2em;
@@ -133,4 +147,47 @@ div#partner-cards div.uk-card-default {
 /* Resize navbar to correct proportions */
 img.navbar-logo {
     max-width: 110%;
+}
+
+#wiki-nav .uk-nav-divider {
+    min-width: 8.0rem;
+}
+
+/* Resource page styling */
+div.payment-icon img {
+    height: 2em;
+}
+
+div.payment-icon {
+    margin-right: 1em;
+}
+
+div.quote {
+    border-left: 3px solid #7289DA;
+    color: #99AAB5;
+    padding-left: 20px;
+    margin-bottom: 1rem;
+}
+
+.uk-article-meta {
+    margin-left: 2px;
+}
+
+select {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    -webkit-appearance: unset !important;
+    opacity: 1 !important;
+}
+
+div.danger-input * {
+    /*border-radius: 5px;*/
+    /*padding: 0.8rem;*/
+    /*min-height: 3.5rem;*/
+    color: red;
+    border-color: red !important;
+
+    transition: color 0.5s ease,
+                border-color 0.5s ease;
 }
