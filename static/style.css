@@ -191,3 +191,11 @@ div.danger-input * {
     transition: color 0.5s ease,
                 border-color 0.5s ease;
 }
+
+table.table-bordered {
+    border: 1px solid rgb(229, 229, 229) !important;
+}
+
+tr.thick-bottom-border {
+    border-bottom: 3px solid rgb(229, 229, 229) !important;
+}
