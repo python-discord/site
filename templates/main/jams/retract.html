@@ -49,11 +49,11 @@
             </form>
         {% else %}
             <p class="uk-alert uk-alert-danger">
-
+                You can't delete your profile - you haven't submitted one to us yet!
             </p>
 
-            <a class="uk-button uk-button-secondary uk-align-center" href="{{ url_for("main.jams.profile") }}">
-                <i class="uk-icon fa-fw far fa-arrow-left"></i> &nbsp;Cancel
+            <a class="uk-button uk-button-secondary uk-width-1-1" href="{{ url_for("main.jams.profile") }}">
+                <i class="uk-icon fa-fw far fa-arrow-left"></i> &nbsp;Back
             </a>
         {% endif %}
     </div>
