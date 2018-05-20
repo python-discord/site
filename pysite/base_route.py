@@ -2,7 +2,7 @@ from collections import Iterable
 from datetime import datetime
 from typing import Any
 
-from flask import Blueprint, Response, jsonify, redirect, render_template, url_for, session
+from flask import Blueprint, Response, jsonify, redirect, render_template, session, url_for
 from flask.views import MethodView
 from werkzeug.exceptions import default_exceptions
 
