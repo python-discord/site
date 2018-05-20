@@ -5,10 +5,10 @@ from werkzeug.exceptions import BadRequest, NotFound
 
 from pysite.base_route import RouteView
 from pysite.decorators import csrf
-from pysite.mixins import DBMixin, OauthMixin
+from pysite.mixins import DBMixin, OAuthMixin
 
 
-class JamsJoinView(RouteView, DBMixin, OauthMixin):
+class JamsJoinView(RouteView, DBMixin, OAuthMixin):
     path = "/jams/join/<int:jam>"
     name = "jams.join"
 
@@ -26,7 +26,7 @@ class JamsJoinView(RouteView, DBMixin, OauthMixin):
             return NotFound()
 
         if not self.user_data:
-            return redirect(url_for("discord.login"))
+            return self.redirect_login(jam=jam)
 
         infractions = self.get_infractions(self.user_data["user_id"])
 
@@ -76,7 +76,7 @@ class JamsJoinView(RouteView, DBMixin, OauthMixin):
             return NotFound()
 
         if not self.user_data:
-            return redirect(url_for("discord.login"))
+            return self.redirect_login(jam=jam)
 
         infractions = self.get_infractions(self.user_data["user_id"])
 

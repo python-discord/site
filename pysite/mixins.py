@@ -4,7 +4,7 @@ from flask import Blueprint
 from rethinkdb.ast import Table
 
 from pysite.database import RethinkDB
-from pysite.oauth import OauthBackend
+from pysite.oauth import OAuthBackend
 
 
 class DBMixin:
@@ -58,7 +58,7 @@ class DBMixin:
         return self._db()
 
 
-class OauthMixin:
+class OAuthMixin:
     """
     Mixin for the classes that need access to a logged in user's information. This class should be used
     to grant route's access to user information, such as name, email, id, ect.
@@ -80,11 +80,11 @@ class OauthMixin:
 
         user_data returns None, if the user isn't logged in.
 
-        * oauth (OauthBackend): The instance of pysite.oauth.OauthBackend, connected to the RouteManager.
+        * oauth (OAuthBackend): The instance of pysite.oauth.OAuthBackend, connected to the RouteManager.
     """
 
     @classmethod
-    def setup(cls: "OauthMixin", manager: "pysite.route_manager.RouteManager", blueprint: Blueprint):
+    def setup(cls: "OAuthMixin", manager: "pysite.route_manager.RouteManager", blueprint: Blueprint):
         if hasattr(super(), "setup"):
             super().setup(manager, blueprint)  # pragma: no cover
 
@@ -99,5 +99,5 @@ class OauthMixin:
         return self.oauth.user_data()
 
     @property
-    def oauth(self) -> OauthBackend:
+    def oauth(self) -> OAuthBackend:
         return self._oauth()

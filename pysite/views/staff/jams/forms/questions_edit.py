@@ -42,8 +42,6 @@ class StaffView(RouteView, DBMixin):
         optional = request.form.get("optional")
         question_type = request.form.get("type")
 
-        print(question_type)
-
         if not title or not optional or not question_type:
             return BadRequest()
 

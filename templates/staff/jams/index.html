@@ -24,45 +24,45 @@
 
                     <span class="uk-align-right">
                         {% if jam.state == "planning" %}
-                            <i class="uk-icon uk-text-muted fa-fw far fa-edit state-{{ jam.number }}" title="State: {{ jam.state }}" id="state-{{ jam.number }}-planning"></i>
+                            <i class="uk-icon uk-text-muted fa-fw far fa-edit state-{{ jam.number }}" title="State: Planning" id="state-{{ jam.number }}-planning"></i>
                         {% else %}
-                            <i class="uk-icon uk-text-muted fa-fw far fa-edit state-{{ jam.number }}" style="display: none;" title="State: {{ jam.state }}" id="state-{{ jam.number }}-planning"></i>
+                            <i class="uk-icon uk-text-muted fa-fw far fa-edit state-{{ jam.number }}" style="display: none;" title="State: Planning" id="state-{{ jam.number }}-planning"></i>
                         {% endif %}
 
                         {% if jam.state == "announced" %}
-                            <i class="uk-icon uk-text-primary fa-fw far fa-bullhorn state-{{ jam.number }}" title="State: {{ jam.state }}" id="state-{{ jam.number }}-announced"></i>
+                            <i class="uk-icon uk-text-primary fa-fw far fa-bullhorn state-{{ jam.number }}" title="State: Announced" id="state-{{ jam.number }}-announced"></i>
                         {% else %}
-                            <i class="uk-icon uk-text-primary fa-fw far fa-bullhorn state-{{ jam.number }}" hidden="hidden" title="State: {{ jam.state }}" id="state-{{ jam.number }}-announced"></i>
+                            <i class="uk-icon uk-text-primary fa-fw far fa-bullhorn state-{{ jam.number }}" hidden="hidden" title="State: Announced" id="state-{{ jam.number }}-announced"></i>
                         {% endif %}
 
                         {% if jam.state == "preparing" %}
-                            <i class="uk-icon uk-text-muted fa-fw far fa-pause state-{{ jam.number }}" title="State: {{ jam.state }}" id="state-{{ jam.number }}-preparing"></i>
+                            <i class="uk-icon uk-text-muted fa-fw fal fa-ellipsis-h-alt state-{{ jam.number }}" title="State: Preparing" id="state-{{ jam.number }}-preparing"></i>
                         {% else %}
-                            <i class="uk-icon uk-text-muted fa-fw far fa-pause state-{{ jam.number }}" hidden="hidden" title="State: {{ jam.state }}" id="state-{{ jam.number }}-preparing"></i>
+                            <i class="uk-icon uk-text-muted fa-fw fal fa-ellipsis-h-alt state-{{ jam.number }}" hidden="hidden" title="State: Preparing" id="state-{{ jam.number }}-preparing"></i>
                         {% endif %}
 
                         {% if jam.state == "running" %}
-                            <i class="uk-icon uk-text-success fa-fw far fa-play state-{{ jam.number }}" title="State: {{ jam.state }}" id="state-{{ jam.number }}-running"></i>
+                            <i class="uk-icon uk-text-success fa-fw far fa-play state-{{ jam.number }}" title="State: Running" id="state-{{ jam.number }}-running"></i>
                         {% else %}
-                            <i class="uk-icon uk-text-success fa-fw far fa-play state-{{ jam.number }}" hidden="hidden" title="State: {{ jam.state }}" id="state-{{ jam.number }}-running"></i>
+                            <i class="uk-icon uk-text-success fa-fw far fa-play state-{{ jam.number }}" hidden="hidden" title="State: Running" id="state-{{ jam.number }}-running"></i>
                         {% endif %}
 
                         {% if jam.state == "judging" %}
-                            <i class="uk-icon uk-text-primary fa-fw far fa-balance-scale state-{{ jam.number }}" title="State: {{ jam.state }}" id="state-{{ jam.number }}-judging"></i>
+                            <i class="uk-icon uk-text-primary fa-fw far fa-balance-scale state-{{ jam.number }}" title="State: Judging" id="state-{{ jam.number }}-judging"></i>
                         {% else %}
-                            <i class="uk-icon uk-text-primary fa-fw far fa-balance-scale state-{{ jam.number }}" hidden="hidden" title="State: {{ jam.state }}" id="state-{{ jam.number }}-judging"></i>
+                            <i class="uk-icon uk-text-primary fa-fw far fa-balance-scale state-{{ jam.number }}" hidden="hidden" title="State: Judging" id="state-{{ jam.number }}-judging"></i>
                         {% endif %}
 
                         {% if jam.state == "finished" %}
-                            <i class="uk-icon uk-text-success fa-fw far fa-check-square state-{{ jam.number }}" title="State: {{ jam.state }}" id="state-{{ jam.number }}-finished"></i>
+                            <i class="uk-icon uk-text-success fa-fw far fa-check-square state-{{ jam.number }}" title="State: Finished" id="state-{{ jam.number }}-finished"></i>
                         {% else %}
-                            <i class="uk-icon uk-text-success fa-fw far fa-check-square state-{{ jam.number }}" hidden="hidden" title="State: {{ jam.state }}" id="state-{{ jam.number }}-finished"></i>
+                            <i class="uk-icon uk-text-success fa-fw far fa-check-square state-{{ jam.number }}" hidden="hidden" title="State: Finished" id="state-{{ jam.number }}-finished"></i>
                         {% endif %}
 
                         {% if not jam.state in states %}
-                            <i class="uk-icon uk-text-danger fa-fw far fa-question-square" title="Unknown state: {{ jam.state }}" id="state-{{ jam.number }}-unknown"></i>
+                            <i class="uk-icon uk-text-danger fa-fw far fa-question-square" title="Unknown state" id="state-{{ jam.number }}-unknown"></i>
                         {% else %}
-                            <i class="uk-icon uk-text-danger fa-fw far fa-question-square" hidden="hidden" title="Unknown state: {{ jam.state }}" id="state-{{ jam.number }}-unknown"></i>
+                            <i class="uk-icon uk-text-danger fa-fw far fa-question-square" hidden="hidden" title="Unknown state" id="state-{{ jam.number }}-unknown"></i>
                         {% endif %}
                     </span>
                 </h2>
@@ -218,7 +218,7 @@
                                     document.getElementById("jam-" + jam + "-button-ending").setAttribute("hidden", "hidden");
                                     break;
                                 case "judging":
-                                    document.getElementById("state-" + jam + "-finished").removeAttribute("hidden");
+                                    document.getElementById("state-" + jam + "-judging").removeAttribute("hidden");
 
                                     document.getElementById("jam-" + jam + "-button-info").setAttribute("hidden", "hidden");
                                     document.getElementById("jam-" + jam + "-button-ending").removeAttribute("hidden");

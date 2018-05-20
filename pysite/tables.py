@@ -190,8 +190,7 @@ TABLES = {
             "user_id",
             "roles",
             "username",
-            "discriminator",
-            "email"
+            "discriminator"
         ])
     ),
 

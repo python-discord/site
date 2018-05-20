@@ -27,7 +27,7 @@ class MixinTests(SiteTest):
         from flask import Blueprint
 
         from pysite.route_manager import RouteView
-        from pysite.oauth import OauthBackend
+        from pysite.oauth import OAuthBackend
 
         class TestRoute(RouteView):
             name = "test"
@@ -35,7 +35,7 @@ class MixinTests(SiteTest):
 
         tr = TestRoute()
         tr.setup(manager, Blueprint("test", "test_name"))
-        self.assertIsInstance(tr.oauth, OauthBackend)
+        self.assertIsInstance(tr.oauth, OAuthBackend)
 
     def test_user_data_property(self):
         """ Make sure the user_data property works"""

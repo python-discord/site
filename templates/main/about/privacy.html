@@ -20,89 +20,175 @@
                 <p>
                     We take every step to ensure that your data is used ethically and that includes making sure that
                     you know exactly what data we collect, and what we do with it. That means that instead of a
-                    bunch of legal mumbo-jumbo, we've provided this information in an easy, human-readable form below.
+                    bunch of legalese, we've provided this information in an easy, human-readable form below.
                 </p>
 
-                <h1 class="uk-article-title hover-title" id="data-collected">
-                    What We Collect
+                <p>
+                    Please note that we are a completely non-profit community. We have no interest in selling your
+                    data, or shipping it off to third parties. Our community is entirely volunteer-run - it does
+                    not have any form of monetary income whatsoever - and we believe that this is how it should be.
+                </p>
 
-                    <a href="#data-collected" class="uk-text-primary" title="Permanent link to this header">
+                <h3>Data collection</h3>
+
+                <table class="uk-table uk-table-divider uk-table-striped uk-table-small table-bordered">
+                    <thead>
+                        <tr class="thick-bottom-border">
+                            <th>What we collect</th>
+                            <th class="uk-table-shrink">When</th>
+                            <th style="max-width: 30rem;">What it's used for</th>
+                            <th>Who can access it</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Discord user ID</td>
+                            <td class="uk-table-shrink"><strong>self.accept()</strong> run on Discord</td>
+                            <td style="max-width: 30rem;">Statistics, data association (infractions, code jam applications, etc)</td>
+                            <td>Administrative staff</td>
+                        </tr>
+                        <tr>
+                            <td>Discord username and discriminator</td>
+                            <td class="uk-table-shrink"><strong>self.accept()</strong> run on Discord</td>
+                            <td style="max-width: 30rem;">Display purposes (alongside ID in staff areas, public profiles)</td>
+                            <td>Public, for code jam team listings and winner info</td>
+                        </tr>
+                        <tr>
+                            <td>Assigned roles on Discord</td>
+                            <td class="uk-table-shrink"><strong>self.accept()</strong> run on Discord</td>
+                            <td style="max-width: 30rem;">Access control for the site</td>
+                            <td>Administrative staff</td>
+                        </tr>
+                        <tr class="thick-bottom-border">
+                            <td>Messages sent on Discord</td>
+                            <td class="uk-table-shrink"><strong>self.accept()</strong> run on Discord</td>
+                            <td style="max-width: 30rem;">
+                                Stored in memory by the bot for processing temporarily, no message content reaches
+                                the database unless you're using a bot command that interfaces with the site - May be
+                                temporarily written to a log file for debugging purposes
+                            </td>
+                            <td>N/A</td>
+                        </tr>
+
+                        <tr class="thick-bottom-border">
+                            <td>OAuth access and refresh token</td>
+                            <td class="uk-table-shrink">Discord login on site</td>
+                            <td style="max-width: 30rem;">Used to find your Discord user ID when you log in</td>
+                            <td>Administrative staff</td>
+                        </tr>
+
+                        <tr>
+                            <td>Date of birth</td>
+                            <td class="uk-table-shrink">Code jam profile </td>
+                            <td style="max-width: 30rem;">Age verification and a factor in code jam team match-ups; only stored if you're over 13</td>
+                            <td>Administrative staff</td>
+                        </tr>
+                        <tr>
+                            <td>GitHub username</td>
+                            <td class="uk-table-shrink">Code jam profile</td>
+                            <td style="max-width: 30rem;">Used to identify you on GitHub as part of a code jam team</td>
+                            <td>Public, for code jam team listings</td>
+                        </tr>
+                        <tr>
+                            <td>Timezone</td>
+                            <td class="uk-table-shrink">Code jam profile</td>
+                            <td style="max-width: 30rem;">A factor in code jam team match-ups</td>
+                            <td>Administrative staff</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h1 class="uk-article-title hover-title" id="consent">
+                    Collecting consent
+
+                    <a href="#consent" class="uk-text-primary" title="Permanent link to this header">
                         <i class="fas fa-paragraph" data-fa-transform="shrink-8"></i>
                     </a>
                 </h1>
-                <p class="uk-article-meta">
-                    Cherry-picking from the firehose of data
-                </p>
-                <p>
-                    During your time on the discord server, we collect...
-                </p>
-
-                <ul>
-                    <li>Your Discord user ID</li>
-                    <li>Your Discord username and discriminator</li>
-                    <li>The list of roles you're assigned on Discord</li>
-                    <li>Any messages you send on the server</li>
-                </ul>
 
                 <p>
-                    Should you click the login button on the site, we additionally collect...
+                    If you joined the community on or before the <strong>20th of May, 2018</strong>, you will have seen an announcement about our
+                    privacy policy on the Discord server. You will have had the opportunity to leave the server if
+                    you weren't happy with it. If you decided to stay, then we will consider you to have accepted
+                    our use of your data, as detailed on this page.
                 </p>
-
-                <ul>
-                    <li>Your email address, supplied by Discord</li>
-                    <li>An access token and refresh token</li>
-                </ul>
-
                 <p>
-                    Should you set up your code jam profile, we additionally collect...
+                    If you joined the community after the <strong>20th of May, 2018</strong>, you will have been greeted with the
+                    <code>#checkpoint</code> channel. In this channel, you must run the <code>self.accept()</code>
+                    command to signify that you accept both our rules and this privacy policy. This will also have been
+                    detailed in a message in that channel.
+                </p>
+                <p>
+                    Please note that your acceptance of this privacy policy is retroactive, and you agree that any
+                    revisions to it will apply when they are published. We will attempt to keep everyone updated on
+                    changes to this policy via the usual announcement channels - if at any point you are not happy with
+                    a change to the privacy policy, please bring it up with a member of staff. If we're unable to
+                    solve your issue in a satisfactory way, you may remove your data as detailed below.
                 </p>
 
-                <ul>
-                    <li>Your date of birth</li>
-                    <li>Your GitHub username</li>
-                    <li>Your timezone</li>
-                </ul>
+                <h1 class="uk-article-title hover-title" id="removal">
+                    Data removal
 
-                <h1 class="uk-article-title hover-title" id="usage">
-                    How We Use Your Data
-
-                    <a href="#usage" class="uk-text-primary" title="Permanent link to this header">
+                    <a href="#removal" class="uk-text-primary" title="Permanent link to this header">
                         <i class="fas fa-paragraph" data-fa-transform="shrink-8"></i>
                     </a>
                 </h1>
-                <p class="uk-article-meta">
-                    Keeping secrets
-                </p>
 
                 <p>
-                    We use your data for the daily maintainance of the server and website. In short: We only collect
-                    what we need. To explain this in more detail:
+                    If you'd like to remove your data from our servers, there are two options available to you.
                 </p>
-                <ul>
-                    <li>
-                        Your Discord account details are useful for statistics - However, the storage of your assigned
-                        roles in our database also allows our site to use a Discord account-based authorization system.
-                        That means that all we have to do is assign the correct roles to you on Discord to give you
-                        access to the relevant parts of the site.
-                    </li>
-                    <li>
-                        While we currently do not use your email address for anything, we do have projects in the works
-                        that will make use of it. Don't worry, your email address will never leave our network, and we
-                        won't send anything to you without your consent!
-                    </li>
-                    <li>
-                        Your messages are not stored in our database - they're stored temporarily in memory during
-                        processing, and may also be written to a logfile.
-                    </li>
-                    <li>
-                        We are a completely non-profit community. We have no interest in selling your data, or
-                        shipping it off to third parties. Our community is entirely volunteer-run and it does not have
-                        any form of monetary income whatsoever - and we believe that this is how it should be.
-                    </li>
-                </ul>
+
+                <div class="uk-grid uk-grid-match" uk-grid>
+                    <div class="uk-width-1-2@m">
+                        <div class="uk-card uk-card-default uk-card-small">
+                            <div class="uk-card-header">
+                                <h3 class="uk-card-title">Complete data removal</h3>
+                            </div>
+
+                            <div class="uk-card-body">
+                                <p>
+                                    If you'd like to remove all of your personal data from our servers, all you need to do
+                                    is leave the Discord server. As much of the data we collect is necessary for running
+                                    our community, we are unable to offer you community membership with zero data collection.
+                                </p>
+                                <p>
+                                    Once you've left the Discord server, your data is removed automatically. Please note that
+                                    for the sake of data integrity and moderation purposes, we do not remove your Discord
+                                    user ID from our database - but we do anonymize your data as far as possible.
+                                </p>
+                                <p>
+                                    As with deleting your code jam profile directly, you will be issued an automatic ban
+                                    from future code jams if you have applied for or are currently taking part in a
+                                    code jam.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="uk-width-1-2@m">
+                        <div class="uk-card uk-card-default uk-card-small">
+                            <div class="uk-card-header">
+                                <h3 class="uk-card-title">Code jam profile removal</h3>
+                            </div>
+
+                            <div class="uk-card-body">
+                                <p>
+                                    If you've provided us with a code jam profile in the past and would like to remove
+                                    it, you may do so by heading to the
+                                    <a href="{{ url_for("main.jams.profile") }}">"My Profile" page</a>,
+                                    where you will find a button that will remove your profile.
+                                </p>
+                                <p>
+                                    Please note that this is a nuclear option. If you have applied for or are currently
+                                    taking part in a code jam, this will void your application and you will receive an
+                                    automatic ban from future code jams until you've contacted us about it.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                 <h1 class="uk-article-title hover-title" id="gdpr">
-                    GDPR
+                    GDPR compliance
 
                     <a href="#gdpr" class="uk-text-primary" title="Permanent link to this header">
                         <i class="fas fa-paragraph" data-fa-transform="shrink-8"></i>
@@ -113,26 +199,37 @@
                 </p>
 
                 <p>
-                    The data we collect is required for the daily operation of this website, our bot and the Discord
-                    server. That said, we intend to fully comply with GDPR. Here's how we do this, and how you can
-                    contact us with any questions you have:
+                    Under the terms specified above, we do aim to comply with GDPR. While we do not currently have
+                    an automated way for users to export the data they've provided to us, we're happy to do this
+                    manually or answer any other GDPR- or privacy-related queries you may have. Feel free to contact
+                    our GDPR officer on Discord (<code>gdude#2002</code>), or any other member of the administrative
+                    staff.
                 </p>
-                <ul>
+                <p>
+                    We are currently working on an automated way to get all of your data in both a human-readable
+                    and machine-readable format. Keep your eye on the usual announcements channels for more information
+                    on that, as it happens.
+                </p>
+
+                <h1 class="uk-article-title hover-title" id="changelog">
+                    Changelog
+
+                    <a href="#changelog" class="uk-text-primary" title="Permanent link to this header">
+                        <i class="fas fa-paragraph" data-fa-transform="shrink-8"></i>
+                    </a>
+                </h1>
+                <p class="uk-article-meta">
+                    Accountability, for the masses
+                </p>
+
+                <ul class="uk-list uk-list-divider">
                     <li>
-                        When you join the server, we require that you accept our rules and terms by running a command
-                        in the <code>#checkpoint</code> channel. In doing so, you agree that you will abide by our rules -
-                        and you also agree to our data collection and usage policies (as detailed above).
-                    </li>
-                    <li>
-                        Should you change your mind at any point, we cannot selectively remove data and keep your
-                        membership on the server. If you'd like us to remove your data, there's only one thing you need
-                        to do: Leave the Discord server. In doing that, all of your data will automatically be removed
-                        from our systems. It's that simple!
-                    </li>
-                    <li>
-                        If you'd like a copy of the data we have belonging to you or you have any other questions about
-                        our data and GDPR handling, feel free to send a message to our GDPR officer on Discord,
-                        <code>gdude#2002</code> - or any other admin if he's not around.
+                        <h4>May 20th, 2018</h4>
+                        <p>
+                            Completed the first version of our privacy policy. We also updated our OAuth scopes for
+                            Discord logins - we no longer collect your email, or get the access to join you to servers
+                            automatically. All collected emails have also been removed from the database.
+                        </p>
                     </li>
                 </ul>
             </article>
