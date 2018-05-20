@@ -6,7 +6,7 @@ from flask import Blueprint, Response, jsonify, redirect, render_template, sessi
 from flask.views import MethodView
 from werkzeug.exceptions import default_exceptions
 
-from pysite.constants import DEBUG_MODE, ErrorCodes, ALL_STAFF_ROLES
+from pysite.constants import ALL_STAFF_ROLES, DEBUG_MODE, ErrorCodes
 from pysite.mixins import OAuthMixin
 
 
