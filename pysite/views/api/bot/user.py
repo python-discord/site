@@ -26,6 +26,8 @@ DELETE_SCHEMA = Schema([
     }
 ])
 
+BANNABLE_STATES = ["preparing", "running"]
+
 
 class UserView(APIView, DBMixin):
     path = "/bot/users"
@@ -33,6 +35,9 @@ class UserView(APIView, DBMixin):
     table_name = "users"
     oauth_table_name = "oauth_data"
     participants_table = "code_jam_participants"
+    infractions_table = "code_jam_infractions"
+    jams_table = "code_jams"
+    responses_table = "code_jam_responses"
 
     @api_key
     @api_params(schema=SCHEMA, validation_type=ValidationTypes.json)
@@ -42,6 +47,8 @@ class UserView(APIView, DBMixin):
         deletions = 0
         oauth_deletions = 0
         profile_deletions = 0
+        response_deletions = 0
+        bans = 0
 
         user_ids = [user["user_id"] for user in data]
 
@@ -56,10 +63,42 @@ class UserView(APIView, DBMixin):
 
         for item in all_oauth_data:
             if item["snowflake"] not in user_ids:
-                self.db.delete(self.oauth_table_name, item["id"], durability="soft")
-                self.db.delete(self.participants_table, item["id"], durability="soft")
-                oauth_deletions += 1
-                profile_deletions += 1
+                user_id = item["snowflake"]
+
+                oauth_deletions += self.db.delete(
+                    self.oauth_table_name, item["id"], durability="soft"
+                ).get("deleted", 0)
+                profile_deletions += self.db.delete(
+                    self.participants_table, user_id, durability="soft"
+                ).get("deleted", 0)
+
+                banned = False
+                responses = self.db.run(
+                    self.db.query(self.responses_table).filter({"snowflake": user_id}),
+                    coerce=list
+                )
+
+                for response in responses:
+                    jam = response["jam"]
+                    jam_obj = self.db.get(self.jams_table, jam)
+
+                    if jam_obj:
+                        if jam_obj["state"] in BANNABLE_STATES:
+                            banned = True
+
+                    self.db.delete(self.responses_table, response["id"], durability="soft")
+                    response_deletions += 1
+
+                if banned:
+                    self.db.insert(
+                        self.infractions_table, {
+                            "participant": user_id,
+                            "reason": "Automatic ban: Removed jammer profile in the middle of a code jam",
+                            "number": -1,
+                            "decremented_for": []
+                        }, durability="soft"
+                    )
+                    bans += 1
 
         del user_ids
 
@@ -69,11 +108,17 @@ class UserView(APIView, DBMixin):
             durability="soft"
         )
 
+        self.db.sync(self.infractions_table)
+        self.db.sync(self.oauth_table_name)
+        self.db.sync(self.participants_table)
+        self.db.sync(self.responses_table)
         self.db.sync(self.table_name)
 
         changes["deleted"] = deletions
         changes["deleted_oauth"] = oauth_deletions
         changes["deleted_jam_profiles"] = profile_deletions
+        changes["deleted_responses"] = response_deletions
+        changes["jam_bans"] = bans
 
         return jsonify(changes)  # pragma: no cover
 
@@ -108,9 +153,40 @@ class UserView(APIView, DBMixin):
             self.db.query(self.participants_table)
             .get_all(*user_ids)
             .delete()
-        )
+        ).get("deleted", 0)
+
+        bans = 0
+        response_deletions = 0
+
+        for user_id in user_ids:
+            banned = False
+            responses = self.db.run(self.db.query(self.responses_table).filter({"snowflake": user_id}), coerce=list)
+
+            for response in responses:
+                jam = response["jam"]
+                jam_obj = self.db.get(self.jams_table, jam)
+
+                if jam_obj:
+                    if jam_obj["state"] in BANNABLE_STATES:
+                        banned = True
+
+                self.db.delete(self.responses_table, response["id"])
+                response_deletions += 1
+
+            if banned:
+                self.db.insert(
+                    self.infractions_table, {
+                        "participant": user_id,
+                        "reason": "Automatic ban: Removed jammer profile in the middle of a code jam",
+                        "number": -1,
+                        "decremented_for": []
+                    }
+                )
+                bans += 1
 
         changes["deleted_oauth"] = oauth_deletions
         changes["deleted_jam_profiles"] = profile_deletions
+        changes["deleted_responses"] = response_deletions
+        changes["jam_bans"] = bans
 
         return jsonify(changes)  # pragma: no cover

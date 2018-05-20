@@ -67,6 +67,17 @@
                 <button type="submit" class="uk-button uk-button-primary" id="submit">
                     <i class="uk-icon fa-fw far fa-check"></i> &nbsp;Save
                 </button>
+
+                {% if existing %}
+                    <a class="uk-button uk-button-danger" href="{{ url_for("main.jams.retract") }}">
+                        <i class="uk-icon fa-fw fas fa-bomb"></i> &nbsp;Delete
+                    </a>
+                {% else %}
+                    <a class="uk-button uk-button-default uk-text-muted uk-link-muted" style="cursor: default !important"
+                       uk-tooltip="title: You can't delete your profile because you haven't submitted one yet!; pos: bottom">
+                        <i class="uk-icon fa-fw fas fa-bomb"></i> &nbsp;Delete
+                    </a>
+                {% endif %}
             </div>
         </form>
     </div>

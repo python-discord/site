@@ -19,9 +19,11 @@ class JamsProfileView(RouteView, DBMixin, OAuthMixin):
             return self.redirect_login()
 
         participant = self.db.get(self.table_name, self.user_data["user_id"])
+        existing = True
 
         if not participant:
             participant = {"id": self.user_data["user_id"]}
+            existing = False
 
         form = request.args.get("form")
 
@@ -32,7 +34,7 @@ class JamsProfileView(RouteView, DBMixin, OAuthMixin):
                 pass  # Someone trying to have some fun I guess
 
         return self.render(
-            "main/jams/profile.html", participant=participant, form=form
+            "main/jams/profile.html", participant=participant, form=form, existing=existing
         )
 
     @csrf
@@ -56,6 +58,12 @@ class JamsProfileView(RouteView, DBMixin, OAuthMixin):
         dob = datetime.datetime.strptime(dob, "%Y-%m-%d")
         dob = dob.replace(tzinfo=datetime.timezone.utc)
 
+        now = datetime.datetime.now(tz=datetime.timezone.utc)
+        then = now.replace(year=now.year - 13)
+
+        if then < dob:
+            raise BadRequest()  # They're too young, but this is validated on the form
+
         participant["dob"] = dob
         participant["github_username"] = github_username
         participant["timezone"] = timezone
@@ -73,5 +81,5 @@ class JamsProfileView(RouteView, DBMixin, OAuthMixin):
                 return redirect(url_for("main.jams.join", jam=form))
 
         return self.render(
-            "main/jams/profile.html", participant=participant, done=True
+            "main/jams/profile.html", participant=participant, done=True, existing=True
         )
