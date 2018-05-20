@@ -7,11 +7,9 @@ class Utilities(SiteTest):
         import pysite.base_route
 
         ev = pysite.base_route.ErrorView()
-        try:
+
+        with self.assertRaises(RuntimeError):
             ev.setup(manager, 'sdfsdf')
-        except RuntimeError:
-            return True
-        raise Exception('Expected runtime error on setup() when giving wrongful arguments')
 
     def test_websocket_callback(self):
         """ Check that websocket default callbacks work """

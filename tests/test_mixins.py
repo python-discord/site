@@ -18,11 +18,9 @@ class MixinTests(SiteTest):
         from pysite.base_route import RouteView
 
         rv = RouteView()
-        try:
+
+        with self.assertRaises(RuntimeError):
             rv.setup(manager, 'sdfsdf')
-        except RuntimeError:
-            return True
-        raise Exception('Expected runtime error on setup() when giving wrongful arguments')
 
     def test_oauth_property(self):
         """ Make sure the oauth property works"""
@@ -51,7 +49,7 @@ class MixinTests(SiteTest):
 
         tr = TestRoute()
         tr.setup(manager, Blueprint("test", "test_name"))
-        self.assertIs(tr.user_data, None)
+        self.assertIsNone(tr.user_data)
 
     def test_logged_in_property(self):
         """ Make sure the user_data property works"""
@@ -65,4 +63,4 @@ class MixinTests(SiteTest):
 
         tr = TestRoute()
         tr.setup(manager, Blueprint("test", "test_name"))
-        self.assertIs(tr.logged_in, False)
+        self.assertFalse(tr.logged_in)

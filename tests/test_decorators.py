@@ -13,10 +13,8 @@ class DecoratorTests(SiteTest):
         def try_json_type(data):
             return data
 
-        try:
+        with self.assertRaises(AttributeError):
             try_json_type("not json")
-        except Exception as error_message:
-            self.assertEqual(type(error_message), AttributeError)
 
     def test_decorator_params(self):
         """ Check the params validation decorator """

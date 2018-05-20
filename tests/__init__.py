@@ -7,10 +7,9 @@ from flask_testing import TestCase
 os.environ["BOT_API_KEY"] = "abcdefg"  # This is a constant, must be done first
 os.environ["PAPERTRAIL_ADDRESS"] = 'localhost'  # satisfies coverage
 os.environ["DATADOG_ADDRESS"] = 'localhost'  # satisfies coverage
-try:
+
+if "FLASK_DEBUG" in os.environ:
     del os.environ["FLASK_DEBUG"]  # Some unit tests fail if this is set
-except KeyError:
-    pass
 
 from app import manager
 from gunicorn_config import _when_ready as when_ready
@@ -38,6 +37,7 @@ class SiteTest(TestCase):
         app.config['API_SUBDOMAIN'] = f'http://api.{server_name}'
         app.config['STAFF_SUBDOMAIN'] = f'http://staff.{server_name}'
         app.config['WIKI_SUBDOMAIN'] = f'http://wiki.{server_name}'
+        app.config['TEST_HEADER'] = {'X-API-Key': 'abcdefg', 'Content-Type': 'application/json'}
         app.allow_subdomain_redirects = True
 
         return app

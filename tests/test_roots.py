@@ -1,5 +1,7 @@
 from tests import SiteTest
-from pysite.constants import DISCORD_OAUTH_REDIRECT, DISCORD_OAUTH_AUTHORIZED
+from pysite.constants import DISCORD_OAUTH_REDIRECT
+from pysite.constants import DISCORD_OAUTH_AUTHORIZED
+from pysite.constants import ERROR_DESCRIPTIONS
 
 class RootEndpoint(SiteTest):
     """ Test cases for the root endpoint and error handling """
@@ -41,9 +43,10 @@ class RootEndpoint(SiteTest):
         self.assertEqual(response.status_code, 404)
 
     def test_error(self):
-        """ Check the /error/XYZ page """
-        response = self.client.get('/error/418')
-        self.assertEqual(response.status_code, 418)
+        """ Check the error pages """
+        for code in ERROR_DESCRIPTIONS.keys():
+            response = self.client.get(f'/error/{code}')
+            self.assertEqual(response.status_code, code)
 
     def test_invite(self):
         """ Check invite redirects """

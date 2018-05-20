@@ -5,15 +5,15 @@ class TestOauthBackend(SiteTest):
 
     def test_get(self):
         """ Make sure the get function returns nothing """
-        self.assertIs(manager.oauth_backend.get(), None)
+        self.assertIsNone(manager.oauth_backend.get())
 
     def test_delete(self):
         """ Make sure the delete function returns nothing """
-        self.assertIs(manager.oauth_backend.delete(None), None)
+        self.assertIsNone(manager.oauth_backend.delete(None))
 
     def test_logout(self):
         """ Make sure at least apart of logout is working :/ """
-        self.assertIs(manager.oauth_backend.logout(), None)
+        self.assertIsNone(manager.oauth_backend.logout())
 
     def test_add_user(self):
         """ Make sure function adds values to database and session """
