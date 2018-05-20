@@ -8,7 +8,7 @@ from flask_dance.contrib.discord import discord
 from pysite.constants import DISCORD_API_ENDPOINT, OAUTH_DATABASE
 
 
-class OauthBackend(BaseBackend):
+class OAuthBackend(BaseBackend):
     """
     This is the backend for the oauth
 
@@ -34,7 +34,6 @@ class OauthBackend(BaseBackend):
         pass
 
     def set(self, blueprint, token):
-
         user = self.get_user()
         sess_id = str(uuid5(uuid4(), self.key))
         self.add_user(token, user, sess_id)
@@ -62,8 +61,7 @@ class OauthBackend(BaseBackend):
             {
                 "user_id": user_data["id"],
                 "username": user_data["username"],
-                "discriminator": user_data["discriminator"],
-                "email": user_data["email"]
+                "discriminator": user_data["discriminator"]
             },
             conflict="update"
         )
@@ -85,3 +83,4 @@ class OauthBackend(BaseBackend):
         sess_id = session.get("session_id")
         if sess_id and self.db.get(OAUTH_DATABASE, sess_id):  # If user exists in db,
             self.db.delete(OAUTH_DATABASE, sess_id)  # remove them (at least, their session)
+            session.clear()

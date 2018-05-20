@@ -2,15 +2,15 @@ from collections import Iterable
 from datetime import datetime
 from typing import Any
 
-from flask import Blueprint, Response, jsonify, redirect, render_template, url_for
+from flask import Blueprint, Response, jsonify, redirect, render_template, url_for, session
 from flask.views import MethodView
 from werkzeug.exceptions import default_exceptions
 
 from pysite.constants import DEBUG_MODE, ErrorCodes
-from pysite.mixins import OauthMixin
+from pysite.mixins import OAuthMixin
 
 
-class BaseView(MethodView, OauthMixin):
+class BaseView(MethodView, OAuthMixin):
     """
     Base view class with functions and attributes that should be common to all view classes.
 
@@ -102,6 +102,16 @@ class RouteView(BaseView):
         blueprint.add_url_rule(cls.path, view_func=cls.as_view(cls.name))
 
         cls.name = f"{blueprint.name}.{cls.name}"  # Add blueprint to page name
+
+    def redirect_login(self, **kwargs):
+        session["redirect_target"] = {
+            "url": self.name,
+            "kwargs": kwargs
+        }
+
+        print(session["redirect_target"])
+
+        return redirect(url_for("discord.login"))
 
 
 class APIView(RouteView):

@@ -5,10 +5,10 @@ from werkzeug.exceptions import BadRequest
 
 from pysite.base_route import RouteView
 from pysite.decorators import csrf
-from pysite.mixins import DBMixin, OauthMixin
+from pysite.mixins import DBMixin, OAuthMixin
 
 
-class JamsProfileView(RouteView, DBMixin, OauthMixin):
+class JamsProfileView(RouteView, DBMixin, OAuthMixin):
     path = "/jams/profile"
     name = "jams.profile"
 
@@ -16,7 +16,7 @@ class JamsProfileView(RouteView, DBMixin, OauthMixin):
 
     def get(self):
         if not self.user_data:
-            return redirect(url_for("discord.login"))
+            return self.redirect_login()
 
         participant = self.db.get(self.table_name, self.user_data["user_id"])
 
@@ -38,7 +38,7 @@ class JamsProfileView(RouteView, DBMixin, OauthMixin):
     @csrf
     def post(self):
         if not self.user_data:
-            return redirect(url_for("discord.login"))
+            return self.redirect_login()
 
         participant = self.db.get(self.table_name, self.user_data["user_id"])
 
