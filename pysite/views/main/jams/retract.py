@@ -63,7 +63,6 @@ class JamsProfileView(RouteView, DBMixin, OAuthMixin):
             if jam_obj:
                 if jam_obj["state"] in BANNABLE_STATES:
                     banned = True
-                    break
 
             self.db.delete(self.responses_table, response["id"])
 
