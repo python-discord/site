@@ -57,7 +57,6 @@ class RenderView(APIView):
                         }
                     )
 
-            print(data)
             return jsonify(data)
         except Exception as e:
             return jsonify({"error": str(e)})

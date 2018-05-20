@@ -26,7 +26,7 @@ DELETE_SCHEMA = Schema([
     }
 ])
 
-BANNABLE_STATES = ["preparing", "running"]
+BANNABLE_STATES = ("preparing", "running")
 
 
 class UserView(APIView, DBMixin):
@@ -85,6 +85,7 @@ class UserView(APIView, DBMixin):
                     if jam_obj:
                         if jam_obj["state"] in BANNABLE_STATES:
                             banned = True
+                            break
 
                     self.db.delete(self.responses_table, response["id"], durability="soft")
                     response_deletions += 1
@@ -169,6 +170,7 @@ class UserView(APIView, DBMixin):
                 if jam_obj:
                     if jam_obj["state"] in BANNABLE_STATES:
                         banned = True
+                        break
 
                 self.db.delete(self.responses_table, response["id"])
                 response_deletions += 1

@@ -1,4 +1,8 @@
 def run(db, table, table_obj):
+    """
+    Remove stored email addresses from every user document
+    """
+
     for document in db.get_all(table):
         if "email" in document:
             del document["email"]

@@ -4,7 +4,7 @@ from pysite.base_route import RouteView
 from pysite.decorators import csrf
 from pysite.mixins import DBMixin, OAuthMixin
 
-BANNABLE_STATES = ["preparing", "running"]
+BANNABLE_STATES = ("preparing", "running")
 
 
 class JamsProfileView(RouteView, DBMixin, OAuthMixin):
@@ -30,7 +30,6 @@ class JamsProfileView(RouteView, DBMixin, OAuthMixin):
 
             for response in responses:
                 jam = response["jam"]
-                print(jam)
                 jam_obj = self.db.get(self.jams_table, jam)
 
                 if jam_obj:
@@ -64,6 +63,7 @@ class JamsProfileView(RouteView, DBMixin, OAuthMixin):
             if jam_obj:
                 if jam_obj["state"] in BANNABLE_STATES:
                     banned = True
+                    break
 
             self.db.delete(self.responses_table, response["id"])
 
