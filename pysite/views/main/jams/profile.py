@@ -5,10 +5,10 @@ from werkzeug.exceptions import BadRequest
 
 from pysite.base_route import RouteView
 from pysite.decorators import csrf
-from pysite.mixins import DBMixin, OauthMixin
+from pysite.mixins import DBMixin, OAuthMixin
 
 
-class JamsProfileView(RouteView, DBMixin, OauthMixin):
+class JamsProfileView(RouteView, DBMixin, OAuthMixin):
     path = "/jams/profile"
     name = "jams.profile"
 
@@ -16,12 +16,14 @@ class JamsProfileView(RouteView, DBMixin, OauthMixin):
 
     def get(self):
         if not self.user_data:
-            return redirect(url_for("discord.login"))
+            return self.redirect_login()
 
         participant = self.db.get(self.table_name, self.user_data["user_id"])
+        existing = True
 
         if not participant:
             participant = {"id": self.user_data["user_id"]}
+            existing = False
 
         form = request.args.get("form")
 
@@ -32,13 +34,13 @@ class JamsProfileView(RouteView, DBMixin, OauthMixin):
                 pass  # Someone trying to have some fun I guess
 
         return self.render(
-            "main/jams/profile.html", participant=participant, form=form
+            "main/jams/profile.html", participant=participant, form=form, existing=existing
         )
 
     @csrf
     def post(self):
         if not self.user_data:
-            return redirect(url_for("discord.login"))
+            return self.redirect_login()
 
         participant = self.db.get(self.table_name, self.user_data["user_id"])
 
@@ -55,6 +57,12 @@ class JamsProfileView(RouteView, DBMixin, OauthMixin):
         # Convert given datetime strings into actual objects, adding timezones to keep rethinkdb happy
         dob = datetime.datetime.strptime(dob, "%Y-%m-%d")
         dob = dob.replace(tzinfo=datetime.timezone.utc)
+
+        now = datetime.datetime.now(tz=datetime.timezone.utc)
+        then = now.replace(year=now.year - 13)
+
+        if then < dob:
+            raise BadRequest()  # They're too young, but this is validated on the form
 
         participant["dob"] = dob
         participant["github_username"] = github_username
@@ -73,5 +81,5 @@ class JamsProfileView(RouteView, DBMixin, OauthMixin):
                 return redirect(url_for("main.jams.join", jam=form))
 
         return self.render(
-            "main/jams/profile.html", participant=participant, done=True
+            "main/jams/profile.html", participant=participant, done=True, existing=True
         )

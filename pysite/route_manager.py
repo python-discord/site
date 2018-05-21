@@ -13,7 +13,7 @@ from pysite.constants import (
     CSRF, DEBUG_MODE, DISCORD_OAUTH_AUTHORIZED, DISCORD_OAUTH_ID, DISCORD_OAUTH_REDIRECT,
     DISCORD_OAUTH_SCOPE, DISCORD_OAUTH_SECRET, PREFERRED_URL_SCHEME)
 from pysite.database import RethinkDB
-from pysite.oauth import OauthBackend
+from pysite.oauth import OAuthBackend
 from pysite.websockets import WS
 
 TEMPLATES_PATH = "../templates"
@@ -51,14 +51,14 @@ class RouteManager:
         CSRF.init_app(self.app)  # Set up CSRF protection
 
         # Load the oauth blueprint
-        self.oauth_backend = OauthBackend(self)
+        self.oauth_backend = OAuthBackend(self)
         self.oauth_blueprint = make_discord_blueprint(
             DISCORD_OAUTH_ID,
             DISCORD_OAUTH_SECRET,
             DISCORD_OAUTH_SCOPE,
-            '/',
             login_url=DISCORD_OAUTH_REDIRECT,
             authorized_url=DISCORD_OAUTH_AUTHORIZED,
+            redirect_to="main.auth.done",
             backend=self.oauth_backend
         )
         self.log.debug(f"Loading Blueprint: {self.oauth_blueprint.name}")

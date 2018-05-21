@@ -1,4 +1,4 @@
-from flask import redirect, session
+from flask import redirect, session, url_for
 
 from pysite.base_route import RouteView
 
@@ -12,4 +12,5 @@ class LogoutView(RouteView):
             # remove user's session
             del session["session_id"]
             self.oauth.logout()
-        return redirect("/")
+
+        return redirect(url_for("main.index"))

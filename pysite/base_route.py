@@ -2,15 +2,15 @@ from collections import Iterable
 from datetime import datetime
 from typing import Any
 
-from flask import Blueprint, Response, jsonify, redirect, render_template, url_for
+from flask import Blueprint, Response, jsonify, redirect, render_template, session, url_for
 from flask.views import MethodView
 from werkzeug.exceptions import default_exceptions
 
-from pysite.constants import DEBUG_MODE, ErrorCodes
-from pysite.mixins import OauthMixin
+from pysite.constants import ALL_STAFF_ROLES, DEBUG_MODE, ErrorCodes
+from pysite.mixins import OAuthMixin
 
 
-class BaseView(MethodView, OauthMixin):
+class BaseView(MethodView, OAuthMixin):
     """
     Base view class with functions and attributes that should be common to all view classes.
 
@@ -52,9 +52,25 @@ class BaseView(MethodView, OauthMixin):
         context["current_page"] = self.name
         context["view"] = self
         context["logged_in"] = self.logged_in
+        context["user"] = self.user_data
         context["static_file"] = self._static_file
         context["debug"] = DEBUG_MODE
         context["format_datetime"] = lambda dt: dt.strftime("%b %d %Y, %H:%M") if isinstance(dt, datetime) else dt
+
+        def is_staff():
+            if DEBUG_MODE:
+                return True
+
+            if not self.logged_in:
+                return False
+
+            for role in ALL_STAFF_ROLES:
+                if role in self.user_data.get("roles", []):
+                    return True
+
+            return False
+
+        context["is_staff"] = is_staff
 
         return render_template(template_names, **context)
 
@@ -102,6 +118,14 @@ class RouteView(BaseView):
         blueprint.add_url_rule(cls.path, view_func=cls.as_view(cls.name))
 
         cls.name = f"{blueprint.name}.{cls.name}"  # Add blueprint to page name
+
+    def redirect_login(self, **kwargs):
+        session["redirect_target"] = {
+            "url": self.name,
+            "kwargs": kwargs
+        }
+
+        return redirect(url_for("discord.login"))
 
 
 class APIView(RouteView):

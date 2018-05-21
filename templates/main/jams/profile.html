@@ -67,6 +67,17 @@
                 <button type="submit" class="uk-button uk-button-primary" id="submit">
                     <i class="uk-icon fa-fw far fa-check"></i> &nbsp;Save
                 </button>
+
+                {% if existing %}
+                    <a class="uk-button uk-button-danger" href="{{ url_for("main.jams.retract") }}">
+                        <i class="uk-icon fa-fw fas fa-bomb"></i> &nbsp;Delete
+                    </a>
+                {% else %}
+                    <a class="uk-button uk-button-default uk-text-muted uk-link-muted" style="cursor: default !important"
+                       uk-tooltip="title: You can't delete your profile because you haven't submitted one yet!; pos: bottom">
+                        <i class="uk-icon fa-fw fas fa-bomb"></i> &nbsp;Delete
+                    </a>
+                {% endif %}
             </div>
         </form>
     </div>
@@ -75,18 +86,46 @@
 
 
 <script type="application/javascript">
-    const date = flatpickr("#dob", {enableTime: false, altInput: true});
+    const date = flatpickr("#dob", {
+        enableTime: false, altInput: true, altInputClass: "date-picker",
+        onChange: function() {
+            let dob = moment(dob_input.value);
+
+            if (!dob.isBefore(earliest_dob)) {
+                UIkit.notification({
+                    "message": "You must be aged 13 or older to participate in our code jams.",
+                    "status": "danger",
+                    "pos": "top-center",
+                    "timeout": 5000,
+                });
+
+                dob_output.classList.add("uk-form-danger");
+                submit_button.disabled = true;
+            } else {
+                dob_output.classList.remove("uk-form-danger");
+            }
+        }
+    });
+
     const tz = moment().format("Z");
 
     const dob_input = document.getElementById("dob");
+    const dob_output = document.getElementsByClassName("date-picker")[0];
     const github_input = document.getElementById("github_username");
     const tz_input = document.getElementById("timezone");
 
     const submit_button = document.getElementById("submit");
+    const earliest_dob = moment().subtract(13, "years");
 
     function checkInputs() {
         if (dob_input.value.length < 1)
             return submit_button.disabled = true;
+
+        let dob = moment(dob_input.value);
+
+        if (!dob.isBefore(earliest_dob)) {
+            return submit_button.disabled = true;
+        }
 
         if (github_input.value.length < 1)
             return submit_button.disabled = true;

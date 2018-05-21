@@ -1,11 +1,11 @@
 from functools import wraps
 from json import JSONDecodeError
 
-from flask import redirect, request, url_for
+from flask import request
 from schema import Schema, SchemaError
 from werkzeug.exceptions import Forbidden
 
-from pysite.base_route import APIView, BaseView
+from pysite.base_route import APIView, RouteView
 from pysite.constants import BOT_API_KEY, CSRF, DEBUG_MODE, ErrorCodes, ValidationTypes
 
 
@@ -27,21 +27,22 @@ def require_roles(*roles: int):
     def inner_decorator(f):
 
         @wraps(f)
-        def inner(self: BaseView, *args, **kwargs):
+        def inner(self: RouteView, *args, **kwargs):
             data = self.user_data
+            print(kwargs)
 
             if DEBUG_MODE:
                 return f(self, *args, **kwargs)
             elif data:
                 for role in roles:
-                    if DEBUG_MODE or role in data.get("roles", []):
+                    if role in data.get("roles", []):
                         return f(self, *args, **kwargs)
 
                 if isinstance(self, APIView):
                     return self.error(ErrorCodes.unauthorized)
 
                 raise Forbidden()
-            return redirect(url_for("discord.login"))
+            return self.redirect_login(**kwargs)
 
         return inner
 
@@ -78,7 +79,7 @@ def api_params(schema: Schema, validation_type: ValidationTypes = ValidationType
     def inner_decorator(f):
 
         @wraps(f)
-        def inner(self: BaseView, *args, **kwargs):
+        def inner(self: APIView, *args, **kwargs):
             if validation_type == ValidationTypes.json:
                 try:
                     if not request.is_json:

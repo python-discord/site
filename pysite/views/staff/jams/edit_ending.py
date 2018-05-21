@@ -39,7 +39,6 @@ class StaffView(RouteView, DBMixin):
         if not jam_obj["state"] in ALLOWED_STATES:
             return BadRequest()
 
-        print(request.form)
         for key in REQUIRED_KEYS:
             arg = request.form.get(key)
 

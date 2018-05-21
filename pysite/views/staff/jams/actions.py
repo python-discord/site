@@ -33,7 +33,6 @@ class ActionView(APIView, DBMixin):
         if action == "questions":
             questions = self.db.get_all(self.questions_table)
 
-            print(questions)
             return jsonify({"questions": questions})
 
     @csrf
