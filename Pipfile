@@ -32,7 +32,6 @@ flask-testing = "*"
 pytest = "*"
 pytest-cov = "*"
 python-coveralls = "*"
-pytest-ordering = "*"
 
 [requires]
 python_version = "3.6"
