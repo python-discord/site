@@ -1,0 +1,254 @@
+{% extends "main/base.html" %}
+{% block title %}Rules{% endblock %}
+{% block og_title %}Rules{% endblock %}
+{% block og_description %}The server rules, along with an explanation of what happens when they're broken{% endblock %}
+{% block content %}
+    <div class="uk-section">
+        <div class="uk-container uk-container-small">
+            <article class="uk-article">
+                <h1 class="uk-article-title hover-title" id="top">
+                    Channels
+
+                    <a href="#top" class="uk-text-primary" title="Permanent link to this header">
+                        <i class="fas fa-paragraph" data-fa-transform="shrink-8"></i>
+                    </a>
+                </h1>
+                <p class="uk-article-meta">
+                    Keeping things tidy
+                </p>
+
+                <p>
+                    Every channel on the server has a use, and we expect users to keep things relevant to the channel
+                    whenever possible. Below, we've outlined all of the channels a normal user has access to send
+                    messages to, and what they should be used for.
+                </p>
+
+                <h2>Conversation</h2>
+
+                <p>
+                    Channels in this section are designated for discussion and chat, and shouldn't be used for help
+                    requests in most cases.
+                </p>
+
+                <table uk-table class="uk-table-striped uk-table uk-table-divider table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Channel</th>
+                            <th>Info</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="fira-code">#python</td>
+                            <td>
+                                Discussion about the Python programming language and ecosystem
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="fira-code">#off-topic</td>
+                            <td>
+                                Off-topic discussion that doesn't fit in any other channel
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="fira-code">#other-languages</td>
+                            <td>
+                                Discussion about non-Python programming - this is not a channel for non-English
+                                speaking languages
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="fira-code">#meta</td>
+                            <td>
+                                Discussion and suggestions relating to the Discord server, site, bot, and other
+                                projects of ours
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h2>Python Help</h2>
+
+                <p>
+                    Channels in this section are strictly on-topic, and designated for asking general Python-related
+                    questions. If you're a beginner or you need some help with your Python, this is probably where you
+                    want to be.
+                </p>
+
+                <p>
+                    Please try to pick a channel that isn't busy when asking your question.
+                </p>
+
+                <h2>Topical Chat/Help</h2>
+
+                <p>
+                    Channels in this section are strictly on-topic, and geared towards specific subjects. They can be
+                    used for either discussion or asking questions - if you need help with one of the specific things
+                    covered here, it's best to ask your question in the relevant channel rather than one of the general
+                    help channels.
+                </p>
+
+                <table uk-table class="uk-table-striped uk-table uk-table-divider table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Channel</th>
+                            <th>Info</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="fira-code">#databases</td>
+                            <td>
+                                Discussion and questions relating to databases - both traditional and document-oriented -
+                                such as SQLite, Postgresql, RethinkDB, Cassandra, Redis and so on
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="fira-code">#data-science</td>
+                            <td>
+                                Discussion and questions relating to machine learning, natural language processing,
+                                statistics and graphing and so on
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="fira-code">#dev-ops</td>
+                            <td>
+                                Discussion and questions relating to devops - for example, deployment and configuration
+                                of services, virtual machines and containers, and the day-to-day running of your
+                                Python-powered services
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="fira-code">#discord-py</td>
+                            <td>
+                                Discussion and questions relating to the
+                                <a href="https://github.com/Rapptz/discord.py">discord.py</a> library for writing
+                                Discord bots in Python - This channel refers specifically to the
+                                <a href="https://discordpy.readthedocs.io/en/async/"><span class="fira-code">async</span> branch of discord.py</a>,
+                                which is currently the stable version but is heavily outdated
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="fira-code">#discord-py-rewrite</td>
+                            <td>
+                                Discussion and questions relating to the
+                                <a href="https://github.com/Rapptz/discord.py">discord.py</a> library for writing
+                                Discord bots in Python - This channel refers specifically to the
+                                <a href="https://discordpy.readthedocs.io/en/rewrite/"><span class="fira-code">rewrite</span> branch of discord.py</a>,
+                                which is the most up-to-date version but is considered to be in beta
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="fira-code">#guis</td>
+                            <td>
+                                Discussion and questions relating to designing and building graphical user interfaces
+                                in Python, and related libraries and tools
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="fira-code">#security</td>
+                            <td>
+                                Discussion and questions relating to cybersecurity, especially in relation to Python
+                                and best practises
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="fira-code">#web-development</td>
+                            <td>
+                                Discussion and questions relating to web development - including Python frameworks
+                                such as Flask and Django, as well as HTML and JavaScript where it related to the Web
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h2>Events</h2>
+
+                <p>
+                    Channels in this section are strictly on-topic, and designated for the discussion of Python-related
+                    events - for example, our <a href="{{ url_for("main.jams.index") }}">Code Jams</a>, as well as any
+                    other large, related events that many of our users are partaking in.
+                </p>
+                <p>
+                    If you're part of a related event and you don't see a channel for it here, feel free to ask for one!
+                </p>
+
+                <h2>Special</h2>
+
+                <p>
+                    Channels in this section are designated for special uses, and don't really fit into the other
+                    categories.
+                </p>
+
+                <table uk-table class="uk-table-striped uk-table uk-table-divider table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Channel</th>
+                            <th>Info</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="fira-code">#bot-commands</td>
+                            <td>
+                                A channel specifically for making use of the bots on the server without clogging up
+                                the other channels
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="fira-code">#checkpoint</td>
+                            <td>
+                                Invisible to most users after verifying themselves, this channel is where new
+                                users verify that they accept the rules and
+                                <a href="{{ url_for("main.about.privacy") }}">privacy policy</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="fira-code">#challenges</td>
+                            <td>
+                                While currently not in use, this channel lists various programming challenges that
+                                one might like to attempt during their learning efforts - we'll be replacing this
+                                with something better later, so stay tuned!
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="fira-code">#show-your-projects</td>
+                            <td>
+                                A listing channel for users to show off their Python-oriented projects - please note
+                                that this is not a discussion channel, and we do not allow postings for communities
+                                or commercial projects - and if possible, we prefer that you post a link to your
+                                source code instead of a website
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="fira-code">#show-your-projects-discussion</td>
+                            <td>
+                                Strictly on-topic discussion relating to projects posted in
+                                <span class="fira-code">#show-your-projects</span> - we prefer that all discussion
+                                relating to personal projects goes here
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h2>Minecraft</h2>
+
+                <p>
+                    Channels in this section are strictly related to
+                    <a href="{{ url_for("wiki.page", page="minecraft") }}">our Minecraft server</a> - while discussion
+                    is quite laid back, we do not allow users to advertise their own servers and prefer that they
+                    make use of the voice channels here for game-related voice chat.
+                </p>
+
+                <h2>Voice</h2>
+
+                <p>
+                    This section contains all of our general voice channels, as well as a single text channel -
+                    <span class="fira-code">#voice-chat</span>. If you're in a voice channel but can't use a
+                    microphone, you should use this channel to reply to other users using text instead of any
+                    of the other channels.
+                </p>
+            </article>
+        </div>
+    </div>
+{% endblock %}
