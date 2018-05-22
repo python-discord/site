@@ -200,6 +200,14 @@ tr.thick-bottom-border {
     border-bottom: 3px solid rgb(229, 229, 229) !important;
 }
 
+td.left-border, th.left-border {
+    border-left: 1px solid rgb(229, 229, 229) !important;
+}
+
+td.right-border, th.right-border {
+    border-right: 1px solid rgb(229, 229, 229) !important;
+}
+
 /* Fira Code stuff */
 
 @font-face {
@@ -214,5 +222,8 @@ tr.thick-bottom-border {
 
 .fira-code {
     font-family: 'Fira Code', "monospace", Fallback;
+}
+
+textarea.fira-code {
     line-height: 1.3 !important;
 }
