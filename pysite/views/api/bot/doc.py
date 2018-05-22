@@ -29,8 +29,8 @@ DELETE_SCHEMA = Schema([
 
 
 class DocView(APIView, DBMixin):
-    path = "/docs"
-    name = "api.bot.docs"
+    path = "/bot/docs"
+    name = "bot.docs"
     table_name = "pydoc_links"
 
     @api_key
