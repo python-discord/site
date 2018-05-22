@@ -199,3 +199,20 @@ table.table-bordered {
 tr.thick-bottom-border {
     border-bottom: 3px solid rgb(229, 229, 229) !important;
 }
+
+/* Fira Code stuff */
+
+@font-face {
+  font-family: 'Fira Code';
+
+  src: url('https://unpkg.com/firacode/distr/eot/FiraCode-Regular.eot');
+  src: url('https://unpkg.com/firacode/distr/eot/FiraCode-Regular.eot?#iefix') format('embedded-opentype'),
+       url('https://unpkg.com/firacode/distr/woff2/FiraCode-Regular.woff2') format('woff2'),
+       url('https://unpkg.com/firacode/distr/woff/FiraCode-Regular.woff') format('woff'),
+       url('https://unpkg.com/firacode/distr/ttf/FiraCode-Regular.ttf')  format('truetype');
+}
+
+.fira-code {
+    font-family: 'Fira Code', "monospace", Fallback;
+    line-height: 1.3 !important;
+}

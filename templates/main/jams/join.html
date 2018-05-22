@@ -84,9 +84,9 @@
 
             {% elif question.type == "textarea" %}
                 {% if question.optional %}
-                    <textarea class="uk-input uk-textarea" name="{{ question.id }}" id="{{ question.id }}" style="resize: vertical; min-height: 15rem; font-family: monospace;"></textarea>
+                    <textarea class="uk-input uk-textarea fira-code" name="{{ question.id }}" id="{{ question.id }}" style="resize: vertical; min-height: 15rem;"></textarea>
                 {% else %}
-                    <textarea class="uk-input uk-textarea" name="{{ question.id }}" id="{{ question.id }}" style="resize: vertical; min-height: 15rem; font-family: monospace;" required></textarea>
+                    <textarea class="uk-input uk-textarea fira-code" name="{{ question.id }}" id="{{ question.id }}" style="resize: vertical; min-height: 15rem;" required></textarea>
                 {% endif %}
 
             {% elif question.type == "slider" %}
