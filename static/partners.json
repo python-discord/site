@@ -23,10 +23,5 @@
     "banner": "/static/images/partners/stem.png",
     "description": "STEM is a growing server dedicated to discussion and education pertaining to subjects within the fields of Science, Technology, Engineering, and Mathematics. We aim to provide our members with an engaged, skilled, friendly community. We hope to see you soon!",
     "invite": "https://discord.gg/XBGetGp"
-  },
-  "Hacking - Coding": {
-    "banner": "/static/images/partners/hacking-coding.png",
-    "description": "Hacking-Coding is a server for discussions about ethical hacking, programming, and infosec in general. We have over 5,000 members. People of all skill levels are welcome to join.",
-    "invite": "https://discord.gg/0kvPIGKKEACoKQ8C"
   }
 }
