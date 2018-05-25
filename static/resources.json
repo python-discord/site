@@ -221,6 +221,17 @@
                     }
                 ]
             },
+            "Google's Python Class": {
+                "description": "A free class for people with a little bit of programming experience who want to learn Python.",
+                "payment": "free",
+                "urls": [
+                    {
+                        "icon": "regular/link",
+                        "title": "Website",
+                        "url": "https://developers.google.com/edu/python/"
+                    }
+                ]
+            },
             "Code Combat": {
                 "description": "Learn Python while gaming - an open-source project with thousands of contributors, which teaches you Python through a deep, top-down RPG.",
                 "payment": "optional",
