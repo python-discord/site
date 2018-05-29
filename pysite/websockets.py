@@ -1,3 +1,5 @@
+import json
+
 from flask import Blueprint
 from geventwebsocket.websocket import WebSocket
 
@@ -28,8 +30,16 @@ class WS:
     path = ""  # type: str
     name = ""  # type: str
 
+    _connections = None
+
     def __init__(self, socket: WebSocket):
         self.socket = socket
+
+    def __new__(cls, *args, **kwargs):
+        if cls._connections is None:
+            cls._connections = []
+
+        return super().__new__(cls)
 
     def on_open(self):
         """
@@ -58,6 +68,17 @@ class WS:
         if not self.socket.closed:
             self.socket.send(message, binary=binary)
 
+    def send_json(self, data):
+        return self.send(json.dumps(data))
+
+    def send_all(self, message, binary=None):
+        for connection in self._connections:
+            connection.send(message, binary=binary)
+
+    def send_all_json(self, data):
+        for connection in self._connections:
+            connection.send_json(data)
+
     @classmethod
     def setup(cls: "type(WS)", manager: "pysite.route_manager.RouteManager", blueprint: Blueprint):
         """
@@ -83,15 +104,18 @@ class WS:
             """
 
             ws = cls(socket)  # Instantiate the current class, passing it the WS object
+            cls._connections.append(ws)
+            try:
+                ws.on_open()  # Call the "on_open" handler
 
-            ws.on_open()  # Call the "on_open" handler
+                while not socket.closed:  # As long as the socket is open...
+                    message = socket.receive()  # Wait for a message
 
-            while not socket.closed:  # As long as the socket is open...
-                message = socket.receive()  # Wait for a message
+                    if not socket.closed:  # If the socket didn't just close (there's always a None message on closing)
+                        ws.on_message(message)  # Call the "on_message" handler
 
-                if not socket.closed:  # If the socket didn't just close (there's always a None message on closing)
-                    ws.on_message(message)  # Call the "on_message" handler
-
-            ws.on_close()  # The socket just closed, call the "on_close" handler
+                ws.on_close()  # The socket just closed, call the "on_close" handler
+            finally:
+                cls._connections.remove(ws)
 
         blueprint.route(cls.path)(handle)  # Register the handling function to the WS blueprint
