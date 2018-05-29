@@ -14,19 +14,25 @@
                     </a>
                 </h1>
                 <p class="uk-article-meta">
-                    Learn about the server, find links to our Partners, and more!
+                    Learn about the server, find links to our partners, and more!
                 </p>
                 <p>
-                    <strong>Server Partners</strong>
+                    <strong>Channels</strong>
+                    <a href="{{ url_for('main.about.channels') }}"><i class="fas fa-link"></i></a>
+                    <br />
+                    <span class="uk-text-meta">Server channel listings and information</span>
+                </p>
+                <p>
+                    <strong>Partners</strong>
                     <a href="{{ url_for('main.about.partners') }}"><i class="fas fa-link"></i></a>
                     <br />
-                    <span class="uk-text-meta">Links to our Partner servers!</span>
+                    <span class="uk-text-meta">Links to our partnered servers</span>
                 </p>
                 <p>
-                    <strong>Server Rules</strong>
+                    <strong>Rules</strong>
                     <a href="{{ url_for('main.about.rules') }}"><i class="fas fa-link"></i></a>
                     <br />
-                    <span class="uk-text-meta">Rules and infraction information for our server</span>
+                    <span class="uk-text-meta">Rules and infraction information for our community</span>
                 </p>
             </article>
         </div>
