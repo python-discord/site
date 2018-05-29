@@ -3,7 +3,7 @@ import logging
 
 from flask import Blueprint
 from geventwebsocket import WebSocketError
-from geventwebsocket.websocket import WebSocket, MSG_SOCKET_DEAD
+from geventwebsocket.websocket import WebSocket
 
 log = logging.getLogger(__name__)
 
