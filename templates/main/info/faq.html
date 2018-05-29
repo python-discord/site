@@ -1,0 +1,227 @@
+{% extends "main/base.html" %}
+{% block title %}FAQ{% endblock %}
+{% block og_title %}FAQ{% endblock %}
+{% block og_description %}Frequently Asked Questions{% endblock %}
+{% block content %}
+    <div class="uk-section">
+        <div class="uk-container uk-container-small">
+            <article class="uk-article">
+                <h1 class="uk-article-title hover-title" id="top">
+                    Frequently Asked Questions
+
+                    <a href="#top" class="uk-text-primary" title="Permanent link to this header">
+                        <i class="fas fa-paragraph" data-fa-transform="shrink-8"></i>
+                    </a>
+                </h1>
+                <p class="uk-article-meta">
+                    Insert witty quip here
+                </p>
+
+                <div uk-grid class="uk-grid uk-grid-divider uk-grid-match">
+                    <div class="uk-width-1-3@m">
+                        <strong>I'm new to Python - how/where do I get started?</strong>
+                    </div>
+                    <div class="uk-width-2-3@m">
+                        <p>
+                            How you get started with Python is very much going to depend on your prior programming
+                            experience. If you're already an experienced programmer, you should should have no
+                            trouble following pretty much any guide out there - but for true beginners, we recommend
+                            full-on tutorials such as Automate the Boring Stuff with Python.
+                        </p>
+                        <p>
+                            For more information on that and other resources, feel free to take a look at
+                            <a href="{{ url_for("main.info.resources") }}">our resources page</a>.
+                        </p>
+                    </div>
+
+                    <div class="uk-width-1-3@m">
+                        <strong>Should I start with Python 2 or Python 3? Which is better?</strong>
+                    </div>
+                    <div class="uk-width-2-3@m">
+                        <p>
+                            Generally, we're always going to recommend that people new to Python start with Python 3.
+                            There's a few reasons for this:
+                        </p>
+                        <ul>
+                            <li>
+                                Python 3 is the latest-and-greatest version. It gets all the new features and is in
+                                active development.
+                            </li>
+                            <li>
+                                Python 2 lacks many features available in Python 3 and is mechanically different in a
+                                few important areas.
+                            </li>
+                            <li>
+                                Python 2 is being sunset and will reach its end of life in 2020. It will not be
+                                maintained past 2020. There will be no Python 2.8.
+                            </li>
+                            <li>
+                                Most libraries now fully support Python 3, and many are dropping or have dropped support
+                                for Python 2.
+                            </li>
+                        </ul>
+
+                        <p>
+                            The only reason a user may want to stick with Python 2 is if they are stuck working a job
+                            with a legacy codebase that cannot or will not be updated to work with Python 3. To users
+                            in those situations: Commiserations.
+                        </p>
+                    </div>
+
+                    <div class="uk-width-1-3@m">
+                        <strong>What IDE/Editor should I use? Should I use an IDE if I'm a beginner?</strong>
+                    </div>
+                    <div class="uk-width-2-3@m">
+                        <p>
+                            If you're a beginner, you should not be using an IDE. This is because IDEs do a lot of
+                            basic things automatically where a beginner should learn to do things themselves - for
+                            example, some IDEs can generate huge chunks of code or catch beginner errors without you
+                            even noticing you'd made a typo.
+                        </p>
+                        <p>
+                            If you're not a beginner or you decide to try an IDE regardless, we heavily recommend
+                            <a href="https://www.jetbrains.com/pycharm/">PyCharm</a>. This is a well-known IDE which
+                            is entirely in a league of its own, and has a very capable free "community" edition that
+                            will serve most people's needs.
+                        </p>
+                        <p>
+                            We've listed off some of our favourite editors and IDEs on
+                            <a href="{{ url_for("main.info.resources") }}">our resources page</a>. Feel free to
+                            take a look if you're not sure what's out there.
+                        </p>
+                        <p>
+                            By the way, we host <a href="{{ url_for("main.jams.index") }}">quarterly code jams</a>
+                            for the users of our community, and the prize for winning it is a one-year PyCharm Pro
+                            license - sponsored by JetBrains. If you like PyCharm and are thinking of grabbing a copy
+                            of Pro, why not join in?
+                        </p>
+                    </div>
+
+                    <div uk-grid class="uk-grid uk-grid-divider uk-grid-match">
+                        <div class="uk-width-1-3@m">
+                            <strong>Why can't I import this module?</strong>
+                        </div>
+                        <div class="uk-width-2-3@m">
+                            <p>
+                                When finding yourself unable to import something in Python, you can follow these
+                                steps to figure it out:
+                            </p>
+                            <ul>
+                                <li>
+                                    Is the module part of <a href="https://docs.python.org/3/library/">Python's standard library</a>?
+                                </li>
+                                <li>
+                                    If not, have you installed it? If the module <a href="https://pypi.org/search/">is on PyPi</a>,
+                                    you can install it using pip in a terminal: <code>pip install module_name</code>
+                                </li>
+                                <li>
+                                    If you think you've installed it, try upgrading it with pip in a terminal:
+                                    <code>pip install -U module_name</code> - Make sure there were no errors during
+                                    installation
+                                </li>
+                                <li>
+                                    If all else fails, make sure you've read the module documentation fully, and ensure
+                                    that you're following it correctly
+                                </li>
+                                <li>
+                                    If you're sure that you've done everything correctly, you may have found a bug - come
+                                    and chat to us, and we might recommend that you report your problem to the developer
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div uk-grid class="uk-grid uk-grid-divider uk-grid-match">
+                        <div class="uk-width-1-3@m">
+                            <strong>If I type "python" or "pip" into a terminal, I get "command not found".</strong>
+                        </div>
+                        <div class="uk-width-2-3@m">
+                            <p>
+                                That's not a question, but there's a few things you can look at to try to solve this.
+                            </p>
+                            <ul>
+                                <li>
+                                    If you're on Windows, the python installer has an option labelled "Add to PATH" -
+                                    Make sure you check this when you install python. If you forgot to do that the
+                                    first time, then the easiest way to solve this problem is to reinstall Python
+                                </li>
+                                <li>
+                                    If you're on Windows, there's a good chance that <code>python</code> and
+                                    <code>pip</code> aren't what you actually need to run! Some options you could
+                                    try include <code>python3</code> or <code>python36</code> - if one of these works,
+                                    then you should be able to use <code>pip3</code> or <code>pip36</code> as well
+                                </li>
+                                <li>
+                                    If you're on a Mac, Python comes with the OS - however, it's quite likely to be
+                                    an old version. You can solve this by using <a href="https://brew.sh">Homebrew</a>
+                                    to install a more recent version of Python, which should be made available as
+                                    <code>python3</code>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div uk-grid class="uk-grid uk-grid-divider uk-grid-match">
+                        <div class="uk-width-1-3@m">
+                            <strong>What's PEP8? Should I care about code style?</strong>
+                        </div>
+                        <div class="uk-width-2-3@m">
+                            <p>
+                                <a href="https://www.python.org/dev/peps/pep-0008/">Python Enhancement Proposal #8</a>
+                                is known as the official Python style guide. It sets out a lot of very clear guidelines
+                                which help you structure your code.
+                            </p>
+                            <p>
+                                One of the most useful things you can do when writing your code is to follow a style
+                                guide. It makes it easier to read your code overall, but a consistent style guide
+                                is very important as it means that everyone that contributes to your project is
+                                writing code in the same style - meaning everyone will be able to read it. As PEP
+                                itself reads: "A foolish consistency is the hobgoblin of little minds".
+                            </p>
+                            <p>
+                                PEP8 isn't the only style guide available to you, but it is the most widely used
+                                and best-understood of them - and for that reason, we do recommend you use it. That
+                                said,
+                                <a href="https://google.github.io/styleguide/pyguide.html">Google's Python Style Guide</a>
+                                is also widely used by Google engineers.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div uk-grid class="uk-grid uk-grid-divider uk-grid-match">
+                        <div class="uk-width-1-3@m">
+                            <strong>Is python a good first language?</strong>
+                        </div>
+                        <div class="uk-width-2-3@m">
+                            <p>
+                                In our opinion, yes it is. It's a very powerful language, but it will force you to
+                                write readable code and it's designed to allow you to write code very quickly, without
+                                you having to keep your head in a book for hours on end.
+                            </p>
+                            <p>
+                                Python is used as a teaching language in many schools, colleges and universities - but
+                                it's a very capable language that is suitable for many real-world tasks as well, and
+                                it's only gaining in popularity!
+                            </p>
+                        </div>
+                    </div>
+
+                    <div uk-grid class="uk-grid uk-grid-divider uk-grid-match">
+                        <div class="uk-width-1-3@m">
+                            <strong>What does "real" Python development look like?</strong>
+                        </div>
+                        <div class="uk-width-2-3@m">
+                            <p>
+                                Python is a very versatile language, and a real-life application using it can take
+                                many forms. That said, we do plenty of Python development here ourselves. If
+                                you're curious about this question, then why not take a look at
+                                <a href="https://github.com/discord-python">our projects</a>?
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </article>
+        </div>
+    </div>
+{% endblock %}
