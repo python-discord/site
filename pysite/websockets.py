@@ -1,7 +1,11 @@
 import json
+import logging
 
 from flask import Blueprint
-from geventwebsocket.websocket import WebSocket
+from geventwebsocket import WebSocketError
+from geventwebsocket.websocket import WebSocket, MSG_SOCKET_DEAD
+
+log = logging.getLogger(__name__)
 
 
 class WS:
@@ -25,12 +29,17 @@ class WS:
 
     Please note that an instance of this class is created for every websocket connected to the path. This does, however,
     mean that you can store any state required by your websocket.
+
+    If you only want to ever have one connection on your websocket at a time, you can set the `exclusive` class
+    attribute to `True`.
     """
 
     path = ""  # type: str
     name = ""  # type: str
+    exclusive = False  # type: bool
 
     _connections = None
+    log = logging.getLogger(__name__)
 
     def __init__(self, socket: WebSocket):
         self.socket = socket
@@ -66,7 +75,12 @@ class WS:
         """
 
         if not self.socket.closed:
-            self.socket.send(message, binary=binary)
+            self.log.debug(f"Sending message: {message}")
+
+            try:
+                self.socket.send(message, binary=binary)
+            except Exception:
+                self.log.exception("Error sending message")
 
     def send_json(self, data):
         return self.send(json.dumps(data))
@@ -106,7 +120,15 @@ class WS:
             """
 
             ws = cls(socket)  # Instantiate the current class, passing it the WS object
-            cls._connections.append(ws)
+
+            if cls.exclusive:
+                for connection in cls._connections:
+                    connection.socket.close()
+
+                cls._connections = [ws]
+            else:
+                cls._connections.append(ws)
+
             try:
                 ws.on_open()  # Call the "on_open" handler
 
@@ -114,10 +136,21 @@ class WS:
                     message = socket.receive()  # Wait for a message
 
                     if not socket.closed:  # If the socket didn't just close (there's always a None message on closing)
-                        ws.on_message(message)  # Call the "on_message" handler
+                        try:
+                            ws.on_message(message)  # Call the "on_message" handler
+                        except Exception as e:
+                            if isinstance(e, WebSocketError):
+                                log.debug(e.args)
+
+                            log.exception("Failed to handle message")
+                            socket.close()
+                            break
 
                 ws.on_close()  # The socket just closed, call the "on_close" handler
             finally:
-                cls._connections.remove(ws)
+                if cls.exclusive:
+                    cls._connections = []
+                else:
+                    cls._connections.remove(ws)
 
         blueprint.route(cls.path)(handle)  # Register the handling function to the WS blueprint
