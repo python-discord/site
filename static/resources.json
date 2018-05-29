@@ -78,7 +78,7 @@
                     {
                         "icon": "regular/tablet-alt",
                         "title": "Kindle edition",
-                        "url": "https://www.amazon.com/Byte-Python-Swaroop-C-H-ebook/dp/B00FJ7S2JU/ref=sr_1_1?ie=UTF8&qid=1524816076&sr=8-1&keywords=a+byte+of+python"
+                        "url": "https://www.amazon.com/Byte-Python-Swaroop-C-H-ebook/dp/B00FJ7S2JU/"
                     }
                 ]
             },
@@ -95,7 +95,7 @@
                     {
                         "icon": "branding/amazon",
                         "title": "Amazon",
-                        "url": "http://www.amazon.com/gp/product/1593275994/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=1593275994&linkCode=as2&tag=playwithpyth-20&linkId=HDM7V3T6RHC5VVN4"
+                        "url": "https://www.amazon.com/Automate-Boring-Stuff-Python-Programming/dp/1593275994/"
                     }
                 ]
             },
@@ -148,7 +148,7 @@
                     {
                         "icon": "regular/link",
                         "title": "Website",
-                        "url": "https://www.safaribooksonline.com/library/view/fluent-python/9781491946237/"
+                        "url": "https://www.oreilly.com/library/view/fluent-python/9781491946237/"
                     },
                     {
                         "icon": "branding/amazon",
@@ -322,6 +322,11 @@
                         "icon": "regular/link",
                         "title": "Website",
                         "url": "https://code.visualstudio.com/"
+                    },
+                    {
+                        "icon": "branding/github",
+                        "title": "GitHub",
+                        "url": "https://github.com/Microsoft/vscode"
                     }
                 ]
             },
