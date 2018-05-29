@@ -81,6 +81,12 @@
                                 <li class="uk-nav-header"><a href="{{ url_for('main.info.index') }}">Information</a></li>
                             {% endif %}
 
+                            {% if current_page == "main.info.faq" %}
+                                <li class="uk-active"><a href="{{ url_for('main.info.faq') }}">FAQ</a></li>
+                            {% else %}
+                                <li><a href="{{ url_for('main.info.faq') }}">FAQ</a></li>
+                            {% endif %}
+
                             {% if current_page == "main.info.help" %}
                                 <li class="uk-active"><a href="{{ url_for('main.info.help') }}">Getting Help</a></li>
                             {% else %}
