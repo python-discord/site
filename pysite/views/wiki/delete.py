@@ -43,6 +43,11 @@ class DeleteView(RouteView, DBMixin):
         self.db.delete(self.table_name, page)
         self.db.delete(self.revision_table_name, page)
 
+        revisions = self.db.filter(self.revision_table_name, lambda revision: revision["slug"] == page)
+
+        for revision in revisions:
+            self.db.delete(self.revision_table_name, revision["id"])
+
         self.audit_log(obj)
 
         return redirect(url_for("wiki.page", page="home"), code=303)  # Redirect, ensuring a GET
