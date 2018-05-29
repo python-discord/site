@@ -56,6 +56,13 @@ class MoveView(RouteView, DBMixin):
 
         self.db.delete(self.table_name, page)
 
+        # Move all revisions for the old slug to the new slug.
+        revisions = self.db.filter(self.revision_table_name, lambda revision: revision["slug"] == obj["slug"])
+
+        for revision in revisions:
+            revision["slug"] = location
+            self.db.insert(self.revision_table_name, revision, conflict="update")
+
         obj["slug"] = location
 
         self.db.insert(self.table_name, obj, conflict="update")
