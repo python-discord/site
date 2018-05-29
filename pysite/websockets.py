@@ -71,12 +71,14 @@ class WS:
     def send_json(self, data):
         return self.send(json.dumps(data))
 
-    def send_all(self, message, binary=None):
-        for connection in self._connections:
+    @classmethod
+    def send_all(cls, message, binary=None):
+        for connection in cls._connections:
             connection.send(message, binary=binary)
 
-    def send_all_json(self, data):
-        for connection in self._connections:
+    @classmethod
+    def send_all_json(cls, data):
+        for connection in cls._connections:
             connection.send_json(data)
 
     @classmethod
