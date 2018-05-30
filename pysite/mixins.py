@@ -114,7 +114,6 @@ class RMQMixin:
         """
         Send some data to the RabbitMQ queue
 
-        >>> self.rmq_send(text="My hovercraft is full of eels.", source="Dirty Hungarian Phrasebook")
         >>> self.rmq_send({
         ...     "text": "My hovercraft is full of eels!",
         ...     "source": "Dirty Hungarian Phrasebook"
