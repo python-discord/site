@@ -122,7 +122,7 @@ BOT_EVENT_QUEUE = "bot_events"
 
 RMQ_USERNAME = environ.get("RABBITMQ_DEFAULT_USER") or "guest"
 RMQ_PASSWORD = environ.get("RABBITMQ_DEFAULT_PASS") or "guest"
-RMQ_HOST = "pdrmq" if not DEBUG_MODE else environ.get("RABBITMQ_HOST") or "localhost"
+RMQ_HOST = "localhost" if DEBUG_MODE else environ.get("RABBITMQ_HOST") or "pdrmq"
 RMQ_PORT = 5672
 
 # Channels
