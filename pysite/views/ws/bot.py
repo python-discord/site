@@ -54,6 +54,3 @@ class BotWebsocket(WS, DBMixin):
     def on_close(self):
         self.log.debug("Bot | WS closed.")
         self.do_changefeed = False
-
-    def send_json(self, data):
-        return self.send(json.dumps(data))
