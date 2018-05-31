@@ -54,11 +54,12 @@ def _when_ready(server=None, output_func=None):
                 producer = c.Producer()
                 producer.publish(
                     {
-                        "event": BotEventTypes.send_embed,
+                        "event": BotEventTypes.send_embed.value,
                         "data": {
                             "target": CHANNEL_DEV_LOGS,
                             "title": "Site Deployment",
                             "message": "The site has been deployed!"
                         }
                     },
-                    routing_key=BOT_EVENT_QUEUE)
+                    routing_key=BOT_EVENT_QUEUE
+                )
