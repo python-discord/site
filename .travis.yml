@@ -13,11 +13,13 @@ sudo: required
 
 services:
   - docker
+  - rabbitmq
 
 env:
   global:
     - PIPENV_VENV_IN_PROJECT=1
     - PIPENV_IGNORE_VIRTUALENVS=1
+    - RABBITMQ_HOST=localhost
 
 install:
   - pip install pipenv

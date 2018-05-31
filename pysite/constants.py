@@ -17,6 +17,16 @@ class ValidationTypes(Enum):
     params = "params"
 
 
+class BotEventTypes(Enum):
+    mod_log = "mod_log"
+
+    send_message = "send_message"
+    send_embed = "send_embed"
+
+    add_role = "add_role"
+    remove_role = "remove_role"
+
+
 DEBUG_MODE = "FLASK_DEBUG" in environ
 
 # All snowflakes should be strings as RethinkDB rounds them as ints
@@ -26,6 +36,7 @@ MODERATOR_ROLE = "267629731250176001"
 DEVOPS_ROLE = "409416496733880320"
 HELPER_ROLE = "267630620367257601"
 CONTRIB_ROLE = "295488872404484098"
+JAMMERS_ROLE = "423054537079783434 "
 
 ALL_STAFF_ROLES = (OWNER_ROLE, ADMIN_ROLE, MODERATOR_ROLE, DEVOPS_ROLE)
 TABLE_MANAGER_ROLES = (OWNER_ROLE, ADMIN_ROLE, DEVOPS_ROLE)
@@ -106,3 +117,14 @@ WIKI_AUDIT_WEBHOOK = environ.get("WIKI_AUDIT_WEBHOOK") or None
 
 # Bot key
 BOT_API_KEY = environ.get("BOT_API_KEY") or None
+
+# RabbitMQ settings
+BOT_EVENT_QUEUE = "bot_events"
+
+RMQ_USERNAME = environ.get("RABBITMQ_DEFAULT_USER") or "guest"
+RMQ_PASSWORD = environ.get("RABBITMQ_DEFAULT_PASS") or "guest"
+RMQ_HOST = "localhost" if DEBUG_MODE else environ.get("RABBITMQ_HOST") or "pdrmq"
+RMQ_PORT = 5672
+
+# Channels
+CHANNEL_MOD_LOG = 282638479504965634

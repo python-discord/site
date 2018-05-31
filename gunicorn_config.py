@@ -1,6 +1,10 @@
 import re
 
+from kombu import Connection
+
+from pysite.constants import RMQ_HOST, RMQ_PASSWORD, RMQ_PORT, RMQ_USERNAME
 from pysite.migrations.runner import run_migrations
+from pysite.queues import QUEUES
 
 STRIP_REGEX = re.compile(r"<[^<]+?>")
 WIKI_TABLE = "wiki"
@@ -34,3 +38,11 @@ def _when_ready(server=None, output_func=None):
         output(f"Created the following tables: {tables}")
 
     run_migrations(db, output=output)
+
+    output("Declaring RabbitMQ queues...")
+
+    with Connection(hostname=RMQ_HOST, userid=RMQ_USERNAME, password=RMQ_PASSWORD, port=RMQ_PORT) as c:
+        with c.channel() as channel:
+            for name, queue in QUEUES.items():
+                queue.declare(channel=channel)
+                output(f"Queue declared: {name}")
