@@ -3,9 +3,9 @@ import re
 from kombu import Connection
 
 from pysite.constants import (
-    BOT_EVENT_QUEUE, BotEventTypes, DEBUG_MODE,
-    RMQ_HOST, RMQ_PASSWORD, RMQ_PORT, RMQ_USERNAME,
-    CHANNEL_DEV_LOGS)
+    BOT_EVENT_QUEUE, BotEventTypes, CHANNEL_DEV_LOGS, DEBUG_MODE,
+    RMQ_HOST, RMQ_PASSWORD, RMQ_PORT, RMQ_USERNAME
+)
 from pysite.migrations.runner import run_migrations
 from pysite.queues import QUEUES
 
