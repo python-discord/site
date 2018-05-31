@@ -58,7 +58,7 @@ def _when_ready(server=None, output_func=None):
                         "data": {
                             "target": CHANNEL_DEV_LOGS,
                             "title": "Site Deployment",
-                            "message": "The site has been deployed!"
+                            "description": "The site has been deployed!"
                         }
                     },
                     routing_key=BOT_EVENT_QUEUE
