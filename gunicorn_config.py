@@ -2,7 +2,10 @@ import re
 
 from kombu import Connection
 
-from pysite.constants import RMQ_HOST, RMQ_PASSWORD, RMQ_PORT, RMQ_USERNAME
+from pysite.constants import (
+    BOT_EVENT_QUEUE, BotEventTypes, DEBUG_MODE,
+    RMQ_HOST, RMQ_PASSWORD, RMQ_PORT, RMQ_USERNAME,
+    CHANNEL_DEV_LOGS)
 from pysite.migrations.runner import run_migrations
 from pysite.queues import QUEUES
 
@@ -46,3 +49,16 @@ def _when_ready(server=None, output_func=None):
             for name, queue in QUEUES.items():
                 queue.declare(channel=channel)
                 output(f"Queue declared: {name}")
+
+            if not DEBUG_MODE:
+                producer = c.Producer()
+                producer.publish(
+                    {
+                        "event": BotEventTypes.send_embed,
+                        "data": {
+                            "target": CHANNEL_DEV_LOGS,
+                            "title": "Site Deployment",
+                            "message": "The site has been deployed!"
+                        }
+                    },
+                    routing_key=BOT_EVENT_QUEUE)
