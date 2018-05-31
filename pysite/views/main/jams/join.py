@@ -4,11 +4,12 @@ from flask import redirect, request, url_for
 from werkzeug.exceptions import BadRequest, NotFound
 
 from pysite.base_route import RouteView
+from pysite.constants import BotEventTypes
 from pysite.decorators import csrf
-from pysite.mixins import DBMixin, OAuthMixin
+from pysite.mixins import DBMixin, OAuthMixin, RMQMixin
 
 
-class JamsJoinView(RouteView, DBMixin, OAuthMixin):
+class JamsJoinView(RouteView, DBMixin, OAuthMixin, RMQMixin):
     path = "/jams/join/<int:jam>"
     name = "jams.join"
 
@@ -82,6 +83,7 @@ class JamsJoinView(RouteView, DBMixin, OAuthMixin):
 
         for infraction in infractions:
             if infraction["number"] == -1:  # Indefinite ban
+                self.log_banned(infraction["number"], infraction["reason"])
                 return self.render("main/jams/banned.html", infraction=infraction)
 
             if infraction["number"]:  # Got some jams left
@@ -92,10 +94,12 @@ class JamsJoinView(RouteView, DBMixin, OAuthMixin):
 
                     self.db.insert(self.infractions_table, infraction, conflict="replace")
 
+                self.log_banned(infraction["number"], infraction["reason"])
                 return self.render("main/jams/banned.html", infraction=infraction, jam=jam_obj)
 
             if jam in infraction["decremented_for"]:
                 # They already tried to apply for this jam
+                self.log_banned(infraction["number"], infraction["reason"])
                 return self.render("main/jams/banned.html", infraction=infraction, jam=jam_obj)
 
         participant = self.db.get(self.participants_table, self.user_data["user_id"])
@@ -173,6 +177,8 @@ class JamsJoinView(RouteView, DBMixin, OAuthMixin):
         }
 
         self.db.insert(self.responses_table, response)
+        self.log_success()
+
         return self.render("main/jams/thanks.html", jam=jam_obj)
 
     def get_response(self, jam, user_id):
@@ -186,3 +192,43 @@ class JamsJoinView(RouteView, DBMixin, OAuthMixin):
     def get_infractions(self, user_id):
         query = self.db.query(self.infractions_table).filter({"participant": user_id})
         return self.db.run(query, coerce=list)
+
+    def log_banned(self, number, reason):
+        user_data = self.user_data
+
+        user_id = user_data["user_id"]
+        username = user_data["username"]
+        discriminator = user_data["discriminator"]
+
+        message = f"Failed code jam signup from banned user: {user_id} ({username}#{discriminator})\n\n"
+
+        if number == -1:
+            message += f"This user has been banned indefinitely. Reason: '{reason}'"
+        elif number < 1:
+            message += f"This application has expired the infraction. Reason: '{reason}'"
+        else:
+            message += f"This user has {number} more applications left before they're unbanned. Reason: '{reason}'"
+
+        self.rmq_bot_event(
+            BotEventTypes.mod_log,
+            {
+                "level": "warning", "title": "Code Jams: Applications",
+                "message": message
+            }
+        )
+
+    def log_success(self):
+        user_data = self.user_data
+
+        user_id = user_data["user_id"]
+        username = user_data["username"]
+        discriminator = user_data["discriminator"]
+
+        self.rmq_bot_event(
+            BotEventTypes.mod_log,
+            {
+                "level": "info", "title": "Code Jams: Applications",
+                "message": f"Successful code jam signup from user: {user_id} "
+                           f"({username}#{discriminator})"
+            }
+        )
