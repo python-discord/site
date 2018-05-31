@@ -23,7 +23,7 @@ class BotEventTypes(Enum):
     send_message = "send_message"
     send_embed = "send_embed"
 
-    add_role = "ensure_role"
+    add_role = "add_role"
     remove_role = "remove_role"
 
 
@@ -36,6 +36,7 @@ MODERATOR_ROLE = "267629731250176001"
 DEVOPS_ROLE = "409416496733880320"
 HELPER_ROLE = "267630620367257601"
 CONTRIB_ROLE = "295488872404484098"
+JAMMERS_ROLE = "423054537079783434 "
 
 ALL_STAFF_ROLES = (OWNER_ROLE, ADMIN_ROLE, MODERATOR_ROLE, DEVOPS_ROLE)
 TABLE_MANAGER_ROLES = (OWNER_ROLE, ADMIN_ROLE, DEVOPS_ROLE)

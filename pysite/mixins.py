@@ -13,6 +13,15 @@ from pysite.database import RethinkDB
 from pysite.oauth import OAuthBackend
 
 
+BOT_EVENT_REQUIRED_PARAMS = {
+    "mod_log": ("level", "title", "message"),
+    "send_message": ("target", "message"),
+    "send_embed": ("target",),
+    "add_role": ("target", "role_id", "reason"),
+    "remove_role": ("target", "role_id", "reason")
+}
+
+
 class DBMixin:
     """
     Mixin for classes that make use of RethinkDB. It can automatically create a table with the specified primary
@@ -147,8 +156,15 @@ class RMQMixin:
         if not isinstance(event_type, BotEventTypes):
             raise ValueError("`event_type` must be a member of the the `pysite.constants.BotEventTypes` enum")
 
+        event_type = event_type.value
+        required_params = BOT_EVENT_REQUIRED_PARAMS[event_type]
+
+        for param in required_params:
+            if param not in data:
+                raise KeyError(f"Event is missing required parameter: {param}")
+
         return self.rmq_send(
-            {"event": event_type.value, "data": data},
+            {"event": event_type, "data": data},
             routing_key=BOT_EVENT_QUEUE,
         )
 
