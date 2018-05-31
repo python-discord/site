@@ -112,7 +112,6 @@ TABLES = {
         primary_key="id",
         keys=sorted([
             "id",  # str
-            "dob",  # str
             "github_username",  # str
             "timezone"  # str
         ])

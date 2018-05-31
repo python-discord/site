@@ -1,5 +1,3 @@
-import datetime
-
 from flask import redirect, request, url_for
 from werkzeug.exceptions import BadRequest
 
@@ -47,24 +45,12 @@ class JamsProfileView(RouteView, DBMixin, OAuthMixin):
         if not participant:
             participant = {"id": self.user_data["user_id"]}
 
-        dob = request.form.get("dob")
         github_username = request.form.get("github_username")
         timezone = request.form.get("timezone")
 
-        if not dob or not github_username or not timezone:
+        if not github_username or not timezone:
             return BadRequest()
 
-        # Convert given datetime strings into actual objects, adding timezones to keep rethinkdb happy
-        dob = datetime.datetime.strptime(dob, "%Y-%m-%d")
-        dob = dob.replace(tzinfo=datetime.timezone.utc)
-
-        now = datetime.datetime.now(tz=datetime.timezone.utc)
-        then = now.replace(year=now.year - 13)
-
-        if then < dob:
-            raise BadRequest()  # They're too young, but this is validated on the form
-
-        participant["dob"] = dob
         participant["github_username"] = github_username
         participant["timezone"] = timezone
 
