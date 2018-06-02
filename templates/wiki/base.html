@@ -33,7 +33,7 @@
             <div class="uk-flex uk-flex-row uk-flex-1">
                 <div class="uk-card uk-card-body uk-flex-left uk-flex uk-card-primary">
                     <ul class="uk-nav-default uk-nav-parent-icon" uk-nav id="wiki-nav">
-                        {% if data is defined %}
+                        {% if data is defined and page == "wiki.page" %}
                             {% if "headers" in data and data.headers %}
                                 <li class="uk-nav-header">Contents</li>
                                 {% for header in data.headers %}
@@ -57,6 +57,8 @@
                                 <li class="uk-nav-divider"></li>
                             {% endif %}
                         {% endif %}
+                        <li class="uk-nav-header">Pages</li>
+
                         <li><a href="{{ url_for("wiki.page", page="home") }}">
                             <i class="uk-icon fas fa-fw fa-home"></i> &nbsp;Home
                         </a></li>
@@ -75,10 +77,12 @@
                                 "wiki.history.compare", "wiki.source", "wiki.delete",
                                 "wiki.move"
                         ] %}
-                        {% set actionable = current_page in ACTIONABLE_PAGES %}
+                        {% set actionable = can_edit and current_page in ACTIONABLE_PAGES %}
 
                         {% if actionable %}
                             <li class="uk-nav-divider"></li>
+
+                            <li class="uk-nav-header">Actions</li>
 
                             {% if current_page == "wiki.edit" %}
                                 <li>
@@ -158,6 +162,7 @@
                         {% endif %}
 
                         <li class="uk-nav-divider"></li>
+                        <li class="uk-nav-header">Information</li>
 
                         <li><a href="{{ url_for("wiki.special") }}">
                             <i class="uk-icon fas fa-fw fa-ellipsis-h"></i> &nbsp;Special Pages
