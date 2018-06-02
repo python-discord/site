@@ -188,11 +188,13 @@
                         </li>
                     </ul>
                 </div>
-                <a class="uk-flex-left uk-flex uk-flex-column uk-background-primary uk-hidden@s uk-hidden@m uk-hidden@l uk-hidden@xl" id="wiki-sidebar-button">
-                    <div class="uk-flex-center"><i class="uk-icon fa-fw far fa-bars"></i></div>
-                </a>
-                <div class="uk-section uk-flex uk-flex-column" style="flex-grow: 1; margin: 0 1rem 1rem; width: calc(100% - 6rem)">
-                    {% block content %}{% endblock %}
+                    <div style="width: 100%;">
+                    <a class="uk-flex-left uk-flex uk-flex-column uk-background-primary uk-hidden@s uk-hidden@m uk-hidden@l uk-hidden@xl" id="wiki-sidebar-button">
+                        <div class="uk-flex-center"><i class="uk-icon fa-fw far fa-bars"></i></div>
+                    </a>
+                    <div class="uk-section uk-flex uk-flex-column" style="flex-grow: 1; margin: 0 1rem 1rem;">
+                        {% block content %}{% endblock %}
+                    </div>
                 </div>
             </div>
         </div>
