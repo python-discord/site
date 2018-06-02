@@ -249,7 +249,7 @@ textarea.fira-code {
 }
 
 #doc-view div {
-    width: calc(100% - 6rem);
+    width: calc(100% - 2rem);
 }
 
 @media (max-width: 639px) {
