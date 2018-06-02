@@ -244,6 +244,6 @@ textarea.fira-code {
     border: 1px solid rgba(0, 0, 0, 0.11);
 }
 
-.code{
-    overflow-x: scroll;
+.code {
+    overflow-x: auto;
 }
