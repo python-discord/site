@@ -1,10 +1,11 @@
+import datetime
 from email.utils import parseaddr
 
 from flask import redirect, request, url_for
 from werkzeug.exceptions import BadRequest, NotFound
 
 from pysite.base_route import RouteView
-from pysite.constants import BotEventTypes
+from pysite.constants import BotEventTypes, CHANNEL_JAM_LOGS
 from pysite.decorators import csrf
 from pysite.mixins import DBMixin, OAuthMixin, RMQMixin
 
@@ -230,5 +231,17 @@ class JamsJoinView(RouteView, DBMixin, OAuthMixin, RMQMixin):
                 "level": "info", "title": "Code Jams: Applications",
                 "message": f"Successful code jam signup from user: {user_id} "
                            f"({username}#{discriminator})"
+            }
+        )
+
+        self.rmq_bot_event(
+            BotEventTypes.send_embed,
+            {
+                "target": CHANNEL_JAM_LOGS,
+                "title": "Code Jams: Applications",
+                "message": f"Successful code jam signup from user: {user_id} "
+                           f"({username}#{discriminator})",
+                "colour": 0x2ecc71,  # Green from d.py
+                "timestamp": datetime.datetime.now().isoformat()
             }
         )
