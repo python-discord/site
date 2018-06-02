@@ -33,7 +33,7 @@
             <div class="uk-flex uk-flex-row uk-flex-1">
                 <div class="uk-card uk-card-body uk-flex-left uk-flex uk-card-primary">
                     <ul class="uk-nav-default uk-nav-parent-icon" uk-nav id="wiki-nav">
-                        {% if data is defined and page == "wiki.page" %}
+                        {% if data is defined and current_page == "wiki.page" %}
                             {% if "headers" in data and data.headers %}
                                 <li class="uk-nav-header">Contents</li>
                                 {% for header in data.headers %}
