@@ -232,6 +232,10 @@ textarea.fira-code {
     transition: width ease 1s;
 }
 
+#wiki-page {
+    overflow-x: hidden;
+}
+
 #wiki-sidebar-button {
     color: white;
     height: 3rem;

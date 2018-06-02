@@ -28,7 +28,7 @@
         {% endblock %}
     </head>
     <body class="page-{{ current_page.replace(".", "-") }}">
-        <div class="uk-offcanvas-content uk-flex uk-flex-column">
+        <div class="uk-offcanvas-content uk-flex uk-flex-column" id="wiki-page">
             {% include "main/navigation.html" %}
             <div class="uk-flex uk-flex-row uk-flex-1">
                 <div class="uk-card uk-card-body uk-flex-left uk-flex uk-card-primary uk-visible@s" id="wiki-sidebar">
