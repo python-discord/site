@@ -28,12 +28,12 @@
         {% endblock %}
     </head>
     <body class="page-{{ current_page.replace(".", "-") }}">
-        <div class="uk-offcanvas-content uk-flex uk-flex-column">
+        <div class="uk-offcanvas-content uk-flex uk-flex-column" id="wiki-page">
             {% include "main/navigation.html" %}
             <div class="uk-flex uk-flex-row uk-flex-1">
-                <div class="uk-card uk-card-body uk-flex-left uk-flex uk-card-primary">
+                <div class="uk-card uk-card-body uk-flex-left uk-flex uk-card-primary uk-visible@s" id="wiki-sidebar">
                     <ul class="uk-nav-default uk-nav-parent-icon" uk-nav id="wiki-nav">
-                        {% if data is defined %}
+                        {% if data is defined and current_page == "wiki.page" %}
                             {% if "headers" in data and data.headers %}
                                 <li class="uk-nav-header">Contents</li>
                                 {% for header in data.headers %}
@@ -57,6 +57,8 @@
                                 <li class="uk-nav-divider"></li>
                             {% endif %}
                         {% endif %}
+                        <li class="uk-nav-header">Pages</li>
+
                         <li><a href="{{ url_for("wiki.page", page="home") }}">
                             <i class="uk-icon fas fa-fw fa-home"></i> &nbsp;Home
                         </a></li>
@@ -75,10 +77,12 @@
                                 "wiki.history.compare", "wiki.source", "wiki.delete",
                                 "wiki.move"
                         ] %}
-                        {% set actionable = current_page in ACTIONABLE_PAGES %}
+                        {% set actionable = can_edit and current_page in ACTIONABLE_PAGES %}
 
                         {% if actionable %}
                             <li class="uk-nav-divider"></li>
+
+                            <li class="uk-nav-header">Actions</li>
 
                             {% if current_page == "wiki.edit" %}
                                 <li>
@@ -158,6 +162,7 @@
                         {% endif %}
 
                         <li class="uk-nav-divider"></li>
+                        <li class="uk-nav-header">Information</li>
 
                         <li><a href="{{ url_for("wiki.special") }}">
                             <i class="uk-icon fas fa-fw fa-ellipsis-h"></i> &nbsp;Special Pages
@@ -183,8 +188,13 @@
                         </li>
                     </ul>
                 </div>
-                <div class="uk-section" style="flex-grow: 1; margin: 0 1rem 1rem;">
-                    {% block content %}{% endblock %}
+                <div style="width: 100%;">
+                    <a class="uk-flex-left uk-flex uk-flex-column uk-background-primary uk-hidden@s uk-hidden@m uk-hidden@l uk-hidden@xl" id="wiki-sidebar-button">
+                        <div class="uk-flex-center"><i class="uk-icon fa-fw far fa-bars"></i></div>
+                    </a>
+                    <div class="uk-section uk-flex uk-flex-column" style="flex-grow: 1; margin: 0 1rem 1rem;">
+                        {% block content %}{% endblock %}
+                    </div>
                 </div>
             </div>
         </div>
@@ -204,5 +214,6 @@
         </footer>
 
         <script src='{{ static_file('js/countdown.js') }}'></script>
+        <script src='{{ static_file('js/wiki.js') }}'></script>
     </body>
 </html>
