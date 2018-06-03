@@ -5,8 +5,6 @@
 {% block beta_error %}{% endblock %}
 
 {% block extra_head %}
-    <link href="{{ static_file('css/bundled/window.css') }}" rel="stylesheet" type="text/css"/>
-
     <script>
         window._RequestMethod = "{{ request.method.lower() }}";
         window._Code = {{ code }};

@@ -2,8 +2,9 @@
   General imports, for styles that apply to all pages
 */
 
-@import "uikit_shim";
 @import "fonts";
+@import "mixins";
+@import "uikit_shim";
 
 /*
   Page-specific styling imports
@@ -32,6 +33,7 @@
   If you do this, make sure you document it on the wiki!
 */
 
+@import "pages/errors";
 @import "pages/partners";
 @import "pages/resources";
 @import "pages/rst";

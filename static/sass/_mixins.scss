@@ -1,0 +1,34 @@
+@mixin linear-gradient-background($base-colour, $start-colour, $end-colour) {
+  // Apply a linear gradient background to a selector
+
+  background: $base-colour;
+  background: -webkit-linear-gradient(top, $start-colour 3%, $end-colour 100%);
+  background:    -moz-linear-gradient(top, $start-colour 3%, $end-colour 100%);
+  background:     -ms-linear-gradient(top, $start-colour 3%, $end-colour 100%);
+  background:      -o-linear-gradient(top, $start-colour 3%, $end-colour 100%);
+  background:        -webkit-gradient(linear, top, bottom, color-stop(3%, $start-colour), color-stop(100%, $end-colour));
+  background:         linear-gradient(to bottom, $start-colour 3%, $end-colour 100%);
+
+  // Why is this a thing?
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{$base-colour}', endColorstr='#{$end-colour}', GradientType=0);
+}
+
+@mixin box-shadow($offset-x, $offset-y, $colour, $blur-radius: 0, $spread-radius: 0) {
+  // Apply a box shadow to a selector
+  -webkit-box-shadow: $offset-x $offset-y $blur-radius $spread-radius $colour;
+     -moz-box-shadow: $offset-x $offset-y $blur-radius $spread-radius $colour;
+          box-shadow: $offset-x $offset-y $blur-radius $spread-radius $colour;
+}
+
+@mixin inset-box-shadow($offset-x, $offset-y, $colour, $blur-radius: 0, $spread-radius: 0) {
+  // Apply an inset box shadow to a selector
+  -webkit-box-shadow: inset $offset-x $offset-y $blur-radius $spread-radius $colour;
+     -moz-box-shadow: inset $offset-x $offset-y $blur-radius $spread-radius $colour;
+          box-shadow: inset $offset-x $offset-y $blur-radius $spread-radius $colour;
+}
+
+@mixin border-radius($radius) {
+  -webkit-border-radius: $radius;
+     -moz-border-radius: $radius;
+          border-radius: $radius;
+}

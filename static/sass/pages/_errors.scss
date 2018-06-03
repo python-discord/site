@@ -1,0 +1,272 @@
+/*
+  Page-specific styling for all error pages
+*/
+
+@import "../mixins";
+
+$page_classes: (
+  blueprint-error,  // All error pages
+);
+
+@each $class in $page_classes {
+  .#{$class} {
+    .window {
+      @include border-radius(4px);
+      @include box-shadow(0, 4px, rgba(0, 0, 0, .5), 12px);
+
+      border: 1px solid #C1C2C2;
+      height: 500px;
+      margin: 20px auto auto;
+      padding-bottom: 20px;
+      width: 100%;
+    }
+
+    .inside {
+      background: black;
+      height: 100%;
+      padding-right: 20px;
+
+      .blok {
+        background: black;
+        width: 100%;
+      }
+    }
+
+    .top {
+      @include linear-gradient-background(#f1f1f1, #E9E9E9, #d8d8d8);
+      @include inset-box-shadow(0px, 1px, rgba(255, 255, 255, 0.76), 1px, 0px);
+
+      border-bottom: 2px solid #BDBCC1;
+      overflow: hidden;
+      padding: 7px 0;
+      position: relative;
+
+      > div {
+        float: left;
+      }
+    }
+
+    .panel {
+      padding-left: 9px;
+      padding-top: 2px;
+
+      > span {
+        @include border-radius(6px);
+
+        cursor: pointer;
+        display: inline-block;
+        float: left;
+        height: 12px;
+        margin-right: 7px;
+        width: 12px;
+      }
+
+      span.first {
+        background: #FF5F4F;
+      }
+
+      span.second {
+        background: #F9C206;
+      }
+      span.third {
+        background: #19CC32;
+      }
+    }
+
+    .nav {
+      overflow: hidden;
+
+      &.right {
+        float: right !important;
+        margin-right: 35px;
+      }
+
+      .nav span {
+        &.tabs {
+          padding: 0;
+          position: relative;
+          width: 26px;
+
+          span {
+            background: #FBFBFB;
+            border: 1px solid #B4B4B4;
+            display: inline-block;
+            height: 7px;
+            position: absolute;
+            width: 7px;
+
+            &.front {
+              top: 8px;
+              left: 6px;
+              z-index: 6;
+            }
+
+            &.behind {
+              top: 6px;
+              left: 8px;
+              z-index: 5;
+            }
+          }
+
+          &:hover span {
+            border: 1px solid #666;
+          }
+        }
+
+        &.share {
+          margin-right: 7px;
+
+          > i.fa {
+            font-size: 11px;
+            position: relative;
+            top: 2px;
+          }
+        }
+      }
+
+      > span {
+        @include border-radius(4px);
+
+        background: #FBFBFB;
+        border-bottom: 1px solid #CECECE;
+        color: #B4B4B4;
+        cursor: pointer;
+        display: inline-block;
+        float: left;
+        height: 23px;
+        padding: 0 8px;
+
+        &:hover {
+          background: #f2f2f2;
+          color: #666;
+        }
+
+        &.active {
+          color: #707070;
+        }
+
+        &.prev {
+          margin-left: 7px;
+          margin-right: 1px;
+        }
+
+        &.next {
+          margin-right: 7px;
+        }
+
+        &.set i {
+          font-size: 14px;
+          position: relative;
+          top: 3px;
+        }
+
+        &.address {
+          background: #fff;
+          display: inline-block;
+          line-height: 23px;
+          margin-left: 75px;
+          padding: 0;
+          position: relative;
+          text-align: center;
+          width: 400px;
+
+          > i.fa {
+            color: #010101;
+            font-size: 11px;
+            position: absolute;
+            right: 5px;
+            top: 7px;
+          }
+
+          > input {
+            background: none;
+            border: none;
+            color: #505050;
+            font-size: 12px;
+            position: relative;
+            text-align: center;
+            width: 300px;
+
+            &:focus {
+              outline: none;
+            }
+
+            &.class {
+              text-align: left;
+            }
+          }
+        }
+
+        i.fa {
+          font-size: 23px;
+        }
+      }
+    }
+
+    span.new {
+      background: #CACACA;
+      border-top: 1px solid #C1C2C2;
+      border-left: 1px solid #C1C2C2;
+      bottom: 0;
+      cursor: pointer;
+      height: 23px;
+      line-height: 23px;
+      position: absolute;
+      right: 0;
+      text-align: center;
+      width: 23px;
+
+      &:hover {
+        @include inset-box-shadow(0px, 1px, 1px, 0px, rgba(0, 0, 0, 0.1));
+      }
+
+      .plus {
+        background: #b0b0b0;
+        display: inline-block;
+        position: absolute;
+
+        &.x {
+          height: 1px;
+          left: 0;
+          margin: auto;
+          right: 0;
+          top: 12px;
+          width: 14px;
+        }
+
+        &.y {
+          bottom: 0;
+          height: 14px;
+          margin: auto;
+          top: 0;
+          width: 1px;
+        }
+      }
+    }
+
+    #terminal {
+      height: 100%;
+      width: 100%;
+    }
+
+    pre {
+      border: 0;
+      border-radius: 3px;
+    }
+
+    .uk-background-muted, .error-header {
+      background-color: #e8e8e8 !important;
+    }
+
+    code, pre {
+      overflow-wrap: break-word;
+      width: 100%;
+      word-wrap: break-word;
+    }
+
+    #terminal {
+      background-color: black;
+      color: white;
+    }
+  }
+}
