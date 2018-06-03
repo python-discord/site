@@ -1,6 +1,7 @@
 {% extends "main/base.html" %}
 {% block title %}Code Jams | Join{% endblock %}
 {% block og_title %}Code Jams | Join{% endblock %}
+{% block page_classes %}uses-rst{% endblock %}
 
 {% macro show_question(question) %}
     <div id="div-{{ question.id }}">

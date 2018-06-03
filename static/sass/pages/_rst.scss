@@ -4,14 +4,7 @@
 */
 
 $page_classes: (
-  page-main-jams-index,  // Jams overview page
-  page-main-jams-join,  // Jams signup form
-  page-wiki-edit,  // Wiki page editor
-  page-wiki-page,  // Wiki page view
-  page-staff-jams-edit-basics,  // Code jams: Edit basic info
-  page-staff-jams-edit-ending,  // Code jams: Edit ending comments
-  page-staff-jams-edit-info,  // Code jams: Edit main info
-  page-staff-jams-forms-preamble-edit,  // Code jams: Edit form preamble
+  uses-rst,  // All pages that declare their use of the RST parser
 );
 
 @each $class in $page_classes {

@@ -2,9 +2,12 @@
 {% block title %}Wiki | Edit: {{ page }}{% endblock %}
 {% block og_title %}Wiki | Edit: {{ page }}{% endblock %}
 {% block og_description %}{% endblock %}
+
+{% block page_classes %}uses-rst{% endblock %}
 {% block extra_head %}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.3.3/ace.js" type="application/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.3.3/ace.js" type="application/javascript"></script>
 {% endblock %}
+
 {% block content %}
     <form uk-grid class="uk-grid-small" action="{{ url_for("wiki.edit", page=page) }}" method="post">
         <div class="uk-width-expand">
