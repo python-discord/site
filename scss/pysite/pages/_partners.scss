@@ -8,9 +8,9 @@ $page_classes: (
 
 @each $class in $page_classes {
   .#{$class} {
-    div#partner-cards div.uk-card-default {
+    #partner-cards .uk-card-default {
       margin-top: 2em;
-      text-align:center;
+      text-align: center;
     }
   }
 }

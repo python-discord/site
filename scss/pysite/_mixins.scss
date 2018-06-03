@@ -1,34 +1,43 @@
-@mixin linear-gradient-background($base-colour, $start-colour, $end-colour) {
-  // Apply a linear gradient background to a selector
+// scss-lint:disable VendorPrefix
 
-  background: $base-colour;
-  background: -webkit-linear-gradient(top, $start-colour 3%, $end-colour 100%);
-  background:    -moz-linear-gradient(top, $start-colour 3%, $end-colour 100%);
-  background:     -ms-linear-gradient(top, $start-colour 3%, $end-colour 100%);
-  background:      -o-linear-gradient(top, $start-colour 3%, $end-colour 100%);
-  background:        -webkit-gradient(linear, top, bottom, color-stop(3%, $start-colour), color-stop(100%, $end-colour));
-  background:         linear-gradient(to bottom, $start-colour 3%, $end-colour 100%);
+@mixin linear_gradient_background($base_colour, $start_colour, $end_colour) {
+  // Apply a linear gradient background to a selector
+  // scss-lint:disable DuplicateProperty NameFormat
+
+  background: $base_colour;
+  background: -webkit-linear-gradient(top, $start_colour 3%, $end_colour 100%);
+  background: -moz-linear-gradient(top, $start_colour 3%, $end_colour 100%);
+  background: -ms-linear-gradient(top, $start_colour 3%, $end_colour 100%);
+  background: -o-linear-gradient(top, $start_colour 3%, $end_colour 100%);
+  background: -webkit-gradient(linear, top, bottom, color-stop(3%, $start_colour), color-stop(100%, $end_colour));
+  background: linear-gradient(to bottom, $start_colour 3%, $end_colour 100%);
 
   // Why is this a thing?
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{$base-colour}', endColorstr='#{$end-colour}', GradientType=0);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{$base_colour}', endColorstr='#{$end_colour}', GradientType=0);
 }
 
-@mixin box-shadow($offset-x, $offset-y, $colour, $blur-radius: 0, $spread-radius: 0) {
+@mixin box_shadow($offset_x, $offset_y, $colour, $blur_radius: 0, $spread_radius: 0) {
   // Apply a box shadow to a selector
-  -webkit-box-shadow: $offset-x $offset-y $blur-radius $spread-radius $colour;
-     -moz-box-shadow: $offset-x $offset-y $blur-radius $spread-radius $colour;
-          box-shadow: $offset-x $offset-y $blur-radius $spread-radius $colour;
+  -webkit-box-shadow: $offset_x $offset_y $blur_radius $spread_radius $colour;
+  -moz-box-shadow: $offset_x $offset_y $blur_radius $spread_radius $colour;
+  box-shadow: $offset_x $offset_y $blur_radius $spread_radius $colour;
 }
 
-@mixin inset-box-shadow($offset-x, $offset-y, $colour, $blur-radius: 0, $spread-radius: 0) {
+@mixin inset_box_shadow($offset_x, $offset_y, $colour, $blur_radius: 0, $spread_radius: 0) {
   // Apply an inset box shadow to a selector
-  -webkit-box-shadow: inset $offset-x $offset-y $blur-radius $spread-radius $colour;
-     -moz-box-shadow: inset $offset-x $offset-y $blur-radius $spread-radius $colour;
-          box-shadow: inset $offset-x $offset-y $blur-radius $spread-radius $colour;
+  -webkit-box-shadow: inset $offset_x $offset_y $blur_radius $spread_radius $colour;
+  -moz-box-shadow: inset $offset_x $offset_y $blur_radius $spread_radius $colour;
+  box-shadow: inset $offset_x $offset_y $blur_radius $spread_radius $colour;
 }
 
-@mixin border-radius($radius) {
+@mixin border_radius($radius) {
   -webkit-border-radius: $radius;
-     -moz-border-radius: $radius;
-          border-radius: $radius;
+  -moz-border-radius: $radius;
+  border-radius: $radius;
+}
+
+@mixin transition($type, $time, $effect) {
+  transition: $type $time $effect;
+  -moz-transition: $type $time $effect;
+  -webkit-transition: $type $time $effect;
 }

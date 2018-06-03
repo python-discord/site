@@ -2,21 +2,27 @@
   Page-specific styling for all wiki pages
 */
 
+@import "../variables";
+
+$quote_border_colour: #7289DA;
+$quote_colour: #99AAB5;
+$sidebar_button_border_colour: rgba(0, 0, 0, .11);
+
 $page_classes: (
   blueprint-wiki,  // All wiki pages
 );
 
 @each $class in $page_classes {
   .#{$class} {
-    div.quote {
-      border-left: 3px solid #7289DA;
-      color: #99AAB5;
-      padding-left: 20px;
+    .quote {
+      border-left: 3px solid $quote_border_colour;
+      color: $quote_colour;
       margin-bottom: 1rem;
+      padding-left: 20px;
     }
 
     #wiki-nav .uk-nav-divider {
-      min-width: 8.0rem;
+      min-width: 8rem;
     }
 
     #wiki-sidebar {
@@ -28,15 +34,14 @@ $page_classes: (
     }
 
     #wiki-sidebar-button {
-      color: white;
+      align-items: center;
+      border: 1px solid $sidebar_button_border_colour;
+      color: $white;
       height: 3rem;
-      width: 3rem;
+      justify-content: center;
       min-height: 3rem;
       min-width: 3rem;
-      align-items: center;
-      justify-content: center;
-      /*box-shadow: unset; */
-      border: 1px solid rgba(0, 0, 0, 0.11);
+      width: 3rem;
     }
 
     #doc-view {

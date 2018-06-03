@@ -1,10 +1,10 @@
-/*
-  General imports, for styles that apply to all pages
-*/
+// General imports, for styles that apply to all pages
+// scss-lint:disable QualifyingElement
 
 @import "fonts";
 @import "mixins";
 @import "uikit_shim";
+@import "variables";
 
 /*
   Page-specific styling imports
@@ -45,6 +45,8 @@
   put it in the UIKit shim file instead.
 */
 
+$table_border_colour: rgb(229, 229, 229);
+
 html {
   height: 100%;
 
@@ -56,69 +58,68 @@ html {
 }
 
 .navbar-logo {
-  margin-left: -10px;
-  padding-left: 3px;
-  margin-top: 2px;
   height: 60%;
+  margin-left: -10px;
+  margin-top: 2px;
   max-width: 110%;
+  padding-left: 3px;
 }
 
 .hover-title a {
-  visibility: hidden;
-  opacity: 0;
+  @include transition(opacity, 200ms, ease-in-out);
 
-  transition: opacity 200ms ease-in-out;
-  -moz-transition: opacity 200ms ease-in-out;
-  -webkit-transition: opacity 200ms ease-in-out;
+  opacity: 0;
+  visibility: hidden;
 }
 
 .hover-title:hover a {
-  visibility: visible;
-  opacity: 1;
+  @include transition(opacity, 200ms, ease-in-out);
 
-  transition: opacity 200ms ease-in-out;
-  -moz-transition: opacity 200ms ease-in-out;
-  -webkit-transition: opacity 200ms ease-in-out;
+  opacity: 1;
+  visibility: visible;
 }
 
 // Forms
 
 select {
-    position: relative !important;
-    top: auto !important;
-    left: auto !important;
-    -webkit-appearance: unset !important;
-    opacity: 1 !important;
+  -webkit-appearance: unset !important;
+
+  left: auto !important;
+  opacity: 1 !important;
+  position: relative !important;
+  top: auto !important;
 }
 
 div.danger-input * {
-    color: red;
-    border-color: red !important;
+  border-color: $red !important;
+  color: $red;
 
-    transition: color 0.5s ease,
-                border-color 0.5s ease;
+  transition: color .5s ease,
+              border-color .5s ease;
 }
 
 // Tables
 
 table.table-bordered {
-    border: 1px solid rgb(229, 229, 229) !important;
+  border: 1px solid $table_border_colour !important;
 }
 
 tr.thick-bottom-border {
-    border-bottom: 3px solid rgb(229, 229, 229) !important;
+  border-bottom: 3px solid $table_border_colour !important;
 }
 
-td.left-border, th.left-border {
-    border-left: 1px solid rgb(229, 229, 229) !important;
+td.left-border,
+th.left-border {
+  border-left: 1px solid $table_border_colour !important;
 }
 
-td.right-border, th.right-border {
-    border-right: 1px solid rgb(229, 229, 229) !important;
+td.right-border,
+th.right-border {
+  border-right: 1px solid $table_border_colour !important;
 }
 
 // Flash of Unstyled Content fixes
 
-.prevent_fouc {
+.prevent-fouc {
   display: none;
 }

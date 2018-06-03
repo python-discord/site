@@ -2,7 +2,6 @@
 {% block title %}Error {{ code }}{% endblock %}
 {% block og_title %}Error {{ code }}{% endblock %}
 {% block og_description %}{{ error_message | safe }}{% endblock %}
-{% block beta_error %}{% endblock %}
 
 {% block extra_head %}
     <script>
@@ -20,7 +19,7 @@
     <div class="uk-background-muted">
         <div class="uk-container">
             <div class="uk-section uk-text-center uk-panel uk-panel-box">
-               <p style="color: #e84149; font-family: monospace;" class="error-header uk-text-large uk-text-break">{{ error_title }}</p>
+               <p class="error-header uk-text-large uk-text-break">{{ error_title }}</p>
             </div>
         </div>
     </div>
@@ -39,7 +38,7 @@
 
                 <div class="inside">
                     <div class="block">
-                        <pre id="terminal"><code style="white-space: pre-wrap;" class="python" id="error"></code></pre>
+                        <pre id="terminal"><code class="python" id="error"></code></pre>
                     </div>
                 </div>
             </div>
