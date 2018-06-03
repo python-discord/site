@@ -27,10 +27,10 @@ install:
   - gem install scss_lint
 script:
   - pipenv run lint
+  - pipenv run lintscss
   - pipenv run python gunicorn_config.py
   - pipenv run test
 #  - pipenv run coveralls
-  - scss-lint scss/pysite
 after_success:
   - bash scripts/deploy.sh
 
