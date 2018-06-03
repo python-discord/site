@@ -1,15 +1,15 @@
 /*
   Page-specific styling for all error pages
 */
-$closeButton: #FF5F4F;
-$minimizeButton: #F9C206;
-$maximizeButton: #19CC32;
-$muted: #e8e8e8;
-$windowBorder: #C1C2C2;
-$topGrad1: #F1F1F1;
-$topGrad2: #E9E9E9;
-$topGrad3: #d8d8d8;
-$topBottomBorder: #BDBCC1;
+$close_button_background: #FF5F4F;
+$minimize_button_background: #F9C206;
+$maximize_button_background: #19CC32;
+$muted_background: #e8e8e8;
+$window_border: #C1C2C2;
+$top_bar_background_gradient_1: #F1F1F1;
+$top_bar_background_gradient_2: #E9E9E9;
+$top_bar_background_gradient_3: #d8d8d8;
+$top_bar_bottom_border: #BDBCC1;
 
 @import "../mixins";
 
@@ -23,7 +23,7 @@ $page_classes: (
       @include border-radius(4px);
       @include box-shadow(0, 4px, rgba(0, 0, 0, .5), 12px);
 
-      border: 1px solid $windowBorder;
+      border: 1px solid $window_border;
       height: 500px;
       margin: 20px auto auto;
       width: 100%;
@@ -48,10 +48,10 @@ $page_classes: (
 
 
     .top {
-      @include linear-gradient-background($topGrad1, $topGrad2, $topGrad3);
+      @include linear-gradient-background($top_bar_background_gradient_1, $top_bar_background_gradient_2, $top_bar_background_gradient_3);
       @include inset-box-shadow(0px, 1px, rgba(255, 255, 255, 0.76), 1px, 0px);
 
-      border-bottom: 2px solid $topBottomBorder;
+      border-bottom: 2px solid $top_bar_bottom_border;
       overflow: hidden;
       padding: 7px 0;
       position: relative;
@@ -80,15 +80,15 @@ $page_classes: (
 
 
     #terminal-close {
-      background: $closeButton;
+      background: $close_button_background;
     }
 
     #second-button {
-      background: $minimizeButton;
+      background: $minimize_button_background;
     }
 
     #third-button {
-      background: $maximizeButton;
+      background: $maximize_button_background;
     }
 
     #terminal {
@@ -102,7 +102,7 @@ $page_classes: (
     }
 
     .uk-background-muted, .error-header {
-      background-color: $muted !important;
+      background-color: $muted_background !important;
     }
 
     code, pre {
