@@ -27,7 +27,7 @@
   make use of in your templates by putting it in a "page_classes" block.
 
   For example:
-    {% block page_classes %} uses-rst {% endblock %}
+    {% block page_classes %}uses-rst{% endblock %}
 
   If you do this, make sure you document it on the wiki!
 */
