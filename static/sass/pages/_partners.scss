@@ -1,0 +1,17 @@
+/*
+  Page-specific styling for pages that make use of embedded
+  RST documents that have been parsed into HTML.
+*/
+
+$page_classes: (
+  page-main-about-partners,  // Partners page
+);
+
+@each $class in $page_classes {
+  .#{$class} {
+    div#partner-cards div.uk-card-default {
+      margin-top: 2em;
+      text-align:center;
+    }
+  }
+}

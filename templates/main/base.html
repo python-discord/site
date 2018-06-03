@@ -15,9 +15,9 @@
 
             <!-- Stylesheets -->
             <link rel="shortcut icon" href="{{ static_file('favicon.ico') }}">
-            <link rel="stylesheet" href="{{ static_file('uikit_blurple.css') }}"/>
-            <link rel="stylesheet" href="{{ static_file('style.css') }}"/>
-            <link rel="stylesheet" href="{{ static_file('css/pygments-monokai.css') }}"/>
+            <link rel="stylesheet" href="{{ static_file('css/bundled/uikit_blurple.css') }}"/>
+            <link rel="stylesheet" href="{{ static_file('css/style.css') }}"/>
+            <link rel="stylesheet" href="{{ static_file('css/bundled/pygments-monokai.css') }}"/>
             <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
             <!-- OpenGraph metadata -->
@@ -29,7 +29,9 @@
 
         {% endblock %}
     </head>
-    <body class="page-{{ current_page.replace(".", "-") }}">
+    <body class="{% block page_classes %}{% endblock page_classes %}
+                 page-{{ current_page.replace(".", "-") }}
+                 blueprint-{{ blueprint.replace(".", "-") }}">
         {% if current_page == "main.index" %}
         <div class="uk-offcanvas-content uk-section-primary">
         {% else %}

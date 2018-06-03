@@ -14,9 +14,10 @@
 
             <!-- Static stuff -->
             <link rel="shortcut icon" href="{{ static_file('favicon.ico') }}">
-            <link rel="stylesheet" href="{{ static_file('uikit_blurple.css') }}"/>
-            <link rel="stylesheet" href="{{ static_file('style.css') }}"/>
-            <link rel="stylesheet" href="{{ static_file('css/pygments-monokai.css') }}"/>
+            <link rel="stylesheet" href="{{ static_file('css/bundled/uikit_blurple.css') }}"/>
+            <link rel="stylesheet" href="{{ static_file('css/style.css') }}"/>
+            <link rel="stylesheet" href="{{ static_file('css/bundled/pygments-monokai.css') }}"/>
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
             <!-- OpenGraph metadata -->
             <meta property="og:title" content="Python Discord | {% block og_title %}{% endblock %}">
@@ -27,7 +28,9 @@
 
         {% endblock %}
     </head>
-    <body class="page-{{ current_page.replace(".", "-") }}">
+    <body class="{% block page_classes %}{% endblock page_classes %}
+                 page-{{ current_page.replace(".", "-") }}
+                 blueprint-{{ blueprint.replace(".", "-") }}">
         <div class="uk-offcanvas-content uk-flex uk-flex-column" id="wiki-page">
             {% include "main/navigation.html" %}
             <div class="uk-flex uk-flex-row uk-flex-1">

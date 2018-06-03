@@ -1,0 +1,53 @@
+/*
+  Page-specific styling for pages that make use of embedded
+  RST documents that have been parsed into HTML.
+*/
+
+$page_classes: (
+  blueprint-wiki,  // All wiki pages
+);
+
+@each $class in $page_classes {
+  .#{$class} {
+    div.quote {
+      border-left: 3px solid #7289DA;
+      color: #99AAB5;
+      padding-left: 20px;
+      margin-bottom: 1rem;
+    }
+
+    #wiki-nav .uk-nav-divider {
+      min-width: 8.0rem;
+    }
+
+    #wiki-sidebar {
+      transition: width ease 1s;
+    }
+
+    #wiki-page {
+      overflow-x: hidden;
+    }
+
+    #wiki-sidebar-button {
+      color: white;
+      height: 3rem;
+      width: 3rem;
+      min-height: 3rem;
+      min-width: 3rem;
+      align-items: center;
+      justify-content: center;
+      /*box-shadow: unset; */
+      border: 1px solid rgba(0, 0, 0, 0.11);
+    }
+
+    #doc-view {
+      width: calc(100% - 6rem);
+    }
+
+    @media (max-width: 639px) {
+      #doc-view {
+        width: calc(100% - 1rem);
+      }
+    }
+  }
+}

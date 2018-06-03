@@ -1,0 +1,20 @@
+/*
+  Page-specific styling for pages that make use of embedded
+  RST documents that have been parsed into HTML.
+*/
+
+$page_classes: (
+  page-main-info-resources,  // Resources page
+);
+
+@each $class in $page_classes {
+  .#{$class} {
+    div.payment-icon img {
+      height: 2em;
+    }
+
+    div.payment-icon {
+      margin-right: 1em;
+    }
+  }
+}

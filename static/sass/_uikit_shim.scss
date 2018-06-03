@@ -1,0 +1,97 @@
+/*
+  Styling that modifies things that are already provided
+  by UIKit. This file is intended to be imported from the
+  main `style.scss`.
+*/
+
+.uk-offcanvas-content {
+  flex: 1 0 auto;
+}
+
+.uk-background-secondary .uk-navbar-dropdown-nav {
+  .uk-active a {
+    color: white;
+  }
+
+  .uk-nav-header {
+    color: #666;
+    text-transform: none;
+    font-weight: bold;
+    font-size: 120%;
+    padding: 0;
+  }
+
+  .uk-nav-header.uk-active {
+    color: white;
+  }
+
+  .uk-navbar-dropbar {
+    background: #222222;
+  }
+}
+
+.uk-navbar-container, .uk-sticky-placeholder,
+.uk-navbar-nav > li > a, .uk-navbar-left > a {
+  height: 70px;
+}
+
+.uk-navbar-dropdown {
+  top: 45px !important;
+}
+
+.uk-article-title {
+  margin-bottom: 0 !important;
+}
+
+.uk-article-meta {
+  margin-top: 0 !important;
+}
+
+.uk-section {
+  padding-top: 20px;
+  padding-bottom: 30px;
+}
+
+.uk-heading-divider .uk-article-meta {
+  margin-bottom: 0;
+}
+
+footer {
+  flex-shrink: 0;
+
+  div.uk-section {
+    padding: 0 0 0 0;
+
+    div.uk-text-center {
+      margin-top: 20px;
+    }
+  }
+}
+
+.uk-button-darkish {  // Technically our own style, but uses the uk prefix
+  background: rgba(0, 0, 0, 0.11);
+  border: 1px solid rgba(34, 34, 34, 0.09);
+
+  :hover {
+    background: rgba(0, 0, 0, 0.22);
+  }
+}
+
+.uk-button-dark {
+  background: rgba(0, 0, 0, 0.95);
+  border: 1px solid rgba(34, 34, 34, 0.93);
+  color: white;
+
+  :hover {
+    background: rgba(0, 0, 0, 0.70);
+  }
+}
+
+.uk-navbar-container {
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+.uk-article-meta {
+  margin-left: 2px;
+}

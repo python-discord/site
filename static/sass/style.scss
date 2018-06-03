@@ -1,0 +1,122 @@
+/*
+  General imports, for styles that apply to all pages
+*/
+
+@import "uikit_shim";
+@import "fonts";
+
+/*
+  Page-specific styling imports
+
+  You can target pages in the following ways:
+
+  * For specific pages, take the view name, prefix it with
+    "page-" and replace all the dots with dashes. This will
+    give you a class that only matches that page.
+  * For all pages under a specific blueprint, take the blueprint
+    name, prefix it with "blueprint-" and replace all the dots with
+    dashes. This will give you a class that matches every page
+    under that blueprint.
+
+  For example:
+    "main.index.jams" -> ".page-main-index-jams"
+    "wiki" -> ".blueprint-wiki"
+
+  Additionally, you can use your own class names for categories of pages.
+  For example, you might provide a "uses-rst" class, which you would then
+  make use of in your templates by putting it in a "page_classes" block.
+
+  For example:
+    {% block page_classes %} uses-rst % endblock %}
+
+  If you do this, make sure you document it on the wiki!
+*/
+
+@import "pages/partners";
+@import "pages/resources";
+@import "pages/rst";
+@import "pages/wiki";
+
+/*
+  Custom styling using our own classes and IDs. If instead you're
+  modifying existing UIKit styles to better suit our site, you should
+  put it in the UIKit shim file instead.
+*/
+
+html {
+  height: 100%;
+
+  body {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+}
+
+.navbar-logo {
+  margin-left: -10px;
+  padding-left: 3px;
+  margin-top: 2px;
+  height: 60%;
+  max-width: 110%;
+}
+
+.hover-title a {
+  visibility: hidden;
+  opacity: 0;
+
+  transition: opacity 200ms ease-in-out;
+  -moz-transition: opacity 200ms ease-in-out;
+  -webkit-transition: opacity 200ms ease-in-out;
+}
+
+.hover-title:hover a {
+  visibility: visible;
+  opacity: 1;
+
+  transition: opacity 200ms ease-in-out;
+  -moz-transition: opacity 200ms ease-in-out;
+  -webkit-transition: opacity 200ms ease-in-out;
+}
+
+// Forms
+
+select {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    -webkit-appearance: unset !important;
+    opacity: 1 !important;
+}
+
+div.danger-input * {
+    color: red;
+    border-color: red !important;
+
+    transition: color 0.5s ease,
+                border-color 0.5s ease;
+}
+
+// Tables
+
+table.table-bordered {
+    border: 1px solid rgb(229, 229, 229) !important;
+}
+
+tr.thick-bottom-border {
+    border-bottom: 3px solid rgb(229, 229, 229) !important;
+}
+
+td.left-border, th.left-border {
+    border-left: 1px solid rgb(229, 229, 229) !important;
+}
+
+td.right-border, th.right-border {
+    border-right: 1px solid rgb(229, 229, 229) !important;
+}
+
+// Flash of Unstyled Content fixes
+
+.prevent_fouc {
+  display: none;
+}
