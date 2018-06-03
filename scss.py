@@ -8,7 +8,7 @@ import sys
 
 import sass
 
-if not len(sys.argv) > 1:
+if len(sys.argv) <= 1:
     print("Usage: python scss.py input.scss:output.css input2.sass:output2.sass")
 
 for arg in sys.argv[1:]:
