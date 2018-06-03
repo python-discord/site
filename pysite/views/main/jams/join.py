@@ -239,8 +239,8 @@ class JamsJoinView(RouteView, DBMixin, OAuthMixin, RMQMixin):
             {
                 "target": CHANNEL_JAM_LOGS,
                 "title": "Code Jams: Applications",
-                "message": f"Successful code jam signup from user: {user_id} "
-                           f"({username}#{discriminator})",
+                "description": f"Successful code jam signup from user: {user_id} "
+                               f"({username}#{discriminator})",
                 "colour": 0x2ecc71,  # Green from d.py
                 "timestamp": datetime.datetime.now().isoformat()
             }

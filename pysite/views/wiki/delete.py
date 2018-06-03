@@ -28,7 +28,7 @@ class DeleteView(RouteView, DBMixin):
                 if datetime.datetime.utcnow() < lock_time:
                     return self.render("wiki/page_in_use.html", page=page)
 
-            return self.render("wiki/page_delete.html", page=page, title=title)
+            return self.render("wiki/page_delete.html", page=page, title=title, can_edit=True)
         else:
             raise NotFound()
 
