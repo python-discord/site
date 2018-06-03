@@ -26,9 +26,9 @@ class MoveView(RouteView, DBMixin):
             if obj.get("lock_expiry") and obj.get("lock_user") != self.user_data.get("user_id"):
                 lock_time = datetime.datetime.fromtimestamp(obj["lock_expiry"])
                 if datetime.datetime.utcnow() < lock_time:
-                    return self.render("wiki/page_in_use.html", page=page)
+                    return self.render("wiki/page_in_use.html", page=page, can_edit=True)
 
-            return self.render("wiki/page_move.html", page=page, title=title)
+            return self.render("wiki/page_move.html", page=page, title=title, can_edit=True)
         else:
             raise NotFound()
 

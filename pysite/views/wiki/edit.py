@@ -38,7 +38,7 @@ class EditView(RouteView, DBMixin):
             if obj.get("lock_expiry") and obj.get("lock_user") != self.user_data.get("user_id"):
                 lock_time = datetime.datetime.fromtimestamp(obj["lock_expiry"])
                 if datetime.datetime.utcnow() < lock_time:
-                    return self.render("wiki/page_in_use.html", page=page)
+                    return self.render("wiki/page_in_use.html", page=page, can_edit=True)
 
         lock_expiry = datetime.datetime.utcnow() + datetime.timedelta(minutes=5)
 
@@ -53,7 +53,7 @@ class EditView(RouteView, DBMixin):
                 conflict="update"
             )
 
-        return self.render("wiki/page_edit.html", page=page, rst=rst, title=title, preview=preview)
+        return self.render("wiki/page_edit.html", page=page, rst=rst, title=title, preview=preview, can_edit=True)
 
     @require_roles(*EDITOR_ROLES)
     @csrf

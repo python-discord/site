@@ -77,7 +77,7 @@
                                 "wiki.history.compare", "wiki.source", "wiki.delete",
                                 "wiki.move"
                         ] %}
-                        {% set actionable = can_edit and current_page in ACTIONABLE_PAGES %}
+                        {% set actionable = current_page in ACTIONABLE_PAGES and can_edit %}
 
                         {% if actionable %}
                             <li class="uk-nav-divider"></li>
