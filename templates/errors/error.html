@@ -30,19 +30,15 @@
             <div class="window" id="win">
                 <div class="top">
                     <div class="panel">
-                        <span class="first" id="terminal-close"></span>
-                        <span class="second"></span>
-                        <span class="third"></span>
+                        <span id="terminal-close"></span>
+                        <span id="second-button"></span>
+                        <span id="third-button"></span>
                     </div>
 
-                    <div class="nav">
-                        <span class="prev active"><i class="fa fa-angle-left"></i></span>
-                        <span class="next"><i class="fa fa-angle-right"></i></span>
-                    </div>
                 </div>
 
                 <div class="inside">
-                    <div class="blok">
+                    <div class="block">
                         <pre id="terminal"><code style="white-space: pre-wrap;" class="python" id="error"></code></pre>
                     </div>
                 </div>
@@ -60,3 +56,4 @@
         <p>{{ error_message | safe }}</p>
     </noscript>
 {% endblock %}
+
