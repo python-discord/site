@@ -44,22 +44,25 @@ def _when_ready(server=None, output_func=None):
 
     output("Declaring RabbitMQ queues...")
 
-    with Connection(hostname=RMQ_HOST, userid=RMQ_USERNAME, password=RMQ_PASSWORD, port=RMQ_PORT) as c:
-        with c.channel() as channel:
-            for name, queue in QUEUES.items():
-                queue.declare(channel=channel)
-                output(f"Queue declared: {name}")
+    try:
+        with Connection(hostname=RMQ_HOST, userid=RMQ_USERNAME, password=RMQ_PASSWORD, port=RMQ_PORT) as c:
+            with c.channel() as channel:
+                for name, queue in QUEUES.items():
+                    queue.declare(channel=channel)
+                    output(f"Queue declared: {name}")
 
-            if not DEBUG_MODE:
-                producer = c.Producer()
-                producer.publish(
-                    {
-                        "event": BotEventTypes.send_embed.value,
-                        "data": {
-                            "target": CHANNEL_DEV_LOGS,
-                            "title": "Site Deployment",
-                            "description": "The site has been deployed!"
-                        }
-                    },
-                    routing_key=BOT_EVENT_QUEUE
-                )
+                if not DEBUG_MODE:
+                    producer = c.Producer()
+                    producer.publish(
+                        {
+                            "event": BotEventTypes.send_embed.value,
+                            "data": {
+                                "target": CHANNEL_DEV_LOGS,
+                                "title": "Site Deployment",
+                                "description": "The site has been deployed!"
+                            }
+                        },
+                        routing_key=BOT_EVENT_QUEUE
+                    )
+    except Exception as e:
+        output(f"Failed to declare RabbitMQ Queues: {e}")
