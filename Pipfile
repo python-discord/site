@@ -42,7 +42,7 @@ python_version = "3.6"
 [scripts]
 build = "docker build -t pythondiscord/site:latest -f docker/Dockerfile ."
 buildbase = "docker build -t pythondiscord/site-base:latest -f docker/Dockerfile.base ."
-buildscss = "python scss.py scss/pysite/style.scss:static/css/style.css scss/uikit/uikit_blurple.scss:static/css/uikit_blurple.css"
+buildscss = "python scss.py scss/pysite:scss/pysite/style.scss:static/css/style.css scss/uikit:scss/uikit/uikit_blurple.scss:static/css/uikit_blurple.css"
 clean = "rm -rf __pycache__ htmlcov .coverage .pytest_cache"
 start = "gunicorn -w 12 -b 0.0.0.0:10012 -c gunicorn_config.py --log-level info -k geventwebsocket.gunicorn.workers.GeventWebSocketWorker app:app"
 lint = "python -m flake8"

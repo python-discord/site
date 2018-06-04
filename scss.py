@@ -9,10 +9,10 @@ import sys
 import sass
 
 if len(sys.argv) <= 1:
-    print("Usage: python scss.py input.scss:output.css input2.sass:output2.sass")
+    print("Usage: python scss.py include_dir:input.scss:output.css import_dir:input2.sass:output2.sass")
 
 for arg in sys.argv[1:]:
-    input_file, output_file = arg.split(":")
+    include_dir, input_file, output_file = arg.split(":")
     source_map_file = f"{output_file}.map"
 
     try:
@@ -20,7 +20,8 @@ for arg in sys.argv[1:]:
             filename=input_file,
             output_style="compressed",
             output_filename_hint=output_file,
-            source_map_filename=source_map_file
+            source_map_filename=source_map_file,
+            include_paths=[include_dir]
         )
     except sass.CompileError as e:
         print(f"Failed to compile {input_file}\n\n{e}")
