@@ -50,7 +50,7 @@
                         {% for question in questions %}
                             <tr id="row-{{ question.id }}">
                                 <td class="uk-table-shrink">
-                                    <button class="uk-button-small uk-button uk-button-danger delete-question-button" style="padding-left: 5px; padding-right: 5px;" data-question-id="{{ question.id }}"><i class="uk-icon fa-fw far fa-times"></i></button>
+                                    <button class="uk-button-small uk-button uk-button-danger delete-question-button" data-question-id="{{ question.id }}"><i class="uk-icon fa-fw far fa-times"></i></button>
                                 </td>
                                 <td class="uk-text-truncate" title="{{ question.id }}">{{ question.id }}</td>
                                 <td class="uk-table-shrink">
@@ -742,7 +742,7 @@
 
             const row = `
     <td class="uk-table-shrink">
-        <button class="uk-button-small uk-button uk-button-danger delete-question-button" style="padding-left: 5px; padding-right: 5px;" data-question-id="${question.id}"><i class="uk-icon fa-fw far fa-times"></i></button>
+        <button class="uk-button-small uk-button uk-button-danger delete-question-button" data-question-id="${question.id}"><i class="uk-icon fa-fw far fa-times"></i></button>
     </td>
     <td class="uk-text-truncate" title="${question.id}">${question.id}</td>
     <td class="uk-table-shrink">${optional}</td>

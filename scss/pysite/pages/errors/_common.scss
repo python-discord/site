@@ -1,8 +1,5 @@
-/*
-  Page-specific styling for all error pages
-*/
-
-@import "../variables";
+@import "mixins";
+@import "variables";
 
 $close_button_background: #FF5F4F;
 
@@ -22,8 +19,6 @@ $top_bar_bottom_border: #BDBCC1;
 $top_bar_shadow_colour: rgba(255, 255, 255, .76);
 
 $window_border: #C1C2C2;
-
-@import "../mixins";
 
 $page_classes: (
   blueprint-error,  // All error pages

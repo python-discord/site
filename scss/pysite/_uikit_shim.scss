@@ -1,8 +1,7 @@
-/*
-  Styling that modifies things that are already provided
-  by UIKit. This file is intended to be imported from the
-  main `style.scss`.
-*/
+// Styling that modifies things that are already provided
+// by UIKit. This file is intended to be imported from the
+// main `style.scss`.
+
 
 @import "variables";
 
@@ -51,6 +50,7 @@ $nav_header_colour: #666666;
 }
 
 .uk-navbar-dropdown {
+  overflow-y: auto;
   top: 45px !important;
 }
 

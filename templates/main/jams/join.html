@@ -7,13 +7,13 @@
     <div id="div-{{ question.id }}">
         <div class="uk-form-label">
             {% if question.optional %}
-                <label class="uk-form-label" style="margin-top: 0" for="{{ question.id }}">
+                <label class="uk-form-label question-label" for="{{ question.id }}">
                     <strong>{{ question.title }}</strong>
                     <br />
                     <span class="uk-text-meta">You may skip this question</span>
                 </label>
             {% else %}
-                <label class="uk-form-label" style="margin-top: 0" for="{{ question.id }}">
+                <label class="uk-form-label question-label" for="{{ question.id }}">
                     <strong>{{ question.title }}</strong>
                     <br />
                     <span class="uk-text-meta">This question is required</span>
@@ -24,10 +24,10 @@
             {% if question.type == "checkbox" %}
                 {% if question.optional %}
                     <input class="uk-checkbox" type="checkbox" name="{{ question.id }}" id="{{ question.id }}">
-                    <label for="{{ question.id }}" style="padding-left: 0.7rem;">Confirm</label>
+                    <label for="{{ question.id }}" class="checkbox-label">Confirm</label>
                 {% else %}
                     <input class="uk-checkbox" type="checkbox" name="{{ question.id }}" id="{{ question.id }}" required>
-                    <label for="{{ question.id }}" style="padding-left: 0.7rem;">Confirm</label>
+                    <label for="{{ question.id }}" class="checkbox-label">Confirm</label>
                 {% endif %}
 
             {% elif question.type == "email" %}
@@ -48,12 +48,12 @@
                 {% if question.optional %}
                     {% for option in question.data.options %}
                         <input class="uk-radio radio-{{ question.id }}" type="radio" name="{{ question.id }}" id="{{ question.id }}-{{ option }}" value="{{ option }}">
-                        <label style="padding-left: 0.7rem; padding-right: 1rem;" for="{{ question.id }}-{{ option }}">{{ option }}</label>
+                        <label class="radio-label" for="{{ question.id }}-{{ option }}">{{ option }}</label>
                     {% endfor %}
                 {% else %}
                     {% for option in question.data.options %}
                         <input class="uk-radio radio-{{ question.id }}" type="radio" name="{{ question.id }}" id="{{ question.id }}-{{ option }}" value="{{ option }}" required>
-                        <label style="padding-left: 0.7rem; padding-right: 1rem;" for="{{ question.id }}-{{ option }}">{{ option }}</label>
+                        <label class="radio-label" for="{{ question.id }}-{{ option }}">{{ option }}</label>
                     {% endfor %}
                 {% endif %}
 
@@ -63,14 +63,14 @@
                         {% for num in range(question.data.min, question.data.max + 1) %}
                             <span>
                                 <input class="uk-radio radio-{{ question.id }}" type="radio" name="{{ question.id }}" id="{{ question.id }}-{{ num }}" value="{{ num }}">
-                                <label style="padding-left: 0.3rem;" for="{{ question.id }}-{{ num }}">{{ num }}</label>
+                                <label class="range-label" for="{{ question.id }}-{{ num }}">{{ num }}</label>
                             </span>
                         {% endfor %}
                     {% else %}
                         {% for num in range(question.data.min, question.data.max + 1) %}
                             <span>
                                 <input class="uk-radio radio-{{ question.id }}" type="radio" name="{{ question.id }}" id="{{ question.id }}-{{ num }}" value="{{ num }}" required>
-                                <label style="padding-left: 0.3rem;" for="{{ question.id }}-{{ num }}">{{ num }}</label>
+                                <label class="range-label" for="{{ question.id }}-{{ num }}">{{ num }}</label>
                             </span>
                         {% endfor %}
                     {% endif %}
@@ -85,14 +85,14 @@
 
             {% elif question.type == "textarea" %}
                 {% if question.optional %}
-                    <textarea class="uk-input uk-textarea fira-code" name="{{ question.id }}" id="{{ question.id }}" style="resize: vertical; min-height: 15rem;"></textarea>
+                    <textarea class="uk-input uk-textarea fira-code textarea" name="{{ question.id }}" id="{{ question.id }}"></textarea>
                 {% else %}
-                    <textarea class="uk-input uk-textarea fira-code" name="{{ question.id }}" id="{{ question.id }}" style="resize: vertical; min-height: 15rem;" required></textarea>
+                    <textarea class="uk-input uk-textarea fira-code textarea" name="{{ question.id }}" id="{{ question.id }}" required></textarea>
                 {% endif %}
 
             {% elif question.type == "slider" %}
                 <div class="uk-flex uk-flex-between">
-                    <label class="uk-label" style="margin-right: 1rem;" for="{{ question.id }}" id="{{ question.id }}-slider-value">{{ question.data.min }}</label>
+                    <label class="uk-label slider-label" for="{{ question.id }}" id="{{ question.id }}-slider-value">{{ question.data.min }}</label>
                     <input class="uk-range range-slider" name="{{ question.id }}" id="{{ question.id }}" min="{{ question.data.min }}" max="{{ question.data.max }}" step="1" value="{{ question.data.min }}" type="range">
                 </div>
 

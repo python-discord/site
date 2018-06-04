@@ -1,0 +1,11 @@
+$page_classes: (
+  page-main-index,
+);
+
+@each $class in $page_classes {
+  .#{$class} {
+    #invite-button {
+      padding: 0;
+    }
+  }
+}

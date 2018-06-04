@@ -17,7 +17,7 @@
         {% endif %}
 
         <h1 class="uk-title uk-text-center">
-            <span style="font-family: monospace">
+            <span class="fira-code">
                 {{ table }}
 
                 {% if table_obj.locked %}
@@ -36,7 +36,7 @@
 
                 <div class="uk-width-auto uk-flex-auto">
                     <select class="uk-select uk-width-1-1" name="search-key" title="Table Key">
-                        <option style="font-weight: bold;">{{ table_obj.primary_key }}</option>
+                        <option class="uk-text-bold">{{ table_obj.primary_key }}</option>
                         {% for key in table_obj.keys %}
                             {% if key != table_obj.primary_key %}
                                 {% if search_key == key %}
@@ -144,7 +144,7 @@
                         {% endif %}
 
                         {% for key in table_obj.keys %}
-                            <td class="uk-text-truncate" style="font-family: monospace" title="{{ doc[key] }}">
+                            <td class="uk-text-truncate fira-code" title="{{ doc[key] }}">
                                 {% if key == table_obj.primary_key %}
                                     <strong>{{ doc[key] }}</strong>
                                 {% else %}

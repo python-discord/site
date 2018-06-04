@@ -1,0 +1,11 @@
+$page_classes: (
+  page-main-jams-index,
+);
+
+@each $class in $page_classes {
+  .#{$class} {
+    .date-separator {
+      vertical-align: middle;
+    }
+  }
+}

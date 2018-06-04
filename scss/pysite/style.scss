@@ -33,11 +33,39 @@
   If you do this, make sure you document it on the wiki!
 */
 
-@import "pages/errors";
-@import "pages/partners";
-@import "pages/resources";
+
+// Styles useful across all pages
 @import "pages/rst";
-@import "pages/wiki";
+
+// Sectional: Errors Blueprint
+@import "pages/errors/common";
+
+// Sectional: Main Blueprint
+@import "pages/main/index";
+
+@import "pages/main/about/partners";
+@import "pages/main/about/privacy";
+
+@import "pages/main/info/resources";
+
+@import "pages/main/jams/index";
+@import "pages/main/jams/join";
+
+// Sectional: Staff Blueprint
+@import "pages/staff/jams/edit_ending";
+@import "pages/staff/jams/edit_info";
+
+@import "pages/staff/jams/forms/preamble_edit";
+@import "pages/staff/jams/forms/questions_view";
+@import "pages/staff/jams/forms/view";
+
+@import "pages/staff/jams/infractions/view";
+
+@import "pages/staff/tables/edit";
+@import "pages/staff/tables/table";
+
+// Sectional: Wiki Blueprint
+@import "pages/wiki/common";
 
 /*
   Custom styling using our own classes and IDs. If instead you're
@@ -77,6 +105,22 @@ html {
 
   opacity: 1;
   visibility: visible;
+}
+
+.debug-mode-item {
+  color: $primary_background !important;
+}
+
+.sponsor-logo {
+  max-width: 15rem;
+}
+
+.cursor-default {
+  cursor: default !important;
+}
+
+.full-width {
+  width: 100%;
 }
 
 // Forms

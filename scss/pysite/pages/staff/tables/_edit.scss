@@ -1,0 +1,12 @@
+$page_classes: (
+  page-staff-tables-edit,
+);
+
+@each $class in $page_classes {
+  .#{$class} {
+    #editor {
+      min-height: 50vh;
+      resize: vertical;
+    }
+  }
+}

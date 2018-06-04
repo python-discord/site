@@ -1,10 +1,5 @@
-/*
-  Page-specific styling for all wiki pages
-*/
+@import "variables";
 
-@import "../variables";
-
-$quote_border_colour: #7289DA;
 $quote_colour: #99AAB5;
 $sidebar_button_border_colour: rgba(0, 0, 0, .11);
 
@@ -15,7 +10,7 @@ $page_classes: (
 @each $class in $page_classes {
   .#{$class} {
     .quote {
-      border-left: 3px solid $quote_border_colour;
+      border-left: 3px solid $primary_background;
       color: $quote_colour;
       margin-bottom: 1rem;
       padding-left: 20px;
@@ -52,6 +47,36 @@ $page_classes: (
       #doc-view {
         width: calc(100% - 1rem);
       }
+    }
+
+    #editor {
+      min-height: 50vh;
+      resize: vertical;
+    }
+
+    .sidebar-search-input {
+      border-left: 0;
+      border-right: 0;
+      margin-top: 5px;
+      padding-right: 0;
+    }
+
+    .search-button {
+      border: 0;
+      width: 100%;
+    }
+
+    .content {
+      flex-grow: 1;
+      margin: 0 1rem 1rem;
+    }
+
+    .location-input {
+      margin-left: 15px;
+    }
+
+    .preview-title {
+      padding: 1rem 1rem .1rem;
     }
   }
 }

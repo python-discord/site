@@ -1,0 +1,29 @@
+$page_classes: (
+  page-main-info-resources,
+);
+
+@each $class in $page_classes {
+  .#{$class} {
+    .payment-icon {
+      margin-right: 1em;
+
+      img {
+        height: 2em;
+      }
+    }
+
+    .payment-description {
+      height: 3.7rem;
+      margin-right: .5rem;
+      vertical-align: text-bottom;
+    }
+
+    .resource-title {
+      margin-bottom: -1rem;
+
+      div {
+        padding-bottom: 0;
+      }
+    }
+  }
+}
