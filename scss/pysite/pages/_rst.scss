@@ -1,0 +1,19 @@
+// Page-specific styling for pages that make use of embedded
+// RST documents that have been parsed into HTML.
+
+
+$page_classes: (
+  uses-rst,  // All pages that declare their use of the RST parser
+);
+
+@each $class in $page_classes {
+  .#{$class} {
+    .document li p {
+      margin-bottom: 0;
+    }
+
+    .document img {
+      margin-bottom: 20px;
+    }
+  }
+}

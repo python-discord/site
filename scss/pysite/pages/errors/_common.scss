@@ -1,0 +1,131 @@
+@import "mixins";
+@import "variables";
+
+$close_button_background: #FF5F4F;
+
+$error_header_color: #E84149;
+
+$half_opacity_black: rgba(0, 0, 0, .5);
+
+$maximize_button_background: #19CC32;
+$minimize_button_background: #F9C206;
+
+$muted_background: #E8E8E8;
+
+$top_bar_background_gradient_1: #F1F1F1;
+$top_bar_background_gradient_2: #E9E9E9;
+$top_bar_background_gradient_3: #D8D8D8;
+$top_bar_bottom_border: #BDBCC1;
+$top_bar_shadow_colour: rgba(255, 255, 255, .76);
+
+$window_border: #C1C2C2;
+
+$page_classes: (
+  blueprint-error,  // All error pages
+);
+
+@each $class in $page_classes {
+  .#{$class} {
+    .window {
+      @include border_radius(4px);
+      @include box_shadow(0, 4px, $half_opacity_black, 12px);
+
+      border: 1px solid $window_border;
+      height: 500px;
+      margin: 20px auto auto;
+      width: 100%;
+    }
+
+    .inside {
+      background: $black;
+      height: 100%;
+      padding-right: 20px;
+    }
+
+    .block {
+      background: $black;
+      width: 100%;
+    }
+
+    .top,
+    .panel {
+      float: left;
+    }
+
+    .top {
+      @include linear_gradient_background($top_bar_background_gradient_1, $top_bar_background_gradient_2, $top_bar_background_gradient_3);
+      @include inset_box_shadow(0, 1px, $top_bar_shadow_colour, 1px, 0);
+
+      border-bottom: 2px solid $top_bar_bottom_border;
+      overflow: hidden;
+      padding: 7px 0;
+      position: relative;
+      width: 100%;
+    }
+
+    .panel {
+      padding-left: 9px;
+      padding-top: 2px;
+    }
+
+    // Window buttons
+
+    #terminal-close,
+    #second-button,
+    #third-button {
+      @include border_radius(6px);
+
+      cursor: pointer;
+      display: inline-block;
+      float: left;
+      height: 12px;
+      margin-right: 7px;
+      width: 12px;
+    }
+
+    #terminal-close {
+      background: $close_button_background;
+    }
+
+    #second-button {
+      background: $minimize_button_background;
+    }
+
+    #third-button {
+      background: $maximize_button_background;
+    }
+
+    #terminal {
+      background-color: $black;
+      color: $white;
+      height: 100%;
+      width: 100%;
+
+      code {
+        white-space: pre-wrap;
+      }
+    }
+
+    pre {
+      border: 0;
+      border-radius: 3px;
+    }
+
+    .uk-background-muted,
+    .error-header {
+      background-color: $muted_background !important;
+    }
+
+    .error-header {
+      color: $error_header_color;
+      font-family: monospace;
+    }
+
+    code,
+    pre {
+      overflow-wrap: break-word;
+      width: 100%;
+      word-wrap: break-word;
+    }
+  }
+}

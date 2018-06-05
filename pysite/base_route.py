@@ -49,6 +49,7 @@ class BaseView(MethodView, OAuthMixin):
         :param context: Extra data to pass into the template
         :return: String representing the rendered templates
         """
+
         context["current_page"] = self.name
         context["view"] = self
         context["logged_in"] = self.logged_in
@@ -56,6 +57,7 @@ class BaseView(MethodView, OAuthMixin):
         context["static_file"] = self._static_file
         context["debug"] = DEBUG_MODE
         context["format_datetime"] = lambda dt: dt.strftime("%b %d %Y, %H:%M") if isinstance(dt, datetime) else dt
+        context["blueprint"] = self.blueprint
 
         def is_staff():
             if DEBUG_MODE:
@@ -117,6 +119,7 @@ class RouteView(BaseView):
 
         blueprint.add_url_rule(cls.path, view_func=cls.as_view(cls.name))
 
+        cls.blueprint = blueprint.name
         cls.name = f"{blueprint.name}.{cls.name}"  # Add blueprint to page name
 
     def redirect_login(self, **kwargs):
@@ -203,6 +206,7 @@ class ErrorView(BaseView):
 
     error_code = None  # type: Union[int, Iterable]
     register_on_app = True
+    blueprint = "error"  # Because it doesn't truly have its own
 
     @classmethod
     def setup(cls: "ErrorView", manager: "pysite.route_manager.RouteManager", blueprint: Blueprint):

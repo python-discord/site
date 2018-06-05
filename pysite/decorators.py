@@ -29,7 +29,6 @@ def require_roles(*roles: int):
         @wraps(f)
         def inner(self: RouteView, *args, **kwargs):
             data = self.user_data
-            print(kwargs)
 
             if DEBUG_MODE:
                 return f(self, *args, **kwargs)

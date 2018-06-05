@@ -31,12 +31,12 @@
 
                 <h3>Data collection</h3>
 
-                <table class="uk-table uk-table-divider uk-table-striped uk-table-small table-bordered">
+                <table class="uk-table uk-table-divider uk-table-striped uk-table-small table-bordered" id="data-collection-table">
                     <thead>
                         <tr class="thick-bottom-border">
                             <th>What we collect</th>
                             <th class="uk-table-shrink">When</th>
-                            <th style="max-width: 30rem;">What it's used for</th>
+                            <th>What it's used for</th>
                             <th>Who can access it</th>
                         </tr>
                     </thead>
@@ -44,25 +44,25 @@
                         <tr>
                             <td>Discord user ID</td>
                             <td class="uk-table-shrink"><strong>self.accept()</strong> run on Discord</td>
-                            <td style="max-width: 30rem;">Statistics, data association (infractions, code jam applications, etc)</td>
+                            <td>Statistics, data association (infractions, code jam applications, etc)</td>
                             <td>Administrative staff</td>
                         </tr>
                         <tr>
                             <td>Discord username and discriminator</td>
                             <td class="uk-table-shrink"><strong>self.accept()</strong> run on Discord</td>
-                            <td style="max-width: 30rem;">Display purposes (alongside ID in staff areas, public profiles)</td>
+                            <td>Display purposes (alongside ID in staff areas, public profiles)</td>
                             <td>Public, for code jam team listings and winner info</td>
                         </tr>
                         <tr>
                             <td>Assigned roles on Discord</td>
                             <td class="uk-table-shrink"><strong>self.accept()</strong> run on Discord</td>
-                            <td style="max-width: 30rem;">Access control for the site</td>
+                            <td>Access control for the site</td>
                             <td>Administrative staff</td>
                         </tr>
                         <tr class="thick-bottom-border">
                             <td>Messages sent on Discord</td>
                             <td class="uk-table-shrink"><strong>self.accept()</strong> run on Discord</td>
-                            <td style="max-width: 30rem;">
+                            <td>
                                 Stored in memory by the bot for processing temporarily, no message content reaches
                                 the database unless you're using a bot command that interfaces with the site - May be
                                 temporarily written to a log file for debugging purposes
@@ -73,20 +73,20 @@
                         <tr class="thick-bottom-border">
                             <td>OAuth access and refresh token</td>
                             <td class="uk-table-shrink">Discord login on site</td>
-                            <td style="max-width: 30rem;">Used to find your Discord user ID when you log in</td>
+                            <td>Used to find your Discord user ID when you log in</td>
                             <td>Administrative staff</td>
                         </tr>
 
                         <tr>
                             <td>GitHub username</td>
                             <td class="uk-table-shrink">Code jam profile</td>
-                            <td style="max-width: 30rem;">Used to identify you on GitHub as part of a code jam team</td>
+                            <td>Used to identify you on GitHub as part of a code jam team</td>
                             <td>Public, for code jam team listings</td>
                         </tr>
                         <tr>
                             <td>Timezone</td>
                             <td class="uk-table-shrink">Code jam profile</td>
-                            <td style="max-width: 30rem;">A factor in code jam team match-ups</td>
+                            <td>A factor in code jam team match-ups</td>
                             <td>Administrative staff</td>
                         </tr>
                     </tbody>

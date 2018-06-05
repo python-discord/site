@@ -2,11 +2,8 @@
 {% block title %}Error {{ code }}{% endblock %}
 {% block og_title %}Error {{ code }}{% endblock %}
 {% block og_description %}{{ error_message | safe }}{% endblock %}
-{% block beta_error %}{% endblock %}
 
 {% block extra_head %}
-    <link href="{{ static_file('css/window.css') }}" rel="stylesheet" type="text/css"/>
-
     <script>
         window._RequestMethod = "{{ request.method.lower() }}";
         window._Code = {{ code }};
@@ -22,7 +19,7 @@
     <div class="uk-background-muted">
         <div class="uk-container">
             <div class="uk-section uk-text-center uk-panel uk-panel-box">
-               <p style="color: #e84149; font-family: monospace;" class="error-header uk-text-large uk-text-break">{{ error_title }}</p>
+               <p class="error-header uk-text-large uk-text-break">{{ error_title }}</p>
             </div>
         </div>
     </div>
@@ -32,20 +29,16 @@
             <div class="window" id="win">
                 <div class="top">
                     <div class="panel">
-                        <span class="first" id="terminal-close"></span>
-                        <span class="second"></span>
-                        <span class="third"></span>
+                        <span id="terminal-close"></span>
+                        <span id="second-button"></span>
+                        <span id="third-button"></span>
                     </div>
 
-                    <div class="nav">
-                        <span class="prev active"><i class="fa fa-angle-left"></i></span>
-                        <span class="next"><i class="fa fa-angle-right"></i></span>
-                    </div>
                 </div>
 
                 <div class="inside">
-                    <div class="blok">
-                        <pre id="terminal"><code style="white-space: pre-wrap;" class="python" id="error"></code></pre>
+                    <div class="block">
+                        <pre id="terminal"><code class="python" id="error"></code></pre>
                     </div>
                 </div>
             </div>
@@ -62,3 +55,4 @@
         <p>{{ error_message | safe }}</p>
     </noscript>
 {% endblock %}
+

@@ -1,6 +1,6 @@
 from tests import SiteTest, app
 
-class ApiEndpointsRootEndpoints(SiteTest):
+class ApiEndpoints(SiteTest):
     """ Test cases for the api subdomain """
     def test_api_unknown_route(self):
         """ Check api unknown route """

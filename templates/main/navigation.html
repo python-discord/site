@@ -38,7 +38,7 @@
             <ul class="uk-navbar-nav">
                 <li>
                     <a><i class="uk-icon fas fa-chevron-down"></i></a>
-                    <div class="uk-navbar-dropdown uk-background-secondary" uk-dropdown="pos: bottom-right" style="overflow-y: auto;">
+                    <div class="uk-navbar-dropdown uk-background-secondary" uk-dropdown="pos: bottom-right">
                         <ul class="uk-nav uk-navbar-dropdown-nav">
                             <li class="uk-nav-header uk-hidden@m">Navigation</li>
 
@@ -72,7 +72,7 @@
                                     <li class="uk-active"><a href="{{ url_for('discord.login') }}"><i class="uk-icon fas fa-lock"></i> &nbsp;Login with Discord</a></li>
                                 {% endif %}
                             {% else %}
-                                <li class="uk-active"><a style="color: #7289DA !important"><i class="uk-icon fas fa-exclamation-triangle"></i> &nbsp;Debug mode</a></li>
+                                <li class="uk-active"><a class="debug-mode-item"><i class="uk-icon fas fa-exclamation-triangle"></i> &nbsp;Debug mode</a></li>
                             {% endif %}
 
                             {% if current_page.startswith("main.info") %}

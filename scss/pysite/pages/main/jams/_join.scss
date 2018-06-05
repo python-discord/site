@@ -1,0 +1,33 @@
+$page_classes: (
+  page-main-jams-join,
+);
+
+@each $class in $page_classes {
+  .#{$class} {
+    .question-label {
+      margin-top: 0;
+    }
+
+    .checkbox-label {
+      padding-left: .7rem;
+    }
+
+    .radio-label {
+      padding-left: .7rem;
+      padding-right: 1rem;
+    }
+
+    .range-label {
+      padding-left: .3rem;
+    }
+
+    .textarea {
+      min-height: 15rem;
+      resize: vertical;
+    }
+
+    .slider-label {
+      margin-right: 1rem;
+    }
+  }
+}

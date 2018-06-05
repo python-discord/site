@@ -17,7 +17,7 @@
             <ul>
             {% for page in pages %}
                 <li><a href="{{ url_for("wiki.page", page=page.slug) }}">
-                    {{ page.title }} (<span style="font-family: monospace;">{{ page.slug }}</span>)
+                    {{ page.title }} (<span class="fira-code">{{ page.slug }}</span>)
                 </a></li>
             {% endfor %}
             </ul>

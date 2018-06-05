@@ -222,5 +222,15 @@ TABLES = {
             "table",
             "version"
         ])
-    )
+    ),
+
+    "pydoc_links": Table(  # pydoc_links
+        primary_key="package",
+        keys=sorted([
+            "base_url",
+            "inventory_url",
+            "package"
+        ]),
+        locked=False
+    ),
 }
