@@ -21,7 +21,7 @@
             {% for page in pages %}
                 <h4>
                     <a href="{{ url_for("wiki.page", page=page["slug"]) }}">{{ page.title }}</a>
-                    (<span style="font-family: monospace;">{{ page.slug }}</span>)
+                    (<span class="fira-code">{{ page.slug }}</span>)
                 </h4>
 
                 {% for snippet in page["matches"] %}

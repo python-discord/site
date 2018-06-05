@@ -1,0 +1,13 @@
+$page_classes: (
+  page-staff-jams-forms-view,  // All wiki pages
+);
+
+@each $class in $page_classes {
+  .#{$class} {
+    .delete-question-button,
+    .edit-question-button {
+      padding-left: 5px;
+      padding-right: 5px;
+    }
+  }
+}

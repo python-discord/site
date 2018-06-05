@@ -26,7 +26,7 @@
                         {% if jam.state == "planning" %}
                             <i class="uk-icon uk-text-muted fa-fw far fa-edit state-{{ jam.number }}" title="State: Planning" id="state-{{ jam.number }}-planning"></i>
                         {% else %}
-                            <i class="uk-icon uk-text-muted fa-fw far fa-edit state-{{ jam.number }}" style="display: none;" title="State: Planning" id="state-{{ jam.number }}-planning"></i>
+                            <i class="uk-icon uk-text-muted fa-fw far fa-edit state-{{ jam.number }}" hidden="hidden" title="State: Planning" id="state-{{ jam.number }}-planning"></i>
                         {% endif %}
 
                         {% if jam.state == "announced" %}

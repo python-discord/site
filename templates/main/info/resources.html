@@ -75,16 +75,17 @@
                                 {% endif %}
 
                                 {% if data["payment_description"] %}
-                                    <img class="uk-float-left" style="height: 3.7rem; vertical-align: text-bottom; margin-right: 0.5rem;" uk-tooltip="{{ data["payment_description"] }}" src="{{ file_path }}" />
+                                    <img class="uk-float-left payment-description" uk-tooltip="{{ data["payment_description"] }}" src="{{ file_path }}" />
                                 {% else %}
-                                    <img class="uk-float-left" style="height: 3.7rem; vertical-align: text-bottom; margin-right: 0.5rem;" uk-tooltip="{{ data["payment"].title() }}" src="{{ file_path }}" />
+                                    <img class="uk-float-left payment-description" uk-tooltip="{{ data["payment"].title() }}" src="{{ file_path }}" />
                                 {% endif %}
-                                <div style="margin-bottom: -1rem;">
+
+                                <div class="resource-title">
                                     <strong>{{ item }}</strong> <br />
-                                    <div class="uk-button-group" style="padding-bottom: 0;">
+                                    <div class="uk-button-group">
                                         {% for url in data.urls %}
                                         <a class="uk-button uk-button-default uk-button-small"
-                                            uk-tooltip="title: {{ url.title }}; pos: bottom"
+                                           uk-tooltip="title: {{ url.title }}; pos: bottom"
                                            href="{{ url.url }}"><i class="{{ url.classes }}"></i></a>
                                         {% endfor %}
                                     </div>

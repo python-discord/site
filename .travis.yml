@@ -24,8 +24,10 @@ env:
 install:
   - pip install pipenv
   - pipenv sync --dev --three
+  - gem install scss_lint
 script:
   - pipenv run lint
+  - pipenv run lintscss
   - pipenv run python gunicorn_config.py
   - pipenv run test
 #  - pipenv run coveralls

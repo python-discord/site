@@ -36,6 +36,10 @@ class RouteManager:
         self.app.config["PREFERRED_URL_SCHEME"] = PREFERRED_URL_SCHEME
         self.app.config["WTF_CSRF_CHECK_DEFAULT"] = False  # We only want to protect specific routes
 
+        # Trim blocks so that {% block %} statements in templates don't generate blank lines
+        self.app.jinja_env.trim_blocks = True
+        self.app.jinja_env.lstrip_blocks = True
+
         # We make the token valid for the lifetime of the session because of the wiki - you might spend some
         # time editing an article, and it seems that session lifetime is a good analogue for how long you have
         # to edit

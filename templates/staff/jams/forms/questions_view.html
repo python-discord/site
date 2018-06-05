@@ -49,8 +49,8 @@
                         {% for question in questions %}
                             <tr id="row-{{ question.id }}">
                                 <td class="uk-table-shrink">
-                                    <button class="uk-button-small uk-button uk-button-danger delete-question-button" style="padding-left: 5px; padding-right: 5px;" data-question-id="{{ question.id }}"><i class="uk-icon fa-fw far fa-trash"></i></button>
-                                    <a href="{{ url_for("staff.jams.forms.questions.edit", question=question.id) }}" class="uk-button-small uk-button uk-button-primary edit-question-button" style="padding-left: 5px; padding-right: 5px;"><i class="uk-icon fa-fw far fa-pencil"></i></a>
+                                    <button class="uk-button-small uk-button uk-button-danger delete-question-button" data-question-id="{{ question.id }}"><i class="uk-icon fa-fw far fa-trash"></i></button>
+                                    <a href="{{ url_for("staff.jams.forms.questions.edit", question=question.id) }}" class="uk-button-small uk-button uk-button-primary edit-question-button"><i class="uk-icon fa-fw far fa-pencil"></i></a>
                                 </td>
                                 <td class="uk-text-truncate" title="{{ question.id }}">{{ question.id }}</td>
                                 <td class="uk-table-shrink">
@@ -579,8 +579,8 @@
 
             const row = `
     <td class="uk-table-shrink">
-        <button class="uk-button-small uk-button uk-button-danger delete-question-button" style="padding-left: 5px; padding-right: 5px;" data-question-id="${question.id}"><i class="uk-icon fa-fw far fa-trash"></i></button>
-        <a href="${q_url}" class="uk-button-small uk-button uk-button-primary edit-question-button" style="padding-left: 5px; padding-right: 5px;"><i class="uk-icon fa-fw far fa-pencil"></i></a>
+        <button class="uk-button-small uk-button uk-button-danger delete-question-button" data-question-id="${question.id}"><i class="uk-icon fa-fw far fa-trash"></i></button>
+        <a href="${q_url}" class="uk-button-small uk-button uk-button-primary edit-question-button"><i class="uk-icon fa-fw far fa-pencil"></i></a>
     </td>
     <td class="uk-text-truncate" title="${question.id}">${question.id}</td>
     <td class="uk-table-shrink">${optional}</td>

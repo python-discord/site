@@ -10,13 +10,14 @@
             <script src="{{ static_file('js/fouc.js') }}"></script>
 
             <!-- Other JS loads -->
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.39/js/uikit.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.4/js/uikit.min.js"></script>
 
             <!-- Static stuff -->
             <link rel="shortcut icon" href="{{ static_file('favicon.ico') }}">
-            <link rel="stylesheet" href="{{ static_file('uikit_blurple.css') }}"/>
-            <link rel="stylesheet" href="{{ static_file('style.css') }}"/>
-            <link rel="stylesheet" href="{{ static_file('css/pygments-monokai.css') }}"/>
+            <link rel="stylesheet" href="{{ static_file('css/uikit_blurple.css') }}"/>
+            <link rel="stylesheet" href="{{ static_file('css/style.css') }}"/>
+            <link rel="stylesheet" href="{{ static_file('css/bundled/pygments-monokai.css') }}"/>
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
             <!-- OpenGraph metadata -->
             <meta property="og:title" content="Python Discord | {% block og_title %}{% endblock %}">
@@ -27,7 +28,9 @@
 
         {% endblock %}
     </head>
-    <body class="page-{{ current_page.replace(".", "-") }}">
+    <body class="{% block page_classes %}{% endblock page_classes %}
+                 page-{{ current_page.replace(".", "-") }}
+                 blueprint-{{ blueprint.replace(".", "-") }}">
         <div class="uk-offcanvas-content uk-flex uk-flex-column" id="wiki-page">
             {% include "main/navigation.html" %}
             <div class="uk-flex uk-flex-row uk-flex-1">
@@ -174,12 +177,12 @@
                         <li>
                             <form action="{{ url_for("wiki.search") }}" method="post">
                                 {% if query is undefined %}
-                                <input type="text" class="uk-input" placeholder="Search (BETA)" id="query" name="query" style="padding-right: 0; margin-top: 5px; border-left: 0; border-right: 0;" required>
+                                <input type="text" class="uk-input sidebar-search-input" placeholder="Search (BETA)" id="query" name="query" required>
                                 {% else %}
-                                <input type="text" class="uk-input" placeholder="Search (BETA)" id="query" name="query" value="{{ query }}" style="padding-right: 0; margin-top: 5px; border-left: 0; border-right: 0;" required>
+                                <input type="text" class="uk-input sidebar-search-input" placeholder="Search (BETA)" id="query" name="query" value="{{ query }}" required>
                                 {% endif %}
                                 <br />
-                                <button class="uk-button uk-button-darkish uk-button-small" type="submit" id="search" title="Search" style="width: 100%; border: 0;">
+                                <button class="uk-button uk-button-darkish uk-button-small search-button" type="submit" id="search" title="Search">
                                     <i class="uk-icon fas fa-fw fa-search"></i>
                                 </button>
 
@@ -188,11 +191,11 @@
                         </li>
                     </ul>
                 </div>
-                <div style="width: 100%;">
+                <div class="uk-width-expand full-width">
                     <a class="uk-flex-left uk-flex uk-flex-column uk-background-primary uk-hidden@s uk-hidden@m uk-hidden@l uk-hidden@xl" id="wiki-sidebar-button">
                         <div class="uk-flex-center"><i class="uk-icon fa-fw far fa-bars"></i></div>
                     </a>
-                    <div class="uk-section uk-flex uk-flex-column" style="flex-grow: 1; margin: 0 1rem 1rem;">
+                    <div class="uk-section uk-flex uk-flex-column content">
                         {% block content %}{% endblock %}
                     </div>
                 </div>

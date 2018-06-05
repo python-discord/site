@@ -21,12 +21,12 @@ function removeClass(selector, myClass) {
 }
 
 // hide the html when the page loads, but only if js is turned on.
-setClass('html', 'prevent_fouc');
+setClass('html', 'prevent-fouc');
 
 // when the DOM has finished loading, unhide the html
 document.onreadystatechange = function () {
     if (document.readyState == "interactive") {
-        removeClass('html', 'prevent_fouc');
+        removeClass('html', 'prevent-fouc');
         getScript(
             'https://pro.fontawesome.com/releases/v5.0.13/js/all.js',  // URL
             'sha384-d84LGg2pm9KhR4mCAs3N29GQ4OYNy+K+FBHX8WhimHpPm86c839++MDABegrZ3gn',  // Integrity

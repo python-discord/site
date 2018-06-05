@@ -12,7 +12,7 @@
 
         <h3>Move Page: {{ page }}</h3>
         <form uk-grid class="uk-grid-small" action="{{ url_for("wiki.move", page=page) }}" method="post">
-            <input type="text" class="uk-width-1-1 uk-input" placeholder="{{ page }}" id="location" name="location" style="margin-left: 15px;" required>
+            <input type="text" class="uk-width-1-1 uk-input location-input" placeholder="{{ page }}" id="location" name="location" required>
             <div class="uk-width-1-2">
                 <a href="{{ url_for("wiki.page", page=page) }}" class="uk-button uk-button-secondary uk-width-1-1" type="button" id="cancel">Cancel</a>
             </div>

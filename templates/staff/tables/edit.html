@@ -14,14 +14,14 @@
         {% endif %}
         <form uk-grid class="uk-grid-small" action="{{ url_for("staff.tables.edit", table=table) }}" method="post">
             <div class="uk-width-expand">
-                <p>Primary key: <strong>"<span style="font-family: monospace">{{ primary_key }}</span>"</strong></p>
+                <p>Primary key: <strong>"<span class="fira-code">{{ primary_key }}</span>"</strong></p>
             </div>
             <div class="uk-width-auto">
                 <a class="uk-button uk-button-default" href="{{ url_for("staff.tables.table", table=table, page=1) }}"><i class="uk-icon fa-fw fas fa-arrow-left"></i>&nbsp; Back</a>
                 <input class="uk-button uk-button-primary" type="submit" id="submit" value="Save" />
             </div>
             <div class="uk-width-1-1">
-                <div id="editor" class="uk-textarea" style="resize: vertical; min-height: 15rem;">{{ document }}</div>
+                <div id="editor" class="uk-textarea">{{ document }}</div>
                 <input type="hidden" name="json" id="json" />
             </div>
 
