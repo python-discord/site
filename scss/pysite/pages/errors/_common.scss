@@ -40,9 +40,7 @@ $page_classes: (
       background: $black;
       height: 100%;
       padding-right: 20px;
-
     }
-
 
     .block {
       background: $black;
@@ -53,7 +51,6 @@ $page_classes: (
     .panel {
       float: left;
     }
-
 
     .top {
       @include linear_gradient_background($top_bar_background_gradient_1, $top_bar_background_gradient_2, $top_bar_background_gradient_3);
@@ -71,9 +68,7 @@ $page_classes: (
       padding-top: 2px;
     }
 
-
     // Window buttons
-
 
     #terminal-close,
     #second-button,
@@ -88,7 +83,6 @@ $page_classes: (
       width: 12px;
     }
 
-
     #terminal-close {
       background: $close_button_background;
     }
@@ -100,7 +94,6 @@ $page_classes: (
     #third-button {
       background: $maximize_button_background;
     }
-
 
     #terminal {
       background-color: $black;
