@@ -16,7 +16,7 @@ services:
 
 
 before_script:
-  - apk add --update ruby ruby-dev
+  - apk add --update ruby ruby-dev ruby-rdoc
   - apk add --update tini
   - apk add --update git
   - apk add --update build-base
@@ -27,7 +27,7 @@ before_script:
   - apk add --update libtool
   - pip install pipenv
   - pipenv sync --dev --three
-  - gem install scss_lint --no-rdoc
+  - gem install scss_lint
 
 stages:
   - test
