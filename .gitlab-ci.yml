@@ -1,0 +1,39 @@
+image: python:3.6-alpine3.7
+
+variables:
+  - PIPENV_VENV_IN_PROJECT: 1
+  - PIPENV_IGNORE_VIRTUALENVS: 1
+  - RABBITMQ_HOST: localhost
+
+services:
+  - docker:dind
+
+  - name: rabbitmq:3.7.5-alpine
+    alias: rabbit
+
+  - name: rethinkdb:2.3.6
+    alias: rethinkdb
+
+
+before_script:
+  - apk add --update ruby
+  - pip install pipenv
+  - pipenv sync --dev --three
+  - gem install scss_lint
+
+stages:
+  - test
+  - build
+
+test:
+  stage: test
+  script:
+    - pipenv run lint
+    - pipenv run lintscss
+    - pipenv run python gunicorn_config.py
+    - pipenv run test
+
+build:
+  stage: build
+  script:
+    - sh scripts/deploy.sh
