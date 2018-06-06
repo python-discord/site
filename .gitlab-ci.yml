@@ -6,15 +6,6 @@ variables:
   RABBITMQ_HOST: rabbit
   RETHINKDB_HOST: rethinkdb
 
-services:
-  - docker:dind
-
-  - name: rabbitmq:3.7.5-alpine
-    alias: rabbit
-
-  - name: rethinkdb:2.3.6
-    alias: rethinkdb
-
 
 before_script:
   - apk add --update tini
@@ -32,6 +23,16 @@ stages:
 
 test:
   stage: test
+  services:
+    - name: rabbitmq:3.7.5-alpine
+      alias: rabbit
+
+    - name: rethinkdb:2.3.6
+      alias: rethinkdb
+
+  cache:
+    - ".venv"
+
   script:
     - apk add --update ruby ruby-dev ruby-rdoc ruby-irb
     - pip install pipenv
@@ -43,6 +44,9 @@ test:
     - pipenv run test
 
 build:
+  services:
+    - docker:dind
+
   stage: build
   script:
     - apk add docker curl
