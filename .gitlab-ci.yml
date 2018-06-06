@@ -16,7 +16,7 @@ services:
 
 
 before_script:
-  - apk add --update ruby
+  - apk add --update ruby ruby-dev
   - apk add --update tini
   - apk add --update git
   - apk add --update build-base
