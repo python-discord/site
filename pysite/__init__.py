@@ -1,12 +1,10 @@
 import logging
 import sys
 from logging import Logger, StreamHandler
-from logging.handlers import SysLogHandler
 
 from logmatic import JsonFormatter
 
-from pysite.constants import DATADOG_ADDRESS, DATADOG_PORT, PAPERTRAIL_ADDRESS, PAPERTRAIL_PORT
-from pysite.logs import NonPicklingSocketHandler
+from pysite.constants import DEBUG_MODE
 
 # region Logging
 # Get the log level from environment
@@ -32,16 +30,18 @@ Logger.trace = monkeypatch_trace
 log_level = logging.TRACE
 logging_handlers = []
 
-if PAPERTRAIL_ADDRESS:
-    logging_handlers.append(SysLogHandler(address=(PAPERTRAIL_ADDRESS, PAPERTRAIL_PORT)))
+if DEBUG_MODE:
+    logging_handlers.append(StreamHandler(stream=sys.stdout))
 
-if DATADOG_ADDRESS:
-    datadog_handler = NonPicklingSocketHandler(host=DATADOG_ADDRESS, port=DATADOG_PORT)
-    datadog_handler.formatter = JsonFormatter(datefmt="%b %d %H:%M:%S")
+    json_handler = logging.FileHandler(filename="log.json", mode="w")
+    json_handler.formatter = JsonFormatter()
+    logging_handlers.append(json_handler)
+else:
+    logging_handlers.append(logging.FileHandler(filename="log.txt", mode="w"))
 
-    logging_handlers.append(datadog_handler)
-
-logging_handlers.append(StreamHandler(stream=sys.stderr))
+    json_handler = logging.StreamHandler(stream=sys.stdout)
+    json_handler.formatter = JsonFormatter()
+    logging_handlers.append(json_handler)
 
 logging.basicConfig(
     format="%(asctime)s pd.beardfist.com Site: | %(name)35s | %(levelname)8s | %(message)s",

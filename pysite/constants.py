@@ -98,14 +98,6 @@ JAM_QUESTION_TYPES = [
     "slider"
 ]
 
-# PaperTrail logging
-PAPERTRAIL_ADDRESS = environ.get("PAPERTRAIL_ADDRESS") or None
-PAPERTRAIL_PORT = int(environ.get("PAPERTRAIL_PORT") or 0)
-
-# DataDog logging
-DATADOG_ADDRESS = environ.get("DATADOG_ADDRESS") or None
-DATADOG_PORT = int(environ.get("DATADOG_PORT") or 0)
-
 # CSRF
 CSRF = CSRFProtect()
 

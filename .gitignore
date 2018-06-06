@@ -109,3 +109,5 @@ rethinkdb_data/
 
 # SASS cache
 .sass-cache/
+
+log.*
