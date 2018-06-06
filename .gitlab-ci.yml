@@ -3,7 +3,8 @@ image: python:3.6-alpine3.7
 variables:
   PIPENV_VENV_IN_PROJECT: 1
   PIPENV_IGNORE_VIRTUALENVS: 1
-  RABBITMQ_HOST: localhost
+  RABBITMQ_HOST: rabbit
+  RETHINKDB_HOST: rethinkdb
 
 services:
   - docker:dind
