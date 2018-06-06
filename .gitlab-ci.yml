@@ -31,7 +31,8 @@ test:
       alias: rethinkdb
 
   cache:
-    - ".venv"
+    paths:
+      - ".venv"
 
   script:
     - apk add --update ruby ruby-dev ruby-rdoc ruby-irb
