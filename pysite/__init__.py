@@ -27,7 +27,7 @@ def monkeypatch_trace(self, msg, *args, **kwargs):
 
 
 Logger.trace = monkeypatch_trace
-log_level = logging.TRACE
+log_level = logging.TRACE if DEBUG_MODE else logging.INFO
 logging_handlers = []
 
 if DEBUG_MODE:
