@@ -8,6 +8,7 @@ from pysite.constants import (
 )
 from pysite.migrations.runner import run_migrations
 from pysite.queues import QUEUES
+from pysite.service_discovery import wait_for_rmq
 
 STRIP_REGEX = re.compile(r"<[^<]+?>")
 WIKI_TABLE = "wiki"
@@ -42,27 +43,34 @@ def _when_ready(server=None, output_func=None):
 
     run_migrations(db, output=output)
 
-    output("Declaring RabbitMQ queues...")
+    output("Waiting for RabbitMQ...")
 
-    try:
-        with Connection(hostname=RMQ_HOST, userid=RMQ_USERNAME, password=RMQ_PASSWORD, port=RMQ_PORT) as c:
-            with c.channel() as channel:
-                for name, queue in QUEUES.items():
-                    queue.declare(channel=channel)
-                    output(f"Queue declared: {name}")
+    has_rmq = wait_for_rmq()
 
-                if not DEBUG_MODE:
-                    producer = c.Producer()
-                    producer.publish(
-                        {
-                            "event": BotEventTypes.send_embed.value,
-                            "data": {
-                                "target": CHANNEL_DEV_LOGS,
-                                "title": "Site Deployment",
-                                "description": "The site has been deployed!"
-                            }
-                        },
-                        routing_key=BOT_EVENT_QUEUE
-                    )
-    except Exception as e:
-        output(f"Failed to declare RabbitMQ Queues: {e}")
+    if not has_rmq:
+        output("Timed out while waiting for RabbitMQ")
+    else:
+        output("RabbitMQ found, declaring RabbitMQ queues...")
+
+        try:
+            with Connection(hostname=RMQ_HOST, userid=RMQ_USERNAME, password=RMQ_PASSWORD, port=RMQ_PORT) as c:
+                with c.channel() as channel:
+                    for name, queue in QUEUES.items():
+                        queue.declare(channel=channel)
+                        output(f"Queue declared: {name}")
+
+                    if not DEBUG_MODE:
+                        producer = c.Producer()
+                        producer.publish(
+                            {
+                                "event": BotEventTypes.send_embed.value,
+                                "data": {
+                                    "target": CHANNEL_DEV_LOGS,
+                                    "title": "Site Deployment",
+                                    "description": "The site has been deployed!"
+                                }
+                            },
+                            routing_key=BOT_EVENT_QUEUE
+                        )
+        except Exception as e:
+            output(f"Failed to declare RabbitMQ Queues: {e}")
