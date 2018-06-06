@@ -22,6 +22,9 @@ stages:
   - build
 
 test:
+  tags:
+  - docker
+
   stage: test
   services:
     - name: rabbitmq:3.7.5-alpine
@@ -45,6 +48,9 @@ test:
     - pipenv run test
 
 build:
+  tags:
+  - docker
+
   services:
     - docker:dind
 
