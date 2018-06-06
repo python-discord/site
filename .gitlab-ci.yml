@@ -27,7 +27,7 @@ before_script:
   - apk add --update libtool
   - pip install pipenv
   - pipenv sync --dev --three
-  - gem install scss_lint
+  - gem install scss_lint --no-rdoc
 
 stages:
   - test
