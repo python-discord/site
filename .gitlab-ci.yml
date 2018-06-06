@@ -17,7 +17,6 @@ services:
 
 
 before_script:
-  - apk add --update ruby ruby-dev ruby-rdoc ruby-irb
   - apk add --update tini
   - apk add --update git
   - apk add --update build-base
@@ -26,9 +25,6 @@ before_script:
   - apk add --update autoconf
   - apk add --update automake
   - apk add --update libtool
-  - pip install pipenv
-  - pipenv sync --dev --three
-  - gem install scss_lint
 
 stages:
   - test
@@ -37,6 +33,10 @@ stages:
 test:
   stage: test
   script:
+    - apk add --update ruby ruby-dev ruby-rdoc ruby-irb
+    - pip install pipenv
+    - pipenv sync --dev --three
+    - gem install scss_lint
     - pipenv run lint
     - pipenv run lintscss
     - pipenv run python gunicorn_config.py
