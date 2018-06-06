@@ -45,4 +45,5 @@ test:
 build:
   stage: build
   script:
+    - apk add docker curl
     - sh scripts/deploy.sh
