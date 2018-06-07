@@ -19,7 +19,7 @@ before_script:
 
 stages:
   - test
-  - build
+  - deploy
 
 test:
   tags:
@@ -36,6 +36,7 @@ test:
   cache:
     paths:
       - ".venv"
+      - ".gem"
 
   script:
     - apk add --update ruby ruby-dev ruby-rdoc ruby-irb
@@ -47,14 +48,18 @@ test:
     - pipenv run python gunicorn_config.py
     - pipenv run test
 
-build:
+deploy:
   tags:
   - docker
 
   services:
     - docker:dind
 
-  stage: build
+  stage: deploy
   script:
     - apk add docker curl
     - sh scripts/deploy.sh
+
+  environment:
+    name: Production
+    url: https://pythondiscord.com
