@@ -13,7 +13,7 @@ SCHEMA = Schema([{
     "data": str
 }])
 
-MESSAGE_REGEX = re.compile(r"<string>:(\d+): \([A-Z]+/\d\) (.*)")
+MESSAGE_REGEX = re.compile(r"<string>:(\d+): \([A-Z]+/\d\) (.*)", flags=re.S)
 
 
 class RenderView(APIView):

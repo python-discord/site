@@ -1,8 +1,10 @@
 import re
 
 from docutils.core import publish_parts
+from docutils.parsers.rst.directives import register_directive
 from docutils.parsers.rst.roles import register_canonical_role
 
+from pysite.rst.directives import ButtonDirective
 from pysite.rst.roles import icon_role, page_role, url_for_role
 
 RST_TEMPLATE = """.. contents::
@@ -97,3 +99,5 @@ def render(rst: str, link_headers=True):
 register_canonical_role("icon", icon_role)
 register_canonical_role("page", page_role)
 register_canonical_role("url_for", url_for_role)
+
+register_directive("button", ButtonDirective)
