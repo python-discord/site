@@ -1,5 +1,3 @@
-import pprint
-
 from docutils import nodes
 from docutils.parsers.rst import Directive
 from docutils.parsers.rst.directives import unchanged, unchanged_required
@@ -28,8 +26,6 @@ class ButtonDirective(Directive):
     }
 
     def run(self):
-        pprint.pprint(self.__dict__)  # DEBUG
-
         icon = self.options.get("icon", "")
         button_type = self.options.get("type", "primary")
 
