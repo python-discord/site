@@ -15,5 +15,10 @@ $page_classes: (
     .document img {
       margin-bottom: 20px;
     }
+
+    #editor {
+      min-height: 50vh;
+      resize: vertical;
+    }
   }
 }
