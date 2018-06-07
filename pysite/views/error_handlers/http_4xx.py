@@ -26,5 +26,6 @@ class Error400View(ErrorView):
         return self.render(
             "errors/error.html", code=error.code, req=request, error_title=error_desc,
             error_message=f"{error_desc} If you believe we have made a mistake, please "
-                          "<a href='https://github.com/discord-python/site/issues'>open an issue on our GitHub</a>."
+                          "<a href='https://gitlab.com/discord-python/projects/site/issues'>"
+                          "open an issue on our GitLab</a>."
         ), error.code

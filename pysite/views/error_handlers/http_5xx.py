@@ -36,6 +36,6 @@ class Error500View(ErrorView):
             "errors/error.html", code=error.code, req=request, error_title=error_desc,
             error_message="An error occurred while processing this request, please try "
                           "again later. If you believe we have made a mistake, please "
-                          "<a href='https://github.com/discord-python/site/issues'>file an issue on our"
-                          " GitHub</a>."
+                          "<a href='https://gitlab.com/discord-python/projects/site/issues'>file an issue on our"
+                          " GitLab</a>."
         ), error.code

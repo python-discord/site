@@ -45,13 +45,13 @@ class JamsProfileView(RouteView, DBMixin, OAuthMixin):
         if not participant:
             participant = {"id": self.user_data["user_id"]}
 
-        github_username = request.form.get("github_username")
+        gitlab_username = request.form.get("gitlab_username")
         timezone = request.form.get("timezone")
 
-        if not github_username or not timezone:
+        if not gitlab_username or not timezone:
             return BadRequest()
 
-        participant["github_username"] = github_username
+        participant["gitlab_username"] = gitlab_username
         participant["timezone"] = timezone
 
         self.db.insert(self.table_name, participant, conflict="replace")

@@ -1,8 +1,8 @@
 from pysite.base_route import RedirectView
 
 
-class GitHubView(RedirectView):
-    path = "/github"
-    name = "github"
+class GitLabView(RedirectView):
+    path = "/gitlab"
+    name = "gitlab"
     page = "https://gitlab.com/discord-python/"
     code = 302

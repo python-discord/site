@@ -36,10 +36,10 @@
 
             <div>
                 <div class="uk-form-label">
-                    <label class="uk-form-label" for="github_username">GitHub Username</label>
+                    <label class="uk-form-label" for="gitlab_username">GitLab Username</label>
                 </div>
                 <div class="uk-form-controls-text uk-form-controls">
-                    <input class="uk-input" type="text" name="github_username" id="github_username" value="{{ participant.github_username }}" required>
+                    <input class="uk-input" type="text" name="gitlab_username" id="gitlab_username" value="{{ participant.gitlab_username }}" required>
                 </div>
             </div>
             <div>
@@ -81,13 +81,13 @@
 <script type="application/javascript">
     const tz = moment().format("Z");
 
-    const github_input = document.getElementById("github_username");
+    const gitlab_input = document.getElementById("gitlab_username");
     const tz_input = document.getElementById("timezone");
 
     const submit_button = document.getElementById("submit");
 
     function checkInputs() {
-        if (github_input.value.length < 1)
+        if (gitlab_input.value.length < 1)
             return submit_button.disabled = true;
 
         if (tz_input.value.length < 1)
@@ -96,7 +96,7 @@
         submit_button.disabled = false;
     }
 
-    github_input.oninput = checkInputs;
+    gitlab_input.oninput = checkInputs;
     tz_input.oninput = checkInputs;
 
     if (tz_input.value.length < 1) {
