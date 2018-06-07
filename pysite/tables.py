@@ -186,6 +186,7 @@ TABLES = {
     "users": Table(  # Users from the Discord server
         primary_key="user_id",
         keys=sorted([
+            "avatar",
             "user_id",
             "roles",
             "username",

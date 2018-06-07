@@ -10,19 +10,22 @@ from pysite.mixins import DBMixin
 
 SCHEMA = Schema([
     {
-        "user_id": str,
+        "avatar": str,
+        "discriminator": str,
         "roles": [str],
-        "username": str,
-        "discriminator": str
+        "user_id": str,
+        "username": str
     }
 ])
 
 DELETE_SCHEMA = Schema([
     {
         "user_id": str,
+
+        Optional("avatar"): str,
+        Optional("discriminator"): str,
         Optional("roles"): [str],
-        Optional("username"): str,
-        Optional("discriminator"): str
+        Optional("username"): str
     }
 ])
 
