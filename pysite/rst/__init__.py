@@ -5,7 +5,7 @@ from docutils.parsers.rst.directives import register_directive
 from docutils.parsers.rst.roles import register_canonical_role
 
 from pysite.rst.directives import ButtonDirective
-from pysite.rst.roles import icon_role, page_role, url_for_role
+from pysite.rst.roles import fira_code_role, icon_role, page_role, url_for_role
 
 RST_TEMPLATE = """.. contents::
 
@@ -13,6 +13,8 @@ RST_TEMPLATE = """.. contents::
 
 CONTENTS_REGEX = re.compile(r"""<div class=\"contents topic\" id=\"contents\">(.*?)</div>""", re.DOTALL)
 HREF_REGEX = re.compile(r"""<a class=\"reference internal\" href=\"(.*?)\".*?>(.*?)</a>""")
+
+TABLE_FRAGMENT = """<table class="uk-table uk-table-divider table-bordered uk-table-striped">"""
 
 
 def render(rst: str, link_headers=True):
@@ -35,7 +37,6 @@ def render(rst: str, link_headers=True):
 
         if match:
             data["html"] = html.replace(match.group(0), "")  # Remove the contents from the document HTML
-
             depth = 0
             headers = []
             current_header = {}
@@ -93,9 +94,13 @@ def render(rst: str, link_headers=True):
                         current_header["sub_headers"] = sub_headers
 
             data["headers"] = headers
+
+    data["html"] = data["html"].replace("<table>", TABLE_FRAGMENT)  # Style the tables properly
+
     return data
 
 
+register_canonical_role("fira_code", fira_code_role)
 register_canonical_role("icon", icon_role)
 register_canonical_role("page", page_role)
 register_canonical_role("url_for", url_for_role)

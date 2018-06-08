@@ -110,3 +110,16 @@ def page_role(_role: str, rawtext: str, text: str, lineno: int, inliner: Inliner
         prb = inliner.problematic(text, rawtext, msg)
 
         return [prb], [msg]
+
+
+def fira_code_role(_role: str, rawtext: str, text: str, lineno: int, inliner: Inliner,
+                   options: dict = None, _content: dict = None):
+    if options is None:
+        options = {}
+
+    set_classes(options)
+
+    html = f"""<span class="fira-code">{text}</span>"""
+    node = nodes.raw(html, html, format="html", **options)
+
+    return [node], []

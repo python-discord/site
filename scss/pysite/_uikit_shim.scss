@@ -16,6 +16,10 @@ $button_darkish_hover_background_colour: rgba(0, 0, 0, .22);
 $dropbar_background_colour: #222222;
 $nav_header_colour: #666666;
 
+th p {
+  margin: 0;
+}
+
 .uk-offcanvas-content {
   flex: 1 0 auto;
 }
