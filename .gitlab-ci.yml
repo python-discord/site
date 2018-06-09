@@ -52,6 +52,9 @@ deploy:
   tags:
   - docker
 
+  only:
+  - master
+
   services:
     - docker:dind
 
