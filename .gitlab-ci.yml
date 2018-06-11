@@ -1,21 +1,8 @@
-image: python:3.6-alpine3.7
+image: pythondiscord/site-ci:latest
 
 variables:
-  PIPENV_VENV_IN_PROJECT: 1
-  PIPENV_IGNORE_VIRTUALENVS: 1
   RABBITMQ_HOST: rabbit
   RETHINKDB_HOST: rethinkdb
-
-
-before_script:
-  - apk add --update tini
-  - apk add --update git
-  - apk add --update build-base
-  - apk add --update gcc
-  - apk add --update cmake
-  - apk add --update autoconf
-  - apk add --update automake
-  - apk add --update libtool
 
 stages:
   - test
@@ -39,10 +26,7 @@ test:
       - ".gem"
 
   script:
-    - apk add --update ruby ruby-dev ruby-rdoc ruby-irb
-    - pip install pipenv
-    - pipenv sync --dev --three
-    - gem install scss_lint
+    - pipenv sync --dev
     - pipenv run lint
     - pipenv run lintscss
     - pipenv run python gunicorn_config.py
@@ -60,7 +44,6 @@ deploy:
 
   stage: deploy
   script:
-    - apk add docker curl
     - sh scripts/deploy.sh
 
   environment:
