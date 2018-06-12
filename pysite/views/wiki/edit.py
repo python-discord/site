@@ -156,7 +156,7 @@ class EditView(RouteView, DBMixin):
 
             headers = {
                 "Authorization": f"token {GITHUB_TOKEN}",
-                "User-Agent": "Discord Python Wiki (https://gitlab.com/discord-python)"
+                "User-Agent": "Discord Python Wiki (https://gitlab.com/python-discord)"
             }
 
             gist = requests.post("https://api.github.com/gists",
