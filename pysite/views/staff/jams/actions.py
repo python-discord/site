@@ -1,7 +1,7 @@
 from flask import jsonify, request
 
 from pysite.base_route import APIView
-from pysite.constants import ALL_STAFF_ROLES, BotEventTypes, ErrorCodes, JAMMERS_ROLE, CHANNEL_JAM_LOGS
+from pysite.constants import ALL_STAFF_ROLES, BotEventTypes, CHANNEL_JAM_LOGS, ErrorCodes, JAMMERS_ROLE
 from pysite.decorators import csrf, require_roles
 from pysite.mixins import DBMixin, RMQMixin
 
