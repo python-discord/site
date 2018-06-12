@@ -13,6 +13,10 @@ $page_classes: (
       border: 1px solid $global_border;
       padding: 0;
 
+      img {
+        height: 2.5rem;
+      }
+
       h2 {
         margin-bottom: 0;
         vertical-align: central;

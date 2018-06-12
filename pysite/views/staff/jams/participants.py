@@ -46,6 +46,8 @@ class StaffView(RouteView, DBMixin):
             for question in form_obj["questions"]:
                 questions[question] = self.db.get(self.questions_table, question)
 
+        print(jam_data)
+
         return self.render(
             "staff/jams/participants.html",
             jam=jam_data, form=form_obj, questions=questions

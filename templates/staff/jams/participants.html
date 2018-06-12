@@ -7,35 +7,38 @@
 {% endblock %}
 {% block content %}
     {% macro card_header(app) %}
-        <h2 class="uk-float-left">
-            <i class="uk-icon fa-fw far fa-check status-icon" title="Approved"></i>
-            <i class="uk-icon fa-fw far fa-times status-icon" title="Not Approved"></i>
-            {{ app.username }}#{{ app.discriminator }}
-        </h2>
-        <span class="uk-float-right">
-            {% if jam.state in ["announced", "preparing"] %}
-                {% if app.approved %}
-                    <button class="uk-button uk-button-success approve-button" data-app="{{ app.id }}" data-app-user="{{ app.username }}#{{ app.discriminator }}" id="approve-button-{{ app.id }}" disabled>
-                        <i class="uk-icon fa-fw far fa-check"></i>
-                    </button>
-                    <button class="uk-button uk-button-danger unapprove-button" data-app="{{ app.id }}" data-app-user="{{ app.username }}#{{ app.discriminator }}" id="unapprove-button-{{ app.id }}">
-                        <i class="uk-icon fa-fw far fa-times"></i>
-                    </button>
-                {% else %}
-                    <button class="uk-button uk-button-success approve-button" data-app="{{ app.id }}" data-app-user="{{ app.username }}#{{ app.discriminator }}" id="approve-button-{{ app.id }}">
-                        <i class="uk-icon fa-fw far fa-check"></i>
-                    </button>
-                    <button class="uk-button uk-button-danger unapprove-button" data-app="{{ app.id }}" data-app-user="{{ app.username }}#{{ app.discriminator }}" id="unapprove-button-{{ app.id }}" disabled>
-                        <i class="uk-icon fa-fw far fa-times"></i>
-                    </button>
+        <div>
+            <h2 class="uk-float-left">
+                <i class="uk-icon fa-fw far fa-check status-icon" title="Approved"></i>
+                <i class="uk-icon fa-fw far fa-times status-icon" title="Not Approved"></i>
+                <img src="{{ app.avatar }}" height="20px" class="uk-border-circle" />
+                {{ app.username }}#{{ app.discriminator }}
+            </h2>
+            <span class="uk-float-right">
+                {% if jam.state in ["announced", "preparing"] %}
+                    {% if app.approved %}
+                        <button class="uk-button uk-button-success approve-button" data-app="{{ app.id }}" data-app-user="{{ app.username }}#{{ app.discriminator }}" id="approve-button-{{ app.id }}" disabled>
+                            <i class="uk-icon fa-fw far fa-check"></i>
+                        </button>
+                        <button class="uk-button uk-button-danger unapprove-button" data-app="{{ app.id }}" data-app-user="{{ app.username }}#{{ app.discriminator }}" id="unapprove-button-{{ app.id }}">
+                            <i class="uk-icon fa-fw far fa-times"></i>
+                        </button>
+                    {% else %}
+                        <button class="uk-button uk-button-success approve-button" data-app="{{ app.id }}" data-app-user="{{ app.username }}#{{ app.discriminator }}" id="approve-button-{{ app.id }}">
+                            <i class="uk-icon fa-fw far fa-check"></i>
+                        </button>
+                        <button class="uk-button uk-button-danger unapprove-button" data-app="{{ app.id }}" data-app-user="{{ app.username }}#{{ app.discriminator }}" id="unapprove-button-{{ app.id }}" disabled>
+                            <i class="uk-icon fa-fw far fa-times"></i>
+                        </button>
+                    {% endif %}
                 {% endif %}
-            {% endif %}
 
-            <a class="uk-button uk-button-primary expand-button" data-app="{{ app.id }}" data-app-user="{{ app.username }}#{{ app.discriminator }}">
-                <i class="uk-icon far fa-fw fa-plus expand-icon"></i>
-                <i class="uk-icon far fa-fw fa-minus contract-icon"></i>
-            </a>
-        </span>
+                <a class="uk-button uk-button-primary expand-button" data-app="{{ app.id }}" data-app-user="{{ app.username }}#{{ app.discriminator }}">
+                    <i class="uk-icon far fa-fw fa-plus expand-icon"></i>
+                    <i class="uk-icon far fa-fw fa-minus contract-icon"></i>
+                </a>
+            </span>
+        </div>
     {% endmacro %}
 
     <div class="uk-container uk-container-small uk-section">
@@ -57,6 +60,10 @@
                     </div>
                 {% endif %}
                 <div class="uk-card-body">
+                    <span class="uk-align-right">
+                        <span class="uk-text-muted">User ID:</span> {{ app.user_id }}
+                    </span>
+
                     {% for response in app.answers %}
                         <div>
                             <strong>{{ questions[response.question].title }}</strong>
@@ -85,7 +92,6 @@
                 }
             }
         }
-
 
         {% if jam.state in ["announced", "preparing"] %}
             for (let elem of document.getElementsByClassName("approve-button")) {
