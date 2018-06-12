@@ -1,7 +1,7 @@
 from flask import jsonify, request
 
 from pysite.base_route import APIView
-from pysite.constants import ALL_STAFF_ROLES, BotEventTypes, ErrorCodes, JAMMERS_ROLE
+from pysite.constants import ALL_STAFF_ROLES, BotEventTypes, ErrorCodes, JAMMERS_ROLE, CHANNEL_JAM_LOGS
 from pysite.decorators import csrf, require_roles
 from pysite.mixins import DBMixin, RMQMixin
 
@@ -227,6 +227,15 @@ class ActionView(APIView, DBMixin, RMQMixin):
                     "reason": "Code jam application approved",
                     "role_id": JAMMERS_ROLE,
                     "target": snowflake,
+                }
+            )
+
+            self.rmq_bot_event(
+                BotEventTypes.send_message,
+                {
+                    "message": f"Congratulations <@{snowflake}> - you've been approved, "
+                               f"and we've assigned you the Jammer role!",
+                    "target": CHANNEL_JAM_LOGS,
                 }
             )
 
