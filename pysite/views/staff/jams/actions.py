@@ -1,9 +1,9 @@
 from flask import jsonify, request
 
 from pysite.base_route import APIView
-from pysite.constants import ALL_STAFF_ROLES, ErrorCodes
+from pysite.constants import ALL_STAFF_ROLES, ErrorCodes, BotEventTypes, JAMMERS_ROLE
 from pysite.decorators import csrf, require_roles
-from pysite.mixins import DBMixin
+from pysite.mixins import DBMixin, RMQMixin
 
 GET_ACTIONS = ["questions"]
 POST_ACTIONS = [
@@ -16,7 +16,7 @@ KEYS = ["action"]
 QUESTION_KEYS = ["optional", "title", "type"]
 
 
-class ActionView(APIView, DBMixin):
+class ActionView(APIView, DBMixin, RMQMixin):
     path = "/jams/action"
     name = "jams.action"
 
@@ -221,6 +221,15 @@ class ActionView(APIView, DBMixin):
                 jam_obj["participants"] = participants
                 self.db.insert(self.table_name, jam_obj, conflict="replace")
 
+            self.rmq_bot_event(
+                BotEventTypes.add_role,
+                {
+                    "reason": "Code jam application approved",
+                    "role_id": JAMMERS_ROLE,
+                    "target": snowflake,
+                }
+            )
+
             return jsonify({"result": "success"})
 
         if action == "unapprove_application":
@@ -252,6 +261,15 @@ class ActionView(APIView, DBMixin):
                 jam_obj["participants"] = participants
 
                 self.db.insert(self.table_name, jam_obj, conflict="replace")
+
+            self.rmq_bot_event(
+                BotEventTypes.remove_role,
+                {
+                    "reason": "Code jam application unapproved",
+                    "role_id": JAMMERS_ROLE,
+                    "target": snowflake,
+                }
+            )
 
             return jsonify({"result": "success"})
 
