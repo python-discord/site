@@ -44,7 +44,7 @@ TABLES = {
             "info_rst",  # str
             "info_html",  # str
             "number",  # int
-            "participants",  # list[int]
+            "participants",  # list[str]
             "repo",  # str
             "state",  # str
             "task_html",  # str

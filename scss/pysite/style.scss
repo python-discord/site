@@ -52,6 +52,8 @@
 @import "pages/main/jams/join";
 
 // Sectional: Staff Blueprint
+@import "pages/staff/common";
+
 @import "pages/staff/jams/edit_ending";
 @import "pages/staff/jams/edit_info";
 
@@ -72,8 +74,6 @@
   modifying existing UIKit styles to better suit our site, you should
   put it in the UIKit shim file instead.
 */
-
-$table_border_colour: rgb(229, 229, 229);
 
 html {
   height: 100%;
@@ -145,21 +145,21 @@ div.danger-input * {
 // Tables
 
 table.table-bordered {
-  border: 1px solid $table_border_colour !important;
+  border: 1px solid $global_border !important;
 }
 
 tr.thick-bottom-border {
-  border-bottom: 3px solid $table_border_colour !important;
+  border-bottom: 3px solid $global_border !important;
 }
 
 td.left-border,
 th.left-border {
-  border-left: 1px solid $table_border_colour !important;
+  border-left: 1px solid $global_border !important;
 }
 
 td.right-border,
 th.right-border {
-  border-right: 1px solid $table_border_colour !important;
+  border-right: 1px solid $global_border !important;
 }
 
 // Flash of Unstyled Content fixes

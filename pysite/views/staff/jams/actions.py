@@ -6,7 +6,10 @@ from pysite.decorators import csrf, require_roles
 from pysite.mixins import DBMixin
 
 GET_ACTIONS = ["questions"]
-POST_ACTIONS = ["associate_question", "disassociate_question", "infraction", "questions", "state"]
+POST_ACTIONS = [
+    "associate_question", "disassociate_question", "infraction", "questions", "state", "approve_application",
+    "unapprove_application"
+]
 DELETE_ACTIONS = ["infraction", "question"]
 KEYS = ["action"]
 
@@ -21,6 +24,7 @@ class ActionView(APIView, DBMixin):
     forms_table = "code_jam_forms"
     infractions_table = "code_jam_infractions"
     questions_table = "code_jam_questions"
+    responses_table = "code_jam_responses"
 
     @csrf
     @require_roles(*ALL_STAFF_ROLES)
@@ -187,6 +191,69 @@ class ActionView(APIView, DBMixin):
             })
 
             return jsonify({"id": result["generated_keys"][0]})
+
+        if action == "approve_application":
+            app = request.args.get("id")
+
+            if not app:
+                return self.error(
+                    ErrorCodes.incorrect_parameters, "Application ID required"
+                )
+
+            app_obj = self.db.get(self.responses_table, app)
+
+            if not app_obj:
+                return self.error(
+                    ErrorCodes.incorrect_parameters, "Unknown application ID"
+                )
+
+            app_obj["approved"] = True
+
+            self.db.insert(self.responses_table, app_obj, conflict="replace")
+
+            jam_obj = self.db.get(self.table_name, app_obj["jam"])
+
+            snowflake = app_obj["snowflake"]
+            participants = jam_obj.get("participants", [])
+
+            if snowflake not in participants:
+                participants.append(snowflake)
+                jam_obj["participants"] = participants
+                self.db.insert(self.table_name, jam_obj, conflict="replace")
+
+            return jsonify({"result": "success"})
+
+        if action == "unapprove_application":
+            app = request.args.get("id")
+
+            if not app:
+                return self.error(
+                    ErrorCodes.incorrect_parameters, "Application ID required"
+                )
+
+            app_obj = self.db.get(self.responses_table, app)
+
+            if not app_obj:
+                return self.error(
+                    ErrorCodes.incorrect_parameters, "Unknown application ID"
+                )
+
+            app_obj["approved"] = False
+
+            self.db.insert(self.responses_table, app_obj, conflict="replace")
+
+            jam_obj = self.db.get(self.table_name, app_obj["jam"])
+
+            snowflake = app_obj["snowflake"]
+            participants = jam_obj.get("participants", [])
+
+            if snowflake in participants:
+                participants.remove(snowflake)
+                jam_obj["participants"] = participants
+
+                self.db.insert(self.table_name, jam_obj, conflict="replace")
+
+            return jsonify({"result": "success"})
 
     @csrf
     @require_roles(*ALL_STAFF_ROLES)

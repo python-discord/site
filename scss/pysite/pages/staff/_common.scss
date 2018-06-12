@@ -1,0 +1,79 @@
+@import "variables";
+
+$quote_colour: #99AAB5;
+$sidebar_button_border_colour: rgba(0, 0, 0, .11);
+
+$page_classes: (
+  blueprint-staff,  // All wiki pages
+);
+
+@each $class in $page_classes {
+  .#{$class} {
+    .approval-card {
+      border: 1px solid $global_border;
+      padding: 0;
+
+      h2 {
+        margin-bottom: 0;
+        vertical-align: central;
+      }
+
+      .expand-icon {
+        display: none;
+      }
+
+      .contract-icon {
+        display: inline-block;
+      }
+
+      .uk-button {
+        padding-left: 10px;
+        padding-right: 10px;
+      }
+
+      .uk-card-body {
+        border-top: 1px solid $global_border;
+        padding-top: 20px;
+      }
+
+      .status-icon.fa-check {
+        color: $success_colour;
+      }
+
+      .status-icon.fa-times {
+        color: $danger_colour;
+      }
+
+      .approved {
+        .status-icon.fa-times {
+          display: none;
+        }
+      }
+
+      .unapproved {
+        .status-icon.fa-check {
+          display: none;
+        }
+      }
+
+      &.collapsed {
+        .expand-icon {
+          display: inline-block;
+        }
+
+        .contract-icon {
+          display: none;
+        }
+
+        .uk-card-header {
+          border-bottom: 0;
+        }
+
+        .uk-card-body {
+          display: none;
+          visibility: hidden;
+        }
+      }
+    }
+  }
+}

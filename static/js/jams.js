@@ -197,4 +197,26 @@ class Actions {
             callback
         )
     }
+
+    approve_application(id, callback) {
+        this.send(
+            "approve_application",
+            "POST",
+            {
+                "id": id,
+            },
+            callback
+        )
+    }
+
+    unapprove_application(id, callback) {
+        this.send(
+            "unapprove_application",
+            "POST",
+            {
+                "id": id,
+            },
+            callback
+        )
+    }
 }

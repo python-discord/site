@@ -112,3 +112,27 @@ footer {
   padding-left: 40px;
   padding-right: 40px;
 }
+
+// Custom success button
+
+.uk-button-success {
+  background-color: $success_colour;
+  border: 1px solid transparent;
+  color: $white;
+}
+
+.uk-button-success:hover,
+.uk-button-success:focus {
+  background-color: darken($success_colour, 5%);
+}
+
+.uk-button-success:active,
+.uk-button-success.uk-active {
+  background-color: darken($success_colour, 10%);
+}
+
+.uk-button-success:disabled {
+  background-color: $white !important;
+  border: 1px solid $global_border;
+  color: $muted_colour !important;
+}

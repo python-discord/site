@@ -1,0 +1,160 @@
+{% extends "main/base.html" %}
+{% block title %}Staff | Jams | Participants{% endblock %}
+{% block og_title %}Staff | Jams | Participants{% endblock %}
+{% block og_description %}Listing of participant applications and their status{% endblock %}
+{% block extra_head %}
+    <script src="{{ static_file('js/jams.js') }}"></script>
+{% endblock %}
+{% block content %}
+    {% macro card_header(app) %}
+        <h2 class="uk-float-left">
+            <i class="uk-icon fa-fw far fa-check status-icon" title="Approved"></i>
+            <i class="uk-icon fa-fw far fa-times status-icon" title="Not Approved"></i>
+            {{ app.username }}#{{ app.discriminator }}
+        </h2>
+        <span class="uk-float-right">
+            {% if jam.state in ["announced", "preparing"] %}
+                {% if app.approved %}
+                    <button class="uk-button uk-button-success approve-button" data-app="{{ app.id }}" data-app-user="{{ app.username }}#{{ app.discriminator }}" id="approve-button-{{ app.id }}" disabled>
+                        <i class="uk-icon fa-fw far fa-check"></i>
+                    </button>
+                    <button class="uk-button uk-button-danger unapprove-button" data-app="{{ app.id }}" data-app-user="{{ app.username }}#{{ app.discriminator }}" id="unapprove-button-{{ app.id }}">
+                        <i class="uk-icon fa-fw far fa-times"></i>
+                    </button>
+                {% else %}
+                    <button class="uk-button uk-button-success approve-button" data-app="{{ app.id }}" data-app-user="{{ app.username }}#{{ app.discriminator }}" id="approve-button-{{ app.id }}">
+                        <i class="uk-icon fa-fw far fa-check"></i>
+                    </button>
+                    <button class="uk-button uk-button-danger unapprove-button" data-app="{{ app.id }}" data-app-user="{{ app.username }}#{{ app.discriminator }}" id="unapprove-button-{{ app.id }}" disabled>
+                        <i class="uk-icon fa-fw far fa-times"></i>
+                    </button>
+                {% endif %}
+            {% endif %}
+
+            <a class="uk-button uk-button-primary expand-button" data-app="{{ app.id }}" data-app-user="{{ app.username }}#{{ app.discriminator }}">
+                <i class="uk-icon far fa-fw fa-plus expand-icon"></i>
+                <i class="uk-icon far fa-fw fa-minus contract-icon"></i>
+            </a>
+        </span>
+    {% endmacro %}
+
+    <div class="uk-container uk-container-small uk-section">
+        <h1 class="uk-text-center">Code Jam {{ jam.number }}: Participants</h1>
+        <a class="uk-button uk-button-default" href="{{ url_for("staff.jams.index") }}"><i class="uk-icon fa-fw far fa-arrow-left"></i> &nbsp;Back</a>
+
+        <br />
+        <br />
+
+        {% for app in jam.participants %}
+            <div class="uk-card approval-card collapsed" id="{{ app.id }}">
+                {% if app.approved %}
+                    <div class="uk-card-header approved" id="header-{{ app.id }}">
+                        {{ card_header(app) }}
+                    </div>
+                {% else %}
+                    <div class="uk-card-header unapproved" id="header-{{ app.id }}">
+                        {{ card_header(app) }}
+                    </div>
+                {% endif %}
+                <div class="uk-card-body">
+                    {% for response in app.answers %}
+                        <div>
+                            <strong>{{ questions[response.question].title }}</strong>
+                            <br />
+                            <pre class="fira-code">{{ response.value }}</pre>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <br />
+        {% endfor %}
+    </div>
+
+    <script>
+        const actions = new Actions("{{ url_for("staff.jams.action") }}", "{{ csrf_token() }}");
+
+        for (let elem of document.getElementsByClassName("expand-button")) {
+            elem.onclick = function(result, data) {
+                let app = this.getAttribute("data-app");
+                let card = document.getElementById(app);
+
+                if (card.classList.contains("collapsed")) {
+                    card.classList.remove("collapsed");
+                } else {
+                    card.classList.add("collapsed");
+                }
+            }
+        }
+
+
+        {% if jam.state in ["announced", "preparing"] %}
+            for (let elem of document.getElementsByClassName("approve-button")) {
+                elem.onclick = function() {
+                    let app = this.getAttribute("data-app");
+                    let header = document.getElementById("header-" + app);
+                    let unapprove_button = document.getElementById("unapprove-button-" + app);
+                    let user = this.getAttribute("data-app-user");
+
+                    actions.approve_application(app, function(result, data) {
+                        if (!result) {
+                            console.log(data);
+                            return UIkit.notification({
+                                "message": "Approval failed",
+                                "status": "danger",
+                                "pos": "bottom-center",
+                                "timeout": 5000
+                            });
+                        }
+
+                        header.classList.add("approved");
+                        header.classList.remove("unapproved");
+
+                        elem.disabled = true;
+                        unapprove_button.disabled = false;
+
+                        UIkit.notification({
+                            "message": "Approved: " + user,
+                            "status": "success",
+                            "pos": "bottom-center",
+                            "timeout": 5000
+                        });
+                    });
+                }
+            }
+
+            for (let elem of document.getElementsByClassName("unapprove-button")) {
+                elem.onclick = function() {
+                    let app = this.getAttribute("data-app");
+                    let approve_button = document.getElementById("approve-button-" + app);
+                    let header = document.getElementById("header-" + app);
+                    let user = this.getAttribute("data-app-user");
+
+                    actions.unapprove_application(app, function(result, data) {
+                        if (!result) {
+                            console.log(data);
+                            return UIkit.notification({
+                                "message": "Unapproval failed",
+                                "status": "danger",
+                                "pos": "bottom-center",
+                                "timeout": 5000
+                            });
+                        }
+
+                        header.classList.add("unapproved");
+                        header.classList.remove("approved");
+
+                        elem.disabled = true;
+                        approve_button.disabled = false;
+
+                        UIkit.notification({
+                            "message": "Unapproved: " + user,
+                            "status": "success",
+                            "pos": "bottom-center",
+                            "timeout": 5000
+                        });
+                    });
+                }
+            }
+        {% endif %}
+    </script>
+{% endblock %}
