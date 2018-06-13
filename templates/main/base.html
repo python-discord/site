@@ -6,12 +6,7 @@
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1">
 
-            <!-- Prevent Flash of Unstyled Content -->
-            <script src="{{ static_file('js/fouc.js') }}"></script>
-
-            <!-- Other JS loads -->
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.39/js/uikit.min.js"></script>
-            <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+            <script src="{{ static_file('js/script.js') }}" type="application/javascript"></script>
 
             <!-- Stylesheets -->
             <link rel="shortcut icon" href="{{ static_file('favicon.ico') }}">
@@ -54,7 +49,5 @@
                 </div>
             </div>
         </footer>
-
-        <script src='{{ static_file('js/countdown.js') }}'></script>
     </body>
 </html>

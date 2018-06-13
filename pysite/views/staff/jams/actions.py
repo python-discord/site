@@ -42,14 +42,14 @@ class ActionView(APIView, DBMixin, RMQMixin):
     @csrf
     @require_roles(*ALL_STAFF_ROLES)
     def post(self):
-        action = request.args.get("action")
+        action = request.form.get("action")
 
         if action not in POST_ACTIONS:
             return self.error(ErrorCodes.incorrect_parameters)
 
         if action == "associate_question":
-            form = int(request.args.get("form"))
-            question = request.args.get("question")
+            form = int(request.form.get("form"))
+            question = request.form.get("question")
 
             form_obj = self.db.get(self.forms_table, form)
 
@@ -73,8 +73,8 @@ class ActionView(APIView, DBMixin, RMQMixin):
                 )
 
         if action == "disassociate_question":
-            form = int(request.args.get("form"))
-            question = request.args.get("question")
+            form = int(request.form.get("form"))
+            question = request.form.get("question")
 
             form_obj = self.db.get(self.forms_table, form)
 
@@ -98,8 +98,8 @@ class ActionView(APIView, DBMixin, RMQMixin):
                 )
 
         if action == "state":
-            jam = int(request.args.get("jam"))
-            state = request.args.get("state")
+            jam = int(request.form.get("jam"))
+            state = request.form.get("state")
 
             if not all((jam, state)):
                 return self.error(ErrorCodes.incorrect_parameters)
@@ -173,15 +173,15 @@ class ActionView(APIView, DBMixin, RMQMixin):
             return jsonify({"id": result["generated_keys"][0]})
 
         if action == "infraction":
-            participant = request.args.get("participant")
-            reason = request.args.get("reason")
+            participant = request.form.get("participant")
+            reason = request.form.get("reason")
 
-            if not participant or not reason or "number" not in request.args:
+            if not participant or not reason or "number" not in request.form:
                 return self.error(
                     ErrorCodes.incorrect_parameters, "Infractions must have a participant, reason and number"
                 )
 
-            number = int(request.args.get("number"))
+            number = int(request.form.get("number"))
 
             result = self.db.insert(self.infractions_table, {
                 "participant": participant,
@@ -193,7 +193,7 @@ class ActionView(APIView, DBMixin, RMQMixin):
             return jsonify({"id": result["generated_keys"][0]})
 
         if action == "approve_application":
-            app = request.args.get("id")
+            app = request.form.get("id")
 
             if not app:
                 return self.error(
@@ -242,7 +242,7 @@ class ActionView(APIView, DBMixin, RMQMixin):
             return jsonify({"result": "success"})
 
         if action == "unapprove_application":
-            app = request.args.get("id")
+            app = request.form.get("id")
 
             if not app:
                 return self.error(
@@ -285,13 +285,13 @@ class ActionView(APIView, DBMixin, RMQMixin):
     @csrf
     @require_roles(*ALL_STAFF_ROLES)
     def delete(self):
-        action = request.args.get("action")
+        action = request.form.get("action")
 
         if action not in DELETE_ACTIONS:
             return self.error(ErrorCodes.incorrect_parameters)
 
         if action == "question":
-            question = request.args.get("id")
+            question = request.form.get("id")
 
             if not question:
                 return self.error(ErrorCodes.incorrect_parameters, f"Missing key: id")
@@ -311,7 +311,7 @@ class ActionView(APIView, DBMixin, RMQMixin):
             return jsonify({"id": question})
 
         if action == "infraction":
-            infraction = request.args.get("id")
+            infraction = request.form.get("id")
 
             if not infraction:
                 return self.error(ErrorCodes.incorrect_parameters, "Missing key id")

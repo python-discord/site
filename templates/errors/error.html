@@ -9,10 +9,8 @@
         window._Code = {{ code }};
         window._ErrorMsg = "{{ error_message | safe }}";
         window._Path = "{{ request.path }}";
+        window.onload = error_typewriter;
     </script>
-
-    <script src="{{ static_file('js/typewriter.js') }}" type="application/javascript"></script>
-    <script src="{{ static_file('js/500.js') }}" type="application/javascript"></script>
 {% endblock %}
 
 {% block content %}

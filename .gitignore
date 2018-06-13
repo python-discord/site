@@ -110,4 +110,8 @@ rethinkdb_data/
 # SASS cache
 .sass-cache/
 
+# Node modules
+node_modules/
+
+*.js.tmp
 log.*

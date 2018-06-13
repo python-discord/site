@@ -20,4 +20,4 @@ ENV PIPENV_HIDE_EMOJIS=1
 # Install toolchain
 RUN pip install pipenv
 RUN gem install scss_lint
-RUN npm install -g eslint --save-dev
+RUN npm install -g eslint gulp-cli

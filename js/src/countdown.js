@@ -1,6 +1,7 @@
 "use strict";
 
 (function(){ // Use a closure to avoid polluting global scope
+    // TODO: This needs to be built into the jams system
     const startjam = new Date(Date.UTC(2018, 2, 23));
     const endjam = new Date(Date.UTC(2018, 2, 26));
 

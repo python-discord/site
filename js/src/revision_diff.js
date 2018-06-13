@@ -1,6 +1,8 @@
 "use strict";
 
-(function() {
+/* exported revision_diff */
+
+function revision_diff(revisions) {
     const buttons = document.querySelectorAll("td input"); // Fetch all radio buttons
     const id_reg = /compare-(before|after)-([\w|-]+)/; // Matches compare-after/before-ID
 
@@ -11,8 +13,6 @@
     }
 
     function getRevision(id) {
-        /* global revisions */ // TODO: FIXME
-
         const e = revisions.filter((x) => {
             // Filter through all revisions to find the selected one (revisions in declared in the template)
             return x.id === id;
@@ -21,7 +21,6 @@
     }
 
     function radioButtonChecked(element) {
-        // console.log("change detected");
         const id = getRevisionId(element);
         const rev = getRevision(id[1]);
         if (id[0] === "after"){
@@ -81,4 +80,4 @@
             radioButtonChecked(button);
         };
     });
-})();
+}

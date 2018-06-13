@@ -1,6 +1,8 @@
 "use strict";
 
-(function(){ // Use a closure to avoid polluting global scope
+/* exported wiki_sidebar */
+
+function wiki_sidebar(){
     const visible_class = "uk-visible@s";
     const sidebar = document.getElementById("wiki-sidebar");
     const display_button = document.getElementById("wiki-sidebar-button");
@@ -12,4 +14,4 @@
             sidebar.classList.add(visible_class);
         }
     };
-})();
+}

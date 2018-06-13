@@ -2,9 +2,6 @@
 {% block title %}Staff | Jams | Participants{% endblock %}
 {% block og_title %}Staff | Jams | Participants{% endblock %}
 {% block og_description %}Listing of participant applications and their status{% endblock %}
-{% block extra_head %}
-    <script src="{{ static_file('js/jams.js') }}"></script>
-{% endblock %}
 {% block content %}
     {% macro card_header(app) %}
         <div>
@@ -78,7 +75,7 @@
     </div>
 
     <script>
-        const actions = new Actions("{{ url_for("staff.jams.action") }}", "{{ csrf_token() }}");
+        const actions = new JamActions("{{ url_for("staff.jams.action") }}", "{{ csrf_token() }}");
 
         for (let elem of document.getElementsByClassName("expand-button")) {
             elem.onclick = function(result, data) {

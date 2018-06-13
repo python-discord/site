@@ -2,9 +2,6 @@
 {% block title %}Staff | Jams | Infractions{% endblock %}
 {% block og_title %}Staff | Jams | Infractions{% endblock %}
 {% block og_description %}Manage infractions{% endblock %}
-{% block extra_head %}
-    <script src="{{ static_file('js/jams.js') }}"></script>
-{% endblock %}
 {% block content %}
     <div class="uk-container uk-container-small uk-section">
         <h1>Infractions</h1>
@@ -125,7 +122,7 @@
 
     <script type="application/javascript">
         "use strict";
-        const actions = new Actions("{{ url_for("staff.jams.action") }}", "{{ csrf_token() }}");
+        const actions = new JamActions("{{ url_for("staff.jams.action") }}", "{{ csrf_token() }}");
 
         const table_body = document.getElementById("table-body");
         const table = document.getElementById("table");

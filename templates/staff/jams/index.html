@@ -1,9 +1,6 @@
 {% extends "main/base.html" %}
 {% block title %}Staff | Code Jams{% endblock %}
 {% block og_title %}Staff | Code Jams{% endblock %}
-{% block extra_head %}
-    <script src="{{ static_file('js/jams.js') }}"></script>
-{% endblock %}
 {% block content %}
     <div class="uk-container uk-container-small uk-section">
         <h1>Code Jams</h1>
@@ -159,7 +156,7 @@
 
     <script type="application/javascript">
         "use strict";
-        const actions = new Actions("{{ url_for("staff.jams.action") }}", "{{ csrf_token() }}");
+        const actions = new JamActions("{{ url_for("staff.jams.action") }}", "{{ csrf_token() }}");
 
         // State modal objects
         const state_modal = UIkit.modal(document.getElementById("state-modal"));

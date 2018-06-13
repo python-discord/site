@@ -31,6 +31,6 @@
     </div>
     <script>
         let revisions = {{ revisions | tojson }};
+        revision_diff(revisions);
     </script>
-    <script src="{{ static_file("js/revision_diff.js") }}"></script>
 {% endblock %}

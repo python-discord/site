@@ -1,6 +1,8 @@
 "use strict";
 
-window.onload = function () {
+/* exported error_typewriter */
+
+function error_typewriter() {
     const app = document.getElementById("error");
 
     const typewriter = new Typewriter(app, {
@@ -44,4 +46,4 @@ window.onload = function () {
         .typeString("response.text\n")
         .appendText(`${ window._ErrorMsg }\n>>> `)
         .start();
-};
+}
