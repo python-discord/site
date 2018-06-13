@@ -5,8 +5,32 @@ variables:
   RETHINKDB_HOST: rethinkdb
 
 stages:
+  - build
   - test
   - deploy
+
+build:
+  before_script:
+  - docker info
+
+  image: docker:stable
+
+  only:
+  - master
+
+  services:
+    - docker:dind
+
+  stage: build
+
+  script:
+    - sh scripts/deploy-ci.sh
+
+  tags:
+  - docker
+
+  variables:
+    DOCKER_DRIVER: overlay2
 
 test:
   tags:

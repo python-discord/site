@@ -1,21 +1,14 @@
 FROM python:3.6-alpine3.7
 
-RUN apk add --update tini \
-                     git \
+RUN apk add --update autoconf automake \
                      build-base \
-                     gcc \
-                     cmake \
-                     autoconf \
-                     automake \
-                     libtool \
-                     ruby \
-                     ruby-dev \
-                     ruby-rdoc \
-                     ruby-irb \
+                     cmake curl \
                      docker \
-                     curl \
-                     nodejs \
-                     nodejs-npm
+                     gcc git \
+                     libtool \
+                     nodejs nodejs-npm
+                     ruby ruby-dev ruby-irb ruby-rdoc \
+                     tini
 
 ENV PIPENV_VENV_IN_PROJECT=1
 ENV PIPENV_IGNORE_VIRTUALENVS=1
