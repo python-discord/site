@@ -27,8 +27,11 @@ test:
 
   script:
     - pipenv sync --dev
+
     - pipenv run lint
+    - pipenv run lintjs
     - pipenv run lintscss
+
     - pipenv run python gunicorn_config.py
     - pipenv run test
 

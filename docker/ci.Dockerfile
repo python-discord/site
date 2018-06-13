@@ -13,7 +13,9 @@ RUN apk add --update tini \
                      ruby-rdoc \
                      ruby-irb \
                      docker \
-                     curl
+                     curl \
+                     nodejs \
+                     nodejs-npm
 
 ENV PIPENV_VENV_IN_PROJECT=1
 ENV PIPENV_IGNORE_VIRTUALENVS=1
@@ -22,3 +24,4 @@ ENV PIPENV_HIDE_EMOJIS=1
 
 RUN pip install pipenv
 RUN gem install scss_lint
+RUN npm install -g eslint --save-dev

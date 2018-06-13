@@ -1,20 +1,21 @@
 "use strict";
 
+/* exported refreshLock, Actions */
+
 function refreshLock() {
-    console.log("Refreshing lock");
-    let oReq = new XMLHttpRequest();
-    oReq.addEventListener("load", function() {
-        let response = JSON.parse(this.responseText);
+    /* global editor, csrf_token */ // TODO: FIXME
+    const oReq = new XMLHttpRequest();
+    oReq.addEventListener("load", () => {
+        const response = JSON.parse(oReq.responseText);
 
         if (response.error !== undefined) {
             document.getElementById("submit").disabled = true;
 
             if (response.error_lines !== undefined) {
                 editor.session.setAnnotations(response.error_lines);
-                document.getElementById("preview-div").innerHTML ="<h3>Error - see editor margin</h3>";
+                document.getElementById("preview-div").innerHTML = "<h3>Error - see editor margin</h3>";
             } else {
-                console.log("Error: " + response.error);
-                document.getElementById("preview-div").innerHTML ="<h3>Error</h3><p>" + response.error + "<p>";
+                document.getElementById("preview-div").innerHTML = `<h3>Error</h3><p>${ response.error }<p>`;
             }
         } else {
             document.getElementById("submit").disabled = false;
@@ -24,9 +25,9 @@ function refreshLock() {
         }
     });
 
-    let data = editor.getValue();
+    const data = editor.getValue();
 
-    if (data.replace("\s", "").length < 1 || document.getElementById("title").value.length < 1) {
+    if (data.replace(" ", "").length < 1 || document.getElementById("title").value.length < 1) {
         document.getElementById("submit").disabled = true;
         return false;
     }
@@ -46,9 +47,9 @@ class Actions {
     }
 
     send(action, method, data, callback) {
-        let oReq = new XMLHttpRequest();
+        const oReq = new XMLHttpRequest();
 
-        oReq.addEventListener("load", function() {
+        oReq.addEventListener("load", () => {
             let result;
 
             try {
@@ -66,8 +67,8 @@ class Actions {
 
         data["action"] = action;
 
-        let params = this.get_params(data);
-        let url = this.url + "?" + params;
+        const params = this.get_params(data);
+        const url = `${this.url }?${ params}`;
 
         oReq.open(method, url);
         oReq.setRequestHeader("X-CSRFToken", this.csrf_token);
@@ -75,13 +76,13 @@ class Actions {
     }
 
     send_json(action, method, data, callback) {
-        let oReq = new XMLHttpRequest();
+        const oReq = new XMLHttpRequest();
 
-        oReq.addEventListener("load", function() {
+        oReq.addEventListener("load", () => {
             let result;
 
             try {
-                result = JSON.parse(this.responseText);
+                result = JSON.parse(oReq.responseText);
             } catch (e) {
                 return callback(false);
             }
@@ -93,18 +94,18 @@ class Actions {
             return callback(true, result);
         });
 
-        data = JSON.stringify(data);
+        const obj = JSON.stringify(data);
 
-        let params = this.get_params({"action": action});
-        let url = this.url + "?" + params;
+        const params = this.get_params({"action": action});
+        const url = `${this.url }?${ params}`;
 
         oReq.open(method, url);
         oReq.setRequestHeader("X-CSRFToken", this.csrf_token);
-        oReq.send(data);
+        oReq.send(obj);
     }
 
-    get_params(data) {  // https://stackoverflow.com/a/12040639
-        return Object.keys(data).map(function(key) {
+    get_params(data) { // https://stackoverflow.com/a/12040639
+        return Object.keys(data).map((key) => {
             return [key, data[key]].map(encodeURIComponent).join("=");
         }).join("&");
     }
@@ -136,18 +137,16 @@ class Actions {
             "POST",
             data,
             callback
-        )
+        );
     }
 
     delete_question(id, callback) {
         this.send(
             "question",
             "DELETE",
-            {
-                "id": id
-            },
+            {"id": id},
             callback
-        )
+        );
     }
 
     associate_question(form, question, callback) {
@@ -159,7 +158,7 @@ class Actions {
                 "question": question,
             },
             callback
-        )
+        );
     }
 
     disassociate_question(form, question, callback) {
@@ -171,7 +170,7 @@ class Actions {
                 "question": question,
             },
             callback
-        )
+        );
     }
 
     create_infraction(id, reason, number, callback) {
@@ -184,39 +183,33 @@ class Actions {
                 "number": number
             },
             callback
-        )
+        );
     }
 
     delete_infraction(id, callback) {
         this.send(
             "infraction",
             "DELETE",
-            {
-                "id": id,
-            },
+            {"id": id},
             callback
-        )
+        );
     }
 
     approve_application(id, callback) {
         this.send(
             "approve_application",
             "POST",
-            {
-                "id": id,
-            },
+            {"id": id},
             callback
-        )
+        );
     }
 
     unapprove_application(id, callback) {
         this.send(
             "unapprove_application",
             "POST",
-            {
-                "id": id,
-            },
+            {"id": id},
             callback
-        )
+        );
     }
 }
