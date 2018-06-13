@@ -7,7 +7,7 @@ RUN apk add --update autoconf automake \
                      docker \
                      gcc git \
                      libtool \
-                     nodejs nodejs-npm
+                     nodejs nodejs-npm \
                      ruby ruby-dev ruby-irb ruby-rdoc \
                      tini
 
