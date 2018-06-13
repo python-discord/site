@@ -1,8 +1,13 @@
 build:
+    image: docker
+    tags: docker
+    only:
+        - master
     script:
-        - docker build -t "gitlab_pysite_$CI_JOB_ID"
+        - scripts/deploy-ci.sh
 
 lint:
+    image: pythondiscord/django-site-ci:latest
     script:
         - pipenv install --system --dev
         - flake8
