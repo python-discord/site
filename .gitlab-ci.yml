@@ -13,7 +13,7 @@ build:
   before_script:
   - docker info
 
-  image: docker:stable
+  image: docker:stable-git
 
   only:
   - master
