@@ -226,7 +226,14 @@ class RethinkDB:
         """
 
         if not new_connection:
-            result = query.run(self.conn)
+            try:
+                result = query.run(self.conn)
+            except rethinkdb.ReqlDriverError as e:
+                if e.message == "Connection is closed.":
+                    self.log.warning("Connection was closed, attempting with a new connection...")
+                    result = query.run(self.get_connection(connect_database))
+                else:
+                    raise
         else:
             result = query.run(self.get_connection(connect_database))
 
