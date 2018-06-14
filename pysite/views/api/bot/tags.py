@@ -6,24 +6,18 @@ from pysite.constants import ValidationTypes
 from pysite.decorators import api_key, api_params
 from pysite.mixins import DBMixin
 
-GET_SCHEMA = Schema([
-    {
-        Optional("tag_name"): str
-    }
-])
+GET_SCHEMA = Schema({
+    Optional("tag_name"): str
+})
 
-POST_SCHEMA = Schema([
-    {
-        "tag_name": str,
-        "tag_content": str
-    }
-])
+POST_SCHEMA = Schema({
+    "tag_name": str,
+    "tag_content": str
+})
 
-DELETE_SCHEMA = Schema([
-    {
-        "tag_name": str
-    }
-])
+DELETE_SCHEMA = Schema({
+    "tag_name": str
+})
 
 
 class TagsView(APIView, DBMixin):
@@ -53,7 +47,7 @@ class TagsView(APIView, DBMixin):
         tag_name = None
 
         if params:
-            tag_name = params[0].get("tag_name")
+            tag_name = params.get("tag_name")
 
         if tag_name:
             data = self.db.get(self.table_name, tag_name) or {}
@@ -75,8 +69,6 @@ class TagsView(APIView, DBMixin):
         Data must be provided as JSON.
         API key must be provided as header.
         """
-
-        json_data = json_data[0]
 
         tag_name = json_data.get("tag_name")
         tag_content = json_data.get("tag_content")
@@ -102,8 +94,7 @@ class TagsView(APIView, DBMixin):
         API key must be provided as header.
         """
 
-        json = data[0]
-        tag_name = json.get("tag_name")
+        tag_name = data.get("tag_name")
         tag_exists = self.db.get(self.table_name, tag_name)
 
         if tag_exists:
