@@ -1,12 +1,22 @@
+from schema import Schema
+from werkzeug.datastructures import ImmutableMultiDict
+from werkzeug.exceptions import BadRequest
+
+from pysite.constants import ValidationTypes
+from pysite.decorators import api_params
 from tests import SiteTest
+
+
+class DuckRequest:
+    """A quacking request with the `args` parameter used in schema validation."""
+
+    def __init__(self, args):
+        self.args = args
+
 
 class DecoratorTests(SiteTest):
     def test_decorator_api_json(self):
         """ Check the json validation decorator """
-        from pysite.decorators import api_params
-        from pysite.constants import ValidationTypes
-        from schema import Schema
-
         SCHEMA = Schema([{"user_id": int, "role": int}])
 
         @api_params(schema=SCHEMA, validation_type=ValidationTypes.json)
@@ -23,3 +33,16 @@ class DecoratorTests(SiteTest):
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json, [{'test': 'params'}])
+
+    def test_duplicate_params_with_dict_schema_raises_400(self):
+        """Check that duplicate parameters with a dictionary schema return 400 Bad Request"""
+
+        response = self.client.get('/testparams?segfault=yes&segfault=no')
+        self.assert400(response)
+
+    def test_single_params_with_dict_schema(self):
+        """Single parameters with a dictionary schema and `allow_duplicate_keys=False` return 200"""
+
+        response = self.client.get('/testparams?segfault=yes')
+        self.assert200(response)
+        self.assertEqual(response.json, {'segfault': 'yes'})

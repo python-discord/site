@@ -12,25 +12,19 @@ from pysite.utils.time import is_expired, parse_duration
 
 log = logging.getLogger(__name__)
 
-GET_SCHEMA = Schema([
-    {
-        "user_id": str
-    }
-])
+GET_SCHEMA = Schema({
+    "user_id": str
+})
 
-POST_SCHEMA = Schema([
-    {
-        "user_id": str,
-        "duration": str,
-        Optional("forced_nick"): str
-    }
-])
+POST_SCHEMA = Schema({
+    "user_id": str,
+    "duration": str,
+    Optional("forced_nick"): str
+})
 
-DELETE_SCHEMA = Schema([
-    {
-        "user_id": str
-    }
-])
+DELETE_SCHEMA = Schema({
+    "user_id": str
+})
 
 
 class HiphopifyView(APIView, DBMixin):
@@ -55,7 +49,7 @@ class HiphopifyView(APIView, DBMixin):
         API key must be provided as header.
         """
 
-        user_id = params[0].get("user_id")
+        user_id = params.get("user_id")
 
         log.debug(f"Checking if user ({user_id}) is permitted to change their nickname.")
         data = self.db.get(self.prison_table, user_id) or {}
@@ -83,9 +77,9 @@ class HiphopifyView(APIView, DBMixin):
         API key must be provided as header.
         """
 
-        user_id = json_data[0].get("user_id")
-        duration = json_data[0].get("duration")
-        forced_nick = json_data[0].get("forced_nick")
+        user_id = json_data.get("user_id")
+        duration = json_data.get("duration")
+        forced_nick = json_data.get("forced_nick")
 
         log.debug(f"Attempting to imprison user ({user_id}).")
 
@@ -146,7 +140,7 @@ class HiphopifyView(APIView, DBMixin):
         API key must be provided as header.
         """
 
-        user_id = json_data[0].get("user_id")
+        user_id = json_data.get("user_id")
 
         log.debug(f"Attempting to release user ({user_id}) from hiphop-prison.")
         prisoner_data = self.db.get(self.prison_table, user_id)
