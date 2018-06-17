@@ -78,7 +78,7 @@ class MoveView(RouteView, DBMixin, RMQMixin):
                 "title": "Wiki Page Move",
                 "description": f"**{obj['title']}** was moved by **{self.user_data.get('username')}** to "
                                f"**{obj['slug']}**",
-                "color": 0x3F8DD7,  # Light blue
+                "colour": 0x3F8DD7,  # Light blue
                 "timestamp": datetime.datetime.now().isoformat()
             }
         )

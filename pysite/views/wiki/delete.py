@@ -58,7 +58,7 @@ class DeleteView(RouteView, DBMixin, RMQMixin):
                 "target": CHANNEL_MOD_LOG,
                 "title": f"Page Deletion",
                 "description": f"**{obj['title']}** was deleted by **{self.user_data.get('username')}**",
-                "color": 0x3F8DD7,  # Light blue
+                "colour": 0x3F8DD7,  # Light blue
                 "timestamp": datetime.datetime.now().isoformat()
             }
         )
