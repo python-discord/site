@@ -35,101 +35,103 @@
     <script type="application/javascript">
         "use strict";
 
-        let csrf_token = "{{ csrf_token() }}";
+        window.onload = () => {
+            let csrf_token = "{{ csrf_token() }}";
 
-        function do_preview(_) {
-            let oReq = new XMLHttpRequest();
+            function do_preview(_) {
+                let oReq = new XMLHttpRequest();
 
-            oReq.addEventListener("load", function() {
-                let response = JSON.parse(this.responseText);
+                oReq.addEventListener("load", function () {
+                    let response = JSON.parse(this.responseText);
 
-                if (response.error !== undefined) {
-                    document.getElementById("submit").disabled = true;
+                    if (response.error !== undefined) {
+                        document.getElementById("submit").disabled = true;
 
-                    if (response.error_lines !== undefined) {
-                        editor.session.setAnnotations(response.error_lines);
-                        document.getElementById("preview-div").innerHTML ="<h3>Error - see editor margin</h3>";
+                        if (response.error_lines !== undefined) {
+                            editor.session.setAnnotations(response.error_lines);
+                            document.getElementById("preview-div").innerHTML = "<h3>Error - see editor margin</h3>";
+                        } else {
+                            console.log("Error: " + response.error);
+                            document.getElementById("preview-div").innerHTML = "<h3>Error</h3><p>" + response.error + "<p>";
+                        }
                     } else {
-                        console.log("Error: " + response.error);
-                        document.getElementById("preview-div").innerHTML ="<h3>Error</h3><p>" + response.error + "<p>";
+                        document.getElementById("submit").disabled = false;
+                        document.getElementById("preview-div").innerHTML = response.data;
+
+                        editor.session.setAnnotations([]);
                     }
-                } else {
-                    document.getElementById("submit").disabled = false;
-                    document.getElementById("preview-div").innerHTML = response.data;
+                });
 
-                    editor.session.setAnnotations([]);
+                let data = editor.getValue();
+
+                if (data.replace("\s", "").length < 1 || document.getElementById("title").value.length < 1) {
+                    document.getElementById("submit").disabled = true;
+                    return false;
                 }
-            });
 
-            let data = editor.getValue();
+                oReq.open("POST", "/render");
 
-            if (data.replace("\s", "").length < 1 || document.getElementById("title").value.length < 1) {
-                document.getElementById("submit").disabled = true;
+                oReq.setRequestHeader("Content-type", "application/json");
+                oReq.setRequestHeader("X-CSRFToken", csrf_token);
+
+                oReq.send(JSON.stringify({"data": editor.getValue()}));
+
                 return false;
             }
 
-            oReq.open("POST", "/render");
+            document.getElementById("preview").onclick = do_preview;
 
-            oReq.setRequestHeader("Content-type", "application/json");
-            oReq.setRequestHeader("X-CSRFToken", csrf_token);
+            let editor = ace.edit("editor");
+            let timer;
 
-            oReq.send(JSON.stringify({"data": editor.getValue()}));
+            editor.session.setMode("ace/mode/rst");
+            editor.session.setUseWrapMode(true);
 
-            return false;
-        }
+            editor.setTheme("ace/theme/iplastic");
+            editor.setShowPrintMargin(false);
 
-        document.getElementById("preview").onclick = do_preview;
-
-        let editor = ace.edit("editor");
-        let timer;
-
-        editor.session.setMode("ace/mode/rst");
-        editor.session.setUseWrapMode(true);
-
-        editor.setTheme("ace/theme/iplastic");
-        editor.setShowPrintMargin(false);
-
-        editor.on("input", function() {
-            document.getElementById("submit").disabled = true;
-            document.getElementById("rst").value = editor.getValue();
-
-            if (timer !== undefined) {
-                clearTimeout(timer);
-            }
-            timer = setTimeout(do_preview, 1000);
-        });
-
-        document.getElementById("title").oninput = function() {
-            if (document.getElementById("title").value.length < 1) {
+            editor.on("input", function () {
                 document.getElementById("submit").disabled = true;
-            }
+                document.getElementById("rst").value = editor.getValue();
 
-            document.getElementById("preview-title").textContent = document.getElementById("title").value;
-
-            document.getElementById("rst").value = editor.getValue();
-
-            if (timer !== undefined) {
-                clearTimeout(timer);
-            }
-            timer = setTimeout(do_preview, 1000);
-        };
-
-        function refreshLock() {
-            console.log("Refreshing lock");
-            let xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function() {
-                if (this.readyState === 4 && this.status === 204) {
-                    console.log("Lock refreshed")
-                } else if(this.readyState === 4 && this.status !== 204) {
-                    console.log("Could not refresh lock")
+                if (timer !== undefined) {
+                    clearTimeout(timer);
                 }
+                timer = setTimeout(do_preview, 1000);
+            });
+
+            document.getElementById("title").oninput = function () {
+                if (document.getElementById("title").value.length < 1) {
+                    document.getElementById("submit").disabled = true;
+                }
+
+                document.getElementById("preview-title").textContent = document.getElementById("title").value;
+
+                document.getElementById("rst").value = editor.getValue();
+
+                if (timer !== undefined) {
+                    clearTimeout(timer);
+                }
+                timer = setTimeout(do_preview, 1000);
             };
 
-            xhttp.open("PATCH", document.location.pathname, true);
-            xhttp.send();
-        }
+            function refreshLock() {
+                console.log("Refreshing lock");
+                let xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function () {
+                    if (this.readyState === 4 && this.status === 204) {
+                        console.log("Lock refreshed")
+                    } else if (this.readyState === 4 && this.status !== 204) {
+                        console.log("Could not refresh lock")
+                    }
+                };
 
-        // Lock refreshing
-        setInterval(refreshLock, (60 * 4) * 1000)
+                xhttp.open("PATCH", document.location.pathname, true);
+                xhttp.send();
+            }
+
+            // Lock refreshing
+            setInterval(refreshLock, (60 * 4) * 1000);
+        }
     </script>
 {% endblock %}
