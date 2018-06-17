@@ -49,10 +49,10 @@ TABLES = {
             "state",  # str
             "task_html",  # str
             "task_rst",  # str
-            "teams",  # list[int]
+            "teams",  # list[str]
             "theme",  # str
             "title",  # str
-            "winners"  # list[int]
+            "winners"  # list[str]
         ])
     ),
 
@@ -93,7 +93,7 @@ TABLES = {
         keys=sorted([
             "id",  # uuid
             "name",  # str
-            "members"  # list[int]
+            "members"  # list[str]
         ])
     ),
 

@@ -4,11 +4,27 @@ $quote_colour: #99AAB5;
 $sidebar_button_border_colour: rgba(0, 0, 0, .11);
 
 $page_classes: (
-  blueprint-staff,  // All wiki pages
+  blueprint-staff,  // All staff pages
 );
 
 @each $class in $page_classes {
   .#{$class} {
+    .participant-handle {
+      cursor: move !important;
+    }
+
+    #member-answers-sidebar {
+      border-right: 1px solid $global_border;
+      margin-right: 1rem;
+      min-width: 20vw;
+      width: 20vw;
+
+      .avatar {
+        margin: 1vw 4vw;
+        width: 12vw;
+      }
+    }
+
     .approval-card {
       border: 1px solid $global_border;
       padding: 0;

@@ -1,0 +1,358 @@
+{% extends "main/base.html" %}
+{% block title %}Staff | Jams | Teams{% endblock %}
+{% block og_title %}Staff | Jams | Teams{% endblock %}
+{% block og_description %}Manage Teams{% endblock %}
+{% block content %}
+    <div class="uk-flex">
+        <div class="uk-flex-column uk-padding-small uk-background-muted" id="member-answers-sidebar">
+            <h3 class="uk-text-center" id="user-info-hint">Hover a user to show their information here</h3>
+
+            <div id="visible-user-info">
+
+            </div>
+            <div id="hidden-user-info" hidden>
+                {% for participant in jam.participants %}
+                    <div class="user-info" id="user-info-{{ participant.user_id }}">
+                        <img src="{{ participant.avatar }}" class="uk-border-circle avatar" />
+                        <div class="uk-text-center">
+                            <strong>{{ participant.username }}#{{ participant.discriminator }}</strong>
+                        </div>
+                        <div class="uk-text-center">
+                            <span class="uk-text-muted">{{ participant.user_id }}</span>
+                        </div>
+                        <div class="uk-text-center">
+                            <i class="uk-icon far fa-fw fa-clock"></i> {{ participant.profile.timezone }} |
+                            <a href="https://gitlab.com/{{ participant.profile.gitlab_username }}">
+                                <i class="uk-icon fab fa-fw fa-gitlab"></i> {{ participant.profile.gitlab_username }}
+                            </a>
+                        </div>
+                        <hr class="uk-divider-icon" />
+
+                        {% for answer in participant.answers %}
+                            <strong>{{ questions[answer.question].title }}</strong>
+                            <br/>
+                            <span class="fira-code">{{ answer.value }}</span>
+                            <br/>
+                            <br/>
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="uk-section uk-flex-column uk-flex-stretch">
+            <h1>Code Jam {{ jam.number }}: Teams</h1>
+
+            <a class="uk-button uk-button-default" href="{{ url_for("staff.jams.index") }}"><i class="uk-icon fa-fw far fa-arrow-left"></i> &nbsp;Back</a>
+
+            {% if teams %}
+                <button class="uk-button uk-button-primary" id="init-button" disabled><i class="uk-icon fa-fw far fa-play"></i> &nbsp;Generate Teams</button>
+            {% else %}
+                <button class="uk-button uk-button-primary" id="init-button"><i class="uk-icon fa-fw far fa-play"></i> &nbsp;Generate Teams</button>
+            {% endif %}
+
+            <button class="uk-button uk-button-secondary" id="add-button"><i class="uk-icon fa-fw far fa-plus"></i> &nbsp;Add Team</button>
+            <br />
+            <br />
+            <div class="uk-hidden hidden-participants" hidden>
+                {% for participant in jam.participants %}
+                    {% if participant.user_id not in assigned %}
+                        <div class="uk-margin-small-bottom uk-margin-small-right uk-margin-small-top uk-margin-small-left" id="participant-line-{{ participant.user_id }}" title="{{ participant.user_id }}">
+                            <span class="participant-handle" draggable="true" data-user-id="{{ participant.user_id }}">
+                                <img class="uk-icon-image uk-border-circle" draggable="false" src="{{ participant.avatar }}" />
+                                {{ participant.username }}#{{ participant.discriminator }} ({{ participant.profile.timezone }})
+                            </span>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <div class="uk-flex uk-flex-row uk-flex-wrap" id="participant-handles">
+                {% for participant in jam.participants %}
+                <div class="participant-handle uk-margin-small-bottom uk-margin-small-right uk-margin-small-top uk-margin-small-left" id="participant-{{ participant.user_id }}" title="{{ participant.profile.timezone }} - {{ participant.user_id }}" draggable="true" data-user-id="{{ participant.user_id }}">
+                    <div class="uk-card uk-card-primary uk-card-small">
+                        <div class="uk-card-body">
+                            <img class="uk-icon-image uk-border-circle" draggable="false" src="{{ participant.avatar }}" />
+                            {{ participant.username }}#{{ participant.discriminator }}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            {% if not teams %}
+                <p id="no-teams-paragraph">No teams found.</p>
+
+                <div class="uk-flex uk-flex-row uk-flex-stretch uk-flex-wrap uk-flex-center" id="team-targets">
+                </div>
+            {% else %}
+                <p id="no-teams-paragraph" hidden="hidden">No teams found.</p>
+
+                <div class="uk-flex uk-flex-row uk-flex-stretch uk-flex-wrap uk-flex-center" id="team-targets">
+                    {% for id, team in teams.items() %}
+                        <div class="team-handle uk-margin-small-bottom uk-margin-small-right uk-margin-small-top uk-margin-small-left" id="team-{{ team.id }}" data-team-id="{{ team.id }}">
+                            <div class="uk-card uk-card-default uk-card-small">
+                                <div class="uk-card-header">
+                                    <h3 class="uk-card-title">{{ team.name }}</h3>
+                                </div>
+                                <div class="uk-card-body team-target" data-team-id="{{ team.id }}">
+                                    <p>Drop users here to assign them</p>
+
+                                    {% for user_id in team.members %}
+                                        <div class="uk-margin-small-bottom uk-margin-small-right uk-margin-small-top uk-margin-small-left" id="participant-line-{{ user_id }}" title="{{ participants[user_id].user_id }}">
+                                            <span class="participant-handle" draggable="true" data-user-id="{{ participants[user_id].user_id }}">
+                                                <img class="uk-icon-image uk-border-circle" draggable="false" src="{{ participants[user_id].avatar }}" />
+                                                {{ participants[user_id].username }}#{{ participants[user_id].discriminator }} ({{ participants[user_id].profile.timezone }})
+                                            </span>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                                <div class="uk-card-footer uk-text-right">
+                                    <button class="team-reroll-button uk-button uk-button-primary uk-button-small" data-team-id="{{ team.id }}">
+                                        <i class="uk-icon fa-fw far fa-dice"></i>
+                                    </button>
+                                    <button class="team-delete-button uk-button uk-button-danger uk-button-small" data-team-id="{{ team.id }}">
+                                        <i class="uk-icon fa-fw far fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <script type="application/javascript">
+        "use strict";
+        const jam = parseInt("{{ jam.number }}");
+        const actions = new JamActions("{{ url_for("staff.jams.action") }}", "{{ csrf_token() }}");
+
+        $("#init-button").on(
+            "click",
+            () => actions.generate_teams(jam, (result, data) => {
+                if (result) {
+                    data.teams.forEach( (team) => {
+                        let elem = `
+                            <div class="team-handle uk-margin-small-bottom uk-margin-small-right uk-margin-small-top uk-margin-small-left" id="team-${team.id}" data-team-id="${team.id}">
+                                <div class="uk-card uk-card-default uk-card-small">
+                                    <div class="uk-card-header">
+                                        <h3 class="uk-card-title">${team.name}</h3>
+                                    </div>
+                                    <div class="uk-card-body team-target" data-team-id="${team.id}">
+                                        <p>Drop users here to assign them</p>
+                                    </div>
+                                    <div class="uk-card-footer uk-text-right">
+                                        <button class="team-reroll-button uk-button uk-button-primary uk-button-small" data-team-id="${team.id}">
+                                            <i class="uk-icon fa-fw far fa-dice"></i>
+                                        </button>
+                                        <button class="team-delete-button uk-button uk-button-danger uk-button-small" data-team-id="${team.id}">
+                                            <i class="uk-icon fa-fw far fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>`;
+
+                        $("#team-targets").append(elem);
+                        assign_handlers();
+                    });
+
+                    $("#init-button").prop('disabled', true);
+
+                    UIkit.notification({
+                        "message": `Generated ${data.teams.length} teams`,
+                        "status": "success",
+                        "pos": "bottom-center",
+                        "timeout": 5000
+                    });
+                } else {
+                    console.log(data);
+
+                    UIkit.notification({
+                        "message": "Failed to generate teams",
+                        "status": "danger",
+                        "pos": "bottom-center",
+                        "timeout": 5000
+                    });
+                }
+            })
+        );
+
+        $("#add-button").on(
+            "click",
+            () => actions.create_team(jam, (result, data) => {
+                if (result) {
+                    let team = data.team;
+                    let elem = `
+                        <div class="team-handle uk-margin-small-bottom uk-margin-small-right uk-margin-small-top uk-margin-small-left" id="team-${team.id}" data-team-id="${team.id}">
+                            <div class="uk-card uk-card-default uk-card-small">
+                                <div class="uk-card-header">
+                                    <h3 class="uk-card-title">${team.name}</h3>
+                                </div>
+                                <div class="uk-card-body team-target" data-team-id="${team.id}">
+                                    <p>Drop users here to assign them</p>
+                                </div>
+                                <div class="uk-card-footer uk-text-right">
+                                    <button class="team-reroll-button uk-button uk-button-primary uk-button-small" data-team-id="${team.id}">
+                                        <i class="uk-icon fa-fw far fa-dice"></i>
+                                    </button>
+                                    <button class="team-delete-button uk-button uk-button-danger uk-button-small" data-team-id="${team.id}">
+                                        <i class="uk-icon fa-fw far fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>`;
+
+                    $("#team-targets").append(elem);
+                    assign_handlers();
+
+                    UIkit.notification({
+                        "message": `Created team: ${team.name}`,
+                        "status": "success",
+                        "pos": "bottom-center",
+                        "timeout": 5000
+                    });
+                } else {
+                    console.log(data);
+
+                    UIkit.notification({
+                        "message": "Failed to create team",
+                        "status": "danger",
+                        "pos": "bottom-center",
+                        "timeout": 5000
+                    });
+                }
+            })
+        );
+
+        $(".participant-handle").on(
+            "dragstart",
+            (e) => {
+                e.originalEvent.dataTransfer.setData(
+                    "pydis/member",
+                    e.target.getAttribute("data-user-id")
+                );
+            }
+        ).on(
+            "mouseenter",
+            (e) => {
+                $("#user-info-hint").prop("hidden", true);
+                $(".user-info").appendTo("#hidden-user-info");
+
+                console.log(e.target);
+                let target = e.target;
+                let member = target.getAttribute("data-user-id");
+
+                if (member === null) {
+                    target = e.target.parentNode.parentNode;
+                    member = target.getAttribute("data-user-id");
+                }
+
+                console.log(member);
+
+                $(`#user-info-${member}`).appendTo("#visible-user-info");
+            }
+        );
+
+        function drag_over(e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            e.originalEvent.dropEffect = "move";
+        }
+
+        function drop(e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            let member = e.originalEvent.dataTransfer.getData("pydis/member");
+
+            if (!member) {
+                return;
+            }
+
+            let target = e.target;
+
+            if (target.tagName === "p" || target.tagName === "P") {
+                target = target.parentNode;
+            }
+
+            let team = target.getAttribute("data-team-id");
+
+            $(`#participant-line-${member}`).appendTo(target);
+            actions.set_team_member(jam, member, team, (result, data) => {
+                if (result) {
+                    UIkit.notification({
+                        "message": `Team assigned successfully`,
+                        "status": "success",
+                        "pos": "bottom-center",
+                        "timeout": 5000
+                    });
+                } else {
+                    console.log(data);
+
+                    UIkit.notification({
+                        "message": "Failed to assign user to team",
+                        "status": "danger",
+                        "pos": "bottom-center",
+                        "timeout": 5000
+                    });
+                }
+            });
+        }
+
+        function reroll_team(e) {
+            let team = this.getAttribute("data-team-id");
+
+            actions.reroll_team(team, (result, data) => {
+                if (result) {
+                    $(`#team-${team}`).find("h3").text(data.name);
+
+                    UIkit.notification({
+                        "message": `Team rerolled: ${data.name}`,
+                        "status": "success",
+                        "pos": "bottom-center",
+                        "timeout": 5000
+                    });
+                } else {
+                    console.log(data);
+
+                    UIkit.notification({
+                        "message": "Failed to reroll team",
+                        "status": "danger",
+                        "pos": "bottom-center",
+                        "timeout": 5000
+                    });
+                }
+            })
+        }
+
+        function delete_team(e) {
+            let team = this.getAttribute("data-team-id");
+
+            actions.delete_team(team, (result, data) => {
+                if (result) {
+                    let target = $(`#team-${team}`);
+
+                    target.find(".team-target").children("div").appendTo(".hidden-participants");
+                    target.remove();
+                } else {
+                    console.log(data);
+
+                    UIkit.notification({
+                        "message": "Failed to delete team",
+                        "status": "danger",
+                        "pos": "bottom-center",
+                        "timeout": 5000
+                    });
+                }
+            })
+        }
+
+        function assign_handlers() {
+            $(".team-target").off("dragover").off("drop").on("dragover", drag_over).on("drop", drop);
+            $(".team-reroll-button").off("click").on("click", reroll_team);
+            $(".team-delete-button").off("click").on("click", delete_team);
+        }
+
+        assign_handlers();
+    </script>
+{% endblock %}
