@@ -1,22 +1,20 @@
 import datetime
-import difflib
 import html
 import re
 
-import requests
 from flask import redirect, request, url_for
 from werkzeug.exceptions import BadRequest
 
 from pysite.base_route import RouteView
-from pysite.constants import DEBUG_MODE, EDITOR_ROLES, GITHUB_TOKEN, WIKI_AUDIT_WEBHOOK
+from pysite.constants import BotEventTypes, CHANNEL_MOD_LOG, DEBUG_MODE, EDITOR_ROLES
 from pysite.decorators import csrf, require_roles
-from pysite.mixins import DBMixin
+from pysite.mixins import DBMixin, RMQMixin
 from pysite.rst import render
 
 STRIP_REGEX = re.compile(r"<[^<]+?>")
 
 
-class EditView(RouteView, DBMixin):
+class EditView(RouteView, DBMixin, RMQMixin):
     path = "/edit/<path:page>"  # "path" means that it accepts slashes
     name = "edit"
     table_name = "wiki"
@@ -78,8 +76,6 @@ class EditView(RouteView, DBMixin):
             "headers": rendered["headers"]
         }
 
-        self.audit_log(page, obj)
-
         self.db.insert(
             self.table_name,
             obj,
@@ -97,7 +93,17 @@ class EditView(RouteView, DBMixin):
 
             del revision_payload["post"]["slug"]
 
-            self.db.insert(self.revision_table_name, revision_payload)
+            current_revisions = self.db.filter(self.revision_table_name, lambda rev: rev["slug"] == page)
+            sorted_revisions = sorted(current_revisions, lambda rev: rev["date"], reverse=True)
+
+            if len(sorted_revisions) > 0:
+                old_rev = sorted_revisions[0]
+            else:
+                old_rev = None
+
+            new_rev = self.db.insert(self.revision_table_name, revision_payload)["generated_keys"][0]
+
+        self.audit_log(page, new_rev, old_rev)
 
         return redirect(url_for("wiki.page", page=page), code=303)  # Redirect, ensuring a GET
 
@@ -120,63 +126,20 @@ class EditView(RouteView, DBMixin):
             }, conflict="update")  # Update with new lock time
         return "", 204
 
-    def audit_log(self, page, obj):
-        if WIKI_AUDIT_WEBHOOK:  # If the audit webhook is not configured there is no point processing the diff
-            before = self.db.get(self.table_name, page)
-            if not before:  # If this is a new page, before will be None
-                before = []
-            else:
-                if before.get("rst") is None:
-                    before = []
-                else:
-                    before = before["rst"].splitlines(keepends=True)
-                    if len(before) == 0:
-                        pass
-                    else:
-                        if not before[-1].endswith("\n"):
-                            before[-1] += "\n"  # difflib sometimes messes up if a newline is missing on last line
+    def audit_log(self, page, new, old):
+        if not old:
+            link = f"https://wiki.pythondiscord.com/source/{page}"
+        else:
+            link = f"https://wiki.pythondiscord.com/history/compare/{old['id']}/{new}"
 
-            after = obj['rst'].splitlines(keepends=True) or [""]
-
-            if not after[-1].endswith("\n"):
-                after[-1] += "\n"  # Does the same thing as L57
-
-            diff = difflib.unified_diff(before, after, fromfile="before.rst", tofile="after.rst")
-            diff = "".join(diff)
-
-            gist_payload = {
-                "description": f"Changes to: {obj['title']}",
-                "public": False,
-                "files": {
-                    "changes.md": {
-                        "content": f"```diff\n{diff}\n```"
-                    }
-                }
+        self.rmq_bot_event(
+            BotEventTypes.send_embed,
+            {
+                "target": CHANNEL_MOD_LOG,
+                "title": "Page Edit",
+                "description": f"**{old['post']['title']}** edited by **{self.user_data.get('username')}**. "
+                               f"[View the diff here]({link})",
+                "color": 0x3F8DD7,  # Light blue
+                "timestamp": datetime.datetime.now().isoformat()
             }
-
-            headers = {
-                "Authorization": f"token {GITHUB_TOKEN}",
-                "User-Agent": "Discord Python Wiki (https://gitlab.com/python-discord)"
-            }
-
-            gist = requests.post("https://api.github.com/gists",
-                                 json=gist_payload,
-                                 headers=headers)
-
-            audit_payload = {
-                "username": "Wiki Updates",
-                "embeds": [
-                    {
-                        "title": "Page Edit",
-                        "description": f"**{obj['title']}** was edited by **{self.user_data.get('username')}**"
-                                       f".\n\n[View diff]({gist.json().get('html_url')})",
-                        "color": 4165079,
-                        "timestamp": datetime.datetime.utcnow().isoformat(),
-                        "thumbnail": {
-                            "url": "https://pythondiscord.com/static/logos/logo_discord.png"
-                        }
-                    }
-                ]
-            }
-
-            requests.post(WIKI_AUDIT_WEBHOOK, json=audit_payload)
+        )

@@ -1,16 +1,15 @@
 import datetime
 
-import requests
 from flask import redirect, request, url_for
 from werkzeug.exceptions import BadRequest, NotFound
 
 from pysite.base_route import RouteView
-from pysite.constants import EDITOR_ROLES, WIKI_AUDIT_WEBHOOK
+from pysite.constants import BotEventTypes, CHANNEL_MOD_LOG, EDITOR_ROLES
 from pysite.decorators import csrf, require_roles
-from pysite.mixins import DBMixin
+from pysite.mixins import DBMixin, RMQMixin
 
 
-class MoveView(RouteView, DBMixin):
+class MoveView(RouteView, DBMixin, RMQMixin):
     path = "/move/<path:page>"  # "path" means that it accepts slashes
     name = "move"
     table_name = "wiki"
@@ -72,22 +71,14 @@ class MoveView(RouteView, DBMixin):
         return redirect(url_for("wiki.page", page=location), code=303)  # Redirect, ensuring a GET
 
     def audit_log(self, obj):
-        if WIKI_AUDIT_WEBHOOK:  # If the audit webhook is not configured there is no point processing it
-            audit_payload = {
-                "username": "Wiki Updates",
-                "embeds": [
-                    {
-                        "title": "Page Move",
-                        "description": f"**{obj['title']}** was moved by "
-                                       f"**{self.user_data.get('username')}** to "
-                                       f"**{obj['slug']}**",
-                        "color": 4165079,
-                        "timestamp": datetime.datetime.utcnow().isoformat(),
-                        "thumbnail": {
-                            "url": "https://pythondiscord.com/static/logos/logo_discord.png"
-                        }
-                    }
-                ]
+        self.rmq_bot_event(
+            BotEventTypes.send_embed,
+            {
+                "target": CHANNEL_MOD_LOG,
+                "title": "Wiki Page Move",
+                "description": f"**{obj['title']}** was moved by **{self.user_data.get('username')}** to "
+                               f"**{obj['slug']}**",
+                "color": 0x3F8DD7,  # Light blue
+                "timestamp": datetime.datetime.now().isoformat()
             }
-
-            requests.post(WIKI_AUDIT_WEBHOOK, json=audit_payload)
+        )

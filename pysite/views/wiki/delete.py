@@ -1,16 +1,15 @@
 import datetime
 
-import requests
 from flask import redirect, url_for
 from werkzeug.exceptions import NotFound
 
 from pysite.base_route import RouteView
-from pysite.constants import EDITOR_ROLES, WIKI_AUDIT_WEBHOOK
+from pysite.constants import BotEventTypes, CHANNEL_MOD_LOG, EDITOR_ROLES
 from pysite.decorators import csrf, require_roles
-from pysite.mixins import DBMixin
+from pysite.mixins import DBMixin, RMQMixin
 
 
-class DeleteView(RouteView, DBMixin):
+class DeleteView(RouteView, DBMixin, RMQMixin):
     path = "/delete/<path:page>"  # "path" means that it accepts slashes
     name = "delete"
     table_name = "wiki"
@@ -53,20 +52,13 @@ class DeleteView(RouteView, DBMixin):
         return redirect(url_for("wiki.page", page="home"), code=303)  # Redirect, ensuring a GET
 
     def audit_log(self, obj):
-        if WIKI_AUDIT_WEBHOOK:  # If the audit webhook is not configured there is no point processing it
-            audit_payload = {
-                "username": "Wiki Updates",
-                "embeds": [
-                    {
-                        "title": "Page Deletion",
-                        "description": f"**{obj['title']}** was deleted by **{self.user_data.get('username')}**",
-                        "color": 4165079,
-                        "timestamp": datetime.datetime.utcnow().isoformat(),
-                        "thumbnail": {
-                            "url": "https://pythondiscord.com/static/logos/logo_discord.png"
-                        }
-                    }
-                ]
+        self.rmq_bot_event(
+            BotEventTypes.send_embed,
+            {
+                "target": CHANNEL_MOD_LOG,
+                "title": f"Page Deletion",
+                "description": f"**{obj['title']}** was deleted by **{self.user_data.get('username')}**",
+                "color": 0x3F8DD7,  # Light blue
+                "timestamp": datetime.datetime.now().isoformat()
             }
-
-            requests.post(WIKI_AUDIT_WEBHOOK, json=audit_payload)
+        )

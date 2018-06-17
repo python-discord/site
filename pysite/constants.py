@@ -101,14 +101,8 @@ JAM_QUESTION_TYPES = [
 # CSRF
 CSRF = CSRFProtect()
 
-# GitHub Token
-GITHUB_TOKEN = environ.get("GITHUB_TOKEN") or None
-
-# Audit Webhook
-WIKI_AUDIT_WEBHOOK = environ.get("WIKI_AUDIT_WEBHOOK") or None
-
 # Bot key
-BOT_API_KEY = environ.get("BOT_API_KEY") or None
+BOT_API_KEY = environ.get("BOT_API_KEY")
 
 # RabbitMQ settings
 BOT_EVENT_QUEUE = "bot_events"
