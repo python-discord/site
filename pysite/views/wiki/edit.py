@@ -103,7 +103,7 @@ class EditView(RouteView, DBMixin, RMQMixin):
 
             new_rev = self.db.insert(self.revision_table_name, revision_payload)["generated_keys"][0]
 
-        self.audit_log(page, new_rev, old_rev)
+        self.audit_log(page, new_rev, old_rev, obj)
 
         return redirect(url_for("wiki.page", page=page), code=303)  # Redirect, ensuring a GET
 
@@ -126,18 +126,18 @@ class EditView(RouteView, DBMixin, RMQMixin):
             }, conflict="update")  # Update with new lock time
         return "", 204
 
-    def audit_log(self, page, new, old):
-        if not old:
+    def audit_log(self, page, new_id, old_data, new_data):
+        if not old_data:
             link = f"https://wiki.pythondiscord.com/source/{page}"
         else:
-            link = f"https://wiki.pythondiscord.com/history/compare/{old['id']}/{new}"
+            link = f"https://wiki.pythondiscord.com/history/compare/{old_data['id']}/{new_id}"
 
         self.rmq_bot_event(
             BotEventTypes.send_embed,
             {
                 "target": CHANNEL_MOD_LOG,
                 "title": "Page Edit",
-                "description": f"**{old['post']['title']}** edited by **{self.user_data.get('username')}**. "
+                "description": f"**{new_data['post']['title']}** edited by **{self.user_data.get('username')}**. "
                                f"[View the diff here]({link})",
                 "color": 0x3F8DD7,  # Light blue
                 "timestamp": datetime.datetime.now().isoformat()
