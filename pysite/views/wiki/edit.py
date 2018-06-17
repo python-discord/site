@@ -94,7 +94,7 @@ class EditView(RouteView, DBMixin, RMQMixin):
             del revision_payload["post"]["slug"]
 
             current_revisions = self.db.filter(self.revision_table_name, lambda rev: rev["slug"] == page)
-            sorted_revisions = sorted(current_revisions, lambda rev: rev["date"], reverse=True)
+            sorted_revisions = sorted(current_revisions, key=lambda rev: rev["date"], reverse=True)
 
             if len(sorted_revisions) > 0:
                 old_rev = sorted_revisions[0]
