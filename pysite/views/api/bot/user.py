@@ -41,6 +41,7 @@ class UserView(APIView, DBMixin):
     infractions_table = "code_jam_infractions"
     jams_table = "code_jams"
     responses_table = "code_jam_responses"
+    teams_table = "code_jam_teams"
 
     @api_key
     @api_params(schema=SCHEMA, validation_type=ValidationTypes.json)
@@ -92,6 +93,16 @@ class UserView(APIView, DBMixin):
                     self.db.delete(self.responses_table, response["id"], durability="soft")
                     response_deletions += 1
 
+                teams = self.db.run(
+                    self.db.query(self.teams_table).filter(lambda row: row["members"].contains(user_id)),
+                    coerce=list
+                )
+
+                for team in teams:
+                    team["members"].remove(user_id)
+
+                    self.db.insert(self.teams_table, team, conflict="replace", durability="soft")
+
                 if banned:
                     self.db.insert(
                         self.infractions_table, {
@@ -116,6 +127,7 @@ class UserView(APIView, DBMixin):
         self.db.sync(self.participants_table)
         self.db.sync(self.responses_table)
         self.db.sync(self.table_name)
+        self.db.sync(self.teams_table)
 
         changes["deleted"] = deletions
         changes["deleted_oauth"] = oauth_deletions
@@ -175,6 +187,18 @@ class UserView(APIView, DBMixin):
 
                 self.db.delete(self.responses_table, response["id"])
                 response_deletions += 1
+
+            teams = self.db.run(
+                self.db.query(self.teams_table).filter(lambda row: row["members"].contains(user_id)),
+                coerce=list
+            )
+
+            for team in teams:
+                team["members"].remove(user_id)
+
+                self.db.insert(self.teams_table, team, conflict="replace", durability="soft")
+
+            self.db.sync(self.teams_table)
 
             if banned:
                 self.db.insert(

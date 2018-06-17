@@ -28,6 +28,7 @@ const OUTPUT_DIR = "./static/js";
 
 gulp.task("build:js", () => {
     return gulp.src([ // Set source directories
+        `${SRC_DIR}/fouc.js`,  // Must be first to ensure libraries are loaded in time for the rest of the JS
         SRC_PATTERN,
         `${VENDOR_DIR}/moment/moment.js`, // Must be included before moment-timezone
         VENDOR_PATTERN], {base: "BASE_DIR"})

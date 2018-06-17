@@ -144,4 +144,49 @@ class JamActions {
             callback
         );
     }
+
+    generate_teams(jam, callback) {
+        this.send(
+            "generate_teams",
+            "POST",
+            {"jam": jam},
+            callback
+        );
+    }
+
+    create_team(jam, callback) {
+        this.send(
+            "create_team",
+            "POST",
+            {"jam": jam},
+            callback
+        );
+    }
+
+    reroll_team(team, callback) {
+        this.send(
+            "reroll_team",
+            "POST",
+            {"team": team},
+            callback
+        );
+    }
+
+    delete_team(team, callback) {
+        this.send(
+            "team",
+            "DELETE",
+            {"team": team},
+            callback
+        );
+    }
+
+    set_team_member(jam, member, team, callback) {
+        this.send(
+            "set_team_member",
+            "POST",
+            {"jam": jam, "member": member, "team": team},
+            callback
+        );
+    }
 }

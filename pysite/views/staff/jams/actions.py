@@ -1,19 +1,22 @@
 from flask import jsonify, request
+from rethinkdb import ReqlNonExistenceError
 
 from pysite.base_route import APIView
 from pysite.constants import ALL_STAFF_ROLES, BotEventTypes, CHANNEL_JAM_LOGS, ErrorCodes, JAMMERS_ROLE
 from pysite.decorators import csrf, require_roles
 from pysite.mixins import DBMixin, RMQMixin
+from pysite.utils.words import get_word_pairs
 
-GET_ACTIONS = ["questions"]
-POST_ACTIONS = [
+GET_ACTIONS = ("questions",)
+POST_ACTIONS = (
     "associate_question", "disassociate_question", "infraction", "questions", "state", "approve_application",
-    "unapprove_application"
-]
-DELETE_ACTIONS = ["infraction", "question"]
-KEYS = ["action"]
+    "unapprove_application", "create_team", "generate_teams", "set_team_member",
+    "reroll_team"
+)
+DELETE_ACTIONS = ("infraction", "question", "team")
 
-QUESTION_KEYS = ["optional", "title", "type"]
+KEYS = ("action",)
+QUESTION_KEYS = ("optional", "title", "type")
 
 
 class ActionView(APIView, DBMixin, RMQMixin):
@@ -25,6 +28,8 @@ class ActionView(APIView, DBMixin, RMQMixin):
     infractions_table = "code_jam_infractions"
     questions_table = "code_jam_questions"
     responses_table = "code_jam_responses"
+    teams_table = "code_jam_teams"
+    users_table = "users"
 
     @csrf
     @require_roles(*ALL_STAFF_ROLES)
@@ -192,6 +197,204 @@ class ActionView(APIView, DBMixin, RMQMixin):
 
             return jsonify({"id": result["generated_keys"][0]})
 
+        if action == "create_team":
+            jam = request.form.get("jam", type=int)
+
+            if not jam:
+                return self.error(
+                    ErrorCodes.incorrect_parameters, "Jam number required"
+                )
+
+            jam_data = self.db.get(self.table_name, jam)
+
+            if not jam_data:
+                return self.error(
+                    ErrorCodes.incorrect_parameters, "Unknown jam number"
+                )
+
+            word_pairs = get_word_pairs()
+            adjective, noun = list(word_pairs)[0]
+
+            team = {
+                "name": f"{adjective} {noun}".title(),
+                "members": []
+            }
+
+            result = self.db.insert(self.teams_table, team)
+            team["id"] = result["generated_keys"][0]
+
+            jam_obj = self.db.get(self.table_name, jam)
+            jam_obj["teams"].append(team["id"])
+
+            self.db.insert(self.table_name, jam_obj, conflict="replace")
+
+            return jsonify({"team": team})
+
+        if action == "generate_teams":
+            jam = request.form.get("jam", type=int)
+
+            if not jam:
+                return self.error(
+                    ErrorCodes.incorrect_parameters, "Jam number required"
+                )
+
+            try:
+                query = self.db.query(self.table_name).get(jam).merge(
+                    lambda jam_obj: {
+                        "participants":
+                            self.db.query(self.responses_table)
+                                .filter({"jam": jam_obj["number"], "approved": True})
+                                .eq_join("snowflake", self.db.query(self.users_table))
+                                .without({"left": ["snowflake", "answers"]})
+                                .zip()
+                                .order_by("username")
+                                .coerce_to("array"),
+                        "teams":
+                            self.db.query(self.teams_table)
+                                .outer_join(self.db.query(self.table_name),
+                                            lambda team_row, jams_row: jams_row["teams"].contains(team_row["id"]))
+                                .pluck({"left": ["id", "name", "members"]})
+                                .zip()
+                                .coerce_to("array")
+                    }
+                )
+
+                jam_data = self.db.run(query)
+            except ReqlNonExistenceError:
+                return self.error(
+                    ErrorCodes.incorrect_parameters, "Unknown jam number"
+                )
+
+            if jam_data["teams"]:
+                return self.error(
+                    ErrorCodes.incorrect_parameters, "Jam already has teams"
+                )
+
+            num_participants = len(jam_data["participants"])
+            num_teams = num_participants // 3
+
+            if num_participants % 3:
+                num_teams += 1
+
+            word_pairs = get_word_pairs(num_teams)
+            teams = []
+
+            for adjective, noun in word_pairs:
+                team = {
+                    "name": f"{adjective} {noun}".title(),
+                    "members": []
+                }
+
+                result = self.db.insert(self.teams_table, team, durability="soft")
+                team["id"] = result["generated_keys"][0]
+                teams.append(team)
+
+            self.db.sync(self.teams_table)
+
+            jam_obj = self.db.get(self.table_name, jam)
+            jam_obj["teams"] = [team["id"] for team in teams]
+
+            self.db.insert(self.table_name, jam_obj, conflict="replace")
+
+            return jsonify({"teams": teams})
+
+        if action == "set_team_member":
+            jam = request.form.get("jam", type=int)
+            member = request.form.get("member")
+            team = request.form.get("team")
+
+            if not jam:
+                return self.error(
+                    ErrorCodes.incorrect_parameters, "Jam number required"
+                )
+
+            if not member:
+                return self.error(
+                    ErrorCodes.incorrect_parameters, "Member ID required"
+                )
+
+            if not team:
+                return self.error(
+                    ErrorCodes.incorrect_parameters, "Team ID required"
+                )
+
+            try:
+                query = self.db.query(self.table_name).get(jam).merge(
+                    lambda jam_obj: {
+                        "participants":
+                            self.db.query(self.responses_table)
+                                .filter({"jam": jam_obj["number"], "approved": True})
+                                .eq_join("snowflake", self.db.query(self.users_table))
+                                .without({"left": ["snowflake", "answers"]})
+                                .zip()
+                                .order_by("username")
+                                .coerce_to("array"),
+                        "teams":
+                            self.db.query(self.teams_table)
+                                .outer_join(self.db.query(self.table_name),
+                                            lambda team_row, jams_row: jams_row["teams"].contains(team_row["id"]))
+                                .pluck({"left": ["id", "name", "members"]})
+                                .zip()
+                                .coerce_to("array")
+                    }
+                )
+
+                jam_data = self.db.run(query)
+            except ReqlNonExistenceError:
+                return self.error(
+                    ErrorCodes.incorrect_parameters, "Unknown jam number"
+                )
+
+            if not jam_data["teams"]:
+                return self.error(
+                    ErrorCodes.incorrect_parameters, "Jam has no teams"
+                )
+
+            team_obj = self.db.get(self.teams_table, team)
+
+            if not team_obj:
+                return self.error(
+                    ErrorCodes.incorrect_parameters, "Unknown team ID"
+                )
+
+            for jam_team_obj in jam_data["teams"]:
+                if jam_team_obj["id"] == team:
+                    if member not in jam_team_obj["members"]:
+                        jam_team_obj["members"].append(member)
+
+                        self.db.insert(self.teams_table, jam_team_obj, conflict="replace")
+                else:
+                    if member in jam_team_obj["members"]:
+                        jam_team_obj["members"].remove(member)
+
+                        self.db.insert(self.teams_table, jam_team_obj, conflict="replace")
+
+            return jsonify({"result": True})
+
+        if action == "reroll_team":
+            team = request.form.get("team")
+
+            if not team:
+                return self.error(
+                    ErrorCodes.incorrect_parameters, "Team ID required"
+                )
+
+            team_obj = self.db.get(self.teams_table, team)
+
+            if not team_obj:
+                return self.error(
+                    ErrorCodes.incorrect_parameters, "Unknown team ID"
+                )
+
+            word_pairs = get_word_pairs()
+            adjective, noun = list(word_pairs)[0]
+
+            team_obj["name"] = f"{adjective} {noun}".title()
+
+            self.db.insert(self.teams_table, team_obj, conflict="replace")
+
+            return jsonify({"name": team_obj["name"]})
+
         if action == "approve_application":
             app = request.form.get("id")
 
@@ -324,3 +527,15 @@ class ActionView(APIView, DBMixin, RMQMixin):
             self.db.delete(self.infractions_table, infraction)
 
             return jsonify({"id": infraction_obj["id"]})
+
+        if action == "team":
+            team = request.form.get("team")
+
+            if not team:
+                return self.error(
+                    ErrorCodes.incorrect_parameters, "Team ID required"
+                )
+
+            self.db.delete(self.teams_table, team)
+
+            return jsonify({"result": True})
