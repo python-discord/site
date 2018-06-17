@@ -137,7 +137,7 @@ class EditView(RouteView, DBMixin, RMQMixin):
             {
                 "target": CHANNEL_MOD_LOG,
                 "title": "Page Edit",
-                "description": f"**{new_data['post']['title']}** edited by **{self.user_data.get('username')}**. "
+                "description": f"**{new_data['title']}** edited by **{self.user_data.get('username')}**. "
                                f"[View the diff here]({link})",
                 "color": 0x3F8DD7,  # Light blue
                 "timestamp": datetime.datetime.now().isoformat()
