@@ -7,5 +7,21 @@ $page_classes: (
     #invite-button {
       padding: 0;
     }
+
+    #reddit-button {
+      font-size: 120%;
+      line-height: 2rem;
+      padding: 1rem;
+      text-transform: unset;
+      width: 320px;
+
+      .fa-fw {
+        font-size: 350% !important;
+      }
+
+      span {
+        font-size: 80%;
+      }
+    }
   }
 }

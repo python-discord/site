@@ -4,9 +4,12 @@
 {% block content %}
 <div class="uk-section uk-section-primary">
     <div class="uk-container uk-text-center">
-        <h1 class="uk-header">
+        <h1 class="uk-header uk-article-title">
             Python Discord
         </h1>
+        <p class="uk-article-meta">
+            The official Discord server of <a href="https://www.reddit.com/r/Python/">r/Python</a>
+        </p>
         <p class="uk-text-lead">
             We're a large, friendly community focused around the Python programming language,
             open to those who wish to learn the language or improve their skills, as well as
@@ -17,6 +20,14 @@
             available to assist around the clock. Whether you're looking to learn the language or working
             on a complex project, we've got someone who can help you if you get stuck.
         </p>
+{#        <div class="uk-container uk-align-center">#}
+{#            <a href="https://www.reddit.com/r/Python/" class="uk-button uk-button-large uk-button-darkish" id="reddit-button">#}
+{#                <div>#}
+{#                    <i class="uk-icon fa-fw fab fa-reddit-alien uk-float-left"></i>#}
+{#                    <div class="uk-text-center">Official Discord server of r/Python</div>#}
+{#                </div>#}
+{#            </a>#}
+{#        </div>#}
         <div class="uk-container uk-align-center">
             <a href="{{ url_for('main.invite') }}" class="uk-button uk-button-large uk-button-darkish" id="invite-button">
                 <img src="https://discordapp.com/api/guilds/267624335836053506/embed.png?style=banner3">
