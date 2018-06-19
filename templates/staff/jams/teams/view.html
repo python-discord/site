@@ -67,14 +67,25 @@
             </div>
             <div class="uk-flex uk-flex-row uk-flex-wrap" id="participant-handles">
                 {% for participant in jam.participants %}
-                <div class="participant-handle uk-margin-small-bottom uk-margin-small-right uk-margin-small-top uk-margin-small-left" id="participant-{{ participant.user_id }}" title="{{ participant.profile.timezone }} - {{ participant.user_id }}" draggable="true" data-user-id="{{ participant.user_id }}">
-                    <div class="uk-card uk-card-primary uk-card-small">
-                        <div class="uk-card-body">
-                            <img class="uk-icon-image uk-border-circle" draggable="false" src="{{ participant.avatar }}" />
-                            {{ participant.username }}#{{ participant.discriminator }}
+                    {% if participant.user_id not in assigned %}
+                        <div class="participant-handle uk-margin-small-bottom uk-margin-small-right uk-margin-small-top uk-margin-small-left" id="participant-{{ participant.user_id }}" title="{{ participant.profile.timezone }} - {{ participant.user_id }}" draggable="true" data-user-id="{{ participant.user_id }}">
+                            <div class="uk-card uk-card-primary uk-card-small" id="participant-{{ participant.user_id }}-card">
+                                <div class="uk-card-body">
+                                    <img class="uk-icon-image uk-border-circle" draggable="false" src="{{ participant.avatar }}" />
+                                    {{ participant.username }}#{{ participant.discriminator }}
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
+                    {% else %}
+                        <div class="participant-handle uk-margin-small-bottom uk-margin-small-right uk-margin-small-top uk-margin-small-left" id="participant-{{ participant.user_id }}" title="{{ participant.profile.timezone }} - {{ participant.user_id }}" draggable="true" data-user-id="{{ participant.user_id }}">
+                            <div class="uk-card uk-card-secondary uk-card-small" id="participant-{{ participant.user_id }}-card">
+                                <div class="uk-card-body">
+                                    <img class="uk-icon-image uk-border-circle" draggable="false" src="{{ participant.avatar }}" />
+                                    {{ participant.username }}#{{ participant.discriminator }}
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
                 {% endfor %}
             </div>
 
@@ -286,6 +297,8 @@
                         "pos": "bottom-center",
                         "timeout": 5000
                     });
+
+                    $(`#participant-${member}-card`).removeClass("uk-card-primary").addClass("uk-card-secondary");
                 } else {
                     console.log(data);
 
