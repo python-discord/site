@@ -18,7 +18,7 @@ class JamsIndexView(RouteView, DBMixin):
         )
 
         jams = self.db.run(query, coerce=list)
-        return self.render("main/jams/index.html", jams=jams, self.has_applied_to_jam=has_applied_to_jam)
+        return self.render("main/jams/index.html", jams=jams, has_applied_to_jam=self.has_applied_to_jam)
 
     def get_jam_response(self, jam, user_id):
         query = self.db.query("code_jam_responses").filter({"jam": jam, "snowflake": user_id})
