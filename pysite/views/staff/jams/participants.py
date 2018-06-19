@@ -1,3 +1,5 @@
+import logging
+
 from rethinkdb import ReqlNonExistenceError
 from werkzeug.exceptions import NotFound
 
@@ -7,6 +9,7 @@ from pysite.decorators import require_roles
 from pysite.mixins import DBMixin
 
 REQUIRED_KEYS = ["title", "date_start", "date_end"]
+log = logging.getLogger(__name__)
 
 
 class StaffView(RouteView, DBMixin):
@@ -37,6 +40,7 @@ class StaffView(RouteView, DBMixin):
 
             jam_data = self.db.run(query)
         except ReqlNonExistenceError:
+            log.exception("Failed RethinkDB query")
             raise NotFound()
 
         form_obj = self.db.get(self.forms_table, jam)
