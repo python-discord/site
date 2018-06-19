@@ -47,7 +47,11 @@ class ActionView(APIView, DBMixin, RMQMixin):
     @csrf
     @require_roles(*ALL_STAFF_ROLES)
     def post(self):
-        action = request.form.get("action")
+        if request.is_json:
+            data = request.get_json(force=True)
+            action = data["action"] if "action" in data else None
+        else:
+            action = request.form.get("action")
 
         if action not in POST_ACTIONS:
             return self.error(ErrorCodes.incorrect_parameters)

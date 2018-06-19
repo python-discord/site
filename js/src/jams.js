@@ -32,6 +32,7 @@ class JamActions {
             "data": JSON.stringify(data),
             "dataType": "json",
             "headers": {"X-CSRFToken": this.csrf_token},
+            "contentType": "application/json",
             "method": method
         }).done(data => {
             if ("error_code" in data) {
