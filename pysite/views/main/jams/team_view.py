@@ -9,7 +9,7 @@ from pysite.mixins import DBMixin, OAuthMixin
 log = logging.getLogger(__name__)
 
 
-class JamsTeamsListView(RouteView, DBMixin, OAuthMixin):
+class JamsTeamView(RouteView, DBMixin, OAuthMixin):
     path = "/jams/team/<string:team_id>"
     name = "jams.team_view"
 
