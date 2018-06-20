@@ -1,0 +1,30 @@
+{% extends "main/base.html" %}
+{% block title %}Code Jams | My Teams{% endblock %}
+{% block og_title %}Code Jams | My Teams{% endblock %}
+
+{% block content %}
+    <div class="uk-section">
+        <div class="uk-container uk-container-small">
+            <h1 class="uk-header uk-article-title uk-heading-divider">
+                Code Jams: My Teams
+            </h1>
+            <br>
+
+            {% if entries %}
+                {% for entry in entries %}
+                    <div>
+                        <h3>Code Jam #{{ entry.jam.number }}: Team <strong>{{ entry.team.name }}</strong></h3>
+                        <strong>Team Members</strong>
+                        <ul>
+                            {% for member in entry.team.members %}
+                                <li>{{ member.username }}#{{ member.discriminator }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>You are not part of any team.</p>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
