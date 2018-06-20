@@ -133,175 +133,177 @@
     <script type="application/javascript">
         "use strict";
 
-        let csrf_token = "{{ csrf_token() }}";
-        let info_modal = UIkit.modal(document.getElementById("preview-info-modal"));
-        let task_modal = UIkit.modal(document.getElementById("preview-task-modal"));
-        let preview_url = "{{ url_for("staff.render") }}";
+        window.onload = () => {
+            let csrf_token = "{{ csrf_token() }}";
+            let info_modal = UIkit.modal(document.getElementById("preview-info-modal"));
+            let task_modal = UIkit.modal(document.getElementById("preview-task-modal"));
+            let preview_url = "{{ url_for("staff.render") }}";
 
-        function do_preview_info(callback) {
-            let oReq = new XMLHttpRequest();
+            function do_preview_info(callback) {
+                let oReq = new XMLHttpRequest();
 
-            oReq.addEventListener("load", function() {
-                let response = JSON.parse(this.responseText);
+                oReq.addEventListener("load", function () {
+                    let response = JSON.parse(this.responseText);
 
-                if (response.error !== undefined) {
+                    if (response.error !== undefined) {
+                        document.getElementById("done").disabled = true;
+
+                        if (response.error_lines !== undefined) {
+                            info_editor.session.setAnnotations(response.error_lines);
+                            document.getElementById("preview-info-div").innerHTML = "<h3>Error - see editor margin</h3>";
+                        } else {
+                            console.log("Error: " + response.error);
+                            document.getElementById("preview-info-div").innerHTML = "<h3>Error</h3><p>" + response.error + "<p>";
+                        }
+                    } else {
+                        document.getElementById("done").disabled = false;
+                        document.getElementById("preview-info-div").innerHTML = response.data;
+
+                        info_editor.session.setAnnotations([]);
+                    }
+
+                    if (callback !== undefined) {
+                        callback();
+                    }
+                });
+
+                let data = info_editor.getValue();
+
+                if (data.replace("\s", "").length < 1) {
                     document.getElementById("done").disabled = true;
 
-                    if (response.error_lines !== undefined) {
-                        info_editor.session.setAnnotations(response.error_lines);
-                        document.getElementById("preview-info-div").innerHTML ="<h3>Error - see editor margin</h3>";
-                    } else {
-                        console.log("Error: " + response.error);
-                        document.getElementById("preview-info-div").innerHTML ="<h3>Error</h3><p>" + response.error + "<p>";
+                    if (callback !== undefined) {
+                        UIkit.notification({
+                            "message": "Please enter some text to preview",
+                            "status": "danger",
+                            "pos": "bottom-center",
+                            "timeout": 5000
+                        });
                     }
-                } else {
-                    document.getElementById("done").disabled = false;
-                    document.getElementById("preview-info-div").innerHTML = response.data;
-
-                    info_editor.session.setAnnotations([]);
+                    return false;
                 }
 
-                if (callback !== undefined) {
-                    callback();
-                }
-            });
+                oReq.open("POST", preview_url);
 
-            let data = info_editor.getValue();
+                oReq.setRequestHeader("Content-type", "application/json");
+                oReq.setRequestHeader("X-CSRFToken", csrf_token);
 
-            if (data.replace("\s", "").length < 1) {
-                document.getElementById("done").disabled = true;
+                oReq.send(JSON.stringify({"data": data}));
 
-                if (callback !== undefined) {
-                    UIkit.notification({
-                        "message": "Please enter some text to preview",
-                        "status": "danger",
-                        "pos": "bottom-center",
-                        "timeout": 5000
-                    });
-                }
                 return false;
             }
 
-            oReq.open("POST", preview_url);
+            function do_preview_task(callback) {
+                let oReq = new XMLHttpRequest();
 
-            oReq.setRequestHeader("Content-type", "application/json");
-            oReq.setRequestHeader("X-CSRFToken", csrf_token);
+                oReq.addEventListener("load", function () {
+                    let response = JSON.parse(this.responseText);
 
-            oReq.send(JSON.stringify({"data": data}));
+                    if (response.error !== undefined) {
+                        document.getElementById("done").disabled = true;
 
-            return false;
-        }
+                        if (response.error_lines !== undefined) {
+                            task_editor.session.setAnnotations(response.error_lines);
+                            document.getElementById("preview-task-div").innerHTML = "<h3>Error - see editor margin</h3>";
+                        } else {
+                            console.log("Error: " + response.error);
+                            document.getElementById("preview-task-div").innerHTML = "<h3>Error</h3><p>" + response.error + "<p>";
+                        }
+                    } else {
+                        document.getElementById("done").disabled = false;
+                        document.getElementById("preview-task-div").innerHTML = response.data;
 
-        function do_preview_task(callback) {
-            let oReq = new XMLHttpRequest();
+                        task_editor.session.setAnnotations([]);
+                    }
 
-            oReq.addEventListener("load", function() {
-                let response = JSON.parse(this.responseText);
+                    if (callback !== undefined) {
+                        callback();
+                    }
+                });
 
-                if (response.error !== undefined) {
+                let data = task_editor.getValue();
+
+                if (data.replace("\s", "").length < 1) {
                     document.getElementById("done").disabled = true;
 
-                    if (response.error_lines !== undefined) {
-                        task_editor.session.setAnnotations(response.error_lines);
-                        document.getElementById("preview-task-div").innerHTML ="<h3>Error - see editor margin</h3>";
-                    } else {
-                        console.log("Error: " + response.error);
-                        document.getElementById("preview-task-div").innerHTML ="<h3>Error</h3><p>" + response.error + "<p>";
+                    if (callback !== undefined) {
+                        UIkit.notification({
+                            "message": "Please enter some text to preview",
+                            "status": "danger",
+                            "pos": "bottom-center",
+                            "timeout": 5000
+                        });
                     }
-                } else {
-                    document.getElementById("done").disabled = false;
-                    document.getElementById("preview-task-div").innerHTML = response.data;
-
-                    task_editor.session.setAnnotations([]);
+                    return false;
                 }
 
-                if (callback !== undefined) {
-                    callback();
-                }
-            });
+                oReq.open("POST", preview_url);
 
-            let data = task_editor.getValue();
+                oReq.setRequestHeader("Content-type", "application/json");
+                oReq.setRequestHeader("X-CSRFToken", csrf_token);
 
-            if (data.replace("\s", "").length < 1) {
-                document.getElementById("done").disabled = true;
+                oReq.send(JSON.stringify({"data": data}));
 
-                if (callback !== undefined) {
-                    UIkit.notification({
-                        "message": "Please enter some text to preview",
-                        "status": "danger",
-                        "pos": "bottom-center",
-                        "timeout": 5000
-                    });
-                }
                 return false;
             }
 
-            oReq.open("POST", preview_url);
+            document.getElementById("preview-task-button").onclick = function () {
+                do_preview_task(function () {
+                    task_modal.show();
+                })
+            };
 
-            oReq.setRequestHeader("Content-type", "application/json");
-            oReq.setRequestHeader("X-CSRFToken", csrf_token);
+            document.getElementById("preview-info-button").onclick = function () {
+                do_preview_info(function () {
+                    info_modal.show();
+                })
+            };
 
-            oReq.send(JSON.stringify({"data": data}));
+            document.getElementById("theme").oninput = function () {
+                document.getElementById("preview-task-theme").textContent = this.value;
+                document.getElementById("preview-info-theme").textContent = this.value;
+            };
 
-            return false;
-        }
+            document.getElementById("repo").oninput = function () {
+                document.getElementById("preview-task-url").href = this.value;
+                document.getElementById("preview-info-url").href = this.value;
+            };
 
-        document.getElementById("preview-task-button").onclick = function() {
-            do_preview_task(function() {
-                task_modal.show();
-            })
+            let info_editor = ace.edit("info_editor");
+            let task_editor = ace.edit("task_editor");
+            let info_timer, task_timer;
+
+            info_editor.session.setMode("ace/mode/rst");
+            info_editor.session.setUseWrapMode(true);
+
+            info_editor.setTheme("ace/theme/iplastic");
+            info_editor.setShowPrintMargin(false);
+
+            info_editor.on("input", function () {
+                document.getElementById("done").disabled = true;
+                document.getElementById("info_rst").value = info_editor.getValue();
+
+                if (info_timer !== undefined) {
+                    clearTimeout(info_timer);
+                }
+                info_timer = setTimeout(do_preview_info, 1000);
+            });
+
+            task_editor.session.setMode("ace/mode/rst");
+            task_editor.session.setUseWrapMode(true);
+
+            task_editor.setTheme("ace/theme/iplastic");
+            task_editor.setShowPrintMargin(false);
+
+            task_editor.on("input", function () {
+                document.getElementById("done").disabled = true;
+                document.getElementById("task_rst").value = task_editor.getValue();
+
+                if (task_timer !== undefined) {
+                    clearTimeout(task_timer);
+                }
+                task_timer = setTimeout(do_preview_task, 1000);
+            });
         };
-
-        document.getElementById("preview-info-button").onclick = function() {
-            do_preview_info(function() {
-                info_modal.show();
-            })
-        };
-
-        document.getElementById("theme").oninput = function() {
-            document.getElementById("preview-task-theme").textContent = this.value;
-            document.getElementById("preview-info-theme").textContent = this.value;
-        };
-
-        document.getElementById("repo").oninput = function() {
-            document.getElementById("preview-task-url").href = this.value;
-            document.getElementById("preview-info-url").href = this.value;
-        };
-
-        let info_editor = ace.edit("info_editor");
-        let task_editor = ace.edit("task_editor");
-        let info_timer, task_timer;
-
-        info_editor.session.setMode("ace/mode/rst");
-        info_editor.session.setUseWrapMode(true);
-
-        info_editor.setTheme("ace/theme/iplastic");
-        info_editor.setShowPrintMargin(false);
-
-        info_editor.on("input", function() {
-            document.getElementById("done").disabled = true;
-            document.getElementById("info_rst").value = info_editor.getValue();
-
-            if (info_timer !== undefined) {
-                clearTimeout(info_timer);
-            }
-            info_timer = setTimeout(do_preview_info, 1000);
-        });
-
-        task_editor.session.setMode("ace/mode/rst");
-        task_editor.session.setUseWrapMode(true);
-
-        task_editor.setTheme("ace/theme/iplastic");
-        task_editor.setShowPrintMargin(false);
-
-        task_editor.on("input", function() {
-            document.getElementById("done").disabled = true;
-            document.getElementById("task_rst").value = task_editor.getValue();
-
-            if (task_timer !== undefined) {
-                clearTimeout(task_timer);
-            }
-            task_timer = setTimeout(do_preview_task, 1000);
-        });
     </script>
 {% endblock %}
