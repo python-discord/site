@@ -17,7 +17,12 @@
                         <strong>Team Members</strong>
                         <ul>
                             {% for member in entry.team.members %}
-                                <li>{{ member.username }}#{{ member.discriminator }}</li>
+                                <li>
+                                    {{ member.username }}#{{ member.discriminator }}
+                                    <a class="uk-button uk-button-small" target="_blank" href="https://gitlab.com/{{ member.gitlab_username }}">
+                                        <i class="uk-icon fa-fw fab fa-gitlab"></i>
+                                    </a>
+                                </li>
                             {% endfor %}
                         </ul>
                     </div>

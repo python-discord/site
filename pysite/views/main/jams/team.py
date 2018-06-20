@@ -18,7 +18,11 @@ class JamsTeamView(RouteView, DBMixin, OAuthMixin):
                 "members":
                     self.db.query("users")
                         .filter(lambda user: team["members"].contains(user["user_id"]))
-                        .coerce_to("array")
+                        .merge(lambda user: {
+                            "gitlab_username":
+                                self.db.query("code_jam_participants").filter({"id": user["user_id"]})
+                                .coerce_to("array")[0]["gitlab_username"]
+                        }).coerce_to("array")
             }
         )
         teams = self.db.run(query)
