@@ -1,5 +1,5 @@
 from pysite.base_route import RouteView
-from pysite.mixins import OAuthMixin, DBMixin
+from pysite.mixins import DBMixin, OAuthMixin
 
 
 class JamsTeamView(RouteView, DBMixin, OAuthMixin):
@@ -30,7 +30,7 @@ class JamsTeamView(RouteView, DBMixin, OAuthMixin):
             query = self.db.query("code_jams").filter(
                 lambda jam: jam["teams"].contains(team["id"])
             )
-            jam = self.db.run(query).next()
+            jam = next(self.db.run(query))
             entries.append({
                 "team": team,
                 "jam": jam
