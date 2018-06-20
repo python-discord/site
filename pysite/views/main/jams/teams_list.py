@@ -4,7 +4,7 @@ from pysite.base_route import RouteView
 from pysite.mixins import DBMixin, OAuthMixin
 
 
-class JamsTeamView(RouteView, DBMixin, OAuthMixin):
+class JamsTeamsListView(RouteView, DBMixin, OAuthMixin):
     path = "/jams/teams"
     name = "jams.teams_list"
 
