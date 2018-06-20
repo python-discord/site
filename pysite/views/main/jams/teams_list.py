@@ -1,3 +1,5 @@
+import rethinkdb
+
 from pysite.base_route import RouteView
 from pysite.mixins import DBMixin, OAuthMixin
 
@@ -22,25 +24,16 @@ class JamsTeamView(RouteView, DBMixin, OAuthMixin):
                             "gitlab_username":
                                 self.db.query("code_jam_participants").filter({"id": user["user_id"]})
                                 .coerce_to("array")[0]["gitlab_username"]
-                        }).coerce_to("array")
+                        }).coerce_to("array"),
+                "jam":
+                    self.db.query("code_jams").filter(
+                        lambda jam: jam["teams"].contains(team["id"])
+                    ).coerce_to("array")[0]
             }
-        )
+        ).order_by(rethinkdb.desc("jam.number"))
         teams = self.db.run(query)
-
-        entries = []
-
-        for team in teams:
-            # find the jam for this team
-            query = self.db.query("code_jams").filter(
-                lambda jam: jam["teams"].contains(team["id"])
-            )
-            jam = next(self.db.run(query))
-            entries.append({
-                "team": team,
-                "jam": jam
-            })
 
         return self.render(
             "main/jams/teams_list.html",
-            entries=entries
+            teams=teams
         )

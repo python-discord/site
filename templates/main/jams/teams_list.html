@@ -10,16 +10,18 @@
             </h1>
             <br>
 
-            {% if entries %}
-                {% for entry in entries %}
+            {% if teams %}
+                {% for team in teams %}
                     <div>
-                        <h3>Code Jam #{{ entry.jam.number }}: Team <strong>{{ entry.team.name }}</strong></h3>
+                        <h3>Code Jam #{{ team.jam.number }}: Team <strong>{{ team.name }}</strong></h3>
                         <strong>Team Members</strong>
                         <ul>
-                            {% for member in entry.team.members %}
+                            {% for member in team.members %}
                                 <li>
                                     {{ member.username }}#{{ member.discriminator }}
-                                    <a class="uk-button uk-button-small" target="_blank" href="https://gitlab.com/{{ member.gitlab_username }}">
+                                    <a class="uk-button uk-button-small"
+                                       title="{{ member.gitlab_username }} on GitLab"
+                                       target="_blank" href="https://gitlab.com/{{ member.gitlab_username }}">
                                         <i class="uk-icon fa-fw fab fa-gitlab"></i>
                                     </a>
                                 </li>
