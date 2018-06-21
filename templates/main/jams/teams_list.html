@@ -12,7 +12,7 @@
                 {% for team in teams %}
                     <p></p>
                     <div>
-                        <h3>Code Jam #{{ team.jam.number }}: Team <strong>{{ team.name }}</strong></h3>
+                        <h3>Code Jam {{ team.jam.number }}: Team <strong>{{ team.name }}</strong></h3>
                         <p>
                             <a href="{{ url_for('main.jams.team_view', team_id=team.id) }}" class="uk-button uk-button-primary">
                                 <i class="uk-icon fa-fw far fa-eye"></i> &nbsp;View

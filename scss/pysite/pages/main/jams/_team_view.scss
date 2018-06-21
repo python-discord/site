@@ -1,0 +1,13 @@
+@import "variables";
+
+$page_classes: (
+    jam-team-view,
+);
+
+@each $class in $page_classes {
+  .#{$class} {
+    .participant-card {
+      color: red;
+    }
+  }
+}

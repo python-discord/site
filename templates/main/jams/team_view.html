@@ -3,5 +3,60 @@
 {% block og_title %}Team {{ team.name }}{% endblock %}
 
 {% block content %}
+    <div class="uk-section">
+        <div class="uk-container uk-container-small">
+            <h1 class="uk-header uk-article-title">
+                Team <strong>{{ team.name }}</strong>
+            </h1>
+            <p class="uk-article-meta">
+                Code Jam {{ team.jam.number }}
+            </p>
+            <p></p>
 
+            <div class="uk-grid">
+                <div class="uk-width-1-2@m">
+                    <h2>
+                        Team Members
+                    </h2>
+                    <div class="uk-card">
+                        {% for member in team.members %}
+                            <div class="jam-team-view participant-card uk-card-default">
+                                <strong>{{ member.username }}#{{ member.discriminator }}</strong>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="uk-width-1-2@m">
+                    <h2>
+                        Activity
+                    </h2>
+                    <p>
+                        <a href="#" class="uk-button uk-button-primary">
+                            <i class="uk-icon fa-fw fab fa-gitlab"></i> &nbsp;View on GitLab
+                        </a>
+                        {% if is_own_team %}
+                            <a href="#" class="uk-button uk-button-default">
+                                <i class="uk-icon fa-fw far fa-pencil"></i>
+                            </a>
+                        {% endif %}
+                    </p>
+
+                </div>
+            </div>
+            <h2>
+                Entry Description
+            </h2>
+            {% if is_own_team %}
+                <a href="#" class="uk-button uk-button-primary">
+                    <i class="uk-icon fa-fw far fa-pencil"></i> &nbsp;Edit
+                </a>
+                <a href="#" class="uk-button uk-button-default">
+                    <i class="uk-icon fa-fw far fa-history"></i> &nbsp;Revision History
+                </a>
+            {% endif %}
+            <p>
+                This team has not written an entry description yet.
+            </p>
+        </div>
+    </div>
 {% endblock %}

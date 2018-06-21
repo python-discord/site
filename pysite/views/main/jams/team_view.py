@@ -41,7 +41,11 @@ class JamsTeamView(RouteView, DBMixin, OAuthMixin):
             log.exception("Failed RethinkDB query")
             raise NotFound()
 
+        # check if the current user is a member of this team
+        # (this is for edition privileges)
+        is_own_team = self.logged_in and self.user_data["user_id"] in [member["user_id"] for member in team["members"]]
+
         return self.render(
             "main/jams/team_view.html",
-            team=team
+            team=team, is_own_team=is_own_team
         )
