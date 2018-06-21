@@ -37,8 +37,8 @@ document.onreadystatechange = function () {
     if (document.readyState === "interactive") {
         removeClass("html", "prevent-fouc");
         getScript(
-            "https://pro.fontawesome.com/releases/v5.0.13/js/all.js", // URL
-            "sha384-d84LGg2pm9KhR4mCAs3N29GQ4OYNy+K+FBHX8WhimHpPm86c839++MDABegrZ3gn", // Integrity
+            "https://pro.fontawesome.com/releases/v5.1.0/js/all.js", // URL
+            "sha384-E5SpgaZcbSJx0Iabb3Jr2AfTRiFnrdOw1mhO19DzzrT9L+wCpDyHUG2q07aQdO6E", // Integrity
             "anonymous" // Cross-origin
         );
         getScript(
