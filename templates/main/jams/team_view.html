@@ -2,6 +2,8 @@
 {% block title %}Team {{ team.name }}{% endblock %}
 {% block og_title %}Team {{ team.name }}{% endblock %}
 
+{% block page_classes %}jam-team-view{% endblock %}
+
 {% block content %}
     <div class="uk-section">
         <div class="uk-container uk-container-small">
@@ -18,10 +20,16 @@
                     <h2>
                         Team Members
                     </h2>
-                    <div class="uk-card">
+                    <div>
                         {% for member in team.members %}
-                            <div class="jam-team-view participant-card uk-card-default">
+                            <div class="participant-card uk-card-default">
+                                <img src="{{ member.avatar }}" class="uk-border-circle participant-avatar"
+                                     height="20px">
                                 <strong>{{ member.username }}#{{ member.discriminator }}</strong>
+                                &nbsp;
+                                <a href="https://gitlab.com/{{ member.gitlab_username }}" target="_blank" class="uk-button uk-button-default participant-gitlab">
+                                    <i class="uk-icon fa-fw fab fa-gitlab"></i>
+                                </a>
                             </div>
                         {% endfor %}
                     </div>

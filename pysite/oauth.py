@@ -60,6 +60,10 @@ class OAuthBackend(BaseBackend):
             "users",
             {
                 "user_id": user_data["id"],
+                #        "avatar": "https://cdn.discordapp.com/avatars/{0}/a_{1}.png".format(
+                #            user_data["id"],
+                #            user_data["avatar"]
+                #        ) if "avatar" in user_data else "",
                 "username": user_data["username"],
                 "discriminator": user_data["discriminator"]
             },

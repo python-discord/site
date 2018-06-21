@@ -7,7 +7,17 @@ $page_classes: (
 @each $class in $page_classes {
   .#{$class} {
     .participant-card {
-      color: red;
+      padding: 20px;
+      margin-bottom: 7px;
+
+      img.participant-avatar {
+        height: 2.5rem;
+        margin-right: 10px;
+      }
+
+      .participant-gitlab {
+        float: right;
+      }
     }
   }
 }
