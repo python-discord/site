@@ -20,16 +20,52 @@
                     <h2>
                         Team Members
                     </h2>
-                    <div>
+                    <div class="participant-card-list">
                         {% for member in team.members %}
                             <div class="participant-card uk-card-default">
                                 <img src="{{ member.avatar }}" class="uk-border-circle participant-avatar"
                                      height="20px">
                                 <strong>{{ member.username }}#{{ member.discriminator }}</strong>
-                                &nbsp;
-                                <a href="https://gitlab.com/{{ member.gitlab_username }}" target="_blank" class="uk-button uk-button-default participant-gitlab">
-                                    <i class="uk-icon fa-fw fab fa-gitlab"></i>
-                                </a>
+                                <div class="participant-links">
+                                    <a href="https://discordapp.com/users/{{ member.user_id }}" target="_blank"
+                                       class="uk-button uk-button-default">
+                                        <i class="uk-icon fa-fw fab fa-discord"></i>
+                                    </a>
+                                    <a href="https://gitlab.com/{{ member.gitlab_username }}" target="_blank"
+                                       class="uk-button uk-button-default">
+                                        <i class="uk-icon fa-fw fab fa-gitlab"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="participant-card uk-card-default">
+                                <img src="{{ member.avatar }}" class="uk-border-circle participant-avatar"
+                                     height="20px">
+                                <strong>{{ member.username }}#{{ member.discriminator }}</strong>
+                                <div class="participant-links">
+                                    <a href="https://discordapp.com/users/{{ member.user_id }}" target="_blank"
+                                       class="uk-button uk-button-default">
+                                        <i class="uk-icon fa-fw fab fa-discord"></i>
+                                    </a>
+                                    <a href="https://gitlab.com/{{ member.gitlab_username }}" target="_blank"
+                                       class="uk-button uk-button-default">
+                                        <i class="uk-icon fa-fw fab fa-gitlab"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="participant-card uk-card-default">
+                                <img src="{{ member.avatar }}" class="uk-border-circle participant-avatar"
+                                     height="20px">
+                                <strong>{{ member.username }}#{{ member.discriminator }}</strong>
+                                <div class="participant-links">
+                                    <a href="https://discordapp.com/users/{{ member.user_id }}" target="_blank"
+                                       class="uk-button uk-button-default">
+                                        <i class="uk-icon fa-fw fab fa-discord"></i>
+                                    </a>
+                                    <a href="https://gitlab.com/{{ member.gitlab_username }}" target="_blank"
+                                       class="uk-button uk-button-default">
+                                        <i class="uk-icon fa-fw fab fa-gitlab"></i>
+                                    </a>
+                                </div>
                             </div>
                         {% endfor %}
                     </div>
@@ -48,23 +84,92 @@
                             </a>
                         {% endif %}
                     </p>
-
+                    <div id="gitlab-activity" class="gitlab-activity uk-card-default">
+                        <div id="gitlab-activity-loading" class="gitlab-activity-loading">
+                            <div class="gitlab-activity-loading-content">
+                                <p>
+                                    Loading GitLab activity, hang tight...
+                                </p>
+                                <div uk-spinner class="gitlab-activity-spinner"></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <h2>
-                Entry Description
-            </h2>
-            {% if is_own_team %}
-                <a href="#" class="uk-button uk-button-primary">
-                    <i class="uk-icon fa-fw far fa-pencil"></i> &nbsp;Edit
-                </a>
-                <a href="#" class="uk-button uk-button-default">
-                    <i class="uk-icon fa-fw far fa-history"></i> &nbsp;Revision History
-                </a>
-            {% endif %}
-            <p>
-                This team has not written an entry description yet.
-            </p>
         </div>
     </div>
+
+    <script type="application/javascript">
+        "use strict";
+
+        window.onload = () => {
+
+            const GITLAB_PROJECT_ID = "python-discord/projects/site"; // the gitlab project id
+            const GITLAB_EVENT_ACTIONS = ["pushed"]; // the actions to filter in the event list
+            const JAM_START_DATE = "2018-01-01"; // the start date of the jam, in order to ignore pushes prior to it
+            const GITLAB_PROJECT_EVENTS_ENDPOINT = `https://gitlab.com/api/v4/projects/${encodeURIComponent(GITLAB_PROJECT_ID)}/events?action=${GITLAB_EVENT_ACTIONS.join(",")}&after=${JAM_START_DATE}`;
+
+            function gitlabBranchURL(branch) {
+                return `https://gitlab.com/${GITLAB_PROJECT_ID}/tree/${branch}`
+            }
+
+            function gitlabCommitURL(commit) {
+                return `https://gitlab.com/${GITLAB_PROJECT_ID}/commit/${commit}`
+            }
+
+            function onEventsLoaded(events) {
+                $("#gitlab-activity-loading").remove();
+
+                let eventList = $("<div></div>")
+                    .addClass("gitlab-activity-events");
+
+
+                let eventCount = 0;
+                for (let i = 0; i < events.length; i++) {
+                    let event = events[i];
+                    if (event["push_data"]["action"] !== "pushed") {
+                        continue;
+                    }
+                    let commit = event["push_data"]["commit_to"];
+                    let branch = event["push_data"]["ref"];
+                    let eventDate = Date.parse(event["created_at"]);
+                    let eventElement = $(
+                        ""
+                        + "<div class=\"gitlab-activity-event-item\">"
+                        + "<div class=\"gitlab-activity-event-item-content\">"
+                        + `<span><strong>${event["author"]["username"]}</strong> pushed: "${event["push_data"]["commit_title"]}"</span>`
+                        + "<br>"
+                        + `<a target=\"blank\" href=\"${gitlabCommitURL(commit)}\" class=\"pasta\">${commit.substring(0, 8)}</a>`
+                        + `<a target=\"blank\" href=\"${gitlabBranchURL(branch)}\" class=\"pasta\"><i class="uk-icon fa-fw far fa-code-branch"></i> ${branch}</a>`
+                        + ``
+                        + "</div>"
+                        + "</div>"
+                    );
+                    eventList.append(eventElement);
+                    eventCount++;
+                }
+
+                let footerMessage = eventCount > 0 ? "We've reached the end!" : "There is no activity to show at this time.";
+
+                // add the footer
+                let eventListFooter = $(
+                    ""
+                    + "<div class=\"gitlab-activity-events-footer\">"
+                    + `<span>${footerMessage}</span>`
+                    + "</div>"
+                ).appendTo(eventList);
+
+
+                $("#gitlab-activity").append(eventList);
+            }
+
+            function onEventsFailed(xhr) {
+                console.error(xhr);
+            }
+
+            $.get(
+                GITLAB_PROJECT_EVENTS_ENDPOINT
+            ).done(onEventsLoaded).fail(onEventsFailed);
+        };
+    </script>
 {% endblock %}
