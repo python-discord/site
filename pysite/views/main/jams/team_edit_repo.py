@@ -6,7 +6,7 @@ import requests
 from flask import jsonify, request
 from rethinkdb import ReqlNonExistenceError
 from urllib3.util import parse_url
-from werkzeug.exceptions import NotFound, Unauthorized, BadRequest
+from werkzeug.exceptions import BadRequest, NotFound, Unauthorized
 
 from pysite.base_route import RouteView
 from pysite.constants import GITLAB_ACCESS_TOKEN
