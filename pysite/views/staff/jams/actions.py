@@ -221,7 +221,8 @@ class ActionView(APIView, DBMixin, RMQMixin):
 
             team = {
                 "name": f"{adjective} {noun}".title(),
-                "members": []
+                "members": [],
+                "jam": jam
             }
 
             result = self.db.insert(self.teams_table, team)
@@ -537,6 +538,18 @@ class ActionView(APIView, DBMixin, RMQMixin):
                 return self.error(
                     ErrorCodes.incorrect_parameters, "Team ID required"
                 )
+
+            team_obj = self.db.get(self.teams_table, team)
+
+            if not team_obj:
+                return self.error(
+                    ErrorCodes.incorrect_parameters, "Unknown team ID"
+                )
+
+            jam_obj = self.db.get(self.table_name, team_obj["jam"])
+            if jam_obj:
+                jam_obj["teams"].remove(team)
+                self.db.insert(self.table_name, jam_obj, conflict="update")
 
             self.db.delete(self.teams_table, team)
 

@@ -10,3 +10,4 @@ def run(db, table, table_obj):
                 if document["id"] in jam["teams"]:
                     document["jam"] = jam["number"]
                     db.insert(table, document, conflict="update", durability="soft")
+    db.sync(table)
