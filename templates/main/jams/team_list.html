@@ -14,8 +14,14 @@
                     Code Jam {{ jam.number }}: Teams
                 {% endif %}
             </h1>
+            {% if not user_teams %}
+                <p>
+                    <a id="back" class="uk-button uk-button-default" href="{{ url_for("main.jams.index") }}">
+                        <i class="uk-icon fa-fw far fa-arrow-left"></i> &nbsp;All Jams
+                    </a>
+                </p>
+            {% endif %}
             {% if teams %}
-
                 <div class="uk-flex uk-flex-row uk-flex-wrap team-list-cards">
                     {% for team in teams %}
                         <div class="uk-card uk-card-default uk-margin-small-bottom uk-margin-small-right uk-margin-small-top uk-margin-small-left
