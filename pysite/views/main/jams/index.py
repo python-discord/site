@@ -9,10 +9,21 @@ class JamsIndexView(RouteView, DBMixin):
     name = "jams.index"
     table_name = "code_jams"
 
+    teams_table = "code_jam_teams"
+
     def get(self):
         query = (
             self.db.query(self.table_name)
             .filter(rethinkdb.row["state"] != "planning")
+            .merge(
+                lambda jam_obj: {
+                    "teams":
+                        self.db.query(self.teams_table)
+                            .filter(lambda team_row: jam_obj["teams"].contains(team_row["id"]))
+                            .pluck(["id"])
+                            .coerce_to("array")
+                }
+            )
             .order_by(rethinkdb.desc("number"))
             .limit(5)
         )

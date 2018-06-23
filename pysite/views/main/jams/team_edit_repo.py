@@ -86,16 +86,16 @@ class JamsTeamEditRepo(RouteView, DBMixin, OAuthMixin):
         if query_response.status_code != 200:
             raise BadRequest()
 
+        if "repo" not in team["jam"]:
+            return True
+        jam_repo = team["jam"]["repo"]
+
         project_data = query_response.json()
         if "forked_from_project" not in project_data:
             raise BadRequest()
 
         # check if it's a fork for the right repo
         forked_from_project = project_data["forked_from_project"]
-
-        jam_repo = team["jam"]["repo"]
-        if not jam_repo or jam_repo == "":
-            return True
 
         jam_repo_path = quote(parse_url(jam_repo).path.strip("/"), safe='')
         jam_repo_response = self.request_project(jam_repo_path)
