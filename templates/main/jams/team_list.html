@@ -1,12 +1,25 @@
 {% extends "main/base.html" %}
-{% block title %}Code Jams | My Teams{% endblock %}
-{% block og_title %}Code Jams | My Teams{% endblock %}
+
+{% block title %}
+    {% if user_teams %}
+        Code Jams | My Teams
+    {% else %}
+        Code Jams | Code Jam {{ jam.number }} Teams
+    {% endif %}
+{% endblock %}
+{% block og_title %}
+    {% if user_teams %}
+        Code Jams | My Teams
+    {% else %}
+        Code Jams | Code Jam {{ jam.number }} Teams
+    {% endif %}
+{% endblock %}
 
 {% block page_classes %}jam-team-list{% endblock %}
 
 {% block content %}
     <div class="uk-section">
-        <div class="uk-container uk-container-small">
+        <div class="uk-container">
             <h1 class="uk-header uk-article-title uk-heading-divider">
                 {% if user_teams %}
                     Code Jams: My Teams
@@ -22,7 +35,7 @@
                 </p>
             {% endif %}
             {% if teams %}
-                <div class="uk-flex uk-flex-row uk-flex-wrap team-list-cards">
+                <div class="uk-flex uk-flex-row uk-flex-wrap uk-flex-center team-list-cards">
                     {% for team in teams %}
                         <div class="uk-card uk-card-default uk-margin-small-bottom uk-margin-small-right uk-margin-small-top uk-margin-small-left
                         {% if not user_teams and logged_in and user.user_id in member_ids(team.members) %}
@@ -54,7 +67,8 @@
                                         <i class="uk-icon fa-fw far fa-eye"></i> &nbsp;View
                                     </a>
                                     {% if team.repo %}
-                                        <a href="https://gitlab.com/{{ team.repo }}" target="_blank" class="uk-button uk-button-default">
+                                        <a href="https://gitlab.com/{{ team.repo }}" target="_blank"
+                                           class="uk-button uk-button-default">
                                             <i class="uk-icon fa-fw fab fa-gitlab"></i>
                                         </a>
                                     {% else %}
