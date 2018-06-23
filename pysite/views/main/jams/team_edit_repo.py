@@ -8,15 +8,15 @@ from rethinkdb import ReqlNonExistenceError
 from urllib3.util import parse_url
 from werkzeug.exceptions import BadRequest, NotFound, Unauthorized
 
-from pysite.base_route import RouteView
-from pysite.constants import GITLAB_ACCESS_TOKEN
+from pysite.base_route import APIView
+from pysite.constants import GITLAB_ACCESS_TOKEN, ErrorCodes
 from pysite.decorators import csrf
 from pysite.mixins import DBMixin, OAuthMixin
 
 log = logging.getLogger(__name__)
 
 
-class JamsTeamEditRepo(RouteView, DBMixin, OAuthMixin):
+class JamsTeamEditRepo(APIView, DBMixin, OAuthMixin):
     path = "/jams/teams/<string:team_id>/edit_repo"
     name = "jams.team.edit_repo"
 
@@ -58,16 +58,23 @@ class JamsTeamEditRepo(RouteView, DBMixin, OAuthMixin):
 
         project_path = url.path.strip("/")
         if len(project_path.split("/")) < 2:
-            raise BadRequest()
+            return self.error(
+                ErrorCodes.incorrect_parameters,
+                "Not a valid repository."
+            )
 
         word_regex = re.compile("^[\-\w]+$")
         for segment in project_path.split("/"):
             if not word_regex.fullmatch(segment):
-                raise BadRequest()
+                return self.error(
+                    ErrorCodes.incorrect_parameters,
+                    "Not a valid repository."
+                )
 
         project_path_encoded = quote(project_path, safe='')
-        if not self.validate_project(team, project_path_encoded):
-            return
+        validation = self.validate_project(team, project_path_encoded)
+        if validation is not True:
+            return validation
 
         team_obj = self.db.get(self.table_name, team_id)
         team_obj["repo"] = project_path
@@ -84,7 +91,10 @@ class JamsTeamEditRepo(RouteView, DBMixin, OAuthMixin):
         query_response = self.request_project(project_path)
 
         if query_response.status_code != 200:
-            raise BadRequest()
+            return self.error(
+                ErrorCodes.incorrect_parameters,
+                "Not a valid repository."
+            )
 
         if "repo" not in team["jam"]:
             return True
@@ -92,7 +102,10 @@ class JamsTeamEditRepo(RouteView, DBMixin, OAuthMixin):
 
         project_data = query_response.json()
         if "forked_from_project" not in project_data:
-            raise BadRequest()
+            return self.error(
+                ErrorCodes.incorrect_parameters,
+                "This repository is not a fork of the jam's repository."
+            )
 
         # check if it's a fork for the right repo
         forked_from_project = project_data["forked_from_project"]
@@ -105,7 +118,10 @@ class JamsTeamEditRepo(RouteView, DBMixin, OAuthMixin):
 
         jam_repo_data = jam_repo_response.json()
         if jam_repo_data["id"] != forked_from_project["id"]:
-            raise BadRequest()
+            return self.error(
+                ErrorCodes.incorrect_parameters,
+                "This repository is not a fork of the jam's repository."
+            )
 
         return True
 

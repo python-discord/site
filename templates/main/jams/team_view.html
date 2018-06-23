@@ -171,7 +171,7 @@
                     }
 
                     return callback(true, data);
-                }).fail(() => callback(false));
+                }).fail((xhr) => callback(false, xhr["responseJSON"]));
             }
 
             repo_submit.onclick = () => {
@@ -190,8 +190,9 @@
                         resetGitLabActivity();
                     } else {
                         console.log(data);
+                        let message = (data && "error_message" in data) ? `Failed: ${data["error_message"]}` : "Failed to edit repository.";
                         UIkit.notification({
-                            "message": "Failed to edit repository",
+                            "message": message,
                             "status": "danger",
                             "pos": "bottom-center",
                             "timeout": 5000
