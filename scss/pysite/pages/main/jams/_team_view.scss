@@ -14,9 +14,17 @@ $pasta_text: #0366D6;
       margin-bottom: 10px;
       padding: 10px;
 
-      .participant-avatar {
-        height: 2.5rem;
+      .participant-avatar-link {
         margin-right: 10px;
+
+        .participant-avatar {
+          height: 2.5rem;
+        }
+      }
+
+      .participant-avatar-link:hover,
+      .participant-avatar-link:active {
+        text-decoration: none;
       }
 
       .participant-links {

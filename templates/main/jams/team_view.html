@@ -34,14 +34,12 @@
                     <div class="participant-card-list">
                         {% for member in team.members %}
                             <div class="participant-card uk-card-default">
-                                <img src="{{ member.avatar }}" class="uk-border-circle participant-avatar"
-                                     height="20px">
+                                <a href="https://discordapp.com/users/{{ member.user_id }}" target="_blank"
+                                   class="participant-avatar-link">
+                                    <img src="{{ member.avatar }}" class="uk-border-circle participant-avatar">
+                                </a>
                                 <strong>{{ member.username }}#{{ member.discriminator }}</strong>
                                 <div class="participant-links">
-                                    <a href="https://discordapp.com/users/{{ member.user_id }}" target="_blank"
-                                       class="uk-button uk-button-default">
-                                        <i class="uk-icon fa-fw fab fa-discord"></i>
-                                    </a>
                                     <a href="https://gitlab.com/{{ member.gitlab_username }}" target="_blank"
                                        class="uk-button uk-button-default">
                                         <i class="uk-icon fa-fw fab fa-gitlab"></i>
