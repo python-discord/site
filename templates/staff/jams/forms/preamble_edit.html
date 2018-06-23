@@ -62,87 +62,89 @@
     <script type="application/javascript">
         "use strict";
 
-        let csrf_token = "{{ csrf_token() }}";
-        let modal = UIkit.modal(document.getElementById("preview-modal"));
-        let preview_url = "{{ url_for("staff.render") }}";
+        window.onload = () => {
+            let csrf_token = "{{ csrf_token() }}";
+            let modal = UIkit.modal(document.getElementById("preview-modal"));
+            let preview_url = "{{ url_for("staff.render") }}";
 
-        function do_preview(callback) {
-            let oReq = new XMLHttpRequest();
+            function do_preview(callback) {
+                let oReq = new XMLHttpRequest();
 
-            oReq.addEventListener("load", function() {
-                let response = JSON.parse(this.responseText);
+                oReq.addEventListener("load", function () {
+                    let response = JSON.parse(this.responseText);
 
-                if (response.error !== undefined) {
+                    if (response.error !== undefined) {
+                        document.getElementById("done").disabled = true;
+
+                        if (response.error_lines !== undefined) {
+                            editor.session.setAnnotations(response.error_lines);
+                            document.getElementById("preview-div").innerHTML = "<h3>Error - see editor margin</h3>";
+                        } else {
+                            console.log("Error: " + response.error);
+                            document.getElementById("preview-div").innerHTML = "<h3>Error</h3><p>" + response.error + "<p>";
+                        }
+                    } else {
+                        document.getElementById("done").disabled = false;
+                        document.getElementById("preview-div").innerHTML = response.data;
+
+                        editor.session.setAnnotations([]);
+                    }
+
+                    if (callback !== undefined) {
+                        callback();
+                    }
+                });
+
+                let data = editor.getValue();
+
+                if (data.replace("\s", "").length < 1) {
                     document.getElementById("done").disabled = true;
 
-                    if (response.error_lines !== undefined) {
-                        editor.session.setAnnotations(response.error_lines);
-                        document.getElementById("preview-div").innerHTML ="<h3>Error - see editor margin</h3>";
-                    } else {
-                        console.log("Error: " + response.error);
-                        document.getElementById("preview-div").innerHTML ="<h3>Error</h3><p>" + response.error + "<p>";
+                    if (callback !== undefined) {
+                        UIkit.notification({
+                            "message": "Please enter some text to preview",
+                            "status": "danger",
+                            "pos": "bottom-center",
+                            "timeout": 5000
+                        });
                     }
-                } else {
-                    document.getElementById("done").disabled = false;
-                    document.getElementById("preview-div").innerHTML = response.data;
-
-                    editor.session.setAnnotations([]);
+                    return false;
                 }
 
-                if (callback !== undefined) {
-                    callback();
-                }
-            });
+                oReq.open("POST", preview_url);
 
-            let data = editor.getValue();
+                oReq.setRequestHeader("Content-type", "application/json");
+                oReq.setRequestHeader("X-CSRFToken", csrf_token);
 
-            if (data.replace("\s", "").length < 1) {
-                document.getElementById("done").disabled = true;
+                oReq.send(JSON.stringify({"data": editor.getValue()}));
 
-                if (callback !== undefined) {
-                    UIkit.notification({
-                        "message": "Please enter some text to preview",
-                        "status": "danger",
-                        "pos": "bottom-center",
-                        "timeout": 5000
-                    });
-                }
                 return false;
             }
 
-            oReq.open("POST", preview_url);
+            document.getElementById("preview").onclick = function () {
+                do_preview(function () {
+                    modal.show();
+                })
+            };
 
-            oReq.setRequestHeader("Content-type", "application/json");
-            oReq.setRequestHeader("X-CSRFToken", csrf_token);
+            let editor = ace.edit("editor");
+            let timer;
 
-            oReq.send(JSON.stringify({"data": editor.getValue()}));
+            editor.session.setMode("ace/mode/rst");
+            editor.session.setUseWrapMode(true);
 
-            return false;
-        }
+            editor.setTheme("ace/theme/iplastic");
+            editor.setShowPrintMargin(false);
 
-        document.getElementById("preview").onclick = function() {
-            do_preview(function() {
-                modal.show();
-            })
+            editor.on("input", function () {
+                document.getElementById("done").disabled = true;
+                document.getElementById("preamble_rst").value = editor.getValue();
+
+                if (timer !== undefined) {
+                    clearTimeout(timer);
+                }
+                timer = setTimeout(do_preview, 1000);
+            });
         };
-
-        let editor = ace.edit("editor");
-        let timer;
-
-        editor.session.setMode("ace/mode/rst");
-        editor.session.setUseWrapMode(true);
-
-        editor.setTheme("ace/theme/iplastic");
-        editor.setShowPrintMargin(false);
-
-        editor.on("input", function() {
-            document.getElementById("done").disabled = true;
-            document.getElementById("preamble_rst").value = editor.getValue();
-
-            if (timer !== undefined) {
-                clearTimeout(timer);
-            }
-            timer = setTimeout(do_preview, 1000);
-        });
     </script>
 {% endblock %}

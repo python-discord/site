@@ -32,17 +32,19 @@
         <script type="application/javascript">
             "use strict";
 
-            let editor = ace.edit("editor");
+            window.onload = () => {
+                let editor = ace.edit("editor");
 
-            editor.session.setMode("ace/mode/json");
-            editor.session.setUseWrapMode(true);
+                editor.session.setMode("ace/mode/json");
+                editor.session.setUseWrapMode(true);
 
-            editor.setTheme("ace/theme/iplastic");
-            editor.setShowPrintMargin(false);
+                editor.setTheme("ace/theme/iplastic");
+                editor.setShowPrintMargin(false);
 
-            editor.on("input", function() {
-                document.getElementById("json").value = editor.getValue();
-            });
+                editor.on("input", function () {
+                    document.getElementById("json").value = editor.getValue();
+                });
+            };
         </script>
     </div>
 {% endblock %}

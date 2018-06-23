@@ -78,7 +78,7 @@
                             <i class="uk-icon fa-fw far fa-pencil"></i> &nbsp;Basics
                         </a>
 
-                        {% if jam.state in ["planning", "preparing", "announced", "finished"] %}
+                        {% if jam.state in ["planning", "announced", "preparing", "finished"] %}
                             <a class="uk-button uk-button-default uk-width-expand" data-jam="{{ jam.number }}" id="jam-{{ jam.number }}-button-info" href="{{ url_for("staff.jams.edit.info", jam=jam.number) }}">
                                 <i class="uk-icon fa-fw far fa-pencil"></i> &nbsp;Info
                             </a>

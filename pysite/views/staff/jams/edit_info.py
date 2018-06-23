@@ -8,7 +8,7 @@ from pysite.mixins import DBMixin
 from pysite.rst import render
 
 REQUIRED_KEYS = ["info_rst", "repo", "task_rst", "theme"]
-ALLOWED_STATES = ["planning", "preparing", "announced", "finished"]
+ALLOWED_STATES = ["planning", "announced", "preparing", "finished"]
 
 
 class StaffView(RouteView, DBMixin):
