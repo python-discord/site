@@ -1,5 +1,9 @@
 $page_classes: (jam-team-view);
 
+$gitlab_activity_background: #F5F5F5;
+$pasta_background: #EAF5FF;
+$pasta_text: #0366D6;
+
 @each $class in $page_classes {
   .#{$class} {
     .participant-card-list {
@@ -7,10 +11,10 @@ $page_classes: (jam-team-view);
     }
 
     .participant-card {
-      padding: 20px;
       margin-bottom: 10px;
+      padding: 20px;
 
-      img.participant-avatar {
+      .participant-avatar {
         height: 2.5rem;
         margin-right: 10px;
       }
@@ -21,56 +25,53 @@ $page_classes: (jam-team-view);
     }
 
     .gitlab-activity {
-      width: 100%;
+      background-color: $gitlab_activity_background;
       height: 500px;
-      background-color: #f5f5f5;
       overflow-x: hidden;
       overflow-y: auto;
+      width: 100%;
 
       .gitlab-activity-loading {
-        display: flex;
-        justify-content: center;
         align-items: center;
-        width: 100%;
+        display: flex;
         height: 100%;
+        justify-content: center;
+        width: 100%;
 
-        .gitlab-activity-loading-content {
-          .gitlab-activity-spinner {
-            width: 100%;
-            text-align: center;
-          }
+        .gitlab-activity-spinner {
+          text-align: center;
+          width: 100%;
         }
       }
 
       .gitlab-activity-events {
-        width: 100%;
         height: auto;
+        width: 100%;
       }
 
       .gitlab-activity-event-item {
-        width: 100%;
-        padding: 10px;
+        background-color: $white;
+        border: solid 1px $muted_colour;
+        border-bottom-width: 0;
+        box-sizing: border-box;
         display: flex;
         justify-content: center;
+        padding: 10px;
         vertical-align: middle;
-        box-sizing: border-box;
-
-        background-color: #FFFFFF;
-        border: solid 1px #AAAAAA;
-        border-bottom-width: 0;
+        width: 100%;
 
         .gitlab-activity-event-item-content {
           width: 100%;
         }
 
         .pasta {
-          background-color: #eaf5ff;
+          background-color: $pasta_background;
           border-radius: 3px;
-          color: #0366d6;
-          padding: 3px 5px;
+          color: $pasta_text;
+          font-family: Consolas, monaco, monospace;
           font-size: 12px;
           margin-right: 10px;
-          font-family: Consolas, monaco, monospace;
+          padding: 3px 5px;
         }
       }
 
@@ -79,12 +80,12 @@ $page_classes: (jam-team-view);
       }
 
       .gitlab-activity-events-footer {
-        padding: 10px;
-        color: #888888;
+        color: $muted_colour;
         display: flex;
         justify-content: center;
-        vertical-align: middle;
+        padding: 10px;
         text-align: center;
+        vertical-align: middle;
       }
     }
   }

@@ -2,22 +2,24 @@
 
 $page_classes: (jam-team-list);
 
-$border-primary-color: $primary_background !default;
-
 @each $class in $page_classes {
   .#{$class} {
     .team-list-cards {
       margin-top: 20px;
     }
+
     .team-links {
       text-align: center;
     }
+
     .team-subtitle {
       margin-bottom: 0;
     }
+
     .team-card-own {
       border: solid 1px $primary_background;
     }
+
     .team-member-avatars {
       padding: 10px;
       text-align: center;
@@ -30,7 +32,8 @@ $border-primary-color: $primary_background !default;
         }
       }
 
-      .team-member-avatar-link:hover, .team-member-avatar-link:active {
+      .team-member-avatar-link:hover,
+      .team-member-avatar-link:active {
         text-decoration: none;
       }
     }
