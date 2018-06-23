@@ -335,10 +335,8 @@ class ActionView(APIView, DBMixin, RMQMixin):
                                 .coerce_to("array"),
                         "teams":
                             self.db.query(self.teams_table)
-                                .outer_join(self.db.query(self.table_name),
-                                            lambda team_row, jams_row: jams_row["teams"].contains(team_row["id"]))
-                                .pluck({"left": ["id", "name", "members"]})
-                                .zip()
+                                .filter(lambda team_row: jam_obj["teams"].contains(team_row["id"]))
+                                .pluck(["id", "name", "members"])
                                 .coerce_to("array")
                     }
                 )

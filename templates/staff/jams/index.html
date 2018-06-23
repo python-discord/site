@@ -205,7 +205,7 @@
                                 case "preparing":
                                     document.getElementById("state-" + jam + "-preparing").removeAttribute("hidden");
 
-                                    document.getElementById("jam-" + jam + "-button-info").removeAttribute("hidden");
+                                    document.getElementById("jam-" + jam + "-button-info").setAttribute("hidden", "hidden");
                                     document.getElementById("jam-" + jam + "-button-ending").setAttribute("hidden", "hidden");
                                     break;
                                 case "running":

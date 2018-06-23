@@ -61,18 +61,10 @@ class StaffView(RouteView, DBMixin):
                             .coerce_to("array"),  # Coerce the document stream into an array
                     "form": self.db.query(self.forms_table).get(jam),  # Just get the correct form object
                     "teams":
-                        # Query the teams table
                         self.db.query(self.table_name)
-                            # Join the teams table against the jams table, to find all of the teams for this
-                            # specific jam - we can't simply filter because of the one-to-many relationship,
-                            # so we must use an inner join with a predicate function. This function is still
-                            # run on the server, however
-                            .inner_join(self.db.query(self.jams_table),
-                                        lambda team_row, jams_row: jams_row["teams"].contains(team_row["id"]))
-                            # Only take the ID, name and members of each team, discard everything else
-                            .pluck({"left": ["id", "name", "members"]})
-                            .zip()  # Combine the left and right documents together
-                            .coerce_to("array")  # Coerce the document stream into an array
+                            .filter(lambda team_row: jam_obj["teams"].contains(team_row["id"]))
+                            .pluck(["id", "name", "members"])
+                            .coerce_to("array")
                 }
             )
 

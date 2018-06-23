@@ -93,7 +93,8 @@ TABLES = {
         keys=sorted([
             "id",  # uuid
             "name",  # str
-            "members"  # list[str]
+            "members",  # list[str]
+            "repo"  # str
         ])
     ),
 

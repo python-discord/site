@@ -1,0 +1,79 @@
+{% extends "main/base.html" %}
+{% block title %}Code Jams | My Teams{% endblock %}
+{% block og_title %}Code Jams | My Teams{% endblock %}
+
+{% block page_classes %}jam-team-list{% endblock %}
+
+{% block content %}
+    <div class="uk-section">
+        <div class="uk-container uk-container-small">
+            <h1 class="uk-header uk-article-title uk-heading-divider">
+                {% if user_teams %}
+                    Code Jams: My Teams
+                {% else %}
+                    Code Jam {{ jam.number }}: Teams
+                {% endif %}
+            </h1>
+            {% if not user_teams %}
+                <p>
+                    <a id="back" class="uk-button uk-button-default" href="{{ url_for("main.jams.index") }}">
+                        <i class="uk-icon fa-fw far fa-arrow-left"></i> &nbsp;All Jams
+                    </a>
+                </p>
+            {% endif %}
+            {% if teams %}
+                <div class="uk-flex uk-flex-row uk-flex-wrap team-list-cards">
+                    {% for team in teams %}
+                        <div class="uk-card uk-card-default uk-margin-small-bottom uk-margin-small-right uk-margin-small-top uk-margin-small-left
+                        {% if not user_teams and logged_in and user.user_id in member_ids(team.members) %}
+                            team-card-own
+                        {% endif %}
+                        ">
+                            <div class="uk-card-body">
+                                <div class="uk-card-title">
+                                    Team <strong>{{ team.name }}</strong>
+                                    {% if user_teams %}
+                                        <p class="uk-article-meta team-subtitle">
+                                            Code Jam {{ team.jam.number }}
+                                        </p>
+                                    {% endif %}
+                                </div>
+                                <div class="team-member-avatars">
+                                    {% for member in team.members %}
+                                        <a href="https://discordapp.com/users/{{ member.user_id }}"
+                                           title="{{ member.username }}#{{ member.discriminator }}"
+                                           target="_blank"
+                                           class="team-member-avatar-link">
+                                            <img src="{{ member.avatar }}" class="team-member-avatar uk-border-circle"/>
+                                        </a>
+                                    {% endfor %}
+                                </div>
+                                <div class="team-links">
+                                    <a href="{{ url_for('main.jams.team_view', team_id=team.id) }}"
+                                       class="uk-button uk-button-primary">
+                                        <i class="uk-icon fa-fw far fa-eye"></i> &nbsp;View
+                                    </a>
+                                    {% if team.repo %}
+                                        <a href="https://gitlab.com/{{ team.repo }}" target="_blank" class="uk-button uk-button-default">
+                                            <i class="uk-icon fa-fw fab fa-gitlab"></i>
+                                        </a>
+                                    {% else %}
+                                        <a href="#" target="_blank" class="uk-button uk-button-darkish uk-disabled">
+                                            <i class="uk-icon fa-fw fab fa-gitlab"></i>
+                                        </a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                {% if user_teams %}
+                    <p>You are not part of any team.</p>
+                {% else %}
+                    <p>There are no teams in this jam.</p>
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
