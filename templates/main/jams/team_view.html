@@ -56,16 +56,28 @@
                         Activity
                     </h2>
                     <p>
-                        <a href="#" class="uk-button uk-button-primary">
-                            <i class="uk-icon fa-fw fab fa-gitlab"></i> &nbsp;View on GitLab
-                        </a>
+                        {% if team.repo %}
+                            <a href="https://gitlab.com/{{ team.repo }}" target="_blank"
+                               class="uk-button uk-button-primary">
+                                <i class="uk-icon fa-fw fab fa-gitlab"></i> &nbsp;View on GitLab
+                            </a>
+                        {% else %}
+                            <a href="https://gitlab.com/{{ team.repo }}" target="_blank" id="view-repo-button"
+                               class="uk-button uk-button-darkish uk-disabled">
+                                <i class="uk-icon fa-fw fab fa-gitlab"></i> &nbsp;View on GitLab
+                            </a>
+                        {% endif %}
                         {% if is_own_team %}
-                            <a href="#" class="uk-button uk-button-default">
+                            <a class="uk-button uk-button-default" id="edit-repo-button">
                                 <i class="uk-icon fa-fw far fa-pencil"></i>
                             </a>
                         {% endif %}
                     </p>
-                    <div id="gitlab-activity" class="gitlab-activity uk-card-default">
+                    <div id="gitlab-activity" class="gitlab-activity uk-card-default
+                        {% if not team.repo %}
+                            uk-hidden
+                        {% endif %}
+                        ">
                         <div id="gitlab-activity-loading" class="gitlab-activity-loading">
                             <div class="gitlab-activity-loading-content">
                                 <p>
@@ -79,17 +91,137 @@
             </div>
         </div>
     </div>
+    {% if is_own_team %}
+        <div id="repo-modal" class="uk-flex-top" uk-modal>
+            <div class="uk-modal-dialog">
+                <button class="uk-modal-close-default" type="button" uk-close></button>
 
+                <div class="uk-modal-header">
+                    <h2 class="uk-modal-title">Edit Repository</h2>
+                </div>
+                <form>
+                    <input type="hidden" name="csrf_token" id="csrf_token" value="{{ csrf_token() }}"/>
+                    <div class="uk-modal-body">
+                        <p>
+                            Enter your team's GitLab repository URL in the field below.
+                        </p>
+                        <p>
+                            Note: it should be a fork of the jam's GitLab repository
+                            (<strong>{{ team.jam.repo }}</strong>).
+                        </p>
+                        <div class="uk-form-horizontal">
+                            <div>
+                                <div class="uk-form-label">
+                                    <label class="uk-form-label" for="repo-url">Repository URL</label>
+                                </div>
+
+                                <div class="uk-form-controls uk-form-controls-text">
+                                    <input class="uk-input" type="text" name="repo-url" id="repo-url"
+                                           value="https://gitlab.com/{{ team.repo }}" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="uk-modal-footer">
+                        <div class="uk-text-center">
+                            <button class="uk-button uk-button-default uk-modal-close" type="button" id="repo-cancel">
+                                <i class="uk-icon fa-fw far fa-arrow-left"></i> &nbsp;Cancel
+                            </button>
+                            <a class="uk-button uk-button-primary" id="repo-submit">
+                                <i class="uk-icon fa-fw far fa-check"></i> &nbsp;Save
+                            </a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    {% endif %}
     <script type="application/javascript">
         "use strict";
 
-        window.onload = () => {
+        {% if is_own_team %}
+            /* Modal */
 
-            const GITLAB_PROJECT_ID = "python-discord/projects/site"; // the gitlab project id
+            const csrf_token = "{{ csrf_token() }}";
+            const repo_edit_target = "{{ url_for('main.jams.team.edit_repo', team_id=team.id) }}";
+            const repo_modal = UIkit.modal(document.getElementById("repo-modal"));
+            const repo_cancel = document.getElementById("repo-cancel");
+            const repo_submit = document.getElementById("repo-submit");
+            const repo_url = document.getElementById("repo-url");
+            const repo_edit_button = document.getElementById("edit-repo-button");
+
+            repo_cancel.onclick = function () {
+                repo_modal.hide();
+            };
+
+            repo_edit_button.onclick = () => {
+                repo_modal.show();
+            };
+
+            function editTeamRepoURL(repo, callback) {
+                $.ajax(repo_edit_target, {
+                    "data": {"repo_url": repo},
+                    "dataType": "json",
+                    "headers": {"X-CSRFToken": csrf_token},
+                    "method": "POST",
+                }).done(data => {
+                    if ("error_code" in data) {
+                        return callback(false, data);
+                    }
+
+                    return callback(true, data);
+                }).fail(() => callback(false));
+            }
+
+            repo_submit.onclick = () => {
+                let repo = repo_url.value;
+                editTeamRepoURL(repo, (success, data) => {
+                    if (success) {
+                        UIkit.notification({
+                            "message": "Edited repository successfully",
+                            "status": "success",
+                            "pos": "bottom-center",
+                            "timeout": 5000,
+                        });
+
+                        GITLAB_PROJECT_ID = data["project_path"];
+                        repo_modal.hide();
+                        resetGitLabActivity();
+                    } else {
+                        console.log(data);
+                        UIkit.notification({
+                            "message": "Failed to edit repository",
+                            "status": "danger",
+                            "pos": "bottom-center",
+                            "timeout": 5000
+                        });
+                    }
+                });
+            };
+
+        {% endif %}
+
+
+        /* GitLab activity */
+
+        function resetGitLabActivity() {
+            $("#gitlab-activity-events").remove();
+            $("#gitlab-activity-loading").show();
+            $("#gitlab-activity").removeClass("uk-hidden");
+            $("#view-repo-button").attr("href", `https://gitlab.com/${GITLAB_PROJECT_ID}`)
+                .removeClass("uk-button-darkish")
+                .removeClass("uk-disabled")
+                .addClass("uk-button-primary");
+            loadGitLabActivity();
+        }
+
+        let GITLAB_PROJECT_ID = "{{ team.repo }}"; // the gitlab project id
+        function loadGitLabActivity() {
             const GITLAB_EVENT_ACTIONS = ["pushed"]; // the actions to filter in the event list
             const JAM_START_DATE = "{{ team.jam.date_start.strftime("%Y-%m-%d") }}"; // the start date of the jam, in order to ignore pushes prior to start
             const JAM_END_DATE = "{{ team.jam.date_end.strftime("%Y-%m-%d") }}"; // the end date of the jam, in order to ignore pushes after the end
-            const GITLAB_PROJECT_EVENTS_ENDPOINT = `https://gitlab.com/api/v4/projects/${encodeURIComponent(GITLAB_PROJECT_ID)}/events?action=${GITLAB_EVENT_ACTIONS.join(",")}&after=${JAM_START_DATE}&before=${JAM_END_DATE}`;
+            const GITLAB_PROJECT_EVENTS_ENDPOINT = () => `https://gitlab.com/api/v4/projects/${encodeURIComponent(GITLAB_PROJECT_ID)}/events?action=${GITLAB_EVENT_ACTIONS.join(",")}&after=${JAM_START_DATE}&before=${JAM_END_DATE}`;
 
             function gitlabBranchURL(branch) {
                 return `https://gitlab.com/${GITLAB_PROJECT_ID}/tree/${branch}`
@@ -100,11 +232,10 @@
             }
 
             function onEventsLoaded(events) {
-                $("#gitlab-activity-loading").remove();
+                $("#gitlab-activity-loading").hide();
 
-                let eventList = $("<div></div>")
+                let eventList = $("<div id=\"gitlab-activity-events\"></div>")
                     .addClass("gitlab-activity-events");
-
 
                 let eventCount = 0;
                 for (let i = 0; i < events.length; i++) {
@@ -149,8 +280,10 @@
             }
 
             $.get(
-                GITLAB_PROJECT_EVENTS_ENDPOINT
+                GITLAB_PROJECT_EVENTS_ENDPOINT()
             ).done(onEventsLoaded).fail(onEventsFailed);
-        };
+        }
+
+        window.onload = loadGitLabActivity;
     </script>
 {% endblock %}

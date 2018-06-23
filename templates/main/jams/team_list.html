@@ -53,9 +53,15 @@
                                        class="uk-button uk-button-primary">
                                         <i class="uk-icon fa-fw far fa-eye"></i> &nbsp;View
                                     </a>
-                                    <a href="#" target="_blank" class="uk-button uk-button-default">
-                                        <i class="uk-icon fa-fw fab fa-gitlab"></i>
-                                    </a>
+                                    {% if team.repo %}
+                                        <a href="https://gitlab.com/{{ team.repo }}" target="_blank" class="uk-button uk-button-default">
+                                            <i class="uk-icon fa-fw fab fa-gitlab"></i>
+                                        </a>
+                                    {% else %}
+                                        <a href="#" target="_blank" class="uk-button uk-button-darkish uk-disabled">
+                                            <i class="uk-icon fa-fw fab fa-gitlab"></i>
+                                        </a>
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>
