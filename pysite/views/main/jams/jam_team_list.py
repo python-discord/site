@@ -23,7 +23,7 @@ class JamsTeamListView(RouteView, DBMixin, OAuthMixin):
                     "teams":
                         self.db.query(self.table_name)
                             .filter(lambda team_row: jam_obj["teams"].contains(team_row["id"]))
-                            .pluck(["id", "name", "members"])
+                            .pluck(["id", "name", "members", "repo"])
                             .merge(
                             lambda team: {
                                 "members":
