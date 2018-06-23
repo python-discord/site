@@ -13,7 +13,18 @@
             <p class="uk-article-meta">
                 Code Jam {{ team.jam.number }}
             </p>
-            <p></p>
+            <p>
+                <a href="{{ url_for('main.jams.jam_team_list', jam_id=team.jam.number) }}"
+                   class="uk-button uk-button-default">
+                    <i class="uk-icon fa-fw far fa-users"></i> &nbsp;Competing Teams
+                </a>
+                {% if logged_in %}
+                    <a href="{{ url_for('main.jams.user_team_list') }}"
+                       class="uk-button uk-button-default">
+                        <i class="uk-icon fa-fw far fa-user"></i> &nbsp;My Teams
+                    </a>
+                {% endif %}
+            </p>
 
             <div class="uk-grid">
                 <div class="uk-width-1-2@m">
@@ -128,7 +139,6 @@
                     + `<span>${footerMessage}</span>`
                     + "</div>"
                 ).appendTo(eventList);
-
 
                 $("#gitlab-activity").append(eventList);
             }

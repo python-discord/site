@@ -143,10 +143,10 @@
                                 <li><a href="{{ url_for('main.jams.profile') }}">My Profile</a></li>
                             {% endif %}
 
-                            {% if current_page == "main.jams.teams_list" %}
-                                <li class="uk-active"><a href="{{ url_for('main.jams.teams_list') }}">My Teams</a></li>
+                            {% if current_page == "main.jams.user_team_list" %}
+                                <li class="uk-active"><a href="{{ url_for('main.jams.user_team_list') }}">My Teams</a></li>
                             {% else %}
-                                <li><a href="{{ url_for('main.jams.teams_list') }}">My Teams</a></li>
+                                <li><a href="{{ url_for('main.jams.user_team_list') }}">My Teams</a></li>
                             {% endif %}
 
                             <li class="uk-nav-divider"></li>

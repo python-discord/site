@@ -4,9 +4,9 @@ from pysite.base_route import RouteView
 from pysite.mixins import DBMixin, OAuthMixin
 
 
-class JamsTeamsListView(RouteView, DBMixin, OAuthMixin):
-    path = "/jams/teams"
-    name = "jams.teams_list"
+class JamsUserTeamListView(RouteView, DBMixin, OAuthMixin):
+    path = "/jams/my_teams"
+    name = "jams.user_team_list"
 
     def get(self):
         # list teams a user is (or was) a part of
@@ -34,6 +34,7 @@ class JamsTeamsListView(RouteView, DBMixin, OAuthMixin):
         teams = self.db.run(query)
 
         return self.render(
-            "main/jams/teams_list.html",
+            "main/jams/team_list.html",
+            user_teams=True,
             teams=teams
         )

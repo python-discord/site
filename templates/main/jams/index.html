@@ -66,6 +66,9 @@
                                     <i class="uk-icon fa-fw far fa-plus"></i> &nbsp;Join
                                 </a>
                             {% else %}
+                                <a class="uk-button uk-button-primary" href="{{ url_for('main.jams.jam_team_list', jam_id=jam.number) }}">
+                                    <i class="uk-icon fa-fw far fa-users"></i> &nbsp;Teams
+                                </a>
                                 <a class="uk-button uk-button-default" target="_blank" href="{{ jam.repo }}">
                                     <i class="uk-icon fa-fw fab fa-gitlab"></i> &nbsp;Repository
                                 </a>
