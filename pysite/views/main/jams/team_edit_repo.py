@@ -33,10 +33,7 @@ class JamsTeamEditRepo(APIView, DBMixin, OAuthMixin):
         try:
             query = self.db.query(self.table_name).get(team_id).merge(
                 lambda team: {
-                    "jam":
-                        self.db.query("code_jams").filter(
-                            lambda jam: jam["teams"].contains(team["id"])
-                        ).coerce_to("array")[0]
+                    "jam": self.db.query("code_jams").get(team["jam"])
                 }
             )
 
