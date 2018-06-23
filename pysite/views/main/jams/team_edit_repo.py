@@ -9,7 +9,7 @@ from urllib3.util import parse_url
 from werkzeug.exceptions import BadRequest, NotFound, Unauthorized
 
 from pysite.base_route import APIView
-from pysite.constants import GITLAB_ACCESS_TOKEN, ErrorCodes
+from pysite.constants import ErrorCodes, GITLAB_ACCESS_TOKEN
 from pysite.decorators import csrf
 from pysite.mixins import DBMixin, OAuthMixin
 
