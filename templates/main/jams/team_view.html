@@ -87,8 +87,9 @@
 
             const GITLAB_PROJECT_ID = "python-discord/projects/site"; // the gitlab project id
             const GITLAB_EVENT_ACTIONS = ["pushed"]; // the actions to filter in the event list
-            const JAM_START_DATE = "2018-01-01"; // the start date of the jam, in order to ignore pushes prior to it
-            const GITLAB_PROJECT_EVENTS_ENDPOINT = `https://gitlab.com/api/v4/projects/${encodeURIComponent(GITLAB_PROJECT_ID)}/events?action=${GITLAB_EVENT_ACTIONS.join(",")}&after=${JAM_START_DATE}`;
+            const JAM_START_DATE = "{{ team.jam.date_start.strftime("%Y-%m-%d") }}"; // the start date of the jam, in order to ignore pushes prior to start
+            const JAM_END_DATE = "{{ team.jam.date_end.strftime("%Y-%m-%d") }}"; // the end date of the jam, in order to ignore pushes after the end
+            const GITLAB_PROJECT_EVENTS_ENDPOINT = `https://gitlab.com/api/v4/projects/${encodeURIComponent(GITLAB_PROJECT_ID)}/events?action=${GITLAB_EVENT_ACTIONS.join(",")}&after=${JAM_START_DATE}&before=${JAM_END_DATE}`;
 
             function gitlabBranchURL(branch) {
                 return `https://gitlab.com/${GITLAB_PROJECT_ID}/tree/${branch}`
