@@ -29,10 +29,7 @@ class JamsTeamView(RouteView, DBMixin, OAuthMixin):
                                 ).coerce_to("array")[0]["gitlab_username"]
                             }
                         ).coerce_to("array"),
-                    "jam":
-                        self.db.query("code_jams").filter(
-                            lambda jam: jam["teams"].contains(team["id"])
-                        ).coerce_to("array")[0]
+                    "jam":  self.db.query("code_jams").get(team["jam"])
                 }
             )
 

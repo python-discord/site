@@ -25,10 +25,7 @@ class JamsUserTeamListView(RouteView, DBMixin, OAuthMixin):
                                 self.db.query("code_jam_participants").filter({"id": user["user_id"]})
                                 .coerce_to("array")[0]["gitlab_username"]
                         }).coerce_to("array"),
-                "jam":
-                    self.db.query("code_jams").filter(
-                        lambda jam: jam["teams"].contains(team["id"])
-                    ).coerce_to("array")[0]
+                "jam": self.db.query("code_jams").get(team["jam"])
             }
         ).order_by(rethinkdb.desc("jam.number"))
         teams = self.db.run(query)
