@@ -173,8 +173,10 @@
             }
 
             repo_submit.onclick = () => {
+                repo_submit.classList.add("uk-disabled");
                 let repo = repo_url.value;
                 editTeamRepoURL(repo, (success, data) => {
+                    repo_submit.classList.remove("uk-disabled");
                     if (success) {
                         UIkit.notification({
                             "message": "Edited repository successfully",
@@ -218,8 +220,8 @@
         let GITLAB_PROJECT_ID = "{{ team.repo }}"; // the gitlab project id
         function loadGitLabActivity() {
             const GITLAB_EVENT_ACTIONS = ["pushed"]; // the actions to filter in the event list
-            const JAM_START_DATE = "{{ team.jam.date_start.strftime("%Y-%m-%d") }}"; // the start date of the jam, in order to ignore pushes prior to start
-            const JAM_END_DATE = "{{ team.jam.date_end.strftime("%Y-%m-%d") }}"; // the end date of the jam, in order to ignore pushes after the end
+            const JAM_START_DATE = "{{ day_delta(team.jam.date_start, -1).strftime("%Y-%m-%d") }}"; // the start date of the jam, in order to ignore pushes prior to start
+            const JAM_END_DATE = "{{ day_delta(team.jam.date_end, +1).strftime("%Y-%m-%d") }}"; // the end date of the jam, in order to ignore pushes after the end
             const GITLAB_PROJECT_EVENTS_ENDPOINT = () => `https://gitlab.com/api/v4/projects/${encodeURIComponent(GITLAB_PROJECT_ID)}/events?action=${GITLAB_EVENT_ACTIONS.join(",")}&after=${JAM_START_DATE}&before=${JAM_END_DATE}`;
 
             function gitlabBranchURL(branch) {

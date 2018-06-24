@@ -1,3 +1,4 @@
+import datetime
 import logging
 
 from rethinkdb import ReqlNonExistenceError
@@ -44,5 +45,9 @@ class JamsTeamView(RouteView, DBMixin, OAuthMixin):
 
         return self.render(
             "main/jams/team_view.html",
-            team=team, is_own_team=is_own_team
+            team=team, is_own_team=is_own_team, day_delta=self.day_delta
         )
+
+    def day_delta(self, date, delta):
+        # util to add or subtract days from a date
+        return date + datetime.timedelta(days=delta)
