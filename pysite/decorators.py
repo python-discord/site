@@ -65,7 +65,7 @@ def api_key(f):
 
 
 def api_params(
-        schema: Schema,
+        schema: Schema = None,
         validation_type: ValidationTypes = ValidationTypes.json,
         allow_duplicate_params: bool = False):
     """
@@ -133,6 +133,8 @@ def api_params(
                         if len(value) > 1:
                             raise BadRequest("This view does not allow duplicate query arguments")
                 data = request.args.to_dict()
+            elif validation_type == ValidationTypes.none:
+                return f(self, None, *args, **kwargs)
 
             else:
                 raise ValueError(f"Unknown validation type: {validation_type}")  # pragma: no cover

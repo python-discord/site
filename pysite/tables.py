@@ -118,6 +118,14 @@ TABLES = {
         ])
     ),
 
+    "member_chunks": Table(
+        primary_key="id",
+        keys=sorted([
+            "id",  # str
+            "chunk",  # list
+        ])
+    ),
+
     "oauth_data": Table(  # OAuth login information
         primary_key="id",
         keys=sorted([

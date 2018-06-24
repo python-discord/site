@@ -14,6 +14,7 @@ class ErrorCodes(IntEnum):
 
 class ValidationTypes(Enum):
     json = "json"
+    none = "none"
     params = "params"
 
 
