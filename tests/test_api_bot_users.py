@@ -16,7 +16,13 @@ class ApiBotUsersEndpoint(SiteTest):
         self.assertEqual(response.status_code, 405)
 
         response = self.client.post('/bot/users', app.config['API_SUBDOMAIN'], headers=app.config['TEST_HEADER'], data=single_data)
+        self.assertTrue("success" in response.json)
+
+        response = self.client.post('/bot/users/complete', app.config['API_SUBDOMAIN'], headers=app.config['TEST_HEADER'], data=single_data)
         self.assertTrue("inserted" in response.json)
 
         response = self.client.post('/bot/users', app.config['API_SUBDOMAIN'], headers=app.config['TEST_HEADER'], data=list_data)
+        self.assertTrue("success" in response.json)
+
+        response = self.client.post('/bot/users/complete', app.config['API_SUBDOMAIN'], headers=app.config['TEST_HEADER'], data=list_data)
         self.assertTrue("inserted" in response.json)
