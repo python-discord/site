@@ -94,7 +94,8 @@ TABLES = {
             "id",  # uuid
             "name",  # str
             "members",  # list[str]
-            "repo"  # str
+            "repo",  # str
+            "jam"  # int
         ])
     ),
 

@@ -1,6 +1,5 @@
 import logging
 
-from rethinkdb import ReqlNonExistenceError
 from werkzeug.exceptions import NotFound
 
 from pysite.base_route import RouteView
@@ -17,32 +16,25 @@ class JamsTeamListView(RouteView, DBMixin, OAuthMixin):
     jams_table = "code_jams"
 
     def get(self, jam_id):
-        try:
-            query = self.db.query(self.jams_table).get(jam_id).merge(
-                lambda jam_obj: {
-                    "teams":
-                        self.db.query(self.table_name)
-                            .filter(lambda team_row: jam_obj["teams"].contains(team_row["id"]))
-                            .pluck(["id", "name", "members", "repo"])
-                            .merge(
-                            lambda team: {
-                                "members":
-                                    self.db.query("users")
-                                        .filter(lambda user: team["members"].contains(user["user_id"]))
-                                        .coerce_to("array")
-                            }).coerce_to("array")
-                }
-            )
-
-            jam_data = self.db.run(query)
-        except ReqlNonExistenceError:
-            log.exception("Failed RethinkDB query")
+        jam_obj = self.db.get(self.jams_table, jam_id)
+        if not jam_obj:
             raise NotFound()
+
+        query = self.db.query(self.table_name).get_all(self.table_name, *jam_obj["teams"]).pluck(
+            ["id", "name", "members", "repo"]).merge(
+            lambda team: {
+                "members":
+                    self.db.query("users")
+                        .filter(lambda user: team["members"].contains(user["user_id"]))
+                        .coerce_to("array")
+            }).coerce_to("array")
+
+        jam_obj["teams"] = self.db.run(query)
 
         return self.render(
             "main/jams/team_list.html",
-            jam=jam_data,
-            teams=jam_data["teams"],
+            jam=jam_obj,
+            teams=jam_obj["teams"],
             member_ids=self.member_ids
         )
 
