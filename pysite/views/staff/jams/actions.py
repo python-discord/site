@@ -337,7 +337,7 @@ class ActionView(APIView, DBMixin, RMQMixin):
                         "teams":
                             self.db.query(self.teams_table)
                                 .filter(lambda team_row: jam_obj["teams"].contains(team_row["id"]))
-                                .pluck(["id", "name", "members"])
+                                .pluck(["id", "name", "members", "jam"])
                                 .coerce_to("array")
                     }
                 )
