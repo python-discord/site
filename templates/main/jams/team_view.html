@@ -223,6 +223,7 @@
             const JAM_START_DATE = "{{ day_delta(team.jam.date_start, -1).strftime("%Y-%m-%d") }}"; // the start date of the jam, in order to ignore pushes prior to start
             const JAM_END_DATE = "{{ day_delta(team.jam.date_end, +1).strftime("%Y-%m-%d") }}"; // the end date of the jam, in order to ignore pushes after the end
             const GITLAB_PROJECT_EVENTS_ENDPOINT = () => `https://gitlab.com/api/v4/projects/${encodeURIComponent(GITLAB_PROJECT_ID)}/events?action=${GITLAB_EVENT_ACTIONS.join(",")}&after=${JAM_START_DATE}&before=${JAM_END_DATE}`;
+            const GITLAB_ACCEPTED_ACTIONS = ["pushed", "created"];
 
             function gitlabBranchURL(branch) {
                 return `https://gitlab.com/${GITLAB_PROJECT_ID}/tree/${branch}`
@@ -241,7 +242,7 @@
                 let eventCount = 0;
                 for (let i = 0; i < events.length; i++) {
                     let event = events[i];
-                    if (event["push_data"]["action"] !== "pushed") {
+                    if (!GITLAB_ACCEPTED_ACTIONS.includes(event["push_data"]["action"])) {
                         continue;
                     }
                     let commit = event["push_data"]["commit_to"];
