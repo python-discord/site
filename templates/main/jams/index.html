@@ -62,9 +62,15 @@
                         Code Jam {{ jam.number }}: {{ jam.title }}
                         <span class="uk-float-right">
                             {% if jam.state == "announced" %}
-                                <a class="uk-button uk-button-primary" href="{{ url_for("main.jams.join", jam=jam.number) }}">
-                                    <i class="uk-icon fa-fw far fa-plus"></i> &nbsp;Join
-                                </a>
+                                {% if has_applied_to_jam(jam) %}
+                                    <a class="uk-button uk-button-default uk-disabled" href="#">
+                                        <i class="uk-icon fa-fw far fa-check"></i> &nbsp;Applied
+                                    </a>
+                                {% else %}
+                                    <a class="uk-button uk-button-primary" href="{{ url_for("main.jams.join", jam=jam.number) }}">
+                                        <i class="uk-icon fa-fw far fa-plus"></i> &nbsp;Join
+                                    </a>
+                                {% endif %}
                             {% else %}
                                 {% if jam.teams and jam.teams | length > 0 %}
                                     <a class="uk-button uk-button-primary" href="{{ url_for('main.jams.jam_team_list', jam_id=jam.number) }}">
