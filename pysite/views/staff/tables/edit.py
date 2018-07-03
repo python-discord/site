@@ -51,7 +51,7 @@ class TableEditView(RouteView, DBMixin):
     @require_roles(*TABLE_MANAGER_ROLES)
     @csrf
     def post(self, table):
-        obj = TABLES.get(TABLES)
+        obj = TABLES.get(table)
 
         if not obj:
             # Unknown table
