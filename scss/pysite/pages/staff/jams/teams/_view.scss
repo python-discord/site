@@ -1,0 +1,28 @@
+@import "variables";
+
+$page_classes: (page-staff-jams-edit-teams);
+
+@each $class in $page_classes {
+  .#{$class} {
+    .team-winner-unset-button,
+    .team-winner-button {
+      background-color: $winner_colour;
+      border: 1px solid transparent;
+      color: $white;
+    }
+
+    .team-winner-unset-button:hover,
+    .team-winner-button:hover {
+      background-color: $winner_colour_hover;
+    }
+
+    .team-winner-unset-button:active,
+    .team-winner-button:active {
+      background-color: $winner_colour_active;
+    }
+
+    .team-card-winner {
+      border: solid 2px $winner_colour;
+    }
+  }
+}

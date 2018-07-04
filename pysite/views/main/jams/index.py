@@ -29,6 +29,12 @@ class JamsIndexView(RouteView, DBMixin):
         )
 
         jams = self.db.run(query, coerce=list)
+        for jam in jams:
+            if "winning_team" in jam and jam["winning_team"]:
+                jam["winning_team"] = self.db.get(self.teams_table, jam["winning_team"])
+            else:
+                jam["winning_team"] = None
+                pass
         return self.render("main/jams/index.html", jams=jams, has_applied_to_jam=self.has_applied_to_jam)
 
     def get_jam_response(self, jam, user_id):

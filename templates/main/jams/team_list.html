@@ -38,12 +38,25 @@
                 <div class="uk-flex uk-flex-row uk-flex-wrap uk-flex-center team-list-cards">
                     {% for team in teams %}
                         <div class="uk-card uk-card-default uk-margin-small-bottom uk-margin-small-right uk-margin-small-top uk-margin-small-left
-                        {% if not user_teams and logged_in and user.user_id in member_ids(team.members) %}
-                            team-card-own
+                        {% if not user_teams %}
+                            {% if logged_in and user.user_id in member_ids(team.members) %}
+                                team-card-own
+                            {% endif %}
+                            {% if jam.winning_team and jam.winning_team == team.id %}
+                                team-card-winner
+                            {% endif %}
                         {% endif %}
                         ">
                             <div class="uk-card-body">
                                 <div class="uk-card-title">
+                                    {% if not user_teams %}
+                                        {% if logged_in and user.user_id in member_ids(team.members) %}
+                                            <i class="uk-icon fa-fw far fa-user team-badge-own" uk-tooltip="Your Team"></i>
+                                        {% endif %}
+                                        {% if jam.winning_team and jam.winning_team == team.id %}
+                                            <i class="uk-icon fa-fw far fa-trophy team-badge-winner" uk-tooltip="Champions"></i>
+                                        {% endif %}
+                                    {% endif %}
                                     Team <strong>{{ team.name }}</strong>
                                     {% if user_teams %}
                                         <p class="uk-article-meta team-subtitle">
