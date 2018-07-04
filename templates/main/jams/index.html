@@ -58,7 +58,7 @@
 
             {% if jams %}
                 {% for jam in jams %}
-                    <h1 class="uk-article-title uk-heading-divider">
+                    <h1 class="uk-article-title">
                         Code Jam {{ jam.number }}: {{ jam.title }}
                         <span class="uk-float-right">
                             {% if jam.state == "announced" %}
@@ -86,25 +86,29 @@
                             State: {{ jam.state.title() }}
                         </p>
                     </h1>
-
-                    <p>
+                    <div class="uk-grid-match uk-grid-small uk-text-center uk-grid-gap-none uk-grid-collapse jam-tiles uk-margin-small-top" uk-grid>
+                        <div class="uk-width-1-2@m uk-tile uk-tile-success uk-padding-small">
+                            <p class="uk-h4 jam-tile-text">Start: {{ format_datetime(jam.date_start) }} UTC</p>
+                        </div>
+                        <div class="uk-width-1-2@m uk-tile uk-tile-danger uk-padding-small">
+                            <p class="uk-h4 jam-tile-text">End: {{ format_datetime(jam.date_end) }} UTC</p>
+                        </div>
                         {% if jam.participants %}
-                            <span class="uk-label uk-label">
-                                Participants: {{ jam.participants | length }}
-                            </span>
+                            {% if jam.winning_team %}
+                                <a href="{{ url_for('main.jams.jam_team_list', jam_id=jam.number) }}"  class="uk-link-reset uk-width-1-2@m uk-tile uk-tile-primary uk-padding-small">
+                                    <p class="uk-h4 jam-tile-text">Participants: {{ jam.participants | length }}</p>
+                                </a>
+                                <a href="{{ url_for('main.jams.team_view', team_id=jam.winning_team.id) }}" class="uk-link-reset uk-width-1-2@m uk-tile uk-tile-winner uk-padding-small">
+                                    <p class="uk-h4 jam-tile-text">Champions: {{ jam.winning_team.name }}</p>
+                                </a>
+                            {% else %}
+                                <a href="{{ url_for('main.jams.jam_team_list', jam_id=jam.number) }}"  class="uk-link-reset uk-width-1-1@m uk-tile uk-tile-primary uk-padding-small">
+                                    <p class="uk-h4 jam-tile-text">Participants: {{ jam.participants | length }}</p>
+                                </a>
+                            {% endif %}
                         {% endif %}
-                        <span class="uk-label uk-label-success">
-                            {{ format_datetime(jam.date_start) }} UTC
-                        </span>
-
-                        <span class="date-separator">
-                            <i class="uk-icon fa-fw far fa-arrow-right" ></i>
-                        </span>
-
-                        <span class="uk-label uk-label-danger">
-                            {{ format_datetime(jam.date_end) }} UTC
-                        </span>
-
+                    </div>
+                    <p>
                         {% if jam.state in ["running", "judging", "finished"] %}
                             <span class="uk-label uk-align-right theme-label">
                             Theme: {{ jam.theme }}

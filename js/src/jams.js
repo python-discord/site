@@ -190,4 +190,22 @@ class JamActions {
             callback
         );
     }
+
+    set_winning_team(team, callback) {
+        this.send(
+            "set_winning_team",
+            "POST",
+            {"team": team},
+            callback
+        );
+    }
+
+    unset_winning_team(jam, callback) {
+        this.send(
+            "unset_winning_team",
+            "POST",
+            {"jam": jam},
+            callback
+        );
+    }
 }

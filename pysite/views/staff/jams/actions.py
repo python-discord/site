@@ -11,7 +11,7 @@ GET_ACTIONS = ("questions",)
 POST_ACTIONS = (
     "associate_question", "disassociate_question", "infraction", "questions", "state", "approve_application",
     "unapprove_application", "create_team", "generate_teams", "set_team_member",
-    "reroll_team"
+    "reroll_team", "set_winning_team", "unset_winning_team"
 )
 DELETE_ACTIONS = ("infraction", "question", "team")
 
@@ -397,6 +397,47 @@ class ActionView(APIView, DBMixin, RMQMixin):
             self.db.insert(self.teams_table, team_obj, conflict="replace")
 
             return jsonify({"name": team_obj["name"]})
+
+        if action == "set_winning_team":
+            team = request.form.get("team")
+
+            if not team:
+                return self.error(
+                    ErrorCodes.incorrect_parameters, "Team ID required"
+                )
+
+            team_obj = self.db.get(self.teams_table, team)
+
+            if not team_obj:
+                return self.error(
+                    ErrorCodes.incorrect_parameters, "Unknown team ID"
+                )
+
+            jam_number = team_obj["jam"]
+            jam_obj = self.db.get(self.table_name, jam_number)
+            jam_obj["winning_team"] = team
+            self.db.insert(self.table_name, jam_obj, conflict="replace")
+
+            return jsonify({"result": "success"})
+
+        if action == "unset_winning_team":
+            jam = request.form.get("jam", type=int)
+
+            if not jam:
+                return self.error(
+                    ErrorCodes.incorrect_parameters, "Jam number required"
+                )
+
+            jam_obj = self.db.get(self.table_name, jam)
+            if not jam_obj:
+                return self.error(
+                    ErrorCodes.incorrect_parameters, "Unknown jam number"
+                )
+
+            jam_obj["winning_team"] = None
+            self.db.insert(self.table_name, jam_obj, conflict="replace")
+
+            return jsonify({"result": "success"})
 
         if action == "approve_application":
             app = request.form.get("id")

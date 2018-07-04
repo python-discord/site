@@ -17,7 +17,23 @@ $page_classes: (jam-team-list);
     }
 
     .team-card-own {
-      border: solid 1px $primary_background;
+      border: solid 2px $primary_background;
+
+      &.team-card-winner {
+        border-color: $winner_colour $winner_colour $primary_background $primary_background;
+      }
+    }
+
+    .team-badge-own {
+      color: $primary_background;
+    }
+
+    .team-card-winner {
+      border: solid 2px $winner_colour;
+    }
+
+    .team-badge-winner {
+      color: $winner_colour;
     }
 
     .team-member-avatars {

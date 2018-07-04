@@ -52,7 +52,7 @@ TABLES = {
             "teams",  # list[str]
             "theme",  # str
             "title",  # str
-            "winners"  # list[str]
+            "winning_team"  # str
         ])
     ),
 

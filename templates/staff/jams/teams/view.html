@@ -2,6 +2,7 @@
 {% block title %}Staff | Jams | Teams{% endblock %}
 {% block og_title %}Staff | Jams | Teams{% endblock %}
 {% block og_description %}Manage Teams{% endblock %}
+{% block page_classes %}page-staff-jams-edit-teams{% endblock %}
 {% block content %}
     <div class="uk-flex">
         <div class="uk-flex-column uk-padding-small uk-background-muted" id="member-answers-sidebar">
@@ -13,7 +14,7 @@
             <div id="hidden-user-info" hidden>
                 {% for participant in jam.participants %}
                     <div class="user-info" id="user-info-{{ participant.user_id }}">
-                        <img src="{{ participant.avatar }}" class="uk-border-circle avatar" />
+                        <img src="{{ participant.avatar }}" class="uk-border-circle avatar"/>
                         <div class="uk-text-center">
                             <strong>{{ participant.username }}#{{ participant.discriminator }}</strong>
                         </div>
@@ -26,7 +27,7 @@
                                 <i class="uk-icon fab fa-fw fa-gitlab"></i> {{ participant.profile.gitlab_username }}
                             </a>
                         </div>
-                        <hr class="uk-divider-icon" />
+                        <hr class="uk-divider-icon"/>
 
                         {% for answer in participant.answers %}
                             <strong>{{ questions[answer.question].title }}</strong>
@@ -42,23 +43,45 @@
         <div class="uk-section uk-flex-column uk-flex-stretch">
             <h1>Code Jam {{ jam.number }}: Teams</h1>
 
-            <a class="uk-button uk-button-default" href="{{ url_for("staff.jams.index") }}"><i class="uk-icon fa-fw far fa-arrow-left"></i> &nbsp;Back</a>
+            <a class="uk-button uk-button-default" href="{{ url_for("staff.jams.index") }}"><i
+                    class="uk-icon fa-fw far fa-arrow-left"></i> &nbsp;Back</a>
 
             {% if teams %}
-                <button class="uk-button uk-button-primary" id="init-button" disabled><i class="uk-icon fa-fw far fa-play"></i> &nbsp;Generate Teams</button>
+                <button class="uk-button uk-button-primary" id="init-button" disabled><i
+                        class="uk-icon fa-fw far fa-play"></i> &nbsp;Generate Teams
+                </button>
             {% else %}
-                <button class="uk-button uk-button-primary" id="init-button"><i class="uk-icon fa-fw far fa-play"></i> &nbsp;Generate Teams</button>
+                <button class="uk-button uk-button-primary" id="init-button"><i class="uk-icon fa-fw far fa-play"></i>
+                    &nbsp;Generate Teams
+                </button>
             {% endif %}
 
-            <button class="uk-button uk-button-secondary" id="add-button"><i class="uk-icon fa-fw far fa-plus"></i> &nbsp;Add Team</button>
-            <br />
-            <br />
+            <button class="uk-button uk-button-secondary" id="add-button"><i class="uk-icon fa-fw far fa-plus"></i>
+                &nbsp;Add Team
+            </button>
+
+            {% if jam.winning_team %}
+                <button class="uk-button team-winner-unset-button uk-button-secondary" id="winner-unset-button"><i
+                        class="uk-icon fa-fw far fa-trophy"></i>
+                    &nbsp;Unset Winner
+                </button>
+            {% else %}
+                <button class="uk-button team-winner-unset-button uk-hidden" id="winner-unset-button"><i
+                        class="uk-icon fa-fw far fa-trophy"></i>
+                    &nbsp;Unset Winner
+                </button>
+            {% endif %}
+
+            <br/>
+            <br/>
             <div class="uk-hidden hidden-participants" hidden>
                 {% for participant in jam.participants %}
                     {% if participant.user_id not in assigned %}
-                        <div class="uk-margin-small-bottom uk-margin-small-right uk-margin-small-top uk-margin-small-left" id="participant-line-{{ participant.user_id }}" title="{{ participant.user_id }}">
+                        <div class="uk-margin-small-bottom uk-margin-small-right uk-margin-small-top uk-margin-small-left"
+                             id="participant-line-{{ participant.user_id }}" title="{{ participant.user_id }}">
                             <span class="participant-handle" draggable="true" data-user-id="{{ participant.user_id }}">
-                                <img class="uk-icon-image uk-border-circle" draggable="false" src="{{ participant.avatar }}" />
+                                <img class="uk-icon-image uk-border-circle" draggable="false"
+                                     src="{{ participant.avatar }}"/>
                                 {{ participant.username }}#{{ participant.discriminator }} ({{ participant.profile.timezone }})
                             </span>
                         </div>
@@ -68,19 +91,29 @@
             <div class="uk-flex uk-flex-row uk-flex-wrap" id="participant-handles">
                 {% for participant in jam.participants %}
                     {% if participant.user_id not in assigned %}
-                        <div class="participant-handle uk-margin-small-bottom uk-margin-small-right uk-margin-small-top uk-margin-small-left" id="participant-{{ participant.user_id }}" title="{{ participant.profile.timezone }} - {{ participant.user_id }}" draggable="true" data-user-id="{{ participant.user_id }}">
-                            <div class="uk-card uk-card-primary uk-card-small" id="participant-{{ participant.user_id }}-card">
+                        <div class="participant-handle uk-margin-small-bottom uk-margin-small-right uk-margin-small-top uk-margin-small-left"
+                             id="participant-{{ participant.user_id }}"
+                             title="{{ participant.profile.timezone }} - {{ participant.user_id }}" draggable="true"
+                             data-user-id="{{ participant.user_id }}">
+                            <div class="uk-card uk-card-primary uk-card-small"
+                                 id="participant-{{ participant.user_id }}-card">
                                 <div class="uk-card-body">
-                                    <img class="uk-icon-image uk-border-circle" draggable="false" src="{{ participant.avatar }}" />
+                                    <img class="uk-icon-image uk-border-circle" draggable="false"
+                                         src="{{ participant.avatar }}"/>
                                     {{ participant.username }}#{{ participant.discriminator }}
                                 </div>
                             </div>
                         </div>
                     {% else %}
-                        <div class="participant-handle uk-margin-small-bottom uk-margin-small-right uk-margin-small-top uk-margin-small-left" id="participant-{{ participant.user_id }}" title="{{ participant.profile.timezone }} - {{ participant.user_id }}" draggable="true" data-user-id="{{ participant.user_id }}">
-                            <div class="uk-card uk-card-secondary uk-card-small" id="participant-{{ participant.user_id }}-card">
+                        <div class="participant-handle uk-margin-small-bottom uk-margin-small-right uk-margin-small-top uk-margin-small-left"
+                             id="participant-{{ participant.user_id }}"
+                             title="{{ participant.profile.timezone }} - {{ participant.user_id }}" draggable="true"
+                             data-user-id="{{ participant.user_id }}">
+                            <div class="uk-card uk-card-secondary uk-card-small"
+                                 id="participant-{{ participant.user_id }}-card">
                                 <div class="uk-card-body">
-                                    <img class="uk-icon-image uk-border-circle" draggable="false" src="{{ participant.avatar }}" />
+                                    <img class="uk-icon-image uk-border-circle" draggable="false"
+                                         src="{{ participant.avatar }}"/>
                                     {{ participant.username }}#{{ participant.discriminator }}
                                 </div>
                             </div>
@@ -99,28 +132,48 @@
 
                 <div class="uk-flex uk-flex-row uk-flex-stretch uk-flex-wrap uk-flex-center" id="team-targets">
                     {% for id, team in teams.items() %}
-                        <div class="team-handle uk-margin-small-bottom uk-margin-small-right uk-margin-small-top uk-margin-small-left" id="team-{{ team.id }}" data-team-id="{{ team.id }}">
-                            <div class="uk-card uk-card-default uk-card-small">
+                        <div class="team-handle uk-margin-small-bottom uk-margin-small-right uk-margin-small-top uk-margin-small-left"
+                             id="team-{{ team.id }}" data-team-id="{{ team.id }}">
+                            <div class="uk-card uk-card-default uk-card-small
+                                {% if jam.winning_team and jam.winning_team == team.id %}
+                                    team-card-winner
+                                {% endif %}
+                                ">
                                 <div class="uk-card-header">
-                                    <h3 class="uk-card-title">{{ team.name }}</h3>
+                                    <h3 class="uk-card-title">
+                                        {{ team.name }}
+                                    </h3>
                                 </div>
                                 <div class="uk-card-body team-target" data-team-id="{{ team.id }}">
                                     <p>Drop users here to assign them</p>
 
                                     {% for user_id in team.members %}
-                                        <div class="uk-margin-small-bottom uk-margin-small-right uk-margin-small-top uk-margin-small-left" id="participant-line-{{ user_id }}" title="{{ participants[user_id].user_id }}">
-                                            <span class="participant-handle" draggable="true" data-user-id="{{ participants[user_id].user_id }}">
-                                                <img class="uk-icon-image uk-border-circle" draggable="false" src="{{ participants[user_id].avatar }}" />
+                                        <div class="uk-margin-small-bottom uk-margin-small-right uk-margin-small-top uk-margin-small-left"
+                                             id="participant-line-{{ user_id }}"
+                                             title="{{ participants[user_id].user_id }}">
+                                            <span class="participant-handle" draggable="true"
+                                                  data-user-id="{{ participants[user_id].user_id }}">
+                                                <img class="uk-icon-image uk-border-circle" draggable="false"
+                                                     src="{{ participants[user_id].avatar }}"/>
                                                 {{ participants[user_id].username }}#{{ participants[user_id].discriminator }} ({{ participants[user_id].profile.timezone }})
                                             </span>
                                         </div>
                                     {% endfor %}
                                 </div>
                                 <div class="uk-card-footer uk-text-right">
-                                    <button class="team-reroll-button uk-button uk-button-primary uk-button-small" data-team-id="{{ team.id }}">
+                                    <button class="team-winner-button uk-button uk-button-small
+                                                {% if jam.winning_team %}
+                                                    uk-hidden
+                                                {% endif %}"
+                                            data-team-id="{{ team.id }}">
+                                        <i class="uk-icon fa-fw far fa-trophy"></i>
+                                    </button>
+                                    <button class="team-reroll-button uk-button uk-button-primary uk-button-small"
+                                            data-team-id="{{ team.id }}">
                                         <i class="uk-icon fa-fw far fa-dice"></i>
                                     </button>
-                                    <button class="team-delete-button uk-button uk-button-danger uk-button-small" data-team-id="{{ team.id }}">
+                                    <button class="team-delete-button uk-button uk-button-danger uk-button-small"
+                                            data-team-id="{{ team.id }}">
                                         <i class="uk-icon fa-fw far fa-trash"></i>
                                     </button>
                                 </div>
@@ -136,12 +189,23 @@
         "use strict";
         const jam = parseInt("{{ jam.number }}");
         const actions = new JamActions("{{ url_for("staff.jams.action") }}", "{{ csrf_token() }}");
+        let jam_winning_team = "{{ jam.winning_tam or "" }}";
+        const has_winner = function () {
+            return jam_winning_team !== "";
+        };
+        const set_winner_button = function (team) {
+            return `
+            <button class="team-winner-button uk-button uk-button-small ${has_winner() ? "uk-hidden" : ""}" data-team-id="${team.id}">
+                <i class="uk-icon fa-fw far fa-trophy"></i>
+            </button>
+            `
+        };
 
         $("#init-button").on(
             "click",
             () => actions.generate_teams(jam, (result, data) => {
                 if (result) {
-                    data.teams.forEach( (team) => {
+                    data.teams.forEach((team) => {
                         let elem = `
                             <div class="team-handle uk-margin-small-bottom uk-margin-small-right uk-margin-small-top uk-margin-small-left" id="team-${team.id}" data-team-id="${team.id}">
                                 <div class="uk-card uk-card-default uk-card-small">
@@ -152,6 +216,7 @@
                                         <p>Drop users here to assign them</p>
                                     </div>
                                     <div class="uk-card-footer uk-text-right">
+                                        ${set_winner_button(team)}
                                         <button class="team-reroll-button uk-button uk-button-primary uk-button-small" data-team-id="${team.id}">
                                             <i class="uk-icon fa-fw far fa-dice"></i>
                                         </button>
@@ -202,6 +267,7 @@
                                     <p>Drop users here to assign them</p>
                                 </div>
                                 <div class="uk-card-footer uk-text-right">
+                                    ${set_winner_button(team)}
                                     <button class="team-reroll-button uk-button uk-button-primary uk-button-small" data-team-id="${team.id}">
                                         <i class="uk-icon fa-fw far fa-dice"></i>
                                     </button>
@@ -232,6 +298,41 @@
                     });
                 }
             })
+        );
+
+        function unset_winning_team(callback) {
+            actions.unset_winning_team(jam, (result, data) => {
+                if (result) {
+                    $("#winner-unset-button").addClass("uk-hidden");
+                    $(".team-winner-button").removeClass("uk-hidden");
+                    $(".team-card-winner").removeClass("team-card-winner");
+                    UIkit.notification({
+                        "message": "Winning team unset",
+                        "status": "success",
+                        "pos": "bottom-center",
+                        "timeout": 5000
+                    });
+                    jam_winning_team = "";
+                    if (callback) {
+                        callback(true);
+                    }
+                } else {
+                    console.error(data);
+                    UIkit.notification({
+                        "message": "Failed to unset winning team",
+                        "status": "danger",
+                        "pos": "bottom-center",
+                        "timeout": 5000
+                    });
+                    if (callback) {
+                        callback(false);
+                    }
+                }
+            });
+        }
+
+        $("#winner-unset-button").on(
+            "click", unset_winning_team
         );
 
         $(".participant-handle").on(
@@ -312,6 +413,34 @@
             });
         }
 
+        function set_winning_team(e) {
+            let team = this.getAttribute("data-team-id");
+
+            actions.set_winning_team(team, (result, data) => {
+                if (result) {
+                    $(".team-winner-button").addClass("uk-hidden");
+                    $("#winner-unset-button").removeClass("uk-hidden");
+                    $(".team-card-winner").removeClass("team-card-winner");
+                    $(`#team-${team}`).find(".uk-card").addClass("team-card-winner");
+                    UIkit.notification({
+                        "message": "Winning team updated",
+                        "status": "success",
+                        "pos": "bottom-center",
+                        "timeout": 5000
+                    });
+                    jam_winning_team = team;
+                } else {
+                    console.error(data);
+                    UIkit.notification({
+                        "message": "Failed to set winning team",
+                        "status": "danger",
+                        "pos": "bottom-center",
+                        "timeout": 5000
+                    });
+                }
+            });
+        }
+
         function reroll_team(e) {
             let team = this.getAttribute("data-team-id");
 
@@ -340,28 +469,41 @@
 
         function delete_team(e) {
             let team = this.getAttribute("data-team-id");
+            const perform = () => {
+                actions.delete_team(team, (result, data) => {
+                    if (result) {
+                        let target = $(`#team-${team}`);
 
-            actions.delete_team(team, (result, data) => {
-                if (result) {
-                    let target = $(`#team-${team}`);
+                        target.find(".team-target").children("div").appendTo(".hidden-participants");
+                        target.remove();
+                    } else {
+                        console.log(data);
 
-                    target.find(".team-target").children("div").appendTo(".hidden-participants");
-                    target.remove();
-                } else {
-                    console.log(data);
+                        UIkit.notification({
+                            "message": "Failed to delete team",
+                            "status": "danger",
+                            "pos": "bottom-center",
+                            "timeout": 5000
+                        });
+                    }
+                })
+            };
 
-                    UIkit.notification({
-                        "message": "Failed to delete team",
-                        "status": "danger",
-                        "pos": "bottom-center",
-                        "timeout": 5000
-                    });
-                }
-            })
+            if (jam_winning_team === team) {
+                // unset the winning team first
+                unset_winning_team(result => {
+                    if (result) {
+                        perform();
+                    }
+                });
+            } else {
+                perform();
+            }
         }
 
         function assign_handlers() {
             $(".team-target").off("dragover").off("drop").on("dragover", drag_over).on("drop", drop);
+            $(".team-winner-button").off("click").on("click", set_winning_team);
             $(".team-reroll-button").off("click").on("click", reroll_team);
             $(".team-delete-button").off("click").on("click", delete_team);
         }
