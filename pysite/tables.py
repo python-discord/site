@@ -250,4 +250,12 @@ TABLES = {
         ]),
         locked=False
     ),
+
+    "bot_settings": Table(
+        primary_key="key",
+        keys=sorted([
+            "key",  # str
+            "value"  # any
+        ])
+    )
 }
