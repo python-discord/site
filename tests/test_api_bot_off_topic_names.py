@@ -58,6 +58,10 @@ class AddingChannelNamesToDatabaseEndpointTests(SiteTest):
         self.assert200(response)
         self.assertIn(self.CHANNEL_NAME, response.json)
 
+
+class AllowsNumbersInNames(SiteTest):
+    """Tests that the site allows names with numbers in them."""
+
     def test_allows_numbers_in_names(self):
         response = self.client.post(
             f'/bot/off-topic-names?name=totallynot42',
