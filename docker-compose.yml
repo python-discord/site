@@ -1,48 +1,28 @@
+# Usage:
+#   Install: docker 18.03 or higher
+#   install: docker-compose 1.21.1 or higher
+#   run: docker-compose up -d
+#   wait for the containers to be up
+#   confirm their ports are listening on the following ports: 5672, 28015
+
 version: '3'
 services:
+  pdrmq:
+    hostname: "pdrmq"
+    image: pythondiscord/rmq:latest
+    network_mode: "host"
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+
   pdrdb:
     hostname: "pdrdb"
     image: pythondiscord/db:latest
     volumes:
       - "rdb:/data"
-    ports:
-      - "28011:28011"
-    expose:
-      - "28011"
-    entrypoint: su-exec daemon:daemon rethinkdb -n pdrdb -d /data --bind 0.0.0.0 --server-tag default --http-port 28011 --driver-port 28016
-    networks:
-      - pdnet
-
-  pdweb:
-    depends_on:
-      - pdrdb
-    hostname: "pdweb"
-    image: pythondiscord/site:latest
-    working_dir: "/site"
-    ports:
-       - "80:10012"
-    expose:
-      - "80"
-    entrypoint: /sbin/tini -- pipenv run start
-    environment:
-      LOG_LEVEL: DEBUG
-      SERVER_NAME: "pysite.local"
-      WEBPAGE_PORT: "80"
-      WEBPAGE_SECRET_KEY: "123456789abcdefghijklmn"
-      RETHINKDB_HOST: "pdrdb"
-      RETHINKDB_PORT: "28016"
-      RETHINKDB_DATABASE: "database"
-      RETHINKDB_TABLE: "table"
-      BOT_API_KEY: "abcdefghijklmnopqrstuvwxyz"
-      TEMPLATES_AUTO_RELOAD: "yes"
-      DOCKER_COMPOSE: "true"
-
-    networks:
-      - pdnet
+    entrypoint: su-exec daemon:daemon rethinkdb -n pdrdb -d /data --bind 0.0.0.0 --server-tag default --http-port 28010 --driver-port 28015
+    network_mode: "host"
 
 volumes:
     rdb:
     web:
-
-networks:
-  pdnet:

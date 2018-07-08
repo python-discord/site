@@ -16,7 +16,11 @@ def wait_for_rmq():
             return False
 
         with closing(socket.socket(socket.AF_INET, socket.SOCK_STREAM)) as sock:
-            if sock.connect_ex((RMQ_HOST, RMQ_PORT)) == 0:
-                return True
+            try:
+                state = sock.connect_ex((RMQ_HOST, RMQ_PORT))
+                if state == 0:
+                    return True
+            except socket.gaierror:
+                pass
 
         time.sleep(0.5)
