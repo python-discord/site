@@ -1,7 +1,10 @@
 {% extends "wiki/base.html" %}
 {% block title %}Wiki | {{ data["title"] }}{% endblock %}
 {% block og_title %}Wiki | {{ data["title"] }}{% endblock %}
-{% block og_description %}{% endblock %}
+
+{# To be safe about whitespace formatting on various platforms, we do everything one one line here #}
+{% block og_description %}{% if data.rst.startswith(".. header::") %}{{ data.text.split("\n", 1)[0] }}{% endif %}{% endblock %}
+
 {% block page_classes %}uses-rst{% endblock %}
 
 {% block content %}
