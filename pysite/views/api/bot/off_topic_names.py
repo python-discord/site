@@ -13,7 +13,7 @@ POST_SCHEMA = Schema({
     'name': And(
         str,
         len,
-        lambda name: all(c.isalpha() or c == '-' for c in name),
+        lambda name: all(c.isalnum() or c == '-' for c in name),
         str.islower,
         lambda name: len(name) <= 96,
         error=(

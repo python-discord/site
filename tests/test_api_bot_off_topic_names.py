@@ -36,7 +36,7 @@ class AddingANameOffTopicEndpointTests(SiteTest):
         self.assert200(response)
 
 
-class AddingChannelNameToDatabaseEndpointTests(SiteTest):
+class AddingChannelNamesToDatabaseEndpointTests(SiteTest):
     """Tests fetching names from the database with GET."""
 
     CHANNEL_NAME = 'bisks-disks'
@@ -57,6 +57,18 @@ class AddingChannelNameToDatabaseEndpointTests(SiteTest):
         )
         self.assert200(response)
         self.assertIn(self.CHANNEL_NAME, response.json)
+
+
+class AllowsNumbersInNames(SiteTest):
+    """Tests that the site allows names with numbers in them."""
+
+    def test_allows_numbers_in_names(self):
+        response = self.client.post(
+            f'/bot/off-topic-names?name=totallynot42',
+            app.config['API_SUBDOMAIN'],
+            headers=app.config['TEST_HEADER']
+        )
+        self.assert200(response)
 
 
 class RandomSampleEndpointTests(SiteTest):
