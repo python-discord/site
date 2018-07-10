@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+        xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+        xmlns:news="http://www.google.com/schemas/sitemap-news/0.9"
+        xmlns:video="http://www.google.com/schemas/sitemap-video/1.1"
+>
+
+{% for url in urls %}
+    <url>
+        <loc>{{ url.url }}</loc>
+
+        {% if url.images is defined %}
+            {% for image in url.images %}
+        <image:image>
+            <image:loc>{{ image.url }}</image:loc>
+            <image:caption>{{ image.caption }}</image:caption>
+        </image:image>
+            {% endfor %}
+        {% endif %}
+
+        {% if url.videos is defined %}
+            {% for video in url.videos %}
+        <video:video>
+            <video:description>{{ video.description }}</video:description>
+            <video:title>{{ video.title }}</video:title>
+
+            <video:content_loc>{{ video.url }}</video:content_loc>
+            <video:player_loc>{{ video.player_url }}</video:player_loc>
+            <video:thumbnail_loc>{{ video.thumbnail_url }}</video:thumbnail_loc>
+        </video:video>
+            {% endfor %}
+        {% endif %}
+
+        {% if url.news_items is defined %}
+            {% for item in url.news_items %}
+        <news:news>
+            <news:publication>
+                <news:name>Python Discord: {{ item.section }}</news:name>
+                <news:language>en</news:language>
+            </news:publication>
+
+            <news:genres>PressRelease, Blog</news:genres>
+            <news:publication_date>{{ item.date }}</news:publication_date>
+            <news:title>{{ item.title }}</news:title>
+            <news:keywords>{{ ", ".join(item.keywords) }}</news:keywords>
+        </news:news>
+            {% endfor %}
+        {% endif %}
+
+        {% if url.last_modified is defined %}
+        <lastmod>{{ url.last_modified }}</lastmod>
+        {% endif %}
+
+        {% if url.change_frequency is defined %}
+        <changefreq>{{ url.change_frequency }}</changefreq>
+        {% endif %}
+
+        {% if url.priority is defined %}
+        <priority>{{ "{0:.1f}".format(url.priority) }}</priority>
+        {% endif %}
+    </url>
+{% endfor %}
+</urlset>

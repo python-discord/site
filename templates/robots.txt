@@ -1,0 +1,14 @@
+{# robots.txt is a little picky about whitespace and newlines - that's why the below looks kind of bad.#}
+{% if rules is defined and rules %}
+{% for user_agent, disallowed in rules %}
+User-agent: {{ user_agent }}
+{% for rule in rules %}
+Disallow: {{ rule }}
+{% endfor %}
+{% endfor %}
+{% else %}
+User-agent: *
+Disallow:
+{% endif %}
+
+Sitemap: {{ sitemap_url }}
