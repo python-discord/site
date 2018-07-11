@@ -40,7 +40,10 @@ class EditView(RouteView, DBMixin, RMQMixin):
 
         lock_expiry = datetime.datetime.utcnow() + datetime.timedelta(minutes=5)
 
-        if not DEBUG_MODE:  # If we are in debug mode we have no user logged in, therefore we can skip locking
+        # There are a couple of cases where we will not need to lock a page. One of these is if the application is
+        # current set to debug mode. The other of these cases is if the page is empty, because if the page is empty
+        # we will only have a partially filled out page if the user quits before saving.
+        if not DEBUG_MODE and obj.get("rst"):
             self.db.insert(
                 self.table_name,
                 {
