@@ -10,6 +10,6 @@ class RobotsTXT(RouteView):
     def get(self):
         return Response(
             self.render(
-                "robots.txt", sitemap_url=url_for("api.sitemap_xml", _external=True), rules={"*": ["/"]}
+                "robots.txt", sitemap_url=url_for("api.sitemap_xml", _external=True)
             ), content_type="text/plain"
         )
