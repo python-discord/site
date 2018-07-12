@@ -257,5 +257,13 @@ TABLES = {
             "key",  # str
             "value"  # any
         ])
+    ),
+
+    "watched_users": Table(  # Users being monitored by the bot's BigBrother cog
+        primary_key="user_id",
+        keys=sorted([
+            "user_id",
+            "channel_id"
+        ])
     )
 }
