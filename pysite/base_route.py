@@ -128,7 +128,10 @@ class RouteView(BaseView):
             "kwargs": kwargs
         }
 
-        return redirect(url_for("discord.login"))
+        response = redirect(url_for("discord.login"))
+        response.headers.add("X-Robots-Tag", "noindex")
+
+        return response
 
 
 class APIView(RouteView):
