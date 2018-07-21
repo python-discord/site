@@ -2,20 +2,20 @@ html.clean_logs {
 
   background-color: #18191d;
 
-  span.nick {
+  .nick {
     color: #9298ff;
-    font-weight:700;
+    font-weight: 700;
   }
 
-  span.time {
+  .time {
     color: #75797f;
-    font-size:11px;
-    front-weight:normal;
-    margin-left:0.8em;
+    font-size: 11px;
+    front-weight: normal;
+    margin-left: .8em;
   }
 
-  span.text {
-    color: white;
-    margin-bottom:1em;
+  .text {
+    color: #FFFFFF;
+    margin-bottom: 1em;
   }
 }
