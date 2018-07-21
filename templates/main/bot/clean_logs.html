@@ -1,0 +1,12 @@
+<html class="clean_logs">
+    <head>
+        <link rel="stylesheet" href="{{ static_file('css/style.css') }}"/>
+    </head>
+    <body>
+        {% for message in messages %}
+            <span class="nick" style="color: {{ message.color }}">{{ message.author }}<span class="time">{{ message.timestamp }}</span></span><br>
+            <span class="text">{{ message.content }}</span>
+        {% endfor %}
+    </body>
+</html>
+
