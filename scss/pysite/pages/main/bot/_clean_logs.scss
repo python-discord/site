@@ -1,21 +1,20 @@
-html.clean_logs {
+.clean-logs {
 
-  background-color: #18191d;
+  background-color: $clean_logs_background;
 
   .nick {
-    color: #9298ff;
     font-weight: 700;
   }
 
   .time {
-    color: #75797f;
-    font-size:11px;
-    front-weight: normal;
+    color: $clean_logs_timestamp;
+    font-size: 11px;
+    font-weight: normal;
     margin-left: .8em;
   }
 
   .text {
-    color: #FFFFFF;
+    color: $white;
     margin-bottom: 1em;
   }
 }
