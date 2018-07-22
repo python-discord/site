@@ -101,6 +101,26 @@ JAM_QUESTION_TYPES = [
     "slider"
 ]
 
+# Server role colors
+ROLE_COLORS = {
+    "owners": "#ffa3a1",
+    "admins": "#e76e6c",
+    "moderators": "#ce3c42",
+    "python": "#6f9fed",
+    "bots": "#6f9fed",
+    "admin bots": "#6f9fed",
+    "devops": "#a1d1ff",
+    "helpers": "#e0b000",
+    "subreddit moderators": "#d897ed",
+    "partners": "#b66fed",
+    "streamers": "#833cba",
+    "developers": "#fcfcfc",
+    "muted": "#fcfcfc",
+    "code jam champions": "#b108b4",
+    "jammers": "#258639",
+    "contributors": "#55cc6c"
+}
+
 # CSRF
 CSRF = CSRFProtect()
 

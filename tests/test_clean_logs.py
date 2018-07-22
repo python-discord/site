@@ -29,8 +29,9 @@ class TestCleanLogAPI(SiteTest):
         good_data = json.dumps({
             "log_data": [
                 {
-                    "author":    "something",
-                    "content":   "testy",
+                    "author": "something",
+                    "role": "awful",
+                    "content": "testy",
                     "timestamp": "this way comes"
                 }
             ]

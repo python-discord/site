@@ -11,7 +11,8 @@ POST_SCHEMA = Schema({
         {
             "author": str,
             "content": str,
-            "timestamp": str
+            "timestamp": str,
+            "role": str
         }
     ]
 })
