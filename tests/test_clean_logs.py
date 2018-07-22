@@ -55,34 +55,16 @@ class TestCleanLogFrontEnd(SiteTest):
     """
     Tests the frontend for
     viewing the clean logs.
+
+    Best I can do with our current
+    system is check if I'm redirected,
+    since this is behind OAuth.
     """
 
-    def test_clean_log_frontend_returns_200(self):
-
-        # Get a log ID
-        good_data = json.dumps({
-            "log_data": [
-                {
-                    "author":    "something",
-                    "content":   "testy",
-                    "timestamp": "this way comes"
-                }
-            ]
-        })
-
-        response = self.client.post(
-            '/bot/clean',
-            app.config['API_SUBDOMAIN'],
-            headers=app.config['TEST_HEADER'],
-            data=good_data
-        )
-
-        log_id = response.json.get("log_id")
-
-        # Now try to access it.
+    def test_clean_log_frontend_returns_302(self):
         response = self.client.get(
-            f'/bot/clean_logs/{log_id}'
+            f'/bot/clean_logs/1',
+            'http://pytest.local'
         )
 
-        self.assert200(response)
-        self.assertIn("testy", response.text)
+        self.assertEqual(response.status_code, 302)

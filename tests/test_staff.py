@@ -1,6 +1,5 @@
-import os
-import json
 from tests import SiteTest, app
+
 
 class StaffEndpoints(SiteTest):
     """ Test cases for staff subdomain """
