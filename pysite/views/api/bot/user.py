@@ -1,6 +1,6 @@
 import logging
-import rethinkdb
 
+import rethinkdb
 from flask import jsonify, request
 from schema import Optional, Schema
 
@@ -96,6 +96,8 @@ class UserView(APIView, DBMixin):
     @api_params(schema=DELETE_SCHEMA, validation_type=ValidationTypes.json)
     def delete(self, data):
         user_ids = [user["user_id"] for user in data]
+
+        changes = {}
 
         # changes = self.db.run(
         #     self.db.query(self.table_name)
