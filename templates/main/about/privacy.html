@@ -31,49 +31,62 @@
 
                 <h3>Data collection</h3>
 
+                <div class="uk-alert uk-alert-warning">
+                    <p>
+                        Please note that data <span class="uk-text-primary">marked with blurple text below</span> is not
+                        automatically removed. We need to hold onto this information in order to maintain infraction records
+                        and ensure the smooth running of our community.
+                    </p>
+                    <p>
+                        We do not store any data until you have verified yourself in <code>#checkpoint</code> on the server,
+                        and certified that you agree to our rules and privacy policy. If you are leaving the server and would
+                        like us to remove this data as well, please contact a member of staff directly.
+                    </p>
+                </div>
+
                 <table class="uk-table uk-table-divider uk-table-striped uk-table-small table-bordered" id="data-collection-table">
                     <thead>
                         <tr class="thick-bottom-border">
-                            <th>What we collect</th>
-                            <th class="uk-table-shrink">When</th>
-                            <th>What it's used for</th>
-                            <th>Who can access it</th>
+                            <th class="uk-width-1-4">What we collect</th>
+                            <th class="uk-width-1-4">When it's collected</th>
+                            <th class="uk-width-1-4">What it's used for</th>
+                            <th class="uk-width-1-4">Who can access it</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>Discord user ID</td>
-                            <td class="uk-table-shrink"><strong>self.accept()</strong> run on Discord</td>
+                            <td class="uk-text-primary">Discord user ID</td>
+                            <td class="uk-table-shrink"><strong>!accept</strong> run on Discord</td>
                             <td>Statistics, data association (infractions, code jam applications, etc)</td>
                             <td>Administrative staff</td>
                         </tr>
                         <tr>
-                            <td>Discord username and discriminator</td>
-                            <td class="uk-table-shrink"><strong>self.accept()</strong> run on Discord</td>
+                            <td class="uk-text-primary">Discord username and discriminator</td>
+                            <td class="uk-table-shrink"><strong>!accept</strong> run on Discord</td>
                             <td>Display purposes (alongside ID in staff areas, public profiles)</td>
-                            <td>Public, for code jam team listings and winner info</td>
+                            <td>Public (for code jam team listings and winner info) and staff areas</td>
                         </tr>
                         <tr>
-                            <td>Discord avatar URLs</td>
-                            <td class="uk-table-shrink"><strong>self.accept()</strong> run on Discord</td>
-                            <td>Display purposes (public profiles)</td>
-                            <td>Public, for code jam team listings and winner info</td>
+                            <td class="uk-text-primary">Discord avatar URLs</td>
+                            <td class="uk-table-shrink"><strong>!accept</strong> run on Discord</td>
+                            <td>Display purposes (alongside ID in staff areas, public profiles)</td>
+                            <td>Public (for code jam team listings and winner info) and staff areas</td>
                         </tr>
                         <tr>
-                            <td>Assigned roles on Discord</td>
-                            <td class="uk-table-shrink"><strong>self.accept()</strong> run on Discord</td>
-                            <td>Access control for the site</td>
+                            <td class="uk-text-primary">Assigned roles on Discord</td>
+                            <td class="uk-table-shrink"><strong>!accept</strong> run on Discord</td>
+                            <td>Access control for the site, infractions, role restoration after kicks</td>
                             <td>Administrative staff</td>
                         </tr>
                         <tr class="thick-bottom-border">
-                            <td>Messages sent on Discord</td>
-                            <td class="uk-table-shrink"><strong>self.accept()</strong> run on Discord</td>
+                            <td class="uk-text-primary">Messages sent on Discord</td>
+                            <td class="uk-table-shrink"><strong>!accept</strong> run on Discord</td>
                             <td>
-                                Stored in memory by the bot for processing temporarily, no message content reaches
-                                the database unless you're using a bot command that interfaces with the site - May be
-                                temporarily written to a log file for debugging purposes
+                                Stored in memory by the bot for processing temporarily, may also end up in
+                                staff-only logging channels for the purposes of accountability and infraction
+                                management
                             </td>
-                            <td>N/A</td>
+                            <td>Administrative staff</td>
                         </tr>
 
                         <tr class="thick-bottom-border">
@@ -136,7 +149,7 @@
                 </p>
                 <p>
                     If you joined the community after the <strong>20th of May, 2018</strong>, you will have been greeted with the
-                    <code>#checkpoint</code> channel. In this channel, you must run the <code>self.accept()</code>
+                    <code>#checkpoint</code> channel. In this channel, you must run the <code>!accept</code>
                     command to signify that you accept both our rules and this privacy policy. This will also have been
                     detailed in a message in that channel.
                 </p>
@@ -161,7 +174,7 @@
                 </p>
 
                 <div class="uk-grid uk-grid-match" uk-grid>
-                    <div class="uk-width-1-2@m">
+                    <div class="uk-width-3-5@m">
                         <div class="uk-card uk-card-default uk-card-small">
                             <div class="uk-card-header">
                                 <h3 class="uk-card-title">Complete data removal</h3>
@@ -172,6 +185,12 @@
                                     If you'd like to remove all of your personal data from our servers, all you need to do
                                     is leave the Discord server. As much of the data we collect is necessary for running
                                     our community, we are unable to offer you community membership with zero data collection.
+                                </p>
+                                <p>
+                                    Please note that data <span class="uk-text-primary">marked with blurple text in the table above</span>
+                                    is not automatically removed. We need to hold onto this information in order to maintain infraction records
+                                    and ensure the smooth running of our community. If you are leaving the server and would like us to remove
+                                    this data as well, please contact a member of staff directly.
                                 </p>
                                 <p>
                                     Once you've left the Discord server, your data is removed automatically. Please note that
@@ -186,7 +205,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="uk-width-1-2@m">
+                    <div class="uk-width-2-5@m">
                         <div class="uk-card uk-card-default uk-card-small">
                             <div class="uk-card-header">
                                 <h3 class="uk-card-title">Code jam profile removal</h3>
@@ -252,6 +271,14 @@
                 </p>
 
                 <ul class="uk-list uk-list-divider">
+                    <li>
+                        <h4>July 27th, 2018</h4>
+                        <p>
+                            As we're replacing Rowboat (the bot we use for moderation), we need to hold onto some of
+                            your data - even after you've left the server. This is necessary to ensure the smooth
+                            running and security of our community.
+                        </p>
+                    </li>
                     <li>
                         <h4>July 3rd, 2018</h4>
                         <p>
