@@ -68,7 +68,7 @@ class UserView(APIView, DBMixin):
             coerce=list
         )
 
-        return jsonify({"result": result})  # pragma: no cover
+        return jsonify({"data": result})  # pragma: no cover
 
     @api_key
     @api_params(schema=SCHEMA, validation_type=ValidationTypes.json)
