@@ -266,7 +266,7 @@ TABLES = {
             "user_id",  # str
             "actor_id",  # str
             "reason",  # str
-            "type"  # str
+            "type",  # str
             "inserted_at",  # datetime
             "expires_at",  # datetime
             "closed",  # bool
