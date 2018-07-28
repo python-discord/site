@@ -30,9 +30,12 @@ class TestCleanLogAPI(SiteTest):
             "log_data": [
                 {
                     "author": "something",
+                    "user_id": "12345151",
                     "role": "awful",
                     "content": "testy",
-                    "timestamp": "this way comes"
+                    "timestamp": "this way comes",
+                    "embeds": [{"fire":"nanny"}],
+                    "attachments": ["<Attachment>"],
                 }
             ]
         })
