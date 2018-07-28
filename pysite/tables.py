@@ -267,6 +267,21 @@ TABLES = {
         ])
     ),
 
+    "bot_infractions": Table(
+        primary_key="id",
+        keys=sorted([
+            "id",  # str
+            "user_id",  # str
+            "actor_id",  # str
+            "reason",  # str
+            "type",  # str
+            "inserted_at",  # datetime
+            "expires_at",  # datetime
+            "closed",  # bool
+            "legacy_rowboat_id"  # str
+        ])
+    ),
+
     "watched_users": Table(  # Users being monitored by the bot's BigBrother cog
         primary_key="user_id",
         keys=sorted([

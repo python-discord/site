@@ -1,5 +1,6 @@
 import logging
 
+import rethinkdb
 from flask import jsonify, request
 from schema import Optional, Schema
 
@@ -15,6 +16,12 @@ SCHEMA = Schema([
         "roles": [str],
         "user_id": str,
         "username": str
+    }
+])
+
+GET_SCHEMA = Schema([
+    {
+        "user_id": str
     }
 ])
 
@@ -46,6 +53,24 @@ class UserView(APIView, DBMixin):
     teams_table = "code_jam_teams"
 
     @api_key
+    @api_params(schema=GET_SCHEMA, validation_type=ValidationTypes.params)
+    def get(self, data):
+        logging.getLogger(__name__).debug(f"Size of request: {len(request.data)} bytes")
+
+        if not data:
+            return self.error(ErrorCodes.bad_data_format, "No user IDs supplied")
+
+        data = [x["user_id"] for x in data]
+
+        result = self.db.run(
+            self.db.query(self.table_name)
+            .filter(lambda document: rethinkdb.expr(data).contains(document["user_id"])),
+            coerce=list
+        )
+
+        return jsonify({"data": result})  # pragma: no cover
+
+    @api_key
     @api_params(schema=SCHEMA, validation_type=ValidationTypes.json)
     def post(self, data):
         logging.getLogger(__name__).debug(f"Size of request: {len(request.data)} bytes")
@@ -72,11 +97,13 @@ class UserView(APIView, DBMixin):
     def delete(self, data):
         user_ids = [user["user_id"] for user in data]
 
-        changes = self.db.run(
-            self.db.query(self.table_name)
-            .get_all(*user_ids)
-            .delete()
-        )
+        changes = {}
+
+        # changes = self.db.run(
+        #     self.db.query(self.table_name)
+        #     .get_all(*user_ids)
+        #     .delete()
+        # )
 
         oauth_deletions = self.db.run(
             self.db.query(self.oauth_table_name)

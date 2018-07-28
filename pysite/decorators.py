@@ -141,8 +141,8 @@ def api_params(
 
             try:
                 schema.validate(data)
-            except SchemaError:
-                return self.error(ErrorCodes.incorrect_parameters)
+            except SchemaError as e:
+                return self.error(ErrorCodes.incorrect_parameters, str(e))
 
             return f(self, data, *args, **kwargs)
 
