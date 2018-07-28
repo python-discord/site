@@ -9,18 +9,24 @@ from pysite.decorators import api_key, api_params
 from pysite.mixins import DBMixin
 
 
-POST_SCHEMA = Schema({
-    'name': And(
-        str,
-        len,
-        lambda name: all(c.isalnum() or c == '-' for c in name),
-        str.islower,
-        lambda name: len(name) <= 96,
-        error=(
-            "The channel name must be a non-blank string consisting only of"
-            " lowercase regular characters and '-' with a maximum length of 96"
-        )
+OFF_TOPIC_NAME = And(
+    str,
+    len,
+    lambda name: all(c.isalnum() or c == '-' for c in name),
+    str.islower,
+    lambda name: len(name) <= 96,
+    error=(
+        "The channel name must be a non-blank string consisting only of"
+        " lowercase regular characters and '-' with a maximum length of 96"
     )
+)
+
+DELETE_SCHEMA = Schema({
+    'name': OFF_TOPIC_NAME
+})
+
+POST_SCHEMA = Schema({
+    'name': OFF_TOPIC_NAME
 })
 
 
@@ -28,6 +34,25 @@ class OffTopicNamesView(APIView, DBMixin):
     path = "/bot/off-topic-names"
     name = "bot.off_topic_names"
     table_name = "off_topic_names"
+
+    @api_key
+    @api_params(schema=DELETE_SCHEMA, validation_type=ValidationTypes.params)
+    def delete(self, params):
+        """
+        Removes a single off-topic name from the database.
+        Returns the result of the deletion call.
+
+        API key must be provided as header.
+        Name to delete must be provided as the `name` query argument.
+        """
+
+        result = self.db.delete(
+            self.table_name,
+            params['name'],
+            return_changes=True
+        )
+
+        return jsonify(result)
 
     @api_key
     def get(self):
