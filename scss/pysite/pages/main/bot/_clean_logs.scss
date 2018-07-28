@@ -17,4 +17,31 @@
     color: $white;
     margin-bottom: 1em;
   }
+
+  .embed {
+    background-color: $clean_logs_embed_background;
+    border: 2px solid $clean_logs_embed_border;
+    border-radius: 5px;
+    color: $white;
+    margin-bottom: 1.5em;
+    padding: 1em;
+    width: 60%;
+
+    .footer {
+      font-size: 9px;
+    }
+
+    .fields {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .field {
+      flex: 50%;
+    }
+
+    a {
+      color: $clean_logs_anchor_color;
+    }
+  }
 }

@@ -4,8 +4,77 @@
     </head>
     <body>
         {% for message in messages %}
-            <span class="nick" style="color: {{ message.color }}">{{ message.author }}<span class="time">{{ message.timestamp }}</span></span><br>
+
+            <!-- Main message -->
+            <span class="nick" style="color: {{ message.color }}">{{ message.author }}<span class="time">{{ message.timestamp }} | User ID: {{ message.user_id }}</span></span><br>
             <span class="text">{{ message.content }}</span>
+
+            <!-- File attachments -->
+            {% for attachment in message.attachments %}
+                <span class="text">{{ attachment }}</span>
+            {% endfor %}
+
+            <!-- Embeds -->
+            {% for embed in message.embeds %}
+                <div class="embed">
+
+                    <!-- Title -->
+                    {% if embed.title %}
+                        {% if embed.url %}
+                            <span><strong><a href="{{ embed.url }}">{{ embed.title }}</a></strong></span><br>
+                        {% else %}
+                            <span><strong>{{ embed.title }}</strong></span><br>
+                        {% endif %}
+                    {% endif %}
+
+
+                    <!-- Description -->
+                    {% if embed.description %}
+                        <br>
+                        <span>{{ embed.description }}</span>
+                    {% endif %}
+
+                    <!-- Fields -->
+                    {% if embed.fields %}
+                        <div class="fields">
+                            {% for field in embed.fields %}
+                                <div class="field">
+                                    <br>
+                                    {% if field.name %}
+                                            <span><strong>{{ field.name }}</strong></span><br>
+                                    {% endif %}
+
+                                    <span>{{ field.value }}</span>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
+                    <!-- Image -->
+                    {% if embed.image %}
+                        <br>
+                        {% if embed.image.url %}
+                            <img src="{{ embed.image.url }}">
+                        {% endif %}
+                    {% endif %}
+
+                    <!-- Thumbnail -->
+                    {% if embed.thumbnail %}
+                        <br>
+                        {% if embed.thumbnail.url %}
+                            <img src="{{ embed.thumbnail.url }}">
+                        {% endif %}
+                    {% endif %}
+
+                    <!-- Footer -->
+                    {% if embed.footer %}
+                        <br>
+                        {% if embed.footer.text %}
+                            <span class="footer">{{ embed.footer.text }}</span>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            {% endfor %}
         {% endfor %}
     </body>
 </html>

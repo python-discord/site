@@ -10,9 +10,12 @@ POST_SCHEMA = Schema({
     'log_data': [
         {
             "author": str,
+            "user_id": str,
             "content": str,
+            "role": str,
             "timestamp": str,
-            "role": str
+            "embeds": object,
+            "attachments": [str],
         }
     ]
 })
