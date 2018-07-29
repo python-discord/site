@@ -1,7 +1,7 @@
 import logging
 
 from pysite.base_route import RouteView
-from pysite.constants import ALL_STAFF_ROLES, ROLE_COLORS
+from pysite.constants import ALL_STAFF_ROLES, DEVELOPERS_ROLE, ROLE_COLORS
 from pysite.decorators import require_roles
 from pysite.mixins import DBMixin, OAuthMixin
 
@@ -30,6 +30,6 @@ class CleanLogView(RouteView, DBMixin, OAuthMixin):
         messages = data["log_data"]
 
         for message in messages:
-            message['color'] = ROLE_COLORS.get(message['role'], ROLE_COLORS['developers'])
+            message['color'] = ROLE_COLORS.get(message['role_id'], ROLE_COLORS[DEVELOPERS_ROLE])
 
         return self.render(self.template, messages=messages)

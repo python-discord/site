@@ -9,7 +9,7 @@ class TestCleanLogAPI(SiteTest):
     Tests submitting a clean log and
     verifies that we get a UUID in return.
 
-    Then tests that
+    Also ensures that we get a 400 if we send in bad data.
     """
 
     def test_returns_400_on_bad_data(self):
@@ -31,7 +31,7 @@ class TestCleanLogAPI(SiteTest):
                 {
                     "author": "something",
                     "user_id": "12345151",
-                    "role": "awful",
+                    "role_id": "4818413",
                     "content": "testy",
                     "timestamp": "this way comes",
                     "embeds": [{"fire":"nanny"}],

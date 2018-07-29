@@ -12,7 +12,7 @@ POST_SCHEMA = Schema({
             "author": str,
             "user_id": str,
             "content": str,
-            "role": str,
+            "role_id": str,
             "timestamp": str,
             "embeds": object,
             "attachments": [str],
