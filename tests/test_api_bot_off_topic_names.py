@@ -100,3 +100,35 @@ class RandomSampleEndpointTests(SiteTest):
         )
         self.assert200(response)
         self.assertEqual(len(response.json), 1)
+
+
+class DeletingANameEndpointTests(SiteTest):
+    """Tests deleting a name from the database using DELETE."""
+
+    CHANNEL_NAME = 'duck-goes-meow'
+
+    def setUp(self):
+        response = self.client.post(
+            f'/bot/off-topic-names?name={self.CHANNEL_NAME}',
+            app.config['API_SUBDOMAIN'],
+            headers=app.config['TEST_HEADER']
+        )
+        self.assert200(response)
+
+    def test_deleting_random_name_returns_deleted_0(self):
+        response = self.client.delete(
+            '/bot/off-topic-names?name=my-totally-random-name',
+            app.config['API_SUBDOMAIN'],
+            headers=app.config['TEST_HEADER']
+        )
+        self.assert200(response)
+        self.assertEqual(response.json['deleted'], 0)
+
+    def test_deleting_channel_name_returns_deleted_1(self):
+        response = self.client.delete(
+            f'/bot/off-topic-names?name={self.CHANNEL_NAME}',
+            app.config['API_SUBDOMAIN'],
+            headers=app.config['TEST_HEADER']
+        )
+        self.assert200(response)
+        self.assertEqual(response.json['deleted'], 1)
