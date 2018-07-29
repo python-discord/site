@@ -16,6 +16,14 @@ TABLES = {
         ])
     ),
 
+    "clean_logs": Table(  # Logs of cleanups done by the clean bot commands
+        primary_key="id",
+        keys=sorted([
+            "id",
+            "log_data"
+        ])
+    ),
+
     "hiphopify": Table(  # Users in hiphop prison
         primary_key="user_id",
         keys=sorted([

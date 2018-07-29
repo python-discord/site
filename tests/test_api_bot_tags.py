@@ -1,6 +1,6 @@
-import os
 import json
 from tests import SiteTest, app
+
 
 class ApiBotTagsEndpoint(SiteTest):
 
