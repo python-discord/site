@@ -1,4 +1,3 @@
-import datetime
 import logging
 
 from flask import jsonify
@@ -147,8 +146,8 @@ class HiphopifyView(APIView, DBMixin):
         sentence_expired = None
 
         log.trace(f"Checking if the user ({user_id}) is currently in hiphop-prison.")
-        if prisoner_data and prisoner_data.get("end_datetime"):
-            sentence_expired = datetime.datetime.now() > prisoner_data.get("end_datetime")
+        if prisoner_data and prisoner_data.get("end_timestamp"):
+            sentence_expired = is_expired(prisoner_data['end_timestamp'])
 
         if prisoner_data and not sentence_expired:
             log.debug("User is currently in hiphop-prison. Deleting the record and releasing the prisoner.")
