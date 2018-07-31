@@ -238,6 +238,18 @@
           }
         ]
       },
+      "Python Tutorials by The New Boston on YouTube": {
+        "description": "A Python basics tutorial based around Python 3.4 - A more casual feel when compared to Corey's tutorials, but still competent",
+        "payment": "free",
+        "payment_description": null,
+        "urls": [
+          {
+            "icon": "branding/youtube",
+            "title": "YouTube",
+            "url": "https://www.youtube.com/playlist?list=PL6gx4Cwl9DGAcbMi1sH6oAMk4JHw91mC_"
+          }
+        ]
+      },
       "Code Combat": {
         "description": "Learn Python while gaming - an open-source project with thousands of contributors, which teaches you Python through a deep, top-down RPG.",
         "payment": "optional",
