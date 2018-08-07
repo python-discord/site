@@ -5,44 +5,44 @@ variables:
   RETHINKDB_HOST: rethinkdb
 
 stages:
-  - build
+#  - build
   - test
-  - deploy
-
-build:
-  before_script:
-  - docker info
-
-  image: docker:stable-git
-
-  only:
-  - master
-
-  services:
-    - docker:dind
-
-  stage: build
-
-  script:
-    - sh scripts/deploy-ci.sh
-
-  tags:
-  - docker
-
-  variables:
-    DOCKER_DRIVER: overlay2
+#  - deploy
+#
+#build:
+#  before_script:
+#  - docker info
+#
+#  image: docker:stable-git
+#
+#  only:
+#  - master
+#
+#  services:
+#    - docker:dind
+#
+#  stage: build
+#
+#  script:
+#    - sh scripts/deploy-ci.sh
+#
+#  tags:
+#  - docker
+#
+#  variables:
+#    DOCKER_DRIVER: overlay2
 
 test:
   tags:
   - docker
 
   stage: test
-  services:
-    - name: rabbitmq:3.7.5-alpine
-      alias: rabbit
-
-    - name: rethinkdb:2.3.6
-      alias: rethinkdb
+#  services:
+#    - name: rabbitmq:3.7.5-alpine
+#      alias: rabbit
+#
+#    - name: rethinkdb:2.3.6
+#      alias: rethinkdb
 
   cache:
     paths:
@@ -53,26 +53,26 @@ test:
     - pipenv sync --dev
 
     - pipenv run lint
-    - pipenv run lintjs
-    - pipenv run lintscss
-
-    - pipenv run python gunicorn_config.py
-    - pipenv run test
-
-deploy:
-  tags:
-  - docker
-
-  only:
-  - master
-
-  services:
-    - docker:dind
-
-  stage: deploy
-  script:
-    - sh scripts/deploy.sh
-
-  environment:
-    name: Production
-    url: https://pythondiscord.com
+#    - pipenv run lintjs
+#    - pipenv run lintscss
+#
+#    - pipenv run python gunicorn_config.py
+#    - pipenv run test
+#
+#deploy:
+#  tags:
+#  - docker
+#
+#  only:
+#  - master
+#
+#  services:
+#    - docker:dind
+#
+#  stage: deploy
+#  script:
+#    - sh scripts/deploy.sh
+#
+#  environment:
+#    name: Production
+#    url: https://pythondiscord.com

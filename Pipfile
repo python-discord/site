@@ -1,26 +1,11 @@
 [[source]]
-url = "https://pypi.python.org/simple"
+url = "https://pypi.org/simple"
 verify_ssl = true
 name = "pypi"
 
 [packages]
-flask = "==0.12.2"
-rethinkdb = "*"
-requests = "*"
-gevent = "==1.2.2"
-gevent-websocket = "*"
-wsaccel = "*"
-ujson = "*"
-schema = "*"
-flask-sockets = "*"
-flask-dance = "*"
-logmatic-python = "*"
-flask-wtf = "*"
-docutils = "*"
-pygments = "*"
-gunicorn = "*"
-kombu = "*"
-librabbitmq = "*"
+django = "*"
+django-hosts = "*"
 
 [dev-packages]
 "flake8" = "*"
@@ -29,15 +14,10 @@ librabbitmq = "*"
 "flake8-import-order" = "*"
 "flake8-tidy-imports" = "*"
 "flake8-string-format" = "*"
-requests = "*"
-flask-testing = "*"
-pytest = "*"
-pytest-cov = "*"
-python-coveralls = "*"
 libsass = "*"
 
 [requires]
-python_version = "3.6"
+python_version = "3.7"
 
 [scripts]
 build = "docker build -t pythondiscord/site:latest -f docker/Dockerfile ."
@@ -45,11 +25,11 @@ buildci = "docker build -t pythondiscord/site-ci:latest -f docker/ci.Dockerfile 
 buildbase = "docker build -t pythondiscord/site-base:latest -f docker/Dockerfile.base ."
 
 buildjs = "gulp"
-buildscss = "python scss.py scss/pysite:scss/pysite/style.scss:static/css/style.css scss/uikit:scss/uikit/uikit_blurple.scss:static/css/uikit_blurple.css"
+#buildscss = "python scss.py scss/pysite:scss/pysite/style.scss:static/css/style.css scss/uikit:scss/uikit/uikit_blurple.scss:static/css/uikit_blurple.css"
 
 clean = "rm -rf __pycache__ htmlcov .coverage .pytest_cache"
 fixjs = "eslint static/js --fix"
-start = "gunicorn -w 12 -b 0.0.0.0:10012 -c gunicorn_config.py --log-level info -k geventwebsocket.gunicorn.workers.GeventWebSocketWorker app:app"
+#start = "gunicorn -w 12 -b 0.0.0.0:10012 -c gunicorn_config.py --log-level info -k geventwebsocket.gunicorn.workers.GeventWebSocketWorker app:app"
 
 lint = "python -m flake8"
 lintjs = "eslint js/src"
@@ -59,5 +39,6 @@ push = "docker push pythondiscord/site:latest"
 pushbase = "docker push pythondiscord/site-base:latest"
 pushci = "docker push pythondiscord/site-ci:latest"
 
-rundev = "python app.py"
-test = "py.test tests --cov pysite --cov-report term-missing -v"
+#rundev = "python app.py"
+#test = "py.test tests --cov pysite --cov-report term-missing -v"
+
