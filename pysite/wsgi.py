@@ -1,5 +1,5 @@
 """
-WSGI config for pydis_django project.
+WSGI config for pysite project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'pydis_django.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'pysite.settings')
 
 application = get_wsgi_application()

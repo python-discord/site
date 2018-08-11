@@ -2,7 +2,7 @@ from django.conf import settings
 from django_hosts import host, patterns
 
 host_patterns = patterns(
-    "pydis_django.urls",
+    "pysite.urls",
 
     # > | Subdomain | URL Module   | Host entry name |
     host(r"admin",    "admin",  name="admin"),
