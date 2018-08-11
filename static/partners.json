@@ -4,16 +4,6 @@
     "description": "Functional Programming is a server for discussing functional languages like Haskell, Idris, Elixir and Lisp as well as related academic fields such as type theory, category theory, proof assistants, and more!",
     "invite": "https://discord.gg/kWJYurV"
   },
-  "Code Monkeys": {
-    "banner": "/static/images/partners/code monkeys.png",
-    "description": "We at Code Monkeys are dedicated to provide a friendly environment for programmers and tech enthusiasts alike. The community here is dedicated to giving and receiving great help and advice for a variety of programming languages. Help us build a large and friendly community at Code Monkeys by joining today!",
-    "invite": "https://discord.gg/vywQPxd"
-  },
-  "Programming": {
-    "banner": "/static/images/partners/programming.png",
-    "description": "Programming was created in 2016, and is an active community around various programming languages, operating systems, as well as hardware, security, and low-level programming.",
-    "invite": "https://discord.gg/010z0Kw1A9ql5c1Qe"
-  },
   "STEM": {
     "banner": "/static/images/partners/stem.png",
     "description": "STEM is a growing server dedicated to discussion and education pertaining to subjects within the fields of Science, Technology, Engineering, and Mathematics. We aim to provide our members with an engaged, skilled, friendly community. We hope to see you soon!",
