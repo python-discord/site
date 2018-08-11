@@ -8,17 +8,17 @@ from pysite.mixins import DBMixin, OAuthMixin
 log = logging.getLogger(__name__)
 
 
-class CleanLogView(RouteView, DBMixin, OAuthMixin):
-    path = "/bot/clean_logs/<log_id>"
-    name = "bot.clean_logs"
+class LogView(RouteView, DBMixin, OAuthMixin):
+    path = "/bot/logs/<log_id>"
+    name = "bot.logs"
 
-    table_name = "clean_logs"
-    template = "main/bot/clean_logs.html"
+    table_name = "bot_logs"
+    template = "main/bot/logs.html"
 
     @require_roles(ALL_STAFF_ROLES)
     def get(self, log_id):
         """
-        Get the requested clean log and spit it out
+        Get the requested  log and spit it out
         in a beautiful template.
         """
 

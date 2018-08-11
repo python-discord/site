@@ -21,10 +21,10 @@ POST_SCHEMA = Schema({
 })
 
 
-class CleanView(APIView, DBMixin):
-    path = '/bot/clean'
-    name = 'bot.clean'
-    table_name = 'clean_logs'
+class LogAPIView(APIView, DBMixin):
+    path = '/bot/logs'
+    name = 'bot.logs_api'
+    table_name = 'bot_logs'
 
     @api_key
     @api_params(schema=POST_SCHEMA, validation_type=ValidationTypes.json)

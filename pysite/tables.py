@@ -16,7 +16,7 @@ TABLES = {
         ])
     ),
 
-    "clean_logs": Table(  # Logs of cleanups done by the clean bot commands
+    "bot_logs": Table(  # Logs uploaded via the logs API endpoint
         primary_key="id",
         keys=sorted([
             "id",
