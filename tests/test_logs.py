@@ -18,7 +18,7 @@ class TestCleanLogAPI(SiteTest):
         })
 
         response = self.client.post(
-            '/bot/clean',
+            '/bot/logs',
             app.config['API_SUBDOMAIN'],
             headers=app.config['TEST_HEADER'],
             data=bad_data
@@ -41,7 +41,7 @@ class TestCleanLogAPI(SiteTest):
         })
 
         response = self.client.post(
-            '/bot/clean',
+            '/bot/logs',
             app.config['API_SUBDOMAIN'],
             headers=app.config['TEST_HEADER'],
             data=good_data
@@ -67,7 +67,7 @@ class TestCleanLogFrontEnd(SiteTest):
 
     def test_clean_log_frontend_returns_302(self):
         response = self.client.get(
-            f'/bot/clean_logs/1',
+            f'/bot/logs/1',
             'http://pytest.local'
         )
 
