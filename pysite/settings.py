@@ -35,7 +35,7 @@ if DEBUG:
 else:
     SECRET_KEY = env('SECRET_KEY')
 
-ALLOWED_HOSTS = ["pythondiscord.com"]
+ALLOWED_HOSTS = ['pythondiscord.com']
 
 
 # Application definition
@@ -64,19 +64,19 @@ MIDDLEWARE = [
 
     "django_hosts.middleware.HostsResponseMiddleware",
 ]
-ROOT_URLCONF = "pysite.urls.main"
+ROOT_URLCONF = 'pysite.urls.main'
 
 TEMPLATES = [
     {
-        "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [os.path.join(BASE_DIR, "pysite", "templates")],
-        "APP_DIRS": True,
-        "OPTIONS": {
-            "builtins": [
+        'BACKEND': "django.template.backends.django.DjangoTemplates",
+        'DIRS': [os.path.join(BASE_DIR, 'pysite', 'templates')],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'builtins': [
                 "django_hosts.templatetags.hosts_override",
             ],
 
-            "context_processors": [
+            'context_processors': [
                 "django.template.context_processors.debug",
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
@@ -86,14 +86,14 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "pysite.wsgi.application"
+WSGI_APPLICATION = 'pysite.wsgi.application'
 
 
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
 DATABASES = {
-    "default": env.db()
+    'default': env.db()
 }
 
 
@@ -102,16 +102,16 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
+        'NAME': "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
     {
-        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
+        'NAME': "django.contrib.auth.password_validation.MinimumLengthValidator",
     },
     {
-        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
+        'NAME': "django.contrib.auth.password_validation.CommonPasswordValidator",
     },
     {
-        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
+        'NAME': "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
 
@@ -119,9 +119,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
 
-LANGUAGE_CODE = "en-us"
+LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = "UTC"
+TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
@@ -133,14 +133,14 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
-STATIC_URL = "/static/"
+STATIC_URL = '/static/'
 
 # django-hosts
 # https://django-hosts.readthedocs.io/en/latest/
-ROOT_HOSTCONF = "pysite.hosts"
-DEFAULT_HOST = 'main'
+ROOT_HOSTCONF = 'pysite.hosts'
+DEFAULT_HOST = 'home'
 
 if DEBUG:
-    PARENT_HOST = "pythondiscord.local:8000"
+    PARENT_HOST = 'pythondiscord.local:8000'
 else:
-    PARENT_HOST = "pythondiscord.com"
+    PARENT_HOST = 'pythondiscord.com'
