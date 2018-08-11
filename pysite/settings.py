@@ -12,15 +12,28 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 
 import os
 
+import environ
+
+
+env = environ.Env(
+    DEBUG=(bool, False)
+)
+
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+
+DEBUG = env('DEBUG')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv("SECRET_KEY", "+_x00w3e94##2-qm-v(5&-x_@*l3t9zlir1etu+7$@4%!it2##")
+if DEBUG:
+    SECRET_KEY = "+_x00w3e94##2-qm-v(5&-x_@*l3t9zlir1etu+7$@4%!it2##"
+else:
+    SECRET_KEY = env('SECRET_KEY')
 
 ALLOWED_HOSTS = ["pythondiscord.com"]
 
@@ -80,10 +93,7 @@ WSGI_APPLICATION = "pysite.wsgi.application"
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
-    }
+    "default": env.db()
 }
 
 
@@ -125,15 +135,12 @@ USE_TZ = True
 
 STATIC_URL = "/static/"
 
-# Custom settings
-
-DEBUG = False
-DEFAULT_HOST = "main"
-PARENT_HOST = "pythondiscord.com"
-
-if os.getenv("DEBUG") is not None:  # Debug mode
-    ALLOWED_HOSTS = ["pythondiscord.local"]
-    DEBUG = True
-    PARENT_HOST = "pythondiscord.local:8000"
-
+# django-hosts
+# https://django-hosts.readthedocs.io/en/latest/
 ROOT_HOSTCONF = "pysite.hosts"
+DEFAULT_HOST = 'main'
+
+if DEBUG:
+    PARENT_HOST = "pythondiscord.local:8000"
+else:
+    PARENT_HOST = "pythondiscord.com"
