@@ -31,16 +31,18 @@ DEBUG = env('DEBUG')
 
 # SECURITY WARNING: keep the secret key used in production secret!
 if DEBUG:
+    ALLOWED_HOSTS = ['pythondiscord.local']
     SECRET_KEY = "+_x00w3e94##2-qm-v(5&-x_@*l3t9zlir1etu+7$@4%!it2##"
 else:
+    ALLOWED_HOSTS = ['pythondiscord.com']
     SECRET_KEY = env('SECRET_KEY')
-
-ALLOWED_HOSTS = ['pythondiscord.com']
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    "home",
+
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -64,7 +66,7 @@ MIDDLEWARE = [
 
     "django_hosts.middleware.HostsResponseMiddleware",
 ]
-ROOT_URLCONF = 'pysite.urls.main'
+ROOT_URLCONF = 'pysite.urls'
 
 TEMPLATES = [
     {
@@ -134,6 +136,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'pysite', 'static')]
 
 # django-hosts
 # https://django-hosts.readthedocs.io/en/latest/
