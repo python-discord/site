@@ -31,10 +31,22 @@ DEBUG = env('DEBUG')
 
 # SECURITY WARNING: keep the secret key used in production secret!
 if DEBUG:
-    ALLOWED_HOSTS = ['pythondiscord.local']
+    ALLOWED_HOSTS = [
+        'pythondiscord.local',
+        'admin.pythondiscord.local',
+        'api.pythondiscord.local',
+        'staff.pythondiscord.local',
+        'wiki.pythondiscord.local'
+    ]
     SECRET_KEY = "+_x00w3e94##2-qm-v(5&-x_@*l3t9zlir1etu+7$@4%!it2##"
 else:
-    ALLOWED_HOSTS = ['pythondiscord.com']
+    ALLOWED_HOSTS = [
+        'pythondiscord.com',
+        'admin.pythondiscord.com',
+        'api.pythondiscord.com',
+        'staff.pythondiscord.local',
+        'wiki.pythondiscord.local'
+    ]
     SECRET_KEY = env('SECRET_KEY')
 
 
