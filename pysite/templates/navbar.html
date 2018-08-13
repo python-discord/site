@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+  <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+{% endblock %}
+{% block body %}
+  <nav class="navbar is-dark" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+      <img src="{% static 'assets/logo-banner.svg' %}" class="navbar-brand navbar-icon" alt="Python Discord">
+    </div>
+  </nav>
+  {{ block.super }}
+{% endblock %}
+
+<!-- vim: set ft=htmldjango: -->
