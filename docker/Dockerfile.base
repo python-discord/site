@@ -8,6 +8,7 @@ RUN apk add --update cmake
 RUN apk add --update autoconf
 RUN apk add --update automake
 RUN apk add --update libtool
+RUN apk add --update postgresql-client postgresql postgresql-dev libffi libffi-dev libxml2 libxml2-dev
 
 ENV PIPENV_VENV_IN_PROJECT=1
 ENV PIPENV_IGNORE_VIRTUALENVS=1
