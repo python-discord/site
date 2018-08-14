@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "8abe5b868e4f260356132c8cc56dc52bd748a06de24ed040583d45a8b8de86f4"
+            "sha256": "8fee16876d03bf40515412046685b94bab4153c6e691e3837908cec81fa29689"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -39,6 +39,14 @@
             ],
             "index": "pypi",
             "version": "==3.0"
+        },
+        "djangorestframework": {
+            "hashes": [
+                "sha256:b6714c3e4b0f8d524f193c91ecf5f5450092c2145439ac2769711f7eba89a9d9",
+                "sha256:c375e4f95a3a64fccac412e36fb42ba36881e52313ec021ef410b40f67cddca4"
+            ],
+            "index": "pypi",
+            "version": "==3.8.2"
         },
         "psycopg2-binary": {
             "hashes": [
@@ -117,11 +125,11 @@
         },
         "flake8-bugbear": {
             "hashes": [
-                "sha256:541746f0f3b2f1a8d7278e1d2d218df298996b60b02677708560db7c7e620e3b",
-                "sha256:5f14a99d458e29cb92be9079c970030e0dd398b2decb179d76d39a5266ea1578"
+                "sha256:07b6e769d7f4e168d590f7088eae40f6ddd9fa4952bed31602def65842682c83",
+                "sha256:0ccf56975f4db1d69dc1cf3598c99d768ebf95d0cad27d76087954aa399b515a"
             ],
             "index": "pypi",
-            "version": "==18.2.0"
+            "version": "==18.8.0"
         },
         "flake8-import-order": {
             "hashes": [
