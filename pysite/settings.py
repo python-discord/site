@@ -159,3 +159,14 @@ if DEBUG:
     PARENT_HOST = 'pythondiscord.local:8000'
 else:
     PARENT_HOST = 'pythondiscord.com'
+
+# Django REST framework
+# http://www.django-rest-framework.org
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'pysite.permissions.HasValidAPIKey'
+    ]
+}
+
+# Bot API settings
+BOT_API_KEY = env('BOT_API_KEY')
