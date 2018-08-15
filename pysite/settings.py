@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
+import sys
 
 import environ
 
@@ -64,6 +65,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'django_hosts',
+    'rest_framework',
+    'rest_framework.authtoken'
 ]
 
 MIDDLEWARE = [
@@ -164,9 +167,10 @@ else:
 # Django REST framework
 # http://www.django-rest-framework.org
 REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': [
-        'pysite.permissions.HasValidAPIKey'
-    ]
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication'
+    ],
+    'TEST_REQUEST_DEFAULT_FORMAT': 'json'
 }
 
 # Bot API settings
