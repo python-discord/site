@@ -167,9 +167,12 @@ else:
 # Django REST framework
 # http://www.django-rest-framework.org
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.TokenAuthentication'
-    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.DjangoModelPermissions',
+    ),
     'TEST_REQUEST_DEFAULT_FORMAT': 'json'
 }
 
