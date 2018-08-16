@@ -3,15 +3,25 @@ from rest_framework.authtoken.models import Token
 from rest_framework.test import APIClient, APITestCase
 
 
-test_user = User.objects.get(username='test')
-if test_user is None:
-    test_user = User.objects.create_user('test', 'test@example.com', 'testpass')
+test_user, _created = User.objects.get_or_create(
+    username='test',
+    email='test@example.com',
+    password='testpass',
+    is_superuser=True,
+    is_staff=True
+)
 
 
 class APISubdomainTestCase(APITestCase):
     """
     Configures the test client to use the proper subdomain
     for requests and forces authentication for the test user.
+
+    The test user is considered staff and superuser.
+    If you want to test for a custom user (for example, to test model permissions),
+    create the user, assign the relevant permissions, and use
+    `self.client.force_authenticate(user=created_user)` to force authentication
+    through the created user.
 
     Using this performs the following niceties for you which ease writing tests:
     - setting the `HTTP_HOST` request header to `api.pythondiscord.local:8000`, and
