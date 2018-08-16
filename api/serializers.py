@@ -6,3 +6,4 @@ from .models import SnakeName
 class SnakeNameSerializer(ModelSerializer):
     class Meta:
         model = SnakeName
+        fields = ('name', 'scientific')
