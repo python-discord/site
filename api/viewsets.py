@@ -1,4 +1,4 @@
-from rest_framework.mixins import ListModelMixin, RetrieveModelMixin
+from rest_framework.mixins import CreateModelMixin, DestroyModelMixin, ListModelMixin, RetrieveModelMixin
 from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet, ViewSet
 
@@ -6,14 +6,15 @@ from .models import DocumentationLink, SnakeName
 from .serializers import DocumentationLinkSerializer, SnakeNameSerializer
 
 
-class DocumentationLinkViewSet(ListModelMixin, RetrieveModelMixin, GenericViewSet):
+class DocumentationLinkViewSet(CreateModelMixin, DestroyModelMixin, ListModelMixin, RetrieveModelMixin, GenericViewSet):
     """
-    View providing documentation links used in the bot's `Doc` cog.
+    View providing management of documentation links used in the bot's `Doc` cog.
 
     ## Routes
     ### GET /bot/documentation-links
-    Return all documentation links in the database in the following format:
+    Retrieve all currently stored entries from the database.
 
+    #### Response format
     >>> [
     ...     {
     ...         'package': 'flask',
@@ -23,17 +24,43 @@ class DocumentationLinkViewSet(ListModelMixin, RetrieveModelMixin, GenericViewSe
     ...     # ...
     ... ]
 
+    #### Status codes
+    - 200: returned on success
+
     ### GET /bot/documentation-links/<package:str>
     Look up the documentation object for the given `package`.
-    If an entry exists, return data in the following format:
 
+    #### Response format
     >>> {
     ...     'package': 'flask',
     ...     'base_url': 'https://flask.pocoo.org/docs/dev',
     ...     'inventory_url': 'https://flask.pocoo.org/docs/objects.inv'
     ... }
 
-    Otherwise, if no entry for the given `package` exists, returns 404.
+    #### Status codes
+    - 200: returned on success
+    - 404: if no entry for the given `package` exists
+
+    ### POST /bot/documentation-links
+    Create a new documentation link object.
+
+    #### Body schema
+    >>> {
+    ...     'package': str,
+    ...     'base_url': URL,
+    ...     'inventory_url': URL
+    ... }
+
+    #### Status codes
+    - 201: returned on success
+    - 400: if the request body has invalid fields, see the response for details
+
+    ### DELETE /bot/documentation-links/<package:str>
+    Delete the entry for the given `package`.
+
+    #### Status codes
+    - 204: returned on success
+    - 404: if the given `package` could not be found
     """
 
     queryset = DocumentationLink.objects.all()
@@ -47,22 +74,28 @@ class SnakeNameViewSet(ViewSet):
 
     ## Routes
     ### GET /bot/snake-names
-    By default, return a single random snake name as JSON in the following format:
+    By default, return a single random snake name along with its name and scientific name.
+    If the `get_all` query parameter is given, for example using...
+        $ curl api.pythondiscord.local:8000/bot/snake-names?get_all=yes
+    ...then the API will return all snake names and scientific names in the database.
 
+    #### Response format
+    Without `get_all` query parameter:
     >>> {
     ...     'name': "Python",
     ...     'scientific': "Langus greatus"
     ... }
 
-    If the `get_all` query parameter is given, for example using...
-        $ curl api.pythondiscord.local:8000/bot/snake-names?get_all=yes
-    ...then the API will return all snake names and scientific names in the database,
-    for example:
+    If the database is empty for whatever reason, this will return an empty dictionary.
 
+    With `get_all` query parameter:
     >>> [
     ...     {'name': "Python 3", 'scientific': "Langus greatus"},
     ...     {'name': "Python 2", 'scientific': "Langus decentus"}
     ... ]
+
+    #### Status codes
+    - 200: returned on success
 
     ## Authentication
     Requires a API token.
