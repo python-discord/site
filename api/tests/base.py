@@ -22,7 +22,7 @@ class APISubdomainTestCase(APITestCase):
     >>> from api.test.base import APISubdomainTestCase
     >>> class UnauthedUserTestCase(APISubdomainTestCase):
     ...     def setUp(self):
-    ...         super().setUp(self)
+    ...         super().setUp()
     ...         self.client.force_authentication(user=None)
     ...     def test_can_read_objects_at_my_endpoint(self):
     ...         resp = self.client.get('/my-publicly-readable-endpoint')

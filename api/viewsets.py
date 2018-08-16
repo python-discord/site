@@ -11,7 +11,7 @@ class SnakeNameViewSet(ViewSet):
 
     ## Routes
     ### GET /bot/snake-names
-    By default, return a single random snake name in the following format:
+    By default, return a single random snake name as JSON in the following format:
 
     >>> {
     ...     'name': "Python",
@@ -27,6 +27,9 @@ class SnakeNameViewSet(ViewSet):
     ...     {'name': "Python 3", 'scientific': "Langus greatus"},
     ...     {'name': "Python 2", 'scientific': "Langus decentus"}
     ... ]
+
+    ## Authentication
+    Requires a API token.
     """
 
     serializer_class = SnakeNameSerializer
