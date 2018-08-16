@@ -37,7 +37,8 @@ test:
   - docker
 
   stage: test
-#  services:
+  services:
+    - name: postgres
 #    - name: rabbitmq:3.7.5-alpine
 #      alias: rabbit
 #
