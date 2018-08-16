@@ -1,6 +1,7 @@
 from django.urls import include, path
 from rest_framework.routers import SimpleRouter
 
+from .views import HealthcheckView
 from .viewsets import SnakeNameViewSet
 
 
@@ -15,4 +16,5 @@ urlpatterns = (
     # from django_hosts.resolvers import reverse
     # snake_name_endpoint = reverse('bot:snakename-list', host='api')  # `bot/` endpoints
     path('bot/', include((bot_router.urls, 'api'), namespace='bot')),
+    path('healthcheck', HealthcheckView.as_view(), name='healthcheck')
 )
