@@ -1,13 +1,49 @@
+from rest_framework.mixins import ListModelMixin, RetrieveModelMixin
 from rest_framework.response import Response
-from rest_framework.viewsets import ViewSet
+from rest_framework.viewsets import GenericViewSet, ViewSet
 
-from .models import SnakeName
-from .serializers import SnakeNameSerializer
+from .models import DocumentationLink, SnakeName
+from .serializers import DocumentationLinkSerializer, SnakeNameSerializer
+
+
+class DocumentationLinkViewSet(ListModelMixin, RetrieveModelMixin, GenericViewSet):
+    """
+    View providing documentation links used in the bot's `Doc` cog.
+
+    ## Routes
+    ### GET /bot/documentation-links
+    Return all documentation links in the database in the following format:
+
+    >>> [
+    ...     {
+    ...         'package': 'flask',
+    ...         'base_url': 'https://flask.pocoo.org/docs/dev',
+    ...         'inventory_url': 'https://flask.pocoo.org/docs/objects.inv'
+    ...     },
+    ...     # ...
+    ... ]
+
+    ### GET /bot/documentation-links/<package:str>
+    Look up the documentation object for the given `package`.
+    If an entry exists, return data in the following format:
+
+    >>> {
+    ...     'package': 'flask',
+    ...     'base_url': 'https://flask.pocoo.org/docs/dev',
+    ...     'inventory_url': 'https://flask.pocoo.org/docs/objects.inv'
+    ... }
+
+    Otherwise, if no entry for the given `package` exists, returns 404.
+    """
+
+    queryset = DocumentationLink.objects.all()
+    serializer_class = DocumentationLinkSerializer
+    lookup_field = 'package'
 
 
 class SnakeNameViewSet(ViewSet):
     """
-    View of snake names for the bot's snake cog from our first code jam's winners.
+    View providing snake names for the bot's snake cog from our first code jam's winners.
 
     ## Routes
     ### GET /bot/snake-names
