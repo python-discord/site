@@ -61,12 +61,12 @@ class UserView(APIView, DBMixin):
 
         user_ids = [user["user_id"] for user in data]
 
-        all_users = self.db.run(self.db.query(self.table_name), coerce=list)
-
-        for user in all_users:
-            if user["user_id"] not in user_ids:
-                self.db.delete(self.table_name, user["user_id"], durability="soft")
-                deletions += 1
+        # all_users = self.db.run(self.db.query(self.table_name), coerce=list)
+        #
+        # for user in all_users:
+        #     if user["user_id"] not in user_ids:
+        #         self.db.delete(self.table_name, user["user_id"], durability="soft")
+        #         deletions += 1
 
         all_oauth_data = self.db.run(self.db.query(self.oauth_table_name), coerce=list)
 
