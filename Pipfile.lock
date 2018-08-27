@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "8fee16876d03bf40515412046685b94bab4153c6e691e3837908cec81fa29689"
+            "sha256": "778f93720794c8cea0740eee96a5069e38ae2825830578964227c8ef085d8c8b"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -175,28 +175,6 @@
                 "sha256:8237dc5bfd6f1366abeee5624111b9d6879393d84745a507de0fda86043b65a8"
             ],
             "version": "==2.1.11"
-        },
-        "libsass": {
-            "hashes": [
-                "sha256:0f2e421d3e5a53833243e0a5f2cf7ebe9812725a7f27a797c38f3c7190ce2a82",
-                "sha256:1b74aff85f1560d629a070552ec67f9f0ff9a47446ffafddafad9944f7589ae1",
-                "sha256:1cf80c04a77d36fd77f00b1ae0a269eee780d971fabd9d493b15d30de9857ae5",
-                "sha256:1d55dfe8e91a15a7d72d7f8aca16e74da36899e70d911af66d7184f1c82e2b39",
-                "sha256:23755425149fe0f576fd0ab7bcd151fe09400b2d980fe176c28f6c19e053c830",
-                "sha256:4a434d5b713b97c4141fb71c59341d4ebff8669114b14c626af51e145a48710e",
-                "sha256:4dcd5b546bed977276f97eb7a2a13cb7cbf0a38d672e7b5525b7587c8cabcf27",
-                "sha256:62771c8ead9227579891814dd714be645243741aa23e5cb232ac0c245cf29a37",
-                "sha256:727fb84326ffa930bc09fad8b706e77ada4d13b3adf35cce134962a434d7eccb",
-                "sha256:7b9e7179b5f4fc32bc716f86e9ccaeb48ab90e7eb6648b339440346733af8828",
-                "sha256:a0ffca466b35fb57f2afe1f1c5fd39b4c51a4107596d28ef8c0d3bb0962244b5",
-                "sha256:bb9735066391189b3c0383254d20d59aaafb438d632d7de551c264f16486e773",
-                "sha256:cbd5ee83d3603a2b2c2937d8f06acc07b30fd22642ea2460c966d4fd6217f1d0",
-                "sha256:de1eae502764b3dde294d6652a0046489cf31008de190c4dd8d05e7f4b5e0d71",
-                "sha256:e00b6c6d75a6e912990cbc23d48ddfdbfefc3e400c20be6593988839292248c5",
-                "sha256:ed8beef197efc6e6ab0ad03cea0885b31cc11f226290783649b4dafe1fb2ea27"
-            ],
-            "index": "pypi",
-            "version": "==0.14.5"
         },
         "mccabe": {
             "hashes": [
