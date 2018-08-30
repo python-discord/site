@@ -2,6 +2,7 @@ stages:
     - build
     - lint
     - test
+    - deploy
 
 build base image:
     image: docker:stable-git
@@ -26,11 +27,36 @@ test:
     stage: test
     services:
         - postgres:10-alpine
-    script:
+    before_script:
         - python manage.py migrate
-        - python manage.py test
+        - pip install coverage
+    script:
+        - coverage run --source=api,home,pysite,wiki --branch manage.py test
+    after_script:
+        - coverage report
+    artifacts:
+        paths:
+            - .coverage
     variables:
         DATABASE_URL: postgres://django:supersecret@postgres/pysite
         POSTGRES_DB: pysite
         POSTGRES_PASSWORD: supersecret
         POSTGRES_USER: django
+
+pages:
+    stage: deploy
+    image: 
+    dependencies:
+        - test
+    before_script:
+        - pip install coverage
+    script:
+        - coverage html --directory=public
+    artifacts:
+        paths:
+            - public
+        expire_in: 30 days
+    only:
+        - master
+        - django
+        - django+add-gitlab-ci

@@ -17,6 +17,7 @@ djangorestframework = "*"
 "flake8-import-order" = "*"
 "flake8-tidy-imports" = "*"
 "flake8-string-format" = "*"
+coverage = "*"
 
 [requires]
 python_version = "3.7"
