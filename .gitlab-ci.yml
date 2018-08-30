@@ -13,7 +13,6 @@ build base image:
     only:
         - master
         - django
-        - django+add-gitlab-ci
 
 lint:
     image: registry.gitlab.com/python-discord/projects/site/django-base:latest
