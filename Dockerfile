@@ -1,1 +1,1 @@
-FROM pythondiscord/django-site-ci:latest
+FROM registry.gitlab.com/python-discord/projects/site/django-base:latest

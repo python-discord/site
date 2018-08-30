@@ -1,5 +1,11 @@
+stages:
+    - build
+    - lint
+    - test
+
 build base image:
     image: docker:stable-git
+    stage: build
     script:
         - sh scripts/deploy-ci.sh
     tags:
@@ -10,7 +16,21 @@ build base image:
         - django+add-gitlab-ci
 
 lint:
-    image: pythondiscord/django-site-ci:latest
+    image: registry.gitlab.com/python-discord/projects/site/django-base:latest
+    stage: lint
     script:
-        - pipenv install --system --dev
+        - pipenv install --dev --system
         - flake8
+
+test:
+    image: registry.gitlab.com/python-discord/projects/site/django-base:latest
+    stage: test
+    services:
+        - postgres:10-alpine
+    script:
+        - pipenv run manage.py test
+    variables:
+        DATABASE_URL: postgres://django:supersecret@postgres/pysite
+        POSTGRES_DB: pysite
+        POSTGRES_PASSWORD: supersecret
+        POSTGRES_USER: django
