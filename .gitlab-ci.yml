@@ -28,7 +28,7 @@ test:
     services:
         - postgres:10-alpine
     script:
-        - pipenv run manage.py test
+        - python manage.py test
     variables:
         DATABASE_URL: postgres://django:supersecret@postgres/pysite
         POSTGRES_DB: pysite
