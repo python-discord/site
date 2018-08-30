@@ -1,10 +1,13 @@
-build:
-    image: docker
-    tags: docker
+build base image:
+    image: docker:stable-git
+    script:
+        - sh scripts/deploy-ci.sh
+    tags:
+        - docker
     only:
         - master
-    script:
-        - scripts/deploy-ci.sh
+        - django
+        - django+add-gitlab-ci
 
 lint:
     image: pythondiscord/django-site-ci:latest
