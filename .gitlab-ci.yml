@@ -28,6 +28,7 @@ test:
     services:
         - postgres:10-alpine
     script:
+        - python manage.py migrate
         - python manage.py test
     variables:
         DATABASE_URL: postgres://django:supersecret@postgres/pysite
