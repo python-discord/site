@@ -6,7 +6,6 @@
 - `psql -c 'CREATE DATABASE pysite OWNER pysite;'`
 - `echo 'DEBUG=1' >> .env`
 - `echo 'DATABASE_URL=postgres://pysite:@localhost/pysite' >> .env`
-- `echo 'BOT_API_KEY=123456' >> .env`
 - `pipenv shell`
 - `python manage.py migrate`
 - `python manage.py runserver`

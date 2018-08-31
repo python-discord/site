@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
-import sys
+# import sys
 
 import environ
 
@@ -40,6 +40,11 @@ if DEBUG:
         'wiki.pythondiscord.local'
     ]
     SECRET_KEY = "+_x00w3e94##2-qm-v(5&-x_@*l3t9zlir1etu+7$@4%!it2##"
+
+elif 'CI' in os.environ:
+    ALLOWED_HOSTS = ['*']
+    SECRET_KEY = "{©ø¬½.Þ7&Ñ`Q^Kº*~¢j<wxß¾±ðÛJ@q"
+
 else:
     ALLOWED_HOSTS = [
         'pythondiscord.com',
@@ -175,6 +180,3 @@ REST_FRAMEWORK = {
     ),
     'TEST_REQUEST_DEFAULT_FORMAT': 'json'
 }
-
-# Bot API settings
-BOT_API_KEY = env('BOT_API_KEY')
