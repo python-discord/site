@@ -1,6 +1,7 @@
-from rest_framework.serializers import ModelSerializer
+from rest_framework.serializers import ModelSerializer, PrimaryKeyRelatedField
+from rest_framework_bulk import BulkSerializerMixin
 
-from .models import DocumentationLink, OffTopicChannelName, SnakeName
+from .models import DocumentationLink, Member, OffTopicChannelName, Role, SnakeName
 
 
 class DocumentationLinkSerializer(ModelSerializer):
@@ -22,3 +23,18 @@ class SnakeNameSerializer(ModelSerializer):
     class Meta:
         model = SnakeName
         fields = ('name', 'scientific')
+
+
+class RoleSerializer(ModelSerializer):
+    class Meta:
+        model = Role
+        fields = ('id', 'name', 'colour', 'permissions')
+
+
+class MemberSerializer(BulkSerializerMixin, ModelSerializer):
+    roles = PrimaryKeyRelatedField(many=True, queryset=Role.objects.all())
+
+    class Meta:
+        model = Member
+        fields = ('id', 'avatar_hash', 'name', 'discriminator', 'roles')
+        depth = 1
