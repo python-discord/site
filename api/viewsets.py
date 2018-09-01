@@ -1,3 +1,4 @@
+from django.shortcuts import get_object_or_404
 from rest_framework.exceptions import ParseError
 from rest_framework.mixins import CreateModelMixin, DestroyModelMixin, ListModelMixin, RetrieveModelMixin
 from rest_framework.response import Response
@@ -70,7 +71,7 @@ class DocumentationLinkViewSet(CreateModelMixin, DestroyModelMixin, ListModelMix
     lookup_field = 'package'
 
 
-class OffTopicChannelNameViewSet(ViewSet):
+class OffTopicChannelNameViewSet(DestroyModelMixin, ViewSet):
     """
     View of off-topic channel names used by the bot
     to rotate our off-topic names on a daily basis.
@@ -102,11 +103,29 @@ class OffTopicChannelNameViewSet(ViewSet):
     - 201: returned on success
     - 400: if the request body has invalid fields, see the response for details
 
+    ### DELETE /bot/off-topic-channel-names/<name:str>
+    Delete the off-topic-channel name with the given `name`.
+
+    #### Status codes
+    - 204: returned on success
+    - 404: returned when the given `name` was not found
+
     ## Authentication
     Requires a API token.
     """
 
+    lookup_field = 'name'
     serializer_class = OffTopicChannelNameSerializer
+
+    def get_object(self):
+        queryset = self.get_queryset()
+        if self.lookup_field not in self.kwargs:
+            raise ParseError(detail={
+                'name': ["This query parameter is required."]
+            })
+
+        name = self.kwargs[self.lookup_field]
+        return get_object_or_404(queryset, name=name)
 
     def get_queryset(self):
         return OffTopicChannelName.objects.all()

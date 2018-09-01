@@ -112,3 +112,32 @@ class CreationTests(APISubdomainTestCase):
             self.assertEqual(response.json(), {
                 'name': ["Enter a valid value."]
             })
+
+
+class DeletionTests(APISubdomainTestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.test_name = OffTopicChannelName.objects.create(name='lemons-lemonade-stand')
+        cls.test_name_2 = OffTopicChannelName.objects.create(name='bbq-with-bisk')
+
+    def test_deleting_unknown_name_returns_404(self):
+        url = reverse('bot:offtopicchannelname-detail', args=('unknown-name',), host='api')
+        response = self.client.delete(url)
+
+        self.assertEqual(response.status_code, 404)
+
+    def test_deleting_known_name_returns_204(self):
+        url = reverse('bot:offtopicchannelname-detail', args=(self.test_name.name,), host='api')
+        response = self.client.delete(url)
+
+        self.assertEqual(response.status_code, 204)
+
+    def test_name_gets_deleted(self):
+        url = reverse('bot:offtopicchannelname-detail', args=(self.test_name_2.name,), host='api')
+        response = self.client.delete(url)
+
+        self.assertEqual(response.status_code, 204)
+
+        url = reverse('bot:offtopicchannelname-list', host='api')
+        response = self.client.get(url)
+        self.assertNotIn(self.test_name_2.name, response.json())
