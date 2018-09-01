@@ -7,7 +7,10 @@ from rest_framework.viewsets import GenericViewSet, ModelViewSet, ViewSet
 from rest_framework_bulk import BulkCreateModelMixin
 
 from .models import DocumentationLink, Member, OffTopicChannelName, SnakeName
-from .serializers import DocumentationLinkSerializer, MemberSerializer, OffTopicChannelNameSerializer, SnakeNameSerializer
+from .serializers import (
+    DocumentationLinkSerializer, MemberSerializer,
+    OffTopicChannelNameSerializer, SnakeNameSerializer
+)
 
 
 class DocumentationLinkViewSet(
