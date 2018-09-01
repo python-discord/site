@@ -36,11 +36,11 @@ class Role(models.Model):
                 message="Role IDs cannot be negative."
             ),
         ),
-        help_text="The role's ID, taken from Discord."
+        help_text="The role ID, taken from Discord."
     )
     name = models.CharField(
         max_length=100,
-        help_text="The role's name, taken from Discord."
+        help_text="The role name, taken from Discord."
     )
     colour = models.IntegerField(
         validators=(
@@ -63,4 +63,44 @@ class Role(models.Model):
             )
         ),
         help_text="The integer value of the permission bitset of this role from Discord."
+    )
+
+
+class Member(models.Model):
+    """A member of our Discord server."""
+
+    id = models.BigIntegerField(
+        primary_key=True,
+        validators=(
+            MinValueValidator(
+                limit_value=0,
+                message="User IDs cannot be negative."
+            ),
+        ),
+        help_text="The ID of this user, taken from Discord."
+    )
+    name = models.CharField(
+        max_length=32,
+        help_text="The username, taken from Discord."
+    )
+    discriminator = models.PositiveSmallIntegerField(
+        validators=(
+            MaxValueValidator(
+                limit_value=9999,
+                message="Discriminators may not exceed `9999`."
+            ),
+        ),
+        help_text="The discriminator of this user, taken from Discord."
+    )
+    avatar_hash = models.CharField(
+        max_length=100,
+        help_text=(
+            "The user's avatar hash, taken from Discord. "
+            "Null if the user does not have any custom avatar."
+        ),
+        null=True
+    )
+    roles = models.ManyToManyField(
+        Role,
+        help_text="Any roles this user has on our server."
     )
