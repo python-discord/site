@@ -46,6 +46,15 @@ class EmptyDatabaseTests(APISubdomainTestCase):
             'random_items': ["Must be a valid integer."]
         })
 
+    def test_returns_400_for_negative_random_items_param(self):
+        url = reverse('bot:offtopicchannelname-list', host='api')
+        response = self.client.get(f'{url}?random_items=-5')
+
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.json(), {
+            'random_items': ["Must be a positive integer."]
+        })
+
 
 class ListTests(APISubdomainTestCase):
     @classmethod

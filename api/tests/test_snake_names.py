@@ -53,8 +53,16 @@ class SnakeNameListTests(APISubdomainTestCase):
             response.json(),
             [
                 {
-                    'name': 'Python',
-                    'scientific': 'Totally.'
+                    'name': self.snake_python.name,
+                    'scientific': self.snake_python.scientific
                 }
             ]
         )
+
+    def test_endpoint_returns_single_snake_without_get_all_param(self):
+        url = reverse('bot:snakename-list', host='api')
+        response = self.client.get(url)
+        self.assertEqual(response.json(), {
+            'name': self.snake_python.name,
+            'scientific': self.snake_python.scientific
+        })
