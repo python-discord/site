@@ -2,7 +2,7 @@ from django.urls import include, path
 from rest_framework.routers import SimpleRouter
 
 from .views import HealthcheckView
-from .viewsets import DocumentationLinkViewSet, OffTopicChannelNameViewSet, MemberViewSet, SnakeNameViewSet
+from .viewsets import DocumentationLinkViewSet, MemberViewSet, OffTopicChannelNameViewSet, SnakeNameViewSet
 
 
 # http://www.django-rest-framework.org/api-guide/routers/#simplerouter

@@ -4,21 +4,21 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-django = "*"
-django-hosts = "*"
-django-environ = "*"
-"psycopg2-binary" = "*"
-djangorestframework = "*"
-djangorestframework-bulk = "*"
+django = "==2.1.1"
+django-hosts = "==3.0"
+django-environ = "==0.4.5"
+"psycopg2-binary" = "==2.7.5"
+djangorestframework = "==3.8.2"
+djangorestframework-bulk = "==0.2.1"
 
 [dev-packages]
-"flake8" = "*"
-"flake8-bugbear" = "*"
-"flake8-bandit" = "*"
-"flake8-import-order" = "*"
-"flake8-tidy-imports" = "*"
-"flake8-string-format" = "*"
-coverage = "*"
+"flake8" = "==3.5.0"
+"flake8-bugbear" = "==18.8.0"
+"flake8-bandit" = "==1.0.2"
+"flake8-import-order" = "==0.18"
+"flake8-tidy-imports" = "==1.1.0"
+"flake8-string-format" = "==0.2.3"
+coverage = "==4.5.1"
 
 [requires]
 python_version = "3.7"

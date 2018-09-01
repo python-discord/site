@@ -6,11 +6,13 @@ from rest_framework.status import HTTP_201_CREATED
 from rest_framework.viewsets import GenericViewSet, ModelViewSet, ViewSet
 from rest_framework_bulk import BulkCreateModelMixin
 
-from .models import DocumentationLink, OffTopicChannelName, Member, SnakeName
-from .serializers import DocumentationLinkSerializer, OffTopicChannelNameSerializer, MemberSerializer, SnakeNameSerializer
+from .models import DocumentationLink, Member, OffTopicChannelName, SnakeName
+from .serializers import DocumentationLinkSerializer, MemberSerializer, OffTopicChannelNameSerializer, SnakeNameSerializer
 
 
-class DocumentationLinkViewSet(CreateModelMixin, DestroyModelMixin, ListModelMixin, RetrieveModelMixin, GenericViewSet):
+class DocumentationLinkViewSet(
+    CreateModelMixin, DestroyModelMixin, ListModelMixin, RetrieveModelMixin, GenericViewSet
+):
     """
     View providing management of documentation links used in the bot's `Doc` cog.
 
