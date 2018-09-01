@@ -3,10 +3,11 @@ from rest_framework.exceptions import ParseError
 from rest_framework.mixins import CreateModelMixin, DestroyModelMixin, ListModelMixin, RetrieveModelMixin
 from rest_framework.response import Response
 from rest_framework.status import HTTP_201_CREATED
-from rest_framework.viewsets import GenericViewSet, ViewSet
+from rest_framework.viewsets import GenericViewSet, ModelViewSet, ViewSet
+from rest_framework_bulk import BulkCreateModelMixin
 
-from .models import DocumentationLink, OffTopicChannelName, SnakeName
-from .serializers import DocumentationLinkSerializer, OffTopicChannelNameSerializer, SnakeNameSerializer
+from .models import DocumentationLink, OffTopicChannelName, Member, SnakeName
+from .serializers import DocumentationLinkSerializer, OffTopicChannelNameSerializer, MemberSerializer, SnakeNameSerializer
 
 
 class DocumentationLinkViewSet(CreateModelMixin, DestroyModelMixin, ListModelMixin, RetrieveModelMixin, GenericViewSet):
@@ -119,11 +120,6 @@ class OffTopicChannelNameViewSet(DestroyModelMixin, ViewSet):
 
     def get_object(self):
         queryset = self.get_queryset()
-        if self.lookup_field not in self.kwargs:
-            raise ParseError(detail={
-                'name': ["This query parameter is required."]
-            })
-
         name = self.kwargs[self.lookup_field]
         return get_object_or_404(queryset, name=name)
 
@@ -219,3 +215,119 @@ class SnakeNameViewSet(ViewSet):
             return Response(body)
 
         return Response({})
+
+
+class MemberViewSet(BulkCreateModelMixin, ModelViewSet):
+    """
+    View providing CRUD operations on our Discord server's members through the bot.
+
+    ## Routes
+    ### GET /bot/members
+    Returns all members currently known.
+
+    #### Response format
+    >>> [
+    ...     {
+    ...         'id': 409107086526644234,
+    ...         'avatar': "3ba3c1acce584c20b1e96fc04bbe80eb",
+    ...         'name': "Python",
+    ...         'discriminator': 4329,
+    ...         'roles': [
+    ...             352427296948486144,
+    ...             270988689419665409,
+    ...             277546923144249364,
+    ...             458226699344019457
+    ...         ]
+    ...     }
+    ... ]
+
+    #### Status codes
+    - 200: returned on success
+
+    ### GET /bot/members/<snowflake:int>
+    Gets a single member by ID.
+
+    #### Response format
+    >>> {
+    ...     'id': 409107086526644234,
+    ...     'avatar': "3ba3c1acce584c20b1e96fc04bbe80eb",
+    ...     'name': "Python",
+    ...     'discriminator': 4329,
+    ...     'roles': [
+    ...         352427296948486144,
+    ...         270988689419665409,
+    ...         277546923144249364,
+    ...         458226699344019457
+    ...     ]
+    ... }
+
+    #### Status codes
+    - 200: returned on success
+    - 404: if a member with the given `snowflake` could not be found
+
+    ### POST /bot/members
+    Adds a single or multiple new members.
+    The roles attached to the member(s) must be roles known by the site.
+
+    #### Request body
+    >>> {
+    ...     'id': int,
+    ...     'avatar': str,
+    ...     'name': str,
+    ...     'discriminator': int,
+    ...     'roles': List[int]
+    ... }
+
+    Alternatively, request members can be POSTed as a list of above objects,
+    in which case multiple members will be created at once.
+
+    #### Status codes
+    - 201: returned on success
+    - 400: if one of the given roles does not exist, or one of the given fields is invalid
+
+    ### PUT /bot/members/<snowflake:int>
+    Update the member with the given `snowflake`.
+    All fields in the request body are required.
+
+    #### Request body
+    >>> {
+    ...     'id': int,
+    ...     'avatar': str,
+    ...     'name': str,
+    ...     'discriminator': int,
+    ...     'roles': List[int]
+    ... }
+
+    #### Status codes
+    - 200: returned on success
+    - 400: if the request body was invalid, see response body for details
+    - 404: if the member with the given `snowflake` could not be found
+
+    ### PATCH /bot/members/<snowflake:int>
+    Update the member with the given `snowflake`.
+    All fields in the request body are optional.
+
+    #### Request body
+    >>> {
+    ...     'id': int,
+    ...     'avatar': str,
+    ...     'name': str,
+    ...     'discriminator': int,
+    ...     'roles': List[int]
+    ... }
+
+    #### Status codes
+    - 200: returned on success
+    - 400: if the request body was invalid, see response body for details
+    - 404: if the member with the given `snowflake` could not be found
+
+    ### DELETE /bot/members/<snowflake:int>
+    Deletes the member with the given `snowflake`.
+
+    #### Status codes
+    - 204: returned on success
+    - 404: if a member with the given `snowflake` does not exist
+    """
+
+    serializer_class = MemberSerializer
+    queryset = Member.objects.all()

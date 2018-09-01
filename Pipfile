@@ -9,6 +9,7 @@ django-hosts = "*"
 django-environ = "*"
 "psycopg2-binary" = "*"
 djangorestframework = "*"
+djangorestframework-bulk = "*"
 
 [dev-packages]
 "flake8" = "*"
