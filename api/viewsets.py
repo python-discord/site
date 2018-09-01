@@ -1,9 +1,10 @@
+from rest_framework.exceptions import ParseError
 from rest_framework.mixins import CreateModelMixin, DestroyModelMixin, ListModelMixin, RetrieveModelMixin
 from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet, ViewSet
 
-from .models import DocumentationLink, SnakeName
-from .serializers import DocumentationLinkSerializer, SnakeNameSerializer
+from .models import DocumentationLink, OffTopicChannelName, SnakeName
+from .serializers import DocumentationLinkSerializer, OffTopicChannelNameSerializer, SnakeNameSerializer
 
 
 class DocumentationLinkViewSet(CreateModelMixin, DestroyModelMixin, ListModelMixin, RetrieveModelMixin, GenericViewSet):
@@ -68,6 +69,60 @@ class DocumentationLinkViewSet(CreateModelMixin, DestroyModelMixin, ListModelMix
     lookup_field = 'package'
 
 
+class OffTopicChannelNameViewSet(ViewSet):
+    """
+    View of off-topic channel names used by the bot
+    to rotate our off-topic names on a daily basis.
+
+    ## Routes
+    ### GET /bot/off-topic-channel-names
+    Return all known off-topic channel names from the database.
+    If the `random_items` query parameter is given, for example using...
+        $ curl api.pythondiscord.local:8000/bot/off-topic-channel-names?random_items=5
+    ... then the API will return `5` random items from the database.
+
+    #### Response format
+    Returns a list of off-topic-channel names:
+    >>> [
+    ...     "lemons-lemonade-stand",
+    ...     "bbq-with-bisk"
+    ... ]
+
+    #### Status codes
+    - 200: returned on success
+    - 400: returned when `random_items` is not a positive integer
+
+    ## Authentication
+    Requires a API token.
+    """
+
+    serializer_class = OffTopicChannelNameSerializer
+
+    def get_queryset(self):
+        return OffTopicChannelName.objects.all()
+
+    def list(self, request):
+        if 'random_items' in request.query_params:
+            param = request.query_params['random_items']
+            try:
+                random_count = int(param)
+            except ValueError:
+                raise ParseError(detail={'random_items': "Must be a valid integer."})
+
+            if random_count <= 0:
+                raise ParseError(detail={
+                    'random_items': "Must be a positive integer."
+                })
+
+            queryset = self.get_queryset().order_by('?')[:random_count]
+            serialized = self.serializer_class(queryset, many=True)
+            return Response(serialized.data)
+
+        queryset = self.get_queryset()
+        serialized = self.serializer_class(queryset, many=True)
+        return Response(serialized.data)
+
+
 class SnakeNameViewSet(ViewSet):
     """
     View providing snake names for the bot's snake cog from our first code jam's winners.
@@ -77,7 +132,7 @@ class SnakeNameViewSet(ViewSet):
     By default, return a single random snake name along with its name and scientific name.
     If the `get_all` query parameter is given, for example using...
         $ curl api.pythondiscord.local:8000/bot/snake-names?get_all=yes
-    ...then the API will return all snake names and scientific names in the database.
+    ... then the API will return all snake names and scientific names in the database.
 
     #### Response format
     Without `get_all` query parameter:
