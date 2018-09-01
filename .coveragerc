@@ -1,3 +1,4 @@
 [run]
 omit = */apps.py
        pysite/wsgi.py
+       pysite/settings.py
