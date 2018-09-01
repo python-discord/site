@@ -104,3 +104,30 @@ class Member(models.Model):
         Role,
         help_text="Any roles this user has on our server."
     )
+
+
+class Tag(models.Model):
+    """A tag providing (hopefully) useful content, shown by the bot."""
+
+    author = models.ForeignKey(
+        Member,
+        help_text="The user that originally created this tag.",
+        on_delete=models.CASCADE
+    )
+    title = models.CharField(
+        max_length=256,
+        help_text="The title of this tag, displayed in the Embed.",
+        unique=True
+    )
+    content = models.CharField(
+        max_length=2048,
+        help_text="The content of this tag, displayed in the Embed."
+    )
+    image_url = models.URLField(
+        null=True,
+        help_text="An optional image to display in the tag embed."
+    )
+    thumbnail_url = models.URLField(
+        null=True,
+        help_text="An optional thumbnail to display in the tag embed."
+    )
