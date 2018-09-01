@@ -42,13 +42,16 @@ class EmptyDatabaseTests(APISubdomainTestCase):
         response = self.client.get(f'{url}?random_items=totally-a-valid-integer')
 
         self.assertEqual(response.status_code, 400)
-        self.assertEqual(response.json(), {'random_items': "Must be a valid integer."})
+        self.assertEqual(response.json(), {
+            'random_items': ["Must be a valid integer."]
+        })
 
 
-class ListRouteTests(APISubdomainTestCase):
+class ListTests(APISubdomainTestCase):
     @classmethod
     def setUpTestData(cls):
         cls.test_name = OffTopicChannelName.objects.create(name='lemons-lemonade-stand')
+        cls.test_name_2 = OffTopicChannelName.objects.create(name='bbq-with-bisk')
 
     def test_returns_name_in_list(self):
         url = reverse('bot:offtopicchannelname-list', host='api')
@@ -58,18 +61,54 @@ class ListRouteTests(APISubdomainTestCase):
         self.assertEqual(
             response.json(),
             [
-                self.test_name.name
+                self.test_name.name,
+                self.test_name_2.name
             ]
         )
 
-    def test_returns_name_in_list_with_random_items_param(self):
+    def test_returns_single_item_with_random_items_param_set_to_1(self):
         url = reverse('bot:offtopicchannelname-list', host='api')
         response = self.client.get(f'{url}?random_items=1')
 
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(
-            response.json(),
-            [
-                self.test_name.name
-            ]
+        self.assertEqual(len(response.json()), 1)
+
+
+class CreationTests(APISubdomainTestCase):
+    def setUp(self):
+        super().setUp()
+
+        url = reverse('bot:offtopicchannelname-list', host='api')
+        self.name = "lemonade-shop"
+        response = self.client.post(f'{url}?name={self.name}')
+        self.assertEqual(response.status_code, 201)
+
+    def test_name_in_full_list(self):
+        url = reverse('bot:offtopicchannelname-list', host='api')
+        response = self.client.get(url)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json(), [self.name])
+
+    def test_returns_400_for_missing_name_param(self):
+        url = reverse('bot:offtopicchannelname-list', host='api')
+        response = self.client.post(url)
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.json(), {
+            'name': ["This query parameter is required."]
+        })
+
+    def test_returns_400_for_bad_name_param(self):
+        url = reverse('bot:offtopicchannelname-list', host='api')
+        invalid_names = (
+            'space between words',
+            'UPPERCASE',
+            '$$$$$$$$'
         )
+
+        for name in invalid_names:
+            response = self.client.post(f'{url}?name={name}')
+            self.assertEqual(response.status_code, 400)
+            self.assertEqual(response.json(), {
+                'name': ["Enter a valid value."]
+            })
