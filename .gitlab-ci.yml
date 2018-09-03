@@ -3,6 +3,9 @@ stages:
     - lint
     - test
     - deploy
+    - cleanup
+services:
+    - registry
 
 cache:
     paths:
@@ -11,11 +14,11 @@ cache:
 variables:
     PIPENV_CACHE_DIR: "$CI_PROJECT_DIR/.cache"
 
-build base image:
+build docker image:
     image: docker:stable-git
     stage: build
     script:
-        - sh scripts/deploy-ci.sh
+        - docker build -t registry:5000/django-ci .
     tags:
         - docker
     only:
@@ -23,20 +26,20 @@ build base image:
         - django
 
 lint:
-    image: registry.gitlab.com/python-discord/projects/site/django-base:latest
+    image: registry:5000/django-ci
     stage: lint
     script:
         - pipenv install --dev --system
         - flake8
 
 test:
-    image: registry.gitlab.com/python-discord/projects/site/django-base:latest
+    image: registry:5000/django-ci
     stage: test
     services:
         - postgres:10-alpine
     before_script:
+        - pipenv install --dev --system
         - python manage.py migrate
-        - pip install coverage
     script:
         - coverage run --source=api,home,pysite,wiki --branch manage.py test
     after_script:
@@ -52,7 +55,6 @@ test:
 
 pages:
     stage: deploy
-    image: 
     dependencies:
         - test
     before_script:
@@ -63,3 +65,15 @@ pages:
         paths:
             - public
         expire_in: 30 days
+
+upload newest docker image:
+    image: docker:stable-git
+    stage: deploy
+    script:
+        - echo "$GITLAB_DOCKER_PASSWORD" | docker login --username "$GITLAB_DOCKER_USERNAME" --password-stdin registry.gitlab.com
+        - docker pull registry:5000/django-ci
+        - docker image tag registry.gitlab.com/python-discord/projects/site/django:latest registry:5000/django-ci
+        - docker push registry.gitlab.com/python-discord/projects/site/django:latest
+    only:
+        - master
+        - django
