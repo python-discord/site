@@ -19,6 +19,7 @@ build docker image:
     stage: build
     script:
         - docker build -t registry:5000/django-ci .
+        - docker push registry:5000/django-ci
     tags:
         - docker
     only:
