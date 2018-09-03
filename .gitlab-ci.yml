@@ -22,9 +22,6 @@ build docker image:
         - docker push registry:5000/django-ci
     tags:
         - docker
-    only:
-        - master
-        - django
 
 lint:
     image: registry:5000/django-ci
@@ -32,6 +29,8 @@ lint:
     script:
         - pipenv install --dev --system
         - flake8
+    tags:
+        - docker
 
 test:
     image: registry:5000/django-ci
@@ -45,6 +44,8 @@ test:
         - coverage run --source=api,home,pysite,wiki --branch manage.py test
     after_script:
         - coverage report
+    tags:
+        - docker
     artifacts:
         paths:
             - .coverage
@@ -78,3 +79,5 @@ upload newest docker image:
     only:
         - master
         - django
+    tags:
+        - docker
