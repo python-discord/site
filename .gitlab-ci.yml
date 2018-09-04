@@ -42,7 +42,7 @@ lint:
     tags:
         - docker
 
-test on 3.7 / alpine:
+test-3.7-alpine:
     <<: *test-template
     image: python:3.7-alpine
     before_script:
@@ -58,7 +58,7 @@ test on 3.7 / alpine:
         paths:
             - .coverage
 
-test on 3.6 / alpine:
+test-3.6-alpine:
     <<: *test-template
     image: python:3.6-alpine
     before_script:
@@ -67,7 +67,7 @@ test on 3.6 / alpine:
         - pipenv install --system
         - python manage.py migrate
 
-test on 3.6 / stretch:
+test-3.7-stretch:
     <<: *test-template
     image: python:3.6-stretch
     services:
@@ -79,7 +79,7 @@ test on 3.6 / stretch:
         - pipenv install --system
         - python manage.py migrate
 
-test on 3.7 / stretch:
+test-3.6-stretch:
     <<: *test-template
     image: python:3.6-stretch
     services:
@@ -94,7 +94,7 @@ test on 3.7 / stretch:
 pages:
     stage: deploy
     dependencies:
-        - test on 3.7 / alpine
+        - test-3.7-alpine
     before_script:
         - pip install coverage
     script:
@@ -104,7 +104,7 @@ pages:
             - public
         expire_in: 30 days
 
-push docker image:
+push-image:
     image: docker:stable-git
     stage: deploy
     script:
