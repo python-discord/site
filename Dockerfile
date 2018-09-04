@@ -15,4 +15,4 @@ WORKDIR /app
 RUN pipenv install --deploy --system
 RUN apk del python3-dev git libpq postgresql-dev gcc cmake autoconf automake musl-dev
 
-CMD ["gunicorn", "--workers", "4", "--bind", "0.0.0.0:4000", "pysite:wsgi"]
+CMD ["gunicorn", "--workers", "4", "--bind", "0.0.0.0:4000", "pysite.wsgi:application"]
