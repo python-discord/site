@@ -1,12 +1,11 @@
 from django.contrib.auth.models import User
-from rest_framework.authtoken.models import Token
-from rest_framework.test import APIClient, APITestCase
+from rest_framework.test import APITestCase
 
 
 test_user, _created = User.objects.get_or_create(
     username='test',
     email='test@example.com',
-    password='testpass',
+    password='testpass',  # flake8: noqa - S106
     is_superuser=True,
     is_staff=True
 )

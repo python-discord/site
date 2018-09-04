@@ -1,6 +1,9 @@
 from django.shortcuts import get_object_or_404
 from rest_framework.exceptions import ParseError
-from rest_framework.mixins import CreateModelMixin, DestroyModelMixin, ListModelMixin, RetrieveModelMixin
+from rest_framework.mixins import (
+    CreateModelMixin, DestroyModelMixin,
+    ListModelMixin, RetrieveModelMixin
+)
 from rest_framework.response import Response
 from rest_framework.status import HTTP_201_CREATED
 from rest_framework.viewsets import GenericViewSet, ModelViewSet, ViewSet
@@ -144,7 +147,7 @@ class OffTopicChannelNameViewSet(DestroyModelMixin, ViewSet):
                 'name': ["This query parameter is required."]
             })
 
-    def list(self, request):
+    def list(self, request):  # noqa
         if 'random_items' in request.query_params:
             param = request.query_params['random_items']
             try:
@@ -204,7 +207,7 @@ class SnakeNameViewSet(ViewSet):
     def get_queryset(self):
         return SnakeName.objects.all()
 
-    def list(self, request):
+    def list(self, request):  # noqa
         if request.query_params.get('get_all'):
             queryset = self.get_queryset()
             serialized = self.serializer_class(queryset, many=True)

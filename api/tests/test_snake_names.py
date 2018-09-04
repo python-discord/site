@@ -4,7 +4,6 @@ from .base import APISubdomainTestCase
 from ..models import SnakeName
 
 
-
 class StatusTests(APISubdomainTestCase):
     def setUp(self):
         super().setUp()
@@ -41,7 +40,7 @@ class EmptyDatabaseSnakeNameTests(APISubdomainTestCase):
 
 class SnakeNameListTests(APISubdomainTestCase):
     @classmethod
-    def setUpTestData(cls):
+    def setUpTestData(cls):  # noqa
         cls.snake_python = SnakeName.objects.create(name='Python', scientific='Totally.')
 
     def test_endpoint_returns_all_snakes_with_get_all_param(self):

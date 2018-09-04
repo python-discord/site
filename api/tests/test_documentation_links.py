@@ -57,7 +57,7 @@ class EmptyDatabaseDocumentationLinkAPITests(APISubdomainTestCase):
 
 class DetailLookupDocumentationLinkAPITests(APISubdomainTestCase):
     @classmethod
-    def setUpTestData(cls):
+    def setUpTestData(cls):  # noqa
         cls.doc_link = DocumentationLink.objects.create(
             package='testpackage',
             base_url='https://example.com',
@@ -141,7 +141,7 @@ class DocumentationLinkCreationTests(APISubdomainTestCase):
 
 class DocumentationLinkDeletionTests(APISubdomainTestCase):
     @classmethod
-    def setUpTestData(cls):
+    def setUpTestData(cls):  # noqa
         cls.doc_link = DocumentationLink.objects.create(
             package='example',
             base_url='https://example.com',

@@ -58,7 +58,7 @@ class EmptyDatabaseTests(APISubdomainTestCase):
 
 class ListTests(APISubdomainTestCase):
     @classmethod
-    def setUpTestData(cls):
+    def setUpTestData(cls):  # noqa
         cls.test_name = OffTopicChannelName.objects.create(name='lemons-lemonade-stand')
         cls.test_name_2 = OffTopicChannelName.objects.create(name='bbq-with-bisk')
 
@@ -125,7 +125,7 @@ class CreationTests(APISubdomainTestCase):
 
 class DeletionTests(APISubdomainTestCase):
     @classmethod
-    def setUpTestData(cls):
+    def setUpTestData(cls):  # noqa
         cls.test_name = OffTopicChannelName.objects.create(name='lemons-lemonade-stand')
         cls.test_name_2 = OffTopicChannelName.objects.create(name='bbq-with-bisk')
 

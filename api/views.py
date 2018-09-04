@@ -23,5 +23,5 @@ class HealthcheckView(APIView):
     authentication_classes = ()
     permission_classes = ()
 
-    def get(self, request, format=None):
+    def get(self, request, format=None):  # noqa
         return Response({'status': 'ok'})

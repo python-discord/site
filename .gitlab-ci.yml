@@ -1,11 +1,8 @@
 stages:
-    - build
     - lint
     - test
     - deploy
-    - cleanup
-services:
-    - registry
+image: python:3.7-alpine
 
 cache:
     paths:
@@ -13,52 +10,91 @@ cache:
 
 variables:
     PIPENV_CACHE_DIR: "$CI_PROJECT_DIR/.cache"
+    PIPENV_HIDE_EMOJIS: 1
+    PIPENV_IGNORE_VIRTUALENVS: 1
+    PIPENV_MAX_SUBPROCESS: 2
+    PIPENV_NOSPIN: 1
+    PIPENV_VENV_IN_PROJECT: 1
 
-build docker image:
-    image: docker:stable-git
-    stage: build
-    script:
-        - docker build -t registry:5000/django-ci .
-        - docker push registry:5000/django-ci
-    tags:
-        - docker
 
-lint:
-    image: registry:5000/django-ci
-    stage: lint
-    script:
-        - pipenv install --dev --system
-        - flake8
-    tags:
-        - docker
-
-test:
-    image: registry:5000/django-ci
+.test-template: &test-template
     stage: test
     services:
         - postgres:10-alpine
-    before_script:
-        - pipenv install --dev --system
-        - python manage.py migrate
     script:
-        - coverage run --source=api,home,pysite,wiki --branch manage.py test
-    after_script:
-        - coverage report
+        - python manage.py test
     tags:
         - docker
-    artifacts:
-        paths:
-            - .coverage
     variables:
         DATABASE_URL: postgres://django:supersecret@postgres/pysite
         POSTGRES_DB: pysite
         POSTGRES_PASSWORD: supersecret
         POSTGRES_USER: django
 
+lint:
+    stage: lint
+    before_script:
+        - apk add python3-dev git libpq postgresql-dev gcc cmake autoconf automake musl-dev
+        - python3 -m pip install pipenv
+        - pipenv install --dev --system
+    script:
+        - flake8
+    tags:
+        - docker
+
+test on 3.7 / alpine:
+    <<: *test-template
+    image: python:3.7-alpine
+    before_script:
+        - apk add python3-dev git libpq postgresql-dev gcc cmake autoconf automake musl-dev
+        - python3 -m pip install pipenv
+        - pipenv install --dev --system
+        - python manage.py migrate
+    script:
+        - coverage run --source=api,home,pysite,wiki --branch manage.py test
+    after_script:
+        - coverage report
+    artifacts:
+        paths:
+            - .coverage
+
+test on 3.6 / alpine:
+    <<: *test-template
+    image: python:3.6-alpine
+    before_script:
+        - apk add python3-dev git libpq postgresql-dev gcc cmake autoconf automake musl-dev
+        - python3 -m pip install pipenv
+        - pipenv install --system
+        - python manage.py migrate
+
+test on 3.6 / stretch:
+    <<: *test-template
+    image: python:3.6-stretch
+    services:
+        - postgres:11
+    before_script:
+        - apt-get update -y
+        - apt-get install -y libpython3-dev git libpq-dev gcc cmake autoconf automake libc-dev
+        - python3 -m pip install pipenv
+        - pipenv install --system
+        - python manage.py migrate
+
+test on 3.7 / stretch:
+    <<: *test-template
+    image: python:3.6-stretch
+    services:
+        - postgres:11
+    before_script:
+        - apt-get update -y
+        - apt-get install -y libpython3-dev git libpq-dev gcc cmake autoconf automake libc-dev
+        - python3 -m pip install pipenv
+        - pipenv install --system
+        - python manage.py migrate
+
 pages:
     stage: deploy
     dependencies:
-        - test
+        - test on 3.7 / alpine
     before_script:
         - pip install coverage
     script:
@@ -72,9 +108,8 @@ upload newest docker image:
     image: docker:stable-git
     stage: deploy
     script:
+        - docker build -t registry.gitlab.com/python-discord/projects/site/django:latest
         - echo "$GITLAB_DOCKER_PASSWORD" | docker login --username "$GITLAB_DOCKER_USERNAME" --password-stdin registry.gitlab.com
-        - docker pull registry:5000/django-ci
-        - docker image tag registry.gitlab.com/python-discord/projects/site/django:latest registry:5000/django-ci
         - docker push registry.gitlab.com/python-discord/projects/site/django:latest
     only:
         - master

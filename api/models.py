@@ -28,7 +28,7 @@ class SnakeName(models.Model):
 class Role(models.Model):
     """A role on our Discord server."""
 
-    id = models.BigIntegerField(
+    id = models.BigIntegerField(  # noqa
         primary_key=True,
         validators=(
             MinValueValidator(
@@ -69,7 +69,7 @@ class Role(models.Model):
 class Member(models.Model):
     """A member of our Discord server."""
 
-    id = models.BigIntegerField(
+    id = models.BigIntegerField(  # noqa
         primary_key=True,
         validators=(
             MinValueValidator(

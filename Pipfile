@@ -19,6 +19,8 @@ djangorestframework-bulk = "==0.2.1"
 "flake8-tidy-imports" = "==1.1.0"
 "flake8-string-format" = "==0.2.3"
 coverage = "==4.5.1"
+"pep8-naming" = "==0.7.0"
+mccabe = "==0.6.1"
 
 [requires]
 python_version = "3.7"

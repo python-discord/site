@@ -1,4 +1,3 @@
-from django.test import TestCase
 from django_hosts.resolvers import reverse
 
 from .base import APISubdomainTestCase
@@ -37,7 +36,7 @@ class UnauthedDocumentationLinkAPITests(APISubdomainTestCase):
 
 class CreationTests(APISubdomainTestCase):
     @classmethod
-    def setUpTestData(cls):
+    def setUpTestData(cls):  # noqa
         cls.role = Role.objects.create(
             id=5,
             name="Test role pls ignore",
