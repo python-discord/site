@@ -109,7 +109,7 @@ push-django:
     stage: deploy
     script:
         - docker build -t pythondiscord/django:latest .
-        - echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin gitlab.com
+        - echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin
         - docker push pythondiscord/django:latest
     only:
         - master
