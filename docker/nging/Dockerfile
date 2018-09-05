@@ -14,3 +14,5 @@ RUN python3 manage.py collectstatic --noinput
 FROM nginx:alpine
 
 COPY --from=builder /var/www/pythondiscord.com /var/www/pythondiscord.com
+
+CMD ["nginx", "-g", "daemon off;"]
