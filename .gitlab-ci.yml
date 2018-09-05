@@ -104,12 +104,12 @@ pages:
             - public
         expire_in: 30 days
 
-push-image:
+push-django-image:
     image: docker:stable-git
     stage: deploy
     script:
-        - docker build -t registry.gitlab.com/python-discord/projects/site/django:latest .
-        - echo "$GITLAB_DOCKER_PASSWORD" | docker login --username "$GITLAB_DOCKER_USERNAME" --password-stdin registry.gitlab.com
+        - docker build -t pythondiscord/django:latest .
+        - echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin registry.gitlab.com
         - docker push registry.gitlab.com/python-discord/projects/site/django:latest
     only:
         - master
