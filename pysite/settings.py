@@ -158,6 +158,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'pysite', 'static')]
+STATIC_ROOT = env('STATIC_ROOT', default='/var/www/pythondiscord.com')
 
 # django-hosts
 # https://django-hosts.readthedocs.io/en/latest/
