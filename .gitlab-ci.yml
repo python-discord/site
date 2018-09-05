@@ -124,3 +124,8 @@ push-nging:
         - echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin
         - docker build -t pythondiscord/nging:latest .
         - docker push pythondiscord/nging:latest
+    only:
+        - master
+        - django
+    tags:
+        - docker
