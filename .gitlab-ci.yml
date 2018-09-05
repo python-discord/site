@@ -108,11 +108,19 @@ push-django:
     image: docker:stable-git
     stage: deploy
     script:
-        - docker build -t pythondiscord/django:latest .
         - echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin
+        - docker build -t pythondiscord/django:latest .
         - docker push pythondiscord/django:latest
     only:
         - master
         - django
     tags:
         - docker
+
+push-nging:
+    image: docker:stable-git
+    stage: deploy
+    script:
+        - echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin
+        - docker build -t pythondiscord/nging:latest .
+        - docker push pythondiscord/nging:latest
