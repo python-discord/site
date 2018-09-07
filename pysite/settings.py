@@ -46,13 +46,16 @@ elif 'CI' in os.environ:
     SECRET_KEY = "{©ø¬½.Þ7&Ñ`Q^Kº*~¢j<wxß¾±ðÛJ@q"
 
 else:
-    ALLOWED_HOSTS = [
-        'pythondiscord.com',
-        'admin.pythondiscord.com',
-        'api.pythondiscord.com',
-        'staff.pythondiscord.local',
-        'wiki.pythondiscord.local'
-    ]
+    ALLOWED_HOSTS = env.list(
+        'ALLOWED_HOSTS',
+        default=[
+            'pythondiscord.com',
+            'admin.pythondiscord.com',
+            'api.pythondiscord.com',
+            'staff.pythondiscord.local',
+            'wiki.pythondiscord.local'
+        ]
+    )
     SECRET_KEY = env('SECRET_KEY')
 
 
