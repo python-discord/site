@@ -184,3 +184,29 @@ REST_FRAMEWORK = {
     ),
     'TEST_REQUEST_DEFAULT_FORMAT': 'json'
 }
+
+# Logging
+# https://docs.djangoproject.com/en/2.1/topics/logging/
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'default': {
+            'format': '%(asctime)s %(levelname)s %(module)s %(message)s'
+        }
+    },
+    'handlers': {
+        'gunicorn': {
+            'level': 'INFO',
+            'class': 'logging.handlers.StreamHandler',
+            'formatters': 'default'
+        }
+    },
+    'loggers': {
+        'gunicorn.errors': {
+            'level': 'DEBUG',
+            'handlers': ['gunicorn'],
+            'propagate': True
+        }
+    }
+}
