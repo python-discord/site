@@ -198,7 +198,7 @@ LOGGING = {
     'handlers': {
         'gunicorn': {
             'level': 'INFO',
-            'class': 'logging.handlers.StreamHandler',
+            'class': 'logging.StreamHandler',
             'formatters': 'default'
         }
     },
