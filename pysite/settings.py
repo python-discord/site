@@ -199,7 +199,7 @@ LOGGING = {
         'gunicorn': {
             'level': 'INFO',
             'class': 'logging.StreamHandler',
-            'formatters': 'default'
+            'formatter': 'default'
         }
     },
     'loggers': {
