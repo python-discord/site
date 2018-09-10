@@ -116,16 +116,3 @@ push-django:
         - django
     tags:
         - docker
-
-push-nging:
-    image: docker:stable-git
-    stage: deploy
-    script:
-        - echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin
-        - docker build -t pythondiscord/nging:latest .
-        - docker push pythondiscord/nging:latest
-    only:
-        - master
-        - django
-    tags:
-        - docker
