@@ -3,12 +3,6 @@ stages:
     - test
     - deploy
 image: python:3.7-alpine
-variables:
-    PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache"
-
-cache:
-    paths:
-        - .cache
 
 .test-template: &test-template
     stage: test
@@ -28,7 +22,7 @@ lint:
     stage: lint
     before_script:
         - apk add python3-dev git libpq postgresql-dev gcc cmake autoconf automake musl-dev
-        - python3 -m pip install -vvv .[lint]
+        - python3 -m pip install --no-cache-dir .[lint]
     script:
         - flake8
     tags:
@@ -39,7 +33,7 @@ test-3.7-alpine:
     image: python:3.7-alpine
     before_script:
         - apk add python3-dev git libpq postgresql-dev gcc cmake autoconf automake musl-dev
-        - python3 -m pip install .[test]
+        - python3 -m pip install --no-cache-dir .[test]
         - python manage.py migrate
     script:
         - coverage run --source=api,home,pysite,wiki --branch manage.py test
@@ -54,7 +48,7 @@ test-3.6-alpine:
     image: python:3.6-alpine
     before_script:
         - apk add git libpq postgresql-dev gcc cmake autoconf automake musl-dev
-        - python3 -m pip install .[test]
+        - python3 -m pip install --no-cache-dir .[test]
         - python manage.py migrate
 
 test-3.7-stretch:
@@ -65,7 +59,7 @@ test-3.7-stretch:
     before_script:
         - apt-get update -y
         - apt-get install -y git libpq-dev gcc cmake autoconf automake libc-dev
-        - python3 -m pip install .[test]
+        - python3 -m pip install --no-cache-dir .[test]
         - python manage.py migrate
 
 test-3.6-stretch:
@@ -76,7 +70,7 @@ test-3.6-stretch:
     before_script:
         - apt-get update -y
         - apt-get install -y git libpq-dev gcc cmake autoconf automake libc-dev
-        - python3 -m pip install .[test]
+        - python3 -m pip install --no-cache-dir .[test]
         - python manage.py migrate
 
 pages:
