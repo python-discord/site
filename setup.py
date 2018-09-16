@@ -10,7 +10,8 @@ setup(
         'djangorestframework>=3.8.2',
         'djangorestframework-bulk>=0.2.1',
         'django-hosts>=3.0',
-        'django-environ>=0.4.5'
+        'django-environ>=0.4.5',
+        'psycopg2-binary>=2.7.5'
     ],
     extras_require={
         'deploy': [
