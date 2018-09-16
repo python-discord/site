@@ -35,7 +35,7 @@ lint:
     stage: lint
     before_script:
         - apk add python3-dev git libpq postgresql-dev gcc cmake autoconf automake musl-dev
-        - python3 -m pip install pipenv
+        - python3 -m pip install poetry
         - pipenv install --dev --system
     script:
         - flake8
@@ -47,8 +47,9 @@ test-3.7-alpine:
     image: python:3.7-alpine
     before_script:
         - apk add python3-dev git libpq postgresql-dev gcc cmake autoconf automake musl-dev
-        - python3 -m pip install pipenv
-        - pipenv install --dev --system
+        - python3 -m pip install poetry
+        - poetry config settings.virtualenvs.in-project true
+        - poetry install
         - python manage.py migrate
     script:
         - coverage run --source=api,home,pysite,wiki --branch manage.py test
@@ -63,8 +64,9 @@ test-3.6-alpine:
     image: python:3.6-alpine
     before_script:
         - apk add python3-dev git libpq postgresql-dev gcc cmake autoconf automake musl-dev
-        - python3 -m pip install pipenv
-        - pipenv install --system
+        - python3 -m pip install poetry
+        - poetry config settings.virtualenvs.in-project true
+        - poetry install
         - python manage.py migrate
 
 test-3.7-stretch:
@@ -75,8 +77,9 @@ test-3.7-stretch:
     before_script:
         - apt-get update -y
         - apt-get install -y libpython3-dev git libpq-dev gcc cmake autoconf automake libc-dev
-        - python3 -m pip install pipenv
-        - pipenv install --system
+        - python3 -m pip install poetry
+        - poetry config settings.virtualenvs.in-project true
+        - poetry install
         - python manage.py migrate
 
 test-3.6-stretch:
@@ -87,8 +90,9 @@ test-3.6-stretch:
     before_script:
         - apt-get update -y
         - apt-get install -y libpython3-dev git libpq-dev gcc cmake autoconf automake libc-dev
-        - python3 -m pip install pipenv
-        - pipenv install --system
+        - python3 -m pip install poetry
+        - poetry config settings.virtualenvs.in-project true
+        - poetry install
         - python manage.py migrate
 
 pages:
