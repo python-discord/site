@@ -53,7 +53,7 @@ test-3.6-alpine:
 
 test-3.7-stretch:
     <<: *test-template
-    image: python:3.6-stretch
+    image: python:3.7-stretch
     services:
         - postgres:11
     before_script:
