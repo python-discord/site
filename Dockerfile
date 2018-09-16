@@ -1,6 +1,6 @@
 FROM python:3.7-alpine
 
-RUN apk add python3-dev git libpq postgresql-dev gcc cmake autoconf automake musl-dev
+RUN apk add git libpq postgresql-dev gcc cmake autoconf automake musl-dev
 
 COPY . /app
 WORKDIR /app

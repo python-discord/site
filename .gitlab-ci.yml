@@ -53,7 +53,7 @@ test-3.6-alpine:
     <<: *test-template
     image: python:3.6-alpine
     before_script:
-        - apk add python3-dev git libpq postgresql-dev gcc cmake autoconf automake musl-dev
+        - apk add git libpq postgresql-dev gcc cmake autoconf automake musl-dev
         - python3 -m pip install .[test]
         - python manage.py migrate
 
@@ -64,7 +64,7 @@ test-3.7-stretch:
         - postgres:11
     before_script:
         - apt-get update -y
-        - apt-get install -y libpython3-dev git libpq-dev gcc cmake autoconf automake libc-dev
+        - apt-get install -y git libpq-dev gcc cmake autoconf automake libc-dev
         - python3 -m pip install .[test]
         - python manage.py migrate
 
@@ -75,7 +75,7 @@ test-3.6-stretch:
         - postgres:11
     before_script:
         - apt-get update -y
-        - apt-get install -y libpython3-dev git libpq-dev gcc cmake autoconf automake libc-dev
+        - apt-get install -y git libpq-dev gcc cmake autoconf automake libc-dev
         - python3 -m pip install .[test]
         - python manage.py migrate
 
