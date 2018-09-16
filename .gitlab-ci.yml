@@ -3,19 +3,12 @@ stages:
     - test
     - deploy
 image: python:3.7-alpine
+variables:
+    PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache"
 
 cache:
     paths:
-        - .cache/
-
-variables:
-    PIPENV_CACHE_DIR: "$CI_PROJECT_DIR/.cache"
-    PIPENV_HIDE_EMOJIS: 1
-    PIPENV_IGNORE_VIRTUALENVS: 1
-    PIPENV_MAX_SUBPROCESS: 2
-    PIPENV_NOSPIN: 1
-    PIPENV_VENV_IN_PROJECT: 1
-
+        - .cache
 
 .test-template: &test-template
     stage: test
@@ -35,9 +28,7 @@ lint:
     stage: lint
     before_script:
         - apk add python3-dev git libpq postgresql-dev gcc cmake autoconf automake musl-dev
-        - python3 -m pip install poetry
-        - poetry config settings.virtualenvs.in-project true
-        - poetry install
+        - python3 -m pip install .[lint]
     script:
         - flake8
     tags:
@@ -48,9 +39,7 @@ test-3.7-alpine:
     image: python:3.7-alpine
     before_script:
         - apk add python3-dev git libpq postgresql-dev gcc cmake autoconf automake musl-dev
-        - python3 -m pip install poetry
-        - poetry config settings.virtualenvs.in-project true
-        - poetry install
+        - python3 -m pip install .[test]
         - python manage.py migrate
     script:
         - coverage run --source=api,home,pysite,wiki --branch manage.py test
@@ -65,9 +54,7 @@ test-3.6-alpine:
     image: python:3.6-alpine
     before_script:
         - apk add python3-dev git libpq postgresql-dev gcc cmake autoconf automake musl-dev
-        - python3 -m pip install poetry
-        - poetry config settings.virtualenvs.in-project true
-        - poetry install
+        - python3 -m pip install .[test]
         - python manage.py migrate
 
 test-3.7-stretch:
@@ -78,9 +65,7 @@ test-3.7-stretch:
     before_script:
         - apt-get update -y
         - apt-get install -y libpython3-dev git libpq-dev gcc cmake autoconf automake libc-dev
-        - python3 -m pip install poetry
-        - poetry config settings.virtualenvs.in-project true
-        - poetry install
+        - python3 -m pip install .[test]
         - python manage.py migrate
 
 test-3.6-stretch:
@@ -91,9 +76,7 @@ test-3.6-stretch:
     before_script:
         - apt-get update -y
         - apt-get install -y libpython3-dev git libpq-dev gcc cmake autoconf automake libc-dev
-        - python3 -m pip install poetry
-        - poetry config settings.virtualenvs.in-project true
-        - poetry install
+        - python3 -m pip install .[test]
         - python manage.py migrate
 
 pages:
