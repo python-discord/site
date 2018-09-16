@@ -28,7 +28,7 @@ lint:
     stage: lint
     before_script:
         - apk add python3-dev git libpq postgresql-dev gcc cmake autoconf automake musl-dev
-        - python3 -m pip install .[lint]
+        - python3 -m pip install -vvv .[lint]
     script:
         - flake8
     tags:
