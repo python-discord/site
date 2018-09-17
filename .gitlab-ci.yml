@@ -1,7 +1,7 @@
 stages:
     - lint
     - test
-    - deploy
+    - publish
 image: python:3.7-alpine
 
 .test-template: &test-template
@@ -74,7 +74,7 @@ test-3.6-stretch:
         - python manage.py migrate
 
 pages:
-    stage: deploy
+    stage: publish
     dependencies:
         - test-3.7-alpine
     before_script:
@@ -88,7 +88,7 @@ pages:
 
 push-django:
     image: docker:stable-git
-    stage: deploy
+    stage: publish
     script:
         - echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin
         - docker build -t pythondiscord/django:latest .
