@@ -107,7 +107,7 @@ deploy:
         - apk add --no-cache openssh-client
         - echo "$DJANGO_DEPLOY_SSH_PRIVATE_KEY" > privkey
     script:
-        - ssh -i privkey pysite-deploy@jchri.st
+        - ssh -i privkey -p 583 pysite-deploy@jchri.st
     environment:
         name: Django staging
         url: https://pysite.jchri.st
