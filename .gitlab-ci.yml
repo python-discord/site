@@ -105,6 +105,10 @@ deploy:
     image: alpine:latest
     before_script:
         - apk add --no-cache openssh-client
+        - mkdir .ssh
+        - chmod 700 .ssh
+        - echo "[jchri.st]:583 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHLqI3HkgC5L3ikpuibNKxbJJaBtstRDdFSYQ0LpxfQN" > .ssh/known_hosts
+        - chmod 400 .ssh/known_hosts
         - echo "$DJANGO_DEPLOY_SSH_PRIVATE_KEY" > privkey
     script:
         - ssh -i privkey -p 583 pysite-deploy@jchri.st
