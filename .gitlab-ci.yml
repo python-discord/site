@@ -25,7 +25,7 @@ build-alpine-3.7:
     image: docker:dind
     script:
         - docker build --build-arg EXTRAS=test,lint -t django:alpine-3.7 -f docker/app/alpine/3.7/Dockerfile .
-        - docker save django:alpine-3.7 django_alpine_py37.tar.gz
+        - docker save django:alpine-3.7 > django_alpine_py37.tar.gz
     artifacts:
         paths:
             - django_alpine_py37.tar.gz
@@ -35,7 +35,7 @@ build-alpine-3.6:
     image: docker:dind
     script:
         - docker build --build-arg EXTRAS=test -t django:alpine-3.6 -f docker/app/alpine/3.6/Dockerfile .
-        - docker save django:alpine-3.6 django_alpine_py36.tar.gz
+        - docker save django:alpine-3.6 > django_alpine_py36.tar.gz
     artifacts:
         paths:
             - django_alpine_py36.tar.gz
@@ -45,7 +45,7 @@ build-stretch-3.7:
     image: docker:dind
     script:
         - docker build --build-arg EXTRAS=test -t django:stretch-3.7 -f docker/app/stretch/3.7/Dockerfile .
-        - docker save django:stretch-3.7 django_stretch_py37.tar.gz
+        - docker save django:stretch-3.7 > django_stretch_py37.tar.gz
     artifacts:
         paths:
             - django_stretch_py37.tar.gz
@@ -55,7 +55,7 @@ build-stretch-3.6:
     image: docker:dind
     script:
         - docker build --build-arg EXTRAS=test -t django:stretch-3.6 -f docker/app/stretch/3.6/Dockerfile .
-        - docker save django:stretch-3.6 django_stretch_py36.tar.gz
+        - docker save django:stretch-3.6 > django_stretch_py36.tar.gz
     artifacts:
         paths:
             - django_stretch_py36.tar.gz
