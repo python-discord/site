@@ -106,6 +106,7 @@ deploy:
     before_script:
         - apk add --no-cache openssh-client
         - echo "$DJANGO_DEPLOY_SSH_PRIVATE_KEY" > privkey
+        - chmod 400 privkey
     script:
         - ssh -i privkey -p 583 -o "StrictHostKeyChecking=no" pysite-deploy@jchri.st
     environment:
