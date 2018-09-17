@@ -108,7 +108,7 @@ deploy:
         - echo "$DJANGO_DEPLOY_SSH_PRIVATE_KEY" > privkey
     script:
         - ssh -i privkey pysite-deploy@jchri.st
-    environments:
+    environment:
         name: Django staging
         url: https://pysite.jchri.st
     tags:
