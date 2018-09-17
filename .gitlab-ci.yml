@@ -79,9 +79,9 @@ test-3.7-alpine:
         - build-alpine-3.7
     before_script:
         - docker load < djano_alpine_py37.tar.gz
-        - docker run --network=host --env DATABASE_URL=$DATABASE_URL django:alpine-3.7 python manage.py migrate
+        - docker run --network=host --env SECRET_KEY=no --env DATABASE_URL=$DATABASE_URL django:alpine-3.7 python manage.py migrate
     script:
-        - docker run --network=host --env DATABASE_URL=$DATABASE_URL -v ./:/app django:alpine-3.7 coverage run --source=api,home,pysite,wiki --branch manage.py test
+        - docker run --network=host --env SECRET_KEY=no --env DATABASE_URL=$DATABASE_URL -v ./:/app django:alpine-3.7 coverage run --source=api,home,pysite,wiki --branch manage.py test
     after_script:
         - docker run -v ./:/app coverage report
     artifacts:
@@ -95,9 +95,9 @@ test-3.6-alpine:
         - build-alpine-3.6
     before_script:
         - docker load < django_alpine_py36.tar.gz
-        - docker run --network=host --env DATABASE_URL=$DATABASE_URL django:alpine-3.6 python manage.py migrate
+        - docker run --network=host --env SECRET_KEY=no --env DATABASE_URL=$DATABASE_URL django:alpine-3.6 python manage.py migrate
     script:
-        - docker run --network=host --env DATABASE_URL=$DATABASE_URL django:alpine-3.6 python manage.py test
+        - docker run --network=host --env SECRET_KEY=no --env DATABASE_URL=$DATABASE_URL django:alpine-3.6 python manage.py test
 
 test-3.7-stretch:
     <<: *test-template
@@ -106,9 +106,9 @@ test-3.7-stretch:
         - build-stretch-3.7
     before_script:
         - docker load < django_stretch_py37.tar.gz
-        - docker run --network=host --env DATABASE_URL=$DATABASE_URL django:stretch-3.7 python manage.py migrate
+        - docker run --network=host --env SECRET_KEY=no --env DATABASE_URL=$DATABASE_URL django:stretch-3.7 python manage.py migrate
     script:
-        - docker run --network=host --env DATABASE_URL=$DATABASE_URL django:stretch-3.7 python manage.py test
+        - docker run --network=host --env SECRET_KEY=no --env DATABASE_URL=$DATABASE_URL django:stretch-3.7 python manage.py test
 
 test-3.6-stretch:
     <<: *test-template
@@ -117,9 +117,9 @@ test-3.6-stretch:
         - build-stretch-3.6
     before_script:
         - docker load < django_stretch_py36.tar.gz
-        - docker run --network=host --env DATABASE_URL=$DATABASE_URL django:stretch-3.6 python manage.py migrate
+        - docker run --network=host --env SECRET_KEY=no --env DATABASE_URL=$DATABASE_URL django:stretch-3.6 python manage.py migrate
     script:
-        - docker run --network=host --env DATABASE_URL=$DATABASE_URL django:stretch-3.6 python manage.py test
+        - docker run --network=host --env SECRET_KEY=no --env DATABASE_URL=$DATABASE_URL django:stretch-3.6 python manage.py test
 
 pages:
     stage: publish
