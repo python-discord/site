@@ -2,6 +2,7 @@ stages:
     - lint
     - test
     - publish
+    - deploy
 image: python:3.7-alpine
 
 .test-template: &test-template
@@ -96,5 +97,19 @@ push-django:
     only:
         - master
         - django
+    tags:
+        - docker
+
+deploy:
+    stage: deploy
+    image: alpine:latest
+    before_script:
+        - apk add --no-cache openssh-client
+        - echo "$DJANGO_DEPLOY_SSH_PRIVATE_KEY" > privkey
+    script:
+        - ssh -i privkey pysite-deploy@jchri.st
+    environments:
+        name: Django staging
+        url: https://pysite.jchri.st
     tags:
         - docker
