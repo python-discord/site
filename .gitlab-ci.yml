@@ -4,7 +4,9 @@ stages:
     - test
     - publish
     - deploy
-image: python:3.7-alpine
+variables:
+  BASE_IMAGE_URL: registry.gitlab.com/python-discord/projects/site/django-ci
+
 
 .test-template: &test-template
     stage: test
@@ -23,42 +25,58 @@ image: python:3.7-alpine
 build-alpine-3.7:
     stage: build
     image: docker:dind
+    before_script:
+        - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
     script:
-        - docker build --build-arg EXTRAS=test,lint -t django:alpine-3.7 -f docker/app/alpine/3.7/Dockerfile .
-        - docker save django:alpine-3.7 > django_alpine_py37.tar.gz
-    artifacts:
-        paths:
-            - django_alpine_py37.tar.gz
+        - >
+            docker build
+            --build-arg EXTRAS=test,lint
+            -t $BASE_IMAGE_URL:alpine-3.7-$CI_COMMIT_REF_SLUG
+            -f docker/app/alpine/3.7/Dockerfile
+            .
+        - docker push $BASE_IMAGE_URL:alpine-3.7-$CI_COMMIT_REF_SLUG
 
 build-alpine-3.6:
     stage: build
     image: docker:dind
+    before_script:
+        - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
     script:
-        - docker build --build-arg EXTRAS=test -t django:alpine-3.6 -f docker/app/alpine/3.6/Dockerfile .
-        - docker save django:alpine-3.6 > django_alpine_py36.tar.gz
-    artifacts:
-        paths:
-            - django_alpine_py36.tar.gz
+        - >
+            docker build
+            --build-arg EXTRAS=test,lint
+            -t $BASE_IMAGE_URL:alpine-3.6-$CI_COMMIT_REF_SLUG
+            -f docker/app/alpine/3.6/Dockerfile
+            .
+        - docker push $BASE_IMAGE_URL:alpine-3.6-$CI_COMMIT_REF_SLUG
 
 build-stretch-3.7:
     stage: build
     image: docker:dind
+    before_script:
+        - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
     script:
-        - docker build --build-arg EXTRAS=test -t django:stretch-3.7 -f docker/app/stretch/3.7/Dockerfile .
-        - docker save django:stretch-3.7 > django_stretch_py37.tar.gz
-    artifacts:
-        paths:
-            - django_stretch_py37.tar.gz
+        - >
+            docker build
+            --build-arg EXTRAS=test,lint
+            -t $BASE_IMAGE_URL:stretch-3.7-$CI_COMMIT_REF_SLUG
+            -f docker/app/stretch/3.7/Dockerfile
+            .
+        - docker push $BASE_IMAGE_URL:stretch-3.7-$CI_COMMIT_REF_SLUg
 
 build-stretch-3.6:
     stage: build
     image: docker:dind
+    before_script:
+        - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
     script:
-        - docker build --build-arg EXTRAS=test -t django:stretch-3.6 -f docker/app/stretch/3.6/Dockerfile .
-        - docker save django:stretch-3.6 > django_stretch_py36.tar.gz
-    artifacts:
-        paths:
-            - django_stretch_py36.tar.gz
+        - >
+            docker build
+            --build-arg EXTRAS=test,lint
+            -t $BASE_IMAGE_URL:stretch-3.6-$CI_COMMIT_REF_SLUG
+            -f docker/app/stretch/3.6/Dockerfile
+            .
+        - docker push $BASE_IMAGE_URL:stretch-3.6-$CI_COMMIT_REF_SLUg
 
 lint:
     stage: lint
