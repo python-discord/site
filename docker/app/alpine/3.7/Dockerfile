@@ -14,8 +14,8 @@ RUN apk add \
 
 COPY . /app
 WORKDIR /app
-
 RUN python3 -m pip install .[$EXTRAS]
+
 RUN apk del \
         autoconf \
         automake \

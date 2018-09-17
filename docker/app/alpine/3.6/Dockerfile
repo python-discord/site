@@ -14,8 +14,8 @@ RUN apk add \
 
 COPY . /app
 WORKDIR /app
-
 RUN python3 -m pip install .[$EXTRAS]
+
 RUN apk del \
         autoconf \
         automake \
@@ -23,4 +23,4 @@ RUN apk del \
         gcc \
         git
 
-CMD ["gunicorn", "--workers", "4", "--bind", "0.0.0.0:4000", "pysite.wsgi:applicati
+CMD ["gunicorn", "--workers", "4", "--bind", "0.0.0.0:4000", "pysite.wsgi:application"]
