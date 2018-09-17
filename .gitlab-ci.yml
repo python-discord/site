@@ -105,10 +105,10 @@ deploy:
     image: alpine:latest
     before_script:
         - apk add --no-cache openssh-client
-        - echo "$DJANGO_DEPLOY_SSH_PRIVATE_KEY" > privkey
-        - chmod 400 privkey
+        - echo "$DJANGO_DEPLOY_SSH_PRIVATE_KEY" > id_ed25519
+        - chmod 400 id_ed25519
     script:
-        - ssh -i privkey -p 583 -o "StrictHostKeyChecking=no" pysite-deploy@jchri.st
+        - ssh -i id_ed25519 -p 583 -o "StrictHostKeyChecking=no" pysite-deploy@jchri.st
     environment:
         name: Django staging
         url: https://pysite.jchri.st
