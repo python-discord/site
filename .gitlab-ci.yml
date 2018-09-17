@@ -29,7 +29,7 @@ build-alpine-3.7:
     stage: build
     image: docker:dind
     before_script:
-        - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+        - echo "$CI_JOB_TOKEN" | docker login -u gitlab-ci-token --password-stdin $CI_REGISTRY
     script:
         - >
             docker build
@@ -43,7 +43,7 @@ build-alpine-3.6:
     stage: build
     image: docker:dind
     before_script:
-        - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+        - echo "$CI_JOB_TOKEN" | docker login -u gitlab-ci-token --password-stdin $CI_REGISTRY
     script:
         - >
             docker build
@@ -57,7 +57,7 @@ build-stretch-3.7:
     stage: build
     image: docker:dind
     before_script:
-        - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+        - echo "$CI_JOB_TOKEN" | docker login -u gitlab-ci-token --password-stdin $CI_REGISTRY
     script:
         - >
             docker build
@@ -71,7 +71,7 @@ build-stretch-3.6:
     stage: build
     image: docker:dind
     before_script:
-        - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+        - echo "$CI_JOB_TOKEN" | docker login -u gitlab-ci-token --password-stdin $CI_REGISTRY
     script:
         - >
             docker build
