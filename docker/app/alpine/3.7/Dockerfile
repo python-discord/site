@@ -12,9 +12,10 @@ RUN apk add \
         musl-dev \
         postgresql-dev
 
-COPY . /app
 WORKDIR /app
+COPY setup.py /app/setup.py
 RUN python3 -m pip install .[$EXTRAS]
+COPY . .
 
 RUN apk del \
         autoconf \

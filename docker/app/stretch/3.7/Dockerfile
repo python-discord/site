@@ -12,8 +12,9 @@ RUN apt-get install -y \
                 libc-dev \
                 libpq-dev
 
-COPY . /app
 WORKDIR /app
+COPY setup.py /app/setup.py
 RUN python3 -m pip install .[$EXTRAS]
+COPY . .
 
 CMD ["gunicorn", "--workers", "4", "--bind", "0.0.0.0:4000", "pysite.wsgi:applicati
