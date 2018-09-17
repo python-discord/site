@@ -1,4 +1,5 @@
 stages:
+    - build
     - lint
     - test
     - publish
@@ -19,30 +20,74 @@ image: python:3.7-alpine
         POSTGRES_PASSWORD: supersecret
         POSTGRES_USER: django
 
+build-alpine-3.7:
+    stage: build
+    image: docker:dind
+    script:
+        - docker build --build-arg EXTRAS=test,lint -t django:alpine-3.7 -f docker/app/alpine/3.7/Dockerfile .
+        - docker save django:alpine-3.7 django_alpine_py37.tar.gz
+    artifacts:
+        paths:
+            - django_alpine_py37.tar.gz
+
+build-alpine-3.6:
+    stage: build
+    image: docker:dind
+    script:
+        - docker build --build-arg EXTRAS=test -t django:alpine-3.6 -f docker/app/alpine/3.6/Dockerfile .
+        - docker save django:alpine-3.6 django_alpine_py36.tar.gz
+    artifacts:
+        paths:
+            - django_alpine_py36.tar.gz
+
+build-stretch-3.7:
+    stage: build
+    image: docker:dind
+    script:
+        - docker build --build-arg EXTRAS=test -t django:stretch-3.7 -f docker/app/stretch/3.7/Dockerfile .
+        - docker save django:stretch-3.7 django_stretch_py37.tar.gz
+    artifacts:
+        paths:
+            - django_stretch_py37.tar.gz
+
+build-stretch-3.6:
+    stage: build
+    image: docker:dind
+    script:
+        - docker build --build-arg EXTRAS=test -t django:stretch-3.6 -f docker/app/stretch/3.6/Dockerfile .
+        - docker save django:stretch-3.6 django_stretch_py36.tar.gz
+    artifacts:
+        paths:
+            - django_stretch_py36.tar.gz
+
 lint:
     stage: lint
+    image: docker:dind
     before_script:
-        - apk add python3-dev git libpq postgresql-dev gcc cmake autoconf automake musl-dev
-        - python3 -m pip install --no-cache-dir .[lint]
+        - docker load < django_alpine_py37.tar.gz
     script:
-        - flake8
+        - docker run django:alpine-3.7 flake8
     tags:
         - docker
+    dependencies:
+        - build-alpine-3.7
+
 
 test-3.7-alpine:
     <<: *test-template
-    image: python:3.7-alpine
+    image: docker:dind
     before_script:
-        - apk add python3-dev git libpq postgresql-dev gcc cmake autoconf automake musl-dev
-        - python3 -m pip install --no-cache-dir .[test]
-        - python manage.py migrate
+        - docker load < django:alpine-3.7
+        - docker run --network=host --env DATABASE_URL=$DATABASE_URL django:alpine-3.7 python manage.py migrate
     script:
-        - coverage run --source=api,home,pysite,wiki --branch manage.py test
+        - docker container run --network=host --env DATABASE_URL=$DATABASE_URL -v ./:/app django:alpine-3.7 coverage run --source=api,home,pysite,wiki --branch manage.py test
     after_script:
-        - coverage report
+        - docker contianer run -v ./:/app coverage report
     artifacts:
         paths:
             - .coverage
+    dependencies:
+        - build-alpine-3.7
 
 test-3.6-alpine:
     <<: *test-template
