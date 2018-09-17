@@ -12,6 +12,8 @@ variables:
     stage: test
     services:
         - postgres:11-alpine
+    before_script:
+        - python manage.py migrate
     script:
         - python manage.py test
     tags:
@@ -21,6 +23,7 @@ variables:
         POSTGRES_DB: pysite
         POSTGRES_PASSWORD: supersecret
         POSTGRES_USER: django
+        SECRET_KEY: supersecret
 
 build-alpine-3.7:
     stage: build
@@ -62,7 +65,7 @@ build-stretch-3.7:
             -t $BASE_IMAGE_URL:stretch-3.7-$CI_COMMIT_REF_SLUG
             -f docker/app/stretch/3.7/Dockerfile
             .
-        - docker push $BASE_IMAGE_URL:stretch-3.7-$CI_COMMIT_REF_SLUg
+        - docker push $BASE_IMAGE_URL:stretch-3.7-$CI_COMMIT_REF_SLUG
 
 build-stretch-3.6:
     stage: build
@@ -76,70 +79,43 @@ build-stretch-3.6:
             -t $BASE_IMAGE_URL:stretch-3.6-$CI_COMMIT_REF_SLUG
             -f docker/app/stretch/3.6/Dockerfile
             .
-        - docker push $BASE_IMAGE_URL:stretch-3.6-$CI_COMMIT_REF_SLUg
+        - docker push $BASE_IMAGE_URL:stretch-3.6-$CI_COMMIT_REF_SLUG
 
 lint:
     stage: lint
-    dependencies:
-        - build-alpine-3.7
-    image: docker:dind
-    before_script:
-        - docker load < django_alpine_py37.tar.gz
+    image: $BASE_IMAGE_URL:alpine-3.7-$CI_COMMIT_REF_SLUG
     script:
-        - docker run django:alpine-3.7 flake8
+        - flake8
     tags:
         - docker
 
 test-3.7-alpine:
     <<: *test-template
-    image: docker:dind
-    dependencies:
-        - build-alpine-3.7
+    image: $BASE_IMAGE_URL:alpine-3.7-$CI_COMMIT_REF_SLUG
     before_script:
-        - docker load < djano_alpine_py37.tar.gz
-        - docker run --env SECRET_KEY=no --add-host postgres:$(dig +short postgres) --env DATABASE_URL=$DATABASE_URL django:alpine-3.7 python manage.py migrate
+        - python manage.py migrate
     script:
-        - docker run --env SECRET_KEY=no --add-host postgres:$(dig +short postgres) --env DATABASE_URL=$DATABASE_URL -v ./:/app django:alpine-3.7 coverage run --source=api,home,pysite,wiki --branch manage.py test
+        - coverage run --source=api,home,pysite,wiki --branch manage.py test
     after_script:
-        - docker run -v ./:/app coverage report
+        - coverage report
     artifacts:
         paths:
             - .coverage
 
 test-3.6-alpine:
     <<: *test-template
-    image: docker:dind
-    dependencies:
-        - build-alpine-3.6
-    before_script:
-        - docker load < django_alpine_py36.tar.gz
-        - docker run --env SECRET_KEY=no --env DATABASE_URL=$DATABASE_URL django:alpine-3.6 python manage.py migrate
-    script:
-        - docker run --env SECRET_KEY=no --env DATABASE_URL=$DATABASE_URL django:alpine-3.6 python manage.py test
+    image: $BASE_IMAGE_URL:alpine-3.6-$CI_COMMIT_REF_SLUG
 
 test-3.7-stretch:
     <<: *test-template
-    image: docker:dind
-    dependencies:
-        - build-stretch-3.7
-    before_script:
-        - docker load < django_stretch_py37.tar.gz
-        - docker run --env SECRET_KEY=no --env DATABASE_URL=$DATABASE_URL django:stretch-3.7 python manage.py migrate
-    script:
-        - docker run --env SECRET_KEY=no --env DATABASE_URL=$DATABASE_URL django:stretch-3.7 python manage.py test
+    image: $BASE_IMAGE_URL:stretch-3.7-$CI_COMMIT_REF_SLUG
 
 test-3.6-stretch:
     <<: *test-template
-    image: docker:dind
-    dependencies:
-        - build-stretch-3.6
-    before_script:
-        - docker load < django_stretch_py36.tar.gz
-        - docker run --env SECRET_KEY=no --env DATABASE_URL=$DATABASE_URL django:stretch-3.6 python manage.py migrate
-    script:
-        - docker run --env SECRET_KEY=no --env DATABASE_URL=$DATABASE_URL django:stretch-3.6 python manage.py test
+    image: $BASE_IMAGE_URL:stretch-3.6-$CI_COMMIT_REF_SLUG
 
 pages:
+    image: python:3.7-alpine
     stage: publish
     dependencies:
         - test-3.7-alpine
