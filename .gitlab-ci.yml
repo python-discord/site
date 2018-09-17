@@ -114,3 +114,6 @@ deploy:
         url: https://pysite.jchri.st
     tags:
         - docker
+    only:
+        - master
+        - django
