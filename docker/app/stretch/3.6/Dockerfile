@@ -9,8 +9,8 @@ RUN apt-get install -y \
                 cmake \
                 gcc \
                 git \
-                libc-dev
-                libpq-dev \
+                libc-dev \
+                libpq-dev
 
 
 RUN python3 -m pip install .[$EXTRAS]
