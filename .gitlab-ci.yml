@@ -148,12 +148,8 @@ deploy:
         - apk add --no-cache openssh-client
         - echo "$DJANGO_DEPLOY_SSH_PRIVATE_KEY" > id_ed25519
         - chmod 400 id_ed25519
-        - mkdir .ssh
-        - chmod 700 .ssh
-        - echo "[jchri.st]:583,[46.101.171.247]:583 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHLqI3HkgC5L3ikpuibNKxbJJaBtstRDdFSYQ0LpxfQN" > .ssh/known_hosts
-        - chmod 400 .ssh/known_hosts
     script:
-        - ssh -i id_ed25519 -p 583 pysite-deploy@jchri.st
+        - ssh -i id_ed25519 -p 583 -o "StrictHostKeyChecking=no" pysite-deploy@jchri.st
     environment:
         name: Django staging
         url: https://pysite.jchri.st
