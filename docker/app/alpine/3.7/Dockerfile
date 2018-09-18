@@ -4,8 +4,8 @@ ARG EXTRAS=deploy
 
 RUN apk add \
         gcc \
-        libpq \
-        musl-dev
+        musl-dev \
+        postgresql-dev
 
 WORKDIR /app
 COPY setup.py /app/setup.py
