@@ -3,7 +3,6 @@ FROM python:3.7-alpine
 ARG EXTRAS=deploy
 
 RUN apk add \
-        autoconf \
         automake \
         cmake \
         gcc \
@@ -18,7 +17,6 @@ RUN python3 -m pip install .[$EXTRAS]
 COPY . .
 
 RUN apk del \
-        autoconf \
         automake \
         cmake \
         gcc \
