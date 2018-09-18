@@ -4,7 +4,6 @@ ARG EXTRAS=deploy
 
 RUN apk add \
         automake \
-        cmake \
         gcc \
         libpq \
         musl-dev \
@@ -17,7 +16,6 @@ COPY . .
 
 RUN apk del \
         automake \
-        cmake \
         gcc
 
 CMD ["gunicorn", "--workers", "4", "--bind", "0.0.0.0:4000", "pysite.wsgi:application"]
