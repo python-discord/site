@@ -7,7 +7,6 @@ RUN apt-get install -y \
                 automake \
                 cmake \
                 gcc \
-                git \
                 libc-dev \
                 libpq-dev
 
@@ -19,7 +18,6 @@ COPY . .
 RUN apt-get purge -y \
             automake \
             cmake \
-            gcc \
-            git
+            gcc
 
 CMD ["gunicorn", "--workers", "4", "--bind", "0.0.0.0:4000", "pysite.wsgi:applicati

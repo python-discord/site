@@ -6,7 +6,6 @@ RUN apk add \
         automake \
         cmake \
         gcc \
-        git \
         libpq \
         musl-dev \
         postgresql-dev
@@ -19,7 +18,6 @@ COPY . .
 RUN apk del \
         automake \
         cmake \
-        gcc \
-        git
+        gcc
 
 CMD ["gunicorn", "--workers", "4", "--bind", "0.0.0.0:4000", "pysite.wsgi:application"]
