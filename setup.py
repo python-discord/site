@@ -10,10 +10,7 @@ setup(
     },
     version='0.2.0',
     packages=find_packages(
-        exclude=(
-            '**/static',
-            '**/tests'
-        )
+        exclude=('**/static',)
     ),
     python_requires='>= 3.6',
     install_requires=[
