@@ -38,5 +38,10 @@ setup(
         'test': [
             'coverage>=4.5.1'
         ]
+    },
+    entry_points={
+        'console_scripts': (
+            'psmgr = manage:main',
+        )
     }
 )
