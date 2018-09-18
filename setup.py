@@ -8,7 +8,7 @@ setup(
     project_urls={
         'Source code': 'https://gitlab.com/python-discord/projects/site'
     },
-    version='0.2.0',
+    version='0.3.0',
     packages=find_packages(
         exclude=('**/static',)
     ),

@@ -16,9 +16,11 @@ contributions may be rejected on the basis of a contributor failing to follow th
       own merge request. If you do this, we suggest following these guidelines when interacting with their repository 
       as well.
 1. **Adhere to the prevailing code style**, which we enforce using [flake8](http://flake8.pycqa.org/en/latest/index.html).
-    * Keep the coverage at 100%. Your reason not to do so is not good enough.
     * Additionally, run `flake8` against your code before you push it. Your commit will be rejected by the build server 
       if it fails to lint.
+    * Keep the coverage at 100%. Your reason not to do so is not good enough.
+    * No pushes to `master` without a really really good reason. If you're unsure, it is not good enough.
+    * Update the `CHANGELOG.md` file as necessary. Maintainers will tag releases as appropriate.
 1. **Don't fight the framework**. Every framework has its flaws, but the frameworks we've picked out have been carefully 
     chosen for their particular merits. If you can avoid it, please resist reimplementing swathes of framework logic - the
     work has already been done for you!
