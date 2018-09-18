@@ -16,5 +16,5 @@ COPY . .
 RUN apk del \
         gcc
 
-HEALTHCHECK curl -I localhost:4000 || exit 1
+HEALTHCHECK CMD curl -I localhost:4000 || exit 1
 CMD ["gunicorn", "--workers", "4", "--bind", "0.0.0.0:4000", "pysite.wsgi:application"]
