@@ -3,7 +3,6 @@ FROM python:3.7-alpine
 ARG EXTRAS=deploy
 
 RUN apk add \
-        automake \
         gcc \
         libpq \
         musl-dev \
@@ -15,7 +14,6 @@ RUN python3 -m pip install .[$EXTRAS]
 COPY . .
 
 RUN apk del \
-        automake \
         gcc
 
 CMD ["gunicorn", "--workers", "4", "--bind", "0.0.0.0:4000", "pysite.wsgi:application"]

@@ -4,7 +4,6 @@ ARG EXTRAS=deploy
 
 RUN apt-get update -y
 RUN apt-get install -y \
-                automake \
                 gcc \
                 libc-dev \
                 libpq-dev
@@ -15,7 +14,6 @@ RUN python3 -m pip install .[$EXTRAS]
 COPY . .
 
 RUN apt-get purge -y \
-            automake \
             gcc
 
 CMD ["gunicorn", "--workers", "4", "--bind", "0.0.0.0:4000", "pysite.wsgi:applicati
