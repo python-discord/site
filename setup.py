@@ -3,8 +3,19 @@ from setuptools import find_packages, setup
 
 setup(
     name='pysite',
+    url='https://pythondiscord.com',
+    description="Python Discord community website",
+    project_urls={
+        'Source code': 'https://gitlab.com/python-discord/projects/site'
+    },
     version='0.2.0',
-    packages=find_packages(),
+    packages=find_packages(
+        exclude=(
+            '**/static',
+            '**/tests'
+        )
+    ),
+    python_requires='>= 3.6',
     install_requires=[
         'django>=2.1.1',
         'djangorestframework>=3.8.2',
