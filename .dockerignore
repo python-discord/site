@@ -27,7 +27,6 @@ home/tests
 home/tests.py
 htmlcov
 LICENSE
-manage.py
 pysite.egg-info
 README.md
 scripts
