@@ -89,6 +89,14 @@ lint-python:
     tags:
         - docker
 
+lint-docker:
+    stage: lint
+    image: hadolint/hadolint:latest-debian
+    script:
+        - hadolint docker/**/**/**/Dockerfile
+    tags:
+        - docker
+
 lint-markdown:
     stage: lint
     image: ruby:2.5-alpine

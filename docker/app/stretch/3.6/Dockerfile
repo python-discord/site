@@ -2,11 +2,16 @@ FROM python:3.6-stretch
 
 ARG EXTRAS=deploy
 
-RUN apt-get update -y
-RUN apt-get install -y \
+RUN apt-get update -y \
+    && \
+        apt-get install --no-install-recommends -y \
                 gcc \
                 libc-dev \
-                libpq-dev
+                libpq-dev \
+    && \
+        apt-get clean \
+    && \
+        rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 COPY setup.py /app/setup.py
