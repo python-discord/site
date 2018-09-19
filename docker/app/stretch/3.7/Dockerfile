@@ -14,6 +14,8 @@ RUN python3 -m pip install .[$EXTRAS]
 COPY . .
 
 RUN apt-get purge -y \
-            gcc
+            gcc \
+            libc-dev \
+            libpq-dev
 
 CMD ["gunicorn", "--workers", "4", "--bind", "0.0.0.0:4000", "pysite.wsgi:applicati

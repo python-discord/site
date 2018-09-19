@@ -5,11 +5,10 @@ ARG EXTRAS=deploy
 # Build-time dependencies: To be removed later.
 RUN apk add --virtual build \
         gcc \
-        musl-dev \
-        postgresql-dev
+        musl-dev
 
-# Used by the healthcheck.
-RUN apk add --no-cache curl
+# Used by the healthcheck and shared library used by psycopg2.
+RUN apk add --no-cache curl postgresql-dev
 
 WORKDIR /app
 COPY setup.py /app/setup.py

@@ -31,7 +31,6 @@ manage.py
 pysite.egg-info
 README.md
 scripts
-setup.py
 Vagrantfile
 venv
 wiki/migrations
