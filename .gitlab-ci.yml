@@ -81,11 +81,21 @@ build-stretch-3.6:
             .
         - docker push $BASE_IMAGE_URL:stretch-3.6-$CI_COMMIT_REF_SLUG
 
-lint:
+lint-python:
     stage: lint
     image: $BASE_IMAGE_URL:alpine-3.7-$CI_COMMIT_REF_SLUG
     script:
         - flake8
+    tags:
+        - docker
+
+lint-markdown:
+    stage: lint
+    image: ruby:2.5-alpine
+    before_script:
+        - gem install mdl
+    script:
+        - mdl *.md **/*.md
     tags:
         - docker
 
