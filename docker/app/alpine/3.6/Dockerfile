@@ -2,6 +2,11 @@ FROM python:3.6-alpine
 
 ARG EXTRAS=deploy
 
+RUN adduser \
+    --disabled-login \
+    --no-create-home \
+    pysite
+
 RUN apk add --no-cache --virtual build \
         gcc \
         linux-headers \
@@ -18,4 +23,5 @@ RUN apk del --purge build
 
 COPY . .
 
+USER pysite
 CMD ["uwsgi", "--ini", "docker/app/uwsgi.ini"]

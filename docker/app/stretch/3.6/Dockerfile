@@ -2,6 +2,11 @@ FROM python:3.6-stretch
 
 ARG EXTRAS=deploy
 
+RUN adduser \
+    --disabled-login \
+    --no-create-home \
+    pysite
+
 RUN apt-get update -y \
     && \
         apt-get install --no-install-recommends -y \
@@ -23,4 +28,5 @@ RUN apt-get purge -y \
             libc-dev \
             libpq-dev
 
+USER pysite
 CMD ["uwsgi", "--ini", "docker/app/uwsgi.ini"]
