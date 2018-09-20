@@ -23,7 +23,7 @@ setup(
     ],
     extras_require={
         'deploy': [
-            'gunicorn>=19.9.0',
+            'uwsgi>=2.0.17.1'
         ],
         'lint': [
             'flake8>=3.5.0',

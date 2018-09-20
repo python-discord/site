@@ -4,6 +4,7 @@ ARG EXTRAS=deploy
 
 RUN apk add --no-cache --virtual build \
         gcc \
+        linux-headers \
         musl-dev \
     && \
         apk add --no-cache \
@@ -17,4 +18,4 @@ RUN apk del --purge build
 
 COPY . .
 
-CMD ["gunicorn", "--workers", "4", "--bind", "0.0.0.0:4000", "pysite.wsgi:application"]
+CMD ["uwsgi", "--ini", "docker/app/uwsgi.ini"]

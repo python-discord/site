@@ -19,6 +19,7 @@ api/tests.py
 CHANGELOG.md
 CONTRIBUTING.md
 docker
+!docker/app/uwsgi.ini
 docker-compose.yml
 Dockerfile
 docs

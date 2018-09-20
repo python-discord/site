@@ -23,4 +23,4 @@ RUN apt-get purge -y \
             libc-dev \
             libpq-dev
 
-CMD ["gunicorn", "--workers", "4", "--bind", "0.0.0.0:4000", "pysite.wsgi:application"]
+CMD ["uwsgi", "--ini", "docker/app/uwsgi.ini"]
