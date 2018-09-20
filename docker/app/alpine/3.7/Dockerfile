@@ -3,8 +3,8 @@ FROM python:3.7-alpine
 ARG EXTRAS=deploy
 
 RUN adduser \
-    --disabled-login \
-    --no-create-home \
+    -D \
+    -H \
     pysite
 
 RUN apk add --no-cache --virtual build \
