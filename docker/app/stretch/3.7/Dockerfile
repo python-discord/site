@@ -5,6 +5,7 @@ ARG EXTRAS=deploy
 RUN adduser \
     --disabled-login \
     --no-create-home \
+    --uid 1500 \
     pysite
 
 RUN apt-get update -y \
@@ -28,5 +29,4 @@ RUN apt-get purge -y \
             libc-dev \
             libpq-dev
 
-USER pysite
 CMD ["uwsgi", "--ini", "docker/app/uwsgi.ini"]

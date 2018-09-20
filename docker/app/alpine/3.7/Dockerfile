@@ -5,6 +5,7 @@ ARG EXTRAS=deploy
 RUN adduser \
     -D \
     -H \
+    -u 1500 \
     pysite
 
 RUN apk add --no-cache --virtual build \
@@ -23,5 +24,4 @@ RUN apk del --purge build
 
 COPY . .
 
-USER pysite
 CMD ["uwsgi", "--ini", "docker/app/uwsgi.ini"]
