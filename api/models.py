@@ -1,5 +1,6 @@
 from operator import itemgetter
 
+from django.contrib.postgres import fields as pgfields
 from django.core.validators import MaxValueValidator, MinValueValidator, RegexValidator
 from django.db import models
 
@@ -159,3 +160,19 @@ class Member(ModelReprMixin, models.Model):
 
     def __str__(self):
         return f"{self.name}#{self.discriminator}"
+
+
+class Tag(ModelReprMixin, models.Model):
+    """A tag providing (hopefully) useful information."""
+
+    title = models.CharField(
+        max_length=100,
+        help_text=(
+            "The title of this tag, shown in searches and providing "
+            "a quick overview over what this embed contains."
+        ),
+        primary_key=True
+    )
+    embed = pgfields.JSONField(
+        help_text="The actual embed shown by this tag."
+    )
