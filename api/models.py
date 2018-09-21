@@ -41,6 +41,9 @@ class DocumentationLink(ModelReprMixin, models.Model):
         help_text="The URL at which the Sphinx inventory is available for this package."
     )
 
+    def __str__(self):
+        return f"{self.package} - {self.base_url}"
+
 
 class OffTopicChannelName(ModelReprMixin, models.Model):
     name = models.CharField(
@@ -49,6 +52,9 @@ class OffTopicChannelName(ModelReprMixin, models.Model):
         validators=(RegexValidator(regex=r'^[a-z0-9-]+$'),),
         help_text="The actual channel name that will be used on our Discord server."
     )
+
+    def __str__(self):
+        return self.name
 
 
 class SnakeName(ModelReprMixin, models.Model):
@@ -63,6 +69,9 @@ class SnakeName(ModelReprMixin, models.Model):
         max_length=150,
         help_text="The scientific name for this snake, e.g. 'Python bivittatus'."
     )
+
+    def __str__(self):
+        return f"{self.name} ({self.scientific})"
 
 
 class Role(ModelReprMixin, models.Model):
@@ -105,6 +114,9 @@ class Role(ModelReprMixin, models.Model):
         help_text="The integer value of the permission bitset of this role from Discord."
     )
 
+    def __str__(self):
+        return self.name
+
 
 class Member(ModelReprMixin, models.Model):
     """A member of our Discord server."""
@@ -144,3 +156,6 @@ class Member(ModelReprMixin, models.Model):
         Role,
         help_text="Any roles this user has on our server."
     )
+
+    def __str__(self):
+        return f"{self.name}#{self.discriminator}"
