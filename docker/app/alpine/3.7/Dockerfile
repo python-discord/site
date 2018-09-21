@@ -1,5 +1,6 @@
 FROM python:3.7-alpine
 
+STOPSIGNAL SIGQUIT
 ARG EXTRAS=deploy
 
 RUN adduser \
