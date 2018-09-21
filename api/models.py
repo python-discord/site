@@ -5,24 +5,43 @@ from django.db import models
 class DocumentationLink(models.Model):
     """A documentation link used by the `!docs` command of the bot."""
 
-    package = models.CharField(primary_key=True, max_length=50)
-    base_url = models.URLField()
-    inventory_url = models.URLField()
+    package = models.CharField(
+        primary_key=True,
+        max_length=50,
+        help_text="The Python package name that this documentation link belongs to."
+    )
+    base_url = models.URLField(
+        help_text=(
+            "The base URL from which documentation will be available for this project. "
+            "Used to generate links to various symbols within this package."
+        )
+    )
+    inventory_url = models.URLField(
+        help_text="The URL at which the Sphinx inventory is available for this package."
+    )
 
 
 class OffTopicChannelName(models.Model):
     name = models.CharField(
         primary_key=True,
         max_length=96,
-        validators=(RegexValidator(regex=r'^[a-z0-9-]+$'),)
+        validators=(RegexValidator(regex=r'^[a-z0-9-]+$'),),
+        help_text="The actual channel name that will be used on our Discord server."
     )
 
 
 class SnakeName(models.Model):
     """A snake name used by the bot's snake cog."""
 
-    name = models.CharField(primary_key=True, max_length=100)
-    scientific = models.CharField(max_length=150)
+    name = models.CharField(
+        primary_key=True,
+        max_length=100,
+        help_text="The regular name for this snake, e.g. 'Python'."
+    )
+    scientific = models.CharField(
+        max_length=150,
+        help_text="The scientific name for this snake, e.g. 'Python bivittatus'."
+    )
 
 
 class Role(models.Model):
