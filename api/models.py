@@ -1,8 +1,29 @@
+from operator import itemgetter
+
 from django.core.validators import MaxValueValidator, MinValueValidator, RegexValidator
 from django.db import models
 
 
-class DocumentationLink(models.Model):
+class ModelReprMixin:
+    """
+    Adds a `__repr__` method to the model subclassing this
+    mixin which will display the model's class name along
+    with all parameters used to construct the object.
+    """
+
+    def __repr__(self):
+        attributes = ' '.join(
+            f'{attribute}={value!r}'
+            for attribute, value in sorted(
+                self.__dict__.items(),
+                key=itemgetter(0)
+            )
+            if not attribute.startswith('_')
+        )
+        return f'<{self.__class__.__name__}({attributes})>'
+
+
+class DocumentationLink(ModelReprMixin, models.Model):
     """A documentation link used by the `!docs` command of the bot."""
 
     package = models.CharField(
@@ -21,7 +42,7 @@ class DocumentationLink(models.Model):
     )
 
 
-class OffTopicChannelName(models.Model):
+class OffTopicChannelName(ModelReprMixin, models.Model):
     name = models.CharField(
         primary_key=True,
         max_length=96,
@@ -30,7 +51,7 @@ class OffTopicChannelName(models.Model):
     )
 
 
-class SnakeName(models.Model):
+class SnakeName(ModelReprMixin, models.Model):
     """A snake name used by the bot's snake cog."""
 
     name = models.CharField(
@@ -44,7 +65,7 @@ class SnakeName(models.Model):
     )
 
 
-class Role(models.Model):
+class Role(ModelReprMixin, models.Model):
     """A role on our Discord server."""
 
     id = models.BigIntegerField(  # noqa
@@ -85,7 +106,7 @@ class Role(models.Model):
     )
 
 
-class Member(models.Model):
+class Member(ModelReprMixin, models.Model):
     """A member of our Discord server."""
 
     id = models.BigIntegerField(  # noqa
