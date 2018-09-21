@@ -171,7 +171,7 @@ DEFAULT_HOST = 'home'
 if DEBUG:
     PARENT_HOST = 'pythondiscord.local:8000'
 else:
-    PARENT_HOST = 'pythondiscord.com'
+    PARENT_HOST = env('PARENT_HOST', default='pythondiscord.com')
 
 # Django REST framework
 # http://www.django-rest-framework.org
