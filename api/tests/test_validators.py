@@ -10,6 +10,10 @@ REQUIRED_KEYS = (
 
 
 class TagEmbedValidatorTests(TestCase):
+    def test_rejects_non_mapping(self):
+        with self.assertRaises(ValidationError):
+            validate_tag_embed('non-empty non-mapping')
+
     def test_rejects_missing_required_keys(self):
         with self.assertRaises(ValidationError):
             validate_tag_embed({
