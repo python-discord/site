@@ -9,10 +9,15 @@ from rest_framework.status import HTTP_201_CREATED
 from rest_framework.viewsets import GenericViewSet, ModelViewSet, ViewSet
 from rest_framework_bulk import BulkCreateModelMixin
 
-from .models import DocumentationLink, Member, OffTopicChannelName, SnakeName
+from .models import (
+    DocumentationLink, Member,
+    OffTopicChannelName, SnakeName,
+    Tag
+)
 from .serializers import (
     DocumentationLinkSerializer, MemberSerializer,
-    OffTopicChannelNameSerializer, SnakeNameSerializer
+    OffTopicChannelNameSerializer, SnakeNameSerializer,
+    TagSerializer
 )
 
 
@@ -223,6 +228,107 @@ class SnakeNameViewSet(ViewSet):
             return Response(body)
 
         return Response({})
+
+
+class TagViewSet(ModelViewSet):
+    """
+    View providing CRUD operations on tags shown by our bot.
+
+    ## Routes
+    ### GET /bot/tags
+    Returns all tags in the database.
+
+    #### Response format
+    >>> [
+    ...     {
+    ...         'title': "resources",
+    ...         'embed': {
+    ...             'content': "Did you really think I'd put something useful here?"
+    ...         }
+    ...     }
+    ... ]
+
+    #### Status codes
+    - 200: returned on success
+
+    ### GET /bot/tags/<title:str>
+    Gets a single tag by its title.
+
+    #### Response format
+    >>> {
+    ...     'title': "My awesome tag",
+    ...     'embed': {
+    ...         'content': "totally not filler words"
+    ...     }
+    ... }
+
+    #### Status codes
+    - 200: returned on success
+    - 404: if a tag with the given `title` could not be found
+
+    ### POST /bot/tags
+    Adds a single tag to the database.
+
+    #### Request body
+    >>> {
+    ...     'title': str,
+    ...     'embed': dict
+    ... }
+
+    The embed structure is the same as the embed structure that the Discord API
+    expects. You can view the documentation for it here:
+        https://discordapp.com/developers/docs/resources/channel#embed-object
+
+    #### Status codes
+    - 201: returned on success
+    - 400: if one of the given fields is invalid
+
+    ### PUT /bot/members/<title:str>
+    Update the tag with the given `title`.
+
+    #### Request body
+    >>> {
+    ...     'title': str,
+    ...     'embed': dict
+    ... }
+
+    The embed structure is the same as the embed structure that the Discord API
+    expects. You can view the documentation for it here:
+        https://discordapp.com/developers/docs/resources/channel#embed-object
+
+    #### Status codes
+    - 200: returned on success
+    - 400: if the request body was invalid, see response body for details
+    - 404: if the tag with the given `title` could not be found
+
+    ### PATCH /bot/members/<title:str>
+    Update the tag with the given `title`.
+
+    #### Request body
+    >>> {
+    ...     'title': str,
+    ...     'embed': dict
+    ... }
+
+    The embed structure is the same as the embed structure that the Discord API
+    expects. You can view the documentation for it here:
+        https://discordapp.com/developers/docs/resources/channel#embed-object
+
+    #### Status codes
+    - 200: returned on success
+    - 400: if the request body was invalid, see response body for details
+    - 404: if the tag with the given `title` could not be found
+
+    ### DELETE /bot/members/<title:str>
+    Deletes the tag with the given `title`.
+
+    #### Status codes
+    - 204: returned on success
+    - 404: if a tag with the given `title` does not exist
+    """
+
+    serializer_class = TagSerializer
+    queryset = Tag.objects.all()
 
 
 class MemberViewSet(BulkCreateModelMixin, ModelViewSet):

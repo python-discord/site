@@ -4,7 +4,8 @@ from rest_framework.routers import SimpleRouter
 from .views import HealthcheckView
 from .viewsets import (
     DocumentationLinkViewSet, MemberViewSet,
-    OffTopicChannelNameViewSet, SnakeNameViewSet
+    OffTopicChannelNameViewSet, SnakeNameViewSet,
+    TagViewSet
 )
 
 
@@ -28,7 +29,10 @@ bot_router.register(
     SnakeNameViewSet,
     base_name='snakename'
 )
-
+bot_router.register(
+    'tags',
+    TagViewSet,
+)
 
 app_name = 'api'
 urlpatterns = (
