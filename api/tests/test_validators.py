@@ -1,7 +1,5 @@
 from django.core.exceptions import ValidationError
-from hypothesis import given, settings
-from hypothesis.extra.django import TestCase
-from hypothesis.strategies import dictionaries, just, lists, one_of, randoms, text
+from django.test import TestCase
 
 from ..validators import validate_tag_embed
 
@@ -12,15 +10,11 @@ REQUIRED_KEYS = (
 
 
 class TagEmbedValidatorTests(TestCase):
-    @given(
-        dictionaries(
-            text().filter(lambda key: key not in REQUIRED_KEYS),
-            text()
-        )
-    )
-    def test_rejects_missing_required_keys(self, embed):
+    def test_rejects_missing_required_keys(self):
         with self.assertRaises(ValidationError):
-            validate_tag_embed(embed)
+            validate_tag_embed({
+                'unknown': "key"
+            })
 
     def test_rejects_empty_required_key(self):
         with self.assertRaises(ValidationError):
@@ -28,10 +22,9 @@ class TagEmbedValidatorTests(TestCase):
                 'title': ''
             })
 
-    @given(lists(randoms()))
-    def test_rejects_list_as_embed(self, embed):
+    def test_rejects_list_as_embed(self):
         with self.assertRaises(ValidationError):
-            validate_tag_embed(embed)
+            validate_tag_embed([])
 
     def test_rejects_required_keys_and_unknown_keys(self):
         with self.assertRaises(ValidationError):
@@ -46,19 +39,11 @@ class TagEmbedValidatorTests(TestCase):
                 'title': 'a' * 257
             })
 
-    @given(
-        dictionaries(
-            just('fields'),
-            one_of(
-                lists(randoms(), min_size=25),
-                text(min_size=25)
-            )
-        )
-    )
-    @settings(max_examples=10)
-    def test_rejects_too_many_fields(self, embed):
+    def test_rejects_too_many_fields(self):
         with self.assertRaises(ValidationError):
-            validate_tag_embed(embed)
+            validate_tag_embed({
+                'fields': [{} for _ in range(26)]
+            })
 
     def test_rejects_too_long_description(self):
         with self.assertRaises(ValidationError):
