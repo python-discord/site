@@ -4,6 +4,8 @@ from django.contrib.postgres import fields as pgfields
 from django.core.validators import MaxValueValidator, MinValueValidator, RegexValidator
 from django.db import models
 
+from .validators import validate_tag_embed
+
 
 class ModelReprMixin:
     """
@@ -174,5 +176,6 @@ class Tag(ModelReprMixin, models.Model):
         primary_key=True
     )
     embed = pgfields.JSONField(
-        help_text="The actual embed shown by this tag."
+        help_text="The actual embed shown by this tag.",
+        validators=(validate_tag_embed,)
     )
