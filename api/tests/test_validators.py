@@ -20,6 +20,13 @@ class TagEmbedValidatorTests(TestCase):
                 'unknown': "key"
             })
 
+    def test_rejects_one_correct_one_incorrect(self):
+        with self.assertRaises(ValidationError):
+            validate_tag_embed({
+                'provider': "??",
+                'title': ""
+            })
+
     def test_rejects_empty_required_key(self):
         with self.assertRaises(ValidationError):
             validate_tag_embed({
@@ -55,6 +62,18 @@ class TagEmbedValidatorTests(TestCase):
                 'description': 'd' * 2049
             })
 
+    def test_allows_valid_embed(self):
+        validate_tag_embed({
+            'title': "My embed",
+            'description': "look at my embed, my embed is amazing"
+        })
+
+    def test_allows_unvalidated_fields(self):
+        validate_tag_embed({
+            'title': "My embed",
+            'provider': "what am I??"
+        })
+
     def test_rejects_fields_as_list_of_non_mappings(self):
         with self.assertRaises(ValidationError):
             validate_tag_embed({
@@ -81,6 +100,30 @@ class TagEmbedValidatorTests(TestCase):
                 ]
             })
 
+    def test_rejects_one_correct_one_incorrect_field(self):
+        with self.assertRaises(ValidationError):
+            validate_tag_embed({
+                'fields': [
+                    {
+                        'name': "Totally valid",
+                        'value': "LOOK AT ME"
+                    },
+                    {
+                        'oh': "what is this key?"
+                    }
+                ]
+            })
+
+    def test_allows_valid_fields(self):
+        validate_tag_embed({
+            'fields': [
+                {
+                    'name': "valid",
+                    'value': "field"
+                }
+            ]
+        })
+
     def test_rejects_footer_as_non_mapping(self):
         with self.assertRaises(ValidationError):
             validate_tag_embed({
@@ -106,6 +149,14 @@ class TagEmbedValidatorTests(TestCase):
                 }
             })
 
+    def test_allows_footer_with_proper_values(self):
+        validate_tag_embed({
+            'title': "whatever",
+            'footer': {
+                'text': "django good"
+            }
+        })
+
     def test_rejects_author_as_non_mapping(self):
         with self.assertRaises(ValidationError):
             validate_tag_embed({
@@ -130,3 +181,22 @@ class TagEmbedValidatorTests(TestCase):
                     'name': ""
                 }
             })
+
+    def test_rejects_author_with_one_correct_one_incorrect(self):
+        with self.assertRaises(ValidationError):
+            validate_tag_embed({
+                'title': "whatever",
+                'author': {
+                    # Relies on "dictionary insertion order remembering" (D.I.O.R.) behaviour
+                    'url': "bobswebsite.com",
+                    'name': ""
+                }
+            })
+
+    def test_allows_author_with_proper_values(self):
+        validate_tag_embed({
+            'title': "whatever",
+            'author': {
+                'name': "Bob"
+            }
+        })
