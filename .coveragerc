@@ -1,17 +1,16 @@
 [run]
 branch = true
-
-fail-under = 100
-
 source =
     admin
     api
     home
     pysite
     wiki
-
 omit =
     */admin.py
     */apps.py
     pysite/wsgi.py
     pysite/settings.py
+
+[report]
+fail-under = 100
