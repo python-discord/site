@@ -179,3 +179,6 @@ class Tag(ModelReprMixin, models.Model):
         help_text="The actual embed shown by this tag.",
         validators=(validate_tag_embed,)
     )
+
+    def __str__(self):
+        return self.title
