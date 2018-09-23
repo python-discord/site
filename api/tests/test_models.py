@@ -2,7 +2,7 @@ from django.test import SimpleTestCase
 
 from ..models import (
     DocumentationLink, Member, ModelReprMixin,
-    OffTopicChannelName, Role, SnakeName
+    OffTopicChannelName, Role, SnakeName, Tag
 )
 
 
@@ -35,6 +35,10 @@ class StringDunderMethodTests(SimpleTestCase):
             Member(
                 id=5, name='bob',
                 discriminator=1, avatar_hash=None
+            ),
+            Tag(
+                name='bob',
+                embed={'content': "the builder"}
             )
         )
 
