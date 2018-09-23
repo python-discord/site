@@ -1,5 +1,5 @@
 from django.urls import include, path
-from rest_framework.routers import SimpleRouter
+from rest_framework.routers import DefaultRouter
 
 from .views import HealthcheckView
 from .viewsets import (
@@ -9,8 +9,8 @@ from .viewsets import (
 )
 
 
-# http://www.django-rest-framework.org/api-guide/routers/#simplerouter
-bot_router = SimpleRouter(trailing_slash=False)
+# http://www.django-rest-framework.org/api-guide/routers/#defaultrouter
+bot_router = DefaultRouter(trailing_slash=False)
 bot_router.register(
     'documentation-links',
     DocumentationLinkViewSet
