@@ -1,4 +1,13 @@
 [run]
-omit = */apps.py
-       pysite/wsgi.py
-       pysite/settings.py
+source =
+    admin
+    api
+    home
+    pysite
+    wiki
+
+omit =
+    */admin.py
+    */apps.py
+    pysite/wsgi.py
+    pysite/settings.py

@@ -1,15 +1,16 @@
 from django.urls import include, path
-from rest_framework.routers import SimpleRouter
+from rest_framework.routers import DefaultRouter
 
 from .views import HealthcheckView
 from .viewsets import (
     DocumentationLinkViewSet, MemberViewSet,
-    OffTopicChannelNameViewSet, SnakeNameViewSet
+    OffTopicChannelNameViewSet, SnakeNameViewSet,
+    TagViewSet
 )
 
 
-# http://www.django-rest-framework.org/api-guide/routers/#simplerouter
-bot_router = SimpleRouter(trailing_slash=False)
+# http://www.django-rest-framework.org/api-guide/routers/#defaultrouter
+bot_router = DefaultRouter(trailing_slash=False)
 bot_router.register(
     'documentation-links',
     DocumentationLinkViewSet
@@ -28,7 +29,10 @@ bot_router.register(
     SnakeNameViewSet,
     base_name='snakename'
 )
-
+bot_router.register(
+    'tags',
+    TagViewSet,
+)
 
 app_name = 'api'
 urlpatterns = (

@@ -1,7 +1,11 @@
 from rest_framework.serializers import ModelSerializer, PrimaryKeyRelatedField
 from rest_framework_bulk import BulkSerializerMixin
 
-from .models import DocumentationLink, Member, OffTopicChannelName, Role, SnakeName
+from .models import (
+    DocumentationLink, Member,
+    OffTopicChannelName, Role,
+    SnakeName, Tag
+)
 
 
 class DocumentationLinkSerializer(ModelSerializer):
@@ -29,6 +33,12 @@ class RoleSerializer(ModelSerializer):
     class Meta:
         model = Role
         fields = ('id', 'name', 'colour', 'permissions')
+
+
+class TagSerializer(ModelSerializer):
+    class Meta:
+        model = Tag
+        fields = ('title', 'embed')
 
 
 class MemberSerializer(BulkSerializerMixin, ModelSerializer):
