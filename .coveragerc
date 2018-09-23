@@ -9,6 +9,7 @@ source =
 omit =
     */admin.py
     */apps.py
+    */urls.py
     pysite/wsgi.py
     pysite/settings.py
 
