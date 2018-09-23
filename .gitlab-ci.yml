@@ -113,7 +113,7 @@ test-3.7-alpine:
     before_script:
         - python manage.py migrate
     script:
-        - coverage run --source=api,home,pysite,wiki --branch manage.py test
+        - coverage run --branch manage.py test
     after_script:
         - coverage report
     artifacts:
