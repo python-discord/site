@@ -10,10 +10,8 @@
 .vagrant
 .venv
 __pycache__
-admin/migrations
 admin/tests
 admin/tests.py
-api/migrations
 api/tests
 api/tests.py
 CHANGELOG.md
@@ -23,7 +21,6 @@ docker
 docker-compose.yml
 Dockerfile
 docs
-home/migrations
 home/tests
 home/tests.py
 htmlcov
@@ -33,6 +30,5 @@ README.md
 scripts
 Vagrantfile
 venv
-wiki/migrations
 wiki/tests
 wiki/tests.py
