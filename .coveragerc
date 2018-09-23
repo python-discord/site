@@ -13,4 +13,4 @@ omit =
     pysite/settings.py
 
 [report]
-fail-under = 100
+fail_under = 100
