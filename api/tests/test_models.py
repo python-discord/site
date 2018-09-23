@@ -37,7 +37,7 @@ class StringDunderMethodTests(SimpleTestCase):
                 discriminator=1, avatar_hash=None
             ),
             Tag(
-                name='bob',
+                title='bob',
                 embed={'content': "the builder"}
             )
         )
