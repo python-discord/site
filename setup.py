@@ -36,7 +36,8 @@ setup(
             'mccabe>=0.6.1'
         ],
         'test': [
-            'coverage>=4.5.1'
+            'coverage>=4.5.1',
+            'hypothesis[django]>=3.71.10'
         ]
     },
     entry_points={
