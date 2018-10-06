@@ -51,6 +51,7 @@ class UserView(APIView, DBMixin):
     responses_table = "code_jam_responses"
     table_name = "users"
     teams_table = "code_jam_teams"
+    reminders_table = "reminders"
 
     @api_key
     @api_params(schema=GET_SCHEMA, validation_type=ValidationTypes.params)
@@ -117,6 +118,12 @@ class UserView(APIView, DBMixin):
             .delete()
         ).get("deleted", 0)
 
+        reminder_deletions = self.db.run(
+            self.db.query(self.reminders_table)
+            .filter(lambda rem: rem["user_id"] in user_ids)
+            .delete()
+        ).get("deleted", 0)
+
         bans = 0
         response_deletions = 0
 
@@ -160,6 +167,7 @@ class UserView(APIView, DBMixin):
 
         changes["deleted_oauth"] = oauth_deletions
         changes["deleted_jam_profiles"] = profile_deletions
+        changes["deleted_reminders"] = reminder_deletions
         changes["deleted_responses"] = response_deletions
         changes["jam_bans"] = bans
 
