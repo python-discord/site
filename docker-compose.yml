@@ -1,0 +1,31 @@
+### Docker compose setup file
+# This file can be used to quickly set up a development server
+# with code auto-reloading and automatic execution of migrations.
+#
+## Note
+# This file is not intended to be used for production.
+
+version: "3.6"
+services:
+  django:
+    build:
+      context: .
+      dockerfile: docker/app/alpine/3.7/Dockerfile
+    command: docker/app/migrate_and_serve.sh
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
+    volumes:
+      - .:/app:ro
+    environment:
+      DATABASE_URL: postgres://pysite:supersecretpassword@postgres/pysite
+      DEBUG: "true"
+      SECRET_KEY: suitable-for-development-only
+
+  postgres:
+    image: postgres:11-alpine
+    environment:
+      POSTGRES_DB: pysite
+      POSTGRES_PASSWORD: supersecretpassword
+      POSTGRES_USER: pysite

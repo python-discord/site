@@ -1,8 +1,8 @@
-version: 0.1.0
+version: 0.3.0
 name: pysite
 description: |
     Our community website, built on Django and PostgreSQL.
-#namespace: python-discord
+namespace: python-discord
 maintainers:
   - name: Johannes Christ
     email: jc@jchri.st
@@ -11,15 +11,16 @@ maintainers:
 version: "3.6"
 services:
     django:
-        image: registry.gitlab.com/python-discord/projects/site/django:latest
+        build:
+            context: .
+        command: docker/app/migrate_and_serve.sh
         ports:
             - "127.0.0.1:4000:4000"
         environment:
             DATABASE_URL: "postgres://${pg_user}:${pg_passwd}@${pg_host}/${pg_db}"
-            DEBUG: 0
+            DEBUG: 'false'
             SECRET_KEY: "${secret_key}"
         depends_on:
-            - migrator
             - postgres
 
     postgres:
@@ -29,20 +30,10 @@ services:
             POSTGRES_USER: "${pg_user}"
             POSTGRES_PASSWORD: "${pg_passwd}"
 
-    migrator:
-        image: registry.gitlab.com/python-discord/projects/site/django:latest
-        environment:
-            DATABASE_URL: "postgres://${pg_user}:${pg_passwd}@${pg_host}/${pg_db}"
-            DEBUG: 0
-            SECRET_KEY: "${secret_key}"
-        command: "python manage.py migrate"
-        depends_on:
-            - postgres
-
 ---
 pg_user: pysite
 pg_db: pysite
-pg_passwd: ''
+pg_passwd: supersecretpassword
 pg_host: postgres
 secret_key: 'suitable-for-development-only'
 
