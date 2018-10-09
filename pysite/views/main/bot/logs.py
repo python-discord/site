@@ -3,19 +3,19 @@ import logging
 from pysite.base_route import RouteView
 from pysite.constants import ALL_STAFF_ROLES, DEVELOPERS_ROLE, ROLE_COLORS
 from pysite.decorators import require_roles
-from pysite.mixins import DBMixin, OAuthMixin
+from pysite.mixins import DBMixin
 
 log = logging.getLogger(__name__)
 
 
-class LogView(RouteView, DBMixin, OAuthMixin):
+class LogView(RouteView, DBMixin):
     path = "/bot/logs/<log_id>"
     name = "bot.logs"
 
     table_name = "bot_logs"
     template = "main/bot/logs.html"
 
-    @require_roles(ALL_STAFF_ROLES)
+    @require_roles(*ALL_STAFF_ROLES)
     def get(self, log_id):
         """
         Get the requested  log and spit it out
