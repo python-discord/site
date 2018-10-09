@@ -322,6 +322,35 @@
       }
     }
   },
+  "Podcasts": {
+    "description": "Notable podcasts about the Python ecosystem",
+    "resources": {
+      "Talk Python To Me": {
+        "description": "The essential weekly Python podcast. Michael Kennedy and a prominent name within the Python community dive into a topic that relates to their experience.",
+        "payment": "free",
+        "payment_description": null,
+        "urls": [
+          {
+            "icon": "regular/link",
+            "title": "Website",
+            "url": "https://talkpython.fm/"
+          }
+        ]
+      },
+      "Python Bytes": {
+        "description": "A byte-sized podcast where Michael Kennedy and Brian Okken work through this week's notable Python headlines.",
+        "payment": "free",
+        "payment_description": null,
+        "urls": [
+          {
+            "icon": "regular/link",
+            "title": "Website",
+            "url": "https://pythonbytes.fm/"
+          }
+        ]
+      }
+    }
+  },
   "Editors": {
     "description": "Lightweight code editors supporting Python",
     "resources": {
