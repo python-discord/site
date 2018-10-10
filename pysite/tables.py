@@ -202,7 +202,8 @@ TABLES = {
         primary_key="tag_name",
         keys=sorted([
             "tag_name",
-            "tag_content"
+            "tag_content",
+            "image_url"
         ]),
         locked=False
     ),
@@ -262,7 +263,7 @@ TABLES = {
     "bot_settings": Table(
         primary_key="key",
         keys=sorted([
-            "key",  # str
+            "key",   # str
             "value"  # any
         ])
     ),
@@ -270,14 +271,14 @@ TABLES = {
     "bot_infractions": Table(
         primary_key="id",
         keys=sorted([
-            "id",  # str
-            "user_id",  # str
-            "actor_id",  # str
-            "reason",  # str
-            "type",  # str
-            "inserted_at",  # datetime
-            "expires_at",  # datetime
-            "closed",  # bool
+            "id",                # str
+            "user_id",           # str
+            "actor_id",          # str
+            "reason",            # str
+            "type",              # str
+            "inserted_at",       # datetime
+            "expires_at",        # datetime
+            "closed",            # bool
             "legacy_rowboat_id"  # str
         ])
     ),
@@ -287,6 +288,17 @@ TABLES = {
         keys=sorted([
             "user_id",
             "channel_id"
+        ])
+    ),
+
+    "reminders": Table(
+        primary_key="id",
+        keys=sorted([
+            "id",          # str
+            "user_id",     # str
+            "channel_id",  # str
+            "expires_at",  # datetime
+            "content"      # str
         ])
     )
 }

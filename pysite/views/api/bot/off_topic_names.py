@@ -12,12 +12,12 @@ from pysite.mixins import DBMixin
 OFF_TOPIC_NAME = And(
     str,
     len,
-    lambda name: all(c.isalnum() or c == '-' for c in name),
+    lambda name: all(c.isalnum() or c in '-’' for c in name),
     str.islower,
     lambda name: len(name) <= 96,
     error=(
         "The channel name must be a non-blank string consisting only of"
-        " lowercase regular characters and '-' with a maximum length of 96"
+        " lowercase regular characters, '’' and '-' with a maximum length of 96"
     )
 )
 
