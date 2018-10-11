@@ -5,7 +5,7 @@ from .views import HealthcheckView
 from .viewsets import (
     DocumentationLinkViewSet, MemberViewSet,
     OffTopicChannelNameViewSet, SnakeNameViewSet,
-    TagViewSet
+    TagViewSet, SnakeFactViewSet
 )
 
 
@@ -32,6 +32,10 @@ bot_router.register(
 bot_router.register(
     'tags',
     TagViewSet,
+)
+bot_router.register(
+    'snake-fact',
+    SnakeFactViewSet,
 )
 
 app_name = 'api'

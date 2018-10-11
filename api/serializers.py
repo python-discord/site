@@ -4,7 +4,7 @@ from rest_framework_bulk import BulkSerializerMixin
 from .models import (
     DocumentationLink, Member,
     OffTopicChannelName, Role,
-    SnakeName, Tag
+    SnakeName, Tag, SnakeFact,
 )
 
 
@@ -27,6 +27,12 @@ class SnakeNameSerializer(ModelSerializer):
     class Meta:
         model = SnakeName
         fields = ('name', 'scientific')
+
+
+class SnakeFactSerializer(ModelSerializer):
+    class Meta:
+        model = SnakeFact
+        fields = ('fact',)
 
 
 class RoleSerializer(ModelSerializer):
