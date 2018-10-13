@@ -12,12 +12,12 @@ from rest_framework_bulk import BulkCreateModelMixin
 from .models import (
     DocumentationLink, Member,
     OffTopicChannelName, SnakeName,
-    Tag, SnakeFact,
+    SnakeFact, Tag,
 )
 from .serializers import (
     DocumentationLinkSerializer, MemberSerializer,
     OffTopicChannelNameSerializer, SnakeNameSerializer,
-    TagSerializer, SnakeFactSerializer
+    SnakeFactSerializer, TagSerializer,
 )
 
 
@@ -174,6 +174,31 @@ class OffTopicChannelNameViewSet(DestroyModelMixin, ViewSet):
         return Response(serialized.data)
 
 
+class SnakeFactViewSet(ListModelMixin, GenericViewSet):
+    """
+    View providing snake facts created by the Pydis community in the first code jam.
+
+    ## Routes
+    ### GET /bot/snake-fact/<fact>
+    Returns a snake fact in the database.
+
+    #### Response format
+    >>> [
+    ...     {'fact': 'Snakes are dangerous'},
+    ...     {'fact': 'Except for Python, we all love it'}
+    ... ]
+
+    #### Status codes
+    - 200: returned on success
+
+    ## Authentication
+    Requires an API token.
+    """
+
+    serializer_class = SnakeFactSerializer
+    queryset = SnakeFact.objects.all()
+
+
 class SnakeNameViewSet(ViewSet):
     """
     View providing snake names for the bot's snake cog from our first code jam's winners.
@@ -228,31 +253,6 @@ class SnakeNameViewSet(ViewSet):
             return Response(body)
 
         return Response({})
-
-
-class SnakeFactViewSet(RetrieveModelMixin, GenericViewSet):
-    """
-    View providing snake facts created by the Pydis community in the first code jam.
-
-    ## Routes
-    ### GET /bot/snake-fact/<fact>
-    Returns a snake fact in the database.
-
-    #### Response format
-    >>> [
-    ...     {'fact': 'Snakes are dangerous'},
-    ...     {'fact': 'Except for Python, we all love it'}
-    ... ]
-
-    #### Status codes
-    - 200: returned on success
-
-    ## Authentication
-    Requires an API token.
-    """
-
-    serializer_class = SnakeFactSerializer
-    queryset = SnakeFact.objects.all()
 
 
 class TagViewSet(ModelViewSet):
