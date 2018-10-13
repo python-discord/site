@@ -25,6 +25,10 @@ bot_router.register(
     MemberViewSet
 )
 bot_router.register(
+    'snake-facts',
+    SnakeFactViewSet,
+)
+bot_router.register(
     'snake-names',
     SnakeNameViewSet,
     base_name='snakename'
@@ -32,10 +36,6 @@ bot_router.register(
 bot_router.register(
     'tags',
     TagViewSet,
-)
-bot_router.register(
-    'snake-fact',
-    SnakeFactViewSet,
 )
 
 app_name = 'api'

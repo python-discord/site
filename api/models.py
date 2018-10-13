@@ -60,6 +60,19 @@ class OffTopicChannelName(ModelReprMixin, models.Model):
         return self.name
 
 
+class SnakeFact(ModelReprMixin, models.Model):
+    """A snake fact used by the bot's snake cog."""
+
+    fact = models.CharField(
+        primary_key=True,
+        max_length=200,
+        help_text="A fact about snakes."
+    )
+
+    def __str__(self):
+        return f"{self.fact}"
+
+
 class SnakeName(ModelReprMixin, models.Model):
     """A snake name used by the bot's snake cog."""
 
@@ -75,19 +88,6 @@ class SnakeName(ModelReprMixin, models.Model):
 
     def __str__(self):
         return f"{self.name} ({self.scientific})"
-
-
-class SnakeFact(ModelReprMixin, models.Model):
-    """A snake fact used by the bot's snake cog."""
-
-    fact = models.CharField(
-        primary_key=True,
-        max_length=200,
-        help_text="A fact about snakes."
-    )
-
-    def __str__(self):
-        return f"{self.fact}"
 
 
 class Role(ModelReprMixin, models.Model):
