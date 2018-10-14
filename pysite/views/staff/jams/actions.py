@@ -215,7 +215,7 @@ class ActionView(APIView, DBMixin, RMQMixin):
                 return self.error(
                     ErrorCodes.incorrect_parameters, "Unknown jam number"
                 )
-            
+
             if not jam_data.get("teams"):
                 jam_data["teams"] = []
                 self.db.insert("code_jams", jam_data, conflict="replace")
