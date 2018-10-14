@@ -218,7 +218,7 @@ class ActionView(APIView, DBMixin, RMQMixin):
 
             if "teams" not in jam_data:
                 jam_data["teams"] = []
-                self.db.insert("code_jams", jam_data, conflict="replace")
+                self.db.insert(self.table_name, jam_data, conflict="replace")
 
             word_pairs = get_word_pairs()
             adjective, noun = list(word_pairs)[0]
@@ -246,6 +246,12 @@ class ActionView(APIView, DBMixin, RMQMixin):
                 return self.error(
                     ErrorCodes.incorrect_parameters, "Jam number required"
                 )
+
+            jam_data = self.db.get(self.table_name, jam)
+
+            if "teams" not in jam_data:
+                jam_data["teams"] = []
+                self.db.insert(self.table_name, jam_data, conflict="replace")
 
             try:
                 query = self.db.query(self.table_name).get(jam).merge(
