@@ -280,7 +280,7 @@ class ActionView(APIView, DBMixin, RMQMixin):
                     ErrorCodes.incorrect_parameters, "Unknown jam number"
                 )
 
-            if jam_data["teams"]:
+            if len(jam_data["teams"]) > 0:
                 return self.error(
                     ErrorCodes.incorrect_parameters, "Jam already has teams"
                 )
