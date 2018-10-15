@@ -4,6 +4,9 @@
 #
 ## Note
 # This file is not intended to be used for production.
+# The "migrate and server" script will automatically apply migrations
+# and additionally use the Django development server which is
+# unsuitable for production.
 
 version: "3.6"
 services:
@@ -13,7 +16,7 @@ services:
       dockerfile: docker/app/alpine/3.7/Dockerfile
     command: docker/app/migrate_and_serve.sh
     ports:
-      - "8000:8000"
+      - "127.0.0.1:8000:8000"
     depends_on:
       - postgres
     volumes:
