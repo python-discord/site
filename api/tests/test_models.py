@@ -2,7 +2,7 @@ from django.test import SimpleTestCase
 
 from ..models import (
     DocumentationLink, Member, ModelReprMixin,
-    OffTopicChannelName, Role, SnakeName, Tag
+    OffTopicChannelName, Role, SnakeFact, SnakeName, Tag
 )
 
 
