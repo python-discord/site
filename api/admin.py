@@ -4,7 +4,7 @@ from .models import (
     DocumentationLink, Member,
     OffTopicChannelName, Role,
     SnakeFact, SnakeName,
-    Tag,
+    Tag
 )
 
 

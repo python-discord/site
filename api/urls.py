@@ -4,8 +4,8 @@ from rest_framework.routers import DefaultRouter
 from .views import HealthcheckView
 from .viewsets import (
     DocumentationLinkViewSet, MemberViewSet,
-    OffTopicChannelNameViewSet, SnakeNameViewSet,
-    TagViewSet, SnakeFactViewSet
+    OffTopicChannelNameViewSet, SnakeFactViewSet, SnakeNameViewSet,
+    TagViewSet
 )
 
 

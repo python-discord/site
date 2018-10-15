@@ -70,7 +70,7 @@ class SnakeFact(ModelReprMixin, models.Model):
     )
 
     def __str__(self):
-        return f"{self.fact}"
+        return self.fact
 
 
 class SnakeName(ModelReprMixin, models.Model):

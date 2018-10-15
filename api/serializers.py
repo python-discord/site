@@ -4,8 +4,8 @@ from rest_framework_bulk import BulkSerializerMixin
 from .models import (
     DocumentationLink, Member,
     OffTopicChannelName, Role,
-    SnakeFact, SnakeName, 
-    Tag, 
+    SnakeFact, SnakeName,
+    Tag,
 )
 
 
