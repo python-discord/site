@@ -137,6 +137,22 @@
           }
         ]
       },
+      "Python Tricks": {
+        "description": "Full of useful Python tips, tricks and features. Easy to read for newbies and pros alike. Get this if you're looking for ways to improve your general Python expertise.",
+        "payment": "paid",
+        "urls": [
+          {
+            "icon": "regular/link",
+            "title": "Website",
+            "url": "https://realpython.com/products/python-tricks-book/"
+          },
+          {
+            "icon": "branding/amazon",
+            "title": "Amazon",
+            "url": "https://www.amazon.com/dp/1775093301/"
+          }
+        ]
+      },
       "Flask Web Development": {
         "description": "A comprehensive Flask walkthrough that has you building a complete social blogging application from scratch.",
         "payment": "paid",
