@@ -38,6 +38,8 @@ build-alpine-3.7:
             -f docker/app/alpine/3.7/Dockerfile
             .
         - docker push $BASE_IMAGE_URL:alpine-3.7-$CI_COMMIT_REF_SLUG
+    tags:
+        - docker
 
 build-alpine-3.6:
     stage: build
@@ -52,6 +54,8 @@ build-alpine-3.6:
             -f docker/app/alpine/3.6/Dockerfile
             .
         - docker push $BASE_IMAGE_URL:alpine-3.6-$CI_COMMIT_REF_SLUG
+    tags:
+        - docker
 
 build-stretch-3.7:
     stage: build
@@ -66,6 +70,8 @@ build-stretch-3.7:
             -f docker/app/stretch/3.7/Dockerfile
             .
         - docker push $BASE_IMAGE_URL:stretch-3.7-$CI_COMMIT_REF_SLUG
+    tags:
+        - docker
 
 build-stretch-3.6:
     stage: build
@@ -80,6 +86,8 @@ build-stretch-3.6:
             -f docker/app/stretch/3.6/Dockerfile
             .
         - docker push $BASE_IMAGE_URL:stretch-3.6-$CI_COMMIT_REF_SLUG
+    tags:
+        - docker
 
 lint-python:
     stage: lint
@@ -145,6 +153,8 @@ pages:
         paths:
             - public
         expire_in: 30 days
+    tags:
+        - docker
 
 push-django:
     image: docker:stable-git
