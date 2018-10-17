@@ -11,12 +11,12 @@ from rest_framework_bulk import BulkCreateModelMixin
 
 from .models import (
     DocumentationLink, Member,
-    OffTopicChannelName, SnakeFact, 
+    OffTopicChannelName, SnakeFact,
     SnakeName, Tag
 )
 from .serializers import (
     DocumentationLinkSerializer, MemberSerializer,
-    OffTopicChannelNameSerializer, SnakeFactSerializer, 
+    OffTopicChannelNameSerializer, SnakeFactSerializer,
     SnakeNameSerializer, TagSerializer
 )
 
