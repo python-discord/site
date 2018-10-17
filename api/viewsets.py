@@ -11,13 +11,13 @@ from rest_framework_bulk import BulkCreateModelMixin
 
 from .models import (
     DocumentationLink, Member,
-    OffTopicChannelName, SnakeName,
-    Tag
+    OffTopicChannelName, SnakeFact, 
+    SnakeName, Tag
 )
 from .serializers import (
     DocumentationLinkSerializer, MemberSerializer,
-    OffTopicChannelNameSerializer, SnakeNameSerializer,
-    TagSerializer
+    OffTopicChannelNameSerializer, SnakeFactSerializer, 
+    SnakeNameSerializer, TagSerializer
 )
 
 
@@ -172,6 +172,31 @@ class OffTopicChannelNameViewSet(DestroyModelMixin, ViewSet):
         queryset = self.get_queryset()
         serialized = self.serializer_class(queryset, many=True)
         return Response(serialized.data)
+
+
+class SnakeFactViewSet(ListModelMixin, GenericViewSet):
+    """
+    View providing snake facts created by the Pydis community in the first code jam.
+
+    ## Routes
+    ### GET /bot/snake-fact/<fact>
+    Returns a snake fact in the database.
+
+    #### Response format
+    >>> [
+    ...     {'fact': 'Snakes are dangerous'},
+    ...     {'fact': 'Except for Python, we all love it'}
+    ... ]
+
+    #### Status codes
+    - 200: returned on success
+
+    ## Authentication
+    Requires an API token.
+    """
+
+    serializer_class = SnakeFactSerializer
+    queryset = SnakeFact.objects.all()
 
 
 class SnakeNameViewSet(ViewSet):

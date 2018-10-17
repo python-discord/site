@@ -2,7 +2,7 @@ from django.test import SimpleTestCase
 
 from ..models import (
     DocumentationLink, Member, ModelReprMixin,
-    OffTopicChannelName, Role, SnakeName, Tag
+    OffTopicChannelName, Role, SnakeFact, SnakeName, Tag
 )
 
 
@@ -27,6 +27,7 @@ class StringDunderMethodTests(SimpleTestCase):
                 'test', 'http://example.com', 'http://example.com'
             ),
             OffTopicChannelName(name='bob-the-builders-playground'),
+            SnakeFact(fact='snakes are cute'),
             SnakeName(name='python', scientific='3'),
             Role(
                 id=5, name='test role',
