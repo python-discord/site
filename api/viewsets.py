@@ -12,12 +12,14 @@ from rest_framework_bulk import BulkCreateModelMixin
 from .models import (
     DocumentationLink, Member,
     OffTopicChannelName, SnakeFact, 
-    SnakeName, Tag
+    SnakeIdiom, SnakeName,
+    Tag
 )
 from .serializers import (
     DocumentationLinkSerializer, MemberSerializer,
     OffTopicChannelNameSerializer, SnakeFactSerializer, 
-    SnakeNameSerializer, TagSerializer
+    SnakeIdiomSerializer, SnakeNameSerializer,
+    TagSerializer
 )
 
 
@@ -197,6 +199,11 @@ class SnakeFactViewSet(ListModelMixin, GenericViewSet):
 
     serializer_class = SnakeFactSerializer
     queryset = SnakeFact.objects.all()
+
+
+class SnakeIdiomViewSet(ListModelMixin, GenericViewSet):
+    serializer_class = SnakeIdiomSerializer
+    queryset = SnakeIdiom.objects.all()
 
 
 class SnakeNameViewSet(ViewSet):
