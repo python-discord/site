@@ -217,7 +217,7 @@ class SnakeIdiomViewSet(ListModelMixin, GenericViewSet):
 
     #### Status codes
     - 200: returned on success
-    
+
     ## Authentication
     Requires an API token
     """
