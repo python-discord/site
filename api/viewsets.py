@@ -214,8 +214,10 @@ class SnakeIdiomViewSet(ListModelMixin, GenericViewSet):
     ...    {'idiom': 'Sneky snek'},
     ...    {'idiom': 'Snooky Snake'}
     ... ]
+
     #### Status codes
     - 200: returned on success
+    
     ## Authentication
     Requires an API token
     """
