@@ -79,7 +79,7 @@ class SnakeIdiom(ModelReprMixin, models.Model):
     idiom = models.CharField(
         primary_key=True,
         max_length=140,
-        help_text="A snake idiom"
+        help_text="A saying about a snake."
     )
 
     def __str__(self):

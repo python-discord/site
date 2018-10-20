@@ -182,7 +182,7 @@ class SnakeFactViewSet(ListModelMixin, GenericViewSet):
 
     ## Routes
     ### GET /bot/snake-facts
-    Returns a snake fact in the database.
+    Returns snake facts from the database.
 
     #### Response format
     >>> [
@@ -203,11 +203,11 @@ class SnakeFactViewSet(ListModelMixin, GenericViewSet):
 
 class SnakeIdiomViewSet(ListModelMixin, GenericViewSet):
     """
-    View providing snake idioms for the snake cog.
+    View providing  for the snake cog.
 
     ## Routes
     ### GET /bot/snake-idioms
-    Returns a snake idiom in the database.
+    Returns snake idioms from the database.
 
     #### Response format
     >>> [
@@ -217,7 +217,7 @@ class SnakeIdiomViewSet(ListModelMixin, GenericViewSet):
     #### Status codes
     - 200: returned on success
     ## Authentication
-    Requires and API token
+    Requires an API token
     """
 
     serializer_class = SnakeIdiomSerializer
