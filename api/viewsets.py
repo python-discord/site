@@ -11,13 +11,13 @@ from rest_framework_bulk import BulkCreateModelMixin
 
 from .models import (
     DocumentationLink, Member,
-    OffTopicChannelName, SnakeFact, 
+    OffTopicChannelName, SnakeFact,
     SnakeIdiom, SnakeName,
     Tag
 )
 from .serializers import (
     DocumentationLinkSerializer, MemberSerializer,
-    OffTopicChannelNameSerializer, SnakeFactSerializer, 
+    OffTopicChannelNameSerializer, SnakeFactSerializer,
     SnakeIdiomSerializer, SnakeNameSerializer,
     TagSerializer
 )
@@ -212,7 +212,7 @@ class SnakeIdiomViewSet(ListModelMixin, GenericViewSet):
     #### Response format
     >>> [
     ...    {'idiom': 'Sneky snek'},
-    ...    {'idiom': 'Snooky Snake'}     
+    ...    {'idiom': 'Snooky Snake'}
     ... ]
     #### Status codes
     - 200: returned on success

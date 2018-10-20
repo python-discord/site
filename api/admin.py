@@ -3,7 +3,7 @@ from django.contrib import admin
 from .models import (
     DocumentationLink, Member,
     OffTopicChannelName, Role,
-    SnakeFact, SnakeIdiom, 
+    SnakeFact, SnakeIdiom,
     SnakeName, Tag
 )
 
