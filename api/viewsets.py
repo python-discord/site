@@ -181,7 +181,7 @@ class SnakeFactViewSet(ListModelMixin, GenericViewSet):
     View providing snake facts created by the Pydis community in the first code jam.
 
     ## Routes
-    ### GET /bot/snake-fact/<fact>
+    ### GET /bot/snake-facts
     Returns a snake fact in the database.
 
     #### Response format
@@ -202,6 +202,24 @@ class SnakeFactViewSet(ListModelMixin, GenericViewSet):
 
 
 class SnakeIdiomViewSet(ListModelMixin, GenericViewSet):
+    """
+    View providing snake idioms for the snake cog.
+
+    ## Routes
+    ### GET /bot/snake-idioms
+    Returns a snake idiom in the database.
+
+    #### Response format
+    >>> [
+    ...    {'idiom': 'Sneky snek'},
+    ...    {'idiom': 'Snooky Snake'}     
+    ... ]
+    #### Status codes
+    - 200: returned on success
+    ## Authentication
+    Requires and API token
+    """
+
     serializer_class = SnakeIdiomSerializer
     queryset = SnakeIdiom.objects.all()
 
