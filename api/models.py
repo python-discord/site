@@ -73,6 +73,19 @@ class SnakeFact(ModelReprMixin, models.Model):
         return self.fact
 
 
+class SnakeIdiom(ModelReprMixin, models.Model):
+    """A snake idiom used by the snake cog."""
+
+    idiom = models.CharField(
+        primary_key=True,
+        max_length=140,
+        help_text="A saying about a snake."
+    )
+
+    def __str__(self):
+        return self.idiom
+
+
 class SnakeName(ModelReprMixin, models.Model):
     """A snake name used by the bot's snake cog."""
 
