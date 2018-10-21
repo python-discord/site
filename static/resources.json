@@ -169,27 +169,6 @@
           }
         ]
       },
-      "Black Hat Python": {
-        "description": "Learn how to use Python for a wide range of offensive cybersecurity tasks. An excellent book for learners getting into Cybersecurity and professionals wanting to add some tricks to their toolbelt. Note: the book uses Legacy Python (2.7).",
-        "payment": "paid",
-        "urls": [
-          {
-            "icon": "regular/link",
-            "title": "No Starch Press",
-            "url": "https://nostarch.com/blackhatpython"
-          },
-          {
-            "icon": "branding/amazon",
-            "title": "Amazon",
-            "url": "https://www.amazon.com/Black-Hat-Python-Programming-Pentesters/dp/1593275900"
-          },
-          {
-            "icon": "regular/link",
-            "title": "Code from the book",
-            "url": "http://www.nostarch.com/download/BHP-Code.zip"
-          }
-        ]
-      },
       "Flask Web Development": {
         "description": "A comprehensive Flask walkthrough that has you building a complete social blogging application from scratch.",
         "payment": "paid",
