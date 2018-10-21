@@ -190,22 +190,6 @@
           }
         ]
       },
-      "Violent Python": {
-        "description": "An older but still relevant book on using Python for everything from network scanning to digital forensics. Chock full of real-world examples that are understandable, relevant, and often times immediately applicable in day to day work.",
-        "payment": "paid",
-        "urls": [
-          {
-            "icon": "branding/amazon",
-            "title": "Amazon",
-            "url": "https://www.amazon.com/Violent-Python-Cookbook-Penetration-Engineers/dp/1597499579"
-          },
-          {
-            "icon": "branding/github",
-            "title": "Unofficial GitHub repo with code examples from book",
-            "url": "https://github.com/shadow-box/Violent-Python-Examples"
-          }
-        ]
-      },
       "Flask Web Development": {
         "description": "A comprehensive Flask walkthrough that has you building a complete social blogging application from scratch.",
         "payment": "paid",
