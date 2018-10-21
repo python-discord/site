@@ -322,6 +322,23 @@
       }
     }
   },
+  "Miscellaneous": {
+    "description": "Resources which do not fit into the other categories",
+    "resources": {
+      "Issue Haven": {
+        "description": "Aggregates open issues from thousands of open source projects. This is a good place to look for your first open source contribution.",
+        "payment": "free",
+        "payment_description": null,
+        "urls": [
+          {
+            "icon": "regular/link",
+            "title": "Website",
+            "url": "https://www.issuehaven.com/"
+          }
+        ]
+      }
+    }
+  },
   "Podcasts": {
     "description": "Notable podcasts about the Python ecosystem",
     "resources": {
