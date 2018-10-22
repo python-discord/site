@@ -2,10 +2,11 @@ from rest_framework.serializers import ModelSerializer, PrimaryKeyRelatedField
 from rest_framework_bulk import BulkSerializerMixin
 
 from .models import (
-    DocumentationLink, Member,
-    OffTopicChannelName, Role,
-    SnakeFact, SnakeIdiom,
-    SnakeName, Tag
+    DocumentationLink, 
+    Member, OffTopicChannelName,
+    Role, SnakeFact, 
+    SnakeIdiom, SnakeName, 
+    SpecialSnake, Tag
 )
 
 
@@ -40,6 +41,12 @@ class SnakeNameSerializer(ModelSerializer):
     class Meta:
         model = SnakeName
         fields = ('name', 'scientific')
+
+
+class SpecialSnakeSerializer(ModelSerializer):
+    class Meta:
+        model = SpecialSnake
+        fields = ('name', 'info',)
 
 
 class RoleSerializer(ModelSerializer):
