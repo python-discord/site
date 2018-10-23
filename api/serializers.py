@@ -40,13 +40,13 @@ class SnakeIdiomSerializer(ModelSerializer):
 class SnakeNameSerializer(ModelSerializer):
     class Meta:
         model = SnakeName
-        fields = ('name', 'scientific')
+        fields = ('name', 'scientific',)
 
 
 class SpecialSnakeSerializer(ModelSerializer):
     class Meta:
         model = SpecialSnake
-        fields = ('name', 'info',)
+        fields = ('name', 'image', 'info',)
 
 
 class RoleSerializer(ModelSerializer):

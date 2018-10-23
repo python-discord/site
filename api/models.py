@@ -110,6 +110,7 @@ class SpecialSnake(ModelReprMixin, models.Model):
         max_length=140, primary_key=True
         )
     info = models.TextField()
+    image = models.URLField()
 
     def __str__(self):
         return self.name
