@@ -2,10 +2,10 @@ from rest_framework.serializers import ModelSerializer, PrimaryKeyRelatedField
 from rest_framework_bulk import BulkSerializerMixin
 
 from .models import (
-    DocumentationLink, 
+    DocumentationLink,
     Member, OffTopicChannelName,
-    Role, SnakeFact, 
-    SnakeIdiom, SnakeName, 
+    Role, SnakeFact,
+    SnakeIdiom, SnakeName,
     SpecialSnake, Tag
 )
 
