@@ -20,7 +20,8 @@ from .serializers import (
     DocumentationLinkSerializer,
     MemberSerializer, OffTopicChannelNameSerializer,
     SnakeFactSerializer, SnakeIdiomSerializer,
-    SnakeNameSerializer, SpecialSnakeSerializer, TagSerializer
+    SnakeNameSerializer, SpecialSnakeSerializer,
+    TagSerializer
 )
 
 
@@ -294,10 +295,10 @@ class SpecialSnakeViewSet(ListModelMixin, GenericViewSet):
     #### Response Format
     >>> [
     ...   {
-    ...     'name':'Snakky sneakatus',
-    ...     'info':'Scary snek',
-    ...     'image':'https://discordapp.com/assets/53ef346458017da2062aca5c7955946b.svg'
-    ...   },
+    ...     'name': 'Snakky sneakatus',
+    ...     'info': 'Scary snek',
+    ...     'image': 'https://discordapp.com/assets/53ef346458017da2062aca5c7955946b.svg'
+    ...   }
     ... ]
 
     #### Status codes

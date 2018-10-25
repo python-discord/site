@@ -104,12 +104,16 @@ class SnakeName(ModelReprMixin, models.Model):
 
 
 class SpecialSnake(ModelReprMixin, models.Model):
-    """A special snake used by the bot's snake cog."""
+    """A special snake's name, info and image from our database used by the bot's snake cog."""
 
     name = models.CharField(
-        max_length=140, primary_key=True
-        )
-    info = models.TextField()
+        max_length=140,
+        primary_key=True,
+        help_text='A special snake name.'
+    )
+    info = models.TextField(
+        help_text='Info about a special snake.'
+    )
     image = models.URLField()
 
     def __str__(self):
