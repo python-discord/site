@@ -2,9 +2,9 @@ from django.contrib import admin
 
 from .models import (
     DocumentationLink, Member,
-    OffTopicChannelName, Role, 
-    SpecialSnake, SnakeFact, 
-    SnakeIdiom, SnakeName, 
+    OffTopicChannelName, Role,
+    SnakeFact, SnakeIdiom,
+    SnakeName, SpecialSnake,
     Tag
 )
 

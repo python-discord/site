@@ -33,7 +33,8 @@ class StringDunderMethodTests(SimpleTestCase):
             SnakeFact(fact='snakes are cute'),
             SnakeIdiom(idiom='snake snacks'),
             SnakeName(name='python', scientific='3'),
-            SpecialSnake(name='Pythagoras Pythonista', info='The only python snake that is born a triangle'),
+            SpecialSnake(name='Pythagoras Pythonista',
+                         info='The only python snake that is born a triangle'),
             Role(
                 id=5, name='test role',
                 colour=0x5, permissions=0
