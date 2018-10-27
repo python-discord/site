@@ -46,7 +46,7 @@ class SnakeNameSerializer(ModelSerializer):
 class SpecialSnakeSerializer(ModelSerializer):
     class Meta:
         model = SpecialSnake
-        fields = ('name', 'image', 'info')
+        fields = ('name', 'images', 'info')
 
 
 class RoleSerializer(ModelSerializer):

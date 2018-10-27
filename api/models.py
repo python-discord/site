@@ -114,7 +114,9 @@ class SpecialSnake(ModelReprMixin, models.Model):
     info = models.TextField(
         help_text='Info about a special snake.'
     )
-    image = models.URLField()
+    images = pgfields.ArrayField(
+        models.URLField()
+    )
 
     def __str__(self):
         return self.name
