@@ -28,7 +28,7 @@ bot_router.register(
 )
 bot_router.register(
     'snake-facts',
-    SnakeFactViewSet,
+    SnakeFactViewSet
 )
 bot_router.register(
     'snake-idioms',
@@ -41,11 +41,11 @@ bot_router.register(
 )
 bot_router.register(
     'special-snakes',
-    SpecialSnakeViewSet,
+    SpecialSnakeViewSet
 )
 bot_router.register(
     'tags',
-    TagViewSet,
+    TagViewSet
 )
 
 app_name = 'api'
