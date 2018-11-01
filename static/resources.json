@@ -248,7 +248,7 @@
     }
   },
   "Interactive": {
-    "description": "Online courses that relate to Python.",
+    "description": "Learn Python with interactive content like courses, games and programming challenges.",
     "resources": {
       "Code Combat": {
         "description": "Learn Python while gaming - an open-source project with thousands of contributors, which teaches you Python through a deep, top-down RPG.",
