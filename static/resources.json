@@ -71,6 +71,30 @@
             "url": "https://perso.limsi.fr/pointal/_media/python:cours:mementopython3-english.pdf"
           }
         ]
+      },
+      "Python Tutorials by Corey Schafer on YouTube": {
+        "description": "An in-depth look at the Python programming language, from one of YouTube's most popular Python tutors.",
+        "payment": "free",
+        "payment_description": null,
+        "urls": [
+          {
+            "icon": "branding/youtube",
+            "title": "YouTube",
+            "url": "https://www.youtube.com/playlist?list=PL-osiE80TeTt2d9bfVyTiXJA-UTHn6WwU"
+          }
+        ]
+      },
+      "Python Tutorials by The New Boston on YouTube": {
+        "description": "A Python basics tutorial based around Python 3.4 - A more casual feel when compared to Corey's tutorials, but still competent.",
+        "payment": "free",
+        "payment_description": null,
+        "urls": [
+          {
+            "icon": "branding/youtube",
+            "title": "YouTube",
+            "url": "https://www.youtube.com/playlist?list=PL6gx4Cwl9DGAcbMi1sH6oAMk4JHw91mC_"
+          }
+        ]
       }
     }
   },
@@ -255,33 +279,9 @@
       }
     }
   },
-  "Courses": {
-    "description": "Online courses that relate to Python.",
+  "Interactive Learning Tools": {
+    "description": "Learn Python with interactive content like courses, games and programming challenges.",
     "resources": {
-      "Python Tutorials by Corey Schafer on YouTube": {
-        "description": "An in-depth look at the Python programming language, from one of YouTube's most popular Python tutors.",
-        "payment": "free",
-        "payment_description": null,
-        "urls": [
-          {
-            "icon": "branding/youtube",
-            "title": "YouTube",
-            "url": "https://www.youtube.com/playlist?list=PL-osiE80TeTt2d9bfVyTiXJA-UTHn6WwU"
-          }
-        ]
-      },
-      "Python Tutorials by The New Boston on YouTube": {
-        "description": "A Python basics tutorial based around Python 3.4 - A more casual feel when compared to Corey's tutorials, but still competent.",
-        "payment": "free",
-        "payment_description": null,
-        "urls": [
-          {
-            "icon": "branding/youtube",
-            "title": "YouTube",
-            "url": "https://www.youtube.com/playlist?list=PL6gx4Cwl9DGAcbMi1sH6oAMk4JHw91mC_"
-          }
-        ]
-      },
       "Code Combat": {
         "description": "Learn Python while gaming - an open-source project with thousands of contributors, which teaches you Python through a deep, top-down RPG.",
         "payment": "optional",
@@ -349,6 +349,23 @@
             "icon": "regular/graduation-cap",
             "title": "Udemy Course",
             "url": "https://www.udemy.com/automate/?couponCode=FOR_LIKE_10_BUCKS"
+          }
+        ]
+      },
+      "exercism.io": {
+        "description": "Level up your programming skills with more than 2600 exercises across 47 programming languages, Python included. The website provides a mentored mode, where you can get your code reviewed for each solution you submit. The mentors will give you insightful advice to make you a better programmer.",
+        "payment": "free",
+        "payment_description": null,
+        "urls": [
+          {
+            "icon": "regular/link",
+            "title": "Website",
+            "url": "https://exercism.io/"
+          },
+          {
+            "icon": "branding/github",
+            "title": "GitHub",
+            "url": "https://github.com/exercism/python"
           }
         ]
       }
