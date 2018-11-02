@@ -137,6 +137,38 @@
           }
         ]
       },
+      "Python Tricks": {
+        "description": "Full of useful Python tips, tricks and features. Get this if you have a good grasp of the basics and want to take your Python skills to the next level, or are a experienced programmer looking to add to your toolbelt.",
+        "payment": "paid",
+        "urls": [
+          {
+            "icon": "regular/link",
+            "title": "Website",
+            "url": "https://realpython.com/products/python-tricks-book/"
+          },
+          {
+            "icon": "branding/amazon",
+            "title": "Amazon",
+            "url": "https://www.amazon.com/Python-Tricks-Buffet-Awesome-Features/dp/1775093301"
+          }
+        ]
+      },
+      "Mission Python": {
+        "description": "Learn programming and Python while building a complete and awesome space-themed game using cutting-edge Python 3.6 and Pygame Zero. Extensive use of code examples, images, and walk-throughs make this a pleasure to both read and follow along. Excellent book for beginners.",
+        "payment": "paid",
+        "urls": [
+          {
+            "icon": "regular/link",
+            "title": "Website",
+            "url": "https://www.sean.co.uk/books/mission-python/index.shtm"
+          },
+          {
+            "icon": "branding/amazon",
+            "title": "Amazon",
+            "url": "https://www.amazon.com/Mission-Python-Code-Space-Adventure/dp/1593278578"
+          }
+        ]
+      },
       "Flask Web Development": {
         "description": "A comprehensive Flask walkthrough that has you building a complete social blogging application from scratch.",
         "payment": "paid",
