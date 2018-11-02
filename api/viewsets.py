@@ -11,14 +11,16 @@ from rest_framework_bulk import BulkCreateModelMixin
 
 from .models import (
     DocumentationLink, Member,
-    OffTopicChannelName, SnakeFact,
-    SnakeIdiom, SnakeName,
+    OffTopicChannelName,
+    SnakeFact, SnakeIdiom,
+    SnakeName, SpecialSnake,
     Tag
 )
 from .serializers import (
-    DocumentationLinkSerializer, MemberSerializer,
-    OffTopicChannelNameSerializer, SnakeFactSerializer,
-    SnakeIdiomSerializer, SnakeNameSerializer,
+    DocumentationLinkSerializer,
+    MemberSerializer, OffTopicChannelNameSerializer,
+    SnakeFactSerializer, SnakeIdiomSerializer,
+    SnakeNameSerializer, SpecialSnakeSerializer,
     TagSerializer
 )
 
@@ -203,7 +205,7 @@ class SnakeFactViewSet(ListModelMixin, GenericViewSet):
 
 class SnakeIdiomViewSet(ListModelMixin, GenericViewSet):
     """
-    View providing  for the snake cog.
+    View providing snake idioms for the snake cog.
 
     ## Routes
     ### GET /bot/snake-idioms
@@ -280,6 +282,34 @@ class SnakeNameViewSet(ViewSet):
             return Response(body)
 
         return Response({})
+
+
+class SpecialSnakeViewSet(ListModelMixin, GenericViewSet):
+    """
+    View providing special snake names for our bot's snake cog.
+
+    ## Routes
+    ### GET /bot/special-snakes
+    Returns a list of special snake names.
+
+    #### Response Format
+    >>> [
+    ...   {
+    ...     'name': 'Snakky sneakatus',
+    ...     'info': 'Scary snek',
+    ...     'image': 'https://discordapp.com/assets/53ef346458017da2062aca5c7955946b.svg'
+    ...   }
+    ... ]
+
+    #### Status codes
+    - 200: returned on success
+
+    ## Authentication
+    Requires an API token.
+    """
+
+    serializer_class = SpecialSnakeSerializer
+    queryset = SpecialSnake.objects.all()
 
 
 class TagViewSet(ModelViewSet):

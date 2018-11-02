@@ -103,6 +103,26 @@ class SnakeName(ModelReprMixin, models.Model):
         return f"{self.name} ({self.scientific})"
 
 
+class SpecialSnake(ModelReprMixin, models.Model):
+    """A special snake's name, info and image from our database used by the bot's snake cog."""
+
+    name = models.CharField(
+        max_length=140,
+        primary_key=True,
+        help_text='A special snake name.'
+    )
+    info = models.TextField(
+        help_text='Info about a special snake.'
+    )
+    images = pgfields.ArrayField(
+        models.URLField(),
+        help_text='Images displaying this special snake.'
+    )
+
+    def __str__(self):
+        return self.name
+
+
 class Role(ModelReprMixin, models.Model):
     """A role on our Discord server."""
 

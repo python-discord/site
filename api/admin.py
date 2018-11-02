@@ -4,7 +4,8 @@ from .models import (
     DocumentationLink, Member,
     OffTopicChannelName, Role,
     SnakeFact, SnakeIdiom,
-    SnakeName, Tag
+    SnakeName, SpecialSnake,
+    Tag
 )
 
 
@@ -15,4 +16,5 @@ admin.site.register(Role)
 admin.site.register(SnakeFact)
 admin.site.register(SnakeIdiom)
 admin.site.register(SnakeName)
+admin.site.register(SpecialSnake)
 admin.site.register(Tag)
