@@ -58,7 +58,11 @@ test-3.7-alpine:
     <<: *test-template
     image: python:3.7-alpine
     before_script:
-        - apk add --no-cache-dir gcc postgresql-dev
+        - apk add --no-cache-dir \
+            gcc \
+            linux-headers \
+            musl-dev \
+            postgresql-dev
         - python -m pip install -e .[test]
         - python manage.py migrate
     script:
@@ -73,7 +77,11 @@ test-3.6-alpine:
     <<: *test-template
     image: python:3.6-alpine
     before_script:
-        - apk add --no-cache-dir gcc postgresql-dev
+        - apk add --no-cache-dir \
+            gcc \
+            linux-headers \
+            musl-dev \
+            postgresql-dev
         - python -m pip install -e .[test]
         - python manage.py migrate
 
