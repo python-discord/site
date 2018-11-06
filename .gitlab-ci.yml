@@ -30,7 +30,8 @@ lint-python:
     image: python:3.7-alpine
     before_script:
 		# Extract lint dependencies from the setup script.
-        - python -m pip install $(sed -n -e "/'lint': \[/,/]/p" setup.py | tail -n +2 | head -n -1 | cut -d"'" -f2)
+        - >
+            python -m pip install $(sed -n -e "/'lint': \[/,/]/p" setup.py | tail -n +2 | head -n -1 | cut -d"'" -f2)
     script:
         - flake8
     tags:
