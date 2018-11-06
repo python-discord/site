@@ -1,5 +1,4 @@
 stages:
-    - build
     - lint
     - test
     - publish
@@ -13,6 +12,7 @@ variables:
     services:
         - postgres:11-alpine
     before_script:
+        - python -m pip install -e .[test]
         - python manage.py migrate
     script:
         - python manage.py test
@@ -24,70 +24,6 @@ variables:
         POSTGRES_PASSWORD: supersecret
         POSTGRES_USER: django
         SECRET_KEY: supersecret
-
-build-alpine-3.7:
-    stage: build
-    image: docker:dind
-    before_script:
-        - echo "$CI_JOB_TOKEN" | docker login -u gitlab-ci-token --password-stdin $CI_REGISTRY
-    script:
-        - >
-            docker build
-            --build-arg EXTRAS=test,lint
-            -t $BASE_IMAGE_URL:alpine-3.7-$CI_COMMIT_REF_SLUG
-            -f docker/app/alpine/3.7/Dockerfile
-            .
-        - docker push $BASE_IMAGE_URL:alpine-3.7-$CI_COMMIT_REF_SLUG
-    tags:
-        - docker
-
-build-alpine-3.6:
-    stage: build
-    image: docker:dind
-    before_script:
-        - echo "$CI_JOB_TOKEN" | docker login -u gitlab-ci-token --password-stdin $CI_REGISTRY
-    script:
-        - >
-            docker build
-            --build-arg EXTRAS=test,lint
-            -t $BASE_IMAGE_URL:alpine-3.6-$CI_COMMIT_REF_SLUG
-            -f docker/app/alpine/3.6/Dockerfile
-            .
-        - docker push $BASE_IMAGE_URL:alpine-3.6-$CI_COMMIT_REF_SLUG
-    tags:
-        - docker
-
-build-stretch-3.7:
-    stage: build
-    image: docker:dind
-    before_script:
-        - echo "$CI_JOB_TOKEN" | docker login -u gitlab-ci-token --password-stdin $CI_REGISTRY
-    script:
-        - >
-            docker build
-            --build-arg EXTRAS=test,lint
-            -t $BASE_IMAGE_URL:stretch-3.7-$CI_COMMIT_REF_SLUG
-            -f docker/app/stretch/3.7/Dockerfile
-            .
-        - docker push $BASE_IMAGE_URL:stretch-3.7-$CI_COMMIT_REF_SLUG
-    tags:
-        - docker
-
-build-stretch-3.6:
-    stage: build
-    image: docker:dind
-    before_script:
-        - echo "$CI_JOB_TOKEN" | docker login -u gitlab-ci-token --password-stdin $CI_REGISTRY
-    script:
-        - >
-            docker build
-            --build-arg EXTRAS=test,lint
-            -t $BASE_IMAGE_URL:stretch-3.6-$CI_COMMIT_REF_SLUG
-            -f docker/app/stretch/3.6/Dockerfile
-            .
-        - docker push $BASE_IMAGE_URL:stretch-3.6-$CI_COMMIT_REF_SLUG
-    tags:
-        - docker
 
 lint-python:
     stage: lint
@@ -117,8 +53,9 @@ lint-markdown:
 
 test-3.7-alpine:
     <<: *test-template
-    image: $BASE_IMAGE_URL:alpine-3.7-$CI_COMMIT_REF_SLUG
+    image: python:3.7-alpine
     before_script:
+        - python -m pip install -e .[test]
         - python manage.py migrate
     script:
         - coverage run --branch manage.py test
@@ -130,15 +67,15 @@ test-3.7-alpine:
 
 test-3.6-alpine:
     <<: *test-template
-    image: $BASE_IMAGE_URL:alpine-3.6-$CI_COMMIT_REF_SLUG
+    image: python:3.6-alpine
 
 test-3.7-stretch:
     <<: *test-template
-    image: $BASE_IMAGE_URL:stretch-3.7-$CI_COMMIT_REF_SLUG
+    image: python:3.7-stretch
 
 test-3.6-stretch:
     <<: *test-template
-    image: $BASE_IMAGE_URL:stretch-3.6-$CI_COMMIT_REF_SLUG
+    image: python:3.6-stretch
 
 pages:
     image: python:3.7-alpine
