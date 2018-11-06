@@ -27,7 +27,9 @@ variables:
 
 lint-python:
     stage: lint
-    image: $BASE_IMAGE_URL:alpine-3.7-$CI_COMMIT_REF_SLUG
+    image: python:3.7-alpine
+    before_script:
+        - python -m pip install flake8
     script:
         - flake8
     tags:
