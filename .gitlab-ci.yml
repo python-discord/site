@@ -93,8 +93,7 @@ pages:
     before_script:
         - pip install coverage
     script:
-        - coverage report
-        - coverage html --directory=public
+        - coverage html --directory=public || echo "Got non-zero exit code trying to publish coverage results. Perhaps the minimum required coverage amount was not met?"
     artifacts:
         paths:
             - public
