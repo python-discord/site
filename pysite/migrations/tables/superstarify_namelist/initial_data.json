@@ -1,0 +1,306 @@
+[
+    {
+        "name": "Elvis Presley",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Elvis_Presley_promoting_Jailhouse_Rock.jpg/1200px-Elvis_Presley_promoting_Jailhouse_Rock.jpg"
+    },
+    {
+        "name": "Michael Jackson",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Michael_Jackson_signature.svg/1200px-Michael_Jackson_signature.svg.png"
+    },
+    {
+        "name": "Madonna",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Madonna_Rebel_Heart_Tour_2015_-_Stockholm_%2823051472299%29_%28cropped_2%29.jpg/1200px-Madonna_Rebel_Heart_Tour_2015_-_Stockholm_%2823051472299%29_%28cropped_2%29.jpg"
+    },
+    {
+        "name": "Elton John",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Elton_John_2011_Shankbone_2.JPG/1200px-Elton_John_2011_Shankbone_2.JPG"
+    },
+    {
+        "name": "Rihanna",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Rihanna_5%2C_2012.jpg/1200px-Rihanna_5%2C_2012.jpg"
+    },
+    {
+        "name": "Eminem",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/1/11/Eminem_DJ_Hero.jpg"
+    },
+    {
+        "name": "Mariah Carey",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/2/21/MariahGMA.jpg"
+    },
+    {
+        "name": "Celine Dion",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/e/ee/Celine_Dion_Live_2017.jpg"
+    },
+    {
+        "name": "Whitney Houston",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/a/a7/Whitney_Houston_Welcome_Home_Heroes_1_cropped.jpg"
+    },
+    {
+        "name": "Taylor Swift",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Taylor_Swift_112_%2818119055110%29_%28cropped%29.jpg/1200px-Taylor_Swift_112_%2818119055110%29_%28cropped%29.jpg"
+    },
+    {
+        "name": "Garth Brooks",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/b/bc/Garth_Brooks_on_World_Tour_%28crop%29.png"
+    },
+    {
+        "name": "Billy Joel",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Billy_Joel_Shankbone_NYC_2009.jpg/1200px-Billy_Joel_Shankbone_NYC_2009.jpg"
+    },
+    {
+        "name": "Phil Collins",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/f/f3/1_collins.jpg"
+    },
+    {
+        "name": "Aerosmith",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/7/7e/Aerosmith2007.jpg"
+    },
+    {
+        "name": "Frank Sinatra",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/a/af/Frank_Sinatra_%2757.jpg"
+    },
+    {
+        "name": "Barbra Streisand",
+        "image_url": "https://upload.wikimedia.org/wikipedia/en/a/a3/Barbra_Streisand_-_1966.jpg"
+    },
+    {
+        "name": "Justin Bieber",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/d/da/Justin_Bieber_in_2015.jpg"
+    },
+    {
+        "name": "Kanye West",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/Kanye_West_at_the_2009_Tribeca_Film_Festival.jpg/1200px-Kanye_West_at_the_2009_Tribeca_Film_Festival.jpg"
+    },
+    {
+        "name": "Bruno Mars",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/b/b0/BrunoMars24KMagicWorldTourLive_%28cropped%29.jpg"
+    },
+    {
+        "name": "Ed Sheeran",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/5/55/Ed_Sheeran_2013.jpg"
+    },
+    {
+        "name": "Bruce Springsteen",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Bruce_Springsteen_-_Roskilde_Festival_2012.jpg/1200px-Bruce_Springsteen_-_Roskilde_Festival_2012.jpg"
+    },
+    {
+        "name": "Lady Gaga",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/4/4f/TIFF_2018_Lady_Gaga_%281_of_1%29-3_%28cropped%29_%28edited%29.jpg"
+    },
+    {
+        "name": "Katy Perry",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/8/8a/Katy_Perry_at_Madison_Square_Garden_%2837436531092%29_%28cropped%29.jpg"
+    },
+    {
+        "name": "Adele",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Adele_2016.jpg/1200px-Adele_2016.jpg"
+    },
+    {
+        "name": "Lil Wayne",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Lil_Wayne_%2823513397583%29.jpg/1200px-Lil_Wayne_%2823513397583%29.jpg"
+    },
+    {
+        "name": "Jay-Z",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Jay-Z_%40_Shawn_%27Jay-Z%27_Carter_Foundation_Carnival_%28crop_2%29.jpg/1200px-Jay-Z_%40_Shawn_%27Jay-Z%27_Carter_Foundation_Carnival_%28crop_2%29.jpg"
+    },
+    {
+        "name": "B'z",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/B%27Z_Best_Buy_Theater_montage.jpg/1200px-B%27Z_Best_Buy_Theater_montage.jpg"
+    },
+    {
+        "name": "Bon Jovi",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Bon_Jovi_1.jpg/1200px-Bon_Jovi_1.jpg"
+    },
+    {
+        "name": "Beyonce",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/f/f2/Beyonce_-_The_Formation_World_Tour%2C_at_Wembley_Stadium_in_London%2C_England.jpg"
+    },
+    {
+        "name": "Britney Spears",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/d/da/Britney_Spears_2013_%28Straighten_Crop%29.jpg"
+    },
+    {
+        "name": "Rod Stewart",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/5/57/Rod_stewart_05111976_12_400.jpg"
+    },
+    {
+        "name": "George Strait",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/George_Strait_2014_1.jpg/1200px-George_Strait_2014_1.jpg"
+    },
+    {
+        "name": "Neil Diamond",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/3/3a/NeilDiamondHWOFAug2012.jpg"
+    },
+    {
+        "name": "Santana",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/4/49/Santana_%281971%29.png"
+    },
+    {
+        "name": "Prince",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/b/b2/Prince_1983_1st_Avenue.jpg"
+    },
+    {
+        "name": "Kenny Rogers",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/4/46/KennyRogers0042-rededit.jpg"
+    },
+    {
+        "name": "Paul McCartney",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Paul_McCartney_-_Out_There_Concert_-_140420-5941-jikatu_%2813950091384%29.jpg/1200px-Paul_McCartney_-_Out_There_Concert_-_140420-5941-jikatu_%2813950091384%29.jpg"
+    },
+    {
+        "name": "Janet Jackson",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/JanetJacksonUnbreakableTourSanFran2015_%28cropped%29.jpg/1200px-JanetJacksonUnbreakableTourSanFran2015_%28cropped%29.jpg"
+    },
+    {
+        "name": "Julio Iglesias",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/e/ef/Julio_Iglesias09.jpg"
+    },
+    {
+        "name": "Bob Dylan",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Bob_Dylan_-_Azkena_Rock_Festival_2010_2.jpg/1200px-Bob_Dylan_-_Azkena_Rock_Festival_2010_2.jpg"
+    },
+    {
+        "name": "Cher",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Cher_-_Casablanca.jpg/1200px-Cher_-_Casablanca.jpg"
+    },
+    {
+        "name": "Olivia Newton-John",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/c/c7/Olivia_Newton-John_2.jpg"
+    },
+    {
+        "name": "James Taylor",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/c/cf/James_Taylor_-_Columbia.jpg"
+    },
+    {
+        "name": "Stevie Wonder",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/5/54/Stevie_Wonder_1973.JPG"
+    },
+    {
+        "name": "David Bowie",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/e/e8/David-Bowie_Chicago_2002-08-08_photoby_Adam-Bielawski-cropped.jpg"
+    },
+    {
+        "name": "Tina Turner",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/1/10/Tina_turner_21021985_01_350.jpg"
+    },
+    {
+        "name": "Linda Ronstadt",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/LindaRonstadtPerforming.jpg/1200px-LindaRonstadtPerforming.jpg"
+    },
+    {
+        "name": "Donna Summer",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/d/dd/Nobel_Peace_Price_Concert_2009_Donna_Summer3.jpg"
+    },
+    {
+        "name": "Barry White",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Barry_White%2C_Bestanddeelnr_927-0099.jpg/1200px-Barry_White%2C_Bestanddeelnr_927-0099.jpg"
+    },
+    {
+        "name": "Drake",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/Drake_at_the_Velvet_Underground_-_2017_%2835986086223%29_%28cropped%29.jpg/1200px-Drake_at_the_Velvet_Underground_-_2017_%2835986086223%29_%28cropped%29.jpg"
+    },
+    {
+        "name": "Shania Twain",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/e/ee/ShaniaTwainJunoAwardsMar2011.jpg"
+    },
+    {
+        "name": "Pink",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/P%21nk_Live_2013.jpg/1200px-P%21nk_Live_2013.jpg"
+    },
+    {
+        "name": "Lionel Richie",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/c/cd/Lionel_Richie_2017.jpg"
+    },
+    {
+        "name": "Johnny Cash",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/f/f2/JohnnyCash1969.jpg"
+    },
+    {
+        "name": "Justin Timberlake",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Justin_Timberlake_by_Gage_Skidmore_2.jpg/1200px-Justin_Timberlake_by_Gage_Skidmore_2.jpg"
+    },
+    {
+        "name": "Nicki Minaj",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/6/66/Nicki_Minaj_cropped.jpg"
+    },
+    {
+        "name": "Flo Rida",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/8/8b/Flo_Rida_%286924266548%29.jpg"
+    },
+    {
+        "name": "Van Halen",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/Van_Halen_2008_%28crop%29.jpg/1200px-Van_Halen_2008_%28crop%29.jpg"
+    },
+    {
+        "name": "Ayumi Hamasaki",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/5/50/Ayumi_Hamasaki_2007.jpg"
+    },
+    {
+        "name": "George Michael",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/George_Michael.jpeg/1200px-George_Michael.jpeg"
+    },
+    {
+        "name": "Reba McEntire",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Reba_McEntire_by_Gage_Skidmore.jpg/1200px-Reba_McEntire_by_Gage_Skidmore.jpg"
+    },
+    {
+        "name": "Meat Loaf",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/e/e7/Meat_Loaf.jpg"
+    },
+    {
+        "name": "Tom Petty",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/5/5a/Tom_Petty_Live_in_Horsens_%28cropped2%29.jpg"
+    },
+    {
+        "name": "Johnny Hallyday",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/a/a1/Johnny_Hallyday_Cannes.jpg"
+    },
+    {
+        "name": "Tim McGraw",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/5/5f/Tim_McGraw_October_24_2015.jpg"
+    },
+    {
+        "name": "Christina Aguilera",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/3/35/Christina_Aguilera_at_the_premiere_of_Burlesque_%282010%29.jpg"
+    },
+    {
+        "name": "Usher",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/f/fa/Usher_Cannes_2016_retusche.jpg"
+    },
+    {
+        "name": "Robbie Williams",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/2/21/Robbie_Williams.jpg"
+    },
+    {
+        "name": "Kenny G",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/f/f4/KennyGHWOFMay2013.jpg"
+    },
+    {
+        "name": "Tupac Shakur",
+        "image_url": "https://upload.wikimedia.org/wikipedia/en/b/b5/Tupac_Amaru_Shakur2.jpg"
+    },
+    {
+        "name": "Enya",
+        "image_url": "https://pbs.twimg.com/media/CU1fFdeUYAABs6i.jpg"
+    },
+    {
+        "name": "Bob Seger",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Bob_Seger_2013.jpg/1200px-Bob_Seger_2013.jpg"
+    },
+    {
+        "name": "Bryan Adams",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Bryan_Adams_Hamburg_MG_0631_flickr.jpg/1200px-Bryan_Adams_Hamburg_MG_0631_flickr.jpg"
+    },
+    {
+        "name": "Bob Marley",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/5/5e/Bob-Marley.jpg"
+    },
+    {
+        "name": "Barry Manilow",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/BarryManilow.jpg/1200px-BarryManilow.jpg"
+    },
+    {
+        "name": "Aretha Franklin",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/c/c6/Aretha_Franklin_1968.jpg"
+    }
+]

@@ -26,17 +26,17 @@ DELETE_SCHEMA = Schema({
 })
 
 
-class HiphopifyView(APIView, DBMixin):
-    path = "/bot/hiphopify"
-    name = "bot.hiphopify"
-    prison_table = "hiphopify"
-    name_table = "hiphopify_namelist"
+class SuperstarifyView(APIView, DBMixin):
+    path = "/bot/superstarify"
+    name = "bot.superstarify"
+    prison_table = "superstarify"
+    name_table = "superstarify_namelist"
 
     @api_key
     @api_params(schema=GET_SCHEMA, validation_type=ValidationTypes.params)
     def get(self, params=None):
         """
-        Check if the user is currently in hiphop-prison.
+        Check if the user is currently in superstar-prison.
 
         If user is currently servin' his sentence in the big house,
         return the name stored in the forced_nick column of prison_table.
@@ -66,10 +66,10 @@ class HiphopifyView(APIView, DBMixin):
     @api_params(schema=POST_SCHEMA, validation_type=ValidationTypes.json)
     def post(self, json_data):
         """
-        Imprisons a user in hiphop-prison.
+        Imprisons a user in superstar-prison.
 
         If a forced_nick was provided by the caller, the method will force
-        this nick. If not, a random hiphop nick will be selected from the
+        this nick. If not, a random superstar nick will be selected from the
         name_table.
 
         Data must be provided as JSON.
@@ -133,7 +133,7 @@ class HiphopifyView(APIView, DBMixin):
     @api_params(schema=DELETE_SCHEMA, validation_type=ValidationTypes.json)
     def delete(self, json_data):
         """
-        Releases a user from hiphop-prison.
+        Releases a user from superstar-prison.
 
         Data must be provided as JSON.
         API key must be provided as header.
@@ -141,30 +141,30 @@ class HiphopifyView(APIView, DBMixin):
 
         user_id = json_data.get("user_id")
 
-        log.debug(f"Attempting to release user ({user_id}) from hiphop-prison.")
+        log.debug(f"Attempting to release user ({user_id}) from superstar-prison.")
         prisoner_data = self.db.get(self.prison_table, user_id)
         sentence_expired = None
 
-        log.trace(f"Checking if the user ({user_id}) is currently in hiphop-prison.")
+        log.trace(f"Checking if the user ({user_id}) is currently in superstar-prison.")
         if prisoner_data and prisoner_data.get("end_timestamp"):
             sentence_expired = is_expired(prisoner_data['end_timestamp'])
 
         if prisoner_data and not sentence_expired:
-            log.debug("User is currently in hiphop-prison. Deleting the record and releasing the prisoner.")
+            log.debug("User is currently in superstar-prison. Deleting the record and releasing the prisoner.")
             self.db.delete(
                 self.prison_table,
                 user_id
             )
             return jsonify({"success": True})
         elif not prisoner_data:
-            log.warning(f"User ({user_id}) is not currently in hiphop-prison.")
+            log.warning(f"User ({user_id}) is not currently in superstar-prison.")
             return jsonify({
                 "success": False,
-                "error_message": "User is not currently in hiphop-prison!"
+                "error_message": "User is not currently in superstar-prison!"
             })
         elif sentence_expired:
-            log.warning(f"User ({user_id}) was in hiphop-prison, but has already been released.")
+            log.warning(f"User ({user_id}) was in superstar-prison, but has already been released.")
             return jsonify({
                 "success": False,
-                "error_message": "User has already been released from hiphop-prison!"
+                "error_message": "User has already been released from superstar-prison!"
             })
