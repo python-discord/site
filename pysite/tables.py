@@ -24,7 +24,7 @@ TABLES = {
         ])
     ),
 
-    "hiphopify": Table(  # Users in hiphop prison
+    "superstarify": Table(  # Users in superstar prison
         primary_key="user_id",
         keys=sorted([
             "user_id",
@@ -33,7 +33,7 @@ TABLES = {
         ])
     ),
 
-    "hiphopify_namelist": Table(  # Names and images of hiphop artists
+    "superstarify_namelist": Table(  # Names and images of music superstars
         primary_key="name",
         keys=sorted([
             "name",
