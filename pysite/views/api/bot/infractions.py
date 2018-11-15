@@ -114,6 +114,7 @@ EXCLUDED_FIELDS = "user_id", "actor_id", "closed", "_timed"
 INFRACTION_ORDER = rethinkdb.desc("active"), rethinkdb.desc("inserted_at")
 
 INFRACTION_TYPES = {
+    "note": InfractionType(timed_infraction=False),
     "warning": InfractionType(timed_infraction=False),
     "mute": InfractionType(timed_infraction=True),
     "ban": InfractionType(timed_infraction=True),
@@ -200,6 +201,10 @@ class InfractionsView(APIView, DBMixin):
 
         if infraction_type not in INFRACTION_TYPES:
             return self.error(ErrorCodes.incorrect_parameters, "Invalid infraction type.")
+
+        # Hidden warnings are notes.
+        elif infraction_type == "warning" and hidden is True:
+            infraction_type = "note"
 
         # check if the user already has an active infraction of this type
         # if so, we need to disable that infraction and create a new infraction
@@ -506,8 +511,9 @@ def _infraction_list_filtered(view, params=None, query_filter=None):
         )
 
     query = query.order_by(*INFRACTION_ORDER)
+    infractions = view.db.run(query.coerce_to("array"))
 
-    return jsonify(view.db.run(query.coerce_to("array")))
+    return jsonify(infractions)
 
 
 def _merged_query(view, expand, query_filter):
