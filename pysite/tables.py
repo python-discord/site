@@ -279,6 +279,7 @@ TABLES = {
             "inserted_at",       # datetime
             "expires_at",        # datetime
             "closed",            # bool
+            "hidden",            # bool
             "legacy_rowboat_id"  # str
         ])
     ),
