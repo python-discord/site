@@ -95,6 +95,18 @@
             "url": "https://www.youtube.com/playlist?list=PL6gx4Cwl9DGAcbMi1sH6oAMk4JHw91mC_"
           }
         ]
+      },
+      "The Modern Python 3 Bootcamp": {
+        "description": "A unique interactive python experience with nearly 200 exercises and quizzes.",
+        "payment": "paid",
+        "payment_description": null,
+        "urls": [
+          {
+            "icon": "regular/chalkboard-teacher",
+            "title": "Udemy",
+            "url": "https://www.udemy.com/the-modern-python3-bootcamp/"
+          }
+        ]
       }
     }
   },
