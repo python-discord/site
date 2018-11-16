@@ -96,9 +96,9 @@
           }
         ]
       },
-      "The Modern Python3 Bootcamp": {
-        "description": "A Unique Interactive Python Experience With Nearly 200 Exercises and Quizzes.",
-        "payment": "Paid",
+      "The Modern Python 3 Bootcamp": {
+        "description": "A unique interactive python experience with nearly 200 exercises and quizzes.",
+        "payment": "paid",
         "payment_description": null,
         "urls": [
           {
