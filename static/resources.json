@@ -95,19 +95,20 @@
             "url": "https://www.youtube.com/playlist?list=PL6gx4Cwl9DGAcbMi1sH6oAMk4JHw91mC_"
           }
         ]
-      }
-   },
-      "The modern python3 bootcamp": {
+      },
+      "The Modern Python3 Bootcamp": {
         "description": "A Unique Interactive Python Experience With Nearly 200 Exercises and Quizzes.",
         "payment": "Paid",
         "payment_description": null,
         "urls": [
           {
-            "icon": "regular/chalkboard-teacher"
-            "title":"Udemy"
+            "icon": "regular/chalkboard-teacher",
+            "title": "Udemy",
             "url": "https://www.udemy.com/the-modern-python3-bootcamp/"
           }
         ]
+      }
+    }
   },
   "Books": {
     "description": "The best books for learning Python or Python Frameworks",
