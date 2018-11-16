@@ -96,16 +96,15 @@
           }
         ]
       }
-   
-    },
-      "The-modern-python3-bootcamp": {
+   },
+      "The modern python3 bootcamp": {
         "description": "A Unique Interactive Python Experience With Nearly 200 Exercises and Quizzes.",
         "payment": "Paid",
         "payment_description": null,
         "urls": [
           {
-            "icon": <i class="fas fa-chalkboard-teacher"></i>
-
+            "icon": "regular/chalkboard-teacher"
+            "title":"Udemy"
             "url": "https://www.udemy.com/the-modern-python3-bootcamp/"
           }
         ]
