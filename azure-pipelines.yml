@@ -39,7 +39,7 @@ jobs:
   - task: UsePythonVersion@0
     displayName: 'Set Python version'
     inputs:
-      versionSpec: '3.7.x'
+      versionSpec: '3.6.x'
       addToPath: true
 
   - script: sudo pip install pipenv
