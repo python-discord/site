@@ -33,7 +33,6 @@ requests = "*"
 flask-testing = "*"
 pytest = "*"
 pytest-cov = "*"
-python-coveralls = "*"
 libsass = "*"
 
 [requires]
