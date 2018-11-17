@@ -33,8 +33,9 @@ jobs:
       wget -qO- https://download.rethinkdb.com/apt/pubkey.gpg | sudo apt-key add -
       sudo apt-get update
       sudo apt-get install rethinkdb
-      sudo cp /etc/rethinkdb/default.conf.sample /etc/rethinkdb/instances.d/instance1.conf
-      sudo service rethinkdb start
+      mkdir ./rdb
+      sudo rethinkdb create -d ./rdb
+      sudo rethinkdb serve --daemon -d ./rdb
     displayName: 'Install and start RethinkDB'
 
   - task: UsePythonVersion@0
