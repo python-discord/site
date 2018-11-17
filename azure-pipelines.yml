@@ -88,5 +88,5 @@ jobs:
     displayName: 'Build and deploy containers'
 
     inputs:
-      scriptPath: scripts/deploy-azure.sh
+      scriptPath: scripts/deploy.sh
       args: '$(AUTODEPLOY_TOKEN) $(AUTODEPLOY_WEBHOOK)'
