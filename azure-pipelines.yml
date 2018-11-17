@@ -71,22 +71,22 @@ jobs:
   - script: pipenv run test
     displayName: 'Run tests'
 
-# - job: build
-#   displayName: 'Build Containers'
-#   dependsOn: 'test'
+ - job: build
+   displayName: 'Build Containers'
+   dependsOn: 'test'
 
-#   steps:
-#   - task: Docker@1
-#     displayName: 'Login: Docker Hub'
+   steps:
+   - task: Docker@1
+     displayName: 'Login: Docker Hub'
 
-#     inputs:
-#       containerregistrytype: 'Container Registry'
-#       dockerRegistryEndpoint: 'DockerHub'
-#       command: 'login'
+     inputs:
+       containerregistrytype: 'Container Registry'
+       dockerRegistryEndpoint: 'DockerHub'
+       command: 'login'
 
-#   - task: ShellScript@2
-#     displayName: 'Build and deploy containers'
+   - task: ShellScript@2
+     displayName: 'Build and deploy containers'
 
-#     inputs:
-#       scriptPath: scripts/deploy-azure.sh
-#       args: '$(AUTODEPLOY_TOKEN) $(AUTODEPLOY_WEBHOOK)'
+     inputs:
+       scriptPath: scripts/deploy-azure.sh
+       args: '$(AUTODEPLOY_TOKEN) $(AUTODEPLOY_WEBHOOK)'
