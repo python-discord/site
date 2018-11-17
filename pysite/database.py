@@ -1,7 +1,7 @@
 import logging
 import os
-from typing import Any, Callable, Dict, Iterator, List, Optional, Union
 import re
+from typing import Any, Callable, Dict, Iterator, List, Optional, Union
 
 import rethinkdb
 from rethinkdb.ast import RqlMethodQuery, Table, UserError
@@ -229,7 +229,7 @@ class RethinkDB:
             try:
                 result = query.run(self.conn)
             except rethinkdb.ReqlDriverError as e:
-                if e.message == "Connection is closed.":
+                if e.args[0] == "Connection is closed.":
                     self.log.warning("Connection was closed, attempting with a new connection...")
                     result = query.run(self.get_connection(connect_database))
                 else:
@@ -246,8 +246,8 @@ class RethinkDB:
     # region: RethinkDB wrapper functions
 
     def between(self, table_name: str, *, lower: Any = rethinkdb.minval, upper: Any = rethinkdb.maxval,
-                index: Optional[str] = None, left_bound: str = "closed", right_bound: str = "open") -> List[
-        Dict[str, Any]]:
+                index: Optional[str] = None, left_bound: str = "closed",
+                right_bound: str = "open") -> List[Dict[str, Any]]:
         """
         Get all documents between two keys
 
@@ -416,8 +416,7 @@ class RethinkDB:
                    str, Callable[  # ...str, or a callable that...
                        [Dict[str, Any], Dict[str, Any]],  # ...takes two dicts with string keys and any values...
                        Dict[str, Any]  # ...and returns a dict with string keys and any values
-                   ]
-               ] = "error") -> Dict[str, Any]:  # flake8: noqa
+                   ]] = "error") -> Dict[str, Any]:  # flake8: noqa
         """
         Insert an object or a set of objects into a table
 

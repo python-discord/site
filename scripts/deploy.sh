@@ -1,10 +1,9 @@
 #!/bin/bash
 
-# Build and deploy on master branch
-if [[ $CI_COMMIT_REF_SLUG == 'master' ]]; then
-    echo "Connecting to docker hub"
-    echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+cd ..
 
+# Build and deploy on master branch, only if not a pull request
+if [[ ($BUILD_SOURCEBRANCHNAME == 'master') && ($SYSTEM_PULLREQUEST_PULLREQUESTID == '') ]]; then
     changed_lines=$(git diff HEAD~1 HEAD docker/Dockerfile.base | wc -l)
 
     if [ $changed_lines != '0' ]; then
@@ -19,7 +18,6 @@ if [[ $CI_COMMIT_REF_SLUG == 'master' ]]; then
       echo "Dockerfile.base was not changed, not building"
     fi
 
-
     echo "Building image"
     docker build -t pythondiscord/site:latest -f docker/Dockerfile .
 
@@ -27,7 +25,7 @@ if [[ $CI_COMMIT_REF_SLUG == 'master' ]]; then
     docker push pythondiscord/site:latest
 
     echo "Deploying container"
-    curl -H "token: $AUTODEPLOY_TOKEN" $AUTODEPLOY_WEBHOOK
+    curl -H "token: $1" $2
 else
     echo "Skipping deploy"
 fi
