@@ -64,7 +64,7 @@ class JamsTeamEditRepo(APIView, DBMixin, OAuthMixin):
                 "Not a valid repository."
             )
 
-        word_regex = re.compile("^[\-\.\w]+$")  # Alphanumerical, underscores, periods, and dashes
+        word_regex = re.compile(r"^[\-.\w]+$")  # Alphanumerical, underscores, periods, and dashes
         for segment in project_path.split("/"):
             if not word_regex.fullmatch(segment):
                 return self.error(

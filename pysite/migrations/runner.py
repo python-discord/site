@@ -28,7 +28,7 @@ def get_migrations(table_path, table):
     return migrations, final_version
 
 
-def run_migrations(db: RethinkDB, output: Callable[[str], None]=None):
+def run_migrations(db: RethinkDB, output: Callable[[str], None] = None):
     for table, obj in TABLES.items():  # All _defined_ tables
         table_path = os.path.join(TABLES_DIR, table)
 
