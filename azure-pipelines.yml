@@ -1,11 +1,10 @@
 # https://aka.ms/yaml
 
 variables:
-  ENV LIBRARY_PATH: /lib:/usr/lib
-  ENV PIPENV_HIDE_EMOJIS: 1
-  ENV PIPENV_IGNORE_VIRTUALENVS: 1
-  ENV PIPENV_NOSPIN: 1
-  ENV PIPENV_VENV_IN_PROJECT: 1
+  PIPENV_HIDE_EMOJIS: 1
+  PIPENV_IGNORE_VIRTUALENVS: 1
+  PIPENV_NOSPIN: 1
+  PIPENV_VENV_IN_PROJECT: 1
 
 jobs:
 - job: test
@@ -19,7 +18,9 @@ jobs:
     PIP_CACHE_DIR: ".cache/pip"
 
   steps:
-  - script: sudo apt-get install autoconf automake build-essential cmake curl libtool nodejs ruby-full ruby-dev
+  - script: |
+      sudo apt-get update
+      sudo apt-get install autoconf automake build-essential cmake curl libtool nodejs ruby-full ruby-dev
     displayName: 'Install base dependencies'
   
   - script: |
