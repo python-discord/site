@@ -1,0 +1,92 @@
+# https://aka.ms/yaml
+
+jobs:
+  - job: lint
+    displayName: Lint
+    pool:
+      vmImage: ubuntu-16.04
+
+    strategy:
+      matrix:
+        Python 3.6:
+          python.version: 3.6
+        Python 3.7:
+          python.version: 3.7
+
+    variables:
+      PIP_CACHE_DIR: .cache/pip
+
+    steps:
+      - task: UsePythonVersion@0
+        inputs:
+          versionSpec: $(python.version)
+          architecture: x64
+
+      - script: >
+          python -m pip install $(sed -n -e "/'lint': \[/,/]/p" setup.py | tail -n +2 | head -n -1 | cut -d"'" -f2)
+        displayName: install lint requirements
+
+      - script: flake8
+        displayName: lint using flake8
+
+  - job: test
+    displayName: Test
+    pool:
+      vmImage: ubuntu-16.04
+    strategy:
+      matrix:
+        Python 3.6 with PostgreSQL 10:
+          python.version: 3.6
+          postgres.version: 10
+        Python 3.6 with PostgreSQL 11:
+          python.version: 3.6
+          postgres.version: 11
+        Python 3.7 with PostgreSQL 10:
+          python.version: 3.7
+          postgres.version: 10
+        Python 3.7 with PostgreSQL 11:
+          python.version: 3.7
+          postgres.version: 11
+
+    steps:
+      - task: UsePythonVersion@0
+        inputs:
+          versionSpec: $(python.version)
+          architecture: x64
+
+      - script: |
+          curl https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+          sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
+          sudo apt-get update -y
+          sudo apt-get install -y postgresql-$(postgres.version)
+        displayName: install postgresql
+
+      - script: |
+          echo "$USER_CREATE_COMMAND;" > pgscript.sql
+          echo "CREATE DATABASE pysite OWNER pysite;" >> pgscript.sql
+          sudo su postgres -c "psql < pgscript.sql"
+        env:
+          USER_CREATE_COMMAND: CREATE USER pysite WITH PASSWORD 'pysite' CREATEDB
+        displayName: set up the database
+
+      - script: python -m pip install -e .[test] unittest-xml-reporting
+        displayName: install requirements
+
+      - script: |
+          python manage.py migrate
+          coverage run --branch manage.py test --testrunner xmlrunner.extra.djangotestrunner.XMLTestRunner --no-input
+        env:
+          CI: azure
+          DATABASE_URL: postgres://pysite:pysite@localhost/pysite
+        displayName: run tests
+
+      - script: coverage report
+        displayName: show coverage results
+
+      - task: PublishTestResults@2
+        inputs:
+          testResultsFiles: "**/TEST-*.xml"
+          testRunTitle: 'Python $(python.version) with PostgreSQL $(postgres.version)'
+
+
+# vim: sw=2 ts=2:
