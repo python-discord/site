@@ -2,12 +2,25 @@ from rest_framework.serializers import ModelSerializer, PrimaryKeyRelatedField
 from rest_framework_bulk import BulkSerializerMixin
 
 from .models import (
-    DocumentationLink,
-    Member, OffTopicChannelName,
-    Role, SnakeFact,
-    SnakeIdiom, SnakeName,
-    SpecialSnake, Tag
+    DeletedMessage, DocumentationLink,
+    Member, MessageDeletionContext,
+    OffTopicChannelName, Role,
+    SnakeFact, SnakeIdiom,
+    SnakeName, SpecialSnake,
+    Tag
 )
+
+
+class MessageDeletionContextSerializer(BulkSerializerMixin, ModelSerializer):
+    deleted_messages = PrimaryKeyRelatedField(
+        many=True,
+        queryset=DeletedMessage.objects.all()
+    )
+
+    class Meta:
+        model = MessageDeletionContext
+        fields = ('actor', 'creation', 'messages')
+        depth = 1
 
 
 class DocumentationLinkSerializer(ModelSerializer):
