@@ -210,6 +210,37 @@ class Member(ModelReprMixin, models.Model):
         return f"{self.name}#{self.discriminator}"
 
 
+class Message(ModelReprMixin, models.Model):
+    id = models.BigIntegerField(
+        primary_key=True,
+        help_text="The message ID as taken from Discord.",
+        validators=(
+            MinValueValidator(
+                limit_value=0,
+                message="Message IDs cannot be negative."
+            ),
+        )
+    )
+    author = models.ForeignKey(
+        Member,
+        on_delete=models.CASCADE,
+        help_text="The author of this message."
+    )
+    content = models.CharField(
+        max_length=2_000,
+        help_text="The content of this message, taken from Discord."
+    )
+    embeds = pgfields.ArrayField(
+        pgfields.JSONField(
+            validators=(validate_tag_embed,)
+        ),
+        help_text="Embeds attached to this message."
+    )
+
+    class Meta:
+        abstract = True
+
+
 class Tag(ModelReprMixin, models.Model):
     """A tag providing (hopefully) useful information."""
 

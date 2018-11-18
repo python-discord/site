@@ -1,7 +1,8 @@
 from django.test import SimpleTestCase
 
 from ..models import (
-    DocumentationLink, Member, ModelReprMixin,
+    DocumentationLink, Member,
+    Message, ModelReprMixin,
     OffTopicChannelName, Role,
     SnakeFact, SnakeIdiom,
     SnakeName, SpecialSnake,
@@ -40,6 +41,15 @@ class StringDunderMethodTests(SimpleTestCase):
             Role(
                 id=5, name='test role',
                 colour=0x5, permissions=0
+            ),
+            Message(
+                id=45,
+                author=Member(
+                    id=444, name='bill',
+                    discriminator=5, avatar_hash=None
+                ),
+                content="wooey",
+                embeds=[]
             ),
             Member(
                 id=5, name='bob',
