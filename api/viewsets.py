@@ -301,7 +301,7 @@ class RoleViewSet(ModelViewSet):
     """
 
     queryset = Role.objects.all()
-    serializer = RoleSerializer
+    serializer_class = RoleSerializer
 
 
 class SnakeFactViewSet(ListModelMixin, GenericViewSet):
