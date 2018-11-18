@@ -1,12 +1,14 @@
+from datetime import datetime
+
 from django.test import SimpleTestCase
 
 from ..models import (
     DocumentationLink, Member,
-    Message, ModelReprMixin,
-    OffTopicChannelName, Role,
-    SnakeFact, SnakeIdiom,
-    SnakeName, SpecialSnake,
-    Tag
+    Message, MessageDeletionContext,
+    ModelReprMixin, OffTopicChannelName,
+    Role, SnakeFact,
+    SnakeIdiom, SnakeName,
+    SpecialSnake, Tag
 )
 
 
@@ -50,6 +52,13 @@ class StringDunderMethodTests(SimpleTestCase):
                 ),
                 content="wooey",
                 embeds=[]
+            ),
+            MessageDeletionContext(
+                actor=Member(
+                    id=5555, name='shawn',
+                    discriminator=555, avatar_hash=None
+                ),
+                creation=datetime.utcnow()
             ),
             Member(
                 id=5, name='bob',
