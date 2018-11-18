@@ -5,9 +5,9 @@ from .views import HealthcheckView
 from .viewsets import (
     DeletedMessageViewSet, DocumentationLinkViewSet,
     MemberViewSet, OffTopicChannelNameViewSet,
-    SnakeFactViewSet, SnakeIdiomViewSet,
-    SnakeNameViewSet, SpecialSnakeViewSet,
-    TagViewSet
+    RoleViewSet, SnakeFactViewSet,
+    SnakeIdiomViewSet, SnakeNameViewSet,
+    SpecialSnakeViewSet, TagViewSet
 )
 
 
@@ -29,6 +29,10 @@ bot_router.register(
 bot_router.register(
     'members',
     MemberViewSet
+)
+bot_router.register(
+    'roles',
+    RoleViewSet
 )
 bot_router.register(
     'snake-facts',
