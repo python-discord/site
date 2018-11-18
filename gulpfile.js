@@ -3,7 +3,6 @@
 
 const del = require("del");
 const gulp = require("gulp");
-const run_sequence = require("run-sequence");
 
 // Gulp plugins
 const concat = require("gulp-concat");
