@@ -226,7 +226,7 @@ class Message(ModelReprMixin, models.Model):
         on_delete=models.CASCADE,
         help_text="The author of this message."
     )
-    channel_id = models.BigInteger(
+    channel_id = models.BigIntegerField(
         help_text=(
             "The channel ID that this message was "
             "sent in, taken from Discord."
