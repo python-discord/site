@@ -1,7 +1,8 @@
 from django.contrib import admin
 
 from .models import (
-    DocumentationLink, Member,
+    DeletedMessage, DocumentationLink,
+    Member, MessageDeletionContext,
     OffTopicChannelName, Role,
     SnakeFact, SnakeIdiom,
     SnakeName, SpecialSnake,
@@ -9,8 +10,10 @@ from .models import (
 )
 
 
+admin.site.register(DeletedMessage)
 admin.site.register(DocumentationLink)
 admin.site.register(Member)
+admin.site.register(MessageDeletionContext)
 admin.site.register(OffTopicChannelName)
 admin.site.register(Role)
 admin.site.register(SnakeFact)
