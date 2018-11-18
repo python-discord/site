@@ -3,12 +3,13 @@ from datetime import datetime
 from django.test import SimpleTestCase
 
 from ..models import (
-    DocumentationLink, Member,
-    Message, MessageDeletionContext,
-    ModelReprMixin, OffTopicChannelName,
-    Role, SnakeFact,
-    SnakeIdiom, SnakeName,
-    SpecialSnake, Tag
+    DeletedMessage, DocumentationLink,
+    Member, Message,
+    MessageDeletionContext, ModelReprMixin,
+    OffTopicChannelName, Role,
+    SnakeFact, SnakeIdiom,
+    SnakeName, SpecialSnake,
+    Tag
 )
 
 
@@ -29,6 +30,23 @@ class ReprMixinTests(SimpleTestCase):
 class StringDunderMethodTests(SimpleTestCase):
     def setUp(self):
         self.objects = (
+            DeletedMessage(
+                id=45,
+                author=Member(
+                    id=444, name='bill',
+                    discriminator=5, avatar_hash=None
+                ),
+                channel_id=666,
+                content="wooey",
+                deletion_context=MessageDeletionContext(
+                    actor=Member(
+                        id=5555, name='shawn',
+                        discriminator=555, avatar_hash=None
+                    ),
+                    creation=datetime.utcnow()
+                ),
+                embeds=[]
+            ),
             DocumentationLink(
                 'test', 'http://example.com', 'http://example.com'
             ),

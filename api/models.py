@@ -272,6 +272,14 @@ class MessageDeletionContext(ModelReprMixin, models.Model):
     )
 
 
+class DeletedMessage(Message):
+    deletion_context = models.ForeignKey(
+        MessageDeletionContext,
+        help_text="The deletion context this message is part of.",
+        on_delete=models.CASCADE
+    )
+
+
 class Tag(ModelReprMixin, models.Model):
     """A tag providing (hopefully) useful information."""
 
