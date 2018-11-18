@@ -3,7 +3,6 @@
 
 const del = require("del");
 const gulp = require("gulp");
-const run_sequence = require("run-sequence");
 
 // Gulp plugins
 const concat = require("gulp-concat");
@@ -26,8 +25,8 @@ const VENDOR_PATTERN = `${VENDOR_DIR}/**/*.js`;
 
 const OUTPUT_DIR = "./static/js";
 
-gulp.task("build:js", () => {
-    return gulp.src([ // Set source directories
+gulp.task("build:js", (done) => {
+    gulp.src([ // Set source directories
         `${SRC_DIR}/fouc.js`,  // Must be first to ensure libraries are loaded in time for the rest of the JS
         SRC_PATTERN,
         `${VENDOR_DIR}/moment/moment.js`, // Must be included before moment-timezone
@@ -39,12 +38,16 @@ gulp.task("build:js", () => {
             .pipe(uglify({"mangle": false}).on("error", e => console.error(e))) // Minify the JS
             .pipe(sourcemaps.write()) // Write the sourcemaps
             .pipe(gulp.dest(OUTPUT_DIR)); // Write files to output dir
+    
+    done();
 });
 
-gulp.task("clean:js", () => {
-    return del([ // Delete temporary files
+gulp.task("clean:js", (done) => {
+    del([ // Delete temporary files
         "js/build",
-    ])
+    ]);
+    
+    done();
 });
 
-gulp.task("default", (cb) => {run_sequence("build:js", "clean:js", cb)});
+gulp.task("default", gulp.series("build:js", "clean:js"));
