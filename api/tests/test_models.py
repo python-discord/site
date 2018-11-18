@@ -50,6 +50,7 @@ class StringDunderMethodTests(SimpleTestCase):
                     id=444, name='bill',
                     discriminator=5, avatar_hash=None
                 ),
+                channel_id=666,
                 content="wooey",
                 embeds=[]
             ),

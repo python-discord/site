@@ -226,6 +226,18 @@ class Message(ModelReprMixin, models.Model):
         on_delete=models.CASCADE,
         help_text="The author of this message."
     )
+    channel_id = models.BigInteger(
+        help_text=(
+            "The channel ID that this message was "
+            "sent in, taken from Discord."
+        ),
+        validators=(
+            MinValueValidator(
+                limit_value=0,
+                message="Channel IDs cannot be negative."
+            ),
+        )
+    )
     content = models.CharField(
         max_length=2_000,
         help_text="The content of this message, taken from Discord."
