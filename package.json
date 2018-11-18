@@ -11,10 +11,7 @@
     "gulp-rename": "^1.4.0",
     "gulp-sourcemaps": "^2.6.4",
     "gulp-uglify": "^3.0.1",
-    "pump": "^3.0.0",
-    "run-sequence": "^2.2.1",
-    "uglify-es": "^3.3.9",
-    "vinyl-paths": "^2.1.0"
+    "uglify-es": "^3.3.9"
   },
   "devDependencies": {},
   "repository": {
