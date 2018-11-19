@@ -167,8 +167,8 @@ class Role(ModelReprMixin, models.Model):
         return self.name
 
 
-class Member(ModelReprMixin, models.Model):
-    """A member of our Discord server."""
+class User(ModelReprMixin, models.Model):
+    """A Discord user."""
 
     id = models.BigIntegerField(  # noqa
         primary_key=True,
@@ -204,6 +204,10 @@ class Member(ModelReprMixin, models.Model):
     roles = models.ManyToManyField(
         Role,
         help_text="Any roles this user has on our server."
+    )
+    in_guild = models.BooleanField(
+        default=True,
+        help_text="Whether this user is in our server."
     )
 
     def __str__(self):
