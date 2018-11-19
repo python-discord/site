@@ -433,7 +433,8 @@ class UserViewSet(BulkCreateModelMixin, ModelViewSet):
     ...             270988689419665409,
     ...             277546923144249364,
     ...             458226699344019457
-    ...         ]
+    ...         ],
+    ...         'in_guild': True
     ...     }
     ... ]
 
@@ -454,7 +455,8 @@ class UserViewSet(BulkCreateModelMixin, ModelViewSet):
     ...         270988689419665409,
     ...         277546923144249364,
     ...         458226699344019457
-    ...     ]
+    ...     ],
+    ...     'in_guild': True
     ... }
 
     #### Status codes
@@ -471,7 +473,8 @@ class UserViewSet(BulkCreateModelMixin, ModelViewSet):
     ...     'avatar': str,
     ...     'name': str,
     ...     'discriminator': int,
-    ...     'roles': List[int]
+    ...     'roles': List[int],
+    ...     'in_guild': bool
     ... }
 
     Alternatively, request users can be POSTed as a list of above objects,
@@ -491,7 +494,8 @@ class UserViewSet(BulkCreateModelMixin, ModelViewSet):
     ...     'avatar': str,
     ...     'name': str,
     ...     'discriminator': int,
-    ...     'roles': List[int]
+    ...     'roles': List[int],
+    ...     'in_guild': bool
     ... }
 
     #### Status codes
@@ -509,7 +513,8 @@ class UserViewSet(BulkCreateModelMixin, ModelViewSet):
     ...     'avatar': str,
     ...     'name': str,
     ...     'discriminator': int,
-    ...     'roles': List[int]
+    ...     'roles': List[int],
+    ...     'in_guild': bool
     ... }
 
     #### Status codes

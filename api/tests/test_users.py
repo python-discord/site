@@ -53,7 +53,8 @@ class CreationTests(APISubdomainTestCase):
             'discriminator': 42,
             'roles': [
                 self.role.id
-            ]
+            ],
+            'in_guild': True
         }
 
         response = self.client.post(url, data=data)
@@ -64,6 +65,7 @@ class CreationTests(APISubdomainTestCase):
         self.assertEqual(user.avatar_hash, data['avatar_hash'])
         self.assertEqual(user.name, data['name'])
         self.assertEqual(user.discriminator, data['discriminator'])
+        self.assertEqual(user.in_guild, data['in_guild'])
 
     def test_supports_multi_creation(self):
         url = reverse('bot:user-list', host='api')
@@ -75,14 +77,16 @@ class CreationTests(APISubdomainTestCase):
                 'discriminator': 42,
                 'roles': [
                     self.role.id
-                ]
+                ],
+                'in_guild': True
             },
             {
                 'id': 8,
                 'avatar_hash': "maybenot",
                 'name': "another test man",
                 'discriminator': 555,
-                'roles': []
+                'roles': [],
+                'in_guild': False
             }
         ]
 

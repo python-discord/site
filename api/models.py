@@ -205,6 +205,10 @@ class User(ModelReprMixin, models.Model):
         Role,
         help_text="Any roles this user has on our server."
     )
+    in_guild = models.BooleanField(
+        default=True,
+        help_text="Whether this user is in our server."
+    )
 
     def __str__(self):
         return f"{self.name}#{self.discriminator}"

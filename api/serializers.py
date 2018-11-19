@@ -66,5 +66,5 @@ class UserSerializer(BulkSerializerMixin, ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'avatar_hash', 'name', 'discriminator', 'roles')
+        fields = ('id', 'avatar_hash', 'name', 'discriminator', 'roles', 'in_guild')
         depth = 1
