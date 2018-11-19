@@ -10,14 +10,14 @@ from rest_framework.viewsets import GenericViewSet, ModelViewSet, ViewSet
 from rest_framework_bulk import BulkCreateModelMixin
 
 from .models import (
-    DocumentationLink,
+    DocumentationLink, Infraction,
     OffTopicChannelName,
     SnakeFact, SnakeIdiom,
     SnakeName, SpecialSnake,
     Tag, User
 )
 from .serializers import (
-    DocumentationLinkSerializer,
+    DocumentationLinkSerializer, InfractionSerializer,
     OffTopicChannelNameSerializer,
     SnakeFactSerializer, SnakeIdiomSerializer,
     SnakeNameSerializer, SpecialSnakeSerializer,
@@ -87,6 +87,11 @@ class DocumentationLinkViewSet(
     queryset = DocumentationLink.objects.all()
     serializer_class = DocumentationLinkSerializer
     lookup_field = 'package'
+
+
+class InfractionViewSet(ModelViewSet):
+    serializer_class = InfractionSerializer
+    queryset = Infraction.objects.all()
 
 
 class OffTopicChannelNameViewSet(DestroyModelMixin, ViewSet):
