@@ -263,11 +263,7 @@ class Infraction(ModelReprMixin, models.Model):
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        null=True,
-        help_text=(
-            "The user to which the infraction was applied. "
-            "Null if the user is not in the database (e.g. cause they've never visited the guild)."
-        )
+        help_text="The user to which the infraction was applied."
     )
     actor = models.ForeignKey(
         User,
