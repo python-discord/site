@@ -2,7 +2,7 @@ from rest_framework.serializers import ModelSerializer, PrimaryKeyRelatedField
 from rest_framework_bulk import BulkSerializerMixin
 
 from .models import (
-    DocumentationLink,
+    DocumentationLink, Infraction,
     Member, OffTopicChannelName,
     Role, SnakeFact,
     SnakeIdiom, SnakeName,
@@ -13,6 +13,14 @@ from .models import (
 class DocumentationLinkSerializer(ModelSerializer):
     class Meta:
         model = DocumentationLink
+        fields = (
+            'id', 'inserted_at', 'expires_at', 'active', 'user', 'actor', 'type', 'reason', 'hidden'
+        )
+
+
+class InfractionSerializer(ModelSerializer):
+    class Meta:
+        model = Infraction
         fields = ('package', 'base_url', 'inventory_url')
 
 

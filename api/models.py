@@ -1,3 +1,4 @@
+import uuid
 from operator import itemgetter
 
 from django.contrib.postgres import fields as pgfields
@@ -228,3 +229,54 @@ class Tag(ModelReprMixin, models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Infraction(ModelReprMixin, models.Model):
+    """An infraction for a member of our Discord server."""
+
+    TYPE_CHOICES = (
+        ("note", "Note"),
+        ("warning", "Warning"),
+        ("mute", "Mute"),
+        ("ban", "Ban"),
+        ("kick", "Kick"),
+        ("superstar", "Superstar")
+    )
+    id = models.UUIDField(
+        primary_key=True,
+        default=uuid.uuid4,
+        help_text="The UUID of the infraction."
+    )
+    inserted_at = models.DateTimeField(
+        auto_now_add=True,
+        help_text="The date and time of the creation of this infraction."
+    )
+    expires_at = models.DateTimeField(
+        null=True,
+        help_text=(
+            "The date and time of the expiration of this infraction."
+            "Null if the infraction is permanent or it can't expire."
+        )
+    )
+    active = models.BooleanField(
+        default=True,
+        help_text="Whether the infraction is still active."
+    )
+    user = Member(
+        help_text="The user to which the infraction was applied."
+    )
+    actor = Member(
+        help_text="The user which applied the infraction."
+    )
+    type = models.CharField(
+        max_length=9,
+        choice=TYPE_CHOICES,
+        help_text="The type of the infraction."
+    )
+    reason = models.TextField(
+        help_text="The reason for the infraction."
+    )
+    hidden = models.BooleanField(
+        default=False,
+        help_text="Whether the infraction is a shadow infraction."
+    )
