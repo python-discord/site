@@ -62,7 +62,7 @@ class TagSerializer(ModelSerializer):
 
 
 class UserSerializer(BulkSerializerMixin, ModelSerializer):
-    roles = PrimaryKeyRelatedField(many=True, queryset=Role.objects.all())
+    roles = PrimaryKeyRelatedField(many=True, queryset=Role.objects.all(), required=False)
 
     class Meta:
         model = User
