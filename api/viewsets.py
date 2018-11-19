@@ -10,18 +10,18 @@ from rest_framework.viewsets import GenericViewSet, ModelViewSet, ViewSet
 from rest_framework_bulk import BulkCreateModelMixin
 
 from .models import (
-    DocumentationLink, User,
+    DocumentationLink,
     OffTopicChannelName,
     SnakeFact, SnakeIdiom,
     SnakeName, SpecialSnake,
-    Tag
+    Tag, User
 )
 from .serializers import (
     DocumentationLinkSerializer,
-    UserSerializer, OffTopicChannelNameSerializer,
+    OffTopicChannelNameSerializer,
     SnakeFactSerializer, SnakeIdiomSerializer,
     SnakeNameSerializer, SpecialSnakeSerializer,
-    TagSerializer
+    TagSerializer, UserSerializer
 )
 
 

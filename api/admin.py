@@ -1,11 +1,11 @@
 from django.contrib import admin
 
 from .models import (
-    DocumentationLink, User,
+    DocumentationLink,
     OffTopicChannelName, Role,
     SnakeFact, SnakeIdiom,
     SnakeName, SpecialSnake,
-    Tag
+    Tag, User
 )
 
 

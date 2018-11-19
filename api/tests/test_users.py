@@ -1,7 +1,7 @@
 from django_hosts.resolvers import reverse
 
 from .base import APISubdomainTestCase
-from ..models import User, Role
+from ..models import Role, User
 
 
 class UnauthedDocumentationLinkAPITests(APISubdomainTestCase):

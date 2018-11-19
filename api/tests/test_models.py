@@ -1,11 +1,11 @@
 from django.test import SimpleTestCase
 
 from ..models import (
-    DocumentationLink, User, ModelReprMixin,
+    DocumentationLink, ModelReprMixin,
     OffTopicChannelName, Role,
     SnakeFact, SnakeIdiom,
     SnakeName, SpecialSnake,
-    Tag
+    Tag, User
 )
 
 

@@ -3,10 +3,10 @@ from rest_framework_bulk import BulkSerializerMixin
 
 from .models import (
     DocumentationLink,
-    User, OffTopicChannelName,
+    OffTopicChannelName,
     Role, SnakeFact,
     SnakeIdiom, SnakeName,
-    SpecialSnake, Tag
+    SpecialSnake, Tag, User
 )
 
 
