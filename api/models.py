@@ -167,8 +167,8 @@ class Role(ModelReprMixin, models.Model):
         return self.name
 
 
-class Member(ModelReprMixin, models.Model):
-    """A member of our Discord server."""
+class User(ModelReprMixin, models.Model):
+    """A Discord user."""
 
     id = models.BigIntegerField(  # noqa
         primary_key=True,

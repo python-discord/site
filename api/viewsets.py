@@ -10,7 +10,7 @@ from rest_framework.viewsets import GenericViewSet, ModelViewSet, ViewSet
 from rest_framework_bulk import BulkCreateModelMixin
 
 from .models import (
-    DocumentationLink, Member,
+    DocumentationLink, User,
     OffTopicChannelName,
     SnakeFact, SnakeIdiom,
     SnakeName, SpecialSnake,
@@ -18,7 +18,7 @@ from .models import (
 )
 from .serializers import (
     DocumentationLinkSerializer,
-    MemberSerializer, OffTopicChannelNameSerializer,
+    UserSerializer, OffTopicChannelNameSerializer,
     SnakeFactSerializer, SnakeIdiomSerializer,
     SnakeNameSerializer, SpecialSnakeSerializer,
     TagSerializer
@@ -413,13 +413,13 @@ class TagViewSet(ModelViewSet):
     queryset = Tag.objects.all()
 
 
-class MemberViewSet(BulkCreateModelMixin, ModelViewSet):
+class UserViewSet(BulkCreateModelMixin, ModelViewSet):
     """
-    View providing CRUD operations on our Discord server's members through the bot.
+    View providing CRUD operations on Discord users through the bot.
 
     ## Routes
-    ### GET /bot/members
-    Returns all members currently known.
+    ### GET /bot/users
+    Returns all users currently known.
 
     #### Response format
     >>> [
@@ -440,8 +440,8 @@ class MemberViewSet(BulkCreateModelMixin, ModelViewSet):
     #### Status codes
     - 200: returned on success
 
-    ### GET /bot/members/<snowflake:int>
-    Gets a single member by ID.
+    ### GET /bot/users/<snowflake:int>
+    Gets a single user by ID.
 
     #### Response format
     >>> {
@@ -459,11 +459,11 @@ class MemberViewSet(BulkCreateModelMixin, ModelViewSet):
 
     #### Status codes
     - 200: returned on success
-    - 404: if a member with the given `snowflake` could not be found
+    - 404: if a user with the given `snowflake` could not be found
 
-    ### POST /bot/members
-    Adds a single or multiple new members.
-    The roles attached to the member(s) must be roles known by the site.
+    ### POST /bot/users
+    Adds a single or multiple new users.
+    The roles attached to the user(s) must be roles known by the site.
 
     #### Request body
     >>> {
@@ -474,15 +474,15 @@ class MemberViewSet(BulkCreateModelMixin, ModelViewSet):
     ...     'roles': List[int]
     ... }
 
-    Alternatively, request members can be POSTed as a list of above objects,
-    in which case multiple members will be created at once.
+    Alternatively, request users can be POSTed as a list of above objects,
+    in which case multiple users will be created at once.
 
     #### Status codes
     - 201: returned on success
     - 400: if one of the given roles does not exist, or one of the given fields is invalid
 
-    ### PUT /bot/members/<snowflake:int>
-    Update the member with the given `snowflake`.
+    ### PUT /bot/users/<snowflake:int>
+    Update the user with the given `snowflake`.
     All fields in the request body are required.
 
     #### Request body
@@ -497,10 +497,10 @@ class MemberViewSet(BulkCreateModelMixin, ModelViewSet):
     #### Status codes
     - 200: returned on success
     - 400: if the request body was invalid, see response body for details
-    - 404: if the member with the given `snowflake` could not be found
+    - 404: if the user with the given `snowflake` could not be found
 
-    ### PATCH /bot/members/<snowflake:int>
-    Update the member with the given `snowflake`.
+    ### PATCH /bot/users/<snowflake:int>
+    Update the user with the given `snowflake`.
     All fields in the request body are optional.
 
     #### Request body
@@ -515,15 +515,15 @@ class MemberViewSet(BulkCreateModelMixin, ModelViewSet):
     #### Status codes
     - 200: returned on success
     - 400: if the request body was invalid, see response body for details
-    - 404: if the member with the given `snowflake` could not be found
+    - 404: if the user with the given `snowflake` could not be found
 
-    ### DELETE /bot/members/<snowflake:int>
-    Deletes the member with the given `snowflake`.
+    ### DELETE /bot/users/<snowflake:int>
+    Deletes the user with the given `snowflake`.
 
     #### Status codes
     - 204: returned on success
-    - 404: if a member with the given `snowflake` does not exist
+    - 404: if a user with the given `snowflake` does not exist
     """
 
-    serializer_class = MemberSerializer
-    queryset = Member.objects.all()
+    serializer_class = UserSerializer
+    queryset = User.objects.all()
