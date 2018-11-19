@@ -1,4 +1,3 @@
-import uuid
 from operator import itemgetter
 
 from django.contrib.postgres import fields as pgfields
