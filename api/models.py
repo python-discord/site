@@ -263,16 +263,18 @@ class Infraction(ModelReprMixin, models.Model):
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
+        related_name='infractions_received',
         help_text="The user to which the infraction was applied."
     )
     actor = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
+        related_name='infractions_given',
         help_text="The user which applied the infraction."
     )
     type = models.CharField(
         max_length=9,
-        choice=TYPE_CHOICES,
+        choices=TYPE_CHOICES,
         help_text="The type of the infraction."
     )
     reason = models.TextField(
