@@ -13,15 +13,15 @@ from .models import (
 class DocumentationLinkSerializer(ModelSerializer):
     class Meta:
         model = DocumentationLink
-        fields = (
-            'id', 'inserted_at', 'expires_at', 'active', 'user', 'actor', 'type', 'reason', 'hidden'
-        )
+        fields = ('package', 'base_url', 'inventory_url')
 
 
 class InfractionSerializer(ModelSerializer):
     class Meta:
         model = Infraction
-        fields = ('package', 'base_url', 'inventory_url')
+        fields = (
+            'id', 'inserted_at', 'expires_at', 'active', 'user', 'actor', 'type', 'reason', 'hidden'
+        )
 
 
 class OffTopicChannelNameSerializer(ModelSerializer):
