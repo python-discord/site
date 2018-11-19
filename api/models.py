@@ -242,11 +242,6 @@ class Infraction(ModelReprMixin, models.Model):
         ("kick", "Kick"),
         ("superstar", "Superstar")
     )
-    id = models.UUIDField(
-        primary_key=True,
-        default=uuid.uuid4,
-        help_text="The UUID of the infraction."
-    )
     inserted_at = models.DateTimeField(
         auto_now_add=True,
         help_text="The date and time of the creation of this infraction."
@@ -254,7 +249,7 @@ class Infraction(ModelReprMixin, models.Model):
     expires_at = models.DateTimeField(
         null=True,
         help_text=(
-            "The date and time of the expiration of this infraction."
+            "The date and time of the expiration of this infraction. "
             "Null if the infraction is permanent or it can't expire."
         )
     )
@@ -262,10 +257,18 @@ class Infraction(ModelReprMixin, models.Model):
         default=True,
         help_text="Whether the infraction is still active."
     )
-    user = Member(
-        help_text="The user to which the infraction was applied."
+    user = models.ForeignKey(
+        Member,
+        on_delete=models.CASCADE,
+        null=True,
+        help_text=(
+            "The user to which the infraction was applied. "
+            "Null if the user is not in the database (e.g. cause they've never visited the guild)."
+        )
     )
-    actor = Member(
+    actor = models.ForeignKey(
+        Member,
+        on_delete=models.CASCADE,
         help_text="The user which applied the infraction."
     )
     type = models.CharField(
