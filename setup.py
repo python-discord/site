@@ -19,6 +19,7 @@ setup(
         'djangorestframework-bulk>=0.2.1',
         'django-hosts>=3.0',
         'django-environ>=0.4.5',
+        'django-filter>=2.0.0',
         'psycopg2-binary>=2.7.5'
     ],
     extras_require={
