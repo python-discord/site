@@ -1,5 +1,7 @@
 from django.shortcuts import get_object_or_404
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.exceptions import ParseError
+from rest_framework.filters import SearchFilter
 from rest_framework.mixins import (
     CreateModelMixin, DestroyModelMixin,
     ListModelMixin, RetrieveModelMixin
@@ -92,6 +94,9 @@ class DocumentationLinkViewSet(
 class InfractionViewSet(ModelViewSet):
     serializer_class = InfractionSerializer
     queryset = Infraction.objects.all()
+    filter_backends = (DjangoFilterBackend, SearchFilter)
+    filter_fields = ('user__id', 'actor__id', 'active', 'hidden', 'type')
+    search_fields = ('$reason',)
 
 
 class OffTopicChannelNameViewSet(DestroyModelMixin, ViewSet):
