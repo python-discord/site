@@ -284,3 +284,6 @@ class Infraction(ModelReprMixin, models.Model):
         default=False,
         help_text="Whether the infraction is a shadow infraction."
     )
+
+    def __str__(self):
+        return self.type
