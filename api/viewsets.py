@@ -91,7 +91,7 @@ class DocumentationLinkViewSet(
     lookup_field = 'package'
 
 
-class InfractionViewSet(ModelViewSet):
+class InfractionViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, GenericViewSet):
     serializer_class = InfractionSerializer
     queryset = Infraction.objects.all()
     filter_backends = (DjangoFilterBackend, SearchFilter)
