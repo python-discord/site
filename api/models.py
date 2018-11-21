@@ -278,6 +278,7 @@ class Infraction(ModelReprMixin, models.Model):
         help_text="The type of the infraction."
     )
     reason = models.TextField(
+        null=True,
         help_text="The reason for the infraction."
     )
     hidden = models.BooleanField(
