@@ -101,12 +101,25 @@ class InfractionTests(APISubdomainTestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(response.json()), 0)
 
+    def test_ignores_bad_filters(self):
+        url = reverse('bot:infraction-list', host='api')
+        response = self.client.get(f'{url}?type=ban&hidden=maybe&foo=bar')
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.json()), 2)
+
     def test_retrieve_single_from_id(self):
         url = reverse('bot:infraction-detail', args=(self.ban_inactive.id,), host='api')
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json()['id'], self.ban_inactive.id)
+
+    def test_retrieve_returns_404_for_absent_id(self):
+        url = reverse('bot:infraction-detail', args=(1337,), host='api')
+        response = self.client.get(url)
+
+        self.assertEqual(response.status_code, 404)
 
     def test_partial_update(self):
         url = reverse('bot:infraction-detail', args=(self.ban_hidden.id,), host='api')
