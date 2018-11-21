@@ -97,7 +97,7 @@ class InfractionTests(APISubdomainTestCase):
         infraction = Infraction.objects.get(id=self.ban_hidden.id)
 
         # Updates for these fields were accepted.
-        self.assertEqual(infraction.expires_at, dt.fromisoformat(data['expires_at']))
+        self.assertEqual(infraction.expires_at.isoformat(), data['expires_at'])
         self.assertEqual(infraction.active, data['active'])
         self.assertEqual(infraction.reason, data['reason'])
 
@@ -135,7 +135,7 @@ class CreationTests(APISubdomainTestCase):
         self.assertEqual(response.status_code, 201)
 
         infraction = Infraction.objects.get(id=1)
-        self.assertEqual(infraction.expires_at, dt.fromisoformat(data['expires_at']))
+        self.assertEqual(infraction.expires_at.isoformat(), data['expires_at'])
         self.assertEqual(infraction.user.id, data['user'])
         self.assertEqual(infraction.actor.id, data['actor'])
         self.assertEqual(infraction.type, data['type'])
