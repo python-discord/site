@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework.exceptions import ParseError
+from rest_framework.exceptions import ParseError, ValidationError
 from rest_framework.filters import SearchFilter
 from rest_framework.mixins import (
     CreateModelMixin, DestroyModelMixin,
@@ -100,12 +100,12 @@ class InfractionViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
     frozen_fields = ('id', 'inserted_at', 'type', 'user', 'actor', 'hidden')
 
     def partial_update(self, request, *args, **kwargs):
+        for field in request.data:
+            if field in self.frozen_fields:
+                raise ValidationError({field: ['This field cannot be updated.']})
+
         instance = self.get_object()
-
-        # Ignore updates for frozen fields.
-        data = {k: v for k, v in request.data.items() if k not in self.frozen_fields}
-
-        serializer = self.get_serializer(instance, data=data, partial=True)
+        serializer = self.get_serializer(instance, data=request.data, partial=True)
         serializer.is_valid(raise_exception=True)
         serializer.save()
 
