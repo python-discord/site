@@ -52,6 +52,10 @@ class StringDunderMethodTests(SimpleTestCase):
                 discriminator=1, avatar_hash=None
             ),
             Infraction(
+                user_id=5, actor_id=5,
+                type='kick', reason='He terk my jerb!'
+            ),
+            Infraction(
                 user_id=5, actor_id=5, hidden=True,
                 type='kick', reason='He terk my jerb!',
                 expires_at=dt(5018, 11, 20, 15, 52, tzinfo=timezone.utc)
