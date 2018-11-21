@@ -7,6 +7,36 @@ from .base import APISubdomainTestCase
 from ..models import Infraction, User
 
 
+class UnauthenticatedTests(APISubdomainTestCase):
+    def setUp(self):
+        super().setUp()
+        self.client.force_authenticate(user=None)
+
+    def test_detail_lookup_returns_401(self):
+        url = reverse('bot:infraction-detail', args=(5,), host='api')
+        response = self.client.get(url)
+
+        self.assertEqual(response.status_code, 401)
+
+    def test_list_returns_401(self):
+        url = reverse('bot:infraction-list', host='api')
+        response = self.client.get(url)
+
+        self.assertEqual(response.status_code, 401)
+
+    def test_create_returns_401(self):
+        url = reverse('bot:infraction-list', host='api')
+        response = self.client.post(url, data={'reason': 'Have a nice day.'})
+
+        self.assertEqual(response.status_code, 401)
+
+    def test_partial_update_returns_401(self):
+        url = reverse('bot:infraction-detail', args=(5,), host='api')
+        response = self.client.patch(url, data={'reason': 'Have a nice day.'})
+
+        self.assertEqual(response.status_code, 401)
+
+
 class InfractionTests(APISubdomainTestCase):
     @classmethod
     def setUpTestData(cls):  # noqa
