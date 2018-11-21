@@ -1,4 +1,4 @@
-from datetime import datetime as dt, timezone
+from datetime import datetime as dt, timedelta, timezone
 from urllib.parse import quote
 
 from django_hosts.resolvers import reverse
@@ -135,6 +135,11 @@ class CreationTests(APISubdomainTestCase):
         self.assertEqual(response.status_code, 201)
 
         infraction = Infraction.objects.get(id=1)
+        self.assertAlmostEqual(
+            infraction.inserted_at,
+            dt.now(timezone.utc),
+            delta=timedelta(seconds=2)
+        )
         self.assertEqual(infraction.expires_at.isoformat(), data['expires_at'])
         self.assertEqual(infraction.user.id, data['user'])
         self.assertEqual(infraction.actor.id, data['actor'])
