@@ -1,4 +1,4 @@
-from datetime import datetime as dt
+from datetime import datetime as dt, timezone
 from urllib.parse import quote
 
 from django_hosts.resolvers import reverse
@@ -7,7 +7,7 @@ from .base import APISubdomainTestCase
 from ..models import Infraction, User
 
 
-class ListTests(APISubdomainTestCase):
+class InfractionTests(APISubdomainTestCase):
     @classmethod
     def setUpTestData(cls):  # noqa
         cls.user = User.objects.create(
@@ -21,7 +21,8 @@ class ListTests(APISubdomainTestCase):
             actor_id=cls.user.id,
             type='ban',
             reason='He terk my jerb!',
-            hidden=True
+            hidden=True,
+            expires_at=dt(5018, 11, 20, 15, 52, tzinfo=timezone.utc)
         )
         cls.ban_inactive = Infraction.objects.create(
             user_id=cls.user.id,
@@ -76,6 +77,37 @@ class ListTests(APISubdomainTestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json()['id'], self.ban_inactive.id)
+
+    def test_partial_update(self):
+        url = reverse('bot:infraction-detail', args=(self.ban_hidden.id,), host='api')
+        data = {
+            'expires_at': '4143-02-15T21:04:31+00:00',
+            'active': False,
+            'reason': 'durka derr',
+            'id': 12,
+            'inserted_at': '4143-02-15T21:04:31+00:00',
+            'user': 6,
+            'actor': 6,
+            'type': 'kick',
+            'hidden': False
+        }
+
+        response = self.client.patch(url, data=data)
+        self.assertEqual(response.status_code, 200)
+        infraction = Infraction.objects.get(id=self.ban_hidden.id)
+
+        # Updates for these fields were accepted.
+        self.assertEqual(infraction.expires_at, dt.fromisoformat(data['expires_at']))
+        self.assertEqual(infraction.active, data['active'])
+        self.assertEqual(infraction.reason, data['reason'])
+
+        # Updates for these fields were ignored.
+        self.assertEqual(infraction.id, self.ban_hidden.id)
+        self.assertEqual(infraction.inserted_at, self.ban_hidden.inserted_at)
+        self.assertEqual(infraction.user.id, self.ban_hidden.user.id)
+        self.assertEqual(infraction.actor.id, self.ban_hidden.actor.id)
+        self.assertEqual(infraction.type, self.ban_hidden.type)
+        self.assertEqual(infraction.hidden, self.ban_hidden.hidden)
 
 
 class CreationTests(APISubdomainTestCase):

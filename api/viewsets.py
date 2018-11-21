@@ -97,6 +97,24 @@ class InfractionViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
     filter_backends = (DjangoFilterBackend, SearchFilter)
     filter_fields = ('user__id', 'actor__id', 'active', 'hidden', 'type')
     search_fields = ('$reason',)
+    frozen_fields = ('id', 'inserted_at', 'type', 'user', 'actor', 'hidden')
+
+    def partial_update(self, request, *args, **kwargs):
+        instance = self.get_object()
+
+        # Ignore updates for frozen fields.
+        data = {k: v for k, v in request.data.items() if k not in self.frozen_fields}
+
+        serializer = self.get_serializer(instance, data=data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+
+        if getattr(instance, '_prefetched_objects_cache', None):
+            # If 'prefetch_related' has been applied to a queryset, we need to
+            # forcibly invalidate the prefetch cache on the instance.
+            instance._prefetched_objects_cache = {}
+
+        return Response(serializer.data)
 
 
 class OffTopicChannelNameViewSet(DestroyModelMixin, ViewSet):
