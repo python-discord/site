@@ -238,7 +238,6 @@ class Infraction(ModelReprMixin, models.Model):
     """An infraction for a member of our Discord server."""
 
     TYPE_CHOICES = (
-        ("note", "Note"),
         ("warning", "Warning"),
         ("mute", "Mute"),
         ("ban", "Ban"),

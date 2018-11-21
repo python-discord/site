@@ -1,4 +1,4 @@
-from rest_framework.serializers import ModelSerializer, PrimaryKeyRelatedField
+from rest_framework.serializers import ModelSerializer, PrimaryKeyRelatedField, ValidationError
 from rest_framework_bulk import BulkSerializerMixin
 
 from .models import (
@@ -22,6 +22,19 @@ class InfractionSerializer(ModelSerializer):
         fields = (
             'id', 'inserted_at', 'expires_at', 'active', 'user', 'actor', 'type', 'reason', 'hidden'
         )
+
+    def validate(self, attrs):
+        infr_type = attrs.get('type')
+
+        expires_at = attrs.get('expires_at')
+        if expires_at and infr_type in ('kick', 'warning'):
+            raise ValidationError({'expires_at': [f'{infr_type} infractions cannot expire.']})
+
+        hidden = attrs.get('hidden')
+        if hidden and infr_type in ('superstar',):
+            raise ValidationError({'hidden': [f'{infr_type} infractions cannot be hidden.']})
+
+        return attrs
 
 
 class OffTopicChannelNameSerializer(ModelSerializer):
