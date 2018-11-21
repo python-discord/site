@@ -287,4 +287,9 @@ class Infraction(ModelReprMixin, models.Model):
     )
 
     def __str__(self):
-        return self.type
+        s = f"#{self.id}: {self.type} on {self.user_id}"
+        if self.expires_at:
+            s += f" until {self.expires_at}"
+        if self.hidden:
+            s += " (hidden)"
+        return s
