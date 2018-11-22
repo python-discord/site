@@ -283,3 +283,77 @@ class CreationTests(APISubdomainTestCase):
         self.assertEqual(response.json(), {
             'hidden': [f'{data["type"]} infractions cannot be hidden.']
         })
+
+
+class ExpandedTests(APISubdomainTestCase):
+    @classmethod
+    def setUpTestData(cls):  # noqa
+        cls.user = User.objects.create(
+            id=5,
+            name='james',
+            discriminator=1,
+            avatar_hash=None
+        )
+        cls.kick = Infraction.objects.create(
+            user_id=cls.user.id,
+            actor_id=cls.user.id,
+            type='kick'
+        )
+        cls.warning = Infraction.objects.create(
+            user_id=cls.user.id,
+            actor_id=cls.user.id,
+            type='warning'
+        )
+
+    def check_expanded_fields(self, infraction):
+        for key in ('user', 'actor'):
+            obj = infraction[key]
+            for field in ('id', 'name', 'discriminator', 'avatar_hash', 'roles', 'in_guild'):
+                self.assertTrue(field in obj, msg=f'field "{field}" missing from {key}')
+
+    def test_list_expanded(self):
+        url = reverse('bot:infraction-list-expanded', host='api')
+
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+
+        response_data = response.json()
+        self.assertEqual(len(response_data), 2)
+
+        for infraction in response_data:
+            self.check_expanded_fields(infraction)
+
+    def test_create_expanded(self):
+        url = reverse('bot:infraction-list-expanded', host='api')
+        data = {
+            'user': self.user.id,
+            'actor': self.user.id,
+            'type': 'warning'
+        }
+
+        response = self.client.post(url, data=data)
+        self.assertEqual(response.status_code, 201)
+
+        self.assertEqual(len(Infraction.objects.all()), 3)
+        self.check_expanded_fields(response.json())
+
+    def test_retrieve_expanded(self):
+        url = reverse('bot:infraction-detail-expanded', args=(self.warning.id,), host='api')
+
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+
+        infraction = response.json()
+        self.assertEqual(infraction['id'], self.warning.id)
+        self.check_expanded_fields(infraction)
+
+    def test_partial_update_expanded(self):
+        url = reverse('bot:infraction-detail-expanded', args=(self.kick.id,), host='api')
+        data = {'active': False}
+
+        response = self.client.patch(url, data=data)
+        self.assertEqual(response.status_code, 200)
+
+        infraction = Infraction.objects.get(id=self.kick.id)
+        self.assertEqual(infraction.active, data['active'])
+        self.check_expanded_fields(response.json())
