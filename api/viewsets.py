@@ -130,7 +130,6 @@ class InfractionViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
 
     @action(url_path='expanded', url_name='detail-expanded', detail=True)
     def retrieve_expanded(self, *args, **kwargs):
-        self.retrieve(*args, **kwargs)
         try:
             self.serializer_class = ExpandedInfractionSerializer
             return self.retrieve(*args, **kwargs)
