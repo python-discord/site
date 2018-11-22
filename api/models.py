@@ -235,7 +235,7 @@ class Tag(ModelReprMixin, models.Model):
 
 
 class Infraction(ModelReprMixin, models.Model):
-    """An infraction for a member of our Discord server."""
+    """An infraction for a Discord user."""
 
     TYPE_CHOICES = (
         ("warning", "Warning"),

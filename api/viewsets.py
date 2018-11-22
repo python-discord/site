@@ -93,6 +93,95 @@ class DocumentationLinkViewSet(
 
 
 class InfractionViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, GenericViewSet):
+    """
+    View providing CRUD operations on infractions for Discord users.
+
+    ## Routes
+    ### GET /bot/infraction
+    Retrieve all infractions.
+    May be filtered by the query parameters.
+
+    #### Query parameters
+    - **active** `bool`: whether the infraction is still active
+    - **actor** `int`: snowflake of the user which applied the infraction
+    - **hidden** `bool`: whether the infraction is a shadow infraction
+    - **search** `str`: regular expression applied to the infraction's reason
+    - **type** `str`: the type of the infraction
+    - **user** `int`: snowflake of the user to which the infraction was applied
+
+    Invalid query parameters are ignored.
+
+    #### Response format
+    >>> [
+    ...     {
+    ...         'id': 5,
+    ...         'inserted_at': '2018-11-22T07:24:06.132307Z',
+    ...         'expires_at': '5018-11-20T15:52:00Z',
+    ...         'active': False,
+    ...         'user': 172395097705414656,
+    ...         'actor': 125435062127820800,
+    ...         'type': 'ban',
+    ...         'reason': 'He terk my jerb!',
+    ...         'hidden': True
+    ...     }
+    ... ]
+
+    #### Status codes
+    - 200: returned on success
+
+    ### GET /bot/infraction/<id:int>
+    Retrieve a single infraction by ID.
+
+    #### Response format
+    See `GET /bot/infraction`.
+
+    #### Status codes
+    - 200: returned on success
+    - 404: if an infraction with the given `id` could not be found
+
+    ### POST /bot/infraction
+    Create a new infraction and return the created infraction.
+    Only `actor`, `type`, and `user` are required.
+    The `actor` and `user` must be users known by the site.
+
+    #### Request body
+    >>> {
+    ...     'active': False,
+    ...     'actor': 125435062127820800,
+    ...     'expires_at': '5018-11-20T15:52:00+00:00',
+    ...     'hidden': True,
+    ...     'type': 'ban',
+    ...     'reason': 'He terk my jerb!',
+    ...     'user': 172395097705414656
+    ... }
+
+    #### Response format
+    See `GET /bot/infraction`.
+
+    #### Status codes
+    - 201: returned on success
+    - 400: if a given user is unknown or a field in the request body is invalid
+
+    ### PATCH /bot/infraction/<id:int>
+    Update the infraction with the given `id` and return the updated infraction.
+    Only `active`, `reason`, and `expires_at` may be updated.
+
+    #### Request body
+    >>> {
+    ...     'active': True,
+    ...     'expires_at': '4143-02-15T21:04:31+00:00',
+    ...     'reason': 'durka derr'
+    ... }
+
+    #### Response format
+    See `GET /bot/infraction`.
+
+    #### Status codes
+    - 200: returned on success
+    - 400: if a field in the request body is invalid or disallowed
+    - 404: if an infraction with the given `id` could not be found
+    """
+
     serializer_class = InfractionSerializer
     queryset = Infraction.objects.all()
     filter_backends = (DjangoFilterBackend, SearchFilter)
