@@ -114,35 +114,24 @@ class InfractionViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
 
     @action(url_path='expanded', detail=False)
     def list_expanded(self, *args, **kwargs):
-        try:
-            self.serializer_class = ExpandedInfractionSerializer
-            return self.list(*args, **kwargs)
-        finally:
-            self.serializer_class = InfractionSerializer
+        self.serializer_class = ExpandedInfractionSerializer
+        return self.list(*args, **kwargs)
 
     @list_expanded.mapping.post
     def create_expanded(self, *args, **kwargs):
-        try:
-            self.serializer_class = ExpandedInfractionSerializer
-            return self.create(*args, **kwargs)
-        finally:
-            self.serializer_class = InfractionSerializer
+        self.serializer_class = ExpandedInfractionSerializer
+        return self.create(*args, **kwargs)
 
     @action(url_path='expanded', url_name='detail-expanded', detail=True)
     def retrieve_expanded(self, *args, **kwargs):
-        try:
-            self.serializer_class = ExpandedInfractionSerializer
-            return self.retrieve(*args, **kwargs)
-        finally:
-            self.serializer_class = InfractionSerializer
+        self.serializer_class = ExpandedInfractionSerializer
+        return self.retrieve(*args, **kwargs)
 
     @retrieve_expanded.mapping.patch
     def partial_update_expanded(self, *args, **kwargs):
-        try:
-            self.serializer_class = ExpandedInfractionSerializer
-            return self.partial_update(*args, **kwargs)
-        finally:
-            self.serializer_class = InfractionSerializer
+        self.serializer_class = ExpandedInfractionSerializer
+        return self.partial_update(*args, **kwargs)
+
 
 
 class OffTopicChannelNameViewSet(DestroyModelMixin, ViewSet):
