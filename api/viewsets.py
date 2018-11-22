@@ -133,7 +133,6 @@ class InfractionViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
         return self.partial_update(*args, **kwargs)
 
 
-
 class OffTopicChannelNameViewSet(DestroyModelMixin, ViewSet):
     """
     View of off-topic channel names used by the bot
