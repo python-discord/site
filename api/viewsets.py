@@ -1,5 +1,6 @@
 from django.shortcuts import get_object_or_404
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.decorators import action
 from rest_framework.exceptions import ParseError, ValidationError
 from rest_framework.filters import SearchFilter
 from rest_framework.mixins import (
@@ -19,8 +20,8 @@ from .models import (
     Tag, User
 )
 from .serializers import (
-    DocumentationLinkSerializer, InfractionSerializer,
-    OffTopicChannelNameSerializer,
+    DocumentationLinkSerializer, ExpandedInfractionSerializer,
+    InfractionSerializer, OffTopicChannelNameSerializer,
     SnakeFactSerializer, SnakeIdiomSerializer,
     SnakeNameSerializer, SpecialSnakeSerializer,
     TagSerializer, UserSerializer
@@ -110,6 +111,39 @@ class InfractionViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
         serializer.save()
 
         return Response(serializer.data)
+
+    @action(url_path='expanded', detail=False)
+    def list_expanded(self, *args, **kwargs):
+        try:
+            self.serializer_class = ExpandedInfractionSerializer
+            return self.list(*args, **kwargs)
+        finally:
+            self.serializer_class = InfractionSerializer
+
+    @list_expanded.mapping.post
+    def create_expanded(self, *args, **kwargs):
+        try:
+            self.serializer_class = ExpandedInfractionSerializer
+            return self.create(*args, **kwargs)
+        finally:
+            self.serializer_class = InfractionSerializer
+
+    @action(url_path='expanded', url_name='detail-expanded', detail=True)
+    def retrieve_expanded(self, *args, **kwargs):
+        self.retrieve(*args, **kwargs)
+        try:
+            self.serializer_class = ExpandedInfractionSerializer
+            return self.retrieve(*args, **kwargs)
+        finally:
+            self.serializer_class = InfractionSerializer
+
+    @retrieve_expanded.mapping.patch
+    def partial_update_expanded(self, *args, **kwargs):
+        try:
+            self.serializer_class = ExpandedInfractionSerializer
+            return self.partial_update(*args, **kwargs)
+        finally:
+            self.serializer_class = InfractionSerializer
 
 
 class OffTopicChannelNameViewSet(DestroyModelMixin, ViewSet):

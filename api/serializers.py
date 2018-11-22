@@ -37,6 +37,21 @@ class InfractionSerializer(ModelSerializer):
         return attrs
 
 
+class ExpandedInfractionSerializer(InfractionSerializer):
+    def to_representation(self, instance):
+        ret = super().to_representation(instance)
+
+        user = User.objects.get(id=ret['user'])
+        user_data = UserSerializer(user).data
+        ret['user'] = user_data
+
+        actor = User.objects.get(id=ret['actor'])
+        actor_data = UserSerializer(actor).data
+        ret['actor'] = actor_data
+
+        return ret
+
+
 class OffTopicChannelNameSerializer(ModelSerializer):
     class Meta:
         model = OffTopicChannelName
