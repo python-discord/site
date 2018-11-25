@@ -3,11 +3,11 @@ from rest_framework_bulk import BulkSerializerMixin
 
 from .models import (
     DeletedMessage, DocumentationLink,
-    Member, MessageDeletionContext,
-    OffTopicChannelName, Role,
-    SnakeFact, SnakeIdiom,
-    SnakeName, SpecialSnake,
-    Tag
+    MessageDeletionContext, OffTopicChannelName,
+    Role, SnakeFact,
+    SnakeIdiom, SnakeName,
+    SpecialSnake, Tag,
+    User
 )
 
 
@@ -74,10 +74,10 @@ class TagSerializer(ModelSerializer):
         fields = ('title', 'embed')
 
 
-class MemberSerializer(BulkSerializerMixin, ModelSerializer):
-    roles = PrimaryKeyRelatedField(many=True, queryset=Role.objects.all())
+class UserSerializer(BulkSerializerMixin, ModelSerializer):
+    roles = PrimaryKeyRelatedField(many=True, queryset=Role.objects.all(), required=False)
 
     class Meta:
-        model = Member
-        fields = ('id', 'avatar_hash', 'name', 'discriminator', 'roles')
+        model = User
+        fields = ('id', 'avatar_hash', 'name', 'discriminator', 'roles', 'in_guild')
         depth = 1

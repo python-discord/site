@@ -4,10 +4,10 @@ from rest_framework.routers import DefaultRouter
 from .views import HealthcheckView
 from .viewsets import (
     DeletedMessageViewSet, DocumentationLinkViewSet,
-    MemberViewSet, OffTopicChannelNameViewSet,
-    RoleViewSet, SnakeFactViewSet,
-    SnakeIdiomViewSet, SnakeNameViewSet,
-    SpecialSnakeViewSet, TagViewSet
+    OffTopicChannelNameViewSet, RoleViewSet,
+    SnakeFactViewSet, SnakeIdiomViewSet,
+    SnakeNameViewSet, SpecialSnakeViewSet,
+    TagViewSet, UserViewSet
 )
 
 
@@ -27,8 +27,8 @@ bot_router.register(
     base_name='offtopicchannelname'
 )
 bot_router.register(
-    'members',
-    MemberViewSet
+    'users',
+    UserViewSet
 )
 bot_router.register(
     'roles',

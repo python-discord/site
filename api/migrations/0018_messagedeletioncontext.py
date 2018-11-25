@@ -17,7 +17,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('creation', models.DateTimeField(help_text='When this deletion took place.')),
-                ('actor', models.ForeignKey(help_text='The original actor causing this deletion. Could be the author of a manual clean command invocation, the bot when executing automatic actions, or nothing to indicate that the bulk deletion was not issued by us.', null=True, on_delete=django.db.models.deletion.CASCADE, to='api.Member')),
+                ('actor', models.ForeignKey(help_text='The original actor causing this deletion. Could be the author of a manual clean command invocation, the bot when executing automatic actions, or nothing to indicate that the bulk deletion was not issued by us.', null=True, on_delete=django.db.models.deletion.CASCADE, to='api.User')),
             ],
             bases=(api.models.ModelReprMixin, models.Model),
         ),

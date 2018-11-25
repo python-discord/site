@@ -4,12 +4,12 @@ from django.test import SimpleTestCase
 
 from ..models import (
     DeletedMessage, DocumentationLink,
-    Member, Message,
-    MessageDeletionContext, ModelReprMixin,
-    OffTopicChannelName, Role,
-    SnakeFact, SnakeIdiom,
-    SnakeName, SpecialSnake,
-    Tag
+    Message, MessageDeletionContext,
+    ModelReprMixin, OffTopicChannelName,
+    Role, SnakeFact,
+    SnakeIdiom, SnakeName,
+    SpecialSnake, Tag,
+    User
 )
 
 
@@ -32,14 +32,14 @@ class StringDunderMethodTests(SimpleTestCase):
         self.objects = (
             DeletedMessage(
                 id=45,
-                author=Member(
+                author=User(
                     id=444, name='bill',
                     discriminator=5, avatar_hash=None
                 ),
                 channel_id=666,
                 content="wooey",
                 deletion_context=MessageDeletionContext(
-                    actor=Member(
+                    actor=User(
                         id=5555, name='shawn',
                         discriminator=555, avatar_hash=None
                     ),
@@ -64,7 +64,7 @@ class StringDunderMethodTests(SimpleTestCase):
             ),
             Message(
                 id=45,
-                author=Member(
+                author=User(
                     id=444, name='bill',
                     discriminator=5, avatar_hash=None
                 ),
@@ -73,13 +73,13 @@ class StringDunderMethodTests(SimpleTestCase):
                 embeds=[]
             ),
             MessageDeletionContext(
-                actor=Member(
+                actor=User(
                     id=5555, name='shawn',
                     discriminator=555, avatar_hash=None
                 ),
                 creation=datetime.utcnow()
             ),
-            Member(
+            User(
                 id=5, name='bob',
                 discriminator=1, avatar_hash=None
             ),

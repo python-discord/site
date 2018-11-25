@@ -23,7 +23,7 @@ class Migration(migrations.Migration):
                 ('channel_id', models.BigIntegerField(help_text='The channel ID that this message was sent in, taken from Discord.', validators=[django.core.validators.MinValueValidator(limit_value=0, message='Channel IDs cannot be negative.')])),
                 ('content', models.CharField(help_text='The content of this message, taken from Discord.', max_length=2000)),
                 ('embeds', django.contrib.postgres.fields.ArrayField(base_field=django.contrib.postgres.fields.jsonb.JSONField(validators=[api.validators.validate_tag_embed]), help_text='Embeds attached to this message.', size=None)),
-                ('author', models.ForeignKey(help_text='The author of this message.', on_delete=django.db.models.deletion.CASCADE, to='api.Member')),
+                ('author', models.ForeignKey(help_text='The author of this message.', on_delete=django.db.models.deletion.CASCADE, to='api.User')),
                 ('deletion_context', models.ForeignKey(help_text='The deletion context this message is part of.', on_delete=django.db.models.deletion.CASCADE, to='api.MessageDeletionContext')),
             ],
             options={
