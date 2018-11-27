@@ -180,6 +180,14 @@ class InfractionViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
     - 200: returned on success
     - 400: if a field in the request body is invalid or disallowed
     - 404: if an infraction with the given `id` could not be found
+
+    ### Expanded routes
+    All routes support expansion of `user` and `actor` in responses. To use an expanded route,
+    append `/expanded` to the end of the route e.g. `GET /bot/infractions/expanded`.
+
+    #### Response format
+    See `GET /bot/users/<snowflake:int>` for the expanded formats of `user` and `actor`. Responses
+    are otherwise identical to their non-expanded counterparts.
     """
 
     serializer_class = InfractionSerializer
