@@ -97,7 +97,7 @@ class InfractionViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
     View providing CRUD operations on infractions for Discord users.
 
     ## Routes
-    ### GET /bot/infraction
+    ### GET /bot/infractions
     Retrieve all infractions.
     May be filtered by the query parameters.
 
@@ -129,17 +129,17 @@ class InfractionViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
     #### Status codes
     - 200: returned on success
 
-    ### GET /bot/infraction/<id:int>
+    ### GET /bot/infractions/<id:int>
     Retrieve a single infraction by ID.
 
     #### Response format
-    See `GET /bot/infraction`.
+    See `GET /bot/infractions`.
 
     #### Status codes
     - 200: returned on success
     - 404: if an infraction with the given `id` could not be found
 
-    ### POST /bot/infraction
+    ### POST /bot/infractions
     Create a new infraction and return the created infraction.
     Only `actor`, `type`, and `user` are required.
     The `actor` and `user` must be users known by the site.
@@ -156,13 +156,13 @@ class InfractionViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
     ... }
 
     #### Response format
-    See `GET /bot/infraction`.
+    See `GET /bot/infractions`.
 
     #### Status codes
     - 201: returned on success
     - 400: if a given user is unknown or a field in the request body is invalid
 
-    ### PATCH /bot/infraction/<id:int>
+    ### PATCH /bot/infractions/<id:int>
     Update the infraction with the given `id` and return the updated infraction.
     Only `active`, `reason`, and `expires_at` may be updated.
 
@@ -174,7 +174,7 @@ class InfractionViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
     ... }
 
     #### Response format
-    See `GET /bot/infraction`.
+    See `GET /bot/infractions`.
 
     #### Status codes
     - 200: returned on success
