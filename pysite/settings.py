@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
-# import sys
+import sys
 
 import environ
 
@@ -208,7 +208,22 @@ LOGGING = {
         'django': {
             'handlers': ['console'],
             'propagate': True,
-            'level': 'INFO' if DEBUG else env('LOG_LEVEL', default='WARN')
+            'level': env(
+                'LOG_LEVEL',
+                default=(
+                    # If there is no explicit `LOG_LEVEL` set,
+                    # use `DEBUG` if we're running in debug mode but not
+                    # testing. Use `ERROR` if we're running tests, else
+                    # default to using `WARN`.
+                    'DEBUG'
+                    if DEBUG and 'test' not in sys.argv
+                    else (
+                        'ERROR'
+                        if 'test' in sys.argv
+                        else 'WARN'
+                    )
+                )
+            )
         }
     }
 }

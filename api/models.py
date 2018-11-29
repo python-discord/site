@@ -92,11 +92,13 @@ class SnakeName(ModelReprMixin, models.Model):
     name = models.CharField(
         primary_key=True,
         max_length=100,
-        help_text="The regular name for this snake, e.g. 'Python'."
+        help_text="The regular name for this snake, e.g. 'Python'.",
+        validators=[RegexValidator(regex=r'^([^0-9])+$')]
     )
     scientific = models.CharField(
         max_length=150,
-        help_text="The scientific name for this snake, e.g. 'Python bivittatus'."
+        help_text="The scientific name for this snake, e.g. 'Python bivittatus'.",
+        validators=[RegexValidator(regex=r'^([^0-9])+$')]
     )
 
     def __str__(self):
@@ -109,7 +111,8 @@ class SpecialSnake(ModelReprMixin, models.Model):
     name = models.CharField(
         max_length=140,
         primary_key=True,
-        help_text='A special snake name.'
+        help_text='A special snake name.',
+        validators=[RegexValidator(regex=r'^([^0-9])+$')]
     )
     info = models.TextField(
         help_text='Info about a special snake.'
