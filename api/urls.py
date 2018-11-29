@@ -3,7 +3,7 @@ from rest_framework.routers import DefaultRouter
 
 from .views import HealthcheckView
 from .viewsets import (
-    DocumentationLinkViewSet,
+    DocumentationLinkViewSet, InfractionViewSet,
     OffTopicChannelNameViewSet,
     SnakeFactViewSet, SnakeIdiomViewSet,
     SnakeNameViewSet, SpecialSnakeViewSet,
@@ -18,13 +18,13 @@ bot_router.register(
     DocumentationLinkViewSet
 )
 bot_router.register(
+    'infractions',
+    InfractionViewSet
+)
+bot_router.register(
     'off-topic-channel-names',
     OffTopicChannelNameViewSet,
     base_name='offtopicchannelname'
-)
-bot_router.register(
-    'users',
-    UserViewSet
 )
 bot_router.register(
     'snake-facts',
@@ -46,6 +46,10 @@ bot_router.register(
 bot_router.register(
     'tags',
     TagViewSet
+)
+bot_router.register(
+    'users',
+    UserViewSet
 )
 
 app_name = 'api'

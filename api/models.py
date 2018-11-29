@@ -235,3 +235,63 @@ class Tag(ModelReprMixin, models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Infraction(ModelReprMixin, models.Model):
+    """An infraction for a Discord user."""
+
+    TYPE_CHOICES = (
+        ("warning", "Warning"),
+        ("mute", "Mute"),
+        ("ban", "Ban"),
+        ("kick", "Kick"),
+        ("superstar", "Superstar")
+    )
+    inserted_at = models.DateTimeField(
+        auto_now_add=True,
+        help_text="The date and time of the creation of this infraction."
+    )
+    expires_at = models.DateTimeField(
+        null=True,
+        help_text=(
+            "The date and time of the expiration of this infraction. "
+            "Null if the infraction is permanent or it can't expire."
+        )
+    )
+    active = models.BooleanField(
+        default=True,
+        help_text="Whether the infraction is still active."
+    )
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='infractions_received',
+        help_text="The user to which the infraction was applied."
+    )
+    actor = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='infractions_given',
+        help_text="The user which applied the infraction."
+    )
+    type = models.CharField(
+        max_length=9,
+        choices=TYPE_CHOICES,
+        help_text="The type of the infraction."
+    )
+    reason = models.TextField(
+        null=True,
+        help_text="The reason for the infraction."
+    )
+    hidden = models.BooleanField(
+        default=False,
+        help_text="Whether the infraction is a shadow infraction."
+    )
+
+    def __str__(self):
+        s = f"#{self.id}: {self.type} on {self.user_id}"
+        if self.expires_at:
+            s += f" until {self.expires_at}"
+        if self.hidden:
+            s += " (hidden)"
+        return s

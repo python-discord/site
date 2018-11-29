@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from .models import (
-    DocumentationLink,
+    DocumentationLink, Infraction,
     OffTopicChannelName, Role,
     SnakeFact, SnakeIdiom,
     SnakeName, SpecialSnake,
@@ -10,6 +10,7 @@ from .models import (
 
 
 admin.site.register(DocumentationLink)
+admin.site.register(Infraction)
 admin.site.register(OffTopicChannelName)
 admin.site.register(Role)
 admin.site.register(SnakeFact)
