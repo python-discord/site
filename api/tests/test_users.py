@@ -4,7 +4,7 @@ from .base import APISubdomainTestCase
 from ..models import Role, User
 
 
-class UnauthedDocumentationLinkAPITests(APISubdomainTestCase):
+class UnauthedUserAPITests(APISubdomainTestCase):
     def setUp(self):
         super().setUp()
         self.client.force_authenticate(user=None)
