@@ -16,7 +16,7 @@
   "devDependencies": {},
   "repository": {
     "type": "git",
-    "url": "git@github.com:python-discord/projects/site.git"
+    "url": "git@github.com:python-discord/site.git"
   },
   "homepage": "https://pythondiscord.com",
   "bugs": "https://github.com/python-discord/site/issues",
