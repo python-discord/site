@@ -19,7 +19,7 @@
     "url": "git@github.com:python-discord/projects/site.git"
   },
   "homepage": "https://pythondiscord.com",
-  "bugs": "https://github.com/python-discord/projects/site/issues",
+  "bugs": "https://github.com/python-discord/site/issues",
   "author": "Python Discord",
   "license": "MIT"
 }
