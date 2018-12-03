@@ -83,7 +83,7 @@
                                 <div class="resource-title">
                                     <strong>{{ item }}</strong> <br />
                                     <div class="uk-button-group">
-            g                           {% for url in data.urls %}
+                                        {% for url in data.urls %}
                                         <a class="uk-button uk-button-default uk-button-small"
                                            uk-tooltip="title: {{ url.title }}; pos: bottom"
                                            href="{{ url.url }}"><i class="{{ url.classes }}"></i></a>
