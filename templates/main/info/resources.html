@@ -19,9 +19,9 @@
                 <p>
                     This page is intended to be a listing of useful resources for beginner and experienced Python
                     programmers alike. This page is generated from a JSON file
-                    <a href="https://gitlab.com/python-discord/projects/site/blob/master/static/resources.json">on GitLab</a> -
+                    <a href="https://raw.githubusercontent.com/python-discord/site/master/static/resources.json">on GitHub</a> -
                     if there's a great resource that you love and you don't see it on this page, feel free to submit a
-                    merge request!
+                    pull request!
                 </p>
                 <p>
                     Some resources aren't free - the below key will help you figure out whether you need to pay for
@@ -83,7 +83,7 @@
                                 <div class="resource-title">
                                     <strong>{{ item }}</strong> <br />
                                     <div class="uk-button-group">
-                                        {% for url in data.urls %}
+            g                           {% for url in data.urls %}
                                         <a class="uk-button uk-button-default uk-button-small"
                                            uk-tooltip="title: {{ url.title }}; pos: bottom"
                                            href="{{ url.url }}"><i class="{{ url.classes }}"></i></a>
