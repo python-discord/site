@@ -15,7 +15,7 @@ setup(
     python_requires='>= 3.6',
     install_requires=[
         'django>=2.1.1',
-        'djangorestframework>=3.8.2',
+        'djangorestframework>=3.9.0',
         'djangorestframework-bulk>=0.2.1',
         'django-hosts>=3.0',
         'django-environ>=0.4.5',
