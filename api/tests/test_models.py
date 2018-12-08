@@ -1,9 +1,11 @@
+from datetime import datetime as dt, timezone
+
 from django.test import SimpleTestCase
 
 from ..models import (
-    DocumentationLink, ModelReprMixin,
-    OffTopicChannelName, Role,
-    SnakeFact, SnakeIdiom,
+    DocumentationLink, Infraction,
+    ModelReprMixin, OffTopicChannelName,
+    Role, SnakeFact, SnakeIdiom,
     SnakeName, SpecialSnake,
     Tag, User
 )
@@ -41,13 +43,22 @@ class StringDunderMethodTests(SimpleTestCase):
                 id=5, name='test role',
                 colour=0x5, permissions=0
             ),
+            Tag(
+                title='bob',
+                embed={'content': "the builder"}
+            ),
             User(
                 id=5, name='bob',
                 discriminator=1, avatar_hash=None
             ),
-            Tag(
-                title='bob',
-                embed={'content': "the builder"}
+            Infraction(
+                user_id=5, actor_id=5,
+                type='kick', reason='He terk my jerb!'
+            ),
+            Infraction(
+                user_id=5, actor_id=5, hidden=True,
+                type='kick', reason='He terk my jerb!',
+                expires_at=dt(5018, 11, 20, 15, 52, tzinfo=timezone.utc)
             )
         )
 
