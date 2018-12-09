@@ -60,6 +60,50 @@ class OffTopicChannelName(ModelReprMixin, models.Model):
         return self.name
 
 
+class Role(ModelReprMixin, models.Model):
+    """A role on our Discord server."""
+
+    id = models.BigIntegerField(  # noqa
+        primary_key=True,
+        validators=(
+            MinValueValidator(
+                limit_value=0,
+                message="Role IDs cannot be negative."
+            ),
+        ),
+        help_text="The role ID, taken from Discord."
+    )
+    name = models.CharField(
+        max_length=100,
+        help_text="The role name, taken from Discord."
+    )
+    colour = models.IntegerField(
+        validators=(
+            MinValueValidator(
+                limit_value=0,
+                message="Colour hex cannot be negative."
+            ),
+        ),
+        help_text="The integer value of the colour of this role from Discord."
+    )
+    permissions = models.IntegerField(
+        validators=(
+            MinValueValidator(
+                limit_value=0,
+                message="Role permissions cannot be negative."
+            ),
+            MaxValueValidator(
+                limit_value=2 << 32,
+                message="Role permission bitset exceeds value of having all permissions"
+            )
+        ),
+        help_text="The integer value of the permission bitset of this role from Discord."
+    )
+
+    def __str__(self):
+        return self.name
+
+
 class SnakeFact(ModelReprMixin, models.Model):
     """A snake fact used by the bot's snake cog."""
 
@@ -126,48 +170,24 @@ class SpecialSnake(ModelReprMixin, models.Model):
         return self.name
 
 
-class Role(ModelReprMixin, models.Model):
-    """A role on our Discord server."""
+class Tag(ModelReprMixin, models.Model):
+    """A tag providing (hopefully) useful information."""
 
-    id = models.BigIntegerField(  # noqa
-        primary_key=True,
-        validators=(
-            MinValueValidator(
-                limit_value=0,
-                message="Role IDs cannot be negative."
-            ),
-        ),
-        help_text="The role ID, taken from Discord."
-    )
-    name = models.CharField(
+    title = models.CharField(
         max_length=100,
-        help_text="The role name, taken from Discord."
-    )
-    colour = models.IntegerField(
-        validators=(
-            MinValueValidator(
-                limit_value=0,
-                message="Colour hex cannot be negative."
-            ),
+        help_text=(
+            "The title of this tag, shown in searches and providing "
+            "a quick overview over what this embed contains."
         ),
-        help_text="The integer value of the colour of this role from Discord."
+        primary_key=True
     )
-    permissions = models.IntegerField(
-        validators=(
-            MinValueValidator(
-                limit_value=0,
-                message="Role permissions cannot be negative."
-            ),
-            MaxValueValidator(
-                limit_value=2 << 32,
-                message="Role permission bitset exceeds value of having all permissions"
-            )
-        ),
-        help_text="The integer value of the permission bitset of this role from Discord."
+    embed = pgfields.JSONField(
+        help_text="The actual embed shown by this tag.",
+        validators=(validate_tag_embed,)
     )
 
     def __str__(self):
-        return self.name
+        return self.title
 
 
 class User(ModelReprMixin, models.Model):
@@ -215,26 +235,6 @@ class User(ModelReprMixin, models.Model):
 
     def __str__(self):
         return f"{self.name}#{self.discriminator}"
-
-
-class Tag(ModelReprMixin, models.Model):
-    """A tag providing (hopefully) useful information."""
-
-    title = models.CharField(
-        max_length=100,
-        help_text=(
-            "The title of this tag, shown in searches and providing "
-            "a quick overview over what this embed contains."
-        ),
-        primary_key=True
-    )
-    embed = pgfields.JSONField(
-        help_text="The actual embed shown by this tag.",
-        validators=(validate_tag_embed,)
-    )
-
-    def __str__(self):
-        return self.title
 
 
 class Infraction(ModelReprMixin, models.Model):

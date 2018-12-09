@@ -506,7 +506,7 @@ class TagViewSet(ModelViewSet):
     - 201: returned on success
     - 400: if one of the given fields is invalid
 
-    ### PUT /bot/members/<title:str>
+    ### PUT /bot/tags/<title:str>
     Update the tag with the given `title`.
 
     #### Request body
@@ -524,7 +524,7 @@ class TagViewSet(ModelViewSet):
     - 400: if the request body was invalid, see response body for details
     - 404: if the tag with the given `title` could not be found
 
-    ### PATCH /bot/members/<title:str>
+    ### PATCH /bot/tags/<title:str>
     Update the tag with the given `title`.
 
     #### Request body
@@ -542,7 +542,7 @@ class TagViewSet(ModelViewSet):
     - 400: if the request body was invalid, see response body for details
     - 404: if the tag with the given `title` could not be found
 
-    ### DELETE /bot/members/<title:str>
+    ### DELETE /bot/tags/<title:str>
     Deletes the tag with the given `title`.
 
     #### Status codes
