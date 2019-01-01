@@ -55,6 +55,9 @@ jobs:
 
   - job: test
     displayName: Test
+    dependsOn:
+      - lint_misc
+      - lint_python
     pool:
       vmImage: ubuntu-16.04
     strategy:
@@ -112,5 +115,25 @@ jobs:
           testResultsFiles: "**/TEST-*.xml"
           testRunTitle: 'Python $(python.version) with PostgreSQL $(postgres.version)'
 
+  - job: push_image
+    displayName: Push Docker image
+    dependsOn: test
+    condition: and(succeeded(), eq(variables['build.sourceBranch'], 'refs/heads/django'))
+    pool:
+      vmImage: ubuntu-16.04
+
+    steps:
+      - task: Docker@1
+        displayName: Login to Docker Hub
+
+        inputs:
+          containerregistrytype: 'Container Registry'
+          dockerRegistryEndpoint: 'DockerHub'
+          command: 'login'
+
+      - script: |
+          docker build -t pythondiscord/django:latest .
+          docker push pythondiscord/django:latest
+        displayName: Build and push the image
 
 # vim: sw=2 ts=2:

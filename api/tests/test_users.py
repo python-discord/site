@@ -1,34 +1,34 @@
 from django_hosts.resolvers import reverse
 
 from .base import APISubdomainTestCase
-from ..models import Member, Role
+from ..models import Role, User
 
 
-class UnauthedDocumentationLinkAPITests(APISubdomainTestCase):
+class UnauthedUserAPITests(APISubdomainTestCase):
     def setUp(self):
         super().setUp()
         self.client.force_authenticate(user=None)
 
     def test_detail_lookup_returns_401(self):
-        url = reverse('bot:member-detail', args=('whatever',), host='api')
+        url = reverse('bot:user-detail', args=('whatever',), host='api')
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, 401)
 
     def test_list_returns_401(self):
-        url = reverse('bot:member-list', host='api')
+        url = reverse('bot:user-list', host='api')
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, 401)
 
     def test_create_returns_401(self):
-        url = reverse('bot:member-list', host='api')
+        url = reverse('bot:user-list', host='api')
         response = self.client.post(url, data={'hi': 'there'})
 
         self.assertEqual(response.status_code, 401)
 
     def test_delete_returns_401(self):
-        url = reverse('bot:member-detail', args=('whatever',), host='api')
+        url = reverse('bot:user-detail', args=('whatever',), host='api')
         response = self.client.delete(url)
 
         self.assertEqual(response.status_code, 401)
@@ -45,7 +45,7 @@ class CreationTests(APISubdomainTestCase):
         )
 
     def test_accepts_valid_data(self):
-        url = reverse('bot:member-list', host='api')
+        url = reverse('bot:user-list', host='api')
         data = {
             'id': 42,
             'avatar_hash': "validavatarhashiswear",
@@ -53,20 +53,22 @@ class CreationTests(APISubdomainTestCase):
             'discriminator': 42,
             'roles': [
                 self.role.id
-            ]
+            ],
+            'in_guild': True
         }
 
         response = self.client.post(url, data=data)
         self.assertEqual(response.status_code, 201)
         self.assertEqual(response.json(), data)
 
-        user = Member.objects.get(id=42)
+        user = User.objects.get(id=42)
         self.assertEqual(user.avatar_hash, data['avatar_hash'])
         self.assertEqual(user.name, data['name'])
         self.assertEqual(user.discriminator, data['discriminator'])
+        self.assertEqual(user.in_guild, data['in_guild'])
 
     def test_supports_multi_creation(self):
-        url = reverse('bot:member-list', host='api')
+        url = reverse('bot:user-list', host='api')
         data = [
             {
                 'id': 5,
@@ -75,14 +77,16 @@ class CreationTests(APISubdomainTestCase):
                 'discriminator': 42,
                 'roles': [
                     self.role.id
-                ]
+                ],
+                'in_guild': True
             },
             {
                 'id': 8,
                 'avatar_hash': "maybenot",
                 'name': "another test man",
                 'discriminator': 555,
-                'roles': []
+                'roles': [],
+                'in_guild': False
             }
         ]
 
@@ -91,7 +95,7 @@ class CreationTests(APISubdomainTestCase):
         self.assertEqual(response.json(), data)
 
     def test_returns_400_for_unknown_role_id(self):
-        url = reverse('bot:member-list', host='api')
+        url = reverse('bot:user-list', host='api')
         data = {
             'id': 5,
             'avatar_hash': "hahayes",
@@ -106,7 +110,7 @@ class CreationTests(APISubdomainTestCase):
         self.assertEqual(response.status_code, 400)
 
     def test_returns_400_for_bad_data(self):
-        url = reverse('bot:member-list', host='api')
+        url = reverse('bot:user-list', host='api')
         data = {
             'id': True,
             'avatar_hash': 1902831,
