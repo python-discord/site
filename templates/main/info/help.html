@@ -503,6 +503,7 @@ ZeroDivisionError: division by zero</code></pre>
                     this case, <code>ZeroDivisionError: division by zero</code>, clearly indicates the problem: We're trying
                     to divide by zero somewhere in our code and that obviously can't be right. However, while we now know
                     which exception was raised, we still need to trace the exception back to the error in our code.
+                </p>
                 <p>
                     To do so, we turn to the lines above the exception. Reading from bottom to top again, we first encounter
                     the line where the exception was raised: <code>answer = a / b</code>. Directly above it, we can
