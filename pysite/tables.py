@@ -6,6 +6,7 @@ class Table(NamedTuple):
     keys: List[str]
     locked: bool = True
 
+
 TABLES = {
     "bot_events": Table(  # Events to be sent to the bot via websocket
         primary_key="id",
@@ -315,4 +316,3 @@ TABLES = {
         ])
     )
 }
-
