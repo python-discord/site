@@ -6,7 +6,6 @@ class Table(NamedTuple):
     keys: List[str]
     locked: bool = True
 
-
 TABLES = {
     "bot_events": Table(  # Events to be sent to the bot via websocket
         primary_key="id",
@@ -301,5 +300,19 @@ TABLES = {
             "expires_at",  # datetime
             "content"      # str
         ])
+    ),
+
+    "starboard_messages": Table(
+        primary_key="message_id",
+        keys=sorted([
+            "message_id",       # str
+            "bot_message_id",   # str
+            "guild_id",         # str
+            "channel_id",       # str
+            "author_id",        # str
+            "jump_to_url",      # str
+            "starred_date"      # datetime
+        ])
     )
 }
+
