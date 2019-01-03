@@ -46,12 +46,16 @@ class StarboardView(APIView, DBMixin):
         Get a list of all starred messages in the database,
         or a specific starred message by the db ID.
 
+        Data must be passed as params, or ignored.
         API key must be provided as header.
         """
 
         if data:
             message = self.db.get(self.table_name, data["message_id"])
             data = {"message": message}
+
+            if message is None:
+                return jsonify({"success": False})
 
         else:
             messages = self.db.get_all(self.table_name)
@@ -63,6 +67,7 @@ class StarboardView(APIView, DBMixin):
     @api_params(schema=POST_SCHEMA, validation_type=ValidationTypes.json)
     def post(self, data):
         """
+        Post an entry to the starboard database.
 
         Data must be provided as params.
         API key must be provided as header.
@@ -95,7 +100,7 @@ class StarboardView(APIView, DBMixin):
         Remove an entry for the starboard
 
         API key must be provided as header.
-        Board entry to delete must be provided as the `message_id` query argument.
+        Starboard entry to delete must be provided as the `message_id` parameter.
         """
         message_id = data.get("message_id")
         star_entry_exists = self.db.get(self.table_name, message_id)
