@@ -60,13 +60,15 @@ class StarboardView(APIView, DBMixin):
         return jsonify({"success": True, **data})
 
     @api_key
-    @api_params(schema=POST_SCHEMA, validation_type=ValidationTypes.params)
+    @api_params(schema=POST_SCHEMA, validation_type=ValidationTypes.json)
     def post(self, data):
         """
 
         Data must be provided as params.
         API key must be provided as header.
         """
+
+        print(data)
 
         if self.db.get(self.table_name, data["message_id"]) is not None:
             response = {
@@ -86,6 +88,7 @@ class StarboardView(APIView, DBMixin):
                 "starred_date": datetime.datetime.now(tz=datetime.timezone.utc)
             }
         )
+        print("inserted ", data["message_id"])
         return jsonify({"message": "ok"})
 
     @api_key
@@ -95,13 +98,16 @@ class StarboardView(APIView, DBMixin):
         Remove an entry for the starboard
 
         API key must be provided as header.
-        Name to delete must be provided as the `bot_message_id` query argument.
+        Board entry to delete must be provided as the `message_id` query argument.
         """
-
-        result = self.db.delete(
-            self.table_name,
-            data["message_id"],
-            return_changes=True
-        )
-
-        return jsonify(result)
+        message_id = data.get("message_id")
+        star_entry_exists = self.db.get(self.table_name, message_id)
+        print(star_entry_exists, message_id)
+        if star_entry_exists:
+            self.db.delete(
+                self.table_name,
+                message_id
+            )
+            print("Deleted", message_id)
+            return jsonify({"success": True})
+        return jsonify({"success": False})
