@@ -8,16 +8,20 @@ class DurationParsingTests(SiteTest):
     """Tests the `parse_duration` method provided by `pysite.utils.time`."""
 
     SIMPLE_DURATION_STRINGS = (
-        ('42s', timedelta(seconds=42)),
-        ('12m', timedelta(minutes=12)),
+        ('42S', timedelta(seconds=42)),
+        ('12M', timedelta(minutes=12)),
+        ('20H', timedelta(hours=20)),
         ('20h', timedelta(hours=20)),
         ('7d', timedelta(days=7)),
-        ('2w', timedelta(weeks=2))
+        ('2w', timedelta(weeks=2)),
+        ('3m', timedelta(days=90)),
+        ('1y', timedelta(days=365)),
     )
     COMBINED_DURATION_STRINGS = (
-        ('12m30s', timedelta(minutes=12, seconds=30)),
-        ('20h5m', timedelta(hours=20, minutes=5)),
-        ('7d10h12s', timedelta(days=7, hours=10, seconds=12))
+        ('12M30S', timedelta(minutes=12, seconds=30)),
+        ('20H5M', timedelta(hours=20, minutes=5)),
+        ('7d10H12S', timedelta(days=7, hours=10, seconds=12)),
+        ('1y2m', timedelta(days=425)),
     )
 
     def test_simple_duration_string_parsing(self):
