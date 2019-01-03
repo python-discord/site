@@ -68,8 +68,6 @@ class StarboardView(APIView, DBMixin):
         API key must be provided as header.
         """
 
-        print(data)
-
         if self.db.get(self.table_name, data["message_id"]) is not None:
             response = {
                 "message": "This message is already stored in the starboard"
@@ -88,7 +86,6 @@ class StarboardView(APIView, DBMixin):
                 "starred_date": datetime.datetime.now(tz=datetime.timezone.utc)
             }
         )
-        print("inserted ", data["message_id"])
         return jsonify({"message": "ok"})
 
     @api_key
@@ -102,12 +99,11 @@ class StarboardView(APIView, DBMixin):
         """
         message_id = data.get("message_id")
         star_entry_exists = self.db.get(self.table_name, message_id)
-        print(star_entry_exists, message_id)
+
         if star_entry_exists:
             self.db.delete(
                 self.table_name,
                 message_id
             )
-            print("Deleted", message_id)
             return jsonify({"success": True})
         return jsonify({"success": False})
