@@ -426,6 +426,18 @@
             "url": "https://pythonbytes.fm/"
           }
         ]
+      },
+      "Podcast.__init__": {
+        "description": "The podcast about Python and the people who make it great. Weekly long-form interviews with the creators of notable Python packages.",
+        "payment": "free",
+        "payment_description": null,
+        "urls": [
+          {
+            "icon": "regular/link",
+            "title": "Website",
+            "url": "https://www.podcastinit.com/"
+          }
+        ]
       }
     }
   },
