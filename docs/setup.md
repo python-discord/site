@@ -26,6 +26,9 @@ in your environment variables:
 export DATABASE_URL=postgres://pysite@localhost/pysite
 ```
 
+After this step, inside the `.env` file, set the `SECRET_KEY` variable which can be anything you like. Also, set the `ENGINE` variable
+to `django.db.backends.postgresql`.
+
 A simpler approach to automatically configuring this might come in the
 near future - if you have any suggestions, please let us know!
 
@@ -68,6 +71,23 @@ to install base dependencies along with lint and test dependencies.
 
 You can either use `python manage.py` directly, or you can use the console
 entrypoint for it, `psmgr`. For example, to run tests, you could use either `python manage.py test` or `psmgr test`.
+
+## Hosts file
+
+Make sure you add the following to your hosts file:
+
+```sh
+127.0.0.1   pythondiscord.local
+127.0.0.1   api.pythondiscord.local
+127.0.0.1   staff.pythondiscord.local
+127.0.0.1   admin.pythondiscord.local
+127.0.0.1   wiki.pythondiscord.local
+127.0.0.1   ws.pythondiscord.local
+```
+When trying to access the site, you'll be using the domains above instead of the usual `localhost:8000`.
+
 To run the server, run `DEBUG=1 python manage.py runserver`. If it gives you an error saying
-`django.core.exceptions.ImproperlyConfigured: Set the DATABASE_URL environment variable` please make sure the server your postgres database is on is running
-and run the command `$(export cat .env) in your terminal`. Happy hacking!
+`django.core.exceptions.ImproperlyConfigured: Set the DATABASE_URL environment variable` please make sure the server that your postgres database is located at is running
+and run the command `$(export cat .env)`. Happy hacking!
+
+
