@@ -81,6 +81,11 @@
   put it in the UIKit shim file instead.
 */
 
+$light_grey: #8C8C8C;
+$dark_grey: #222222;
+$white: #FFFFFF;
+
+
 html {
   height: 100%;
 
@@ -125,22 +130,26 @@ html {
   max-height: 2.2rem;
 }
 
+.jetbrains {
+  max-width: 35%;
+}
+
 footer div.uk-section div.footer {
-   color:white;
-   background-color:#222222;
-   display: flex;
-   flex-wrap: wrap;
-   align-items: center;
-   justify-content: center;
-   margin: 0.5rem 1rem 0.5rem 1rem;
+  align-items: center;
+  background-color: $dark_grey;
+  color: $white;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: .5rem 1rem;
 }
 
 @media only screen and (min-width: 505px) {
   div.footer div.vertical-divider {
-      background-color: #8c8c8c;
-      width: 1px;
-      margin: 0 1.5% 0 1.5%;
-      height: 3rem;
+    background-color: $light_grey;
+    height: 3rem;
+    margin: 0 1.5%;
+    width: 1px;
   }
 }
 
@@ -150,12 +159,12 @@ footer div.uk-section div.footer {
   }
 }
 
-div.footer div.right-align{
+div.footer div.right-align {
   text-align: center;
 }
 
-div.footer div#linode{
-  min-width:4%;
+div.footer div#linode {
+  min-width: 4%;
 }
 
 .cursor-default {
