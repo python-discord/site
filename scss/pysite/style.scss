@@ -81,6 +81,11 @@
   put it in the UIKit shim file instead.
 */
 
+$light_grey: #8C8C8C;
+$dark_grey: #222222;
+$white: #FFFFFF;
+
+
 html {
   height: 100%;
 
@@ -118,7 +123,48 @@ html {
 }
 
 .jam-image {
-  max-width: 15rem;
+  max-width: 10rem;
+}
+
+.footer-sponsor {
+  max-height: 2.2rem;
+}
+
+.jetbrains {
+  max-width: 35%;
+}
+
+footer div.uk-section div.footer {
+  align-items: center;
+  background-color: $dark_grey;
+  color: $white;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: .5rem 1rem;
+}
+
+@media only screen and (min-width: 505px) {
+  div.footer div.vertical-divider {
+    background-color: $light_grey;
+    height: 3rem;
+    margin: 0 1.5%;
+    width: 1px;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  div.footer div#linode {
+    margin-top: 1rem;
+  }
+}
+
+div.footer div.right-align {
+  text-align: center;
+}
+
+div.footer div#linode {
+  min-width: 4%;
 }
 
 .cursor-default {
