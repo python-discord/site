@@ -118,7 +118,36 @@ html {
 }
 
 .jam-image {
-  max-width: 15rem;
+  max-width: 10rem;
+}
+
+.footer-sponsor {
+  max-height: 2.2rem;
+}
+
+footer div.uk-section div.footer {
+   color:white;
+   background-color:#222222;
+   display: flex;
+   flex-wrap: wrap;
+   align-items: center;
+   justify-content: center;
+   margin: 0.5rem 1rem 0.5rem 1rem;
+}
+
+div.footer div.vertical-divider {
+    background-color: #8c8c8c;
+    width: 1px;
+    margin: 0 1.5% 0 1.5%;
+    height: 3rem;
+}
+
+div.footer div.right-align{
+  text-align: right;
+}
+
+div.footer div#linode{
+  min-width:20%;
 }
 
 .cursor-default {
