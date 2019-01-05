@@ -13,11 +13,11 @@ GET_SCHEMA = Schema({
 })
 
 POST_SCHEMA = Schema({
-    "bot_message_id": str,
-    "message_id": str,
-    "guild_id": str,
-    "channel_id": str,
-    "author_id": str,
+    "bot_message_id": int,
+    "message_id": int,
+    "guild_id": int,
+    "channel_id": int,
+    "author_id": int,
     "jump_to_url": str,
 })
 
@@ -32,6 +32,8 @@ DELETE_BY_BOT_MESSAGE_SCHEMA = Schema({
 AUTHOR_GET_SCHEMA = Schema({
     "author_id": str
 })
+
+DELETE_ALL_STARBOARD = Schema({})
 
 
 class StarboardView(APIView, DBMixin):
@@ -99,6 +101,9 @@ class StarboardView(APIView, DBMixin):
         """
         Remove an entry for the starboard
 
+        Returns 200 (ok, empty response) on success.
+        Returns 400 if the given `user_id` is invalid.
+
         API key must be provided as header.
         Starboard entry to delete must be provided as the `message_id` parameter.
         """
@@ -110,5 +115,28 @@ class StarboardView(APIView, DBMixin):
                 self.table_name,
                 message_id
             )
-            return jsonify({"success": True})
-        return jsonify({"success": False})
+            return "", 200
+        return "", 400
+
+
+class StarboardDeletionView(APIView, DBMixin):
+    path = "/bot/starboard/delete"
+    name = "bot.starboard.delete"
+    table_name = "starboard_messages"
+
+    @api_key
+    @api_params(schema=DELETE_ALL_STARBOARD, validation_type=ValidationTypes.params)
+    def delete(self, data):
+        """
+        Remove ALL entries from the starboard
+
+        Returns 200 (with a blank text) on success.
+        Returns 400 (with error message as text) on failure.
+
+        API key must be provided as header.
+        """
+        try:
+            self.db.delete(self.table_name)
+        except Exception as e:
+            return e, 400
+        return "", 200
