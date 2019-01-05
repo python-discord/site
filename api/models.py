@@ -241,10 +241,11 @@ class Infraction(ModelReprMixin, models.Model):
     """An infraction for a Discord user."""
 
     TYPE_CHOICES = (
+        ("note", "Note"),
         ("warning", "Warning"),
         ("mute", "Mute"),
-        ("ban", "Ban"),
         ("kick", "Kick"),
+        ("ban", "Ban"),
         ("superstar", "Superstar")
     )
     inserted_at = models.DateTimeField(
