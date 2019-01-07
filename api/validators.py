@@ -115,7 +115,7 @@ def validate_tag_embed(embed):
         'color', 'footer', 'image', 'thumbnail', 'video',
         'provider', 'author', 'fields'
     }
-    one_required_of = {'content', 'fields', 'image', 'title', 'video'}
+    one_required_of = {'description', 'fields', 'image', 'title', 'video'}
     field_validators = {
         'title': (
             MinLengthValidator(
