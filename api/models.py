@@ -1,3 +1,4 @@
+import datetime
 from operator import itemgetter
 
 from django.contrib.postgres import fields as pgfields
@@ -249,7 +250,7 @@ class Infraction(ModelReprMixin, models.Model):
         ("superstar", "Superstar")
     )
     inserted_at = models.DateTimeField(
-        auto_now_add=True,
+        default=datetime.datetime.utcnow,
         help_text="The date and time of the creation of this infraction."
     )
     expires_at = models.DateTimeField(
