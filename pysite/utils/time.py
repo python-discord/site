@@ -4,11 +4,14 @@ from rethinkdb import make_timezone
 
 
 UNITS = {
-    's': lambda value: value,
-    'm': lambda value: value * 60,
-    'h': lambda value: value * 60 * 60,
-    'd': lambda value: value * 60 * 60 * 24,
-    'w': lambda value: value * 60 * 60 * 24 * 7
+    'S': lambda value: value,                       # Seconds
+    'M': lambda value: value * 60,                  # Minutes
+    'H': lambda value: value * 60 * 60,             # Hours (strftime format)
+    'h': lambda value: value * 60 * 60,             # Hours (commonly used by staff)
+    'd': lambda value: value * 60 * 60 * 24,        # Days
+    'w': lambda value: value * 60 * 60 * 24 * 7,    # Weeks
+    'm': lambda value: value * 60 * 60 * 24 * 30,   # Months
+    'y': lambda value: value * 60 * 60 * 24 * 365,  # Years
 }
 
 
@@ -16,10 +19,12 @@ def parse_duration(duration: str) -> datetime:
     """
     Parses a string like '3w' into a datetime 3 weeks from now.
 
-    Also supports strings like 1w2d or 1h25m.
+    Also supports strings like 1w2d or 1H25M.
 
     This function is adapted from a bot called ROWBOAT, written by b1naryth1ef.
     See https://github.com/b1naryth1ef/rowboat/blob/master/rowboat/util/input.py
+
+    Uses strftime designators for all values - time is uppercase, date is lowercase. (although hour supports both)
 
     :param duration: a string containing the number and a time unit shorthand.
     :return: A datetime representing now + the duration

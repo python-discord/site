@@ -99,7 +99,7 @@
       "The Modern Python 3 Bootcamp": {
         "description": "A unique interactive python experience with nearly 200 exercises and quizzes.",
         "payment": "paid",
-        "payment_description": null,
+        "payment_description": "Paid course with a certificate of completion. Some sample videos are available for free.",
         "urls": [
           {
             "icon": "regular/chalkboard-teacher",
@@ -355,7 +355,7 @@
       "Automate the Boring Stuff with Python": {
         "description": "The interactive course version of Al Sweigart's excellent book for beginners, taught by the author himself. This link has a discounted version of the course which will always cost 10 dollars. Thanks, Al!",
         "payment": "paid",
-        "payment_description": "You can pay to enroll for a graded certificate, or choose to take the full course for free.",
+        "payment_description": "Paid course with a certificate of completion. Some sample videos are available for free.",
         "urls": [
           {
             "icon": "regular/graduation-cap",
@@ -424,6 +424,18 @@
             "icon": "regular/link",
             "title": "Website",
             "url": "https://pythonbytes.fm/"
+          }
+        ]
+      },
+      "Podcast.__init__": {
+        "description": "The podcast about Python and the people who make it great. Weekly long-form interviews with the creators of notable Python packages.",
+        "payment": "free",
+        "payment_description": null,
+        "urls": [
+          {
+            "icon": "regular/link",
+            "title": "Website",
+            "url": "https://www.podcastinit.com/"
           }
         ]
       }
@@ -526,6 +538,23 @@
             "icon": "regular/link",
             "title": "Website",
             "url": "https://www.jetbrains.com/pycharm/"
+          }
+        ]
+      },
+      "Thonny": {
+        "description": "A Python IDE specifially aimed at learning programming. Has a lot of helpful features to help you understand your code.",
+        "payment": "free",
+        "payment_description": null,
+        "urls": [
+          {
+            "icon": "regular/link",
+            "title": "Website",
+            "url": "https://thonny.org/"
+          },
+          {
+            "icon": "branding/github",
+            "title": "GitHub",
+            "url": "https://github.com/thonny/thonny/"
           }
         ]
       }

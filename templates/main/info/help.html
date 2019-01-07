@@ -45,6 +45,7 @@
                 <ul>
                     <li>Read the official documentation for whatever you're working with</li>
                     <li>Use a debugger to inspect your code</li>
+                    <li><a href="#traceback">Examine the traceback</a> when your code raises an exception</li>
                     <li>Do some research online - for example, on Stack Overflow</li>
                     <li>Read the source code for whatever you're working with</li>
                     <li>Search the message history of the help channels</li>
@@ -103,7 +104,7 @@
                 <p>
                     If you're still confused, try searching the Internet for people that have already had the same
                     problem. Often, you won't be the only person to have encountered the issue you're dealing with - more often
-                    than not, you'll find a GitLab ticket or a StackOverflow question along with a fix or answer to your
+                    than not, you'll find a GitHub issue or a StackOverflow question along with a fix or answer to your
                     question already posted.
                 </p>
                 <p>
@@ -136,6 +137,12 @@
                     <li>Details on how you attempted to solve the problem on your own</li>
                     <li>Full version information &mdash; for example, <em class="uk-text-primary">"Python 3.6.4 with
                         discord.py 1.0.0a"</em></li>
+                    <li>The full traceback if your code raises an exception
+                        <ul>
+                            <li>Do not curate the traceback as you may inadvertently exclude information crucial to
+                            solving your issue</li>
+                        </ul>
+                    </li>
                 </ul>
                 <p>
                     Your question should be informative, but to the point. More importantly, how you phrase your
@@ -454,6 +461,137 @@
                     have to focus on you, instead of being able to deal with other people while you're figuring out an
                     answer. If your problem is graphical and you can't adequately describe it without a visual, take a
                     screenshot or provide a short screen recording to illustrate your problem.
+                </p>
+            </article>
+        </div>
+    </div>
+
+    <div class="uk-section">
+        <div class="uk-container uk-container-small">
+            <article class="uk-article">
+                <h2 class="uk-article-title hover-title" id="traceback">
+                    Examining Tracebacks
+
+                    <a href="#traceback" class="uk-text-primary" title="Permanent link to this header">
+                        <i class="fas fa-paragraph" data-fa-transform="shrink-8"></i>
+                    </a>
+                </h2>
+                <p class="uk-article-meta">
+                    Don't Panic!
+                </p>
+                <p>
+                    Usually, the first sign of trouble is that when you run your code, it raises an exception. For beginning
+                    programmers, the traceback that's generated for the exception may feel overwhelming and discouraging
+                    at first. However, in time, most developers start to appreciate the extensive information contained in
+                    the traceback as it helps them track down the error in their code. So, don't panic and take a moment to
+                    carefully review the information provided to you.
+                </p>
+                <p class="uk-text-lead">
+                    Reading the traceback
+                </p>
+                <p>
+<pre class="code python literal-block"><code>Traceback (most recent call last):
+  File "my_python_file.py", line 6, in &lt;module&gt;
+    spam = division(a=10, b=0)
+  File "my_python_file.py", line 2, in division
+    answer = a / b
+ZeroDivisionError: division by zero</code></pre>
+                </p>
+                <p>
+                    In general, the best strategy is to read the traceback from bottom to top. As you can see in the example
+                    above, the last line of the traceback contains the actual exception that was raised by your code. In
+                    this case, <code>ZeroDivisionError: division by zero</code>, clearly indicates the problem: We're trying
+                    to divide by zero somewhere in our code and that obviously can't be right. However, while we now know
+                    which exception was raised, we still need to trace the exception back to the error in our code.
+                </p>
+                <p>
+                    To do so, we turn to the lines above the exception. Reading from bottom to top again, we first encounter
+                    the line where the exception was raised: <code>answer = a / b</code>. Directly above it, we can
+                    see that this line of code was <code>line 2</code> of the file <code>"my_python_file.py"</code> and that
+                    it's in the scope of the function <code>division</code>. At this point, it's a good idea to inspect the
+                    code referenced here to see if we can spot an obvious mistake:
+                </p>
+                <p>
+<pre class="code python literal-block"><code>1| <span class="k">def</span> <span class="nf">division</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+2|    <span class="n">answer</span> <span class="o">=</span> <span class="n">a</span> <span class="o">/</span> <span class="n">b</span>
+3|    <span class="k">return</span> <span class="n">answer</span></code></pre>
+                </p>
+                <p>
+                    Unfortunately, there's no obvious mistake in the code at this point, although one thing we do see
+                    here is that this function divides <code>a</code> by <code>b</code> and that the exception will only
+                    occur if <code>b</code> is somehow assigned the numeric value <code>0</code>.
+                </p>
+                <p>
+                    Keeping that observation in the back of our minds, we continue reading the traceback from bottom
+                    to top. The next thing we encounter is <code>spam = division(a=10, b=0)</code> from <code>line 6</code>
+                    of the file <code>"my_python_file.py"</code>. In this case, <code>&lt;module&gt;</code> tells us
+                    that the code is in the global scope of that file. While it's already clear from the traceback what's
+                    going wrong here, we're passing <code>b=0</code> to the function <code>division</code>, inspecting the
+                    code shows us the same:
+                </p>
+                <p>
+<pre class="code python literal-block"><code>5| <span class="n">spam</span> <span class="o">=</span> <span class="n">division</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+6| <span class="k">print</span><span class="p">(</span><span class="n">spam</span><span class="p">)</span></code></pre>
+                </p>
+                <p>
+                    We have now traced back the exception to a line of code calling the division function with a
+                    divisor of 0. Obviously, this is a simplified example, but the exact same steps apply to
+                    more complex situations as well.
+
+                </p>
+                <p class="uk-text-lead">
+                    The error is sometimes in the line before the line in the traceback
+                </p>
+                <p>
+                    Sometimes, the actual error is in the line just before the one referenced in the traceback. This
+                    usually happens when we've inadvertently omitted a character meant to close an expression, like a
+                    brace, bracket, or parenthesis. For instance, the following snippet of code will generate a
+                    traceback pointing at the line after the one in which we've missed the closing parenthesis:
+                </p>
+                <p>
+ <pre class="code python literal-block"><code><span></span>1| <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Hello, world!&quot;</span>
+2| <span class="k">print</span><span class="p">(</span><span class="s2">&quot;This is my first Python program!&quot;</span><span class="p">)</span>
+</code></pre>
+                </p>
+                <p>
+ <pre class="code python literal-block"><code>File "my_python_file.py", line 2
+    print("This is my first Python program!")
+        ^
+SyntaxError: invalid syntax</code></pre>
+                </p>
+                <p>
+                    The reason this may happen is that Python allows for
+                    <a href="https://docs.python.org/3/reference/lexical_analysis.html#implicit-line-joining">implicit
+                    line continuation</a> and will only notice the error when the expression does not continue
+                    as expected on the next line. So, it's always a good idea to also check the line before the one
+                    mentioned in the traceback!
+                </p>
+                <p class="uk-text-lead">
+                    More information on exceptions
+                </p>
+                <p>
+                    Further information on exceptions can be found in the official Python documentation:
+                </p>
+                <ul>
+                    <li>
+                        The <a href="https://docs.python.org/3/library/exceptions.html">built-in exceptions</a> page
+                        lists all the built-in exceptions along with a short description of the exception. If you're
+                        unsure of the meaning of an exception in your traceback, this is a good place to start.
+                    </li>
+                    <li>
+                        The <a href="https://docs.python.org/3/tutorial/errors.html">errors and exceptions</a> chapter
+                        in the official tutorial gives an overview of errors and exceptions in Python. Besides explaining
+                        what exceptions are, it also explains how to handle expected exceptions graciously to keep your
+                        application from crashing when an expected exception is raised and how to define custom
+                        exceptions specific to your application.
+                    </li>
+                </ul>
+                <p>
+                    If you encounter an exception specific to an external module or package, it's usually a good idea
+                    to check the documentation of that package to see if the exception is documented. Another option
+                    is to paste a part of the traceback, usually the last line, into your favorite search engine to see
+                    if anyone else has encountered a similar problem. More often than not, you will be able to find a
+                    solution to your problem this way.
                 </p>
             </article>
         </div>

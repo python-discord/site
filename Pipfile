@@ -4,7 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-flask = "==0.12.2"
+flask = "==0.12.4"
 rethinkdb = "*"
 requests = "*"
 gevent = "==1.2.2"
@@ -33,7 +33,6 @@ requests = "*"
 flask-testing = "*"
 pytest = "*"
 pytest-cov = "*"
-python-coveralls = "*"
 libsass = "*"
 
 [requires]
