@@ -4,7 +4,7 @@ from .base import APISubdomainTestCase
 from ..views import RulesView
 
 
-class HealthcheckAPITests(APISubdomainTestCase):
+class RuleAPITests(APISubdomainTestCase):
     def setUp(self):
         super().setUp()
         self.client.force_authenticate(user=None)
