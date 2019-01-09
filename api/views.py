@@ -44,7 +44,9 @@ class RulesView(APIView):
 
     Since some of the the rules require links, this view
     gives you the option to return rules in either Markdown
-    or HTML format by specifying the `format`.
+    or HTML format by specifying the `link_format` query parameter
+    as either `md` or `html`. Specifying a different value than
+    `md` or `html` will return 400.
 
     ## Authentication
     Does not require any authentication nor permissions.
