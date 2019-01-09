@@ -1,9 +1,9 @@
-import datetime
 from operator import itemgetter
 
 from django.contrib.postgres import fields as pgfields
 from django.core.validators import MaxValueValidator, MinValueValidator, RegexValidator
 from django.db import models
+from django.utils import timezone
 
 from .validators import validate_tag_embed
 
@@ -250,7 +250,7 @@ class Infraction(ModelReprMixin, models.Model):
         ("superstar", "Superstar")
     )
     inserted_at = models.DateTimeField(
-        default=datetime.datetime.utcnow,
+        default=timezone.now,
         help_text="The date and time of the creation of this infraction."
     )
     expires_at = models.DateTimeField(
