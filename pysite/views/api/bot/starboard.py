@@ -13,11 +13,11 @@ GET_SCHEMA = Schema({
 })
 
 POST_SCHEMA = Schema({
-    "bot_message_id": int,
-    "message_id": int,
-    "guild_id": int,
-    "channel_id": int,
-    "author_id": int,
+    "bot_message_id": str,
+    "message_id": str,
+    "guild_id": str,
+    "channel_id": str,
+    "author_id": str,
     "jump_to_url": str,
 })
 
@@ -53,7 +53,7 @@ class StarboardView(APIView, DBMixin):
         """
 
         if data:
-            message = self.db.get(self.table_name, data["message_id"])
+            message = self.db.get(self.table_name, str(data["message_id"]))
             data = {"message": message}
 
             if message is None:
@@ -81,18 +81,9 @@ class StarboardView(APIView, DBMixin):
             }
             return jsonify(response), 400
 
-        self.db.insert(
-            self.table_name,
-            {
-                "message_id": data["message_id"],
-                "bot_message_id": data["bot_message_id"],
-                "guild_id": data["guild_id"],
-                "channel_id": data["channel_id"],
-                "author_id": data["author_id"],
-                "jump_to_url": data["jump_to_url"],
-                "starred_date": datetime.datetime.now(tz=datetime.timezone.utc)
-            }
-        )
+        data["starred_date"] = datetime.datetime.now(tz=datetime.timezone.utc)
+        self.db.insert(self.table_name, data)
+
         return jsonify({"message": "ok"})
 
     @api_key
@@ -108,7 +99,7 @@ class StarboardView(APIView, DBMixin):
         Starboard entry to delete must be provided as the `message_id` parameter.
         """
         message_id = data.get("message_id")
-        star_entry_exists = self.db.get(self.table_name, message_id)
+        star_entry_exists = self.db.get(self.table_name, str(message_id))
 
         if star_entry_exists:
             self.db.delete(
@@ -125,8 +116,8 @@ class StarboardDeletionView(APIView, DBMixin):
     table_name = "starboard_messages"
 
     @api_key
-    @api_params(schema=DELETE_ALL_STARBOARD, validation_type=ValidationTypes.params)
-    def delete(self, data):
+    @api_params(schema=DELETE_ALL_STARBOARD)
+    def delete(self):
         """
         Remove ALL entries from the starboard
 
