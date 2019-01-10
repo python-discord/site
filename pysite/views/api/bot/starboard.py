@@ -33,8 +33,6 @@ AUTHOR_GET_SCHEMA = Schema({
     "author_id": str
 })
 
-DELETE_ALL_STARBOARD = Schema({})
-
 
 class StarboardView(APIView, DBMixin):
     path = "/bot/starboard"
@@ -116,7 +114,6 @@ class StarboardDeletionView(APIView, DBMixin):
     table_name = "starboard_messages"
 
     @api_key
-    @api_params(schema=DELETE_ALL_STARBOARD)
     def delete(self):
         """
         Remove ALL entries from the starboard
