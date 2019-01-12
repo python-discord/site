@@ -94,7 +94,6 @@ class RulesView(APIView):
                 f"Can only template links to `html` or `md`, got `{target}`"
             )
 
-
     # `format` here is the result format, we have a link format here instead.
     def get(self, request, format=None):  # noqa
         link_format = request.query_params.get('link_format', 'md')
