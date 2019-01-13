@@ -24,6 +24,5 @@ RUN python3 -m pip install .[$EXTRAS] \
     && apk del --purge build
 
 COPY . .
-RUN SECRET_KEY=abc DATABASE_URL=postgresql://fake:password@host/database python manage.py collectstatic
 
 CMD ["uwsgi", "--ini", "docker/app/uwsgi.ini"]
