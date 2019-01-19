@@ -7,7 +7,7 @@
 
             <!-- Main message -->
             <span class="nick" style="color: {{ message.color }}">{{ message.author }}<span class="time">{{ message.timestamp }} | User ID: {{ message.user_id }}</span></span><br>
-            <span class="text">{{ message.content }}</span>
+            <span class="text">{{ message.content | safe }}</span>
 
             <!-- File attachments -->
             {% for attachment in message.attachments %}

@@ -30,6 +30,13 @@ class LogView(RouteView, DBMixin):
         messages = data["log_data"]
 
         for message in messages:
+            # Set the user role color
             message['color'] = ROLE_COLORS.get(message['role_id'], ROLE_COLORS[DEVELOPERS_ROLE])
+
+            # If there's any html, let's make it safe.
+            message['content'] = message['content'].replace("<", "&lt;").replace(">", "&gt;")
+
+            # Convert newlines to <br> so they will render properly
+            message['content'] = message['content'].replace("\n", "<br>")
 
         return self.render(self.template, messages=messages)
