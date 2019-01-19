@@ -72,6 +72,18 @@
           }
         ]
       },
+      "The Hitchhiker's Guide to Python": {
+        "description": "This opinionated guide exists to provide both novice and expert Python developers a best practice handbook to the installation, configuration, and usage of Python on a daily basis.",
+        "payment": "free",
+        "payment_description": null,
+        "urls": [
+          {
+            "icon": "regular/link",
+            "title": "Website",
+            "url": "https://python-guide.org/"
+          }
+        ]
+      },
       "Python Tutorials by Corey Schafer on YouTube": {
         "description": "An in-depth look at the Python programming language, from one of YouTube's most popular Python tutors.",
         "payment": "free",
@@ -424,6 +436,18 @@
             "icon": "regular/link",
             "title": "Website",
             "url": "https://pythonbytes.fm/"
+          }
+        ]
+      },
+      "Podcast.__init__": {
+        "description": "The podcast about Python and the people who make it great. Weekly long-form interviews with the creators of notable Python packages.",
+        "payment": "free",
+        "payment_description": null,
+        "urls": [
+          {
+            "icon": "regular/link",
+            "title": "Website",
+            "url": "https://www.podcastinit.com/"
           }
         ]
       }
