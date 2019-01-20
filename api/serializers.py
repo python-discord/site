@@ -11,16 +11,43 @@ from .models import (
 )
 
 
-class MessageDeletionContextSerializer(BulkSerializerMixin, ModelSerializer):
-    deleted_messages = PrimaryKeyRelatedField(
-        many=True,
-        queryset=DeletedMessage.objects.all()
+class DeletedMessageSerializer(ModelSerializer):
+    author = PrimaryKeyRelatedField(
+        queryset=User.objects.all()
+    )
+    deletion_context = PrimaryKeyRelatedField(
+         queryset=MessageDeletionContext.objects.all(),
+         # This will be overriden in the `create` function
+         # of the deletion context serializer.
+         required=False
     )
 
     class Meta:
+        model = DeletedMessage
+        fields = (
+            'id', 'author',
+            'channel_id', 'content',
+            'embeds', 'deletion_context'
+        )
+
+class MessageDeletionContextSerializer(ModelSerializer):
+    deletedmessage_set = DeletedMessageSerializer(many=True)
+
+    class Meta:
         model = MessageDeletionContext
-        fields = ('actor', 'creation', 'messages')
+        fields = ('actor', 'creation', 'id', 'deletedmessage_set')
         depth = 1
+
+    def create(self, validated_data):
+        messages = validated_data.pop('deletedmessage_set')
+        deletion_context = MessageDeletionContext.objects.create(**validated_data)
+        for message in messages:
+            DeletedMessage.objects.create(
+                deletion_context=deletion_context,
+                **message
+            )
+
+        return deletion_context
 
 
 class DocumentationLinkSerializer(ModelSerializer):
