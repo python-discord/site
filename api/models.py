@@ -315,6 +315,7 @@ class Infraction(ModelReprMixin, models.Model):
     TYPE_CHOICES = (
         ("note", "Note"),
         ("warning", "Warning"),
+        ("watch", "Watch"),
         ("mute", "Mute"),
         ("kick", "Kick"),
         ("ban", "Ban"),
