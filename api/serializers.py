@@ -16,10 +16,10 @@ class DeletedMessageSerializer(ModelSerializer):
         queryset=User.objects.all()
     )
     deletion_context = PrimaryKeyRelatedField(
-         queryset=MessageDeletionContext.objects.all(),
-         # This will be overriden in the `create` function
-         # of the deletion context serializer.
-         required=False
+        queryset=MessageDeletionContext.objects.all(),
+        # This will be overriden in the `create` function
+        # of the deletion context serializer.
+        required=False
     )
 
     class Meta:
@@ -29,6 +29,7 @@ class DeletedMessageSerializer(ModelSerializer):
             'channel_id', 'content',
             'embeds', 'deletion_context'
         )
+
 
 class MessageDeletionContextSerializer(ModelSerializer):
     deletedmessage_set = DeletedMessageSerializer(many=True)

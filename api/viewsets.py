@@ -22,8 +22,8 @@ from .models import (
 )
 from .serializers import (
     DocumentationLinkSerializer, ExpandedInfractionSerializer,
-    InfractionSerializer, OffTopicChannelNameSerializer,
-    MessageDeletionContextSerializer, RoleSerializer,
+    InfractionSerializer, MessageDeletionContextSerializer,
+    OffTopicChannelNameSerializer, RoleSerializer,
     SnakeFactSerializer, SnakeIdiomSerializer,
     SnakeNameSerializer, SpecialSnakeSerializer,
     TagSerializer, UserSerializer
