@@ -181,7 +181,7 @@ class CreationTests(APISubdomainTestCase):
         response = self.client.post(url, data=data)
         self.assertEqual(response.status_code, 201)
 
-        infraction = Infraction.objects.get(id=1)
+        infraction = Infraction.objects.get(id=response.json()['id'])
         self.assertAlmostEqual(
             infraction.inserted_at,
             dt.now(timezone.utc),
