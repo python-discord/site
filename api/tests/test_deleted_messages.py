@@ -2,8 +2,8 @@ from datetime import datetime
 
 from django_hosts.resolvers import reverse
 
-from ..models import User
 from .base import APISubdomainTestCase
+from ..models import User
 
 
 class DeletedMessagesTests(APISubdomainTestCase):
