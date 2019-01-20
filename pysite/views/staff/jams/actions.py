@@ -2,9 +2,9 @@ from flask import jsonify, request
 from rethinkdb import ReqlNonExistenceError
 
 from pysite.base_route import APIView
-from pysite.constants import ALL_STAFF_ROLES, BotEventTypes, CHANNEL_JAM_LOGS, ErrorCodes, JAMMERS_ROLE
+from pysite.constants import ALL_STAFF_ROLES, EmbedColors, ErrorCodes, Webhooks
 from pysite.decorators import csrf, require_roles
-from pysite.mixins import DBMixin, RMQMixin
+from pysite.mixins import DBMixin, DiscordMixin
 from pysite.utils.words import get_word_pairs
 
 GET_ACTIONS = ("questions",)
@@ -19,7 +19,7 @@ KEYS = ("action",)
 QUESTION_KEYS = ("optional", "title", "type")
 
 
-class ActionView(APIView, DBMixin, RMQMixin):
+class ActionView(APIView, DBMixin, DiscordMixin):
     path = "/jams/action"
     name = "jams.action"
 
@@ -478,22 +478,13 @@ class ActionView(APIView, DBMixin, RMQMixin):
                 jam_obj["participants"] = participants
                 self.db.insert(self.table_name, jam_obj, conflict="replace")
 
-            self.rmq_bot_event(
-                BotEventTypes.add_role,
-                {
-                    "reason": "Code jam application approved",
-                    "role_id": JAMMERS_ROLE,
-                    "target": snowflake,
-                }
-            )
+            # Note: Roles no longer added automatically
 
-            self.rmq_bot_event(
-                BotEventTypes.send_message,
-                {
-                    "message": f"Congratulations <@{snowflake}> - you've been approved, "
-                               f"and we've assigned you the Jammer role!",
-                    "target": CHANNEL_JAM_LOGS,
-                }
+            self.discord_send(
+                "New Jammer!",
+                f"Congratulations <@{snowflake}> - you've been approved. You should receive the Jammer role shortly!",
+                color=EmbedColors.success,
+                webhook=Webhooks.jamlog
             )
 
             return jsonify({"result": "success"})
@@ -528,13 +519,13 @@ class ActionView(APIView, DBMixin, RMQMixin):
 
                 self.db.insert(self.table_name, jam_obj, conflict="replace")
 
-            self.rmq_bot_event(
-                BotEventTypes.remove_role,
-                {
-                    "reason": "Code jam application unapproved",
-                    "role_id": JAMMERS_ROLE,
-                    "target": snowflake,
-                }
+            # Note: Roles no longer removed automatically
+
+            self.discord_send(
+                "Code jam application unapproved.",
+                f"<@{snowflake}> has been unapproved. Please ensure their Jammer role has been removed.",
+                color=EmbedColors.warning,
+                webhook=Webhooks.modlog
             )
 
             return jsonify({"result": "success"})

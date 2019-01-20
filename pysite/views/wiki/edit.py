@@ -6,15 +6,15 @@ from flask import redirect, request, url_for
 from werkzeug.exceptions import BadRequest
 
 from pysite.base_route import RouteView
-from pysite.constants import BotEventTypes, CHANNEL_MOD_LOG, DEBUG_MODE, EDITOR_ROLES
+from pysite.constants import DEBUG_MODE, EDITOR_ROLES
 from pysite.decorators import csrf, require_roles
-from pysite.mixins import DBMixin, RMQMixin
+from pysite.mixins import DBMixin, DiscordMixin
 from pysite.rst import render
 
 STRIP_REGEX = re.compile(r"<[^<]+?>")
 
 
-class EditView(RouteView, DBMixin, RMQMixin):
+class EditView(RouteView, DBMixin, DiscordMixin):
     path = "/edit/<path:page>"  # "path" means that it accepts slashes
     name = "edit"
     table_name = "wiki"
@@ -136,14 +136,7 @@ class EditView(RouteView, DBMixin, RMQMixin):
         else:
             link = f"https://wiki.pythondiscord.com/history/compare/{old_data['id']}/{new_id}"
 
-        self.rmq_bot_event(
-            BotEventTypes.send_embed,
-            {
-                "target": CHANNEL_MOD_LOG,
-                "title": "Page Edit",
-                "description": f"**{new_data['title']}** edited by **{self.user_data.get('username')}**. "
-                               f"[View the diff here]({link})",
-                "colour": 0x3F8DD7,  # Light blue
-                "timestamp": datetime.datetime.now().isoformat()
-            }
+        self.discord_send(
+            "Page Edit",
+            f"**{new_data['title']}** edited by **{self.user_data.get('username')}**. [View the diff here]({link})"
         )

@@ -1,16 +1,15 @@
-import datetime
 from email.utils import parseaddr
 
 from flask import redirect, request, url_for
 from werkzeug.exceptions import BadRequest, NotFound
 
 from pysite.base_route import RouteView
-from pysite.constants import BotEventTypes, CHANNEL_JAM_LOGS
+from pysite.constants import EmbedColors, Webhooks
 from pysite.decorators import csrf
-from pysite.mixins import DBMixin, OAuthMixin, RMQMixin
+from pysite.mixins import DBMixin, DiscordMixin, OAuthMixin
 
 
-class JamsJoinView(RouteView, DBMixin, OAuthMixin, RMQMixin):
+class JamsJoinView(RouteView, DBMixin, OAuthMixin, DiscordMixin):
     path = "/jams/join/<int:jam>"
     name = "jams.join"
 
@@ -210,13 +209,7 @@ class JamsJoinView(RouteView, DBMixin, OAuthMixin, RMQMixin):
         else:
             message += f"This user has {number} more applications left before they're unbanned. Reason: '{reason}'"
 
-        self.rmq_bot_event(
-            BotEventTypes.mod_log,
-            {
-                "level": "warning", "title": "Code Jams: Applications",
-                "message": message
-            }
-        )
+        self.discord_send("Code Jams: Applications", message, color=EmbedColors.warning, webhook=Webhooks.modlog)
 
     def log_success(self):
         user_data = self.user_data
@@ -225,23 +218,9 @@ class JamsJoinView(RouteView, DBMixin, OAuthMixin, RMQMixin):
         username = user_data["username"]
         discriminator = user_data["discriminator"]
 
-        self.rmq_bot_event(
-            BotEventTypes.mod_log,
-            {
-                "level": "info", "title": "Code Jams: Applications",
-                "message": f"Successful code jam signup from user: {user_id} "
-                           f"({username}#{discriminator})"
-            }
-        )
-
-        self.rmq_bot_event(
-            BotEventTypes.send_embed,
-            {
-                "target": CHANNEL_JAM_LOGS,
-                "title": "Code Jams: Applications",
-                "description": f"Successful code jam signup from user: {user_id} "
-                               f"({username}#{discriminator})",
-                "colour": 0x2ecc71,  # Green from d.py
-                "timestamp": datetime.datetime.now().isoformat()
-            }
+        self.discord_send(
+            "Code Jams: Applications",
+            f"Successful code jam signup from user: {user_id} ({username}#{discriminator})",
+            color=EmbedColors.success,
+            webhook=Webhooks.jamlog
         )

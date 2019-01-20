@@ -1,17 +1,10 @@
-import re
+import json
+from datetime import datetime
 
-from kombu import Connection
+import requests
 
-from pysite.constants import (
-    BOT_EVENT_QUEUE, BotEventTypes, CHANNEL_DEV_LOGS, DEBUG_MODE,
-    RMQ_HOST, RMQ_PASSWORD, RMQ_PORT, RMQ_USERNAME
-)
+from pysite.constants import DEBUG_MODE, EmbedColors, Webhooks
 from pysite.migrations.runner import run_migrations
-from pysite.queues import QUEUES
-from pysite.service_discovery import wait_for_rmq
-
-STRIP_REGEX = re.compile(r"<[^<]+?>")
-WIKI_TABLE = "wiki"
 
 
 def when_ready(server=None):
@@ -43,34 +36,16 @@ def _when_ready(server=None, output_func=None):
 
     run_migrations(db, output=output)
 
-    output("Waiting for RabbitMQ...")
-
-    has_rmq = wait_for_rmq()
-
-    if not has_rmq:
-        output("Timed out while waiting for RabbitMQ")
-    else:
-        output("RabbitMQ found, declaring RabbitMQ queues...")
-
-        try:
-            with Connection(hostname=RMQ_HOST, userid=RMQ_USERNAME, password=RMQ_PASSWORD, port=RMQ_PORT) as c:
-                with c.channel() as channel:
-                    for name, queue in QUEUES.items():
-                        queue.declare(channel=channel)
-                        output(f"Queue declared: {name}")
-
-                    if not DEBUG_MODE:
-                        producer = c.Producer()
-                        producer.publish(
-                            {
-                                "event": BotEventTypes.send_embed.value,
-                                "data": {
-                                    "target": CHANNEL_DEV_LOGS,
-                                    "title": "Site Deployment",
-                                    "description": "The site has been deployed!"
-                                }
-                            },
-                            routing_key=BOT_EVENT_QUEUE
-                        )
-        except Exception as e:
-            output(f"Failed to declare RabbitMQ Queues: {e}")
+    if not DEBUG_MODE:
+        if Webhooks.devlog:
+            headers = {"Content-Type": "application/json"}
+            payload = {
+                "username": "Python Discord Site",
+                "embeds": [{
+                    "title": "Site Deployment",
+                    "description": "The site has been deployed!",
+                    "timestamp": datetime.utcnow().isoformat(),
+                    "color": EmbedColors.info
+                }]
+            }
+            requests.post(Webhooks.devlog, headers=headers, data=json.dumps(payload))

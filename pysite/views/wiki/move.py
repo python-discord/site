@@ -4,12 +4,12 @@ from flask import redirect, request, url_for
 from werkzeug.exceptions import BadRequest, NotFound
 
 from pysite.base_route import RouteView
-from pysite.constants import BotEventTypes, CHANNEL_MOD_LOG, EDITOR_ROLES
+from pysite.constants import EDITOR_ROLES
 from pysite.decorators import csrf, require_roles
-from pysite.mixins import DBMixin, RMQMixin
+from pysite.mixins import DBMixin, DiscordMixin
 
 
-class MoveView(RouteView, DBMixin, RMQMixin):
+class MoveView(RouteView, DBMixin, DiscordMixin):
     path = "/move/<path:page>"  # "path" means that it accepts slashes
     name = "move"
     table_name = "wiki"
@@ -71,14 +71,7 @@ class MoveView(RouteView, DBMixin, RMQMixin):
         return redirect(url_for("wiki.page", page=location), code=303)  # Redirect, ensuring a GET
 
     def audit_log(self, obj):
-        self.rmq_bot_event(
-            BotEventTypes.send_embed,
-            {
-                "target": CHANNEL_MOD_LOG,
-                "title": "Wiki Page Move",
-                "description": f"**{obj['title']}** was moved by **{self.user_data.get('username')}** to "
-                               f"**{obj['slug']}**",
-                "colour": 0x3F8DD7,  # Light blue
-                "timestamp": datetime.datetime.now().isoformat()
-            }
+        self.discord_send(
+            "Wiki Page Move",
+            f"**{obj['title']}** was moved by **{self.user_data.get('username')}** to **{obj['slug']}**"
         )

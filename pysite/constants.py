@@ -18,16 +18,6 @@ class ValidationTypes(Enum):
     params = "params"
 
 
-class BotEventTypes(Enum):
-    mod_log = "mod_log"
-
-    send_message = "send_message"
-    send_embed = "send_embed"
-
-    add_role = "add_role"
-    remove_role = "remove_role"
-
-
 DEBUG_MODE = "FLASK_DEBUG" in environ
 
 # All snowflakes should be strings as RethinkDB rounds them as ints
@@ -137,15 +127,16 @@ CSRF = CSRFProtect()
 # Bot key
 BOT_API_KEY = environ.get("BOT_API_KEY")
 
-# RabbitMQ settings
-BOT_EVENT_QUEUE = "bot_events"
 
-RMQ_USERNAME = environ.get("RABBITMQ_DEFAULT_USER") or "guest"
-RMQ_PASSWORD = environ.get("RABBITMQ_DEFAULT_PASS") or "guest"
-RMQ_HOST = "localhost" if DEBUG_MODE else environ.get("RABBITMQ_HOST") or "pdrmq"
-RMQ_PORT = 5672
+class EmbedColors:
+    success = 0x2ecc71  # green
+    info = 0x3F8DD7  # light blue
+    warning = 0xe67e22  # orange
+    error = 0xe74c3c  # red
 
-# Channels
-CHANNEL_MOD_LOG = 282638479504965634
-CHANNEL_DEV_LOGS = 409308876241108992
-CHANNEL_JAM_LOGS = 452486310121439262
+
+class Webhooks:
+    devlog = environ.get("WEBHOOK_DEVLOG")
+    modlog = environ.get("WEBHOOK_MODLOG")
+    jamlog = environ.get("WEBHOOK_JAMLOG")
+    userlog = environ.get("WEBHOOK_USERLOG")

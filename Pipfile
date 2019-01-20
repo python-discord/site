@@ -19,8 +19,6 @@ flask-wtf = "*"
 docutils = "*"
 pygments = "*"
 gunicorn = "*"
-kombu = "*"
-librabbitmq = "*"
 
 [dev-packages]
 "flake8" = "*"

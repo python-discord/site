@@ -4,12 +4,12 @@ from flask import redirect, url_for
 from werkzeug.exceptions import NotFound
 
 from pysite.base_route import RouteView
-from pysite.constants import BotEventTypes, CHANNEL_MOD_LOG, EDITOR_ROLES
+from pysite.constants import EDITOR_ROLES
 from pysite.decorators import csrf, require_roles
-from pysite.mixins import DBMixin, RMQMixin
+from pysite.mixins import DBMixin, DiscordMixin
 
 
-class DeleteView(RouteView, DBMixin, RMQMixin):
+class DeleteView(RouteView, DBMixin, DiscordMixin):
     path = "/delete/<path:page>"  # "path" means that it accepts slashes
     name = "delete"
     table_name = "wiki"
@@ -52,13 +52,7 @@ class DeleteView(RouteView, DBMixin, RMQMixin):
         return redirect(url_for("wiki.page", page="home"), code=303)  # Redirect, ensuring a GET
 
     def audit_log(self, obj):
-        self.rmq_bot_event(
-            BotEventTypes.send_embed,
-            {
-                "target": CHANNEL_MOD_LOG,
-                "title": f"Page Deletion",
-                "description": f"**{obj['title']}** was deleted by **{self.user_data.get('username')}**",
-                "colour": 0x3F8DD7,  # Light blue
-                "timestamp": datetime.datetime.now().isoformat()
-            }
+        self.discord_send(
+            "Page Deletion",
+            f"**{obj['title']}** was deleted by **{self.user_data.get('username')}**"
         )

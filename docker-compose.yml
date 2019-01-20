@@ -7,14 +7,6 @@
 
 version: '3'
 services:
-  pdrmq:
-    hostname: "pdrmq"
-    image: pythondiscord/rmq:latest
-    network_mode: "host"
-    environment:
-      RABBITMQ_DEFAULT_USER: guest
-      RABBITMQ_DEFAULT_PASS: guest
-
   pdrdb:
     hostname: "pdrdb"
     image: pythondiscord/db:latest

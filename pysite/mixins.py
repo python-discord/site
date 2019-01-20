@@ -1,14 +1,11 @@
-from typing import Any, Dict
+from datetime import datetime
 from weakref import ref
 
+import requests
 from flask import Blueprint
-from kombu import Connection
 from rethinkdb.ast import Table
 
-from pysite.constants import (
-    BOT_EVENT_QUEUE, BotEventTypes,
-    RMQ_HOST, RMQ_PASSWORD, RMQ_PORT, RMQ_USERNAME
-)
+from pysite.constants import EmbedColors, Webhooks
 from pysite.database import RethinkDB
 from pysite.oauth import OAuthBackend
 
@@ -73,100 +70,62 @@ class DBMixin:
         return self._db()
 
 
-class RMQMixin:
+class DiscordMixin:
     """
-    Mixin for classes that make use of RabbitMQ. It allows routes to send JSON-encoded messages to specific RabbitMQ
-    queues.
+    Mixin for the classes that need to send log messages to discord channels via webhooks.
 
     This class is intended to be mixed in alongside one of the other view classes. For example:
 
-    >>> class MyView(APIView, RMQMixin):
+    >>> class MyView(APIView, DiscordMixin):
     ...     name = "my_view"  # Flask internal name for this route
     ...     path = "/my_view"  # Actual URL path to reach this route
-    ...     queue_name = "my_queue"  # Name of the RabbitMQ queue to send on
+    ...     default_webhook = Webhooks.devlog  # URL of the webhook to send by default
 
-    Note that the queue name is optional if all you want to do is send bot events.
-
-    This class will also work with Websockets:
-
-    >>> class MyWebsocket(WS, RMQMixin):
-    ...     name = "my_websocket"
-    ...     path = "/my_websocket"
-    ...     queue_name = "my_queue"
+    Note that default_webhook is optional, defaulting to Webhook.devlog.
     """
 
-    queue_name = ""
+    default_webhook = Webhooks.devlog
 
     @classmethod
-    def setup(cls: "RMQMixin", manager: "pysite.route_manager.RouteManager", blueprint: Blueprint):
-        """
-        Set up the view by calling `super().setup()` as appropriate.
-
-        :param manager: Instance of the current RouteManager (used to get a handle for the database object)
-        :param blueprint: Current Flask blueprint
-        """
-
+    def setup(cls: "DiscordMixin", manager: "pysite.route_manager.RouteManager", blueprint: Blueprint):
         if hasattr(super(), "setup"):
-            super().setup(manager, blueprint)  # pragma: no cover
+            super().setup(manager, blueprint)
 
-    @property
-    def rmq_connection(self) -> Connection:
+    @staticmethod
+    def _discord_post(url: str, embed_data: dict):
         """
-        Get a Kombu AMQP connection object - use this in a context manager so that it gets closed after you're done
+        Structures the data and posts it to be sent to the discord webhook.
 
-        If you're just trying to send a message, check out `rmq_send` and `rmq_bot_event` instead.
+        :param url: The URL of the webhook to send to.
+        :param embed_data: The dict representing the embed data to be added to the payload.
         """
+        headers = {"Content-Type": "application/json"}
+        payload = {
+            "username": "Python Discord Site",
+            "embeds": [embed_data]
+        }
+        requests.post(url, headers=headers, data=json.dumps(payload))
 
-        return Connection(hostname=RMQ_HOST, userid=RMQ_USERNAME, password=RMQ_PASSWORD, port=RMQ_PORT)
-
-    def rmq_send(self, data: Dict[str, Any], routing_key: str = None):
+    @staticmethod
+    def _build_embed(title: str, description: str, timestamp: str = None, color: int = None):
         """
-        Send some data to the RabbitMQ queue
+        Builds the embed dict in the right structure for sending to the webhook.
 
-        >>> self.rmq_send({
-        ...     "text": "My hovercraft is full of eels!",
-        ...     "source": "Dirty Hungarian Phrasebook"
-        ... })
-        ...
-
-        This will be delivered to the queue immediately.
+        :param title: The title field of the embed.
+        :param description: The main description text field of the embed.
+        :param timestamp: The timestamp to show in the footer of the embed.
         """
+        return {
+            "title": title,
+            "description": description,
+            "timestamp": timestamp or datetime.utcnow().isoformat(),
+            "color": color or EmbedColors.info
+        }
 
-        if routing_key is None:
-            routing_key = self.queue_name
-
-        with self.rmq_connection as c:
-            producer = c.Producer()
-            producer.publish(data, routing_key=routing_key)
-
-    def rmq_bot_event(self, event_type: BotEventTypes, data: Dict[str, Any]):
-        """
-        Send an event to the queue responsible for delivering events to the bot
-
-        >>> self.rmq_bot_event(BotEventTypes.send_message, {
-        ...     "channel": CHANNEL_MOD_LOG,
-        ...     "message": "This is a plain-text message for @everyone, from the site!"
-        ... })
-        ...
-
-        This will be delivered to the bot and actioned immediately, or when the bot comes online if it isn't already
-        connected.
-        """
-
-        if not isinstance(event_type, BotEventTypes):
-            raise ValueError("`event_type` must be a member of the the `pysite.constants.BotEventTypes` enum")
-
-        event_type = event_type.value
-        required_params = BOT_EVENT_REQUIRED_PARAMS[event_type]
-
-        for param in required_params:
-            if param not in data:
-                raise KeyError(f"Event is missing required parameter: {param}")
-
-        return self.rmq_send(
-            {"event": event_type, "data": data},
-            routing_key=BOT_EVENT_QUEUE,
-        )
+    def discord_send(self, title: str, content: str, *, timestamp: str = None, color: int = None, webhook: str = None):
+        url = webhook or self.default_webhook
+        embed = self._build_embed(title, content, timestamp, color)
+        self._discord_post(url, embed)
 
 
 class OAuthMixin:
