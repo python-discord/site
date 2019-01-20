@@ -268,7 +268,8 @@ class Message(ModelReprMixin, models.Model):
     )
     content = models.CharField(
         max_length=2_000,
-        help_text="The content of this message, taken from Discord."
+        help_text="The content of this message, taken from Discord.",
+        blank=True
     )
     embeds = pgfields.ArrayField(
         pgfields.JSONField(
