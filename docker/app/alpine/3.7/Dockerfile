@@ -9,19 +9,19 @@ RUN adduser \
     -u 1500 \
     pysite
 
-RUN apk add --no-cache --virtual build \
+RUN apk add --no-cache --update --virtual build \
         gcc \
         linux-headers \
         musl-dev \
     && \
-        apk add --no-cache \
+        apk add \
         curl \
         postgresql-dev
 
 WORKDIR /app
 COPY setup.py /app/setup.py
-RUN python3 -m pip install .[$EXTRAS]
-RUN apk del --purge build
+RUN python3 -m pip install .[$EXTRAS] \
+    && apk del --purge build
 
 COPY . .
 

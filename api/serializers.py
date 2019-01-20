@@ -1,13 +1,13 @@
-from rest_framework.serializers import ModelSerializer, PrimaryKeyRelatedField
+from rest_framework.serializers import ModelSerializer, PrimaryKeyRelatedField, ValidationError
 from rest_framework_bulk import BulkSerializerMixin
 
 from .models import (
     DeletedMessage, DocumentationLink,
-    MessageDeletionContext, OffTopicChannelName,
-    Role, SnakeFact,
-    SnakeIdiom, SnakeName,
-    SpecialSnake, Tag,
-    User
+    Infraction, MessageDeletionContext,
+    OffTopicChannelName, Role,
+    SnakeFact, SnakeIdiom,
+    SnakeName, SpecialSnake,
+    Tag, User
 )
 
 
@@ -27,6 +27,42 @@ class DocumentationLinkSerializer(ModelSerializer):
     class Meta:
         model = DocumentationLink
         fields = ('package', 'base_url', 'inventory_url')
+
+
+class InfractionSerializer(ModelSerializer):
+    class Meta:
+        model = Infraction
+        fields = (
+            'id', 'inserted_at', 'expires_at', 'active', 'user', 'actor', 'type', 'reason', 'hidden'
+        )
+
+    def validate(self, attrs):
+        infr_type = attrs.get('type')
+
+        expires_at = attrs.get('expires_at')
+        if expires_at and infr_type in ('kick', 'warning'):
+            raise ValidationError({'expires_at': [f'{infr_type} infractions cannot expire.']})
+
+        hidden = attrs.get('hidden')
+        if hidden and infr_type in ('superstar',):
+            raise ValidationError({'hidden': [f'{infr_type} infractions cannot be hidden.']})
+
+        return attrs
+
+
+class ExpandedInfractionSerializer(InfractionSerializer):
+    def to_representation(self, instance):
+        ret = super().to_representation(instance)
+
+        user = User.objects.get(id=ret['user'])
+        user_data = UserSerializer(user).data
+        ret['user'] = user_data
+
+        actor = User.objects.get(id=ret['actor'])
+        actor_data = UserSerializer(actor).data
+        ret['actor'] = actor_data
+
+        return ret
 
 
 class OffTopicChannelNameSerializer(ModelSerializer):

@@ -1,13 +1,14 @@
 from django.urls import include, path
 from rest_framework.routers import DefaultRouter
 
-from .views import HealthcheckView
+from .views import HealthcheckView, RulesView
 from .viewsets import (
     DeletedMessageViewSet, DocumentationLinkViewSet,
-    OffTopicChannelNameViewSet, RoleViewSet,
-    SnakeFactViewSet, SnakeIdiomViewSet,
-    SnakeNameViewSet, SpecialSnakeViewSet,
-    TagViewSet, UserViewSet
+    InfractionViewSet, OffTopicChannelNameViewSet,
+    RoleViewSet, SnakeFactViewSet,
+    SnakeIdiomViewSet, SnakeNameViewSet,
+    SpecialSnakeViewSet, TagViewSet,
+    UserViewSet
 )
 
 
@@ -22,13 +23,17 @@ bot_router.register(
     DocumentationLinkViewSet
 )
 bot_router.register(
+    'infractions',
+    InfractionViewSet
+)
+bot_router.register(
     'off-topic-channel-names',
     OffTopicChannelNameViewSet,
     base_name='offtopicchannelname'
 )
 bot_router.register(
-    'users',
-    UserViewSet
+    'roles',
+    RoleViewSet
 )
 bot_router.register(
     'roles',
@@ -55,6 +60,10 @@ bot_router.register(
     'tags',
     TagViewSet
 )
+bot_router.register(
+    'users',
+    UserViewSet
+)
 
 app_name = 'api'
 urlpatterns = (
@@ -63,5 +72,6 @@ urlpatterns = (
     # from django_hosts.resolvers import reverse
     # snake_name_endpoint = reverse('bot:snakename-list', host='api')  # `bot/` endpoints
     path('bot/', include((bot_router.urls, 'api'), namespace='bot')),
-    path('healthcheck', HealthcheckView.as_view(), name='healthcheck')
+    path('healthcheck', HealthcheckView.as_view(), name='healthcheck'),
+    path('rules', RulesView.as_view(), name='rules')
 )

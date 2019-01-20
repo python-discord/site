@@ -10,7 +10,21 @@
 
 version: "3.6"
 services:
-  django:
+  bot:
+    image: pythondiscord/bot:django
+    environment:
+      BOT_TOKEN: ${BOT_TOKEN?bot token needs to be set}
+      # Set me once you configured me in the Django Admin!
+      BOT_API_KEY: ${BOT_API_KEY}
+
+  postgres:
+    image: postgres:11-alpine
+    environment:
+      POSTGRES_DB: pysite
+      POSTGRES_PASSWORD: supersecretpassword
+      POSTGRES_USER: pysite
+
+  web:
     build:
       context: .
       dockerfile: docker/app/alpine/3.7/Dockerfile
@@ -26,9 +40,4 @@ services:
       DEBUG: "true"
       SECRET_KEY: suitable-for-development-only
 
-  postgres:
-    image: postgres:11-alpine
-    environment:
-      POSTGRES_DB: pysite
-      POSTGRES_PASSWORD: supersecretpassword
-      POSTGRES_USER: pysite
+# vim: sw=2 ts=2:

@@ -20,7 +20,7 @@ jobs:
       - script: |
           echo 'set -ex' > script.sh
           echo 'for dockerfile in docker/**/**/**/Dockerfile; do' >> script.sh
-          echo '  docker run -i hadolint/hadolint hadolint --ignore DL3008 --ignore DL3018 - < $dockerfile' >> script.sh
+          echo '  docker run -i hadolint/hadolint hadolint --ignore DL3008 --ignore DL3018 --ignore DL3019 - < $dockerfile' >> script.sh
           echo 'done' >> script.sh
           sh script.sh
         displayName: run hadolint

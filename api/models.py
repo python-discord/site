@@ -3,6 +3,7 @@ from operator import itemgetter
 from django.contrib.postgres import fields as pgfields
 from django.core.validators import MaxValueValidator, MinValueValidator, RegexValidator
 from django.db import models
+from django.utils import timezone
 
 from .validators import validate_tag_embed
 
@@ -60,6 +61,50 @@ class OffTopicChannelName(ModelReprMixin, models.Model):
         return self.name
 
 
+class Role(ModelReprMixin, models.Model):
+    """A role on our Discord server."""
+
+    id = models.BigIntegerField(  # noqa
+        primary_key=True,
+        validators=(
+            MinValueValidator(
+                limit_value=0,
+                message="Role IDs cannot be negative."
+            ),
+        ),
+        help_text="The role ID, taken from Discord."
+    )
+    name = models.CharField(
+        max_length=100,
+        help_text="The role name, taken from Discord."
+    )
+    colour = models.IntegerField(
+        validators=(
+            MinValueValidator(
+                limit_value=0,
+                message="Colour hex cannot be negative."
+            ),
+        ),
+        help_text="The integer value of the colour of this role from Discord."
+    )
+    permissions = models.IntegerField(
+        validators=(
+            MinValueValidator(
+                limit_value=0,
+                message="Role permissions cannot be negative."
+            ),
+            MaxValueValidator(
+                limit_value=2 << 32,
+                message="Role permission bitset exceeds value of having all permissions"
+            )
+        ),
+        help_text="The integer value of the permission bitset of this role from Discord."
+    )
+
+    def __str__(self):
+        return self.name
+
+
 class SnakeFact(ModelReprMixin, models.Model):
     """A snake fact used by the bot's snake cog."""
 
@@ -111,7 +156,8 @@ class SpecialSnake(ModelReprMixin, models.Model):
     name = models.CharField(
         max_length=140,
         primary_key=True,
-        help_text='A special snake name.'
+        help_text='A special snake name.',
+        validators=[RegexValidator(regex=r'^([^0-9])+$')]
     )
     info = models.TextField(
         help_text='Info about a special snake.'
@@ -125,48 +171,24 @@ class SpecialSnake(ModelReprMixin, models.Model):
         return self.name
 
 
-class Role(ModelReprMixin, models.Model):
-    """A role on our Discord server."""
+class Tag(ModelReprMixin, models.Model):
+    """A tag providing (hopefully) useful information."""
 
-    id = models.BigIntegerField(  # noqa
-        primary_key=True,
-        validators=(
-            MinValueValidator(
-                limit_value=0,
-                message="Role IDs cannot be negative."
-            ),
-        ),
-        help_text="The role ID, taken from Discord."
-    )
-    name = models.CharField(
+    title = models.CharField(
         max_length=100,
-        help_text="The role name, taken from Discord."
-    )
-    colour = models.IntegerField(
-        validators=(
-            MinValueValidator(
-                limit_value=0,
-                message="Colour hex cannot be negative."
-            ),
+        help_text=(
+            "The title of this tag, shown in searches and providing "
+            "a quick overview over what this embed contains."
         ),
-        help_text="The integer value of the colour of this role from Discord."
+        primary_key=True
     )
-    permissions = models.IntegerField(
-        validators=(
-            MinValueValidator(
-                limit_value=0,
-                message="Role permissions cannot be negative."
-            ),
-            MaxValueValidator(
-                limit_value=2 << 32,
-                message="Role permission bitset exceeds value of having all permissions"
-            )
-        ),
-        help_text="The integer value of the permission bitset of this role from Discord."
+    embed = pgfields.JSONField(
+        help_text="The actual embed shown by this tag.",
+        validators=(validate_tag_embed,)
     )
 
     def __str__(self):
-        return self.name
+        return self.title
 
 
 class User(ModelReprMixin, models.Model):
@@ -286,21 +308,62 @@ class DeletedMessage(Message):
     )
 
 
-class Tag(ModelReprMixin, models.Model):
-    """A tag providing (hopefully) useful information."""
+class Infraction(ModelReprMixin, models.Model):
+    """An infraction for a Discord user."""
 
-    title = models.CharField(
-        max_length=100,
-        help_text=(
-            "The title of this tag, shown in searches and providing "
-            "a quick overview over what this embed contains."
-        ),
-        primary_key=True
+    TYPE_CHOICES = (
+        ("note", "Note"),
+        ("warning", "Warning"),
+        ("mute", "Mute"),
+        ("kick", "Kick"),
+        ("ban", "Ban"),
+        ("superstar", "Superstar")
     )
-    embed = pgfields.JSONField(
-        help_text="The actual embed shown by this tag.",
-        validators=(validate_tag_embed,)
+    inserted_at = models.DateTimeField(
+        default=timezone.now,
+        help_text="The date and time of the creation of this infraction."
+    )
+    expires_at = models.DateTimeField(
+        null=True,
+        help_text=(
+            "The date and time of the expiration of this infraction. "
+            "Null if the infraction is permanent or it can't expire."
+        )
+    )
+    active = models.BooleanField(
+        default=True,
+        help_text="Whether the infraction is still active."
+    )
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='infractions_received',
+        help_text="The user to which the infraction was applied."
+    )
+    actor = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='infractions_given',
+        help_text="The user which applied the infraction."
+    )
+    type = models.CharField(
+        max_length=9,
+        choices=TYPE_CHOICES,
+        help_text="The type of the infraction."
+    )
+    reason = models.TextField(
+        null=True,
+        help_text="The reason for the infraction."
+    )
+    hidden = models.BooleanField(
+        default=False,
+        help_text="Whether the infraction is a shadow infraction."
     )
 
     def __str__(self):
-        return self.title
+        s = f"#{self.id}: {self.type} on {self.user_id}"
+        if self.expires_at:
+            s += f" until {self.expires_at}"
+        if self.hidden:
+            s += " (hidden)"
+        return s

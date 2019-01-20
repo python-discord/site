@@ -72,7 +72,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'crispy_forms',
     'django_hosts',
+    'django_filters',
     'rest_framework',
     'rest_framework.authtoken'
 ]
@@ -214,7 +216,7 @@ LOGGING = {
                     # use `DEBUG` if we're running in debug mode but not
                     # testing. Use `ERROR` if we're running tests, else
                     # default to using `WARN`.
-                    'DEBUG'
+                    'INFO'
                     if DEBUG and 'test' not in sys.argv
                     else (
                         'ERROR'

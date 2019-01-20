@@ -2,7 +2,7 @@ from django.contrib import admin
 
 from .models import (
     DeletedMessage, DocumentationLink,
-    MessageDeletionContext,
+    Infraction, MessageDeletionContext,
     OffTopicChannelName, Role,
     SnakeFact, SnakeIdiom,
     SnakeName, SpecialSnake,
@@ -12,6 +12,7 @@ from .models import (
 
 admin.site.register(DeletedMessage)
 admin.site.register(DocumentationLink)
+admin.site.register(Infraction)
 admin.site.register(MessageDeletionContext)
 admin.site.register(OffTopicChannelName)
 admin.site.register(Role)
