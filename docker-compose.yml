@@ -17,4 +17,3 @@ services:
 
 volumes:
     rdb:
-    web:
