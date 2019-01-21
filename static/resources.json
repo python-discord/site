@@ -409,6 +409,18 @@
             "url": "https://www.issuehaven.com/"
           }
         ]
+      },
+      "Kite": {
+        "description": "Kite's powerful editor integrations allow you to work uninterrupted on the same screen. Need to see examples and documentation? All the information from Kite's Python documentation is available right in the editor copilot — no web browser needed.",
+        "payment": "free",
+        "payment_description": null,
+        "urls": [
+          {
+            "icon": "regular/link",
+            "title": "Website",
+            "url": "https://www.kite.com/"
+          }
+        ]
       }
     }
   },
