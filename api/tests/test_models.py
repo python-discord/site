@@ -6,10 +6,11 @@ from ..models import (
     DeletedMessage, DocumentationLink,
     Infraction, Message,
     MessageDeletionContext, ModelReprMixin,
-    OffTopicChannelName, Role,
-    SnakeFact, SnakeIdiom,
-    SnakeName, SpecialSnake,
-    Tag, User
+    OffTopicChannelName, Reminder,
+    Role, SnakeFact,
+    SnakeIdiom, SnakeName,
+    SpecialSnake, Tag,
+    User
 )
 
 
@@ -95,6 +96,15 @@ class StringDunderMethodTests(SimpleTestCase):
                 user_id=5, actor_id=5, hidden=True,
                 type='kick', reason='He terk my jerb!',
                 expires_at=dt(5018, 11, 20, 15, 52, tzinfo=timezone.utc)
+            ),
+            Reminder(
+                author=User(
+                    id=452, name='billy',
+                    discriminator=5, avatar_hash=None
+                ),
+                channel_id=555,
+                content="oh no",
+                expiration=dt(5018, 11, 20, 15, 52, tzinfo=timezone.utc)
             )
         )
 

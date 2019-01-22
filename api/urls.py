@@ -5,10 +5,10 @@ from .views import HealthcheckView, RulesView
 from .viewsets import (
     DeletedMessageViewSet, DocumentationLinkViewSet,
     InfractionViewSet, OffTopicChannelNameViewSet,
-    RoleViewSet, SnakeFactViewSet,
-    SnakeIdiomViewSet, SnakeNameViewSet,
-    SpecialSnakeViewSet, TagViewSet,
-    UserViewSet
+    ReminderViewSet, RoleViewSet,
+    SnakeFactViewSet, SnakeIdiomViewSet,
+    SnakeNameViewSet, SpecialSnakeViewSet,
+    TagViewSet, UserViewSet
 )
 
 
@@ -32,8 +32,8 @@ bot_router.register(
     base_name='offtopicchannelname'
 )
 bot_router.register(
-    'roles',
-    RoleViewSet
+    'reminders',
+    ReminderViewSet
 )
 bot_router.register(
     'roles',

@@ -4,10 +4,11 @@ from rest_framework_bulk import BulkSerializerMixin
 from .models import (
     DeletedMessage, DocumentationLink,
     Infraction, MessageDeletionContext,
-    OffTopicChannelName, Role,
-    SnakeFact, SnakeIdiom,
-    SnakeName, SpecialSnake,
-    Tag, User
+    OffTopicChannelName, Reminder,
+    Role, SnakeFact,
+    SnakeIdiom, SnakeName,
+    SpecialSnake, Tag,
+    User
 )
 
 
@@ -124,6 +125,14 @@ class SpecialSnakeSerializer(ModelSerializer):
     class Meta:
         model = SpecialSnake
         fields = ('name', 'images', 'info')
+
+
+class ReminderSerializer(ModelSerializer):
+    author = PrimaryKeyRelatedField(queryset=User.objects.all())
+
+    class Meta:
+        model = Reminder
+        fields = ('active', 'author', 'channel_id', 'content', 'expiration', 'id')
 
 
 class RoleSerializer(ModelSerializer):
