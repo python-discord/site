@@ -1,14 +1,15 @@
 from rest_framework.serializers import ModelSerializer, PrimaryKeyRelatedField, ValidationError
+from rest_framework.validators import UniqueValidator
 from rest_framework_bulk import BulkSerializerMixin
 
 from .models import (
     DeletedMessage, DocumentationLink,
     Infraction, MessageDeletionContext,
-    OffTopicChannelName, Reminder,
-    Role, SnakeFact,
-    SnakeIdiom, SnakeName,
-    SpecialSnake, Tag,
-    User
+    Nomination, OffTopicChannelName,
+    Reminder, Role,
+    SnakeFact, SnakeIdiom,
+    SnakeName, SpecialSnake,
+    Tag, User
 )
 
 
@@ -153,4 +154,14 @@ class UserSerializer(BulkSerializerMixin, ModelSerializer):
     class Meta:
         model = User
         fields = ('id', 'avatar_hash', 'name', 'discriminator', 'roles', 'in_guild')
+        depth = 1
+
+
+class NominationSerializer(ModelSerializer):
+    author = PrimaryKeyRelatedField(queryset=User.objects.all())
+    user = PrimaryKeyRelatedField(queryset=User.objects.all())
+
+    class Meta:
+        model = Nomination
+        fields = ('active', 'author', 'reason', 'user', 'inserted_at')
         depth = 1

@@ -14,20 +14,21 @@ from rest_framework_bulk import BulkCreateModelMixin
 
 from .models import (
     DocumentationLink, Infraction,
-    MessageDeletionContext, OffTopicChannelName,
-    Reminder, Role,
-    SnakeFact, SnakeIdiom,
-    SnakeName, SpecialSnake,
-    Tag, User
+    MessageDeletionContext, Nomination,
+    OffTopicChannelName, Reminder,
+    Role, SnakeFact,
+    SnakeIdiom, SnakeName,
+    SpecialSnake, Tag,
+    User
 )
 from .serializers import (
     DocumentationLinkSerializer, ExpandedInfractionSerializer,
     InfractionSerializer, MessageDeletionContextSerializer,
-    OffTopicChannelNameSerializer, ReminderSerializer,
-    RoleSerializer, SnakeFactSerializer,
-    SnakeIdiomSerializer, SnakeNameSerializer,
-    SpecialSnakeSerializer, TagSerializer,
-    UserSerializer
+    NominationSerializer, OffTopicChannelNameSerializer,
+    ReminderSerializer, RoleSerializer,
+    SnakeFactSerializer, SnakeIdiomSerializer,
+    SnakeNameSerializer, SpecialSnakeSerializer,
+    TagSerializer, UserSerializer
 )
 
 
@@ -857,3 +858,22 @@ class UserViewSet(BulkCreateModelMixin, ModelViewSet):
 
     serializer_class = UserSerializer
     queryset = User.objects.prefetch_related('roles')
+
+
+class NominationViewSet(ModelViewSet):
+    # TODO: doc me
+    serializer_class = NominationSerializer
+    queryset = Nomination.objects.prefetch_related('author', 'user')
+    frozen_fields = ('author', 'inserted_at', 'user')
+
+    def partial_update(self, request, *args, **kwargs):
+        for field in request.data:
+            if field in self.frozen_fields:
+                raise ValidationError({field: ['This field cannot be updated.']})
+
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+
+        return Response(serializer.data)

@@ -4,11 +4,12 @@ from rest_framework.routers import DefaultRouter
 from .views import HealthcheckView, RulesView
 from .viewsets import (
     DeletedMessageViewSet, DocumentationLinkViewSet,
-    InfractionViewSet, OffTopicChannelNameViewSet,
-    ReminderViewSet, RoleViewSet,
-    SnakeFactViewSet, SnakeIdiomViewSet,
-    SnakeNameViewSet, SpecialSnakeViewSet,
-    TagViewSet, UserViewSet
+    InfractionViewSet, NominationViewSet,
+    OffTopicChannelNameViewSet, ReminderViewSet,
+    RoleViewSet, SnakeFactViewSet,
+    SnakeIdiomViewSet, SnakeNameViewSet,
+    SpecialSnakeViewSet, TagViewSet,
+    UserViewSet
 )
 
 
@@ -25,6 +26,10 @@ bot_router.register(
 bot_router.register(
     'infractions',
     InfractionViewSet
+)
+bot_router.register(
+    'nominations',
+    NominationViewSet
 )
 bot_router.register(
     'off-topic-channel-names',
