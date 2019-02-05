@@ -47,7 +47,7 @@ jobs:
           architecture: x64
 
       - script: >
-          python -m pip install $(sed -n -e "/'lint': \[/,/]/p" setup.py | tail -n +2 | head -n -1 | cut -d"'" -f2)
+          python -m pip install $(grep -E '^(coverage|flake8|mccabe|pep8-naming)' pyproject.toml | cut -d' ' -f1)
         displayName: install lint requirements
 
       - script: flake8
@@ -96,7 +96,7 @@ jobs:
           USER_CREATE_COMMAND: CREATE USER pysite WITH PASSWORD 'pysite' CREATEDB
         displayName: set up the database
 
-      - script: python -m pip install -e .[test] unittest-xml-reporting
+      - script: python -m pip install poetry && python -m poetry install --extras "test ci"
         displayName: install requirements
 
       - script: |

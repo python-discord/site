@@ -1,7 +1,6 @@
 FROM python:3.7-alpine
 
 STOPSIGNAL SIGQUIT
-ARG EXTRAS=deploy
 
 RUN adduser \
     -D \
@@ -19,8 +18,9 @@ RUN apk add --no-cache --update --virtual build \
         postgresql-dev
 
 WORKDIR /app
-COPY setup.py /app/setup.py
-RUN python3 -m pip install .[$EXTRAS] \
+COPY pyproject.toml /app/pyproject.toml
+RUN python3 -m pip install poetry \
+    && python3 -m poetry install --extras deploy \
     && apk del --purge build
 
 COPY . .

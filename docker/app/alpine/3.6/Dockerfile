@@ -19,9 +19,10 @@ RUN apk add --no-cache --virtual build \
         postgresql-dev
 
 WORKDIR /app
-COPY setup.py /app/setup.py
-RUN python3 -m pip install .[$EXTRAS]
-RUN apk del --purge build
+COPY pyproject.toml /app/pyproject.toml
+RUN python3 -m pip install poetry \
+    && python3 -m poetry install --extras deploy \
+    && apk del --purge build
 
 COPY . .
 
