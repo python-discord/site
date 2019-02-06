@@ -866,7 +866,7 @@ class NominationViewSet(ModelViewSet):
     queryset = Nomination.objects.prefetch_related('author', 'user')
     frozen_fields = ('author', 'inserted_at', 'user')
 
-    def partial_update(self, request, *args, **kwargs):
+    def update(self, request, *args, **kwargs):
         for field in request.data:
             if field in self.frozen_fields:
                 raise ValidationError({field: ['This field cannot be updated.']})
