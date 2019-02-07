@@ -153,3 +153,12 @@ def validate_tag_embed(embed):
         if field_name in field_validators:
             for validator in field_validators[field_name]:
                 validator(value)
+
+
+def validate_bot_setting_name(name):
+    KNOWN_SETTINGS = (
+        'defcon',
+    )
+
+    if name not in KNOWN_SETTINGS:
+        raise ValidationError(f"`{name}` is not a known setting name.")

@@ -3,14 +3,14 @@ from datetime import datetime as dt, timezone
 from django.test import SimpleTestCase
 
 from ..models import (
-    DeletedMessage, DocumentationLink,
-    Infraction, Message,
-    MessageDeletionContext, ModelReprMixin,
-    OffTopicChannelName, Reminder,
-    Role, SnakeFact,
-    SnakeIdiom, SnakeName,
-    SpecialSnake, Tag,
-    User
+    BotSetting, DeletedMessage,
+    DocumentationLink, Infraction,
+    Message, MessageDeletionContext,
+    ModelReprMixin, OffTopicChannelName,
+    Reminder, Role,
+    SnakeFact, SnakeIdiom,
+    SnakeName, SpecialSnake,
+    Tag, User
 )
 
 

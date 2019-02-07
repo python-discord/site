@@ -5,7 +5,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator, RegexVa
 from django.db import models
 from django.utils import timezone
 
-from .validators import validate_tag_embed
+from .validators import validate_bot_setting_name, validate_tag_embed
 
 
 class ModelReprMixin:
@@ -25,6 +25,19 @@ class ModelReprMixin:
             if not attribute.startswith('_')
         )
         return f'<{self.__class__.__name__}({attributes})>'
+
+
+class BotSetting(ModelReprMixin, models.Model):
+    """A configuration entry for the bot."""
+
+    name = models.CharField(
+        primary_key=True,
+        max_length=50,
+        validators=(validate_bot_setting_name,)
+    )
+    data = pgfields.JSONField(
+        help_text="The actual settings of this setting."
+    )
 
 
 class DocumentationLink(ModelReprMixin, models.Model):
