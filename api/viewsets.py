@@ -34,7 +34,7 @@ from .serializers import (
 )
 
 
-class BotSettingViewSet(UpdateModelMixin, GenericViewSet):
+class BotSettingViewSet(RetrieveModelMixin, UpdateModelMixin, GenericViewSet):
     """
     View providing update operations on bot setting routes.
     """
