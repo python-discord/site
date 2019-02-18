@@ -14,7 +14,7 @@ def up(apps, schema_editor):
     ).save()
 
 
-def down(apps, schema_editor):
+def down(apps, schema_editor):  # pragma: no cover - not necessary to test
     BotSetting = apps.get_model('api', 'BotSetting')
     BotSetting.get(name='defcon').delete()
 
