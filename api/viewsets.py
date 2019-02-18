@@ -5,7 +5,8 @@ from rest_framework.exceptions import ParseError, ValidationError
 from rest_framework.filters import SearchFilter
 from rest_framework.mixins import (
     CreateModelMixin, DestroyModelMixin,
-    ListModelMixin, RetrieveModelMixin
+    ListModelMixin, RetrieveModelMixin,
+    UpdateModelMixin
 )
 from rest_framework.response import Response
 from rest_framework.status import HTTP_201_CREATED
@@ -13,23 +14,33 @@ from rest_framework.viewsets import GenericViewSet, ModelViewSet, ViewSet
 from rest_framework_bulk import BulkCreateModelMixin
 
 from .models import (
-    DocumentationLink, Infraction,
-    MessageDeletionContext, Nomination,
-    OffTopicChannelName, Reminder,
-    Role, SnakeFact,
-    SnakeIdiom, SnakeName,
-    SpecialSnake, Tag,
-    User
+    BotSetting, DocumentationLink,
+    Infraction, MessageDeletionContext,
+    Nomination, OffTopicChannelName,
+    Reminder, Role,
+    SnakeFact, SnakeIdiom,
+    SnakeName, SpecialSnake,
+    Tag, User
 )
 from .serializers import (
-    DocumentationLinkSerializer, ExpandedInfractionSerializer,
-    InfractionSerializer, MessageDeletionContextSerializer,
-    NominationSerializer, OffTopicChannelNameSerializer,
-    ReminderSerializer, RoleSerializer,
-    SnakeFactSerializer, SnakeIdiomSerializer,
-    SnakeNameSerializer, SpecialSnakeSerializer,
-    TagSerializer, UserSerializer
+    BotSettingSerializer, DocumentationLinkSerializer,
+    ExpandedInfractionSerializer, InfractionSerializer,
+    MessageDeletionContextSerializer, NominationSerializer,
+    OffTopicChannelNameSerializer, ReminderSerializer,
+    RoleSerializer, SnakeFactSerializer,
+    SnakeIdiomSerializer, SnakeNameSerializer,
+    SpecialSnakeSerializer, TagSerializer,
+    UserSerializer
 )
+
+
+class BotSettingViewSet(UpdateModelMixin, GenericViewSet):
+    """
+    View providing update operations on bot setting routes.
+    """
+
+    serializer_class = BotSettingSerializer
+    queryset = BotSetting.objects.all()
 
 
 class DeletedMessageViewSet(CreateModelMixin, GenericViewSet):

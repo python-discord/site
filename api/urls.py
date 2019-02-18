@@ -3,18 +3,22 @@ from rest_framework.routers import DefaultRouter
 
 from .views import HealthcheckView, RulesView
 from .viewsets import (
-    DeletedMessageViewSet, DocumentationLinkViewSet,
-    InfractionViewSet, NominationViewSet,
-    OffTopicChannelNameViewSet, ReminderViewSet,
-    RoleViewSet, SnakeFactViewSet,
-    SnakeIdiomViewSet, SnakeNameViewSet,
-    SpecialSnakeViewSet, TagViewSet,
-    UserViewSet
+    BotSettingViewSet, DeletedMessageViewSet,
+    DocumentationLinkViewSet, InfractionViewSet,
+    NominationViewSet, OffTopicChannelNameViewSet,
+    ReminderViewSet, RoleViewSet,
+    SnakeFactViewSet, SnakeIdiomViewSet,
+    SnakeNameViewSet, SpecialSnakeViewSet,
+    TagViewSet, UserViewSet
 )
 
 
 # http://www.django-rest-framework.org/api-guide/routers/#defaultrouter
 bot_router = DefaultRouter(trailing_slash=False)
+bot_router.register(
+    'bot-settings',
+    BotSettingViewSet
+)
 bot_router.register(
     'deleted-messages',
     DeletedMessageViewSet

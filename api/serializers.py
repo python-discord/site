@@ -3,14 +3,21 @@ from rest_framework.validators import UniqueValidator
 from rest_framework_bulk import BulkSerializerMixin
 
 from .models import (
-    DeletedMessage, DocumentationLink,
-    Infraction, MessageDeletionContext,
-    Nomination, OffTopicChannelName,
-    Reminder, Role,
-    SnakeFact, SnakeIdiom,
-    SnakeName, SpecialSnake,
-    Tag, User
+    BotSetting, DeletedMessage,
+    DocumentationLink, Infraction,
+    MessageDeletionContext, Nomination,
+    OffTopicChannelName, Reminder,
+    Role, SnakeFact,
+    SnakeIdiom, SnakeName,
+    SpecialSnake, Tag,
+    User
 )
+
+
+class BotSettingSerializer(ModelSerializer):
+    class Meta:
+        model = BotSetting
+        fields = ('name', 'data')
 
 
 class DeletedMessageSerializer(ModelSerializer):
