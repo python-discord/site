@@ -34,6 +34,7 @@ flask-testing = "*"
 pytest = "*"
 pytest-cov = "*"
 libsass = "*"
+pre-commit = "*"
 
 [requires]
 python_version = "3.6"
@@ -53,6 +54,8 @@ start = "gunicorn -w 12 -b 0.0.0.0:10012 -c gunicorn_config.py --log-level info 
 lint = "python -m flake8"
 lintjs = "eslint js/src"
 lintscss = "scss-lint scss/pysite"
+
+precommit = "pre-commit install"
 
 push = "docker push pythondiscord/site:latest"
 pushbase = "docker push pythondiscord/site-base:latest"
