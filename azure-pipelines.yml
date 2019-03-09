@@ -4,7 +4,7 @@ jobs:
   - job: lint_misc
     displayName: Lint others
     pool:
-      vmImage: ubuntu-16.04
+      vmImage: ubuntu-18.04
 
     steps:
       - script: |
@@ -28,7 +28,7 @@ jobs:
   - job: lint_python
     displayName: Lint Python
     pool:
-      vmImage: ubuntu-16.04
+      vmImage: ubuntu-18.04
 
     strategy:
       matrix:
@@ -59,7 +59,7 @@ jobs:
       - lint_misc
       - lint_python
     pool:
-      vmImage: ubuntu-16.04
+      vmImage: ubuntu-18.04
     strategy:
       matrix:
         Python 3.6 with PostgreSQL 10:
@@ -120,7 +120,7 @@ jobs:
     dependsOn: test
     condition: and(succeeded(), eq(variables['build.sourceBranch'], 'refs/heads/django'))
     pool:
-      vmImage: ubuntu-16.04
+      vmImage: ubuntu-18.04
 
     steps:
       - task: Docker@1
