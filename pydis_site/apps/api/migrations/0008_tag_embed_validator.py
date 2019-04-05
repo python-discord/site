@@ -15,9 +15,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='tag',
             name='embed',
-            field=django.contrib.postgres.fields.jsonb.JSONField(help_text='The actual embed shown by this tag.', validators=[
-
-
-                pydis_site.apps.api.validators.validate_tag_embed]),
+            field=django.contrib.postgres.fields.jsonb.JSONField(help_text='The actual embed shown by this tag.', validators=[pydis_site.apps.api.validators.validate_tag_embed]),
         ),
     ]

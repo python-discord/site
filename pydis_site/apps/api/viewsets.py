@@ -54,7 +54,7 @@ class DeletedMessageViewSet(CreateModelMixin, GenericViewSet):
     #### Body schema
     >>> {
     ...     # The member ID of the original actor, if applicable.
-    ...     # If a member ID is given, it must be present on the pydis_site.
+    ...     # If a member ID is given, it must be present on the site.
     ...     'actor': Optional[int]
     ...     'creation': datetime,
     ...     'messages': [
@@ -192,7 +192,7 @@ class InfractionViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
     ### POST /bot/infractions
     Create a new infraction and return the created infraction.
     Only `actor`, `type`, and `user` are required.
-    The `actor` and `user` must be users known by the pydis_site.
+    The `actor` and `user` must be users known by the site.
 
     #### Request body
     >>> {
@@ -427,7 +427,7 @@ class ReminderViewSet(CreateModelMixin, ListModelMixin, DestroyModelMixin, Gener
 class RoleViewSet(ModelViewSet):
     """
     View providing CRUD access to the roles on our server, used
-    by the bot to keep a mirror of our server's roles on the pydis_site.
+    by the bot to keep a mirror of our server's roles on the site.
 
     ## Routes
     ### GET /bot/roles
@@ -802,7 +802,7 @@ class UserViewSet(BulkCreateModelMixin, ModelViewSet):
 
     ### POST /bot/users
     Adds a single or multiple new users.
-    The roles attached to the user(s) must be roles known by the pydis_site.
+    The roles attached to the user(s) must be roles known by the site.
 
     #### Request body
     >>> {

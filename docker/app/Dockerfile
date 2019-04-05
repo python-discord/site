@@ -1,4 +1,4 @@
-FROM python:3.6-stretch
+FROM bitnami/python:3.7-prod
 
 STOPSIGNAL SIGQUIT
 ARG EXTRAS=deploy
@@ -22,14 +22,17 @@ RUN apt-get update -y \
 
 WORKDIR /app
 
-COPY Pipfile /app/Pipfile
-COPY Pipfile.lock /app/Pipfile.lock
+COPY Pipfile Pipfile.lock /app/
+
+RUN rm -r /opt/bitnami/python/lib/python3.*/site-packages/setuptools* && \
+    pip install --no-cache-dir -U setuptools
+
 RUN python3 -m pip install pipenv \
     && python3 -m pipenv install --dev --system --deploy
 
 COPY . .
 
-RUN python3 manage.py collectstatic --no-input --clear
+RUN SECRET_KEY=placeholder DATABASE_URL=sqlite:// python3 manage.py collectstatic --no-input --clear --verbosity 0
 
 RUN apt-get purge -y \
             gcc \

@@ -17,12 +17,7 @@ jobs:
       - script: docker run -v $(pwd):/app:ro --rm ruby:alpine /bin/ash -c "gem install mdl && cd /app && mdl"
         displayName: run markdownlint
 
-      - script: |
-          echo 'set -ex' > script.sh
-          echo 'for dockerfile in docker/**/**/**/Dockerfile; do' >> script.sh
-          echo '  docker run -i hadolint/hadolint hadolint --ignore DL3008 --ignore DL3018 --ignore DL3019 - < $dockerfile' >> script.sh
-          echo 'done' >> script.sh
-          sh script.sh
+      - script: docker run -i hadolint/hadolint hadolint --ignore DL3008 --ignore DL3018 --ignore DL3019 - < docker/app/Dockerfile
         displayName: run hadolint
 
   - job: lint_python
@@ -47,7 +42,7 @@ jobs:
           architecture: x64
 
       - script: >
-          python -m pip install $(grep -E '^(coverage|flake8|mccabe|pep8-naming)' pyproject.toml | cut -d' ' -f1)
+          python -m pip install $(grep -E '^(coverage|flake8|mccabe|pep8-naming)' Pipfile | cut -d' ' -f1)
         displayName: install lint requirements
 
       - script: flake8
@@ -93,7 +88,7 @@ jobs:
           echo "CREATE DATABASE pysite OWNER pysite;" >> pgscript.sql
           sudo su postgres -c "psql < pgscript.sql"
         env:
-          USER_CREATE_COMMAND: CREATE USER pydis_site WITH PASSWORD 'pydis_site' CREATEDB
+          USER_CREATE_COMMAND: CREATE USER pysite WITH PASSWORD 'pysite' CREATEDB
         displayName: set up the database
 
       - script: python -m pip install pipenv && python -m pipenv install --dev --system
@@ -104,7 +99,7 @@ jobs:
           coverage run --branch manage.py test --testrunner xmlrunner.extra.djangotestrunner.XMLTestRunner --no-input
         env:
           CI: azure
-          DATABASE_URL: postgres://pydis_site:pydis_site@localhost/pydis_site
+          DATABASE_URL: postgres://pysite:pysite@localhost/pysite
         displayName: run tests
 
       - script: coverage report
@@ -132,7 +127,7 @@ jobs:
           command: 'login'
 
       - script: |
-          docker build -t pythondiscord/django:latest .
+          docker build -t pythondiscord/django:latest docker/app/Dockerfile
           docker push pythondiscord/django:latest
         displayName: Build and push the image
 
