@@ -86,7 +86,7 @@ def validate_tag_embed(embed):
 
         >>> from django.contrib.postgres import fields as pgfields
         >>> from django.db import models
-        >>> from api.validators import validate_tag_embed
+        >>> from pysite.apps.api import validate_tag_embed
         >>> class MyMessage(models.Model):
         ...     embed = pgfields.JSONField(
         ...         validators=(

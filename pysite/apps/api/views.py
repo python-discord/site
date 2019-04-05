@@ -131,7 +131,7 @@ class RulesView(APIView):
             ),
             (
                 "We will not help you with anything that might break a law or the "
-                "terms of service of any other community, site, service, or "
+                "terms of service of any other community, pysite, service, or "
                 "otherwise - No piracy, brute-forcing, captcha circumvention, "
                 "sneaker bots, or anything else of that nature."
             ),

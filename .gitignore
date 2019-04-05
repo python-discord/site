@@ -113,5 +113,6 @@ rethinkdb_data/
 # Node modules
 node_modules/
 
+pip-wheel-metadata/
 *.js.tmp
 log.*

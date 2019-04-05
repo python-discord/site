@@ -62,8 +62,9 @@ else:
 # Application definition
 
 INSTALLED_APPS = [
-    'api',
-    'home',
+    'pysite.apps.api',
+    'pysite.apps.home',
+    'pysite.apps.wiki',
 
     'django.contrib.admin',
     'django.contrib.auth',

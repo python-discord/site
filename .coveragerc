@@ -1,11 +1,11 @@
 [run]
 branch = true
 source =
-    admin
-    api
-    home
     pysite
-    wiki
+    pysite/apps/admin
+    pysite/apps/api
+    pysite/apps/home
+    pysite/apps/wiki
 omit =
     */admin.py
     */apps.py
