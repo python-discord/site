@@ -1,6 +1,6 @@
 [flake8]
 max-line-length=100
 ignore=S106
-application_import_names=pysite
+application_import_names=pydis_site
 exclude=__pycache__, venv, .venv, **/migrations
 import-order-style=pycharm

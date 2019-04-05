@@ -93,7 +93,7 @@ jobs:
           echo "CREATE DATABASE pysite OWNER pysite;" >> pgscript.sql
           sudo su postgres -c "psql < pgscript.sql"
         env:
-          USER_CREATE_COMMAND: CREATE USER pysite WITH PASSWORD 'pysite' CREATEDB
+          USER_CREATE_COMMAND: CREATE USER pydis_site WITH PASSWORD 'pydis_site' CREATEDB
         displayName: set up the database
 
       - script: python -m pip install pipenv && python -m pipenv install --dev --system
@@ -104,7 +104,7 @@ jobs:
           coverage run --branch manage.py test --testrunner xmlrunner.extra.djangotestrunner.XMLTestRunner --no-input
         env:
           CI: azure
-          DATABASE_URL: postgres://pysite:pysite@localhost/pysite
+          DATABASE_URL: postgres://pydis_site:pydis_site@localhost/pydis_site
         displayName: run tests
 
       - script: coverage report

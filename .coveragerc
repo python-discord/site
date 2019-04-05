@@ -1,17 +1,17 @@
 [run]
 branch = true
 source =
-    pysite
-    pysite/apps/admin
-    pysite/apps/api
-    pysite/apps/home
-    pysite/apps/wiki
+    pydis_site
+    pydis_site/apps/admin
+    pydis_site/apps/api
+    pydis_site/apps/home
+    pydis_site/apps/wiki
 omit =
     */admin.py
     */apps.py
     */urls.py
-    pysite/wsgi.py
-    pysite/settings.py
+    pydis_site/wsgi.py
+    pydis_site/settings.py
 
 [report]
 fail_under = 100

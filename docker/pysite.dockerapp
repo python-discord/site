@@ -1,5 +1,5 @@
 version: 0.3.0
-name: pysite
+name: pydis_site
 description: |
     Our community website, built on Django and PostgreSQL.
 namespace: python-discord

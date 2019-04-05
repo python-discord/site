@@ -28,7 +28,7 @@ class APISubdomainTestCase(APITestCase):
     If you don't want to force authentication (for example, to test a route's response
     for an unauthenticated user), un-force authentication by using the following:
 
-    >>> from pysite.apps.api import APISubdomainTestCase
+    >>> from pydis_site.apps.api import APISubdomainTestCase
     >>> class UnauthedUserTestCase(APISubdomainTestCase):
     ...     def setUp(self):
     ...         super().setUp()
@@ -46,7 +46,7 @@ class APISubdomainTestCase(APITestCase):
     ## Example
     Using this in a test case is rather straightforward:
 
-    >>> from pysite.apps.api import APISubdomainTestCase
+    >>> from pydis_site.apps.api import APISubdomainTestCase
     >>> class MyAPITestCase(APISubdomainTestCase):
     ...     def test_that_it_works(self):
     ...         response = self.client.get('/my-endpoint')
@@ -55,7 +55,7 @@ class APISubdomainTestCase(APITestCase):
     To reverse URLs of the API host, you need to use `django_hosts`:
 
     >>> from django_hosts.resolvers import reverse
-    >>> from pysite.apps.api import APISubdomainTestCase
+    >>> from pydis_site.apps.api import APISubdomainTestCase
     >>> class MyReversedTestCase(APISubdomainTestCase):
     ...     def test_my_endpoint(self):
     ...         url = reverse('user-detail', host='api')

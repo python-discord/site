@@ -20,9 +20,9 @@ services:
   postgres:
     image: postgres:11-alpine
     environment:
-      POSTGRES_DB: pysite
+      POSTGRES_DB: pydis_site
       POSTGRES_PASSWORD: supersecretpassword
-      POSTGRES_USER: pysite
+      POSTGRES_USER: pydis_site
 
   web:
     build:
@@ -36,7 +36,7 @@ services:
     volumes:
       - .:/app:ro
     environment:
-      DATABASE_URL: postgres://pysite:supersecretpassword@postgres/pysite
+      DATABASE_URL: postgres://pydis_site:supersecretpassword@postgres/pydis_site
       DEBUG: "true"
       SECRET_KEY: suitable-for-development-only
 
