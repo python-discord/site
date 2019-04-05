@@ -1,0 +1,30 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+flake8 = "*"
+flake8-bandit = "*"
+flake8-bugbear = "*"
+flake8-import-order = "*"
+flake8-string-format = "*"
+flake8-tidy-imports = "*"
+mccabe = "*"
+pep8-naming = "*"
+coverage = "*"
+unittest-xml-reporting = "*"
+
+[packages]
+django = ">=2.2"
+django-crispy-forms = "*"
+django-environ = "*"
+django-filter = "*"
+django-hosts = "*"
+djangorestframework = "*"
+djangorestframework-bulk = "*"
+uwsgi = "*"
+psycopg2-binary = "*"
+
+[requires]
+python_version = "3.7"

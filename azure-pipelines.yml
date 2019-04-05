@@ -96,7 +96,7 @@ jobs:
           USER_CREATE_COMMAND: CREATE USER pysite WITH PASSWORD 'pysite' CREATEDB
         displayName: set up the database
 
-      - script: python -m pip install poetry && python -m poetry install --extras "test ci"
+      - script: python -m pip install pipenv && python -m pipenv install --dev --system
         displayName: install requirements
 
       - script: |

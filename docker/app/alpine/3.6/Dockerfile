@@ -19,9 +19,11 @@ RUN apk add --no-cache --virtual build \
         postgresql-dev
 
 WORKDIR /app
-COPY pyproject.toml /app/pyproject.toml
-RUN python3 -m pip install poetry \
-    && python3 -m poetry install --extras deploy \
+
+COPY Pipfile /app/Pipfile
+COPY Pipfile.lock /app/Pipfile.lock
+RUN python3 -m pip install pipenv \
+    && python3 -m pipenv install --dev --system --deploy \
     && apk del --purge build
 
 COPY . .

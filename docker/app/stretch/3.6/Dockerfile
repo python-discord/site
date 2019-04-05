@@ -21,8 +21,12 @@ RUN apt-get update -y \
         rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
-COPY setup.py /app/setup.py
-RUN python3 -m pip install .[$EXTRAS]
+
+COPY Pipfile /app/Pipfile
+COPY Pipfile.lock /app/Pipfile.lock
+RUN python3 -m pip install pipenv \
+    && python3 -m pipenv install --dev --system --deploy
+
 COPY . .
 
 RUN apt-get purge -y \
