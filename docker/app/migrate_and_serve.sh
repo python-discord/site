@@ -9,5 +9,7 @@
 
 echo [i] Applying migrations.
 python manage.py migrate --verbosity 0
+echo [i] Collecting static files.
+python manage.py collectstatic --no-input --clear --verbosity 0
 echo [i] Starting server.
 python manage.py runserver 0.0.0.0:8000

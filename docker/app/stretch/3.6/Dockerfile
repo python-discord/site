@@ -29,6 +29,8 @@ RUN python3 -m pip install pipenv \
 
 COPY . .
 
+RUN python3 manage.py collectstatic --no-input --clear
+
 RUN apt-get purge -y \
             gcc \
             libc-dev \

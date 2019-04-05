@@ -27,4 +27,6 @@ RUN python3 -m pip install pipenv \
 
 COPY . .
 
+RUN python3 manage.py collectstatic --no-input --clear
+
 CMD ["uwsgi", "--ini", "docker/app/uwsgi.ini"]
