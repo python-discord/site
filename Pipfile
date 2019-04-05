@@ -25,6 +25,8 @@ djangorestframework = "*"
 djangorestframework-bulk = "*"
 uwsgi = "*"
 psycopg2-binary = "*"
+django-simple-bulma = "*"
+django-crispy-bulma = "*"
 
 [requires]
 python_version = "3.7"

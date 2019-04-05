@@ -76,6 +76,8 @@ INSTALLED_APPS = [
     'crispy_forms',
     'django_hosts',
     'django_filters',
+    'django_crispy_bulma',
+    'django_simple_bulma',
     'rest_framework',
     'rest_framework.authtoken'
 ]
@@ -164,7 +166,14 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'pysite', 'static')]
-STATIC_ROOT = env('STATIC_ROOT', default='/var/www/pythondiscord.com')
+STATIC_ROOT = env('STATIC_ROOT', default='staticfiles')
+
+STATICFILES_FINDERS = [
+  'django.contrib.staticfiles.finders.FileSystemFinder',
+  'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+
+  'django_simple_bulma.finders.SimpleBulmaFinder',
+]
 
 # django-hosts
 # https://django-hosts.readthedocs.io/en/latest/
@@ -227,5 +236,24 @@ LOGGING = {
                 )
             )
         }
+    }
+}
+
+# Custom settings for Crispyforms
+CRISPY_ALLOWED_TEMPLATE_PACKS = (
+    "bootstrap",
+    "uni_form",
+    "bootstrap3",
+    "bootstrap4",
+    "bulma",
+)
+
+CRISPY_TEMPLATE_PACK = "bulma"
+
+# Custom settings for django-simple-bulma
+BULMA_SETTINGS = {
+    "variables": {
+        "primary": "#7289DA",
+        "link": "$primary",
     }
 }
