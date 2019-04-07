@@ -28,10 +28,14 @@ services:
       - postgres
     volumes:
       - .:/app:ro
+      - staticfiles:/var/www/static
     environment:
       DATABASE_URL: postgres://pysite:supersecretpassword@postgres/pysite
       DEBUG: "true"
       SECRET_KEY: suitable-for-development-only
-      STATIC_ROOT: /tmp/staticfiles
+      STATIC_ROOT: /var/www/static
+
+volumes:
+  staticfiles:
 
 # vim: sw=2 ts=2:
