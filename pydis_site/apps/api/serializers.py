@@ -5,12 +5,12 @@ from rest_framework_bulk import BulkSerializerMixin
 from .models import (
     BotSetting, DeletedMessage,
     DocumentationLink, Infraction,
-    MessageDeletionContext, Nomination,
-    OffTopicChannelName, Reminder,
-    Role, SnakeFact,
-    SnakeIdiom, SnakeName,
-    SpecialSnake, Tag,
-    User
+    LogEntry, MessageDeletionContext,
+    Nomination, OffTopicChannelName,
+    Reminder, Role,
+    SnakeFact, SnakeIdiom,
+    SnakeName, SpecialSnake,
+    Tag, User
 )
 
 
@@ -100,6 +100,15 @@ class ExpandedInfractionSerializer(InfractionSerializer):
         ret['actor'] = actor_data
 
         return ret
+
+
+class LogEntrySerializer(ModelSerializer):
+    class Meta:
+        model = LogEntry
+        fields = (
+            'application', 'logger_name', 'timestamp',
+            'level', 'module', 'line'
+        )
 
 
 class OffTopicChannelNameSerializer(ModelSerializer):

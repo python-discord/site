@@ -15,22 +15,23 @@ from rest_framework_bulk import BulkCreateModelMixin
 
 from .models import (
     BotSetting, DocumentationLink,
-    Infraction, MessageDeletionContext,
-    Nomination, OffTopicChannelName,
-    Reminder, Role,
-    SnakeFact, SnakeIdiom,
-    SnakeName, SpecialSnake,
-    Tag, User
+    Infraction, LogEntry,
+    MessageDeletionContext, Nomination,
+    OffTopicChannelName, Reminder,
+    Role, SnakeFact,
+    SnakeIdiom, SnakeName,
+    SpecialSnake, Tag,
+    User
 )
 from .serializers import (
     BotSettingSerializer, DocumentationLinkSerializer,
     ExpandedInfractionSerializer, InfractionSerializer,
-    MessageDeletionContextSerializer, NominationSerializer,
-    OffTopicChannelNameSerializer, ReminderSerializer,
-    RoleSerializer, SnakeFactSerializer,
-    SnakeIdiomSerializer, SnakeNameSerializer,
-    SpecialSnakeSerializer, TagSerializer,
-    UserSerializer
+    LogEntrySerializer, MessageDeletionContextSerializer,
+    NominationSerializer, OffTopicChannelNameSerializer,
+    ReminderSerializer, RoleSerializer,
+    SnakeFactSerializer, SnakeIdiomSerializer,
+    SnakeNameSerializer, SpecialSnakeSerializer,
+    TagSerializer, UserSerializer
 )
 
 
@@ -278,6 +279,12 @@ class InfractionViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
     def partial_update_expanded(self, *args, **kwargs):
         self.serializer_class = ExpandedInfractionSerializer
         return self.partial_update(*args, **kwargs)
+
+
+class LogEntryViewSet(CreateModelMixin, GenericViewSet):
+    # TODO: doc me foobar baz boom bang crow caw caw caw
+    queryset = LogEntry.objects.all()
+    serializer_class = LogEntrySerializer
 
 
 class OffTopicChannelNameViewSet(DestroyModelMixin, ViewSet):
