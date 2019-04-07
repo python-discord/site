@@ -383,7 +383,7 @@ class ReminderViewSet(CreateModelMixin, ListModelMixin, DestroyModelMixin, Gener
     ...         'active': True,
     ...         'author': 1020103901030,
     ...         'content': "Make dinner",
-    ...         'expiration': '5018-11-20T15:52:00Z'
+    ...         'expiration': '5018-11-20T15:52:00Z',
     ...         'id': 11
     ...     },
     ...     ...
