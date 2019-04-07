@@ -12,8 +12,8 @@
 __pycache__
 admin/tests
 admin/tests.py
-api/tests
-api/tests.py
+pydis_site/apps/api/tests
+pydis_site/apps/api/tests.py
 CHANGELOG.md
 CONTRIBUTING.md
 docker
@@ -31,5 +31,5 @@ README.md
 scripts
 Vagrantfile
 venv
-wiki/tests
-wiki/tests.py
+pydis_site/apps/wiki/tests
+pydis_site/apps/wiki/tests.py

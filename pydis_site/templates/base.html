@@ -1,0 +1,22 @@
+{# Base template, with a few basic style definitions. #}
+{% load django_simple_bulma %}
+{% load static %}
+
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Python Discord | {% block page_title %}Website{% endblock %}</title>
+  <meta name="description" content="{% block page_description %}We're a large, friendly community focused around the Python programming language. Our community is open to those who wish to learn the language, as well as those looking to help others.{% endblock %}">
+
+  {% bulma %}
+  {% font_awesome %}
+  {% block head %}{% endblock %}
+</head>
+<body>
+  {% block body %}
+  {% endblock %}
+</body>
+
+
+<!-- vim: set ft=htmldjango: -->
