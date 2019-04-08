@@ -64,7 +64,6 @@ else:
 INSTALLED_APPS = [
     'pydis_site.apps.api',
     'pydis_site.apps.home',
-    'pydis_site.apps.wiki_container',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -277,3 +276,31 @@ SITE_ID = 1
 
 WIKI_ACCOUNT_HANDLING = False
 WIKI_ACCOUNT_SIGNUP_ALLOWED = False
+
+WIKI_ANONYMOUS = True
+WIKI_ANONYMOUS_CREATE = DEBUG
+WIKI_ANONYMOUS_UPLOAD = DEBUG
+WIKI_ANONYMOUS_WRITE = DEBUG
+
+WIKI_MARKDOWN_KWARGS = {
+    "extension_configs": {
+        "wiki.plugins.macros.mdx.toc": {
+            "title": "Contents"
+        }
+    }, "extensions": [
+        "markdown.extensions.abbr",
+        "markdown.extensions.attr_list",
+        "markdown.extensions.extra",
+        "markdown.extensions.fenced_code",
+        "markdown.extensions.footnotes",
+        "markdown.extensions.nl2br",
+        "markdown.extensions.sane_lists",
+
+        "wiki.core.markdown.mdx.codehilite",
+        "wiki.core.markdown.mdx.previewlinks",
+        "wiki.core.markdown.mdx.responsivetable",
+        "wiki.plugins.macros.mdx.macro",
+        "wiki.plugins.macros.mdx.toc",
+        "wiki.plugins.macros.mdx.wikilinks",
+    ]
+}

@@ -31,5 +31,3 @@ README.md
 scripts
 Vagrantfile
 venv
-pydis_site/apps/wiki/tests
-pydis_site/apps/wiki/tests.py
