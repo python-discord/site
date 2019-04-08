@@ -1,0 +1,50 @@
+{% extends "wiki/base.html" %}
+{% load wiki_tags i18n sekizai_tags static %}
+
+
+{% block wiki_pagetitle %}{% trans "Add new article" %}{% endblock %}
+
+{% block wiki_contents %}
+
+  {% addtoblock "js" %}
+  <script type="text/javascript" src="{% static "admin/js/urlify.js" %}"></script>
+  <script type="text/javascript">
+  {% if not create_form.slug.value %}
+  //<![CDATA[
+  (function($) {
+	  $(document).ready(function (){
+		  $("#id_title").keyup(function () {
+			  var e = $("#id_slug")[0];
+			  if(!e._changed) {
+			    slug = URLify(this.value, 50);
+				  e.value = slug;
+			  }
+	      });
+	  });
+  })(jQuery);
+  //]]>
+  {% endif %}
+  </script>
+  {% endaddtoblock %}
+
+  {% include "wiki/includes/editormedia.html" %}
+  <h1 class="page-header">{% trans "Add new article" %}</h1>
+
+  <form method="POST" class="form-horizontal">
+    {% wiki_form create_form %}
+    <div class="form-group form-actions">
+      <div class="col-lg-2"></div>
+      <div class="col-lg-10">
+        <a href="{% url 'wiki:get' path=parent_urlpath.path %}" class="btn btn-default">
+          <span class="fa fa-arrow-left"></span>
+          {% trans "Go back" %}
+        </a>
+        <button type="submit" name="save_changes" class="btn btn-primary">
+          <span class="fa fa-plus"></span>
+          {% trans "Create article" %}
+        </button>
+      </div>
+    </div>
+  </form>
+
+{% endblock %}
