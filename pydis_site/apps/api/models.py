@@ -493,3 +493,6 @@ class LogEntry(ModelReprMixin, models.Model):
     line = models.PositiveSmallIntegerField(
         help_text="The line at which the log line was emitted."
     )
+    message = models.TextField(
+        help_text="The textual content of the log line."
+    )

@@ -1,5 +1,4 @@
 from rest_framework.serializers import ModelSerializer, PrimaryKeyRelatedField, ValidationError
-from rest_framework.validators import UniqueValidator
 from rest_framework_bulk import BulkSerializerMixin
 
 from .models import (
@@ -107,7 +106,7 @@ class LogEntrySerializer(ModelSerializer):
         model = LogEntry
         fields = (
             'application', 'logger_name', 'timestamp',
-            'level', 'module', 'line'
+            'level', 'module', 'line', 'message'
         )
 
 
