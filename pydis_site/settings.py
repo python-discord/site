@@ -64,22 +64,34 @@ else:
 INSTALLED_APPS = [
     'pydis_site.apps.api',
     'pydis_site.apps.home',
-    'pydis_site.apps.wiki',
+    'pydis_site.apps.wiki_container',
 
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
+    'django.contrib.humanize.apps.HumanizeConfig',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'django.contrib.sites.apps.SitesConfig',
     'django.contrib.staticfiles',
 
     'crispy_forms',
+    'django_crispy_bulma',
     'django_hosts',
     'django_filters',
-    'django_crispy_bulma',
+    'django_nyt.apps.DjangoNytConfig',
     'django_simple_bulma',
+    'mptt',
     'rest_framework',
-    'rest_framework.authtoken'
+    'rest_framework.authtoken',
+    'sekizai',
+    'sorl.thumbnail',
+
+    'wiki.apps.WikiConfig',
+    'wiki.plugins.attachments.apps.AttachmentsConfig',
+    'wiki.plugins.notifications.apps.NotificationsConfig',
+    'wiki.plugins.images.apps.ImagesConfig',
+    'wiki.plugins.macros.apps.MacrosConfig',
 ]
 
 MIDDLEWARE = [
@@ -112,6 +124,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+
+                "sekizai.context_processors.sekizai",
             ],
         },
     },
@@ -257,3 +271,9 @@ BULMA_SETTINGS = {
         "link": "$primary",
     }
 }
+
+# Required for the wiki
+SITE_ID = 1
+
+WIKI_ACCOUNT_HANDLING = False
+WIKI_ACCOUNT_SIGNUP_ALLOWED = False
