@@ -14,6 +14,10 @@ It requires two arguments to be set in the include:
 For example, to use light icons and no dropdowns, you could use the following in your template:
 
 {% include "base/navbar.html" with icon_weight="fal" dropdowns=False %}
+
+This template is based on the navbar template found here:
+  https://github.com/gdude2002/gserv.me/blob/20f491836342925dc67b08e1bd0ea2ed29610da8/base/templates/base/navbar.html
+
 {% endcomment %}
 
 <nav class="navbar is-primary" role="navigation" aria-label="main navigation">
@@ -46,62 +50,10 @@ For example, to use light icons and no dropdowns, you could use the following in
     </div>
     <div class="navbar-menu is-paddingless" id="navbar_menu">
       <div class="navbar-start">
-        {#                    {% if dropdowns %}#}
-        {#                        <div class="navbar-item has-dropdown is-hoverable">#}
-        {#                            {% if request.path|starts_with:"/blog" %}#}
-        {#                                <a class="navbar-link is-active" href="{% url "blog.index" %}">#}
-        {#                            {% else %}#}
-        {#                                <a class="navbar-link" href="{% url "blog.index" %}">#}
-        {#                            {% endif %}#}
-        {#                                <span class="icon is-size-4 is-medium"><i class="{{ icon_weight }} fa-blog"></i></span>#}
-        {#                                <span>&nbsp;Blog</span>#}
-        {#                            </a>#}
-        {##}
-        {#                            <div class="navbar-dropdown is-paddingless">#}
-        {#                                <a class="navbar-item" href="{% url "blog.posts" page=1 %}">#}
-        {#                                    <span class="icon is-size-4 is-medium"><i class="{{ icon_weight }} fa-quote-right"></i></span>#}
-        {#                                    <span>&nbsp;Posts</span>#}
-        {#                                </a>#}
-        {##}
-        {#                                <a class="navbar-item" href="{% url "blog.categories" %}">#}
-        {#                                    <span class="icon is-size-4 is-medium"><i class="{{ icon_weight }} fa-tag"></i></span>#}
-        {#                                    <span>&nbsp;Categories</span>#}
-        {#                                </a>#}
-        {#                            </div>#}
-        {#                        </div>#}
-        {#                    {% else %}#}
-        {#                        <a class="navbar-item" href="{% url "blog.index" %}">#}
-        {#                            <span class="icon is-size-4 is-medium"><i class="{{ icon_weight }} fa-blog"></i></span>#}
-        {#                            <span>&nbsp;Blog</span>#}
-        {#                        </a>#}
-        {#                    {% endif %}#}
+        {# Content on the left side of the navbar #}
       </div>
       <div class="navbar-end">
-        {#                    {% if request.user.is_authenticated %}#}
-        {#                        {% if user.is_staff %}#}
-        {#                            <a class="navbar-item" href="{% url "admin:index" %}">#}
-        {#                                <span class="icon is-size-4 is-medium"><i class="{{ icon_weight }} fa-cog"></i></span>#}
-        {#                                <span>&nbsp;Admin</span>#}
-        {#                            </a>#}
-        {#                        {% endif %}#}
-        {##}
-        {#                        <a class="navbar-item" href="{% url "logout" %}">#}
-        {#                            <span class="icon is-size-4 is-medium"><i class="{{ icon_weight }} fa-unlock"></i></span>#}
-        {#                            <span>&nbsp;Logout</span>#}
-        {#                        </a>#}
-        {#                    {% else %}#}
-        {#                        {% if request.path == "/login" %}#}
-        {#                            <a class="navbar-item is-active" href="{% url "login" %}">#}
-        {#                                <span class="icon is-size-4 is-medium"><i class="{{ icon_weight }} fa-lock"></i></span>#}
-        {#                                <span>&nbsp;Login</span>#}
-        {#                            </a>#}
-        {#                        {% else %}#}
-        {#                            <a class="navbar-item" href="{% url "login" %}">#}
-        {#                                <span class="icon is-size-4 is-medium"><i class="{{ icon_weight }} fa-lock"></i></span>#}
-        {#                                <span>&nbsp;Login</span>#}
-        {#                            </a>#}
-        {#                        {% endif %}#}
-        {#                    {% endif %}#}
+        {# Content on the right sside of the navbar #}
       </div>
     </div>
   </div>
