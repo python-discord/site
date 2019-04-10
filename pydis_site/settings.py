@@ -272,6 +272,7 @@ BULMA_SETTINGS = {
 }
 
 # Required for the wiki
+LOGIN_URL = "/admin/login"  # TODO: Update this when the real login system is in place
 SITE_ID = 1
 
 WIKI_ACCOUNT_HANDLING = False

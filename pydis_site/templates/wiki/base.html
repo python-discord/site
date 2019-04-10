@@ -1,3 +1,30 @@
-{% extends "wiki/base_site.html" %}
+{% extends "base/base.html" %}
+{% load sekizai_tags i18n wiki_tags static %}
 
-{# Intentionally empty, to allow easy customization with no copy-paste #}
+{% block title %}
+  Wiki | {% block wiki_pagetitle %}{% endblock %}{% block wiki_site_title %}{% endblock %}
+{% endblock %}
+
+{% block content %}
+  {% include "base/navbar.html" with active_item=True dropdowns=True icon_weight="far" use_logo=True %}
+
+  {% block wiki_body %}
+    {% block wiki_navbar %}
+
+    {% endblock %}
+
+    <section class="section">
+      <div class="container">
+        {% wiki_messages %}
+
+        {% block wiki_breadcrumbs %}{% endblock %}
+
+        <div class="content">
+          {% block wiki_contents %}{% endblock %}
+        </div>
+      </div>
+    </section>
+  {% endblock %}
+
+  {% include "base/footer.html" %}
+{% endblock %}
