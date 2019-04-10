@@ -1,0 +1,50 @@
+{% load django_simple_bulma %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description"
+        content="{% block meta-description %}We're a large, friendly community focused around the Python programming language. Our community is open to those who wish to learn the language, as well as those looking to help others.{% endblock %}">
+
+  <title>Python Discord | {% block title %}Website{% endblock %}</title>
+
+  {% bulma %}
+
+  {# Font-awesome here is defined explicitly so that we can have Pro #}
+  <link rel="stylesheet"
+        href="https://pro.fontawesome.com/releases/v5.7.2/css/all.css"
+        integrity="sha384-6jHF7Z3XI3fF4XZixAuSu0gGKrXwoX/w3uFPxC56OtjChio7wtTGJWRW53Nhx6Ev"
+        crossorigin="anonymous"
+  >
+
+  {% block head %}{% endblock %}
+</head>
+<body>
+
+<section class="hero is-primary">
+  <div class="hero-head">
+    {% block hero-head %}{% endblock %}
+  </div>
+  <div class="hero-body">
+    {% block hero-body %}{% endblock %}
+  </div>
+  <div class="hero-foot">
+    {% block hero-foot %}{% endblock %}
+    {% include "base/navbar.html" with active_item=False dropdowns=True icon_weight="fas" use_logo=False %}
+  </div>
+</section>
+
+{% block content %}{% endblock %}
+
+<footer class="footer has-background-dark has-text-grey">
+  <div class="content has-text-centered">
+    <p>
+      &copy; 2019 Python Discord | Built with Django and Bulma
+    </p>
+  </div>
+</footer>
+</body>
+</html>
