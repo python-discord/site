@@ -1,0 +1,18 @@
+.discord-banner {
+    border-radius: 0.5rem;
+}
+
+.hero-image {
+    width: 20rem;
+    margin: auto;
+}
+
+.hero-body {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+.section-sp img {
+    height: 5rem;
+    margin-right: 2rem;
+}
