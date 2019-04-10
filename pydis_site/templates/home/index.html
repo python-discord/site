@@ -1,4 +1,4 @@
-{% extends 'base/base-hero.html' %}
+{% extends 'base/base.html' %}
 {% load static %}
 
 {% block title %}Home{% endblock %}
@@ -6,17 +6,22 @@
   <link rel="stylesheet" href="{% static "css/home/index.css" %}">
 {% endblock %}
 
-{% block hero-body %}
-  <div class="container is-flex">
-    <img class="hero-image is-centered" src="{% static "images/logo_site_banner.svg" %}" alt="Python Discord logo" />
-  </div>
-  <div class="container has-text-centered">
-    <h1 class="title is-4">
-      The hottest Python community on the web
-    </h1>
-  </div>
-{% endblock %}
 {% block content %}
+  <section class="hero is-primary">
+    <div class="hero-body">
+      <div class="container is-flex">
+        <img class="hero-image is-centered" src="{% static "images/logo_site_banner.svg" %}" alt="Python Discord logo" />
+      </div>
+      <div class="container has-text-centered">
+        <h1 class="title is-4">
+          The hottest Python community on the web
+        </h1>
+      </div>
+    </div>
+    <div class="hero-foot">
+      {% include "base/navbar.html" with active_item=False dropdowns=True icon_weight="fas" use_logo=False %}
+    </div>
+  </section>
   <section class="section">
     <div class="container is-spaced">
       <div class="columns">
@@ -61,6 +66,8 @@
       </div>
     </div>
   </section>
+
+  {% include "base/footer.html" %}
 {% endblock %}
 
 <!-- vim: set ft=htmldjango: -->
