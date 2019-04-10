@@ -20,6 +20,7 @@ class BotSettingValidatorTests(TestCase):
         with self.assertRaises(ValidationError):
             validate_bot_setting_name('bad name')
 
+
 class TagEmbedValidatorTests(TestCase):
     def test_rejects_non_mapping(self):
         with self.assertRaises(ValidationError):
