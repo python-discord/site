@@ -1,0 +1,60 @@
+{% load extra_filters %}
+{% load static %}
+
+{% comment %}
+This template is responsible for rendering the main navigation on each page that uses it.
+It requires two arguments to be set in the include:
+
+* `dropdown` (bool):   True to render the dropdowns included, False to omit them
+* `icon_weight` (str): Either "fas", "far" or "fal" to correspond with Font-Awesome's weight classes.
+                       This will not affect branding icons, which have the "fab" class.
+* use_logo (bool):     True to render the navbar with the site logo on the left side, False to use an
+                       icon with text instead
+
+For example, to use light icons and no dropdowns, you could use the following in your template:
+
+{% include "base/navbar.html" with icon_weight="fal" dropdowns=False %}
+
+This template is based on the navbar template found here:
+  https://github.com/gdude2002/gserv.me/blob/20f491836342925dc67b08e1bd0ea2ed29610da8/base/templates/base/navbar.html
+
+{% endcomment %}
+
+<nav class="navbar is-primary" role="navigation" aria-label="main navigation">
+  <div class="container">
+    <div class="navbar-brand">
+        {% if use_logo %}
+          <a class="navbar-item" href="{% url "home.index" %}">
+            <img src="{% static 'images/logo_site_banner.svg' %}" class="navbar-brand navbar-icon" alt="Python Discord">
+          </a>
+        {% else %}
+          <a
+            {% if active_item and request.path == "/" %}
+              class="navbar-item is-active"
+            {% else %}
+              class="navbar-item"
+            {% endif %}
+            href="{% url "home.index" %}"
+          >
+
+            <span class="icon is-size-4 is-medium"><i class="{{ icon_weight }} fa-home"></i></span>
+            <span class="is-hidden-touch">&nbsp;Home</span>
+          </a>
+        {% endif %}
+
+      <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbar_menu">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </div>
+    <div class="navbar-menu is-paddingless" id="navbar_menu">
+      <div class="navbar-start">
+        {# Content on the left side of the navbar #}
+      </div>
+      <div class="navbar-end">
+        {# Content on the right sside of the navbar #}
+      </div>
+    </div>
+  </div>
+</nav>

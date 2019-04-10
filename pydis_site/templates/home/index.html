@@ -1,42 +1,71 @@
-{% extends 'navbar.html' %}
+{% extends 'base/base.html' %}
 {% load static %}
 
-{% block page_title %}Home{% endblock %}
+{% block title %}Home{% endblock %}
 {% block head %}
-  {{ block.super }}
-  <link rel="stylesheet" href="{% static 'home/css/index.css' %}">
-{% endblock %}
-{% block body %}
-  {{ block.super }}
-  <div class="overview has-text-centered container">
-    <h1 class="has-text-white has-text-weight-semibold is-size-2">Python Discord</h1>
-    <p class="has-text-grey-lighter is-size-7">
-      The official Discord server of
-      <a class="has-text-white" href="https://reddit.com/r/Python">r/Python</a>
-    </p>
-
-    <p class="has-text-light is-size-4">
-      We're a large, friendly community focused around the Python programming language, open to those
-      who wish to learn the language or improve their skills, as well as those looking to help others.
-    </p>
-
-    <p class="has-text-light is-size-6">
-      We organise regular community events and have a dedicated staff of talented Python
-      developers available to assist around the clock. Whether you're looking to learn the
-      language or working on a complex project, we've got someone who can help you if you get stuck.
-    </p>
-
-    <img src="https://discordapp.com/api/guilds/267624335836053506/embed.png?style=banner3">
-
-    <p class="divider has-text-grey-light">
-      ------------------------------------------------------------------------------------------------------------&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;O&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-------------------------------------------------------------------------------------------------------------
-    </p>
-
-    <p class="has-text-grey-lighter is-size-7">
-      Please note: this site is under construction. What you see now may be vastly different
-      from the final project state. Feel free to chat to us on Discord if you're curious!
-    </p>
-  </div>
+  <link rel="stylesheet" href="{% static "css/home/index.css" %}">
 {% endblock %}
 
-<!-- vim: set ft=htmldjango: -->
+{% block content %}
+  <section class="hero is-primary">
+    <div class="hero-body">
+      <div class="container is-flex">
+        <img class="hero-image is-centered" src="{% static "images/logo_site_banner.svg" %}" alt="Python Discord logo" />
+      </div>
+      <div class="container has-text-centered">
+        <h1 class="title is-4">
+          The hottest Python community on the web
+        </h1>
+      </div>
+    </div>
+    <div class="hero-foot">
+      {% include "base/navbar.html" with active_item=False dropdowns=True icon_weight="fas" use_logo=False %}
+    </div>
+  </section>
+  <section class="section">
+    <div class="container is-spaced">
+      <div class="columns">
+        <div class="column is-two-thirds">
+          <p>
+            We're a large, friendly community focused around the Python programming
+            language, open to those who wish to learn the language or improve their
+            skills, as well as those looking to help others.
+
+            <br /><br />
+
+            We organise regular community events and have a dedicated staff of
+            talented Python developers available to assist around the clock.
+
+            <br /><br />
+
+            Whether you're looking to learn the language or working on a complex project,
+            we've got someone who can help you if you get stuck.
+          </p>
+        </div>
+        <div class="column is-one-third is-first has-text-centered">
+          <h1 class="title">Join the community</h1>
+
+          {# TODO: Fix URL #}
+          <a href="https://pythondiscord.com/invite">
+            <img class="discord-banner" src="https://discordapp.com/api/guilds/267624335836053506/embed.png?style=banner3" alt="Discord banner" />
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-sp hero is-light">
+    <div class="hero-body">
+      <div class="container">
+        <h1 class="title is-6 has-text-grey">
+          Sponsors
+        </h1>
+        <img src="{% static "images/sponsors/linode.png" %}" alt="" />
+        <img src="{% static "images/sponsors/jetbrains.png" %}" alt="" />
+        <img src="{% static "images/sponsors/adafruit.png" %}" alt="" />
+      </div>
+    </div>
+  </section>
+
+  {% include "base/footer.html" %}
+{% endblock %}
