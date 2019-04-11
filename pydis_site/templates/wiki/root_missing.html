@@ -6,28 +6,29 @@
     <div class="column is-two-thirds is-offset-2">
       <article class="message is-primary">
         <div class="message-header">
-          <p>Congratulations!</p>
+          <p>No articles found</p>
         </div>
         <div class="message-body">
           <p>
-            {% trans "You have django-wiki installed and it seems to be working. But there are no articles yet." %}
+            It appears that there are no articles available on this wiki.
           </p>
 
           {% if not user.is_superuser %}
             <p>
-              {% trans "Not to worry! You simply have to login with a superuser account and create the first article in the root of the URL hierarchy." %}
+              To get started, please login with a superuser account.
             </p>
 
             {% login_url as wiki_login_url %}
 
             {% if wiki_login_url %}
               <div class="has-text-centered">
-                <a href="{{ wiki_login_url }}" class="button is-primary">{% trans "Click here to login" %}</a>
+                <a href="{{ wiki_login_url }}" class="button is-primary">Login</a>
               </div>
             {% endif %}
           {% else %}
             <p>
-              {% trans "But since you're logged in as a superuser, we should really get started..." %}
+              Let's get started - click below to create the first article, or to read up on the
+              <code>django-wiki</code> documentation.
             </p>
 
             <a class="button is-primary" href="{% url 'wiki:root_create' %}">Create Article</a>

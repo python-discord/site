@@ -1,24 +1,42 @@
 {% extends "wiki/base.html" %}
-{% load wiki_tags i18n sekizai_tags static %}
+{% load wiki_tags crispy_forms_tags i18n sekizai_tags static %}
 
 {% block wiki_pagetitle %}{% trans "Create root article" %}{% endblock %}
 
 {% block wiki_contents %}
-  <h1 class="title">{% trans "Congratulations!" %}</h1>
+  <div class="columns">
+    <div class="column is-two-thirds is-offset-2">
+      <article class="message is-primary">
+        <div class="message-header">
+          <p>Create first article</p>
+        </div>
+        <div class="message-body">
+          <p>
+            Please create the root article. This article will be available at the root of your wiki,
+            so consider creating a landing page here.
+          </p>
+          <p>
+            Please note that, to begin with, this article may only be modified by wiki administrators.
+            Once it's been created, you may edit the permissions and set up plugins, metadata, and so on.
+          </p>
+        </div>
+      </article>
+    </div>
+  </div>
 
-  <p>
-    {% trans "You have django-wiki installed... but there are no articles. So it's time to create the first one, the root article." %}
-    {% trans "In the beginning, it will only be editable by administrators, but you can define permissions after." %}
-  </p>
-
-  <h2 class="page-header">{% trans "Root article" %}</h2>
+  <h2 class="title is-2">{% trans "Root article" %}</h2>
 
   <form method="POST" class="form-horizontal">
     {% wiki_form form %}
-    <div class="form-group form-actions">
-      <div class="col-lg-2"></div>
-      <div class="col-lg-10">
-        <input type="submit" name="save_changes" value="{% trans "Create root" %} &raquo;" class="btn btn-primary btn-lg" />
+
+    <div class="field is-horizontal">
+      <div class="field-label">
+        {# Empty for spacing #}
+      </div>
+      <div class="field-body">
+        <div class="control">
+          <input type="submit" class="button is-primary" name="save_changes" value="Create" />
+        </div>
       </div>
     </div>
   </form>
