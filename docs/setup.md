@@ -26,8 +26,7 @@ in your environment variables:
 export DATABASE_URL=postgres://pysite@localhost/pysite
 ```
 
-After this step, inside the `.env` file, set the `SECRET_KEY` variable which can be anything you like. Also, set the `ENGINE` variable
-to `django.db.backends.postgresql`.
+After this step, inside the `.env` file, set the `SECRET_KEY` variable which can be anything you like.
 
 A simpler approach to automatically configuring this might come in the
 near future - if you have any suggestions, please let us know!
