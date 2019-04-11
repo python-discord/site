@@ -3,6 +3,21 @@
 
 {% block wiki_pagetitle %}{% trans "Create root article" %}{% endblock %}
 
+{% block head %}
+  {{ block.super }}
+
+  {% for js in editor.Media.js %}
+    <script type="text/javascript" src="{% static js %}"></script>
+  {% endfor %}
+
+  {% for media, srcs in editor.Media.css.items %}
+    {% for src in srcs %}
+      <link rel="stylesheet" media="{{ media }}" href="{% static src %}" />
+    {% endfor %}
+  {% endfor %}
+{% endblock %}
+
+
 {% block wiki_contents %}
   <div class="columns">
     <div class="column is-two-thirds is-offset-2">

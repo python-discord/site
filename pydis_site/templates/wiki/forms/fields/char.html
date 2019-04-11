@@ -1,0 +1,21 @@
+{% if is_markitup %}
+  <textarea class="textarea is-family-monospace{% if field.errors %} is-danger{% endif %}"
+            id="{{ field.auto_id }}"
+            rows = 10
+
+            {% if field.required %}required{% endif %}
+            {% if field.max_length %}maxlength="{{ field.maxlength }}"{% endif %}
+            {% if field.min_length %}minlength="{{ field.minelength }}"{% endif %}
+            {% if field.empty_value %}placeholder="{{ field.empty_value }}"{% endif %}
+  ></textarea>
+{% else %}
+  <input class="input{% if field.errors %} is-danger{% endif %}"
+         type="text"
+         id="{{ field.auto_id }}"
+
+         {% if field.required %}required{% endif %}
+         {% if field.max_length %}maxlength="{{ field.maxlength }}"{% endif %}
+         {% if field.min_length %}minlength="{{ field.minelength }}"{% endif %}
+         {% if field.empty_value %}placeholder="{{ field.empty_value }}"{% endif %}
+  />
+{% endif %}
