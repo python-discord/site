@@ -1,0 +1,20 @@
+#django-logo {
+  height: 20px;
+  background: url(https://static.djangoproject.com/img/logos/django-logo-negative.png) no-repeat center;
+  filter: grayscale(1) invert(0.04);
+  background-size: 50px;
+  background-position: 0 0;
+  color: #00000000;
+}
+
+#bulma-logo {
+  padding-left: 18px;
+  height: 20px;
+  background: url(https://bulma.io/images/bulma-logo-white.png) no-repeat center;
+  background-size: 60px;
+  color: #00000000;
+}
+
+#pydis-text {
+    font-weight: bold;
+}

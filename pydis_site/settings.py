@@ -255,5 +255,6 @@ BULMA_SETTINGS = {
     "variables": {
         "primary": "#7289DA",
         "link": "$primary",
+        "navbar-height": "4.75rem",
     }
 }

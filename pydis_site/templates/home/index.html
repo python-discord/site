@@ -7,25 +7,12 @@
 {% endblock %}
 
 {% block content %}
-  <section class="hero is-primary">
-    <div class="hero-body">
-      <div class="container is-flex">
-        <img class="hero-image is-centered" src="{% static "images/logo_site_banner.svg" %}" alt="Python Discord logo" />
-      </div>
-      <div class="container has-text-centered">
-        <h1 class="title is-4">
-          The hottest Python community on the web
-        </h1>
-      </div>
-    </div>
-    <div class="hero-foot">
-      {% include "base/navbar.html" with active_item=False dropdowns=True icon_weight="fas" use_logo=False %}
-    </div>
-  </section>
+ {% include "base/navbar.html" %}
+
   <section class="section">
     <div class="container is-spaced">
       <div class="columns">
-        <div class="column is-two-thirds">
+        <div class="column is-half">
           <p>
             We're a large, friendly community focused around the Python programming
             language, open to those who wish to learn the language or improve their
@@ -42,13 +29,8 @@
             we've got someone who can help you if you get stuck.
           </p>
         </div>
-        <div class="column is-one-third is-first has-text-centered">
-          <h1 class="title">Join the community</h1>
-
-          {# TODO: Fix URL #}
-          <a href="https://pythondiscord.com/invite">
-            <img class="discord-banner" src="https://discordapp.com/api/guilds/267624335836053506/embed.png?style=banner3" alt="Discord banner" />
-          </a>
+        <div class="column is-half is-first has-text-centered">
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/DIBXg8Qh7bA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </div>
       </div>
     </div>
