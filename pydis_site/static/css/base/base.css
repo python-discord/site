@@ -1,9 +1,9 @@
 #django-logo {
-  height: 20px;
+  padding-bottom: 2px;
   background: url(https://static.djangoproject.com/img/logos/django-logo-negative.png) no-repeat center;
-  filter: grayscale(1) invert(0.04);
-  background-size: 50px;
-  background-position: 0 0;
+  filter: grayscale(1) invert(0.02);
+  background-size: 52px 25.5px;
+  background-position: -1px -2px;
   color: #00000000;
 }
 
