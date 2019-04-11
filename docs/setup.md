@@ -68,8 +68,7 @@ pip install -e .[lint,test]
 
 to install base dependencies along with lint and test dependencies.
 
-You can either use `python manage.py` directly, or you can use the console
-entrypoint for it, `psmgr`. For example, to run tests, you could use either `python manage.py test` or `psmgr test`.
+To run tests, use `python manage.py test`.
 
 ## Hosts file
 
@@ -85,8 +84,10 @@ Make sure you add the following to your hosts file:
 ```
 When trying to access the site, you'll be using the domains above instead of the usual `localhost:8000`.
 
-To run the server, run `DEBUG=1 python manage.py runserver`. If it gives you an error saying
+Finally, you will need to set the environment variable `DEBUG=1`. When using `pipenv`, you can
+set put this into an `.env` file to have it exported automatically. It's also recommended to
+export `LOG_LEVEL=INFO` when using `DEBUG=1` if you don't want super verbose logs.
+
+To run the server, run `python manage.py runserver`. If it gives you an error saying
 `django.core.exceptions.ImproperlyConfigured: Set the DATABASE_URL environment variable` please make sure the server that your postgres database is located at is running
 and run the command `$(export cat .env)`. Happy hacking!
-
-
