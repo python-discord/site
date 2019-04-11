@@ -28,7 +28,8 @@ RUN rm -r /opt/bitnami/python/lib/python3.*/site-packages/setuptools* && \
     pip install --no-cache-dir -U setuptools
 
 RUN python3 -m pip install pipenv \
-    && python3 -m pipenv install --dev --system --deploy
+    && python3 -m pipenv install --system --deploy \
+    && pip install uwsgi==2.0.18
 
 COPY . .
 
