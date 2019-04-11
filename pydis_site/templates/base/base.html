@@ -24,11 +24,15 @@
   <link rel="stylesheet" href="{% static "css/base/base.css" %}">
   {% block head %}{% endblock %}
 </head>
-<body>
+<body class="site">
 
-{% block content %}
-  {{ block.super }}
-{% endblock %}
+<main class="site-content">
+  {% block content %}
+    {{ block.super }}
+  {% endblock %}
+</main>
+
+{% include "base/footer.html" %}
 
 </body>
 </html>

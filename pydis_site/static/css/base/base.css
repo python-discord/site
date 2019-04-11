@@ -18,3 +18,14 @@
 #pydis-text {
     font-weight: bold;
 }
+
+
+body.site {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+main.site-content {
+  flex: 1;
+}

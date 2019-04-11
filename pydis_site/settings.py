@@ -256,5 +256,6 @@ BULMA_SETTINGS = {
         "primary": "#7289DA",
         "link": "$primary",
         "navbar-height": "4.75rem",
+        "footer-padding": "1rem 1.5rem 1rem",
     }
 }
