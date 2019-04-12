@@ -12,6 +12,12 @@ main.site-content {
   flex: 1;
 }
 
+div.card.has-equal-height {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
 #django-logo {
   padding-bottom: 2px;
   background: url(https://static.djangoproject.com/img/logos/django-logo-negative.png) no-repeat center;
