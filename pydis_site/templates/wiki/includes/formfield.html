@@ -3,35 +3,5 @@
 {% if field.is_hidden %}
   {{ field }}
 {% else %}
-  <div id="div_{{ field.auto_id }}" class="field is-horizontal{% if field.errors %} is-danger{% endif %}">
-    <div class="field-label">
-      {% if field.label %}
-        <label for="div_{{ field.auto_id }}" class="label {% if field.errors %} is-danger{% endif %}">
-          {{ field.label | safe }} {% if field.field.required %}<span class="asterisk has-text-danger">*</span>{% endif %}
-        </label>
-      {% endif %}
-
-      {% if field.help_text %}
-        <p id="hint_{{ field.auto_id }}" class="help">
-          {{ field.help_text|safe }}
-        </p>
-      {% endif %}
-    </div>
-
-    <div class="field-body">
-      <div class="field">
-        <div class="control">
-          {% render_field field %}
-        </div>
-
-      {% if field.errors %}
-        <p class="help is-danger">
-          {% for error in field.errors %}
-            <span id="error_{{ forloop.counter }}_{{ field.auto_id }}">{{ error }}</span><br />
-          {% endfor %}
-        </p>
-      {% endif %}
-      </div>
-    </div>
-  </div>
+  {% render_field field %}
 {% endif %}

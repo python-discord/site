@@ -1,13 +1,14 @@
 from django import template
 from django.forms import (
-    BooleanField, CharField, ChoiceField, ComboField, DateField, DateTimeField, DecimalField, DurationField, EmailField,
-    Field, FileField, FilePathField, FloatField, GenericIPAddressField, ImageField, IntegerField, ModelChoiceField,
-    ModelMultipleChoiceField, MultiValueField, MultipleChoiceField, NullBooleanField, RegexField, SlugField,
-    SplitDateTimeField, TimeField, TypedChoiceField, TypedMultipleChoiceField, URLField, UUIDField, BoundField)
+    BooleanField, BoundField, CharField, ChoiceField, ComboField, DateField, DateTimeField, DecimalField, DurationField,
+    EmailField, Field, FileField, FilePathField, FloatField, GenericIPAddressField, ImageField, IntegerField,
+    ModelChoiceField, ModelMultipleChoiceField, MultiValueField, MultipleChoiceField, NullBooleanField, RegexField,
+    SlugField, SplitDateTimeField, TimeField, TypedChoiceField, TypedMultipleChoiceField, URLField, UUIDField)
 from django.template import Template
 from django.template.loader import get_template
 from django.utils.safestring import mark_safe
 from wiki.editors.markitup import MarkItUpWidget
+from wiki.plugins.notifications.forms import SettingsModelChoiceField
 
 TEMPLATE_PATH = "wiki/forms/fields/{0}.html"
 
@@ -42,23 +43,33 @@ TEMPLATES = {
 
     ModelChoiceField: TEMPLATE_PATH.format("model_choice"),
     ModelMultipleChoiceField: TEMPLATE_PATH.format("model_multiple_choice"),
+
+    SettingsModelChoiceField: TEMPLATE_PATH.format("in_place_render"),
 }
 
 
 register = template.Library()
 
 
+def get_unbound_field(field: BoundField):
+    while isinstance(field, BoundField):
+        field = field.field
+
+    return field
+
+
 @register.simple_tag
 def render_field(field: Field):
     if isinstance(field, BoundField):
-        template_path = TEMPLATES.get(field.field.__class__)
-        is_markitup = isinstance(field.field.widget, MarkItUpWidget)
+        unbound_field = get_unbound_field(field)
     else:
-        template_path = TEMPLATES.get(field.__class__)
-        is_markitup = isinstance(field.widget, MarkItUpWidget)
+        unbound_field = field
+
+    template_path = TEMPLATES.get(unbound_field.__class__)
+    is_markitup = isinstance(unbound_field.widget, MarkItUpWidget)
 
     if not template_path:
-        raise NotImplementedError(f"Unknown field type: {field.__class__}")
+        raise NotImplementedError(f"Unknown field type: {unbound_field.__class__}")
 
     template_obj: Template = get_template(template_path)
     context = {"field": field, "is_markitup": is_markitup}
