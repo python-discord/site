@@ -7,9 +7,10 @@
 {% endblock %}
 
 {% block content %}
- {% include "base/navbar.html" %}
+  {% include "base/navbar.html" %}
 
   <section class="section">
+    <!-- About us -->
     <div class="container is-spaced">
       <div class="columns">
         <div class="column is-half">
@@ -18,33 +19,107 @@
             language, open to those who wish to learn the language or improve their
             skills, as well as those looking to help others.
 
-            <br /><br />
+            <br/><br/>
 
             We organise regular community events and have a dedicated staff of
             talented Python developers available to assist around the clock.
 
-            <br /><br />
+            <br/><br/>
 
             Whether you're looking to learn the language or working on a complex project,
             we've got someone who can help you if you get stuck.
           </p>
         </div>
         <div class="column is-half is-first has-text-centered video-container">
-          <iframe width="560" height="315" src="https://www.youtube.com/embed/DIBXg8Qh7bA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/DIBXg8Qh7bA" frameborder="0"
+                  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                  allowfullscreen></iframe>
         </div>
+      </div>
+
+      <!-- Projects -->
+      <h1 class="is-size-1">Projects</h1>
+      <br><br>
+      <div class="columns">
+
+        <!-- Site -->
+        <div class="column is-one-quarter">
+          <div class="card">
+            <header class="card-header">
+              <p class="card-header-title">
+                pythondiscord/site
+              </p>
+            </header>
+            <div class="card-content">
+              <div class="content">
+                Some stuff goes in here. tags? dynamic info?
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SeasonalBot -->
+        <div class="column is-one-quarter">
+          <div class="card">
+            <header class="card-header">
+              <p class="card-header-title">
+                pythondiscord/seasonalbot
+              </p>
+            </header>
+            <div class="card-content">
+              <div class="content">
+                Some stuff goes in here. tags? dynamic info? github stars?
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SeasonalBot -->
+        <div class="column is-one-quarter">
+          <div class="card">
+            <header class="card-header">
+              <p class="card-header-title">
+                pythondiscord/seasonalbot
+              </p>
+            </header>
+            <div class="card-content">
+              <div class="content">
+                Some stuff goes in here. tags? dynamic info? github stars?
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SeasonalBot -->
+        <div class="column is-one-quarter">
+          <div class="card">
+            <header class="card-header">
+              <p class="card-header-title">
+                pythondiscord/seasonalbot
+              </p>
+            </header>
+            <div class="card-content">
+              <div class="content">
+                Some stuff goes in here. tags? dynamic info? github stars?
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
 
+  <!-- Sponsors -->
   <section class="section-sp hero is-light">
     <div class="hero-body">
       <div class="container">
         <h1 class="title is-6 has-text-grey">
           Sponsors
         </h1>
-        <img src="{% static "images/sponsors/linode.png" %}" alt="" />
-        <img src="{% static "images/sponsors/jetbrains.png" %}" alt="" />
-        <img src="{% static "images/sponsors/adafruit.png" %}" alt="" />
+        <a href="https://linode.com"><img src="{% static "images/sponsors/linode.png" %}" alt="Linode"/></a>
+        <a href="https://jetbrains.com"><img src="{% static "images/sponsors/jetbrains.png" %}" alt=""/></a>
+        <a href="https://adafruit.com"><img src="{% static "images/sponsors/adafruit.png" %}" alt=""/></a>
       </div>
     </div>
   </section>
