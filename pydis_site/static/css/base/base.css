@@ -1,3 +1,17 @@
+html {
+    overflow:auto;
+}
+
+body.site {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+main.site-content {
+  flex: 1;
+}
+
 #django-logo {
   padding-bottom: 2px;
   background: url(https://static.djangoproject.com/img/logos/django-logo-negative.png) no-repeat center;
@@ -17,15 +31,4 @@
 
 #pydis-text {
     font-weight: bold;
-}
-
-
-body.site {
-  display: flex;
-  min-height: 100vh;
-  flex-direction: column;
-}
-
-main.site-content {
-  flex: 1;
 }
