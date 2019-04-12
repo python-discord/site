@@ -4,8 +4,8 @@
             rows = 10
 
             {% if field.required %}required{% endif %}
-            {% if field.max_length %}maxlength="{{ field.maxlength }}"{% endif %}
-            {% if field.min_length %}minlength="{{ field.minelength }}"{% endif %}
+            {% if field.max_length %}maxlength="{{ field.max_length }}"{% endif %}
+            {% if field.min_length %}minlength="{{ field.min_length }}"{% endif %}
             {% if field.empty_value %}placeholder="{{ field.empty_value }}"{% endif %}
   ></textarea>
 {% else %}
@@ -14,8 +14,8 @@
          id="{{ field.auto_id }}"
 
          {% if field.required %}required{% endif %}
-         {% if field.max_length %}maxlength="{{ field.maxlength }}"{% endif %}
-         {% if field.min_length %}minlength="{{ field.minelength }}"{% endif %}
+         {% if field.max_length %}maxlength="{{ field.max_length }}"{% endif %}
+         {% if field.min_length %}minlength="{{ field.min_length }}"{% endif %}
          {% if field.empty_value %}placeholder="{{ field.empty_value }}"{% endif %}
   />
 {% endif %}
