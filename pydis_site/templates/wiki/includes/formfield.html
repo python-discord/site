@@ -7,7 +7,7 @@
     <div class="field-label">
       {% if field.label %}
         <label for="div_{{ field.auto_id }}" class="label {% if field.errors %} is-danger{% endif %}">
-          {{ field.label | safe }} {% if field.field.required %}<span class="asterisk">*</span>{% endif %}
+          {{ field.label | safe }} {% if field.field.required %}<span class="asterisk has-text-danger">*</span>{% endif %}
         </label>
       {% endif %}
 
@@ -23,7 +23,6 @@
         <div class="control">
           {% render_field field %}
         </div>
-      </div>
 
       {% if field.errors %}
         <p class="help is-danger">
@@ -32,6 +31,7 @@
           {% endfor %}
         </p>
       {% endif %}
+      </div>
     </div>
   </div>
 {% endif %}

@@ -19,27 +19,16 @@
 
 
 {% block wiki_contents %}
-  <div class="columns">
-    <div class="column is-two-thirds is-offset-2">
-      <article class="message is-primary">
-        <div class="message-header">
-          <p>Create first article</p>
-        </div>
-        <div class="message-body">
-          <p>
-            Please create the root article. This article will be available at the root of your wiki,
-            so consider creating a landing page here.
-          </p>
-          <p>
-            Please note that, to begin with, this article may only be modified by wiki administrators.
-            Once it's been created, you may edit the permissions and set up plugins, metadata, and so on.
-          </p>
-        </div>
-      </article>
-    </div>
-  </div>
+  <h2 class="title is-2">Create First Article</h2>
 
-  <h2 class="title is-2">{% trans "Root article" %}</h2>
+  <p>
+    Please create the root article. This article will be available at the root of your wiki,
+    so consider creating a landing page here.
+  </p>
+  <p>
+    Please note that, to begin with, this article may only be modified by wiki administrators.
+    Once it's been created, you may edit the permissions and set up plugins, metadata, and so on.
+  </p>
 
   <form method="POST" class="form-horizontal">
     {% wiki_form form %}
@@ -50,7 +39,7 @@
       </div>
       <div class="field-body">
         <div class="control">
-          <input type="submit" class="button is-primary" name="save_changes" value="Create" />
+          <input type="submit" class="button is-primary is-medium" name="save_changes" value="Create" />
         </div>
       </div>
     </div>
