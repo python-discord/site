@@ -7,15 +7,18 @@
 {% block wiki_contents_tab %}
 
   {% for form in forms %}
-  <form method="POST" class="form-horizontal settings-form" action="?f={{form.action}}">
+  <form method="POST" class="form-horizontal" action="?f={{form.action}}">
     <h3 class="page-header">{{ form.settings_form_headline }}</h3>
     {% wiki_form form %}
-    <div class="form-group form-actions">
-      <div class="col-lg-10 col-lg-2-offset">
-        <button type="submit" name="save" value="1" class="btn btn-primary">
-          <span class="fa fa-check"></span>
-          {% trans "Save changes" %}
-        </button>
+
+    <div class="field is-horizontal">
+      <div class="field-label">
+        {# Empty for spacing #}
+      </div>
+      <div class="field-body">
+        <div class="control">
+          <input type="submit" class="button is-primary is-medium" name="save" value="Save Changes" />
+        </div>
       </div>
     </div>
   </form>

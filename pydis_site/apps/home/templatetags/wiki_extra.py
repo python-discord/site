@@ -75,3 +75,16 @@ def render_field(field: Field):
     context = {"field": field, "is_markitup": is_markitup}
 
     return mark_safe(template_obj.render(context))
+
+
+@register.simple_tag(takes_context=True)
+def get_field_options(context, field: BoundField):
+    widget = field.field.widget
+
+    if field.value() is None:
+        value = []
+    else:
+        value = [str(field.value())]
+
+    context["options"] = widget.optgroups(field.name, value)
+    return ""
