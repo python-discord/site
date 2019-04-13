@@ -1,9 +1,7 @@
 (function() {
-    window.editors = {};
+    window.editors = {};  // So that other scripts can get at 'em
 
     let elements = document.getElementsByClassName("simple-mde");
-
-    console.log(elements);
 
     for (let element of elements) {
         window.editors[element.id] = new SimpleMDE({
