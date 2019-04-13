@@ -44,7 +44,7 @@ TEMPLATES = {
     ModelChoiceField: TEMPLATE_PATH.format("model_choice"),
     ModelMultipleChoiceField: TEMPLATE_PATH.format("model_multiple_choice"),
 
-    SettingsModelChoiceField: TEMPLATE_PATH.format("in_place_render"),
+    SettingsModelChoiceField: TEMPLATE_PATH.format("model_choice"),
 }
 
 

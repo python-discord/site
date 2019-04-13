@@ -17,10 +17,9 @@
     <div class="field">
       <div class="control">
         {% if is_markitup %}
-          <textarea class="textarea is-family-monospace{% if field.errors %} is-danger{% endif %}"
+          <textarea class="simple-mde textarea is-family-monospace{% if field.errors %} is-danger{% endif %}"
                     id="{{ field.auto_id }}"
                     name="{{ field.name }}"
-                    rows = 10
 
                     {% if field.required %}required{% endif %}
                     {% if field.max_length %}maxlength="{{ field.max_length }}"{% endif %}

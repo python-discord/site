@@ -10,6 +10,10 @@
 
   <script src="{% static "wiki/js/jquery-3.3.1.min.js" %}" type="text/javascript"></script>
   <script src="{% static "wiki/js/core.js" %}" type="text/javascript"></script>
+
+  <link rel="stylesheet" href="{% static "css/wiki/simplemde.min.css" %}">
+  <link rel="stylesheet" href="{% static "css/wiki/simplemde-fixes.css" %}">
+  <script src="{% static "js/wiki/simplemde.min.js" %}" type="text/javascript"></script>
 {% endblock %}
 
 {% block content %}
@@ -34,4 +38,6 @@
   {% endblock %}
 
   {% include "base/footer.html" %}
+
+  <script src="{% static "js/wiki/load_editor.js" %}" type="text/javascript"></script>
 {% endblock %}
