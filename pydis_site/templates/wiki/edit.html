@@ -6,13 +6,83 @@
   Edit: {{ article.current_revision.title }}
 {% endblock %}
 
+{% block head %}
+  {{ block.super }}
+
+  <script language="javascript">
+    {# I'm sorry this JS sucks, it came with the wiki, just stuck right in here. #}
+
+    $(document).ready(function() {
+      $("#article_edit_form :input").change(function() {
+         $("#article_edit_form").data("changed",true);
+      });
+      if ($("#article_edit_form").find(".alert-danger").length > 0 || $("#article_edit_form").find(".has-error").length > 0 ) {
+        // Set the forms status as "changed" if there was a submission error
+        $("#article_edit_form").data("changed",true);
+      }
+      window.onbeforeunload = confirmOnPageExit;
+      var click_time = 0;
+      $("#article_edit_form").on("submit", function (ev) {
+          now = Date.now();
+          elapsed = now-click_time;
+          click_time = now;
+          if (elapsed < 3000)
+              ev.preventDefault();
+          window.onbeforeunload = null;
+          return true;
+      });
+      $("#id_preview").on("click", function () {
+          $("#previewModal").modal("show");
+          return true;
+      });
+      $("#id_preview_save_changes").on("click", function (ev) {
+          ev.preventDefault();
+          $("#id_save").trigger("click");
+      });
+    });
+
+    var confirmOnPageExit = function (e) {
+      if ($("#article_edit_form").data("changed")) {
+        e = e || window.event;
+        var message = "You have unsaved changes!";
+        // For IE6-8 and Firefox prior to version 4
+        if (e) {
+            e.returnValue = message;
+        }
+        // For Chrome, Safari, IE8+ and Opera 12+
+        return message;
+      } else {
+        // If the form hasn't been changed, don't display the pop-up
+        return;
+      }
+    };
+  </script>
+
+  <script type="text/javascript">
+    $(document).ready( function() {
+      $('.sidebar-form').each(function () {
+        $(this).submit( function() {
+          this.unsaved_article_title.value = $('#id_title').val();
+          this.unsaved_article_content.value = $('#id_content').val();
+        });
+      });
+    });
+  </script>
+
+  <script language="javascript">
+    $(document).ready(function() {
+      $("#id_revision").val('{{ article.current_revision.id }}');
+    });
+  </script>
+{% endblock %}
+
 {% block wiki_contents_tab %}
 
   {% if not user.is_authenticated %}
-  <p class="alert alert-warning">
-  {% trans "<strong>Warning:</strong> You are not logged in. Your IP address will be logged." %}
-  <a href="{% url 'wiki:login' %}?next={% url 'wiki:edit' article_id=article.id path=urlpath.path %}">{% trans "Click here to log in" %} &raquo;</a>
-  </p>
+    <p class="alert alert-warning">
+      {% trans "<strong>Warning:</strong> You are not logged in. Your IP address will be logged." %}
+      <a href="{% url 'wiki:login' %}?next={% url 'wiki:edit' article_id=article.id path=urlpath.path %}">{% trans "Click here to log in" %} &raquo;</a>
+    </p>
   {% endif %}
 
   <div class="row">
@@ -23,38 +93,43 @@
           {% include "wiki/includes/editor.html" %}
         {% endwith %}
 
-        <div class="form-group form-actions">
-          <div class="col-lg-12">
-            <div class="col-lg-offset-2">
-              <button class="btn btn-default" type="submit" name="preview" value="1" id="id_preview"
-                      formaction="{% url 'wiki:preview' path=urlpath.path article_id=article.id %}"
-                      formtarget="previewWindow"
-                      >
-                <span class="fa fa-eye"></span>
-                {% trans "Preview" %}
-              </button>
-              <button class="btn btn-primary" type="submit" name="save" value="1" id="id_save">
-                <span class="fa fa-check"></span>
-                {% trans "Save changes" %}
-              </button>
+        <button class="button is-primary" type="submit" name="preview" value="1" id="id_preview"
+                formaction="{% url 'wiki:preview' path=urlpath.path article_id=article.id %}"
+                formtarget="previewWindow"
+        >
+          <span class="icon">
+            <i class="fas fa-eye"></i>
+          </span>
+          <span>Preview</span>
+        </button>
+        <button class="button is-primary" type="submit" name="save" value="1" id="id_save">
+          <span class="icon">
+            <i class="fas fa-save"></i>
+          </span>
+          <span>Save Changes</span>
+        </button>
 
-              <div class="btn-toolbar pull-right">
-                {% if user.is_authenticated and urlpath.path %}
-                <a href="{% url 'wiki:move' path=urlpath.path article_id=article.id %}" class="btn btn-warning ">
-                  <span class="fa fa-random"></span>
-                  {% trans "Move article" %}
-                </a>
-                {% endif %}
-                {% if article|can_delete:user %}
-                <a href="{% url 'wiki:delete' path=urlpath.path article_id=article.id %}" class="btn btn-danger">
-                  <span class="fa fa-trash-o"></span>
-                  {% trans "Delete article" %}
-                </a>
-                {% endif %}
-              </div>
-            </div>
-          </div>
+        <div class="is-pulled-right">
+          {% if user.is_authenticated and urlpath.path %}
+            <a href="{% url 'wiki:move' path=urlpath.path article_id=article.id %}" class="button is-warning ">
+              <span class="icon">
+                <i class="fas fa-random"></i>
+              </span>
+              <span>Move Article</span>
+            </a>
+          {% endif %}
+          {% if article|can_delete:user %}
+            <a href="{% url 'wiki:delete' path=urlpath.path article_id=article.id %}" class="button is-danger">
+              <span class="icon">
+                <i class="fas fa-trash"></i>
+              </span>
+              <span>Delete Article</span>
+            </a>
+          {% endif %}
         </div>
+
+        <br />
+        <br />
 
       </form>
     </div>
@@ -88,53 +163,4 @@
       </div>
     </div>
   </div>
-
-  {% addtoblock "js" %}
-    <script language="javascript">
-      $(document).ready(function() {
-        $("#article_edit_form :input").change(function() {
-           $("#article_edit_form").data("changed",true);
-        });
-        if ($("#article_edit_form").find(".alert-danger").length > 0 || $("#article_edit_form").find(".has-error").length > 0 ) {
-          // Set the forms status as "changed" if there was a submission error
-          $("#article_edit_form").data("changed",true);
-        }
-        window.onbeforeunload = confirmOnPageExit;
-        var click_time = 0;
-        $("#article_edit_form").on("submit", function (ev) {
-            now = Date.now();
-            elapsed = now-click_time;
-            click_time = now;
-            if (elapsed < 3000)
-                ev.preventDefault();
-            window.onbeforeunload = null;
-            return true;
-        });
-        $("#id_preview").on("click", function () {
-            $("#previewModal").modal("show");
-            return true;
-        });
-        $("#id_preview_save_changes").on("click", function (ev) {
-            ev.preventDefault();
-            $("#id_save").trigger("click");
-        });
-      });
-
-      var confirmOnPageExit = function (e) {
-        if ($("#article_edit_form").data("changed")) {
-          e = e || window.event;
-          var message = "You have unsaved changes!";
-          // For IE6-8 and Firefox prior to version 4
-          if (e) {
-              e.returnValue = message;
-          }
-          // For Chrome, Safari, IE8+ and Opera 12+
-          return message;
-        } else {
-          // If the form hasn't been changed, don't display the pop-up
-          return;
-        }
-      };
-    </script>
-  {% endaddtoblock %}
 {% endblock %}

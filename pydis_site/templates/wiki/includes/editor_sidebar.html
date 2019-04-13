@@ -1,16 +1,4 @@
 {% load i18n sekizai_tags %}
-{% addtoblock "js" %}
-<script type="text/javascript">
-  $(document).ready( function() {
-    $('.sidebar-form').each(function () {
-      $(this).submit( function() {
-        this.unsaved_article_title.value = $('#id_title').val();
-        this.unsaved_article_content.value = $('#id_content').val();
-      });
-    });
-  });
-</script>
-{% endaddtoblock %}
 
 <div class="panel-group" id="accordion_{{ plugin.slug }}">
 
