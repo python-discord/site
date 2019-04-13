@@ -4,37 +4,37 @@
 
 {% block wiki_pagetitle %}{{ article.current_revision.title }}{% endblock %}
 
+{% block wiki_navbar %}
+  {% include "wiki/includes/article_menu.html" %}
+{% endblock %}
+
 {% block wiki_breadcrumbs %}
-{% include "wiki/includes/breadcrumbs.html" %}
+  {% include "wiki/includes/breadcrumbs.html" %}
 {% endblock %}
 
 {% block wiki_contents %}
-
   <div id="article-container">
-    <ul class="nav nav-pills" id="article-menu">
-      <li class="pull-left" id="article-title-li">
-        <h1 id="article-title">
-          {{ article.current_revision.title }}
-          <small style="font-size: 14px;">
-            {% if urlpath.parent %}
-            <a href="{% url 'wiki:get' path=urlpath.path %}"><span class="fa fa-bookmark"></span> {{ urlpath.slug }}</a>
-            {% endif %}
-            {% if article.current_revision.locked %}
-              <span class="fa fa-lock"></span> {% trans "locked" %}
-            {% endif %}
-          </small>
-        </h1>
-      </li>
-      {% include "wiki/includes/article_menu.html" %}
-    </ul>
+    <h1 id="article-title">
+      {{ article.current_revision.title }}
+      <small style="font-size: 14px;">
+        {% if urlpath.parent %}
+          <a href="{% url 'wiki:get' path=urlpath.path %}"><span class="fa fa-bookmark"></span> {{ urlpath.slug }}</a>
+        {% endif %}
+
+        {% if article.current_revision.locked %}
+          <span class="icon">
+            <i class="fas fa-lock"></i>
+          </span> locked
+        {% endif %}
+      </small>
+    </h1>
     <div>
       {% block wiki_contents_tab %}
       {% endblock %}
     </div>
   </div>
-
 {% endblock %}
 
 {% block wiki_footer_prepend %}
-  <p style="margin-bottom: 10px;"><em>{% trans "This article was last modified:" %} {{ article.current_revision.modified }}</em></p>
+  <p style="margin-bottom: 10px;"><em>This article was last modified: {{ article.current_revision.modified }}</em></p>
 {% endblock %}

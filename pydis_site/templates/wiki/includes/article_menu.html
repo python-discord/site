@@ -1,53 +1,82 @@
 {% load i18n wiki_tags %}
 
 {% with selected_tab as selected %}
+  <nav class="navbar is-light" role="navigation" aria-label="wiki navigation">
+    <div class="container">
+      <a role="button" class="navbar-burger" data-target="wiki-menu" aria-label="menu" aria-expanded="false">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
 
-<li class="pull-right{% if selected == "settings" %} active{% endif %}">
-  {% if not user.is_anonymous %}
-  <a href="{% url 'wiki:settings' article_id=article.id path=urlpath.path %}">
-    <span class="fa fa-wrench"></span>
-    <span class="hidden-xs">{% trans "Settings" %}</span>
-  </a>
-  {% endif %}
-</li>
+      <div class="navbar-menu" id="wiki-menu">
+        {% if not user.is_anonymous %}
+          <a class="navbar-item{% if selected == "settings" %} is-active{% endif %}"
+             href="{% url 'wiki:settings' article_id=article.id path=urlpath.path %}"
+          >
+            <span class="icon">
+              <i class="fas fa-wrench"></i>
+            </span>
 
-{% for plugin in article_tabs %}
-  <li class="pull-right{% if selected == plugin.slug %} active{% endif %}">
-    <a href="{% url 'wiki:plugin' slug=plugin.slug article_id=article.id path=urlpath.path %}">
-      <span class="{{ plugin.article_tab.1 }}"></span>
-      <span class="hidden-xs">{{ plugin.article_tab.0 }}</span>
-    </a>
-  </li>
-{% endfor %}
+            <span>&nbsp;Settings</span>
+          </a>
+        {% endif %}
 
-<li class="pull-right{% if selected == "history" %} active{% endif %}">
-  <a href="{% url 'wiki:history' article_id=article.id path=urlpath.path %}">
-    <span class="fa fa-clock-o"></span>
-    <span class="hidden-xs">{% trans "Changes" %}</span>
-  </a>
-</li>
+        {% for plugin in article_tabs %}
+          <a class="navbar-item{% if selected == plugin.slug %} is-active{% endif %}"
+             href="{% url 'wiki:plugin' slug=plugin.slug article_id=article.id path=urlpath.path %}"
+          >
+            <span class="icon">
+              <i class="{{ plugin.article_tab.1 }}"></i>
+            </span>
 
-{% if article|can_write:user and not article.current_revision.locked %}
-<li class="pull-right{% if selected == "edit" %} active{% endif %}">
-  <a href="{% url 'wiki:edit' article_id=article.id path=urlpath.path %}">
-    <span class="fa fa-edit"></span>
-    <span class="hidden-xs">{% trans "Edit" %}</span>
-  </a>
-</li>
-{% else %}
-<li class="pull-right{% if selected == "source" %} active{% endif %}">
-  <a href="{% url 'wiki:source' article_id=article.id path=urlpath.path %}">
-    <span class="fa fa-lock"></span>
-    <span class="hidden-xs">{% trans "View Source" %}</span>
-  </a>
-</li>
-{% endif %}
+            <span>&nbsp;{{ plugin.article_tab.0 }}</span>
+          </a>
+        {% endfor %}
 
-<li class="pull-right{% if selected == "view" %} active{% endif %}">
-  <a href="{% url 'wiki:get' article_id=article.id path=urlpath.path %}">
-    <span class="fa fa-home"></span>
-    <span class="hidden-xs">{% trans "View" %}</span>
-  </a>
-</li>
+        <a class="navbar-item{% if selected == "history" %} is-active{% endif %}"
+           href="{% url 'wiki:history' article_id=article.id path=urlpath.path %}"
+        >
+          <span class="icon">
+            <i class="fas fa-clock"></i>
+          </span>
+
+          <span>&nbsp;Changes</span>
+        </a>
+
+        {% if article|can_write:user and not article.current_revision.locked %}
+          <a class="navbar-item{% if selected == "edit" %} is-active{% endif %}"
+             href="{% url 'wiki:edit' article_id=article.id path=urlpath.path %}"
+          >
+            <span class="icon">
+              <i class="fas fa-edit"></i>
+            </span>
+
+            <span>&nbsp;Edit</span>
+          </a>
+        {% else %}
+          <a class="navbar-item{% if selected == "source" %} is-active{% endif %}"
+             href="{% url 'wiki:source' article_id=article.id path=urlpath.path %}"
+          >
+            <span class="icon">
+              <i class="fas fa-lock"></i>
+            </span>
+
+            <span>&nbsp;View Source</span>
+          </a>
+        {% endif %}
+
+        <a class="navbar-item{% if selected == "view" %} is-active{% endif %}"
+           href="{% url 'wiki:get' article_id=article.id path=urlpath.path %}"
+        >
+          <span class="icon">
+            <i class="fas fa-home"></i>
+          </span>
+
+          <span>&nbsp;View</span>
+        </a>
+      </div>
+    </div>
+  </nav>
 
 {% endwith %}

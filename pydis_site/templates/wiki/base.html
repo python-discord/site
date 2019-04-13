@@ -19,10 +19,11 @@
 {% block content %}
   {% include "base/navbar.html" with active_item=True dropdowns=True icon_weight="far" use_logo=True %}
 
-  {% block wiki_body %}
-    {% block wiki_navbar %}
+  {% block wiki_navbar %}
 
-    {% endblock %}
+  {% endblock %}
+
+  {% block wiki_body %}
 
     <section class="section">
       <div class="container">
