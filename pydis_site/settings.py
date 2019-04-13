@@ -63,8 +63,7 @@ else:
 
 INSTALLED_APPS = [
     'pydis_site.apps.api',
-    'pydis_site.apps.home',
-    'pydis_site.apps.wiki',
+    'pydis_site.apps.main',
 
     'django.contrib.admin',
     'django.contrib.auth',

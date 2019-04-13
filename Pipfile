@@ -27,6 +27,7 @@ uwsgi = "~=2.0.18"
 psycopg2-binary = "~=2.8"
 django-simple-bulma = ">=1.1.6,<2.0"
 django-crispy-bulma = ">=0.1.2,<2.0"
+requests = "*"
 
 [requires]
 python_version = "3.7"
