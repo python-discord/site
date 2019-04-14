@@ -1,0 +1,188 @@
+{% load i18n wiki_tags wiki_images_tags humanize wiki_thumbnails sekizai_tags %}
+
+
+{% addtoblock "js" %}
+<script type="text/javascript">
+function insert_image(data) {
+    if (typeof data == "number") {
+        image_id = data;
+        $("#img_title").text(" {{ _("Insert Image")|escapejs }} " + image_id);
+        $("#img_modal").on('shown.bs.modal', function(){
+            $(this).find('#img_caption').focus();
+        });
+        $("#img_modal").modal();
+   } else {
+        align = data.img_align.options[data.img_align.selectedIndex].text;
+        size = data.img_size.options[data.img_size.selectedIndex].text;
+        caption = data.img_caption.value;
+
+        data.img_align.selectedIndex = 0;
+        data.img_size.selectedIndex = 0;
+        data.img_caption.value = "";
+
+        tag = '\n[image:'+image_id;
+        if (align != "center") tag = tag + ' align:'+align;
+        if (size != "default") tag = tag + ' size:'+size;
+
+        if (caption == '')
+            $('#id_content').insertAtCaret(tag+']\n\n');
+        else
+            $('#id_content').insertAtCaret(tag+']\n    '+caption+'\n\n');
+    }
+}
+function add_image(form) {
+    $(form).submit();
+}
+</script>
+{% endaddtoblock %}
+
+{% with article|images_for_article as images %}
+<style type="text/css">
+  #image-list tr:first-child td {border:0;}
+</style>
+<div style="max-height: 300px; overflow: auto;">
+  <table class="table table-responsive table-bordered" id="image-list">
+    {% for image in images %}
+      {% with image.current_revision.imagerevision as revision %}
+      {% thumbnail revision.image "50x50" crop="center" as thumb %}
+        <tr>
+          <td style="white-space: nowrap;">
+            <p>{% trans "Image id" %}: {{ image.id }}</p>
+            <p>
+              <a href="javascript:void(insert_image({{ image.id }}))"><span class="fa fa-edit"></span> {% trans "Insert" %}</a><br />
+              {% if image|can_write:user %}
+              <a href="{% url 'wiki:images_add_revision' path=urlpath.path article_id=article.id image_id=image.id %}"><span class="fa fa-upload"></span> {% trans "Replace" %}</a>
+              {% endif %}
+            </p>
+          </td>
+          <td>
+            <div class="thumbnail">
+              <img src="{{ thumb.url }}" alt="{{ revision.get_filename }}" />
+            </div>
+          </td>
+        </tr>
+      {% endthumbnail %}
+      {% endwith %}
+    {% empty %}
+    <tr>
+      <td><em>{% trans "No images found for this article" %}</em></td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+
+<p>
+  <a href="{% url 'wiki:images_index' path=urlpath.path article_id=article.id %}">
+    {% trans "Manage images" %} &raquo;
+  </a>
+</p>
+<hr />
+
+<h4>{% trans "Add new image" %}</h4>
+
+{% if article|images_can_add:user %}
+  {% if form.non_field_errors %}
+    {% if form_error_title %}<h4 class="alert-heading">{{ form_error_title }}</h4>{% endif %}
+    {% for error_message in form.non_field_errors %}
+      <div class="alert alert-block alert-danger">
+        {{ error_message }}
+      </div>
+    {% endfor %}
+  {% endif %}
+
+  {# Include the hidden fields #}
+  {% for hidden in form.hidden_fields %}
+    {{ hidden }}
+  {% endfor %}
+
+  <p>
+  {% for field in form.visible_fields %}
+    <fieldset id="div_{{ field.auto_id }}" class="control-group fields {% if field.errors %} error{% endif %}">
+      {% if field.label %}
+        <!--<label for="{{ field.id_for_label }}" class="{% if field.field.required %}requiredField{% endif %}">
+        {{ field.label|safe }}
+        </label>-->
+      {% endif %}
+      {{ field }}
+      {% if field.errors %}
+      <div id="error_{{ forloop.counter }}_{{ field.auto_id }}" class="help-block">
+        {% for error in field.errors %}
+        <div>{{ error }}</div>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </fieldset>
+    {% if field.help_text %}
+      <p id="hint_{{ field.auto_id }}" class="help-block">{{ field.help_text|safe }}</p>
+    {% endif %}
+  {% endfor %}
+  </p>
+
+  <p>
+    <button type="button" onClick="add_image(this.form)" name="{{ plugin.slug }}_save" value="1" class="btn btn-default btn-md">
+      <span class="fa fa-upload"></span>
+      {% trans "Add image" %}
+    </button>
+  </p>
+{% else %}
+
+  {% if user.is_anonymous %}
+    {% include "wiki/includes/anonymous_blocked.html" %}
+  {% else %}
+    <p><em>{% trans "You do not have permissions to add images." %}</em></p>
+  {% endif %}
+{% endif %}
+
+<hr />
+
+<h4>
+  {% trans "How to use images" %}
+</h4>
+
+<p>{% trans "After uploading an image, it is attached to this particular article and can be used only here. Other users may replace the image, but older versions are kept. To show the image press the Insert button and select the options you want to use. You can use Markdown in the caption. The Markdown code syntax for images looks like this" %}<br/>
+<pre>[image:id align:right size:orig]
+    caption indented by 4 spaces</pre>
+{% trans "Possible values for align are" %} <pre>left | right</pre>
+{% trans "Possible values for size are" %} <pre>small | medium | large | orig | default</pre>
+</p>
+{% endwith %}
+
+<div class="modal" id="img_modal" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content" style="position:relative !important;">
+      <div class="modal-header">
+        <h4 id="img_title"></h4>
+      </div>
+      <div class="modal-body">
+        <form role="form">
+          <div class="form-group" style="margin-left:0; margin-right:0;">
+            <label for="img_align">{% trans "Alignment" %}</label>
+            <select class="form-control" id="img_align">
+              <option>center</option>
+              <option>left</option>
+              <option>right</option>
+            </select>
+          </div>
+          <div class="form-group" style="margin-left:0; margin-right:0;">
+            <label for="img_size">{% trans "Size" %}</label>
+            <select class="form-control" id="img_size">
+              <option>default</option>
+              <option>small</option>
+              <option>medium</option>
+              <option>large</option>
+              <option>orig</option>
+            </select>
+          </div>
+          <div class="form-group" style="margin-left:0; margin-right:0;">
+            <label for="img_caption">{% trans "Caption" %}</label>
+            <input type="text" class="form-control" id="img_caption" placeholder="{% trans "Enter caption" %}">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-success btn-default" data-dismiss="modal" onClick="insert_image(this.form)"> {% trans "Insert image" %} </button>
+        <button class="btn btn-danger" data-dismiss="modal"> {% trans "Cancel" %} </button>
+      </div>
+    </div>
+  </div>
+</div>
