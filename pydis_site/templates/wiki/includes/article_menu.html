@@ -4,10 +4,6 @@
   <nav class="navbar is-light" role="navigation" aria-label="wiki navigation">
     <div class="container">
       <div class="navbar-brand">
-        {% block wiki_breadcrumbs %}
-          {% include "wiki/includes/breadcrumbs.html" %}
-        {% endblock %}
-
         <a role="button" class="navbar-burger" data-target="wiki-menu" aria-label="menu" aria-expanded="false">
           <span aria-hidden="true"></span>
           <span aria-hidden="true"></span>
@@ -16,6 +12,11 @@
       </div>
 
       <div class="navbar-menu" id="wiki-menu">
+        <div class="navbar-start">
+          {% block wiki_breadcrumbs %}
+            {% include "wiki/includes/breadcrumbs.html" %}
+          {% endblock %}
+        </div>
         <div class="navbar-end">
           {% if not user.is_anonymous %}
             <a class="navbar-item{% if selected == "settings" %} is-active{% endif %}"

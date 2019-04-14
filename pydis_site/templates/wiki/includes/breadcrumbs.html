@@ -1,22 +1,5 @@
 {% load i18n %}
-{% if urlpath %}
-
-  <div class="navbar-item">
-    <nav class="breadcrumb" aria-label="breadcrumbs">
-      {% for ancestor in urlpath.cached_ancestors %}
-        <li>
-          <a href="{% url 'wiki:get' path=ancestor.path %}">{{ ancestor.article.current_revision.title|truncatechars:25 }}</a>
-        </li>
-      {% endfor %}
-
-      <li class="active">
-        <a href="{% url 'wiki:get' path=article.path %}">{{ article.current_revision.title|truncatechars:25 }}</a>
-      </li>
-    </nav>
-  </div>
-
-  <hr class="navbar-divider">
-
+{% if urlpath and article %}
   <div class="navbar-item has-dropdown is-hoverable">
     <a class="navbar-link">Sub-Articles</a>
 
@@ -43,19 +26,37 @@
     </div>
   </div>
 
-  <div class="navbar-item has-dropdown is-hoverable">
-    <a class="navbar-link">Create Article</a>
+  {% if request.user.is_authenticated %}
+    <div class="navbar-item has-dropdown is-hoverable">
+      <a class="navbar-link">Create Article</a>
 
-    <div class="navbar-dropdown">
-      {% if urlpath.parent %}
-        <a class="navbar-item" href="{% url 'wiki:create' path=urlpath.parent.path %}">
-          At current level
+      <div class="navbar-dropdown">
+        {% if urlpath.parent %}
+          <a class="navbar-item" href="{% url 'wiki:create' path=urlpath.parent.path %}">
+            At current level
+          </a>
+        {% endif %}
+
+        <a class="navbar-item" href="{% url 'wiki:create' path=urlpath.path %}">
+          Below current level
         </a>
-      {% endif %}
-
-      <a class="navbar-item" href="{% url 'wiki:create' path=urlpath.path %}">
-        Below current level
-      </a>
+      </div>
     </div>
+  {% endif %}
+
+  <hr class="navbar-divider">
+
+  <div class="navbar-item">
+    <nav class="breadcrumb" aria-label="breadcrumbs">
+      {% for ancestor in urlpath.cached_ancestors %}
+        <li>
+          <a href="{% url 'wiki:get' path=ancestor.path %}">{{ ancestor.article.current_revision.title|truncatechars:25 }}</a>
+        </li>
+      {% endfor %}
+
+      <li class="active">
+        <a href="{% url 'wiki:get' path=article.path %}">{{ article.current_revision.title|truncatechars:25 }}</a>
+      </li>
+    </nav>
   </div>
 {% endif %}

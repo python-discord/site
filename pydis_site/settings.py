@@ -15,6 +15,8 @@ import sys
 
 import environ
 
+from django.contrib.messages import constants as messages
+
 
 env = environ.Env(
     DEBUG=(bool, False)
@@ -285,9 +287,6 @@ WIKI_ACCOUNT_HANDLING = False
 WIKI_ACCOUNT_SIGNUP_ALLOWED = False
 
 WIKI_ANONYMOUS = True
-WIKI_ANONYMOUS_CREATE = DEBUG
-WIKI_ANONYMOUS_UPLOAD = DEBUG
-WIKI_ANONYMOUS_WRITE = DEBUG
 
 WIKI_MARKDOWN_KWARGS = {
     "extension_configs": {
@@ -310,4 +309,12 @@ WIKI_MARKDOWN_KWARGS = {
         "wiki.plugins.macros.mdx.toc",
         "wiki.plugins.macros.mdx.wikilinks",
     ]
+}
+
+WIKI_MESSAGE_TAG_CSS_CLASS = {
+    messages.DEBUG: "is-info",
+    messages.ERROR: "is-danger",
+    messages.INFO: "is-primary",
+    messages.SUCCESS: "is-success",
+    messages.WARNING: "is-warning",
 }

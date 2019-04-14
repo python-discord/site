@@ -1,9 +1,11 @@
 {% if messages %}
   <!-- Messages for this instance -->
   {% for message in messages %}
-    <div class="{{ message.css_class }}">
-      <a class="close" data-dismiss="alert" href="#">&times;</a>
-      {{ message }}
-    </div>
+    <article class="message {{ message.css_class }}">
+      <div class="message-body">
+        {{ message }}
+      </div>
+    </article>
+
   {% endfor %}
 {% endif %}
