@@ -1,61 +1,61 @@
 {% load i18n %}
 {% if urlpath %}
-<div id="article-breadcrumbs">
 
-<ul class="breadcrumb pull-left">
-  {% for ancestor in urlpath.cached_ancestors %}
-    <li><a href="{% url 'wiki:get' path=ancestor.path %}">{{ ancestor.article.current_revision.title|truncatechars:25 }}</a></li>
-  {% endfor %}
-  <li class="active">{{ article.current_revision.title|truncatechars:25 }}</li>
-</ul>
-<div class="pull-left" style="margin-left: 10px;">
-  <div class="btn-group">
-    <a class="btn btn-info dropdown-toggle" data-toggle="dropdown" href="#" style="padding: 7px;" title="{% trans "Sub-articles for" %} {{ article.current_revision.title }}">
-      <span class="fa fa-sitemap"></span>
-      <span class="caret"></span>
-    </a>
-    <ul class="dropdown-menu">
-      {% for child in children_slice %}
+  <div class="navbar-item">
+    <nav class="breadcrumb" aria-label="breadcrumbs">
+      {% for ancestor in urlpath.cached_ancestors %}
         <li>
-          <a href="{% url 'wiki:get' path=child.path %}">
+          <a href="{% url 'wiki:get' path=ancestor.path %}">{{ ancestor.article.current_revision.title|truncatechars:25 }}</a>
+        </li>
+      {% endfor %}
+
+      <li class="active">
+        <a href="{% url 'wiki:get' path=article.path %}">{{ article.current_revision.title|truncatechars:25 }}</a>
+      </li>
+    </nav>
+  </div>
+
+  <hr class="navbar-divider">
+
+  <div class="navbar-item has-dropdown is-hoverable">
+    <a class="navbar-link">Sub-Articles</a>
+
+    <div class="navbar-dropdown">
+      {% if children_slice %}
+        {% for child in children_slice %}
+          <a class="navbar-item" href="{% url 'wiki:get' path=child.path %}">
             {{ child.article.current_revision.title }}
           </a>
-        </li>
-        {% empty %}
-        <li><a href="#"><em>{% trans "No sub-articles" %}</em></a></li>
-      {% endfor %}
-      {% if children_slice_more %}
-      <li><a href="#"><em>{% trans "...and more" %}</em></a></li>
-      {% endif %}
-      <li class="divider"></li>
-      <li>
-        <a href="{% url 'wiki:dir' path=urlpath.path %}">{% trans "Browse articles in this level" %} &raquo;</a>
-      </li>
-    </ul>
-  </div>
-</div>
-<div class="pull-left" style="margin-left: 10px;">
-  <div class="btn-group">
-    <a class="btn btn-info dropdown-toggle" data-toggle="dropdown" href="#" style="padding: 7px;" title="{% trans "Sub-articles for" %} {{ article.current_revision.title }}">
-      <span class="fa fa-file"></span>
-      <span class="caret"></span>
-    </a>
-    <ul class="dropdown-menu">
-      <li>
-        {% if urlpath.parent %}
-        <a href="{% url 'wiki:create' path=urlpath.parent.path %}" style="padding: 7px;">
-          <span class="fa fa-arrow-right"></span>
-          {% blocktrans with article.current_revision.title as title %}New article next to {{ title }}{% endblocktrans %}
-        </a>
+        {% endfor %}
+
+        {% if children_slice_more %}
+          <a class="navbar-item" href="{% url 'wiki:dir' path=urlpath.path %}">
+            ...and more.
+          </a>
         {% endif %}
-        <a href="{% url 'wiki:create' path=urlpath.path %}" style="padding: 7px;">
-          <span class="fa fa-arrow-down"></span>
-          {% blocktrans with article.current_revision.title as title %}New article below {{ title }}{% endblocktrans %}
-        </a>
-      </li>
-    </ul>
+
+        <hr class="navbar-divider">
+      {% endif %}
+
+      <a class="navbar-item" href="{% url 'wiki:dir' path=urlpath.path %}">
+        Browse other articles
+      </a>
+    </div>
   </div>
-</div>
-<div style="clear: both"></div>
-</div>
+
+  <div class="navbar-item has-dropdown is-hoverable">
+    <a class="navbar-link">Create Article</a>
+
+    <div class="navbar-dropdown">
+      {% if urlpath.parent %}
+        <a class="navbar-item" href="{% url 'wiki:create' path=urlpath.parent.path %}">
+          At current level
+        </a>
+      {% endif %}
+
+      <a class="navbar-item" href="{% url 'wiki:create' path=urlpath.path %}">
+        Below current level
+      </a>
+    </div>
+  </div>
 {% endif %}

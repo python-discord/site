@@ -1,8 +1,15 @@
 {% if form.non_field_errors %}
-  {% if form_error_title %}<h4 class="alert-heading">{{ form_error_title }}</h4>{% endif %}
-  {% for error_message in form.non_field_errors %}
-    <div class="alert alert-block alert-danger">
-      {{ error_message }}
+  <article class="message is-danger">
+    {% if form_error_title %}
+      <div class="message-header">
+        <p>{{ form_error_title }}</p>
+      </div>
+    {% endif %}
+
+    <div class="message-body">
+      {% for error_message in form.non_field_errors %}
+        <p>{{ error_message }}</p>
+      {% endfor %}
     </div>
-  {% endfor %}
+  </article>
 {% endif %}

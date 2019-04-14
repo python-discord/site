@@ -17,19 +17,18 @@
 {% endblock %}
 
 {% block content %}
-  {% include "base/navbar.html" with active_item=True dropdowns=True icon_weight="far" use_logo=True %}
+  {% block site_navbar %}
+    {% include "base/navbar.html" with active_item=True dropdowns=True icon_weight="far" use_logo=True %}
+  {% endblock %}
 
   {% block wiki_navbar %}
 
   {% endblock %}
 
   {% block wiki_body %}
-
     <section class="section">
       <div class="container">
         {% wiki_messages %}
-
-        {% block wiki_breadcrumbs %}{% endblock %}
 
         <div class="content">
           {% block wiki_contents %}{% endblock %}
@@ -38,7 +37,9 @@
     </section>
   {% endblock %}
 
-  {% include "base/footer.html" %}
+  {% block site_footer %}
+    {% include "base/footer.html" %}
+  {% endblock %}
 
   <script src="{% static "js/wiki/load_editor.js" %}" type="text/javascript"></script>
 {% endblock %}

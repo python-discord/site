@@ -15,7 +15,7 @@
     <div id="collapse_{{ plugin.slug }}" class="panel-collapse collapse{% if plugin_form.errors %} in{% endif %}">
       <div class="panel-body form-vertical">
         {% if plugin.sidebar.template %}
-          {% with plugin_form as form and plugin as plugin %}
+          {% with plugin_form as form %}
             <form method="POST" class="form-horizontal sidebar-form" action="?f={{ plugin_form.form_id }}" enctype="multipart/form-data">
               {% csrf_token %}
               {% include plugin.sidebar.template %}

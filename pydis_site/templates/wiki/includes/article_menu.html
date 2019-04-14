@@ -3,78 +3,86 @@
 {% with selected_tab as selected %}
   <nav class="navbar is-light" role="navigation" aria-label="wiki navigation">
     <div class="container">
-      <a role="button" class="navbar-burger" data-target="wiki-menu" aria-label="menu" aria-expanded="false">
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
-      </a>
+      <div class="navbar-brand">
+        {% block wiki_breadcrumbs %}
+          {% include "wiki/includes/breadcrumbs.html" %}
+        {% endblock %}
+
+        <a role="button" class="navbar-burger" data-target="wiki-menu" aria-label="menu" aria-expanded="false">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
 
       <div class="navbar-menu" id="wiki-menu">
-        {% if not user.is_anonymous %}
-          <a class="navbar-item{% if selected == "settings" %} is-active{% endif %}"
-             href="{% url 'wiki:settings' article_id=article.id path=urlpath.path %}"
+        <div class="navbar-end">
+          {% if not user.is_anonymous %}
+            <a class="navbar-item{% if selected == "settings" %} is-active{% endif %}"
+               href="{% url 'wiki:settings' article_id=article.id path=urlpath.path %}"
+            >
+              <span class="icon">
+                <i class="fas fa-wrench"></i>
+              </span>
+
+              <span>&nbsp;Settings</span>
+            </a>
+          {% endif %}
+
+          {% for plugin in article_tabs %}
+            <a class="navbar-item{% if selected == plugin.slug %} is-active{% endif %}"
+               href="{% url 'wiki:plugin' slug=plugin.slug article_id=article.id path=urlpath.path %}"
+            >
+              <span class="icon">
+                <i class="{{ plugin.article_tab.1 }}"></i>
+              </span>
+
+              <span>&nbsp;{{ plugin.article_tab.0 }}</span>
+            </a>
+          {% endfor %}
+
+          <a class="navbar-item{% if selected == "history" %} is-active{% endif %}"
+             href="{% url 'wiki:history' article_id=article.id path=urlpath.path %}"
           >
             <span class="icon">
-              <i class="fas fa-wrench"></i>
+              <i class="fas fa-clock"></i>
             </span>
 
-            <span>&nbsp;Settings</span>
+            <span>&nbsp;Changes</span>
           </a>
-        {% endif %}
 
-        {% for plugin in article_tabs %}
-          <a class="navbar-item{% if selected == plugin.slug %} is-active{% endif %}"
-             href="{% url 'wiki:plugin' slug=plugin.slug article_id=article.id path=urlpath.path %}"
+          {% if article|can_write:user and not article.current_revision.locked %}
+            <a class="navbar-item{% if selected == "edit" %} is-active{% endif %}"
+               href="{% url 'wiki:edit' article_id=article.id path=urlpath.path %}"
+            >
+              <span class="icon">
+                <i class="fas fa-edit"></i>
+              </span>
+
+              <span>&nbsp;Edit</span>
+            </a>
+          {% else %}
+            <a class="navbar-item{% if selected == "source" %} is-active{% endif %}"
+               href="{% url 'wiki:source' article_id=article.id path=urlpath.path %}"
+            >
+              <span class="icon">
+                <i class="fas fa-lock"></i>
+              </span>
+
+              <span>&nbsp;View Source</span>
+            </a>
+          {% endif %}
+
+          <a class="navbar-item{% if selected == "view" %} is-active{% endif %}"
+             href="{% url 'wiki:get' article_id=article.id path=urlpath.path %}"
           >
             <span class="icon">
-              <i class="{{ plugin.article_tab.1 }}"></i>
+              <i class="fas fa-home"></i>
             </span>
 
-            <span>&nbsp;{{ plugin.article_tab.0 }}</span>
+            <span>&nbsp;View</span>
           </a>
-        {% endfor %}
-
-        <a class="navbar-item{% if selected == "history" %} is-active{% endif %}"
-           href="{% url 'wiki:history' article_id=article.id path=urlpath.path %}"
-        >
-          <span class="icon">
-            <i class="fas fa-clock"></i>
-          </span>
-
-          <span>&nbsp;Changes</span>
-        </a>
-
-        {% if article|can_write:user and not article.current_revision.locked %}
-          <a class="navbar-item{% if selected == "edit" %} is-active{% endif %}"
-             href="{% url 'wiki:edit' article_id=article.id path=urlpath.path %}"
-          >
-            <span class="icon">
-              <i class="fas fa-edit"></i>
-            </span>
-
-            <span>&nbsp;Edit</span>
-          </a>
-        {% else %}
-          <a class="navbar-item{% if selected == "source" %} is-active{% endif %}"
-             href="{% url 'wiki:source' article_id=article.id path=urlpath.path %}"
-          >
-            <span class="icon">
-              <i class="fas fa-lock"></i>
-            </span>
-
-            <span>&nbsp;View Source</span>
-          </a>
-        {% endif %}
-
-        <a class="navbar-item{% if selected == "view" %} is-active{% endif %}"
-           href="{% url 'wiki:get' article_id=article.id path=urlpath.path %}"
-        >
-          <span class="icon">
-            <i class="fas fa-home"></i>
-          </span>
-
-          <span>&nbsp;View</span>
-        </a>
+        </div>
       </div>
     </div>
   </nav>
