@@ -1,6 +1,5 @@
 {# Base template, with a few basic style definitions. #}
-{% load django_simple_bulma %}
-{% load static %}
+{% load django_simple_bulma sekizai_tags static %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -22,6 +21,8 @@
   >
 
   {% block head %}{% endblock %}
+
+  {% render_block "css" %}
 </head>
 <body>
 
@@ -29,5 +30,6 @@
   {{ block.super }}
 {% endblock %}
 
+{% render_block "js" %}
 </body>
 </html>
