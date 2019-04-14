@@ -4,9 +4,19 @@
     "description": "Functional Programming is a server for discussing functional languages like Haskell, Idris, Elixir and Lisp as well as related academic fields such as type theory, category theory, proof assistants, and more!",
     "invite": "https://discord.gg/kWJYurV"
   },
-  "STEM": {
-    "banner": "/static/images/partners/stem.png",
-    "description": "STEM is a growing server dedicated to discussion and education pertaining to subjects within the fields of Science, Technology, Engineering, and Mathematics. We aim to provide our members with an engaged, skilled, friendly community. We hope to see you soon!",
-    "invite": "https://discord.gg/XBGetGp"
+  "RLBot": {
+    "banner": "",
+    "description": "RLBot is a community of programmers making awesome Rocket League bots. They've created a framework that you can use to write bots in a number of languages (including Python), and they host regular tournaments where botmakers can pit their creations against each other.",
+    "invite": "https://discord.gg/4JJdJKb"
+  },
+  "The Pallets Project": {
+    "banner": "",
+    "description": "The Pallets Projects develop Python libraries such as the Flask web framework, the Jinja templating library, and the Click command line toolkit. Join to discuss and get help from the Pallets community.",
+    "invite": "https://discord.gg/t6rrQZH"
+  },
+  "Adafruit": {
+    "banner": "",
+    "description": "Adafruit is an open-source electronics manufacturer that makes all the components you need to start your own Python-powered hardware projects.\n\nTheir official community host regular show-and-tells, provide help with your projects, and the Adafruit devs do all the CircuitPython development right out in the open. Join the Maker Revolution today!",
+    "invite": "https://discord.gg/adafruit"
   }
 }
