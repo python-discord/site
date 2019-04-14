@@ -1,62 +1,87 @@
-{% load i18n %}
 {% if urlpath and article %}
-  <div class="navbar-item has-dropdown is-hoverable">
-    <a class="navbar-link">Sub-Articles</a>
+  <section class="section">
+    <div class="container">
+      <nav class="breadcrumb is-pulled-left" aria-label="breadcrumbs">
+        <ul>
+          {% for ancestor in urlpath.cached_ancestors %}
+            <li>
+              <a href="{% url 'wiki:get' path=ancestor.path %}">{{ ancestor.article.current_revision.title|truncatechars:25 }}</a>
+            </li>
+          {% endfor %}
 
-    <div class="navbar-dropdown">
-      {% if children_slice %}
-        {% for child in children_slice %}
-          <a class="navbar-item" href="{% url 'wiki:get' path=child.path %}">
-            {{ child.article.current_revision.title }}
+          <li class="is-active">
+            <a href="{% url 'wiki:get' path=article.path %}">{{ article.current_revision.title|truncatechars:25 }}</a>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="dropdown is-pulled-right is-right">
+        <div class="dropdown-trigger">
+          <a aria-haspopup="true" aria-controls="sub-article-dropdown">
+            <span>Sub-Articles</span>
+            <span class="icon">
+              <i class="fas fa-angle-down"></i>
+            </span>
           </a>
-        {% endfor %}
+        </div>
+        <div class="dropdown-menu" id="sub-article-dropdown" role="menu">
+          <div class="dropdown-content">
+            {% if children_slice %}
+              {% for child in children_slice %}
+                <a class="dropdown-item" href="{% url 'wiki:get' path=child.path %}">
+                  {{ child.article.current_revision.title }}
+                </a>
+              {% endfor %}
 
-        {% if children_slice_more %}
-          <a class="navbar-item" href="{% url 'wiki:dir' path=urlpath.path %}">
-            ...and more.
-          </a>
-        {% endif %}
+              {% if children_slice_more %}
+                <a class="dropdown-item" href="{% url 'wiki:dir' path=urlpath.path %}">
+                  ...and more.
+                </a>
+              {% endif %}
 
-        <hr class="navbar-divider">
+              <hr class="dropdown-divider">
+            {% endif %}
+
+            <a class="dropdown-item" href="{% url 'wiki:dir' path=urlpath.path %}">
+              Browse other articles
+            </a>
+          </div>
+        </div>
+      </div>
+
+      {% if request.user.is_authenticated %}
+        <div class="dropdown is-pulled-right is-right">
+          <div class="dropdown-trigger">
+            <a aria-haspopup="true" aria-controls="sub-article-dropdown">
+              <span>Create Article</span>
+              <span class="icon">
+                <i class="fas fa-angle-down"></i>
+              </span>
+              &nbsp;
+            </a>
+          </div>
+          <div class="dropdown-menu" id="sub-article-dropdown" role="menu">
+            <div class="dropdown-content">
+              {% if urlpath.parent %}
+                <a class="dropdown-item" href="{% url 'wiki:create' path=urlpath.parent.path %}">
+                  <span class="icon">
+                    <i class="fas fa-arrow-right"></i>
+                  </span>
+                  <span>At current level</span>
+                </a>
+              {% endif %}
+
+              <a class="dropdown-item" href="{% url 'wiki:create' path=urlpath.path %}">
+                <span class="icon">
+                  <i class="fas fa-arrow-down"></i>
+                </span>
+                <span>Below current level</span>
+              </a>
+            </div>
+          </div>
+        </div>
       {% endif %}
 
-      <a class="navbar-item" href="{% url 'wiki:dir' path=urlpath.path %}">
-        Browse other articles
-      </a>
     </div>
-  </div>
-
-  {% if request.user.is_authenticated %}
-    <div class="navbar-item has-dropdown is-hoverable">
-      <a class="navbar-link">Create Article</a>
-
-      <div class="navbar-dropdown">
-        {% if urlpath.parent %}
-          <a class="navbar-item" href="{% url 'wiki:create' path=urlpath.parent.path %}">
-            At current level
-          </a>
-        {% endif %}
-
-        <a class="navbar-item" href="{% url 'wiki:create' path=urlpath.path %}">
-          Below current level
-        </a>
-      </div>
-    </div>
-  {% endif %}
-
-  <hr class="navbar-divider">
-
-  <div class="navbar-item">
-    <nav class="breadcrumb" aria-label="breadcrumbs">
-      {% for ancestor in urlpath.cached_ancestors %}
-        <li>
-          <a href="{% url 'wiki:get' path=ancestor.path %}">{{ ancestor.article.current_revision.title|truncatechars:25 }}</a>
-        </li>
-      {% endfor %}
-
-      <li class="active">
-        <a href="{% url 'wiki:get' path=article.path %}">{{ article.current_revision.title|truncatechars:25 }}</a>
-      </li>
-    </nav>
-  </div>
+  </section>
 {% endif %}
