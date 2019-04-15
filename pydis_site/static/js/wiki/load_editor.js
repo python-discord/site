@@ -17,27 +17,7 @@
         title: "Insert image",
     };
 
-    const TOCAction = {
-        name: "toc",
-        action: insertTOC,
-        className: "fa fa-stream",
-        title: "Insert Table of Contents"
-    };
-
     let elements = document.getElementsByClassName("simple-mde");
-
-    function insertTOC(editor) {
-        let doc = editor.codemirror.getDoc(),
-            cursor = doc.getCursor(),
-            line = doc.getLine(cursor.line),
-            position = {"line": cursor.line, "ch": 0};
-
-        if (line.length === 0) {
-            doc.replaceRange(TOCText, position);
-        } else {
-            doc.replaceRange(TOCText + "\n", position)
-        }
-    }
 
     for (let element of elements) {
         window.editors[element.id] = new SimpleMDE({
@@ -67,7 +47,6 @@
                 "bold", "italic", "strikethrough", headingAction, "|",
                 "code", "quote", "unordered-list", "ordered-list", "|",
                 "link", imageAction, "table", "horizontal-rule", "|",
-                TOCAction, "|",
                 "preview", "side-by-side", "fullscreen", "|",
                 "guide"
             ],

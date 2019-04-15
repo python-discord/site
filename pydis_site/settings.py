@@ -287,11 +287,13 @@ WIKI_ACCOUNT_HANDLING = False
 WIKI_ACCOUNT_SIGNUP_ALLOWED = False
 
 WIKI_ANONYMOUS = True
+WIKI_ANONYMOUS_WRITE = False
 
 WIKI_MARKDOWN_KWARGS = {
     "extension_configs": {
         "wiki.plugins.macros.mdx.toc": {
-            "title": "Contents"
+            "anchorlink": True,
+            "baselevel": 2
         }
     }, "extensions": [
         "markdown.extensions.abbr",

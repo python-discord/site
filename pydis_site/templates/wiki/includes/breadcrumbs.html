@@ -1,5 +1,5 @@
-{% if urlpath and article %}
-  <section class="section">
+{% if urlpath and article and not user.is_anonymous %}
+  <section class="breadcrumb-section section">
     <div class="container">
       <nav class="breadcrumb is-pulled-left" aria-label="breadcrumbs">
         <ul>
