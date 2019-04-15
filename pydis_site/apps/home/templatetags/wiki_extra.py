@@ -68,6 +68,9 @@ def render_field(field: Field, render_labels: bool = True):
     else:
         unbound_field = field
 
+    if not isinstance(render_labels, bool):
+        render_labels = True
+
     template_path = TEMPLATES.get(unbound_field.__class__)
     is_markitup = isinstance(unbound_field.widget, MarkItUpWidget)
 

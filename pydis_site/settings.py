@@ -39,7 +39,8 @@ if DEBUG:
         'admin.pythondiscord.local',
         'api.pythondiscord.local',
         'staff.pythondiscord.local',
-        'wiki.pythondiscord.local'
+        'wiki.pythondiscord.local',
+        '*',  # PLEASE yell at me if I commit this
     ]
     SECRET_KEY = "+_x00w3e94##2-qm-v(5&-x_@*l3t9zlir1etu+7$@4%!it2##"
 
@@ -93,7 +94,6 @@ INSTALLED_APPS = [
     'wiki.plugins.images.apps.ImagesConfig',
     'wiki.plugins.links.apps.LinksConfig',
     'wiki.plugins.redlinks.apps.RedlinksConfig',
-    'wiki.plugins.macros.apps.MacrosConfig',
 ]
 
 MIDDLEWARE = [
@@ -202,7 +202,7 @@ ROOT_HOSTCONF = 'pydis_site.hosts'
 DEFAULT_HOST = 'home'
 
 if DEBUG:
-    PARENT_HOST = 'pythondiscord.local:8000'
+    PARENT_HOST = 'trixie.gserv.me:8000'
 else:
     PARENT_HOST = env('PARENT_HOST', default='pythondiscord.com')
 
@@ -307,7 +307,6 @@ WIKI_MARKDOWN_KWARGS = {
         "wiki.core.markdown.mdx.codehilite",
         "wiki.core.markdown.mdx.previewlinks",
         "wiki.core.markdown.mdx.responsivetable",
-        "wiki.plugins.macros.mdx.macro",
         "wiki.plugins.macros.mdx.toc",
         "wiki.plugins.macros.mdx.wikilinks",
     ]
