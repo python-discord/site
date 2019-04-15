@@ -17,7 +17,7 @@
 
   <div class="columns">
 
-    <div class="column is-8">
+    <div class="column is-two-thirds">
       <form method="POST" class="form-horizontal" id="article_edit_form">
         {% with edit_form as form %}
           {% include "wiki/includes/editor.html" %}
@@ -64,7 +64,7 @@
       </form>
     </div>
 
-    <div class="column is-4" id="wiki-edit-sidebar">
+    <div class="column is-one-third" id="wiki-edit-sidebar">
       {% include "wiki/includes/editor_sidebar.html" %}
     </div>
 

@@ -1,19 +1,26 @@
 {% load i18n sekizai_tags %}
 
-<div class="panel-group" id="accordion_{{ plugin.slug }}">
-
+<section class="accordions">
 {% for plugin, plugin_form in sidebar %}
 
-  <div class="panel panel-default">
+  <article class="accordion is-primary">
+    <div class="accordion-header toggle">
+      <p>
+        {% if plugin.sidebar.icon_class %}
+          <span class="icon">
+            {% if plugin.sidebar.icon_class == "fa-picture-o" %}
+              <i class="fas fa-images"></i>
+            {% else %}
+              <i class="fas {{ plugin.sidebar.icon_class }}"></i>
+            {% endif %}
+          </span>
+        {% endif %}
+        {{ plugin.sidebar.headline }}
+      </p>
 
-    <div class="panel-heading">
-      <a class="panel-toggle" href="#collapse_{{ plugin.slug }}" data-toggle="collapse">
-        <h3 class="panel-title"><span class="fa fa-fw {{ plugin.sidebar.icon_class }}"></span> {{ plugin.sidebar.headline }}</h3>
-      </a>
     </div>
-
-    <div id="collapse_{{ plugin.slug }}" class="panel-collapse collapse{% if plugin_form.errors %} in{% endif %}">
-      <div class="panel-body form-vertical">
+    <div class="accordion-body">
+      <div class="accordion-content">
         {% if plugin.sidebar.template %}
           {% with plugin_form as form %}
             <form method="POST" class="form-horizontal sidebar-form" action="?f={{ plugin_form.form_id }}" enctype="multipart/form-data">
@@ -24,7 +31,10 @@
         {% endif %}
       </div>
     </div>
-
-  </div>
+  </article>
 {% endfor %}
-</div>
+</section>
+
+<script type="application/javascript">
+  bulmaAccordion.attach();
+</script>

@@ -39,6 +39,7 @@
             forceSync: true,
             indentWithTabs: false,
             initialValue: element.value,
+            lineWrapping: true,
             placeholder: "**Write some _markdown_!**",
             spellChecker: false,
             tabSize: 4,
@@ -50,6 +51,8 @@
                 "preview", "side-by-side", "fullscreen", "|",
                 "guide"
             ],
+
+            status: false,
         })
     }
 })();
