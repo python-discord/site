@@ -1,10 +1,8 @@
 from django.core.exceptions import ValidationError
 from django.test import TestCase
 
-from ..validators import (
-    validate_bot_setting_name,
-    validate_tag_embed
-)
+from ..models.bot.bot_setting import validate_bot_setting_name
+from ..models.bot.tag import validate_tag_embed
 
 
 REQUIRED_KEYS = (
