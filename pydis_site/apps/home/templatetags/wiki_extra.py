@@ -62,7 +62,7 @@ def get_unbound_field(field: BoundField):
 
 
 @register.simple_tag
-def render_field(field: Field):
+def render_field(field: Field, render_labels: bool = True):
     if isinstance(field, BoundField):
         unbound_field = get_unbound_field(field)
     else:
@@ -75,7 +75,7 @@ def render_field(field: Field):
         raise NotImplementedError(f"Unknown field type: {unbound_field.__class__}")
 
     template_obj: Template = get_template(template_path)
-    context = {"field": field, "is_markitup": is_markitup}
+    context = {"field": field, "is_markitup": is_markitup, "render_labels": render_labels}
 
     return mark_safe(template_obj.render(context))
 

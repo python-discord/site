@@ -1,15 +1,17 @@
 <div id="div_{{ field.auto_id }}" class="field is-horizontal{% if field.errors %} is-danger{% endif %}">
-  <div class="field-label">
-    <label class="label {% if field.errors %} is-danger{% endif %}">
-      {{ field.label | safe }} {% if field.field.required %}<span class="asterisk has-text-danger">*</span>{% endif %}
-    </label>
+  {% if render_labels %}
+    <div class="field-label">
+      <label class="label {% if field.errors %} is-danger{% endif %}">
+        {{ field.label | safe }} {% if field.field.required %}<span class="asterisk has-text-danger">*</span>{% endif %}
+      </label>
 
-    {% if field.help_text %}
-      <p id="hint_{{ field.auto_id }}" class="help has-text-grey">
-        {{ field.help_text|safe }}
-      </p>
-    {% endif %}
-  </div>
+      {% if field.help_text %}
+        <p id="hint_{{ field.auto_id }}" class="help has-text-grey">
+          {{ field.help_text|safe }}
+        </p>
+      {% endif %}
+    </div>
+  {% endif %}
 
   <div class="field-body">
     <div class="field">
@@ -25,8 +27,13 @@
                {% if field.min_length %}minlength="{{ field.min_length }}"{% endif %}
                {% if field.empty_value %}placeholder="{{ field.empty_value }}"{% endif %}
         />
+
         <label for="{{ field.auto_id }}" class="label {% if field.errors %} is-danger{% endif %}">
-          &nbsp;
+          {% if not render_labels %}
+            {{ field.label | safe }} {% if field.field.required %}<span class="asterisk has-text-danger">*</span>{% endif %}
+          {% else %}
+            &nbsp;
+          {% endif %}
         </label>
       </div>
 

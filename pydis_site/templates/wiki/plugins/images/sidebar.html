@@ -40,6 +40,39 @@ function add_image(form) {
 <style type="text/css">
   #image-list tr:first-child td {border:0;}
 </style>
+
+  <h4>Add image</h4>
+
+  {% if article|images_can_add:user %}
+    {% include "wiki/includes/formerrors.html" %}
+
+    {# Include the hidden fields #}
+    {% for hidden in form.hidden_fields %}
+      {{ hidden }}
+    {% endfor %}
+
+    <p>
+    {% for field in form.visible_fields %}
+      {% include "wiki/includes/formfield.html" with render_labels=False %}
+    {% endfor %}
+
+    <p>
+      <button type="button" onClick="add_image(this.form)" name="{{ plugin.slug }}_save" value="1" class="button is-primary">
+        <span class="icon">
+          <i class="fas fa-upload"></i>
+        </span>
+        <span>Upload</span>
+      </button>
+    </p>
+  {% else %}
+
+    {% if user.is_anonymous %}
+      {% include "wiki/includes/anonymous_blocked.html" %}
+    {% else %}
+      <p><em>{% trans "You do not have permissions to add images." %}</em></p>
+    {% endif %}
+  {% endif %}
+
 <div style="max-height: 300px; overflow: auto;">
   <table class="table table-responsive table-bordered" id="image-list">
     {% for image in images %}
@@ -77,61 +110,6 @@ function add_image(form) {
   </a>
 </p>
 <hr />
-
-<h4>{% trans "Add new image" %}</h4>
-
-{% if article|images_can_add:user %}
-  {% if form.non_field_errors %}
-    {% if form_error_title %}<h4 class="alert-heading">{{ form_error_title }}</h4>{% endif %}
-    {% for error_message in form.non_field_errors %}
-      <div class="alert alert-block alert-danger">
-        {{ error_message }}
-      </div>
-    {% endfor %}
-  {% endif %}
-
-  {# Include the hidden fields #}
-  {% for hidden in form.hidden_fields %}
-    {{ hidden }}
-  {% endfor %}
-
-  <p>
-  {% for field in form.visible_fields %}
-    <fieldset id="div_{{ field.auto_id }}" class="control-group fields {% if field.errors %} error{% endif %}">
-      {% if field.label %}
-        <!--<label for="{{ field.id_for_label }}" class="{% if field.field.required %}requiredField{% endif %}">
-        {{ field.label|safe }}
-        </label>-->
-      {% endif %}
-      {{ field }}
-      {% if field.errors %}
-      <div id="error_{{ forloop.counter }}_{{ field.auto_id }}" class="help-block">
-        {% for error in field.errors %}
-        <div>{{ error }}</div>
-        {% endfor %}
-      </div>
-      {% endif %}
-    </fieldset>
-    {% if field.help_text %}
-      <p id="hint_{{ field.auto_id }}" class="help-block">{{ field.help_text|safe }}</p>
-    {% endif %}
-  {% endfor %}
-  </p>
-
-  <p>
-    <button type="button" onClick="add_image(this.form)" name="{{ plugin.slug }}_save" value="1" class="btn btn-default btn-md">
-      <span class="fa fa-upload"></span>
-      {% trans "Add image" %}
-    </button>
-  </p>
-{% else %}
-
-  {% if user.is_anonymous %}
-    {% include "wiki/includes/anonymous_blocked.html" %}
-  {% else %}
-    <p><em>{% trans "You do not have permissions to add images." %}</em></p>
-  {% endif %}
-{% endif %}
 
 <hr />
 

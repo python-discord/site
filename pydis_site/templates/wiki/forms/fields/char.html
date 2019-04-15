@@ -1,5 +1,5 @@
 <div id="div_{{ field.auto_id }}" class="field is-horizontal{% if field.errors %} is-danger{% endif %}">
-  {% if not is_markitup %}
+  {% if render_labels and not is_markitup %}
     <div class="field-label">
       {% if field.label %}
         <label for="{{ field.auto_id }}" class="label {% if field.errors %} is-danger{% endif %}">
