@@ -19,23 +19,23 @@
 
     const TOCAction = {
         name: "toc",
-        action: inserTOC,
+        action: insertTOC,
         className: "fa fa-stream",
         title: "Insert Table of Contents"
     };
 
     let elements = document.getElementsByClassName("simple-mde");
 
-    function inserTOC(editor) {
+    function insertTOC(editor) {
         let doc = editor.codemirror.getDoc(),
             cursor = doc.getCursor(),
             line = doc.getLine(cursor.line),
-            position = {"line": cursor.line};
+            position = {"line": cursor.line, "ch": 0};
 
         if (line.length === 0) {
             doc.replaceRange(TOCText, position);
         } else {
-            doc.replaceRange("\n" + TOCText, position)
+            doc.replaceRange(TOCText + "\n", position)
         }
     }
 
