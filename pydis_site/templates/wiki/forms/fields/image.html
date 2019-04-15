@@ -18,7 +18,27 @@
   <div class="field-body">
     <div class="field">
       <div class="control">
-        {{ field }}
+        <div class="file has-name is-fullwidth">
+          <label class="file-label">
+            <input class="file-input"
+                   type="file"
+                   id="{{ field.auto_id }}"
+                   name="{{ field.name }}"
+                   accept="image/*"
+
+                   {% if field.required %}required{% endif %}
+            />
+          <span class="file-cta">
+            <span class="file-icon">
+              <i class="fas fa-image"></i>
+            </span>
+            <span class="file-label">
+              Upload
+            </span>
+          </span>
+          <span class="file-name"></span>
+          </label>
+        </div>
       </div>
 
     {% if field.errors %}

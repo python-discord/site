@@ -41,37 +41,27 @@ function add_image(form) {
   #image-list tr:first-child td {border:0;}
 </style>
 
-  <h4>Add image</h4>
+{% if article|images_can_add:user %}
+  {% include "wiki/includes/formerrors.html" %}
 
-  {% if article|images_can_add:user %}
-    {% include "wiki/includes/formerrors.html" %}
+  {# Include the hidden fields #}
+  {% for hidden in form.hidden_fields %}
+    {{ hidden }}
+  {% endfor %}
 
-    {# Include the hidden fields #}
-    {% for hidden in form.hidden_fields %}
-      {{ hidden }}
-    {% endfor %}
+  {% for field in form.visible_fields %}
+    {% include "wiki/includes/formfield.html" with render_labels=False %}
+  {% endfor %}
 
-    <p>
-    {% for field in form.visible_fields %}
-      {% include "wiki/includes/formfield.html" with render_labels=False %}
-    {% endfor %}
+  <button type="button" onClick="add_image(this.form)" name="{{ plugin.slug }}_save" value="1" class="button is-primary is-fullwidth">
+    <span class="icon">
+      <i class="fas fa-save"></i>
+    </span>
+    <span>Save</span>
+  </button>
+{% endif %}
 
-    <p>
-      <button type="button" onClick="add_image(this.form)" name="{{ plugin.slug }}_save" value="1" class="button is-primary">
-        <span class="icon">
-          <i class="fas fa-upload"></i>
-        </span>
-        <span>Upload</span>
-      </button>
-    </p>
-  {% else %}
-
-    {% if user.is_anonymous %}
-      {% include "wiki/includes/anonymous_blocked.html" %}
-    {% else %}
-      <p><em>{% trans "You do not have permissions to add images." %}</em></p>
-    {% endif %}
-  {% endif %}
+<div class="is-divider"></div>
 
 <div style="max-height: 300px; overflow: auto;">
   <table class="table table-responsive table-bordered" id="image-list">
