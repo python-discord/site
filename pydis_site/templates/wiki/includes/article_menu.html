@@ -1,6 +1,6 @@
 {% load i18n wiki_tags %}
 
-{% if not user.is_anonymous %}
+{% if article|can_write:user %}
   {% with selected_tab as selected %}
     <nav class="navbar is-light" role="navigation" aria-label="wiki navigation">
       <div class="container">

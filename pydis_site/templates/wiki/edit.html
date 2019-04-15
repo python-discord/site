@@ -15,9 +15,9 @@
     </p>
   {% endif %}
 
-  <div class="row">
+  <div class="columns">
 
-    <div class="col-lg-8">
+    <div class="column is-8">
       <form method="POST" class="form-horizontal" id="article_edit_form">
         {% with edit_form as form %}
           {% include "wiki/includes/editor.html" %}
@@ -64,7 +64,7 @@
       </form>
     </div>
 
-    <div class="col-lg-4" id="wiki-edit-sidebar">
+    <div class="column is-4" id="wiki-edit-sidebar">
       {% include "wiki/includes/editor_sidebar.html" %}
     </div>
 
@@ -72,11 +72,12 @@
 
   <div style="clear: both"></div>
 
-  {% include "wiki/includes/modals.html" %}
-
   <div class="modal" id="previewModal">
     <div class="modal-background"></div>
-    <div class="modal-card" style="height: 50%;">
+    <div class="modal-card" style="height: 80%; width: 80%;">
+      <div class="modal-card-head">
+        <p class="modal-card-title">Article Preview</p>
+      </div>
       <div class="modal-card-body" style="padding: 0; overflow: hidden;">
         <iframe name="previewWindow" frameborder="0" style="width: 100%; height: 100%;"></iframe>
       </div>
