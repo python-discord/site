@@ -7,24 +7,24 @@
 {% block wiki_contents %}
 
   {% addtoblock "js" %}
-  <script type="text/javascript" src="{% static "admin/js/urlify.js" %}"></script>
-  <script type="text/javascript">
-  {% if not create_form.slug.value %}
-  //<![CDATA[
-  (function($) {
-	  $(document).ready(function (){
-		  $("#id_title").keyup(function () {
-			  var e = $("#id_slug")[0];
-			  if(!e._changed) {
-			    slug = URLify(this.value, 50);
-				  e.value = slug;
-			  }
-	      });
-	  });
-  })(jQuery);
-  //]]>
-  {% endif %}
-  </script>
+    <script type="text/javascript" src="{% static "admin/js/urlify.js" %}"></script>
+    <script type="text/javascript">
+    {% if not create_form.slug.value %}
+    //<![CDATA[
+    (function($) {
+      $(document).ready(function (){
+        $("#id_title").keyup(function () {
+          var e = $("#id_slug")[0];
+          if(!e._changed) {
+            slug = URLify(this.value, 50);
+            e.value = slug;
+          }
+          });
+      });
+    })(jQuery);
+    //]]>
+    {% endif %}
+    </script>
   {% endaddtoblock %}
 
   {% include "wiki/includes/editormedia.html" %}
@@ -32,16 +32,22 @@
 
   <form method="POST" class="form-horizontal">
     {% wiki_form create_form %}
-    <div class="form-group form-actions">
-      <div class="col-lg-2"></div>
-      <div class="col-lg-10">
-        <a href="{% url 'wiki:get' path=parent_urlpath.path %}" class="btn btn-default">
-          <span class="fa fa-arrow-left"></span>
-          {% trans "Go back" %}
+
+    <div class="field is-horizontal is-grouped">
+      <div class="control">
+        <a href="{% url 'wiki:get' path=parent_urlpath.path %}" class="button is-white">
+          <span class="icon">
+            <i class="fa fa-arrow-left"></i>
+          </span>
+          <span>Go back</span>
         </a>
-        <button type="submit" name="save_changes" class="btn btn-primary">
-          <span class="fa fa-plus"></span>
-          {% trans "Create article" %}
+      </div>
+      <div class="control">
+        <button type="submit" name="save_changes" class="button is-primary">
+          <span class="icon">
+            <i class="fa fa-plus"></i>
+          </span>
+          <span>Create Article</span>
         </button>
       </div>
     </div>

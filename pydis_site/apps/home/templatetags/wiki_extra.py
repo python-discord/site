@@ -8,6 +8,8 @@ from django.template import Template
 from django.template.loader import get_template
 from django.utils.safestring import mark_safe
 from wiki.editors.markitup import MarkItUpWidget
+from wiki.forms import WikiSlugField
+from wiki.models import URLPath
 from wiki.plugins.notifications.forms import SettingsModelChoiceField
 
 TEMPLATE_PATH = "wiki/forms/fields/{0}.html"
@@ -45,6 +47,7 @@ TEMPLATES = {
     ModelMultipleChoiceField: TEMPLATE_PATH.format("model_multiple_choice"),
 
     SettingsModelChoiceField: TEMPLATE_PATH.format("model_choice"),
+    WikiSlugField: TEMPLATE_PATH.format("wiki_slug_render"),
 }
 
 
@@ -88,3 +91,9 @@ def get_field_options(context, field: BoundField):
 
     context["options"] = widget.optgroups(field.name, value)
     return ""
+
+
+@register.filter
+def render_urlpath(value: URLPath):
+    return value.path or "/"
+
