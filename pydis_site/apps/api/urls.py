@@ -5,11 +5,12 @@ from .views import HealthcheckView, RulesView
 from .viewsets import (
     BotSettingViewSet, DeletedMessageViewSet,
     DocumentationLinkViewSet, InfractionViewSet,
-    NominationViewSet, OffTopicChannelNameViewSet,
-    ReminderViewSet, RoleViewSet,
-    SnakeFactViewSet, SnakeIdiomViewSet,
-    SnakeNameViewSet, SpecialSnakeViewSet,
-    TagViewSet, UserViewSet
+    LogEntryViewSet, NominationViewSet,
+    OffTopicChannelNameViewSet, ReminderViewSet,
+    RoleViewSet, SnakeFactViewSet,
+    SnakeIdiomViewSet, SnakeNameViewSet,
+    SpecialSnakeViewSet, TagViewSet,
+    UserViewSet
 )
 
 
@@ -81,6 +82,7 @@ urlpatterns = (
     # from django_hosts.resolvers import reverse
     # snake_name_endpoint = reverse('bot:snakename-list', host='api')  # `bot/` endpoints
     path('bot/', include((bot_router.urls, 'api'), namespace='bot')),
+    path('logs', LogEntryViewSet.as_view({'post': 'create'}), name='logs'),
     path('healthcheck', HealthcheckView.as_view(), name='healthcheck'),
     path('rules', RulesView.as_view(), name='rules')
 )
