@@ -25,6 +25,8 @@ services:
 
     postgres:
         image: postgres:11-alpine
+        ports:
+            - "127.0.0.1:5432:5432"
         environment:
             POSTGRES_DB: "${pg_db}"
             POSTGRES_USER: "${pg_user}"

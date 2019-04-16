@@ -30,3 +30,7 @@ requests = "*"
 
 [requires]
 python_version = "3.7"
+
+[scripts]
+makemigrations = "python manage.py makemigrations"
+django_shell = "python manage.py shell"
