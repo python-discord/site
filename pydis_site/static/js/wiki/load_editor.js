@@ -1,15 +1,12 @@
 (function() {
     window.editors = {};  // So that other scripts can get at 'em
 
-    const TOCText = "[TOC]";
-
     const headingAction = {
         name: "heading",
         action: SimpleMDE.toggleHeadingSmaller,
         className: "fa fa-heading",
         title: "Heading",
     };
-
     const imageAction = {
         name: "image",
         action: SimpleMDE.drawImage,
@@ -17,10 +14,37 @@
         title: "Insert image",
     };
 
+    const imageAlign = "align:{ALIGN} ";
+    const imageSize = "size:{SIZE}";
+
     let elements = document.getElementsByClassName("simple-mde");
 
+    function add_insert_image_wiki(editor) {
+        editor.insert_image_wiki = function(id, align, size, caption) {
+            let contents = "",
+                doc = editor.codemirror.getDoc(),
+                cursor = doc.getCursor();
+
+            if (typeof align !== "undefined" && align.length) {
+                contents = contents + imageAlign.replace("{ALIGN}", align);
+            }
+
+            if (typeof size !== "undefined" && size.length) {
+                contents = contents + imageSize.replace("{SIZE}", size);
+            }
+
+            contents = `\n[image:${id} ${contents}]`;
+
+            if (typeof caption !== "undefined" && caption.length) {
+                contents = contents + "\n" + `    ${caption}`
+            }
+
+            doc.replaceRange(contents, cursor);
+        }
+    }
+
     for (let element of elements) {
-        window.editors[element.id] = new SimpleMDE({
+        let editor = new SimpleMDE({
             "element": element,
 
             autoDownloadFontAwesome: false,  // We already have the pro one loaded
@@ -53,6 +77,9 @@
             ],
 
             status: false,
-        })
+        });
+
+        add_insert_image_wiki(editor);
+        window.editors[element.id] = editor;
     }
 })();

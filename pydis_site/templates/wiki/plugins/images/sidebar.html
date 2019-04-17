@@ -1,163 +1,236 @@
 {% load i18n wiki_tags wiki_images_tags humanize wiki_thumbnails sekizai_tags %}
 
-
-{% addtoblock "js" %}
-<script type="text/javascript">
-function insert_image(data) {
-    if (typeof data == "number") {
-        image_id = data;
-        $("#img_title").text(" {{ _("Insert Image")|escapejs }} " + image_id);
-        $("#img_modal").on('shown.bs.modal', function(){
-            $(this).find('#img_caption').focus();
-        });
-        $("#img_modal").modal();
-   } else {
-        align = data.img_align.options[data.img_align.selectedIndex].text;
-        size = data.img_size.options[data.img_size.selectedIndex].text;
-        caption = data.img_caption.value;
-
-        data.img_align.selectedIndex = 0;
-        data.img_size.selectedIndex = 0;
-        data.img_caption.value = "";
-
-        tag = '\n[image:'+image_id;
-        if (align != "center") tag = tag + ' align:'+align;
-        if (size != "default") tag = tag + ' size:'+size;
-
-        if (caption == '')
-            $('#id_content').insertAtCaret(tag+']\n\n');
-        else
-            $('#id_content').insertAtCaret(tag+']\n    '+caption+'\n\n');
-    }
-}
-function add_image(form) {
-    $(form).submit();
-}
-</script>
-{% endaddtoblock %}
-
 {% with article|images_for_article as images %}
-<style type="text/css">
-  #image-list tr:first-child td {border:0;}
-</style>
+  {% if article|images_can_add:user %}
+    {% include "wiki/includes/formerrors.html" %}
 
-{% if article|images_can_add:user %}
-  {% include "wiki/includes/formerrors.html" %}
+    {# Include the hidden fields #}
+    {% for hidden in form.hidden_fields %}
+      {{ hidden }}
+    {% endfor %}
 
-  {# Include the hidden fields #}
-  {% for hidden in form.hidden_fields %}
-    {{ hidden }}
-  {% endfor %}
+    {% for field in form.visible_fields %}
+      {% include "wiki/includes/formfield.html" with render_labels=False %}
+    {% endfor %}
 
-  {% for field in form.visible_fields %}
-    {% include "wiki/includes/formfield.html" with render_labels=False %}
-  {% endfor %}
+    <button type="button" onClick="add_image(this.form)" name="{{ plugin.slug }}_save" value="1" class="button is-primary is-fullwidth">
+      <span class="icon">
+        <i class="fas fa-upload"></i>
+      </span>
+      <span>Upload</span>
+    </button>
 
-  <button type="button" onClick="add_image(this.form)" name="{{ plugin.slug }}_save" value="1" class="button is-primary is-fullwidth">
-    <span class="icon">
-      <i class="fas fa-upload"></i>
-    </span>
-    <span>Upload</span>
-  </button>
-{% endif %}
+    <br />
+  {% endif %}
 
-<div class="is-divider"></div>
-
-{% for image in images %}
-  {% with image.current_revision.imagerevision as revision %}
-    {% thumbnail revision.image "100x100" crop="center" as thumb %}
-      <div class="columns">
-        <div class="column is-half">
-          <img src="{{ thumb.url }}" alt="{{ revision.get_filename }}" title="{{ revision.get_filename }}" />
-        </div>
-        <div class="column is-half has-text-right">
-          <div class="tags is-right">
-            <span class="tag is-dark is-medium">Image ID: {{ image.id }}</span>
+  {% for image in images %}
+    {% with image.current_revision.imagerevision as revision %}
+      {% thumbnail revision.image "100x100" crop="center" as thumb %}
+        <div class="columns">
+          <div class="column is-half">
+            <img src="{{ thumb.url }}" alt="{{ revision.get_filename }}" title="{{ revision.get_filename }}" />
           </div>
+          <div class="column is-half has-text-right">
+            <div class="tags is-right">
+              <span class="tag is-dark is-medium">Image ID: {{ image.id }}</span>
+            </div>
 
-          <p>
-            <a class="button is-primary" title="Insert image" href="javascript:void(insert_image({{ image.id }}))">
-              <span class="icon">
-                <i class="fa fa-paste"></i>
-              </span>
-            </a>
-
-            {% if image|can_write:user %}
-              <a class="button is-primary" title="Replace" href="{% url 'wiki:images_add_revision' path=urlpath.path article_id=article.id image_id=image.id %}">
+            <p>
+              <a class="button is-primary" title="Insert image" href="javascript:void(insert_image({{ image.id }}))">
                 <span class="icon">
-                  <i class="fas fa-upload"></i>
+                  <i class="fa fa-paste"></i>
                 </span>
               </a>
-            {% endif %}
-          </p>
+
+              {% if image|can_write:user %}
+                <a class="button is-primary" title="Replace" href="{% url 'wiki:images_add_revision' path=urlpath.path article_id=article.id image_id=image.id %}">
+                  <span class="icon">
+                    <i class="fas fa-upload"></i>
+                  </span>
+                </a>
+              {% endif %}
+            </p>
+          </div>
         </div>
-      </div>
-    {% endthumbnail %}
-  {% endwith %}
-{% empty %}
-  <em>No images found for this article</em>
-{% endfor %}
+      {% endthumbnail %}
+    {% endwith %}
 
-<p>
-  <a class="button is-primary is-fullwidth" href="{% url 'wiki:images_index' path=urlpath.path article_id=article.id %}">
-    <span>Manage Images</span>
-    <span class="icon">
-      <i class="fas fa-arrow-right"></i>
-    </span>
-  </a>
-</p>
-<hr />
+  {% empty %}
+    <div class="has-text-centered">
+      No images found for this article.
+    </div>
+    <br />
+  {% endfor %}
 
-<hr />
+  <p>
+    <a class="button is-primary is-fullwidth" href="{% url 'wiki:images_index' path=urlpath.path article_id=article.id %}">
+      <span>Manage Images</span>
+      <span class="icon">
+        <i class="fas fa-arrow-right"></i>
+      </span>
+    </a>
+  </p>
 
-<h4>
-  {% trans "How to use images" %}
-</h4>
+  <h4 class="title is-4">How to use images</h4>
 
-<p>{% trans "After uploading an image, it is attached to this particular article and can be used only here. Other users may replace the image, but older versions are kept. To show the image press the Insert button and select the options you want to use. You can use Markdown in the caption. The Markdown code syntax for images looks like this" %}<br/>
-<pre>[image:id align:right size:orig]
-    caption indented by 4 spaces</pre>
-{% trans "Possible values for align are" %} <pre>left | right</pre>
-{% trans "Possible values for size are" %} <pre>small | medium | large | orig | default</pre>
-</p>
+  <p>
+    Images are local to the article, and may only be used in the article they are
+    uploaded to. Images may be replaced by clicking the upload button next to it
+    above, but note that image revisions are kept and can be found on the
+    <a href="{% url 'wiki:images_index' path=urlpath.path article_id=article.id %}">Manage Images page</a>.
+  </p>
+
+  <p>
+    To make use of images in an article, use the <code>image</code> wiki tag in
+    your Markdown. These tags take some arguments for customisation, and you can
+    also include a caption on the next line, indented by four spaces. Note that
+    the <code>align</code> and <code>size</code> options are optional.
+  </p>
+    <p>
+    Syntax: <code>[image:ID align:x size:y]</code>
+    </p>
+  <p>
+    The ID to use is the image ID shown next to the image in the list above.
+    You can click on the insert button if you'd like to insert an image into the
+    editor without manually typing the tag.
+  </p>
+
+  <h5 class="title is-5">Example tag</h5>
+
+  <pre>
+  [image:1 align:left size:orig]
+      Python Discord logo
+  </pre>
+
+  <h5 class="title is-5">Options for align</h5>
+
+  <div class="tags">
+    <span class="tag is-primary">left</span>
+    <span class="tag is-primary">right</span>
+  </div>
+
+  <h5 class="title is-5">Options for size</h5>
+
+  <div class="tags">
+    <span class="tag is-primary">small</span>
+    <span class="tag is-primary">medium</span>
+    <span class="tag is-primary">large</span>
+    <span class="tag is-primary">orig</span>
+    <span class="tag is-primary">default</span>
+  </div>
 {% endwith %}
 
-<div class="modal" id="img_modal" role="dialog">
-  <div class="modal-dialog">
-    <div class="modal-content" style="position:relative !important;">
-      <div class="modal-header">
-        <h4 id="img_title"></h4>
-      </div>
-      <div class="modal-body">
-        <form role="form">
-          <div class="form-group" style="margin-left:0; margin-right:0;">
-            <label for="img_align">{% trans "Alignment" %}</label>
-            <select class="form-control" id="img_align">
-              <option>center</option>
-              <option>left</option>
-              <option>right</option>
-            </select>
+<div class="modal" id="imgModal">
+  <div class="modal-background"></div>
+  <div class="modal-card" style="height: 80%; width: 80%;">
+    <div class="modal-card-head">
+      <p class="modal-card-title">Insert Image</p>
+    </div>
+    <div class="modal-card-body" style="padding: 0; overflow: hidden;">
+      <section class="section">
+        <input type="hidden" value="0" id="img_id" />
+        <div class="field is-horizontal">
+          <div class="field-label">
+            <label for="img_align">Image alignment</label>
           </div>
-          <div class="form-group" style="margin-left:0; margin-right:0;">
-            <label for="img_size">{% trans "Size" %}</label>
-            <select class="form-control" id="img_size">
-              <option>default</option>
-              <option>small</option>
-              <option>medium</option>
-              <option>large</option>
-              <option>orig</option>
-            </select>
+          <div class="field-body">
+            <div class="control has-icons-left is-fullwidth">
+              <div class="select is-fullwidth">
+                <select id="img_align">
+                  <option selected value="">Default</option>
+                  <option value="left">Left</option>
+                  <option value="right">Right</option>
+                </select>
+              </div>
+
+              <span class="icon is-left">
+                <i class="fas fa-align-center"></i>
+              </span>
+            </div>
           </div>
-          <div class="form-group" style="margin-left:0; margin-right:0;">
-            <label for="img_caption">{% trans "Caption" %}</label>
-            <input type="text" class="form-control" id="img_caption" placeholder="{% trans "Enter caption" %}">
+        </div>
+
+        <div class="field is-horizontal">
+          <div class="field-label">
+            <label for="img_size">Image size</label>
           </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-success btn-default" data-dismiss="modal" onClick="insert_image(this.form)"> {% trans "Insert image" %} </button>
-        <button class="btn btn-danger" data-dismiss="modal"> {% trans "Cancel" %} </button>
-      </div>
+          <div class="field-body">
+            <div class="control has-icons-left is-fullwidth">
+              <div class="select is-fullwidth">
+                <select id="img_size">
+                  <option selected value="">Default</option>
+                  <option value="orig">Original</option>
+
+                  <option value="small">Small</option>
+                  <option value="medium">Medium</option>
+                  <option value="large">Large</option>
+                </select>
+              </div>
+              <span class="icon is-left">
+                <i class="fas fa-expand-arrows"></i>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="field is-horizontal">
+          <div class="field-label">
+            <label for="img_caption">Image caption</label>
+          </div>
+          <div class="field-body">
+            <input class="input" type="text" placeholder="Enter Caption" id="img_caption" />
+          </div>
+        </div>
+      </section>
+    </div>
+    <div class="modal-card-foot">
+      <button class="button is-light" aria-label="close">
+        <span class="icon">
+          <i class="fas fa-arrow-left"></i>
+        </span>
+        <span>Back</span>
+      </button>
+      <button class="button is-primary" id="id_image_insert">
+        <span class="icon">
+          <i class="fas fa-paste"></i>
+        </span>
+        <span>Insert</span>
+      </button>
     </div>
   </div>
 </div>
+
+<script type="text/javascript">
+  $("#id_image_insert").click(function(e) {
+    e.preventDefault();
+
+    let image_id_element = document.getElementById("img_id"),
+        align_element = document.getElementById("img_align"),
+        size_element = document.getElementById("img_size"),
+        caption_element = document.getElementById("img_caption"),
+
+        editor = window.editors["id_content"];
+
+    editor.insert_image_wiki(
+        image_id_element.value, align_element.value,
+        size_element.value, caption_element.value
+    );
+
+    $("#imgModal").removeClass("is-active");  // Close modal
+
+    // Reset form
+    image_id_element.value = 0;
+    align_element.selectedIndex = 0;
+    size_element.selectedIndex = 0;
+    caption_element.value = "";
+  });
+
+  function insert_image(image_id) {
+    document.getElementById("img_id").value = image_id;
+    open_modal("imgModal");
+  }
+
+  function add_image(form) {
+      $(form).submit();
+  }
+</script>

@@ -1,3 +1,7 @@
 .breadcrumb-section {
     padding: 1rem;
 }
+
+div.control.is-fullwidth {
+    width: 100%;
+}

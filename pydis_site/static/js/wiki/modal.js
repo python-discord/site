@@ -7,7 +7,8 @@ function open_modal(id) {
         $(element).removeClass("is-active");
     });
 
-    $(element).find("[aria-label=\"close\"]").click(function() {
+    $(element).find("[aria-label=\"close\"]").click(function(e) {
         $(element).removeClass("is-active");
+        e.preventDefault();
     });
 }
