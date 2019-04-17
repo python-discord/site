@@ -3,20 +3,23 @@
 
   NB! Watch out for line breaks, markdown might add <br />s and <p>s.
 {% endcomment %}{% with image.current_revision.imagerevision as revision %}{% spaceless %}
-<figure class="thumbnail{% if align %} pull-{{ align }}{% endif %}" {% if width %} style="width: {{ width }}px;" {% endif %}>
+<figure
+    class="image{% if align %} is-pulled-{{ align }}{% endif %}" {% if width %}
+    style="width: {{ width }}px;" {% endif %}
+>
     <a href="{{ revision.image.url }}">
-{% if size %}
-  {% thumbnail revision.image size upscale=False as thumb %}
-      <img src="{{ thumb.url }}" alt="{{ revision.get_filename }}" />
-  {% empty %}
-      <div class="caption">
-        <em>{% trans "Image not found" %}</em>
-      </div>
-  {% endthumbnail %}
-{% else %}
-      <img src="{{ revision.image.url }}" alt="{{ revision.get_filename }}" />
-{% endif %}
+      {% if size %}
+        {% thumbnail revision.image size upscale=False as thumb %}
+          <img src="{{ thumb.url }}" alt="{{ revision.get_filename }}" />
+        {% empty %}
+          <figcaption>
+            <em>"Image not found"</em>
+          </figcaption>
+        {% endthumbnail %}
+      {% else %}
+        <img src="{{ revision.image.url }}" alt="{{ revision.get_filename }}" />
+      {% endif %}
     </a>
-  <figcaption class="caption">{{ caption|safe }}</figcaption>
+  <figcaption>{{ caption|safe }}</figcaption>
 </figure>
 {% endspaceless %}{% endwith %}
