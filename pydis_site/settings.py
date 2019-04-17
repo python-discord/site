@@ -258,3 +258,13 @@ BULMA_SETTINGS = {
         "footer-padding": "1rem 1.5rem 1rem",
     }
 }
+
+# Which of our GitHub repos should be displayed on the front page, and in which order?
+HOMEPAGE_REPOS = [
+    "python-discord/site",
+    "python-discord/bot",
+    "python-discord/snekbox",
+    "python-discord/seasonalbot",
+    "python-discord/django-simple-bulma",
+    "python-discord/django-crispy-bulma",
+]

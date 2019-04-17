@@ -52,95 +52,26 @@
       <br>
       <div class="columns is-multiline">
 
-        <!-- Site -->
-        <div class="column is-one-third">
-          <div class="card has-equal-height">
-            <div class="card-content">
-              <i class="fab fa-github"></i> <a href="https://github.com/python-discord/site"> python-discord/site</a>
-              <br><br>
-              <em>Source code for our website</em>
-              <br><br>
-              </span><span class="repo-language-dot python"></span> Python
-              <span id="repo-footer-item"><i class="fas fa-star"></i> 566</span>
-              <span id="repo-footer-item"><i class="fas fa-code-branch"></i> 27</span>
+        <!-- Display projects from settings.HOMEPAGE_REPOS -->
+        {% for repo in repo_data %}
+          <div class="column is-one-third">
+            <div class="card has-equal-height github-card">
+              <div class="card-content">
+                <div class="repo-headline">
+                  <i class="fab fa-github"></i>
+                  <a href="https://github.com/{{ repo.repo_name }}"> <strong>{{ repo.repo_name }}</strong></a>
+                </div>
+                <div>
+                  {{ repo.description }}
+                  <br><br>
+                  </span><span class="repo-language-dot {{ repo.language | lower }}"></span> {{ repo.language }}
+                  <span id="repo-footer-item"><i class="fas fa-star"></i> {{ repo.stargazers }}</span>
+                  <span id="repo-footer-item"><i class="fas fa-code-branch"></i> {{ repo.forks }}</span>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-
-        <!-- Bot -->
-        <div class="column is-one-third">
-          <div class="card has-equal-height">
-            <div class="card-content">
-              <i class="fab fa-github"></i> <a href="https://github.com/python-discord/bot"> python-discord/bot</a>
-              <br><br>
-              <em>Source code for our Discord bot</em>
-              <br><br>
-              </span><span class="repo-language-dot python"></span> Python
-              <span id="repo-footer-item"><i class="fas fa-star"></i> 566</span>
-              <span id="repo-footer-item"><i class="fas fa-code-branch"></i> 27</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Snekbox -->
-        <div class="column is-one-third">
-          <div class="card has-equal-height">
-            <div class="card-content">
-              <i class="fab fa-github"></i> <a href="https://github.com/python-discord/snekbox"> python-discord/snekbox</a>
-              <br><br>
-              <em>Easy, safe evaluation of arbitrary Python code</em>
-              <br><br>
-              </span><span class="repo-language-dot python"></span> Python
-              <span id="repo-footer-item"><i class="fas fa-star"></i> 566</span>
-              <span id="repo-footer-item"><i class="fas fa-code-branch"></i> 27</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- SeasonalBot -->
-        <div class="column is-one-third">
-          <div class="card has-equal-height">
-            <div class="card-content">
-              <i class="fab fa-github"></i> <a href="https://github.com/python-discord/seasonalbot"> python-discord/seasonalbot</a>
-              <br><br>
-              <em>A Discord bot that changes with the seasons. Meant as a beginner-friendly learning project.</em>
-              <br><br>
-              </span><span class="repo-language-dot python"></span> Python
-              <span id="repo-footer-item"><i class="fas fa-star"></i> 566</span>
-              <span id="repo-footer-item"><i class="fas fa-code-branch"></i> 27</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- django-simple-bulma -->
-        <div class="column is-one-third">
-          <div class="card has-equal-height">
-            <div class="card-content">
-              <i class="fab fa-github"></i> <a href="https://github.com/python-discord/django-simple-bulma"> python-discord/django-simple-bulma</a>
-              <br><br>
-              <em>Django application to add the Bulma CSS framework and its extensions</em>
-              <br><br>
-              </span><span class="repo-language-dot css"></span> CSS
-              <span id="repo-footer-item"><i class="fas fa-star"></i> 566</span>
-              <span id="repo-footer-item"><i class="fas fa-code-branch"></i> 27</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- django-crispy-bulma -->
-        <div class="column is-one-third">
-          <div class="card has-equal-height">
-            <div class="card-content">
-              <i class="fab fa-github"></i> <a href="https://github.com/python-discord/django-crispy-bulma"> python-discord/django-crispy-bulma</a>
-              <br><br>
-              <em>Django application to add 'django-crispy-forms' layout objects for Bulma.io</em>
-              <br><br>
-              </span><span class="repo-language-dot html"></span> HTML
-              <span id="repo-footer-item"><i class="fas fa-star"></i> 566</span>
-              <span id="repo-footer-item"><i class="fas fa-code-branch"></i> 27</span>
-            </div>
-          </div>
-        </div>
+        {% endfor %}
 
       </div>
     </div>

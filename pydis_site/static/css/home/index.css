@@ -53,6 +53,17 @@
     margin: 8px auto auto auto;
 }
 
+div.card.github-card {
+    box-shadow: none;
+    border: #d1d5da 1px solid;
+    border-radius: 3px;
+}
+
+div.repo-headline {
+    font-size: 1.25rem;
+    margin-bottom: 8px;
+}
+
 span.repo-language-dot {
     border-radius: 50%;
     height: 12px;
