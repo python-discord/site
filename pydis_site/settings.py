@@ -278,6 +278,8 @@ BULMA_SETTINGS = {
         "link": "$primary",
 
         "green": "#21c65c",  # Better contrast with the light text
+
+        "dimensions": "16 24 32 48 64 96 128 256 512"  # Image dimensions
     }
 }
 
