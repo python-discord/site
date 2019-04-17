@@ -99,4 +99,3 @@ def get_field_options(context, field: BoundField):
 @register.filter
 def render_urlpath(value: URLPath):
     return value.path or "/"
-

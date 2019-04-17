@@ -276,6 +276,8 @@ BULMA_SETTINGS = {
     "variables": {
         "primary": "#7289DA",
         "link": "$primary",
+
+        "green": "#21c65c",  # Better contrast with the light text
     }
 }
 
@@ -313,7 +315,7 @@ WIKI_MARKDOWN_KWARGS = {
 }
 
 WIKI_MESSAGE_TAG_CSS_CLASS = {
-    messages.DEBUG: "is-info",
+    messages.DEBUG: "",  # is-info isn't distinctive enough from blurple
     messages.ERROR: "is-danger",
     messages.INFO: "is-primary",
     messages.SUCCESS: "is-success",

@@ -55,48 +55,55 @@ function add_image(form) {
 
   <button type="button" onClick="add_image(this.form)" name="{{ plugin.slug }}_save" value="1" class="button is-primary is-fullwidth">
     <span class="icon">
-      <i class="fas fa-save"></i>
+      <i class="fas fa-upload"></i>
     </span>
-    <span>Save</span>
+    <span>Upload</span>
   </button>
 {% endif %}
 
 <div class="is-divider"></div>
 
-<div style="max-height: 300px; overflow: auto;">
-  <table class="table table-responsive table-bordered" id="image-list">
-    {% for image in images %}
-      {% with image.current_revision.imagerevision as revision %}
-      {% thumbnail revision.image "50x50" crop="center" as thumb %}
-        <tr>
-          <td style="white-space: nowrap;">
-            <p>{% trans "Image id" %}: {{ image.id }}</p>
-            <p>
-              <a href="javascript:void(insert_image({{ image.id }}))"><span class="fa fa-edit"></span> {% trans "Insert" %}</a><br />
-              {% if image|can_write:user %}
-              <a href="{% url 'wiki:images_add_revision' path=urlpath.path article_id=article.id image_id=image.id %}"><span class="fa fa-upload"></span> {% trans "Replace" %}</a>
-              {% endif %}
-            </p>
-          </td>
-          <td>
-            <div class="thumbnail">
-              <img src="{{ thumb.url }}" alt="{{ revision.get_filename }}" />
-            </div>
-          </td>
-        </tr>
-      {% endthumbnail %}
-      {% endwith %}
-    {% empty %}
-    <tr>
-      <td><em>{% trans "No images found for this article" %}</em></td>
-    </tr>
-    {% endfor %}
-  </table>
-</div>
+{% for image in images %}
+  {% with image.current_revision.imagerevision as revision %}
+    {% thumbnail revision.image "100x100" crop="center" as thumb %}
+      <div class="columns">
+        <div class="column is-half">
+          <img src="{{ thumb.url }}" alt="{{ revision.get_filename }}" title="{{ revision.get_filename }}" />
+        </div>
+        <div class="column is-half has-text-right">
+          <div class="tags is-right">
+            <span class="tag is-dark is-medium">Image ID: {{ image.id }}</span>
+          </div>
+
+          <p>
+            <a class="button is-primary" title="Insert image" href="javascript:void(insert_image({{ image.id }}))">
+              <span class="icon">
+                <i class="fa fa-paste"></i>
+              </span>
+            </a>
+
+            {% if image|can_write:user %}
+              <a class="button is-primary" title="Replace" href="{% url 'wiki:images_add_revision' path=urlpath.path article_id=article.id image_id=image.id %}">
+                <span class="icon">
+                  <i class="fas fa-upload"></i>
+                </span>
+              </a>
+            {% endif %}
+          </p>
+        </div>
+      </div>
+    {% endthumbnail %}
+  {% endwith %}
+{% empty %}
+  <em>No images found for this article</em>
+{% endfor %}
 
 <p>
-  <a href="{% url 'wiki:images_index' path=urlpath.path article_id=article.id %}">
-    {% trans "Manage images" %} &raquo;
+  <a class="button is-primary is-fullwidth" href="{% url 'wiki:images_index' path=urlpath.path article_id=article.id %}">
+    <span>Manage Images</span>
+    <span class="icon">
+      <i class="fas fa-arrow-right"></i>
+    </span>
   </a>
 </p>
 <hr />

@@ -3,7 +3,7 @@
     <div class="field-label">
       {% if field.label %}
         <label for="{{ field.auto_id }}" class="label {% if field.errors %} is-danger{% endif %}">
-          IN PLACE RENDER: {{ field.label | safe }} {% if field.field.required %}<span class="asterisk has-text-danger">*</span>{% endif %}
+          {{ field.label | safe }} {% if field.field.required %}<span class="asterisk has-text-danger">*</span>{% endif %}
         </label>
       {% endif %}
 
@@ -33,7 +33,7 @@
               <i class="fas fa-image"></i>
             </span>
             <span class="file-label">
-              Upload
+              Choose
             </span>
           </span>
           <span class="file-name"></span>
