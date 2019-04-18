@@ -14,7 +14,7 @@ echo [i] Collecting static files.
 python manage.py collectstatic --no-input --clear --verbosity 0
 
 echo [i] Creating a superuser
-echo "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser('admin', 'admin', 'admin')" | python manage.py shell
+echo "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser('admin', 'admin', 'admin') if not User.objects.filter(username='admin').exists() else print('Username already exists')" | python manage.py shell
 
 echo [i] Starting server.
 python manage.py runserver 0.0.0.0:8000
