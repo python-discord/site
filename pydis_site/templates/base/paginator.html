@@ -1,0 +1,64 @@
+{% comment %}
+This template inserts a Bulma paginator wherever one is required. Simply include it as follows:
+
+{% include "base/paginator.html" with page=paginator_object %}
+{% endcomment %}
+
+<nav class="pagination" role="navigation" aria-label="pagination">
+    {% if page.has_previous %}
+        <a class="pagination-previous" href="{% url "blog.posts" page=page.previous_page_number %}">Newer</a>
+    {% else %}
+        <a class="pagination-previous" title="This is the first page" disabled>Newer</a>
+    {% endif %}
+
+    {% if page.has_next %}
+        <a class="pagination-next" href="{% url "" page=1 %}">Older</a>
+    {% else %}
+        <a class="pagination-next" title="This is the last page" disabled>Older</a>
+    {% endif %}
+
+    <ul class="pagination-list">
+        {% if page.has_previous %}
+            <li>
+                <a class="pagination-link" aria-label="Goto page 1"
+                   href="{% url "blog.posts" page=1 %}">
+                    1
+                </a>
+            </li>
+            <li>
+              <span class="pagination-ellipsis">&hellip;</span>
+            </li>
+            <li>
+                <a class="pagination-link" aria-label="Goto page {{ page.previous_page_number }}"
+                   href="{% url "blog.posts" page=page.previous_page_number %}">
+                    {{ page.previous_page_number }}
+                </a>
+            </li>
+        {% endif %}
+
+        <li>
+            <a class="pagination-link is-current" aria-label="Page {{ page.number }}" aria-current="page"
+               href="{% url "blog.posts" page=page.number %}">
+                {{ page.number }}
+            </a>
+        </li>
+
+        {% if page.has_next %}
+            <li>
+                <a class="pagination-link" aria-label="Goto page {{ page.next_page_number }}"
+                   href="{% url "blog.posts" page=page.next_page_number %}">
+                    {{ page.next_page_number }}
+                </a>
+            </li>
+            <li>
+              <span class="pagination-ellipsis">&hellip;</span>
+            </li>
+            <li>
+                <a class="pagination-link" aria-label="Goto page {{ page.paginator.num_pages }}"
+                   href="{% url "blog.posts" page=page.paginator.num_pages %}">
+                    {{ page.paginator.num_pages }}
+                </a>
+            </li>
+        {% endif %}
+    </ul>
+</nav>

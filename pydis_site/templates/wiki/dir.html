@@ -77,6 +77,8 @@
   {% endfor %}
 </table>
 
-{% include "wiki/includes/pagination.html" %}
+{% if is_paginated %}
+  {% include "base/paginator.html" with page=page_obj %}
+{% endif %}
 
 {% endblock %}
