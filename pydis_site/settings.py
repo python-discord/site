@@ -40,7 +40,6 @@ if DEBUG:
         'api.pythondiscord.local',
         'staff.pythondiscord.local',
         'wiki.pythondiscord.local',
-        '*',  # PLEASE yell at me if I commit this
     ]
     SECRET_KEY = "+_x00w3e94##2-qm-v(5&-x_@*l3t9zlir1etu+7$@4%!it2##"
 
@@ -202,7 +201,7 @@ ROOT_HOSTCONF = 'pydis_site.hosts'
 DEFAULT_HOST = 'home'
 
 if DEBUG:
-    PARENT_HOST = 'trixie.gserv.me:8000'
+    PARENT_HOST = 'pythondiscord.local:8000'
 else:
     PARENT_HOST = env('PARENT_HOST', default='pythondiscord.com')
 
@@ -303,7 +302,6 @@ WIKI_MARKDOWN_KWARGS = {
         "markdown.extensions.abbr",
         "markdown.extensions.attr_list",
         "markdown.extensions.extra",
-        "markdown.extensions.fenced_code",
         "markdown.extensions.footnotes",
         "markdown.extensions.nl2br",
         "markdown.extensions.sane_lists",
