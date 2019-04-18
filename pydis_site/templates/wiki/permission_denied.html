@@ -1,32 +1,36 @@
 {% extends "wiki/base.html" %}
-{% load wiki_tags i18n %}
-
+{% load wiki_tags %}
 
 {% block wiki_pagetitle %}Permission Denied{% endblock %}
 
 {% block wiki_contents %}
-  <h1 class="page-header">{% trans "Permission Denied" %}</h1>
-  <p class="alert denied alert-danger">
-    <i class="fa fa-minus-circle"></i>
-    {% trans "Sorry, you don't have permission to access this page." %}
-  </p>
-  {% if article.current_revision.locked %}
-  <p class="alert alert-warning">
-    <i class="fa fa-lock"></i>
-    {% trans "This article is locked for editing." %}
-  </p>
-  {% endif %}
+  <div class="message is-danger">
+    <div class="message-header">
+      <p>Permission Denied</p>
+    </div>
 
-  <p>
-  {% if not read_denied %}
-    <a href="{% url 'wiki:get' article_id=article.id path=urlpath.path %}" class="btn btn-default">
-      {% trans "Back to article" %}
-    </a>
-  {% elif urlpath.parent %}
-    <a href="{% url 'wiki:get' path=urlpath.parent.path %}" class="btn btn-default">
-      {% trans "Back to article" %}
-    </a>
-  {% endif %}
-  </p>
-
+    <div class="message-body">
+      <p>
+        Sorry, you don't have permission to access this page.
+      </p>
+      {% if article.current_revision.locked %}
+        <p>This article is locked for editing.</p>
+      {% endif %}
+      {% if not read_denied %}
+        <a href="{% url 'wiki:get' article_id=article.id path=urlpath.path %}" class="button is-primary">
+          <span class="icon">
+            <i class="fas fa-arrow-left"></i>
+          </span>
+          <span>Back to article</span>
+        </a>
+      {% elif urlpath.parent %}
+        <a href="{% url 'wiki:get' path=urlpath.parent.path %}" class="button is-primary">
+          <span class="icon">
+            <i class="fas fa-arrow-left"></i>
+          </span>
+          <span>Back to article</span>
+        </a>
+      {% endif %}
+    </div>
+  </div>
 {% endblock %}

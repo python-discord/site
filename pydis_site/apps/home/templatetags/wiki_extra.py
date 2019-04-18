@@ -1,3 +1,5 @@
+from typing import Union
+
 from django import template
 from django.forms import (
     BooleanField, BoundField, CharField, ChoiceField, ComboField, DateField, DateTimeField, DecimalField, DurationField,
@@ -97,5 +99,8 @@ def get_field_options(context, field: BoundField):
 
 
 @register.filter
-def render_urlpath(value: URLPath):
+def render_urlpath(value: Union[URLPath, str]):
+    if isinstance(value, str):
+        return value or "/"
+
     return value.path or "/"
