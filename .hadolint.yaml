@@ -1,4 +1,0 @@
-ignored:
-    - DL3008  # Ignore suggestion for pinned versions in `apt-get`...
-    - DL3013  # ... and `pip`.
-    - DL3018  # ... and `apk`.
