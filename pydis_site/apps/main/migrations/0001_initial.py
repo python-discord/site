@@ -13,7 +13,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='RepoData',
+            name='RepositoryMetadata',
             fields=[
                 ('last_updated', models.DateTimeField(default=django.utils.timezone.now, help_text='The date and time this data was last fetched.')),
                 ('repo_name', models.CharField(help_text='The full name of the repo, e.g. python-discord/site', max_length=40, primary_key=True, serialize=False)),

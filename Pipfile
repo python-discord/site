@@ -26,7 +26,7 @@ djangorestframework-bulk = "~=0.2.1"
 psycopg2-binary = "~=2.8"
 django-simple-bulma = ">=1.1.6,<2.0"
 django-crispy-bulma = ">=0.1.2,<2.0"
-requests = "*"
+requests = "~=2.21"
 
 [requires]
 python_version = "3.7"
@@ -34,3 +34,4 @@ python_version = "3.7"
 [scripts]
 makemigrations = "python manage.py makemigrations"
 django_shell = "python manage.py shell"
+test = "python manage.py test -v 2"

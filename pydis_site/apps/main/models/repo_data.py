@@ -2,7 +2,7 @@ from django.db import models
 from django.utils import timezone
 
 
-class RepoData(models.Model):
+class RepositoryMetadata(models.Model):
     """Information about one of our repos fetched from the GitHub API."""
 
     last_updated = models.DateTimeField(
