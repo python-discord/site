@@ -19,7 +19,7 @@ jobs:
       - script: docker run -v $(pwd):/app:ro --rm ruby:alpine /bin/ash -c "gem install mdl && cd /app && mdl"
         displayName: run markdownlint
 
-      - script: docker run -i hadolint/hadolint hadolint --ignore DL3008 --ignore DL3018 --ignore DL3019 - < docker/app/Dockerfile
+      - script: docker run -i hadolint/hadolint hadolint --ignore DL3008 --ignore DL3013 --ignore DL3018 --ignore DL3019 - < docker/app/Dockerfile
         displayName: run hadolint
 
   - job: lint_python
