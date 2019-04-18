@@ -1,44 +1,68 @@
-{% load i18n sekizai_tags static %}
+{% load sekizai_tags static %}
 
-<h4>{% trans "Link to another wiki page" %}</h4>
+<h4 class="title is-4">Link to another wiki page</h4>
 
 <p>
-  {% trans "Type in something from another wiki page's title and auto-complete will help you create a tag for your wiki link. Tags for links look like this:" %}<br />
+  Type in something from another wiki page's title and auto-complete will help you create a tag for your wiki link. Tags for links look like this:<br />
 </p>
 
 <pre>[Title of link](wiki:ArticleSlug)</pre>
 
-<div class="input-group">
-  <input type="text" class="page_title_query form-control" id="links_page_title_query" value="" placeholder="Type to search..." />
-  <span class="input-group-btn">
-    <button type="button" class="btn btn-default" onclick="wikiInsertLink()">
-      {% trans "Insert" %}
-    </button>
-  </span>
+<div class="field">
+  <div class="control has-icons-left">
+    <div class="dropdown">
+      <div class="dropdown-trigger">
+        <input class="input" type="text" id="page_title_input" value="" placeholder="Search: 3+ chars" aria-haspopup="true" aria-controls="page_title_menu">
+      </div>
+      <div class="dropdown-menu" id="page_title_menu" role="menu"></div>
+    </div>
+
+    <span class="icon is-small is-left">
+      <i class="fas fa-search"></i>
+    </span>
+  </div>
 </div>
 
-<hr />
+<div class="is-divider"></div>
 
-<h4>{% trans "An external link" %}</h4>
+<h4 class="title is-4">An external link</h4>
 
 <p>
-  {% trans "You can link to another website simply by inserting an address example.com or http://example.com or by using the markdown syntax:" %}<br />
+  You can link to another website simply by inserting an address example.com or http://example.com or by using the markdown syntax:<br />
 </p>
+
 <pre>[Clickable text](http://example.com)</pre>
 
-{% addtoblock "js" %}<script type="text/javascript" src="{% static "wiki/js/typeahead.min.js" %}"></script>{% endaddtoblock %}
 {% addtoblock "js" %}
-<script type="text/javascript">
-  $(document).ready(function() {
-      $('.page_title_query').typeahead({
-        remote: "{% url 'wiki:links_query_urlpath' path=urlpath.path article_id=article.id %}?query=%QUERY",
-        dataType: String
-      });
-  });
+  <script src="https://cdn.rawgit.com/mattmezza/bulmahead/master/dist/bulmahead.bundle.js"></script>
 
-function wikiInsertLink() {
-  $('#id_content').insertAtCaret($('#links_page_title_query').val());
-}
+  <script type="text/javascript">
+    $(document).ready(function() {
+      function search(query) {
+        query = encodeURIComponent(query);
+        return fetch(`{% url 'wiki:links_query_urlpath' path=urlpath.path article_id=article.id %}?query=${query}`).then(function(response) {
+          return response.json();
+        }).then(function(data){
+          return data.map(function(element) {
+            return {label: element, value: element};
+          })
+        });
+      }
+
+      function selected(state) {
+        let value = state.value;
+        wikiInsertLink(value);
+        document.getElementById("page_title_input").value = "";
+      }
+
+      bulmahead("page_title_input", "page_title_menu", search, selected, 10);
+    });
+
+    function wikiInsertLink(value) {
+      let editor = window.editors["id_content"];
+
+      editor.insert_text(value);
+    }
 
 </script>
 {% endaddtoblock %}

@@ -43,6 +43,15 @@
         }
     }
 
+    function add_insert_text(editor) {
+        editor.insert_text = function(text) {
+            let doc = editor.codemirror.getDoc(),
+                cursor = doc.getCursor();
+
+            doc.replaceRange(text, cursor);
+        }
+    }
+
     for (let element of elements) {
         let editor = new SimpleMDE({
             "element": element,
@@ -80,6 +89,8 @@
         });
 
         add_insert_image_wiki(editor);
+        add_insert_text(editor);
+
         window.editors[element.id] = editor;
     }
 })();
