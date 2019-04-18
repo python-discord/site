@@ -201,7 +201,7 @@ ROOT_HOSTCONF = 'pydis_site.hosts'
 DEFAULT_HOST = 'home'
 
 if DEBUG:
-    PARENT_HOST = 'pythondiscord.local:8000'
+    PARENT_HOST = env('PARENT_HOST', default='pythondiscord.local:8000')
 else:
     PARENT_HOST = env('PARENT_HOST', default='pythondiscord.com')
 
