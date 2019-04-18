@@ -2,9 +2,9 @@ from django.contrib.postgres import fields as pgfields
 from django.core.validators import MinValueValidator
 from django.db import models
 
-from pydis_site.apps.api.models.utils import ModelReprMixin
 from pydis_site.apps.api.models.bot.tag import validate_tag_embed
 from pydis_site.apps.api.models.bot.user import User
+from pydis_site.apps.api.models.utils import ModelReprMixin
 
 
 class Message(ModelReprMixin, models.Model):

@@ -1,9 +1,9 @@
 import requests
-
+from django.conf import settings
 from django.shortcuts import render
 from django.utils import timezone
 from django.views import View
-from django.conf import settings
+
 from pydis_site.apps.main.models import RepoData
 
 GITHUB_API = "https://api.github.com/users/python-discord/repos"
@@ -26,10 +26,10 @@ class Home(View):
 
             if full_name in settings.HOMEPAGE_REPOS:
                 repo_dict[full_name] = {
-                    "full_name":        repo["full_name"],
-                    "description":      repo["description"],
-                    "language":         repo["language"],
-                    "forks_count":      repo["forks_count"],
+                    "full_name": repo["full_name"],
+                    "description": repo["description"],
+                    "language": repo["language"],
+                    "forks_count": repo["forks_count"],
                     "stargazers_count": repo["stargazers_count"],
                 }
         print(f"repo_dict after processing = {repo_dict}")
@@ -84,7 +84,7 @@ class Home(View):
             repo_data_container = []
 
             # Create all the repodata records in the database.
-            for repo_name, api_data in api_data_container.items():
+            for api_data in api_data_container.values():
                 repo_data = RepoData(
                     repo_name=api_data["full_name"],
                     description=api_data["description"],
