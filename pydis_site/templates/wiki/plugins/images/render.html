@@ -4,8 +4,8 @@
   NB! Watch out for line breaks, markdown might add <br />s and <p>s.
 {% endcomment %}{% with image.current_revision.imagerevision as revision %}{% spaceless %}
 <figure
-    class="image{% if align %} is-pulled-{{ align }}{% endif %}" {% if width %}
-    style="width: {{ width }}px;" {% endif %}
+    class="image{% if align %} is-pulled-{{ align }}{% endif %}"
+    {% if width %}style="width: {{ width }}px;" {% endif %}
 >
   <a href="{{ revision.image.url }}">
     {% if size %}
@@ -13,7 +13,7 @@
         <img src="{{ thumb.url }}" alt="{{ revision.get_filename }}" />
       {% empty %}
         <figcaption>
-          <em>"Image not found"</em>
+          <em>Image not found</em>
         </figcaption>
       {% endthumbnail %}
     {% else %}

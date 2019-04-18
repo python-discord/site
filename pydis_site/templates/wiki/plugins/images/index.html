@@ -1,6 +1,7 @@
 {% extends "wiki/article.html" %}
 {% load wiki_tags i18n humanize wiki_thumbnails %}
 
+{# TODO: This page needs re-styling, but it's functional for now so we're not touching it until after wiki completion #}
 
 {% block wiki_pagetitle %}{% trans "Images" %}: {{ article.current_revision.title }}{% endblock %}
 
@@ -63,7 +64,7 @@
                   </a>
                 {% endif %}
                 {% if article|can_moderate:user %}
-                  <a class="button is-danger tooltip" href="{% url 'wiki:images_purge' path=urlpath.path article_id=article.id image_id=image.id %}">
+                  <a class="button is-danger" href="{% url 'wiki:images_purge' path=urlpath.path article_id=article.id image_id=image.id %}">
                     <span class="icon">
                       <i class="fas fa-trash"></i>
                     </span>
@@ -129,7 +130,7 @@
                             <span>Restore</span>
                           </a>
                         {% else %}
-                          <a class="button is-static has-text-black">
+                          <a class="button is-static has-text-grey">
                             <span class="icon">
                               <i class="fas fa-times"></i>
                             </span>

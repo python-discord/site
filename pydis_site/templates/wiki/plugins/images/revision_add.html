@@ -6,13 +6,13 @@
 {% block wiki_contents_tab %}
   <div class="columns">
     <div class="column is-two-thirds">
-      <p class="lead">
+      <p>
         Upload an image to replace the current one.
       </p>
       <form method="POST" class="form-horizontal" enctype="multipart/form-data">
         {% wiki_form form %}
 
-        <a href="{% url 'wiki:images_index' path=urlpath.path article_id=article.id %}" class="button is-light">
+        <a href="{% url 'wiki:images_index' path=urlpath.path article_id=article.id %}" class="button is-white">
           <span class="icon">
             <i class="fas fa-arrow-left"></i>
           </span>
