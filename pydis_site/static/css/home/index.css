@@ -17,10 +17,6 @@
     margin-right: 2rem;
 }
 
-.navbar-item.is-large img {
-    max-height: 3rem;
-}
-
 .navbar-item.is-fullsize {
     padding:0;
 }
@@ -87,6 +83,19 @@ span.repo-language-dot.css {
 
 #repo-footer-item {
     margin-left: 1.2rem;
+}
+
+#navbar-banner {
+    background-color: transparent;
+}
+
+#navbar-banner img {
+    max-height: 3rem;
+}
+
+#sponsors-hero {
+    padding-top: 2rem;
+    padding-bottom: 3rem;
 }
 
 @media screen and (min-width: 1088px) {

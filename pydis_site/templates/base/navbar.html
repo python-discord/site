@@ -4,7 +4,7 @@
 <nav class="navbar is-primary" role="navigation" aria-label="main navigation">
   <div class="navbar-brand">
 
-    <a class="navbar-item is-large has-left-margin-1 has-no-highlight" href="#">
+    <a id="navbar-banner" class="navbar-item has-left-margin-1" href="/">
       <img src="{% static "images/navbar/pydis_banner_no_square.svg" %}" alt="Python Discord logo"/>
     </a>
 
@@ -19,32 +19,32 @@
   {# Content on the right side of the navbar #}
   <div class="navbar-menu is-paddingless" id="navbar_menu">
     <div class="navbar-end">
-      {# Rules #}
-      <a class="navbar-item" href="#">
-        <span class="icon is-size-4 is-medium"><i class="fas fa-book"></i></span>
-        <span>&nbsp;Rules</span>
+      {# GitHub #}
+      <a class="navbar-item" href="https://github.com/python-discord">
+        <span class="icon is-size-4 is-medium"><i class="fab fa-github"></i></span>
+        <span>&nbsp;GitHub</span>
       </a>
 
       {# Reddit #}
-      <a class="navbar-item" href="#">
+      <a class="navbar-item" href="https://reddit.com/r/python">
         <span class="icon is-size-4 is-medium"><i class="fab fa-reddit-alien"></i></span>
         <span>&nbsp;Reddit</span>
       </a>
 
       {# YouTube #}
-      <a class="navbar-item" href="#">
+      <a class="navbar-item" href="https://youtube.com/pythondiscord">
         <span class="icon is-size-4 is-medium"><i class="fab fa-youtube"></i></span>
         <span>&nbsp;YouTube</span>
       </a>
 
       {# Patreon #}
-      <a class="navbar-item" href="#">
+      <a class="navbar-item" href="http://patreon.com/python_discord">
         <span class="icon is-size-4 is-medium"><i class="fab fa-patreon"></i></span>
         <span>&nbsp;Patreon</span>
       </a>
 
       {# RedBubble #}
-      <a class="navbar-item" href="#">
+      <a class="navbar-item" href="https://www.redbubble.com/people/PythonDiscord/shop">
         <span class="icon is-size-4 is-medium"><i class="fas fa-tshirt"></i></span>
         <span>&nbsp;Merch</span>
       </a>
@@ -56,24 +56,27 @@
         </a>
         <div class="navbar-dropdown">
           <a class="navbar-item">
-            Code Jams
+            Resources
           </a>
           <a class="navbar-item">
             FAQ
+          </a>
+          <a class="navbar-item">
+            Rules
           </a>
           <a class="navbar-item">
             Privacy
           </a>
           <hr class="navbar-divider">
           <a class="navbar-item">
-            Report an issue
+            Code Jams
           </a>
         </div>
       </div>
     </div>
 
     {# Join us on Discord! #}
-    <a class="navbar-item is-fullsize has-no-highlight has-left-margin-1" href="#">
+    <a class="navbar-item is-fullsize has-no-highlight has-left-margin-1" href="https://discord.gg/python">
       <img class="is-hidden-touch" src="{% static "images/navbar/navbar_discordjoin.svg" %}" alt="Join us on Discord!"/>
     </a>
   </div>
