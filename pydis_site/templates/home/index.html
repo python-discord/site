@@ -11,7 +11,7 @@
 
   <section class="section">
 
-    <!-- Who are we? -->
+    {# Who are we? #}
     <div class="container is-spaced">
       <h1 class="is-size-1">Who are we?</h1>
       <br>
@@ -39,20 +39,20 @@
           </p>
         </div>
 
-        <!-- Intro video -->
+        {# Intro video #}
         <div class="column is-half video-container">
           <iframe src="https://www.youtube.com/embed/DIBXg8Qh7bA" frameborder="0"
-                  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                  allow="accelerometer; encrypted-media; gyroscope; picture-in-picture"
                   allowfullscreen></iframe>
         </div>
       </div>
 
-      <!-- Projects -->
+      {# Projects #}
       <h1 class="is-size-1">Projects</h1>
       <br>
       <div class="columns is-multiline">
 
-        <!-- Display projects from settings.HOMEPAGE_REPOS -->
+        {# Display projects from settings.HOMEPAGE_REPOS #}
         {% for repo in repo_data %}
           <div class="column is-one-third">
             <div class="card has-equal-height github-card">
@@ -77,7 +77,7 @@
     </div>
   </section>
 
-  <!-- Sponsors -->
+  {# Sponsors #}
   <section class="section-sp hero is-light">
     <div id="sponsors-hero" class="hero-body">
       <div class="container">
@@ -85,8 +85,8 @@
           Sponsors
         </h1>
         <a href="https://linode.com"><img src="{% static "images/sponsors/linode.png" %}" alt="Linode"/></a>
-        <a href="https://jetbrains.com"><img src="{% static "images/sponsors/jetbrains.png" %}" alt=""/></a>
-        <a href="https://adafruit.com"><img src="{% static "images/sponsors/adafruit.png" %}" alt=""/></a>
+        <a href="https://jetbrains.com"><img src="{% static "images/sponsors/jetbrains.png" %}" alt="JetBrains"/></a>
+        <a href="https://adafruit.com"><img src="{% static "images/sponsors/adafruit.png" %}" alt="Adafruit"/></a>
       </div>
     </div>
   </section>

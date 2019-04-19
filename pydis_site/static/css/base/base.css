@@ -1,15 +1,15 @@
 html {
-    overflow:auto;
+    overflow: auto;
 }
 
 body.site {
-  display: flex;
-  min-height: 100vh;
-  flex-direction: column;
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
 }
 
 main.site-content {
-  flex: 1;
+    flex: 1;
 }
 
 div.card.has-equal-height {
@@ -19,20 +19,20 @@ div.card.has-equal-height {
 }
 
 #django-logo {
-  padding-bottom: 2px;
-  background: url(https://static.djangoproject.com/img/logos/django-logo-negative.png) no-repeat center;
-  filter: grayscale(1) invert(0.02);
-  background-size: 52px 25.5px;
-  background-position: -1px -2px;
-  color: #00000000;
+    padding-bottom: 2px;
+    background: url(https://static.djangoproject.com/img/logos/django-logo-negative.png) no-repeat center;
+    filter: grayscale(1) invert(0.02);
+    background-size: 52px 25.5px;
+    background-position: -1px -2px;
+    color: #00000000;
 }
 
 #bulma-logo {
-  padding-left: 18px;
-  height: 20px;
-  background: url(https://bulma.io/images/bulma-logo-white.png) no-repeat center;
-  background-size: 60px;
-  color: #00000000;
+    padding-left: 18px;
+    height: 20px;
+    background: url(https://bulma.io/images/bulma-logo-white.png) no-repeat center;
+    background-size: 60px;
+    color: #00000000;
 }
 
 #pydis-text {

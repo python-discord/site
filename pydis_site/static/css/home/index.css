@@ -18,7 +18,7 @@
 }
 
 .navbar-item.is-fullsize {
-    padding:0;
+    padding: 0;
 }
 
 .navbar-item.is-fullsize img {
@@ -45,7 +45,7 @@
 .video-container object,
 .video-container embed {
     width: 100%;
-    height: calc(92vw*0.5625);
+    height: calc(92vw * 0.5625);
     margin: 8px auto auto auto;
 }
 
@@ -103,11 +103,13 @@ span.repo-language-dot.css {
         flex: none;
         width: 50%;
     }
+
     .columns:not(.is-desktop) {
         display: flex;
     }
+
     .video-container iframe {
-        height: calc(42vw*0.5625);
+        height: calc(42vw * 0.5625);
         max-height: 371px;
         max-width: 660px;
     }
@@ -118,11 +120,13 @@ span.repo-language-dot.css {
         flex: none;
         width: 100%;
     }
+
     .columns:not(.is-desktop) {
         display: block;
     }
+
     .video-container iframe {
-        height: calc(92vw*0.5625);
+        height: calc(92vw * 0.5625);
         max-height: none;
         max-width: none;
     }

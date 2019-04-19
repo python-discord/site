@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from pydis_site.apps.main.templatetags import starts_with
+from pydis_site.apps.home.templatetags import starts_with
 
 
 class TestTemplateTags(TestCase):

@@ -1,31 +1,40 @@
 import requests
-from django.conf import settings
 from django.shortcuts import render
 from django.utils import timezone
 from django.views import View
 
-from pydis_site.apps.main.models import RepositoryMetadata
-
-GITHUB_API = "https://api.github.com/users/python-discord/repos"
+from pydis_site.apps.home.models import RepositoryMetadata
 
 
 class HomeView(View):
+    """The view"""
 
-    @staticmethod
-    def _get_api_data():
+    github_api = "https://api.github.com/users/python-discord/repos"
+
+    # Which of our GitHub repos should be displayed on the front page, and in which order?
+    repos = [
+        "python-discord/site",
+        "python-discord/bot",
+        "python-discord/snekbox",
+        "python-discord/seasonalbot",
+        "python-discord/django-simple-bulma",
+        "python-discord/django-crispy-bulma",
+    ]
+
+    def _get_api_data(self):
         """Call the GitHub API and get information about our repos."""
 
-        repo_dict = {repo_name: {} for repo_name in settings.HOMEPAGE_REPOS}
+        repo_dict = {repo_name: {} for repo_name in self.repos}
 
         # Fetch the data from the GitHub API
-        api_data = requests.get(GITHUB_API)
+        api_data = requests.get(self.github_api)
         api_data = api_data.json()
 
         # Process the API data into our dict
         for repo in api_data:
             full_name = repo["full_name"]
 
-            if full_name in settings.HOMEPAGE_REPOS:
+            if full_name in self.repos:
                 repo_dict[full_name] = {
                     "full_name": repo["full_name"],
                     "description": repo["description"],
@@ -46,11 +55,11 @@ class HomeView(View):
             if (timezone.now() - repo_data.last_updated).seconds > 120:
 
                 # Get new data from API
-                api_data_container = self._get_api_data()
-                repo_data_container = []
+                api_repositories = self._get_api_data()
+                database_repositories = []
 
-                # Update or create all RepoData objects in settings.HOMEPAGE_REPOS
-                for repo_name, api_data in api_data_container.items():
+                # Update or create all RepoData objects in self.repos
+                for repo_name, api_data in api_repositories.items():
                     try:
                         repo_data = RepositoryMetadata.objects.get(repo_name=repo_name)
                         repo_data.description = api_data["description"]
@@ -66,8 +75,8 @@ class HomeView(View):
                             language=api_data["language"],
                         )
                     repo_data.save()
-                    repo_data_container.append(repo_data)
-                return repo_data_container
+                    database_repositories.append(repo_data)
+                return database_repositories
 
             # Otherwise, if the data is fresher than 2 minutes old, we should just return it.
             else:
@@ -77,11 +86,11 @@ class HomeView(View):
         except RepositoryMetadata.DoesNotExist:
 
             # Get new data from API
-            api_data_container = self._get_api_data()
-            repo_data_container = []
+            api_repositories = self._get_api_data()
+            database_repositories = []
 
             # Create all the repodata records in the database.
-            for api_data in api_data_container.values():
+            for api_data in api_repositories.values():
                 repo_data = RepositoryMetadata(
                     repo_name=api_data["full_name"],
                     description=api_data["description"],
@@ -90,9 +99,9 @@ class HomeView(View):
                     language=api_data["language"],
                 )
                 repo_data.save()
-                repo_data_container.append(repo_data)
+                database_repositories.append(repo_data)
 
-            return repo_data_container
+            return database_repositories
 
     def get(self, request):
         """Collect repo data and render the homepage view"""
