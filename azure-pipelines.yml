@@ -1,7 +1,7 @@
 # https://aka.ms/yaml
 
 jobs:
-- job: lint
+- job: python_lint
   displayName: 'Lint'
   pool:
     vmImage: ubuntu-16.04
@@ -17,7 +17,7 @@ jobs:
       addToPath: true
 
   - script: python3 -m pip install pipenv && pipenv install --dev --system && python3 -m pip install flake8-formatter-junit-xml
-    displayName: 'Install Requirements'
+    displayName: 'Install Project Environment'
 
   - script: python3 -m flake8 --format junit-xml --output-file test-lint.xml
     displayName: 'Run Linter'
@@ -28,9 +28,9 @@ jobs:
       testResultsFiles: '**/test-*.xml'
       testRunTitle: 'Site-Django Lint Results'
 
-- job: test
+- job: coverage_test
   displayName: 'Test'
-  dependsOn: lint
+  dependsOn: python_lint
   pool:
     vmImage: ubuntu-16.04
 
@@ -56,7 +56,7 @@ jobs:
       displayName: 'Setup Database'
 
     - script: python3 -m pip install pipenv && pipenv install --dev --system
-      displayName: 'Install Requirements'
+      displayName: 'Install Project Environment'
 
     - script: |
         python manage.py migrate
@@ -74,9 +74,9 @@ jobs:
         testResultsFiles: "**/TEST-*.xml"
         testRunTitle: 'Site-Django Test Results'
 
-- job: build
-  displayName: Build
-  dependsOn: test
+- job: docker
+  displayName: 'Build & Push'
+  dependsOn: coverage_test
   condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
   pool:
     vmImage: ubuntu-16.04
@@ -91,6 +91,6 @@ jobs:
         command: 'login'
 
     - script: |
-        docker build -t pythondiscord/django:latest -f docker/Dockerfile .
+        docker build -t pythondiscord/django:latest -f docker/app/Dockerfile .
         docker push pythondiscord/django:latest
-      displayName: 'Build & Push Docker'
+      displayName: 'Build & Push Docker Image'
