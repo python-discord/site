@@ -1,5 +1,5 @@
 {% extends "wiki/article.html" %}
-{% load wiki_tags i18n humanize %}
+{% load wiki_tags wiki_extra i18n humanize %}
 
 
 {% block wiki_pagetitle %}{% trans "Listing articles in" %} {{ article.current_revision.title }}{% endblock %}
@@ -8,31 +8,34 @@
   {% url 'wiki:dir' urlpath.path as self_url %}
 
   <form class="form-search directory-toolbar">
-  <div class="well well-small">
-    <div class="btn-group pull-left">
-      {% if urlpath.parent %}
-      <a href="{% url 'wiki:dir' path=urlpath.parent.path %}" class="btn btn-default">
-        <span class="fa fa-arrow-up"></span>
-        {% trans "Up one level" %}
-      </a>
-      {% endif %}
-      <a href="{% url 'wiki:create' path=urlpath.path %}" class="btn btn-default">
-        <span class="fa fa-plus"></span>
-        {% trans "Add article" %}
-      </a>
+    <div class="is-pulled-right">
+      {% render_field filter_form.query render_labels=False %}
     </div>
-    <div class="pull-right">
-      {{ filter_form.query }}
-    </div>
-    {% if filter_query %}
-      <div class="pull-right filter-clear">
-        <a href="{{ self_url }}">({% trans "clear" %})</a>
+    <div class="field is-grouped">
+      <div class="field-body">
+        <div class="control">
+          {% if urlpath.parent %}
+            <a href="{% url 'wiki:dir' path=urlpath.parent.path %}" class="button">
+              <span class="icon">
+                <i class="fas fa-arrow-up"></i>
+              </span>
+              <span>Up one level</span>
+            </a>
+          {% endif %}
+        </div>
+        <div class="control">
+          <a href="{% url 'wiki:create' path=urlpath.path %}" class="button is-primary">
+            <span class="icon">
+              <i class="fas fa-plus"></i>
+            </span>
+            <span>Add Article</span>
+          </a>
+        </div>
       </div>
-    {% endif %}
-
-    <div class="clearfix"></div>
-  </div>
+    </div>
   </form>
+
+  <br />
 
   <p>
     {% with paginator.object_list.count as cnt %}
@@ -44,22 +47,33 @@
 
   {% include "wiki/includes/pagination.html" %}
 
-  <table class="table table-striped">
+  <table class="table is-striped">
     <tr>
-      <th>{% trans "Title" %}</th>
-      <th>{% trans "Slug" %}</th>
-      <th>{% trans "Last modified" %}</th>
+      <th>Title</th>
+      <th>Slug</th>
+      <th>Last modified</th>
     </tr>
     {% for urlpath in directory %}
       <tr>
         <td>
-          <a href="{% url 'wiki:get' path=urlpath.path %}"> {{ urlpath.article.current_revision.title }} </a>
-          <a href="{% url 'wiki:dir' path=urlpath.path %}" class="list-children"> › </a>
+          <a href="{% url 'wiki:get' path=urlpath.path %}">{{ urlpath.article.current_revision.title }}</a>
+
+          <a href="{% url 'wiki:dir' path=urlpath.path %}" class="list-children">
+            <span class="icon">
+              <i class="fas fa-arrow-right"></i>
+            </span>
+          </a>
+
           {% if urlpath.article.current_revision.deleted %}
-            <span class="fa fa-trash"></span>
+            <span class="icon tooltip" data-tooltip="This article has been deleted">
+              <i class="fas fa-trash"></i>
+            </span>
           {% endif %}
+
           {% if urlpath.article.current_revision.locked %}
-            <span class="fa fa-lock"></span>
+            <span class="icon tooltip" data-tooltip="This article is locked">
+              <i class="fas fa-lock"></i>
+            </span>
           {% endif %}
         </td>
         <td>
@@ -71,8 +85,8 @@
       </tr>
       {% empty%}
       <tr>
-        <td colspan="100">
-          <em>{% trans "There are no articles in this level" %}</em>
+        <td colspan="3">
+          <em>There are no articles at this level</em>
         </td>
       </tr>
     {% endfor %}

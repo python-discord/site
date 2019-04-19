@@ -26,6 +26,7 @@
                     {% if field.required %}required{% endif %}
                     {% if field.max_length %}maxlength="{{ field.max_length }}"{% endif %}
                     {% if field.min_length %}minlength="{{ field.min_length }}"{% endif %}
+                    {% if field.field.widget.attrs.placeholder %}placeholder="{{ field.field.widget.attrs.placeholderplaceholder }}"{% endif %}
                     {% if field.empty_value %}placeholder="{{ field.empty_value }}"{% endif %}
           >{% if field.value %}{{ field.value }}{% endif %}</textarea>
         {% else %}
@@ -37,6 +38,7 @@
                  {% if field.required %}required{% endif %}
                  {% if field.max_length %}maxlength="{{ field.max_length }}"{% endif %}
                  {% if field.min_length %}minlength="{{ field.min_length }}"{% endif %}
+                 {% if field.field.widget.attrs.placeholder %}placeholder="{{ field.field.widget.attrs.placeholder }}"{% endif %}
                  {% if field.empty_value %}placeholder="{{ field.empty_value }}"{% endif %}
                  {% if field.value %}value="{{ field.value }}"{% endif %}
           />
