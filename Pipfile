@@ -5,7 +5,7 @@ verify_ssl = true
 
 [dev-packages]
 flake8 = "~=3.7.7"
-flake8-bandit = "~=2.1.0"
+flake8-bandit = "==1.0.2"
 flake8-bugbear = "~=19.3.0"
 flake8-import-order = "~=0.18.1"
 flake8-string-format = "~=0.2.3"
