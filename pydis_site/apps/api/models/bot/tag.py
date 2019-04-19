@@ -1,7 +1,11 @@
 from collections.abc import Mapping
 
+from django.contrib.postgres import fields as pgfields
 from django.core.exceptions import ValidationError
 from django.core.validators import MaxLengthValidator, MinLengthValidator
+from django.db import models
+
+from pydis_site.apps.api.models.utils import ModelReprMixin
 
 
 def validate_tag_embed_fields(fields):
@@ -155,10 +159,21 @@ def validate_tag_embed(embed):
                 validator(value)
 
 
-def validate_bot_setting_name(name):
-    KNOWN_SETTINGS = (
-        'defcon',
+class Tag(ModelReprMixin, models.Model):
+    """A tag providing (hopefully) useful information."""
+
+    title = models.CharField(
+        max_length=100,
+        help_text=(
+            "The title of this tag, shown in searches and providing "
+            "a quick overview over what this embed contains."
+        ),
+        primary_key=True
+    )
+    embed = pgfields.JSONField(
+        help_text="The actual embed shown by this tag.",
+        validators=(validate_tag_embed,)
     )
 
-    if name not in KNOWN_SETTINGS:
-        raise ValidationError(f"`{name}` is not a known setting name.")
+    def __str__(self):
+        return self.title

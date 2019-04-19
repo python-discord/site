@@ -1,134 +1,96 @@
 # https://aka.ms/yaml
 
 jobs:
-  - job: lint_misc
-    displayName: Lint others
-    pool:
-      vmImage: ubuntu-16.04
+- job: python_lint
+  displayName: 'Lint Job'
+  pool:
+    vmImage: ubuntu-16.04
 
-    steps:
-      - script: |
-          curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-          sudo add-apt-repository deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable
-          sudo apt-get update
-          sudo apt-get install docker-ce
-        displayName: install docker
+  variables:
+    PIP_CACHE_DIR: .cache/pip
 
-      - script: docker run -v $(pwd):/app:ro --rm ruby:alpine /bin/ash -c "gem install mdl && cd /app && mdl"
-        displayName: run markdownlint
+  steps:
+  - task: UsePythonVersion@0
+    displayName: 'Set Python Version'
+    inputs:
+      versionSpec: '3.7.x'
+      addToPath: true
 
-      - script: docker run -i hadolint/hadolint hadolint --ignore DL3008 --ignore DL3018 --ignore DL3019 - < docker/app/Dockerfile
-        displayName: run hadolint
+  - script: python3 -m pip install pipenv && pipenv install --dev --system && python3 -m pip install flake8-formatter-junit-xml
+    displayName: 'Install Project Environment'
 
-  - job: lint_python
-    displayName: Lint Python
-    pool:
-      vmImage: ubuntu-16.04
+  - script: python3 -m flake8 --format junit-xml --output-file test-lint.xml
+    displayName: 'Run Linter'
 
-    strategy:
-      matrix:
-        Python 3.6:
-          python.version: 3.6
-        Python 3.7:
-          python.version: 3.7
+  - task: PublishTestResults@2
+    condition: succeededOrFailed()
+    inputs:
+      testResultsFiles: '**/test-*.xml'
+      testRunTitle: 'Site-Django Lint Results'
 
-    variables:
-      PIP_CACHE_DIR: .cache/pip
+- job: coverage_test
+  displayName: 'Test Job'
+  dependsOn: python_lint
+  pool:
+    vmImage: ubuntu-16.04
 
-    steps:
-      - task: UsePythonVersion@0
-        inputs:
-          versionSpec: $(python.version)
-          architecture: x64
+  steps:
+    - task: UsePythonVersion@0
+      inputs:
+        versionSpec: '3.7.x'
+        architecture: x64
 
-      - script: >
-          python -m pip install $(grep -E '^(coverage|flake8|mccabe|pep8-naming)' Pipfile | cut -d' ' -f1)
-        displayName: install lint requirements
+    - script: |
+        curl https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+        sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
+        sudo apt-get update -y
+        sudo apt-get install -y postgresql-11
+      displayName: 'Install PostgreSQL'
 
-      - script: flake8
-        displayName: lint using flake8
+    - script: |
+        echo "$USER_CREATE_COMMAND;" > pgscript.sql
+        echo "CREATE DATABASE pysite OWNER pysite;" >> pgscript.sql
+        sudo su postgres -c "psql < pgscript.sql"
+      env:
+        USER_CREATE_COMMAND: CREATE USER pysite WITH PASSWORD 'pysite' CREATEDB
+      displayName: 'Setup Database'
 
-  - job: test
-    displayName: Test
-    dependsOn:
-      - lint_misc
-      - lint_python
-    pool:
-      vmImage: ubuntu-16.04
-    strategy:
-      matrix:
-        Python 3.6 with PostgreSQL 10:
-          python.version: 3.6
-          postgres.version: 10
-        Python 3.6 with PostgreSQL 11:
-          python.version: 3.6
-          postgres.version: 11
-        Python 3.7 with PostgreSQL 10:
-          python.version: 3.7
-          postgres.version: 10
-        Python 3.7 with PostgreSQL 11:
-          python.version: 3.7
-          postgres.version: 11
+    - script: python3 -m pip install pipenv && pipenv install --dev --system
+      displayName: 'Install Project Environment'
 
-    steps:
-      - task: UsePythonVersion@0
-        inputs:
-          versionSpec: $(python.version)
-          architecture: x64
+    - script: |
+        python manage.py migrate
+        coverage run --branch manage.py test --testrunner xmlrunner.extra.djangotestrunner.XMLTestRunner --no-input
+      env:
+        CI: azure
+        DATABASE_URL: postgres://pysite:pysite@localhost/pysite
+      displayName: 'Run Test'
 
-      - script: |
-          curl https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
-          sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
-          sudo apt-get update -y
-          sudo apt-get install -y postgresql-$(postgres.version)
-        displayName: install postgresql
+    - script: coverage report
+      displayName: 'Show Coverage Results'
 
-      - script: |
-          echo "$USER_CREATE_COMMAND;" > pgscript.sql
-          echo "CREATE DATABASE pysite OWNER pysite;" >> pgscript.sql
-          sudo su postgres -c "psql < pgscript.sql"
-        env:
-          USER_CREATE_COMMAND: CREATE USER pysite WITH PASSWORD 'pysite' CREATEDB
-        displayName: set up the database
+    - task: PublishTestResults@2
+      inputs:
+        testResultsFiles: "**/TEST-*.xml"
+        testRunTitle: 'Site-Django Test Results'
 
-      - script: python -m pip install pipenv && python -m pipenv install --dev --system
-        displayName: install requirements
+- job: docker
+  displayName: 'Build & Push Job'
+  dependsOn: coverage_test
+  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+  pool:
+    vmImage: ubuntu-16.04
 
-      - script: |
-          python manage.py migrate
-          coverage run --branch manage.py test --testrunner xmlrunner.extra.djangotestrunner.XMLTestRunner --no-input
-        env:
-          CI: azure
-          DATABASE_URL: postgres://pysite:pysite@localhost/pysite
-        displayName: run tests
+  steps:
+    - task: Docker@1
+      displayName: Login to Docker Hub
 
-      - script: coverage report
-        displayName: show coverage results
+      inputs:
+        containerregistrytype: 'Container Registry'
+        dockerRegistryEndpoint: 'DockerHub'
+        command: 'login'
 
-      - task: PublishTestResults@2
-        inputs:
-          testResultsFiles: "**/TEST-*.xml"
-          testRunTitle: 'Python $(python.version) with PostgreSQL $(postgres.version)'
-
-  - job: push_image
-    displayName: Push Docker image
-    dependsOn: test
-    condition: and(succeeded(), eq(variables['build.sourceBranch'], 'refs/heads/django'))
-    pool:
-      vmImage: ubuntu-16.04
-
-    steps:
-      - task: Docker@1
-        displayName: Login to Docker Hub
-
-        inputs:
-          containerregistrytype: 'Container Registry'
-          dockerRegistryEndpoint: 'DockerHub'
-          command: 'login'
-
-      - script: |
-          docker build -t pythondiscord/django:latest docker/app/Dockerfile
-          docker push pythondiscord/django:latest
-        displayName: Build and push the image
-
-# vim: sw=2 ts=2:
+    - script: |
+        docker build -t pythondiscord/django:latest -f docker/app/Dockerfile .
+        docker push pythondiscord/django:latest
+      displayName: 'Build & Push Docker Image'
