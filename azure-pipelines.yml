@@ -2,7 +2,7 @@
 
 jobs:
 - job: lint
-  displayName: Lint
+  displayName: 'Lint'
   pool:
     vmImage: ubuntu-16.04
 
@@ -11,28 +11,25 @@ jobs:
 
   steps:
   - task: UsePythonVersion@0
-    displayName: Set Python Version
+    displayName: 'Set Python Version'
     inputs:
       versionSpec: '3.7.x'
       addToPath: true
 
-  - script: |
-      python3 -m pip install pipenv
-      pipenv install --dev --system
-      python3 -m pip install flake8-formatter-junit-xml
-    displayName: Install Requirements
+  - script: python3 -m pip install pipenv && pipenv install --dev --system && python3 -m pip install flake8-formatter-junit-xml
+    displayName: 'Install Requirements'
 
   - script: python3 -m flake8 --format junit-xml --output-file test-lint.xml
-    displayName: Run Linter
+    displayName: 'Run Linter'
 
   - task: PublishTestResults@2
     condition: succeededOrFailed()
     inputs:
       testResultsFiles: '**/test-*.xml'
-      testRunTitle: Site-Django Lint Results
+      testRunTitle: 'Site-Django Lint Results'
 
 - job: test
-  displayName: Test
+  displayName: 'Test'
   dependsOn: lint
   pool:
     vmImage: ubuntu-16.04
@@ -48,7 +45,7 @@ jobs:
         sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
         sudo apt-get update -y
         sudo apt-get install -y postgresql-11
-      displayName: Install PostgreSQL
+      displayName: 'Install PostgreSQL'
 
     - script: |
         echo "$USER_CREATE_COMMAND;" > pgscript.sql
@@ -56,10 +53,10 @@ jobs:
         sudo su postgres -c "psql < pgscript.sql"
       env:
         USER_CREATE_COMMAND: CREATE USER pysite WITH PASSWORD 'pysite' CREATEDB
-      displayName: Setup Database
+      displayName: 'Setup Database'
 
     - script: python3 -m pip install pipenv && pipenv install --dev --system
-      displayName: Install Requirements
+      displayName: 'Install Requirements'
 
     - script: |
         python manage.py migrate
@@ -67,15 +64,15 @@ jobs:
       env:
         CI: azure
         DATABASE_URL: postgres://pysite:pysite@localhost/pysite
-      displayName: Run Test
+      displayName: 'Run Test'
 
     - script: coverage report
-      displayName: Show Coverage Results
+      displayName: 'Show Coverage Results'
 
     - task: PublishTestResults@2
       inputs:
         testResultsFiles: "**/TEST-*.xml"
-        testRunTitle: Site-Django Test Results
+        testRunTitle: 'Site-Django Test Results'
 
 - job: build
   displayName: Build
@@ -94,6 +91,6 @@ jobs:
         command: 'login'
 
     - script: |
-        docker build -t pythondiscord/django:latest docker/app/Dockerfile
+        docker build -t pythondiscord/django:latest -f docker/Dockerfile .
         docker push pythondiscord/django:latest
-      displayName: Build & Push Docker
+      displayName: 'Build & Push Docker'
