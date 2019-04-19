@@ -72,7 +72,7 @@ class TestRepositoryMetadataHelpers(TestCase):
             forks=42,
             stargazers=42,
             language="English",
-            last_updated=timezone.now() - timedelta(seconds=121),  # Make the data 2 minutes old.
+            last_updated=timezone.now() - timedelta(seconds=HomeView.repository_cache_ttl + 1),
         )
         repo_data.save()
         metadata = self.home_view._get_repo_data()
@@ -90,3 +90,16 @@ class TestRepositoryMetadataHelpers(TestCase):
         self.assertEquals(len(api_data), len(self.home_view.repos))
         self.assertIn(repo, api_data.keys())
         self.assertIn("stargazers_count", api_data[repo])
+
+    @mock.patch('requests.get', side_effect=mocked_requests_get)
+    def test_mocked_requests_get(self, mock_get):
+        """Tests if our mocked_requests_get is returning what it should."""
+
+        success_data = mock_get(HomeView.github_api)
+        fail_data = mock_get("failtest")
+
+        self.assertEqual(success_data.status_code, 200)
+        self.assertEqual(fail_data.status_code, 404)
+
+        self.assertIsNotNone(success_data.json_data)
+        self.assertIsNone(fail_data.json_data)

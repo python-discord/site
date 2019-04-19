@@ -1,3 +1,3 @@
-from .repo_data import RepositoryMetadata
+from .repository_metadata import RepositoryMetadata
 
 __all__ = ["RepositoryMetadata"]
