@@ -8,7 +8,7 @@
   <h1 class="title is-1">Delete "{{ article.current_revision.title }}"</h1>
 
   {% if cannot_delete_root %}
-    <div class="message is-warning">
+    <article class="message is-warning">
       <div class="message-body">
         <p>
           You cannot delete the root article.
@@ -21,10 +21,10 @@
           <span>Go back</span>
         </a>
       </div>
-    </div>
+    </article>
   {% else %}
     {% if cannot_delete_children %}
-      <div class="message is-warning">
+      <article class="message is-warning">
         <div class="message-body">
           <p>
             You do not have permission to delete articles that have children.
@@ -37,7 +37,7 @@
             <span>Go back</span>
           </a>
         </div>
-      </div>
+      </article>
     {% endif %}
 
     {% if delete_children %}

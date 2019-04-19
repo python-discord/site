@@ -12,7 +12,7 @@
   {% if error_type == "ancestors_missing" %}
     <h1 class="title">Not Found</h1>
 
-    <div class="message is-primary">
+    <article class="message is-primary">
       <div class="message-body">
         <p>
           We were unable to find that page. If you think this was in error, please let us know!
@@ -24,11 +24,11 @@
           <span>Back to homepage</span>
         </a>
       </div>
-    </div>
+    </article>
   {% else %}
     <h1 class="title">Error</h1>
 
-    <div class="message is-danger">
+    <article class="message is-danger">
       <div class="message-body">
         <p>
           {% if not error_msg %}
@@ -47,6 +47,6 @@
           </a>
         {% endif %}
       </div>
-    </div>
+    </article>
   {% endif %}
 {% endblock %}

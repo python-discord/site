@@ -5,7 +5,7 @@
 
 {% block wiki_contents_tab %}
 
-  <div class="message is-warning">
+  <article class="message is-warning">
     <div class="message-body">
       {% if urlpath.get_descendants %}
         {% blocktrans count cnt=urlpath.get_descendants.count trimmed %}
@@ -28,7 +28,7 @@
         are temporary - so it's better to update the links directly.
       </p>
     </div>
-  </div>
+  </article>
 
 <form method="POST" class="form-horizontal" id="article_move_form">
   {% wiki_form form %}

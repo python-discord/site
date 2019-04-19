@@ -5,7 +5,7 @@
 {% block wiki_pagetitle %}Article deleted{% endblock %}
 
 {% block wiki_contents %}
-  <div class="message is-warning">
+  <article class="message is-warning">
     <div class="message-header">
       <p>Article deleted</p>
     </div>
@@ -14,7 +14,7 @@
         The article you were looking for has been deleted.
       </p>
     </div>
-  </div>
+  </article>
 
   {% if not article.current_revision.locked or article|can_delete:user %}
 
