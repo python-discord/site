@@ -7,9 +7,10 @@ from pydis_site.apps.home.models import RepositoryMetadata
 
 
 class HomeView(View):
-    """The view"""
+    """The main landing page for the website."""
 
     github_api = "https://api.github.com/users/python-discord/repos"
+    repository_cache_ttl = 600
 
     # Which of our GitHub repos should be displayed on the front page, and in which order?
     repos = [
@@ -51,8 +52,8 @@ class HomeView(View):
         try:
             repo_data = RepositoryMetadata.objects.get(repo_name="python-discord/site")
 
-            # If the data is older than 2 minutes, we should refresh it.
-            if (timezone.now() - repo_data.last_updated).seconds > 120:
+            # If the data is stale, we should refresh it.
+            if (timezone.now() - repo_data.last_updated).seconds > self.repository_cache_ttl:
 
                 # Get new data from API
                 api_repositories = self._get_api_data()
