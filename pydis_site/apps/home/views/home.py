@@ -1,4 +1,9 @@
+from typing import Dict, Union, List
+
 import requests
+from django.core.handlers.wsgi import WSGIRequest
+from django.db.models import QuerySet
+from django.http import HttpResponse
 from django.shortcuts import render
 from django.utils import timezone
 from django.views import View
@@ -22,7 +27,7 @@ class HomeView(View):
         "python-discord/django-crispy-bulma",
     ]
 
-    def _get_api_data(self):
+    def _get_api_data(self) -> Dict[str, Dict[str, str]]:
         """Call the GitHub API and get information about our repos."""
 
         repo_dict = {repo_name: {} for repo_name in self.repos}
@@ -45,7 +50,7 @@ class HomeView(View):
                 }
         return repo_dict
 
-    def _get_repo_data(self):
+    def _get_repo_data(self) -> List[RepositoryMetadata]:
         """Build a list of RepositoryMetadata objects that we can use to populate the front page."""
 
         # Try to get site data from the cache
@@ -104,7 +109,7 @@ class HomeView(View):
 
             return database_repositories
 
-    def get(self, request):
+    def get(self, request: WSGIRequest) -> HttpResponse:
         """Collect repo data and render the homepage view"""
 
         repo_data = self._get_repo_data()

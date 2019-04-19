@@ -10,7 +10,7 @@ from pydis_site.apps.home.models import RepositoryMetadata
 from pydis_site.apps.home.views import HomeView
 
 
-def mocked_requests_get(*args, **kwargs):
+def mocked_requests_get(*args, **kwargs) -> "MockResponse":
     """A mock version of requests.get, so we don't need to call the API every time we run a test"""
     class MockResponse:
         def __init__(self, json_data, status_code):
@@ -38,7 +38,7 @@ class TestRepositoryMetadataHelpers(TestCase):
         self.home_view = HomeView()
 
     @mock.patch('requests.get', side_effect=mocked_requests_get)
-    def test_returns_metadata(self, _):
+    def test_returns_metadata(self, _: mock.MagicMock):
         """Test if the _get_repo_data helper actually returns what it should."""
 
         metadata = self.home_view._get_repo_data()
@@ -63,7 +63,7 @@ class TestRepositoryMetadataHelpers(TestCase):
         self.assertIsInstance(str(metadata[0]), str)
 
     @mock.patch('requests.get', side_effect=mocked_requests_get)
-    def test_refresh_stale_metadata(self, _):
+    def test_refresh_stale_metadata(self, _: mock.MagicMock):
         """Test if the _get_repo_data helper will refresh when the data is stale"""
 
         repo_data = RepositoryMetadata(
@@ -80,7 +80,7 @@ class TestRepositoryMetadataHelpers(TestCase):
         self.assertIsInstance(metadata[0], RepositoryMetadata)
 
     @mock.patch('requests.get', side_effect=mocked_requests_get)
-    def test_returns_api_data(self, _):
+    def test_returns_api_data(self, _: mock.MagicMock):
         """Tests if the _get_api_data helper returns what it should."""
 
         api_data = self.home_view._get_api_data()
@@ -92,7 +92,7 @@ class TestRepositoryMetadataHelpers(TestCase):
         self.assertIn("stargazers_count", api_data[repo])
 
     @mock.patch('requests.get', side_effect=mocked_requests_get)
-    def test_mocked_requests_get(self, mock_get):
+    def test_mocked_requests_get(self, mock_get: mock.MagicMock):
         """Tests if our mocked_requests_get is returning what it should."""
 
         success_data = mock_get(HomeView.github_api)
