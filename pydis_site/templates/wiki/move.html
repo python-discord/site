@@ -59,9 +59,11 @@
 </form>
 
 {% addtoblock "js" %}
-
   <script type="text/javascript" src="{% static "js/wiki/move.js" %}"></script>
-
+  <script type="text/javascript">
+    $('#id_slug').val('{{ urlpath.slug }}');
+    select_path('{{urlpath.parent.pk}}', '{{urlpath.parent}}');
+  </script>
 {% endaddtoblock %}
 
 {% endblock %}

@@ -56,7 +56,3 @@ $(document).ready( function() {
     });
   });
 });
-
-$(document).ready(function() {
-  $("#id_revision").val('{{ article.current_revision.id }}');
-});

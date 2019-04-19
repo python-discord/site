@@ -41,7 +41,7 @@
     {% endif %}
 
     {% if delete_children %}
-      <div class="message">
+      <div class="message is-danger">
         <div class="message-body">
           <p>
             You are deleting an article with children. If you delete this article, then its children will also be deleted.
@@ -87,8 +87,4 @@
       </form>
     {% endif %}
   {% endif %}
-
-  {% addtoblock "js" %}
-  <script type="text/javascript" src="{% static "js/wiki/delete.js" %}"></script>
-  {% endaddtoblock %}
 {% endblock %}
