@@ -8,23 +8,10 @@
 
   {% addtoblock "js" %}
     <script type="text/javascript" src="{% static "admin/js/urlify.js" %}"></script>
-    <script type="text/javascript">
+
     {% if not create_form.slug.value %}
-    //<![CDATA[
-    (function($) {
-      $(document).ready(function (){
-        $("#id_title").keyup(function () {
-          var e = $("#id_slug")[0];
-          if(!e._changed) {
-            slug = URLify(this.value, 50);
-            e.value = slug;
-          }
-          });
-      });
-    })(jQuery);
-    //]]>
+      <script type="text/javascript" src="{% static "js/wiki/create.js" %}"></script>
     {% endif %}
-    </script>
   {% endaddtoblock %}
 
   {% include "wiki/includes/editormedia.html" %}

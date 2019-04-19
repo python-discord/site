@@ -1,5 +1,5 @@
 {% extends "wiki/base.html" %}
-{% load wiki_tags sekizai_tags %}
+{% load wiki_tags sekizai_tags static %}
 
 
 {% block wiki_pagetitle %}Delete Article{% endblock %}
@@ -89,8 +89,6 @@
   {% endif %}
 
   {% addtoblock "js" %}
-  <script type="text/javascript">
-    $('#id_revision').val('{{ article.current_revision.id }}');
-  </script>
+  <script type="text/javascript" src="{% static "js/wiki/delete.js" %}"></script>
   {% endaddtoblock %}
 {% endblock %}

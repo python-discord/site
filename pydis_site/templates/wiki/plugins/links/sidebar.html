@@ -37,35 +37,20 @@
 <pre>[Clickable text](http://example.com)</pre>
 
 {% addtoblock "js" %}
+  {% comment %}
+    So, for whatever reason, bulmahead doesn't have a LICENSE file. There is one in
+    the package.json, but that isn't a standard most projects adhere to - so I've
+    declined to include it within the project directly.
+
+    The package.json states MIT - but there is no prose or license
+    text available for the project itself.
+  {% endcomment %}
+
   <script src="https://cdn.rawgit.com/mattmezza/bulmahead/master/dist/bulmahead.bundle.js"></script>
+  <script src="{% static "js/wiki/links_sidebar.js" %}"></script>
 
   <script type="text/javascript">
-    $(document).ready(function() {
-      function search(query) {
-        query = encodeURIComponent(query);
-        return fetch(`{% url 'wiki:links_query_urlpath' path=urlpath.path article_id=article.id %}?query=${query}`).then(function(response) {
-          return response.json();
-        }).then(function(data){
-          return data.map(function(element) {
-            return {label: element, value: element};
-          })
-        });
-      }
-
-      function selected(state) {
-        let value = state.value;
-        wikiInsertLink(value);
-        document.getElementById("page_title_input").value = "";
-      }
-
-      bulmahead("page_title_input", "page_title_menu", search, selected, 10);
-    });
-
-    function wikiInsertLink(value) {
-      let editor = window.editors["id_content"];
-
-      editor.insert_text(value);
-    }
-
-</script>
+    {# If you figure out a way to do this without putting some JS directly in the page... let me know #}
+    setFetchURL("{% url 'wiki:links_query_urlpath' path=urlpath.path article_id=article.id %}");
+  </script>
 {% endaddtoblock %}

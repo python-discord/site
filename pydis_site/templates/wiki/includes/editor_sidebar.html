@@ -1,4 +1,4 @@
-{% load i18n sekizai_tags %}
+{% load i18n sekizai_tags static %}
 
 <section class="accordions">
 {% for plugin, plugin_form in sidebar %}
@@ -35,6 +35,4 @@
 {% endfor %}
 </section>
 
-<script type="application/javascript">
-  bulmaAccordion.attach();
-</script>
+<script type="application/javascript" src="{% static "js/wiki/editor_sidebar.js" %}"></script>
