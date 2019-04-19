@@ -6,7 +6,7 @@ from django.forms import (
     EmailField, Field, FileField, FilePathField, FloatField, GenericIPAddressField, ImageField, IntegerField,
     ModelChoiceField, ModelMultipleChoiceField, MultiValueField, MultipleChoiceField, NullBooleanField, RegexField,
     SlugField, SplitDateTimeField, TimeField, TypedChoiceField, TypedMultipleChoiceField, URLField, UUIDField)
-from django.template import Template
+from django.template import Template, Context
 from django.template.loader import get_template
 from django.utils.safestring import mark_safe
 from wiki.editors.markitup import MarkItUpWidget
@@ -86,7 +86,7 @@ def render_field(field: Field, render_labels: bool = True):
 
 
 @register.simple_tag(takes_context=True)
-def get_field_options(context, field: BoundField):
+def get_field_options(context: Context, field: BoundField):
     widget = field.field.widget
 
     if field.value() is None:
