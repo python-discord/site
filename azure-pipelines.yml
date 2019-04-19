@@ -2,7 +2,7 @@
 
 jobs:
 - job: python_lint
-  displayName: 'Lint'
+  displayName: 'Lint Job'
   pool:
     vmImage: ubuntu-16.04
 
@@ -19,7 +19,7 @@ jobs:
   - script: python3 -m pip install pipenv && pipenv install --dev --system && python3 -m pip install flake8-formatter-junit-xml
     displayName: 'Install Project Environment'
 
-  - script: python3 -m flake8 -vv && python3 -m flake8 --format junit-xml --output-file test-lint.xml
+  - script: python3 -m flake8 --format junit-xml --output-file test-lint.xml
     displayName: 'Run Linter'
 
   - task: PublishTestResults@2
@@ -29,7 +29,7 @@ jobs:
       testRunTitle: 'Site-Django Lint Results'
 
 - job: coverage_test
-  displayName: 'Test'
+  displayName: 'Test Job'
   dependsOn: python_lint
   pool:
     vmImage: ubuntu-16.04
@@ -75,7 +75,7 @@ jobs:
         testRunTitle: 'Site-Django Test Results'
 
 - job: docker
-  displayName: 'Build & Push'
+  displayName: 'Build & Push Job'
   dependsOn: coverage_test
   condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
   pool:
