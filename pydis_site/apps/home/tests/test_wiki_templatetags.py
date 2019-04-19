@@ -1,6 +1,9 @@
 from unittest.mock import Mock, create_autospec
 
-from django.forms import BooleanField, BoundField, CharField, ChoiceField, Field, Form, ImageField, ModelChoiceField
+from django.forms import (
+    BooleanField, BoundField, CharField, ChoiceField, Field, Form, ImageField,
+    ModelChoiceField
+)
 from django.template import Context, Template
 from django.test import TestCase
 from wiki.editors.markitup import MarkItUpWidget

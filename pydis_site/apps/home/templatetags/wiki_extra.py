@@ -1,4 +1,4 @@
-from typing import Union, Dict, Type, Any
+from typing import Any, Dict, Type, Union
 
 from django import template
 from django.forms import BooleanField, BoundField, CharField, Field, ImageField, ModelChoiceField
@@ -34,7 +34,7 @@ def get_unbound_field(field: BoundField) -> Field:
 
 
 def render(template_path: str, context: Dict[str, Any]):
-    return mark_safe(get_template(template_path).render(context))
+    return mark_safe(get_template(template_path).render(context))  # noqa: S703 S308
 
 
 @register.simple_tag

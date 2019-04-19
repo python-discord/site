@@ -14,9 +14,7 @@ import os
 import sys
 
 import environ
-
 from django.contrib.messages import constants as messages
-
 
 env = environ.Env(
     DEBUG=(bool, False)
@@ -190,10 +188,10 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = env('MEDIA_ROOT', default='media')
 
 STATICFILES_FINDERS = [
-  'django.contrib.staticfiles.finders.FileSystemFinder',
-  'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 
-  'django_simple_bulma.finders.SimpleBulmaFinder',
+    'django_simple_bulma.finders.SimpleBulmaFinder',
 ]
 
 # django-hosts
