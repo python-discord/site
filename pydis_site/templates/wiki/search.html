@@ -5,59 +5,55 @@
 {% block wiki_pagetitle %}Search results for: "{{ search_query }}"{% endblock %}
 
 {% block wiki_contents %}
+  <h1 class="page-header">Search results for: "{{ search_query }}"</h1>
 
-<h1 class="page-header">Search results for: "{{ search_query }}"</h1>
+  <form class="form-search directory-toolbar">
+    <p>
+      {% if urlpath %}
+        Searching: <strong>in {{ urlpath.article }}</strong>
+      {% else %}
+        Searching: <strong>everywhere</strong>
+      {% endif %}
+    </p>
 
-<form class="form-search directory-toolbar">
-  <p>
-    {% if urlpath %}
-      Searching: <strong>in {{ urlpath.article }}</strong>
-    {% else %}
-      Searching: <strong>everywhere</strong>
-    {% endif %}
-  </p>
-
-  <div class="field has-addons">
-    <div class="control has-icons-left is-expanded">
-      <input type="search" class="input" name="q" value="{{ search_query }}" />
-      <span class="icon is-left">
-        <i class="fas fa-search"></i>
-      </span>
+    <div class="field has-addons">
+      <div class="control has-icons-left is-expanded">
+        <input type="search" class="input" name="q" value="{{ search_query }}" />
+        <span class="icon is-left">
+          <i class="fas fa-search"></i>
+        </span>
+      </div>
+      <div class="control">
+        <button class="button is-primary" type="submit">
+          Search
+        </button>
+      </div>
     </div>
-    <div class="control">
-      <button class="button is-primary" type="submit">
-        Search
-      </button>
-    </div>
-  </div>
 
-  <p>
-    {% blocktrans with paginator.object_list.count as cnt %}
-      Your search returned <strong>{{ cnt }}</strong> results.
-    {% endblocktrans %}
-  </p>
-</form>
+    <p>
+      {% blocktrans with paginator.object_list.count as cnt %}
+        Your search returned <strong>{{ cnt }}</strong> results.
+      {% endblocktrans %}
+    </p>
+  </form>
 
-<table class="table is-striped">
-  <tr>
-    <th>Title</th>
-    <th class="has-text-right">Last modified</th>
-  </tr>
-  {% for article in articles %}
-    {% block wiki_search_loop %}
-      {% include "wiki/includes/searchresult.html" %}
-    {% endblock %}
-    {% empty %}
-      <tr>
-        <td colspan="2">
-          <em>No articles were found for that search query.</em>
-        </td>
-      </tr>
-  {% endfor %}
-</table>
+  <table class="table is-striped">
+    <tr>
+      <th>Title</th>
+      <th class="has-text-right">Last modified</th>
+    </tr>
+    {% for article in articles %}
+      {% block wiki_search_loop %}
+        {% include "wiki/includes/searchresult.html" %}
+      {% endblock %}
+      {% empty %}
+        <tr>
+          <td colspan="2">
+            <em>No articles were found for that search query.</em>
+          </td>
+        </tr>
+    {% endfor %}
+  </table>
 
-{% if is_paginated %}
-  {% include "base/paginator.html" with page=page_obj %}
-{% endif %}
-
+  {% include "wiki/includes/pagination.html" %}
 {% endblock %}

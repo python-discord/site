@@ -5,3 +5,17 @@
 div.control.is-fullwidth {
     width: 100%;
 }
+
+ul.pagination-list {
+    list-style: none;
+    margin: 0;
+}
+
+ul.pagination-list li + li {
+    margin: 0;
+}
+
+.pagination {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}

@@ -49,6 +49,8 @@
   {% trans "Click each revision to see a list of edited lines. Click the Preview button to see how the article looked at this stage. At the bottom of this page, you can change to a particular revision or merge an old revision with the current one." %}
 </p>
 
+  {% include "wiki/includes/pagination.html" %}
+
 <form method="GET">
   <div class="tab-content" style="overflow: visible;">
     {% for revision in revisions %}
@@ -119,10 +121,6 @@
     {% endfor %}
 
     {% include "wiki/includes/pagination.html" %}
-
-    {% if is_paginated %}
-      {% include "base/paginator.html" %}
-    {% endif %}
 
     {% if revisions.count > 1 and article|can_write:user and not article.current_revision.locked %}
 

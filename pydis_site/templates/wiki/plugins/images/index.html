@@ -149,8 +149,6 @@
     {% endfor %}
   </table>
 
-  {% if is_paginated %}
-    {% include "base/paginator.html" with page=page_obj %}
-  {% endif %}
+  {% include "wiki/includes/pagination.html" %}
 
 {% endblock %}
