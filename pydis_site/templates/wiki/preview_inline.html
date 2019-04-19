@@ -7,9 +7,15 @@
 
 {% block wiki_body %}
   {% if revision %}
-    <div class="alert alert-info">
-      <strong>{% trans "Previewing revision" %}:</strong>
-      {% include "wiki/includes/revision_info.html" %}
+    <div class="container">
+      <div class="message">
+        <div class="message-header">
+          <p>Previewing Revision</p>
+        </div>
+        <div class="message-body">
+          {% include "wiki/includes/revision_info.html" %}
+        </div>
+      </div>
     </div>
   {% endif %}
 
