@@ -93,6 +93,7 @@ INSTALLED_APPS = [
     'wiki.plugins.images.apps.ImagesConfig',
     'wiki.plugins.links.apps.LinksConfig',
     'wiki.plugins.redlinks.apps.RedlinksConfig',
+    'wiki.plugins.notifications.apps.NotificationsConfig',  # Required for migrations
 ]
 
 MIDDLEWARE = [
