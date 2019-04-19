@@ -13,6 +13,9 @@
       {% trans "Back to edit page" %}
     </a>
   </p>
+
+  {% include "wiki/includes/pagination.html" %}
+
   <table class="table is-fullwidth">
     {% for image in images %}
       {% with image.current_revision.imagerevision as revision %}

@@ -5,49 +5,48 @@
 {% block wiki_pagetitle %}{% trans "History" %}: {{ article.current_revision.title }}{% endblock %}
 
 {% block wiki_contents_tab %}
+  {% include "wiki/includes/modals.html" %}
 
-{% include "wiki/includes/modals.html" %}
+  {% addtoblock "js" %}
+    <script type="text/javascript" src="{% static "wiki/js/diffview.js" %}"></script>
+    <script type="text/javascript" src="{% static "wiki/js/diff.js" %}"></script>
+  {% endaddtoblock %}
+  {% addtoblock "css" %}
+    <style type="text/css">
+      td.linenumber {
+        width: 20px;
+      }
+      tr.insert td {
+        background-color: #DFC;
+      }
+      tr.delete td {
+        background-color: #FDC;
+      }
+      tr.equal td {
+        background-color: #F2F2F2;
+      }
 
-{% addtoblock "js" %}
-<script type="text/javascript" src="{% static "wiki/js/diffview.js" %}"></script>
-<script type="text/javascript" src="{% static "wiki/js/diff.js" %}"></script>
-{% endaddtoblock %}
-{% addtoblock "css" %}
-<style type="text/css">
-  td.linenumber {
-    width: 20px;
-  }
-  tr.insert td {
-    background-color: #DFC;
-  }
-  tr.delete td {
-    background-color: #FDC;
-  }
-  tr.equal td {
-    background-color: #F2F2F2;
-  }
+      .diff-container td {
+        white-space: pre; font-family: monospace;
+      }
+      .diff-container td,
+      .diff-container th {
+        padding: 2px 7px;
+        border-right: 1px solid #DDD;
+      }
+      .diff-container td:last-child,
+      .diff-container th:last-child {
+        border-right: none;
+      }
+      .diff-container table {
+        border-top: 1px solid #DDD;
+      }
+    </style>
+  {% endaddtoblock %}
 
-  .diff-container td {
-    white-space: pre; font-family: monospace;
-  }
-  .diff-container td,
-  .diff-container th {
-    padding: 2px 7px;
-    border-right: 1px solid #DDD;
-  }
-  .diff-container td:last-child,
-  .diff-container th:last-child {
-    border-right: none;
-  }
-  .diff-container table {
-    border-top: 1px solid #DDD;
-  }
-</style>
-{% endaddtoblock %}
-
-<p class="lead">
-  {% trans "Click each revision to see a list of edited lines. Click the Preview button to see how the article looked at this stage. At the bottom of this page, you can change to a particular revision or merge an old revision with the current one." %}
-</p>
+  <p class="lead">
+    {% trans "Click each revision to see a list of edited lines. Click the Preview button to see how the article looked at this stage. At the bottom of this page, you can change to a particular revision or merge an old revision with the current one." %}
+  </p>
 
   {% include "wiki/includes/pagination.html" %}
 
