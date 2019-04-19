@@ -202,6 +202,11 @@ DEFAULT_HOST = 'home'
 
 if DEBUG:
     PARENT_HOST = env('PARENT_HOST', default='pythondiscord.local:8000')
+
+    if ":" in PARENT_HOST:
+        ALLOWED_HOSTS.append(PARENT_HOST.split(":", 1)[0])
+    else:
+        ALLOWED_HOSTS.append(PARENT_HOST)
 else:
     PARENT_HOST = env('PARENT_HOST', default='pythondiscord.com')
 
