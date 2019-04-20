@@ -64,7 +64,6 @@ else:
 INSTALLED_APPS = [
     'pydis_site.apps.api',
     'pydis_site.apps.home',
-    'pydis_site.apps.wiki',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -255,5 +254,7 @@ BULMA_SETTINGS = {
     "variables": {
         "primary": "#7289DA",
         "link": "$primary",
+        "navbar-height": "4.75rem",
+        "footer-padding": "1rem 1.5rem 1rem",
     }
 }

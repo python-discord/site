@@ -12,6 +12,8 @@ version: "3.6"
 services:
   postgres:
     image: postgres:11-alpine
+    ports:
+      - "127.0.0.1:7777:5432"
     environment:
       POSTGRES_DB: pysite
       POSTGRES_PASSWORD: supersecretpassword
@@ -30,7 +32,7 @@ services:
       - .:/app:ro
       - staticfiles:/var/www/static
     environment:
-      DATABASE_URL: postgres://pysite:supersecretpassword@postgres/pysite
+      DATABASE_URL: postgres://pysite:supersecretpassword@postgres:5432/pysite
       DEBUG: "true"
       SECRET_KEY: suitable-for-development-only
       STATIC_ROOT: /var/www/static
