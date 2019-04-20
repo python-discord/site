@@ -1,3 +1,15 @@
+#wikiNavbar {
+    min-height: 3rem;
+}
+
+#wikiNavbar .container {
+    min-height: 3rem;
+}
+
+#wikiNavbar .navbar-brand {
+    min-height: 3rem;
+}
+
 .breadcrumb-section {
     padding: 1rem;
 }

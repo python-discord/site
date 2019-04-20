@@ -2,7 +2,7 @@
 
 {% if article|can_write:user %}
   {% with selected_tab as selected %}
-    <nav class="navbar is-light" role="navigation" aria-label="wiki navigation">
+    <nav class="navbar is-light" role="navigation" aria-label="wiki navigation" id="wikiNavbar">
       <div class="container">
         <div class="navbar-brand">
           {% if not user.is_anonymous %}
