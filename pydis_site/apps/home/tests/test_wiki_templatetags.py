@@ -229,3 +229,10 @@ class TestGetFieldOptions(TestCase):
 
         context = Context({"field": field})
         self.TEMPLATE.render(context)
+
+    def test_get_field_options_value(self):
+        unbound_field = ChoiceField()
+        field = BoundField(Form(initial={"field": "Value"}), unbound_field, "field")
+
+        context = Context({"field": field})
+        self.TEMPLATE.render(context)
