@@ -1,8 +1,7 @@
-from typing import Dict, Union, List
+from typing import Dict, List
 
 import requests
 from django.core.handlers.wsgi import WSGIRequest
-from django.db.models import QuerySet
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.utils import timezone
