@@ -1,8 +1,8 @@
 {% extends "wiki/article.html" %}
-{% load wiki_tags i18n humanize wiki_thumbnails %}
+{% load wiki_tags %}
+{% load wiki_thumbnails %}
 
-
-{% block wiki_pagetitle %}{% trans "Purge deletion" %}: {{ image }}{% endblock %}
+{% block wiki_pagetitle %}Purge image: {{ image }}{% endblock %}
 
 {% block wiki_contents_tab %}
   <div class="columns">

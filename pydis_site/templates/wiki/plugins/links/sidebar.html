@@ -1,4 +1,5 @@
-{% load sekizai_tags static %}
+{% load sekizai_tags %}
+{% load static %}
 
 <h4 class="title is-4">Link to another wiki page</h4>
 
@@ -50,7 +51,6 @@
   <script src="{% static "js/wiki/links_sidebar.js" %}"></script>
 
   <script type="text/javascript">
-    {# If you figure out a way to do this without putting some JS directly in the page... let me know #}
     setFetchURL("{% url 'wiki:links_query_urlpath' path=urlpath.path article_id=article.id %}");
   </script>
 {% endaddtoblock %}

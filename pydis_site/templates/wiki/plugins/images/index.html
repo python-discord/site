@@ -1,16 +1,21 @@
 {% extends "wiki/article.html" %}
-{% load wiki_tags i18n humanize wiki_thumbnails %}
+{% load humanize %}
+{% load wiki_tags %}
+{% load wiki_thumbnails %}
 
 {# TODO: This page needs re-styling, but it's functional for now so we're not touching it until after wiki completion #}
 
-{% block wiki_pagetitle %}{% trans "Images" %}: {{ article.current_revision.title }}{% endblock %}
+{% block wiki_pagetitle %}Images: {{ article.current_revision.title }}{% endblock %}
 
 {% block wiki_contents_tab %}
-  <p class="lead">{% trans "The following images are available for this article. Copy the markdown tag to directly refer to an image from the article text." %}</p>
+  <p>The following images are available for this article. Copy the markdown tag to directly refer to an image from the article text.</p>
+
   <p>
-    <a href="{% url 'wiki:edit' path=urlpath.path article_id=article.id %}">
-      <span class="fa fa-arrow-left"></span>
-      {% trans "Back to edit page" %}
+    <a href="{% url 'wiki:edit' path=urlpath.path article_id=article.id %}" class="button is-white">
+      <span class="icon">
+        <i class="fas fa-arrow-left"></i>
+      </span>
+      <span>Back to edit page</span>
     </a>
   </p>
 
@@ -27,6 +32,7 @@
             <th>Size</th>
           </tr>
         </thead>
+
         <tbody>
           <tr>
             <td rowspan="3">
@@ -76,21 +82,26 @@
                 {% endif %}
               {% endif %}
             </td>
+
             <td>
               <code>[image:{{ image.id }}]</code>
             </td>
+
             <td colspan="3">
               {% include "wiki/includes/revision_info.html" %}
             </td>
+
             <td>
               {{ revision.get_size|filesizeformat }}<br />{{ revision.width }}x{{ revision.height }} pixels
             </td>
           </tr>
+
           <tr>
             <th colspan="5">
               History
             </th>
           </tr>
+
           <tr>
             <td class="is-paddingless" colspan="5">
               <table class="table is-striped">
@@ -115,15 +126,19 @@
                           {% endthumbnail %}
                         </figure>
                       </td>
+
                       <td>
                         {% include "wiki/includes/revision_info.html" with current_revision=image.current_revision revision=old_revision %}
                       </td>
+
                       <td>
                         {{ old_revision.imagerevision.get_size|filesizeformat }}
                       </td>
+
                       <td>
                         {{ old_revision.imagerevision.width }}x{{ old_revision.imagerevision.height }} pixels
                       </td>
+
                       <td>
                         {% if image|can_write:user and old_revision != image.current_revision %}
                           <a class="button is-primary" href="{% url 'wiki:images_set_revision' path=urlpath.path article_id=article.id image_id=image.id rev_id=old_revision.id %}">
@@ -153,5 +168,4 @@
   </table>
 
   {% include "wiki/includes/pagination.html" %}
-
 {% endblock %}

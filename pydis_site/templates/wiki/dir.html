@@ -1,8 +1,10 @@
 {% extends "wiki/article.html" %}
-{% load wiki_tags wiki_extra i18n humanize %}
+{% load humanize %}
+{% load i18n %}
+{% load wiki_extra %}
+{% load wiki_tags %}
 
-
-{% block wiki_pagetitle %}{% trans "Listing articles in" %} {{ article.current_revision.title }}{% endblock %}
+{% block wiki_pagetitle %}Listing articles in {{ article.current_revision.title }}{% endblock %}
 
 {% block wiki_contents_tab %}
   {% url 'wiki:dir' urlpath.path as self_url %}
@@ -11,6 +13,7 @@
     <div class="is-pulled-right">
       {% render_field filter_form.query render_labels=False %}
     </div>
+
     <div class="field is-grouped">
       <div class="field-body">
         <div class="control">
@@ -53,6 +56,7 @@
       <th>Slug</th>
       <th>Last modified</th>
     </tr>
+
     {% for urlpath in directory %}
       <tr>
         <td>
@@ -76,14 +80,17 @@
             </span>
           {% endif %}
         </td>
+
         <td>
           {{ urlpath.slug }}
         </td>
+
         <td>
           {{ urlpath.article.current_revision.created|naturaltime }}
         </td>
       </tr>
-      {% empty%}
+
+      {% empty %}
       <tr>
         <td colspan="3">
           <em>There are no articles at this level</em>

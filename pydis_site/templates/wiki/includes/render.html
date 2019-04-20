@@ -1,4 +1,5 @@
-{% load wiki_tags i18n cache sekizai_tags static %}
+{% load sekizai_tags %}
+{% load static %}
 
 {% addtoblock "js" %}
   <script type="text/javascript" src="{% static "wiki/js/article.js" %}"></script>
@@ -16,6 +17,7 @@
       {% endfor %}
     {% endaddtoblock %}
   {% endif %}
+
   {% if plugin.RenderMedia.js %}
     {% addtoblock "js" %}
       {% for url in plugin.RenderMedia.js %}

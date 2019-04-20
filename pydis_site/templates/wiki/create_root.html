@@ -1,7 +1,8 @@
 {% extends "wiki/base.html" %}
-{% load wiki_tags crispy_forms_tags i18n sekizai_tags static %}
+{% load static %}
+{% load wiki_tags %}
 
-{% block wiki_pagetitle %}{% trans "Create root article" %}{% endblock %}
+{% block wiki_pagetitle %}{Create root article{% endblock %}
 
 {% block head %}
   {{ block.super }}
@@ -16,7 +17,6 @@
     {% endfor %}
   {% endfor %}
 {% endblock %}
-
 
 {% block wiki_contents %}
   <h2 class="title is-2">Create First Article</h2>
@@ -49,5 +49,4 @@
       </div>
     </div>
   </form>
-
 {% endblock %}

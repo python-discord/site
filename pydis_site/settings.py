@@ -277,12 +277,11 @@ CRISPY_TEMPLATE_PACK = "bulma"
 # Custom settings for django-simple-bulma
 BULMA_SETTINGS = {
     "variables": {
+        "green": "#21c65c",  # Accessibility: Better contrast with the light text
         "primary": "#7289DA",
         "link": "$primary",
 
-        "green": "#21c65c",  # Better contrast with the light text
-
-        "dimensions": "16 24 32 48 64 96 128 256 512"  # Image dimensions
+        "dimensions": "16 24 32 48 64 96 128 256 512"  # Possible image dimensions
     }
 }
 

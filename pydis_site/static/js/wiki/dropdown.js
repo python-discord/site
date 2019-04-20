@@ -1,5 +1,3 @@
-// TODO: Move to django-simple-bulma
-
 (function() {
     window.dropdowns = {};
 

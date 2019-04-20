@@ -1,22 +1,13 @@
 {% extends "wiki/article.html" %}
-{% load wiki_tags i18n sekizai_tags static %}
-
+{% load static %}
+{% load wiki_tags %}
 
 {% block wiki_pagetitle %}
   Edit: {{ article.current_revision.title }}
 {% endblock %}
 
 {% block wiki_contents_tab %}
-
-  {% if not user.is_authenticated %}
-    <p class="alert alert-warning">
-      {% trans "<strong>Warning:</strong> You are not logged in. Your IP address will be logged." %}
-      <a href="{% url 'wiki:login' %}?next={% url 'wiki:edit' article_id=article.id path=urlpath.path %}">{% trans "Click here to log in" %} &raquo;</a>
-    </p>
-  {% endif %}
-
   <div class="columns">
-
     <div class="column is-two-thirds">
       <form method="POST" class="form-horizontal" id="article_edit_form">
         {% with edit_form as form %}
@@ -60,17 +51,13 @@
 
         <br />
         <br />
-
       </form>
     </div>
 
     <div class="column is-one-third" id="wiki-edit-sidebar">
       {% include "wiki/includes/editor_sidebar.html" %}
     </div>
-
   </div>
-
-  <div style="clear: both"></div>
 
   <div class="modal" id="previewModal">
     <div class="modal-background"></div>

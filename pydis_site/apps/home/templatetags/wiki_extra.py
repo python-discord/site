@@ -26,7 +26,7 @@ TEMPLATES: Dict[Type, str] = {
 register = template.Library()
 
 
-def get_unbound_field(field: BoundField) -> Field:
+def get_unbound_field(field: Union[BoundField, Field]) -> Field:
     while isinstance(field, BoundField):
         field = field.field
 
@@ -39,10 +39,7 @@ def render(template_path: str, context: Dict[str, Any]):
 
 @register.simple_tag
 def render_field(field: Field, render_labels: bool = True):
-    if isinstance(field, BoundField):
-        unbound_field = get_unbound_field(field)
-    else:
-        unbound_field = field
+    unbound_field = get_unbound_field(field)
 
     if not isinstance(render_labels, bool):
         render_labels = True

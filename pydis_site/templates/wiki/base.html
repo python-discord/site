@@ -1,5 +1,6 @@
 {% extends "base/base.html" %}
-{% load sekizai_tags i18n wiki_tags static %}
+{% load static %}
+{% load wiki_tags %}
 
 {% block title %}
   Wiki | {% block wiki_pagetitle %}{% endblock %}{% block wiki_site_title %}{% endblock %}
@@ -41,7 +42,9 @@
   {% endblock %}
 
   {% block site_footer %}
-    {% include "base/footer.html" %}
+    {% block wiki_footer_prepend %}{% endblock %}
+
+    {{ block.super }}
   {% endblock %}
 
   <script src="{% static "js/wiki/dropdown.js" %}" type="text/javascript"></script>

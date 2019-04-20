@@ -1,5 +1,6 @@
 {% extends "wiki/article.html" %}
-{% load wiki_tags wiki_thumbnails %}
+{% load wiki_tags %}
+{% load wiki_thumbnails %}
 
 {% block wiki_pagetitle %}Replace Image: {{ image }}{% endblock %}
 
@@ -9,6 +10,7 @@
       <p>
         Upload an image to replace the current one.
       </p>
+
       <form method="POST" class="form-horizontal" enctype="multipart/form-data">
         {% wiki_form form %}
 
@@ -27,6 +29,7 @@
         </button>
       </form>
     </div>
+
     <div class="column is-one-third">
       {% thumbnail image.current_revision.imagerevision.image "250x250" as thumb %}
         <figure class="image">
