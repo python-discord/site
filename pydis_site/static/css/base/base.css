@@ -18,6 +18,30 @@ div.card.has-equal-height {
     flex-direction: column;
 }
 
+.navbar-item.is-fullsize {
+    padding: 0;
+}
+
+.navbar-item.is-fullsize img {
+    max-height: 4.75rem;
+}
+
+.navbar-item.has-no-highlight:hover {
+    background-color: transparent;
+}
+
+.navbar-item.has-left-margin-1 {
+    margin-left: 1rem;
+}
+
+.navbar-item.has-left-margin-2 {
+    margin-left: 2rem;
+}
+
+.navbar-item.has-left-margin-3 {
+    margin-left: 3rem;
+}
+
 #django-logo {
     padding-bottom: 2px;
     background: url(https://static.djangoproject.com/img/logos/django-logo-negative.png) no-repeat center;
