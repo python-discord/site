@@ -15,6 +15,7 @@ RUN apt-get update -y \
                 gcc \
                 libc-dev \
                 libpq-dev \
+                git \
     && \
         apt-get clean \
     && \

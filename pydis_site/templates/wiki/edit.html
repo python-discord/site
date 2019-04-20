@@ -1,0 +1,95 @@
+{% extends "wiki/article.html" %}
+{% load static %}
+{% load wiki_tags %}
+
+{% block wiki_pagetitle %}
+  Edit: {{ article.current_revision.title }}
+{% endblock %}
+
+{% block wiki_contents_tab %}
+  <div class="columns">
+    <div class="column is-two-thirds">
+      <form method="POST" class="form-horizontal" id="article_edit_form">
+        {% with edit_form as form %}
+          {% include "wiki/includes/editor.html" %}
+        {% endwith %}
+
+        <button class="button is-light" type="submit" name="preview" value="1" id="id_preview"
+                formaction="{% url 'wiki:preview' path=urlpath.path article_id=article.id %}"
+                formtarget="previewWindow"
+        >
+          <span class="icon">
+            <i class="fas fa-eye"></i>
+          </span>
+          <span>Preview</span>
+        </button>
+        <button class="button is-primary" type="submit" name="save" value="1" id="id_save">
+          <span class="icon">
+            <i class="fas fa-save"></i>
+          </span>
+          <span>Save Changes</span>
+        </button>
+
+        <div class="is-pulled-right">
+          {% if user.is_authenticated and urlpath.path %}
+            <a href="{% url 'wiki:move' path=urlpath.path article_id=article.id %}" class="button is-warning ">
+              <span class="icon">
+                <i class="fas fa-random"></i>
+              </span>
+              <span>Move Article</span>
+            </a>
+          {% endif %}
+          {% if article|can_delete:user %}
+            <a href="{% url 'wiki:delete' path=urlpath.path article_id=article.id %}" class="button is-danger">
+              <span class="icon">
+                <i class="fas fa-trash"></i>
+              </span>
+              <span>Delete Article</span>
+            </a>
+          {% endif %}
+        </div>
+
+        <br />
+        <br />
+      </form>
+    </div>
+
+    <div class="column is-one-third" id="wiki-edit-sidebar">
+      {% include "wiki/includes/editor_sidebar.html" %}
+    </div>
+  </div>
+
+  <div class="modal" id="previewModal">
+    <div class="modal-background"></div>
+    <div class="modal-card" style="height: 80%; width: 80%;">
+      <div class="modal-card-head">
+        <p class="modal-card-title">Article Preview</p>
+      </div>
+      <div class="modal-card-body" style="padding: 0; overflow: hidden;">
+        <iframe name="previewWindow" frameborder="0" style="width: 100%; height: 100%;"></iframe>
+      </div>
+      <div class="modal-card-foot">
+        <button class="button is-light" aria-label="close">
+          <span class="icon">
+            <i class="fas fa-arrow-left"></i>
+          </span>
+          <span>Back</span>
+        </button>
+        <a class="button is-primary" id="id_preview_save_changes">
+          <span class="icon">
+            <i class="fas fa-save"></i>
+          </span>
+          <span>Save Changes</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script src="{% static "js/wiki/modal.js" %}" type="text/javascript"></script>
+  <script src="{% static "js/wiki/edit.js" %}" type="text/javascript"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $("#id_revision").val('{{ article.current_revision.id }}');
+    });
+  </script>
+{% endblock %}

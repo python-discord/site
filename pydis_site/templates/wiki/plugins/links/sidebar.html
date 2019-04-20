@@ -1,0 +1,56 @@
+{% load sekizai_tags %}
+{% load static %}
+
+<h4 class="title is-4">Link to another wiki page</h4>
+
+<p>
+  Type in something from another wiki page's title and auto-complete will help you create a tag for your wiki link. Tags for links look like this:<br />
+</p>
+
+<pre>[Title of link](wiki:ArticleSlug)</pre>
+
+{# We do this to prevent accidental form submission - this isn't _really_ a form #}
+<input type="submit" disabled style="display: none" aria-hidden="true" />
+
+<div class="field">
+  <div class="control has-icons-left">
+    <div class="dropdown">
+      <div class="dropdown-trigger">
+        <input class="input" type="text" id="page_title_input" value="" placeholder="Search: 3+ chars" aria-haspopup="true" aria-controls="page_title_menu">
+      </div>
+      <div class="dropdown-menu" id="page_title_menu" role="menu"></div>
+    </div>
+
+    <span class="icon is-small is-left">
+      <i class="fas fa-search"></i>
+    </span>
+  </div>
+</div>
+
+<div class="is-divider"></div>
+
+<h4 class="title is-4">An external link</h4>
+
+<p>
+  You can link to another website simply by inserting an address example.com or http://example.com or by using the markdown syntax:<br />
+</p>
+
+<pre>[Clickable text](http://example.com)</pre>
+
+{% addtoblock "js" %}
+  {% comment %}
+    So, for whatever reason, bulmahead doesn't have a LICENSE file. There is one in
+    the package.json, but that isn't a standard most projects adhere to - so I've
+    declined to include it within the project directly.
+
+    The package.json states MIT - but there is no prose or license
+    text available for the project itself.
+  {% endcomment %}
+
+  <script src="https://cdn.rawgit.com/mattmezza/bulmahead/master/dist/bulmahead.bundle.js"></script>
+  <script src="{% static "js/wiki/links_sidebar.js" %}"></script>
+
+  <script type="text/javascript">
+    setFetchURL("{% url 'wiki:links_query_urlpath' path=urlpath.path article_id=article.id %}");
+  </script>
+{% endaddtoblock %}

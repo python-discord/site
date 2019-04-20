@@ -1,0 +1,73 @@
+{% extends "wiki/base.html" %}
+{% load sekizai_tags %}
+{% load static %}
+{% load wiki_tags %}
+
+{# We make these empty so they don't appear in the preview #}
+{% block site_navbar %}{% endblock %}
+{% block site_footer %}{% endblock %}
+{% block wiki_breadcrumbs %}{% endblock %}
+
+{% block wiki_body %}
+  {% if revision %}
+    <div class="container">
+      <div class="message">
+        <div class="message-header">
+          <p>Previewing Revision</p>
+        </div>
+        <div class="message-body">
+          {% include "wiki/includes/revision_info.html" %}
+        </div>
+      </div>
+    </div>
+  {% endif %}
+
+  {% if merge %}
+    <div class="alert alert-info">
+      <strong>Previewing merge between:</strong>
+      {% include "wiki/includes/revision_info.html" with revision=merge1 %}
+      <strong>and</strong>
+      {% include "wiki/includes/revision_info.html" with revision=merge2 %}
+    </div>
+
+    {% if merge1.deleted %}
+      <div class="alert alert-danger">
+        <strong>You cannot merge with a deleted revision</strong>
+      </div>
+    {% endif %}
+  {% endif %}
+
+  {% if revision and revision.deleted %}
+    <div class="warning">
+      <strong>This revision has been deleted.</strong>
+      <p>Restoring to this revision will mark the article as deleted.</p>
+    </div>
+  {% else %}
+    <section class="section">
+      <div class="container">
+        <div class="content">
+          <h1 class="title">{{ article.current_revision.title }}</h1>
+
+          {% wiki_render article content %}
+        </div>
+      </div>
+    </section>
+
+    {% for plugin in plugins %}
+      {% if plugin.RenderMedia.css %}
+        {% addtoblock "css" %}
+          {% for media, url in plugin.RenderMedia.css.items %}
+            <link rel="stylesheet" href="{% static url %}" />
+          {% endfor %}
+        {% endaddtoblock %}
+      {% endif %}
+      {% if plugin.RenderMedia.js %}
+        {% addtoblock "js" %}
+          {% for url in plugin.RenderMedia.js %}
+            <script type="text/javascript" src="{% static url %}"></script>
+          {% endfor %}
+        {% endaddtoblock %}
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+{% endblock %}

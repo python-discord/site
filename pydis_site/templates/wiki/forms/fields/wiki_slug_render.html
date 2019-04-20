@@ -1,0 +1,48 @@
+{% load wiki_extra %}
+
+<div id="div_{{ field.auto_id }}" class="field is-horizontal{% if field.errors %} is-danger{% endif %}">
+  {% if render_labels %}
+    <div class="field-label">
+      {% if field.label %}
+        <label for="{{ field.auto_id }}" class="label {% if field.errors %} is-danger{% endif %}">
+          {{ field.label | safe }} {% if field.field.required %}<span class="asterisk has-text-danger">*</span>{% endif %}
+        </label>
+      {% endif %}
+
+      {% if field.help_text %}
+        <p id="hint_{{ field.auto_id }}" class="help has-text-grey">
+          {{ field.help_text|safe }}
+        </p>
+      {% endif %}
+    </div>
+  {% endif %}
+
+  <div class="field-body">
+    <div class="field has-addons">
+    <div class="control">
+      <a class="button is-static">{{ field.form.urlpath_parent | render_urlpath }}</a>
+    </div>
+      <div class="control is-expanded">
+        <input class="input{% if field.errors %} is-danger{% endif %}"
+               type="text"
+               id="{{ field.auto_id }}"
+               name="{{ field.name }}"
+
+               {% if field.required %}required{% endif %}
+               {% if field.max_length %}maxlength="{{ field.max_length }}"{% endif %}
+               {% if field.min_length %}minlength="{{ field.min_length }}"{% endif %}
+               {% if field.empty_value %}placeholder="{{ field.empty_value }}"{% endif %}
+               {% if field.value %}value="{{ field.value }}"{% endif %}
+        >
+      </div>
+
+    {% if field.errors %}
+      <p class="help is-danger">
+        {% for error in field.errors %}
+          <span id="error_{{ forloop.counter }}_{{ field.auto_id }}">{{ error }}</span><br />
+        {% endfor %}
+      </p>
+    {% endif %}
+    </div>
+  </div>
+</div>

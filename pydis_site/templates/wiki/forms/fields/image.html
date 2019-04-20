@@ -1,0 +1,53 @@
+<div id="div_{{ field.auto_id }}" class="field is-horizontal{% if field.errors %} is-danger{% endif %}">
+  {% if render_labels %}
+    <div class="field-label">
+      {% if field.label %}
+        <label for="{{ field.auto_id }}" class="label {% if field.errors %} is-danger{% endif %}">
+          {{ field.label | safe }} {% if field.field.required %}<span class="asterisk has-text-danger">*</span>{% endif %}
+        </label>
+      {% endif %}
+
+      {% if field.help_text %}
+        <p id="hint_{{ field.auto_id }}" class="help has-text-grey">
+          {{ field.help_text|safe }}
+        </p>
+      {% endif %}
+    </div>
+  {% endif %}
+
+  <div class="field-body">
+    <div class="field">
+      <div class="control">
+        <div class="file has-name is-fullwidth">
+          <label class="file-label">
+            <input class="file-input"
+                   type="file"
+                   id="{{ field.auto_id }}"
+                   name="{{ field.name }}"
+                   accept="image/*"
+
+                   {% if field.required %}required{% endif %}
+            />
+          <span class="file-cta">
+            <span class="file-icon">
+              <i class="fas fa-image"></i>
+            </span>
+            <span class="file-label">
+              Choose
+            </span>
+          </span>
+          <span class="file-name"></span>
+          </label>
+        </div>
+      </div>
+
+    {% if field.errors %}
+      <p class="help is-danger">
+        {% for error in field.errors %}
+          <span id="error_{{ forloop.counter }}_{{ field.auto_id }}">{{ error }}</span><br />
+        {% endfor %}
+      </p>
+    {% endif %}
+    </div>
+  </div>
+</div>

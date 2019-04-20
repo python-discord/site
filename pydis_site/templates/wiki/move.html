@@ -1,0 +1,72 @@
+{% extends "wiki/article.html" %}
+{% load i18n %}
+{% load sekizai_tags %}
+{% load static %}
+{% load wiki_tags %}
+
+{% block wiki_pagetitle %}Move: {{ article.current_revision.title }}{% endblock %}
+
+{% block wiki_contents_tab %}
+  <article class="message is-warning">
+    <div class="message-body">
+      {% if urlpath.get_descendants %}
+        {% blocktrans count cnt=urlpath.get_descendants.count trimmed %}
+          <p>
+            Please note that this article has {{ cnt }} child article. If you
+            decide to move this article, then links to any child articles will
+            not be updated.
+          </p>
+          {% plural %}
+          <p>
+            Please note that this article has {{ cnt }} child articles. If you
+            decide to move this article, then links to any child articles will
+            not be updated.
+          </p>
+        {% endblocktrans %}
+      {% endif %}
+      <p>
+        Remember: Any links to this article will not be automatically updated. You
+        may leave behind a redirect page by specifying that option below, but these
+        are temporary - so it's better to update the links directly.
+      </p>
+    </div>
+  </article>
+
+  <form method="POST" class="form-horizontal" id="article_move_form">
+    {% wiki_form form %}
+
+    {# Not gonna lie, I have no idea what this is or what it's for #}
+    <div class="btn-group" id="dest_selector">
+      <a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#">
+        <span class="dest_selector_title"></span>
+        <span class="caret"></span>
+      </a>
+
+      <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+          {% with current_path=root_path %}{% include "wiki/includes/move_tree.html" %}{% endwith %}
+      </ul>
+    </div>
+
+    <a href="{% url 'wiki:get' path=urlpath.path article_id=article.id %}" class="button is-white">
+      <span class="icon">
+        <i class="fas fa-arrow-left"></i>
+      </span>
+      <span>Go back</span>
+    </a>
+
+    <button class="button is-warning" type="submit" name="move" id="id_move">
+      <span class="icon">
+        <i class="fas fa-random"></i>
+      </span>
+      <span>Move article</span>
+    </button>
+  </form>
+
+  {% addtoblock "js" %}
+    <script type="text/javascript" src="{% static "js/wiki/move.js" %}"></script>
+    <script type="text/javascript">
+      $('#id_slug').val('{{ urlpath.slug }}');
+      select_path('{{urlpath.parent.pk}}', '{{urlpath.parent}}');
+    </script>
+  {% endaddtoblock %}
+{% endblock %}

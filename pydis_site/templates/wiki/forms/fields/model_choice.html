@@ -1,0 +1,71 @@
+{% load wiki_extra %}
+
+<div id="div_{{ field.auto_id }}" class="field is-horizontal{% if field.errors %} is-danger{% endif %}">
+  {% if render_labels %}
+    <div class="field-label">
+      {% if field.label %}
+        <label for="{{ field.auto_id }}" class="label {% if field.errors %} is-danger{% endif %}">
+          {{ field.label | safe }} {% if field.field.required %}<span class="asterisk has-text-danger">*</span>{% endif %}
+        </label>
+      {% endif %}
+
+      {% if field.help_text %}
+        <p id="hint_{{ field.auto_id }}" class="help has-text-grey">
+          {{ field.help_text|safe }}
+        </p>
+      {% endif %}
+    </div>
+  {% endif %}
+
+  <div class="field-body">
+    <div class="field">
+      <div class="control">
+        <div class="select">
+          {% get_field_options field %}
+
+          <select {% if not options %}disabled{% endif %}
+                  id="{{ field.auto_id }}"
+                  name="{{ field.name }}"
+
+                  {% if field.required %}required{% endif %}
+          >
+            {% if options %}
+              {% for group_name, group_choices, group_index in options %}
+                {% if group_name %}
+                  <optgroup label="{{ group_name }}">
+                {% endif %}
+                {% for option in group_choices %}
+                  <option {% if option.value == field.value %}selected{% endif %}
+                          value="{{ option.value|stringformat:'s' }}"
+                  >
+                    {{ option.label }}
+                  </option>
+                {% endfor %}
+                {% if group_name %}
+                  </optgroup>
+                {% endif %}
+              {% endfor %}
+            {% else %}
+              <option value="">
+                {% if field.field.empty_label %}
+                  {{ field.field.empty_label }}
+                {% else %}
+                  N/A
+                {% endif %}
+                </option>
+            {% endif %}
+          </select>
+        </div>
+
+      </div>
+
+    {% if field.errors %}
+      <p class="help is-danger">
+        {% for error in field.errors %}
+          <span id="error_{{ forloop.counter }}_{{ field.auto_id }}">{{ error }}</span><br />
+        {% endfor %}
+      </p>
+    {% endif %}
+    </div>
+  </div>
+</div>

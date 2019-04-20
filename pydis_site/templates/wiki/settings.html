@@ -1,0 +1,30 @@
+{% extends "wiki/article.html" %}
+{% load wiki_tags %}
+
+{% block wiki_pagetitle %}Settings: {{ article.current_revision.title }}{% endblock %}
+
+{% block wiki_contents_tab %}
+  {% for form in forms %}
+    <form method="POST" class="form-horizontal" action="?f={{form.action}}">
+      <h3 class="page-header">{{ form.settings_form_headline }}</h3>
+
+      {% wiki_form form %}
+
+      <div class="field is-horizontal">
+        <div class="field-label">
+          {# Empty for spacing #}
+        </div>
+        <div class="field-body">
+          <div class="control">
+            <button type="submit" class="button is-primary" name="save">
+              <span class="icon">
+                <i class="fas fa-save"></i>
+              </span>
+              <span>Save Changes</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  {% endfor %}
+{% endblock %}

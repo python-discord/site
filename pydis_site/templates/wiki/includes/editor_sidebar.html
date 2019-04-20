@@ -1,0 +1,38 @@
+{% load static %}
+
+<section class="accordions">
+  {% for plugin, plugin_form in sidebar %}
+    <article class="accordion is-primary">
+      <div class="accordion-header toggle">
+        <p>
+          {% if plugin.sidebar.icon_class %}
+            <span class="icon">
+              {% if plugin.sidebar.icon_class == "fa-picture-o" %}
+                <i class="fas fa-images"></i>
+              {% else %}
+                <i class="fas {{ plugin.sidebar.icon_class }}"></i>
+              {% endif %}
+            </span>
+          {% endif %}
+
+          {{ plugin.sidebar.headline }}
+        </p>
+
+      </div>
+      <div class="accordion-body">
+        <div class="accordion-content">
+          {% if plugin.sidebar.template %}
+            {% with plugin_form as form %}
+              <form method="POST" class="form-horizontal sidebar-form" action="?f={{ plugin_form.form_id }}" enctype="multipart/form-data">
+                {% csrf_token %}
+                {% include plugin.sidebar.template %}
+              </form>
+            {% endwith %}
+          {% endif %}
+        </div>
+      </div>
+    </article>
+  {% endfor %}
+</section>
+
+<script type="application/javascript" src="{% static "js/wiki/editor_sidebar.js" %}"></script>

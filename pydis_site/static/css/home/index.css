@@ -17,30 +17,6 @@
     margin-right: 2rem;
 }
 
-.navbar-item.is-fullsize {
-    padding: 0;
-}
-
-.navbar-item.is-fullsize img {
-    max-height: 4.75rem;
-}
-
-.navbar-item.has-no-highlight:hover {
-    background-color: transparent;
-}
-
-.navbar-item.has-left-margin-1 {
-    margin-left: 1rem;
-}
-
-.navbar-item.has-left-margin-2 {
-    margin-left: 2rem;
-}
-
-.navbar-item.has-left-margin-3 {
-    margin-left: 3rem;
-}
-
 .video-container iframe,
 .video-container object,
 .video-container embed {

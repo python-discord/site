@@ -1,0 +1,15 @@
+{% if form.non_field_errors %}
+  <article class="message is-danger">
+    {% if form_error_title %}
+      <div class="message-header">
+        <p>{{ form_error_title }}</p>
+      </div>
+    {% endif %}
+
+    <div class="message-body">
+      {% for error_message in form.non_field_errors %}
+        <p>{{ error_message }}</p>
+      {% endfor %}
+    </div>
+  </article>
+{% endif %}

@@ -1,0 +1,90 @@
+{% extends "wiki/base.html" %}
+{% load static %}
+{% load wiki_tags %}
+
+{% block wiki_pagetitle %}Delete Article{% endblock %}
+
+{% block wiki_contents %}
+  <h1 class="title is-1">Delete "{{ article.current_revision.title }}"</h1>
+
+  {% if cannot_delete_root %}
+    <article class="message is-warning">
+      <div class="message-body">
+        <p>
+          You cannot delete the root article.
+        </p>
+
+        <a href="{% url 'wiki:get' path=urlpath.path article_id=article.id %}" class="button is-primary">
+          <span class="icon">
+            <i class="fas fa-arrow-left"></i>
+          </span>
+          <span>Go back</span>
+        </a>
+      </div>
+    </article>
+  {% else %}
+    {% if cannot_delete_children %}
+      <article class="message is-warning">
+        <div class="message-body">
+          <p>
+            You do not have permission to delete articles that have children.
+          </p>
+
+          <a href="{% url 'wiki:get' path=urlpath.path article_id=article.id %}" class="button is-primary">
+            <span class="icon">
+              <i class="fas fa-arrow-left"></i>
+            </span>
+            <span>Go back</span>
+          </a>
+        </div>
+      </article>
+    {% endif %}
+
+    {% if delete_children %}
+      <div class="message is-danger">
+        <div class="message-body">
+          <p>
+            You are deleting an article with children. If you delete this article, then its children will also be deleted.
+          </p>
+          <p>
+            If you choose to purge this article, note that its children will also be purged.
+          </p>
+        </div>
+      </div>
+
+      <h2 class="title is-2">Child articles</h2>
+
+      <ul>
+        {% for child in delete_children %}
+          <li><a href="{% url 'wiki:get' article_id=child.article.id %}" target="_blank">{{ child.article }}</a></li>
+        {% endfor %}
+
+        {% if delete_children_more %}
+          <li><em>"...and more!"</em></li>
+        {% endif %}
+      </ul>
+
+    {% endif %}
+
+    {% if not cannot_delete_children %}
+      <p>Please confirm that you would like to delete this article.</p>
+
+      <form method="POST">
+        {% wiki_form delete_form %}
+
+      <a href="{% url 'wiki:get' path=urlpath.path article_id=article.id %}" class="button is-white">
+        <span class="icon">
+          <i class="fas fa-arrow-left"></i>
+        </span>
+        <span>Go back</span>
+      </a>
+      <button type="submit" name="save_changes" class="button is-danger">
+        <span class="icon">
+          <i class="fas fa-trash"></i>
+        </span>
+        <span>Delete Article</span>
+      </button>
+      </form>
+    {% endif %}
+  {% endif %}
+{% endblock %}

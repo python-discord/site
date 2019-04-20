@@ -1,0 +1,206 @@
+{% load static %}
+{% load wiki_images_tags %}
+{% load wiki_tags %}
+{% load wiki_thumbnails %}
+
+{% with article|images_for_article as images %}
+  {% if article|images_can_add:user %}
+    {% include "wiki/includes/formerrors.html" %}
+
+    {# Include the hidden fields #}
+    {% for hidden in form.hidden_fields %}
+      {{ hidden }}
+    {% endfor %}
+
+    {% for field in form.visible_fields %}
+      {% include "wiki/includes/formfield.html" with render_labels=False %}
+    {% endfor %}
+
+    <button type="button" onClick="add_image(this.form)" name="{{ plugin.slug }}_save" value="1" class="button is-primary is-fullwidth">
+      <span class="icon">
+        <i class="fas fa-upload"></i>
+      </span>
+      <span>Upload</span>
+    </button>
+
+    <br />
+  {% endif %}
+
+  {% for image in images %}
+    {% with image.current_revision.imagerevision as revision %}
+      {% thumbnail revision.image "100x100" crop="center" as thumb %}
+        <div class="columns">
+          <div class="column is-half">
+            <img src="{{ thumb.url }}" alt="{{ revision.get_filename }}" title="{{ revision.get_filename }}" />
+          </div>
+          <div class="column is-half has-text-right">
+            <div class="tags is-right">
+              <span class="tag is-dark is-medium">Image ID: {{ image.id }}</span>
+            </div>
+
+            <p>
+              <a class="button is-primary" title="Insert image" href="javascript:void(insert_image({{ image.id }}))">
+                <span class="icon">
+                  <i class="fa fa-paste"></i>
+                </span>
+              </a>
+
+              {% if image|can_write:user %}
+                <a class="button is-primary" title="Replace" href="{% url 'wiki:images_add_revision' path=urlpath.path article_id=article.id image_id=image.id %}">
+                  <span class="icon">
+                    <i class="fas fa-upload"></i>
+                  </span>
+                </a>
+              {% endif %}
+            </p>
+          </div>
+        </div>
+      {% endthumbnail %}
+    {% endwith %}
+
+  {% empty %}
+    <div class="has-text-centered">
+      No images found for this article.
+    </div>
+    <br />
+  {% endfor %}
+
+  <p>
+    <a class="button is-primary is-fullwidth" href="{% url 'wiki:images_index' path=urlpath.path article_id=article.id %}">
+      <span>Manage Images</span>
+      <span class="icon">
+        <i class="fas fa-arrow-right"></i>
+      </span>
+    </a>
+  </p>
+
+  <h4 class="title is-4">How to use images</h4>
+
+  <p>
+    Images are local to the article, and may only be used in the article they are
+    uploaded to. Images may be replaced by clicking the upload button next to it
+    above, but note that image revisions are kept and can be found on the
+    <a href="{% url 'wiki:images_index' path=urlpath.path article_id=article.id %}">Manage Images page</a>.
+  </p>
+
+  <p>
+    To make use of images in an article, use the <code>image</code> wiki tag in
+    your Markdown. These tags take some arguments for customisation, and you can
+    also include a caption on the next line, indented by four spaces. Note that
+    the <code>align</code> and <code>size</code> options are optional.
+  </p>
+    <p>
+    Syntax: <code>[image:ID align:x size:y]</code>
+    </p>
+  <p>
+    The ID to use is the image ID shown next to the image in the list above.
+    You can click on the insert button if you'd like to insert an image into the
+    editor without manually typing the tag.
+  </p>
+
+  <h5 class="title is-5">Example tag</h5>
+
+  <pre>
+  [image:1 align:left size:orig]
+      Python Discord logo
+  </pre>
+
+  <h5 class="title is-5">Options for align</h5>
+
+  <div class="tags">
+    <span class="tag is-primary">left</span>
+    <span class="tag is-primary">right</span>
+  </div>
+
+  <h5 class="title is-5">Options for size</h5>
+
+  <div class="tags">
+    <span class="tag is-primary">small</span>
+    <span class="tag is-primary">medium</span>
+    <span class="tag is-primary">large</span>
+    <span class="tag is-primary">orig</span>
+    <span class="tag is-primary">default</span>
+  </div>
+{% endwith %}
+
+<div class="modal" id="imgModal">
+  <div class="modal-background"></div>
+  <div class="modal-card" style="height: 80%; width: 80%;">
+    <div class="modal-card-head">
+      <p class="modal-card-title">Insert Image</p>
+    </div>
+    <div class="modal-card-body" style="padding: 0; overflow: hidden;">
+      <section class="section">
+        <input type="hidden" value="0" id="img_id" />
+        <div class="field is-horizontal">
+          <div class="field-label">
+            <label for="img_align">Image alignment</label>
+          </div>
+          <div class="field-body">
+            <div class="control has-icons-left is-fullwidth">
+              <div class="select is-fullwidth">
+                <select id="img_align">
+                  <option selected value="">Default</option>
+                  <option value="left">Left</option>
+                  <option value="right">Right</option>
+                </select>
+              </div>
+
+              <span class="icon is-left">
+                <i class="fas fa-align-center"></i>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="field is-horizontal">
+          <div class="field-label">
+            <label for="img_size">Image size</label>
+          </div>
+          <div class="field-body">
+            <div class="control has-icons-left is-fullwidth">
+              <div class="select is-fullwidth">
+                <select id="img_size">
+                  <option selected value="">Default</option>
+                  <option value="orig">Original</option>
+
+                  <option value="small">Small</option>
+                  <option value="medium">Medium</option>
+                  <option value="large">Large</option>
+                </select>
+              </div>
+              <span class="icon is-left">
+                <i class="fas fa-expand-arrows"></i>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="field is-horizontal">
+          <div class="field-label">
+            <label for="img_caption">Image caption</label>
+          </div>
+          <div class="field-body">
+            <input class="input" type="text" placeholder="Enter Caption" id="img_caption" />
+          </div>
+        </div>
+      </section>
+    </div>
+    <div class="modal-card-foot">
+      <button class="button is-light" aria-label="close">
+        <span class="icon">
+          <i class="fas fa-arrow-left"></i>
+        </span>
+        <span>Back</span>
+      </button>
+      <button class="button is-primary" id="id_image_insert">
+        <span class="icon">
+          <i class="fas fa-paste"></i>
+        </span>
+        <span>Insert</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript" src="{% static "js/wiki/image_sidebar.js" %}"></script>

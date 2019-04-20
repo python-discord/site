@@ -1,0 +1,62 @@
+{% extends "wiki/base.html" %}
+{% load wiki_tags %}
+
+{% block wiki_pagetitle %}Article deleted{% endblock %}
+
+{% block wiki_contents %}
+  <article class="message is-warning">
+    <div class="message-header">
+      <p>Article deleted</p>
+    </div>
+    <div class="message-body">
+      <p>
+        The article you were looking for has been deleted.
+      </p>
+    </div>
+  </article>
+
+  {% if not article.current_revision.locked or article|can_delete:user %}
+    <h2 class="title is-2">
+      Restore Article
+    </h2>
+
+    <p>
+      To restore this article and any child articles, click the restore button below.
+    </p>
+    <a href="?restore=1" class="button is-primary">
+      <span class="icon">
+        <i class="fa fa-sync"></i>
+      </span>
+      <span>Restore</span>
+    </a>
+  {% endif %}
+
+  {% if article|can_moderate:user %}
+     <h2 class="title is-2">
+      Purge Article
+    </h2>
+
+    <p>
+      To permanently remove this article and any child articles, click the purge button below. This will
+      allow you to free up the slugs assigned to these articles, so that they may be used for other
+      articles.
+    </p>
+    <p>
+      Please note: <span class="has-text-danger">This action cannot be undone</span>.
+    </p>
+
+    <form method="POST" class="form form-inline">
+      {% csrf_token %}
+      {% wiki_form purge_form %}
+      <button class="button is-danger" type="submit">
+        <span class="icon">
+          <i class="fas fa-trash"></i>
+        </span>
+        <span>
+          Purge
+        </span>
+      </button>
+    </form>
+  {% endif %}
+
+{% endblock %}

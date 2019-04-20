@@ -24,9 +24,11 @@ django-hosts = "~=3.0"
 djangorestframework = "~=3.9.2"
 djangorestframework-bulk = "~=0.2.1"
 psycopg2-binary = "~=2.8"
-django-simple-bulma = ">=1.1.6,<2.0"
+django-simple-bulma = ">=1.1.7,<2.0"
 django-crispy-bulma = ">=0.1.2,<2.0"
 requests = "~=2.21"
+pygments = "~=2.3.1"
+wiki = {git = "https://github.com/python-discord/django-wiki.git"}
 
 [requires]
 python_version = "3.7"

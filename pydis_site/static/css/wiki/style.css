@@ -1,0 +1,33 @@
+#wikiNavbar {
+    min-height: 3rem;
+}
+
+#wikiNavbar .container {
+    min-height: 3rem;
+}
+
+#wikiNavbar .navbar-brand {
+    min-height: 3rem;
+}
+
+.breadcrumb-section {
+    padding: 1rem;
+}
+
+div.control.is-fullwidth {
+    width: 100%;
+}
+
+ul.pagination-list {
+    list-style: none;
+    margin: 0;
+}
+
+ul.pagination-list li + li {
+    margin: 0;
+}
+
+.pagination {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}

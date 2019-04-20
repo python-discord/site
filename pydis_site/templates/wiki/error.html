@@ -1,0 +1,51 @@
+{% extends "wiki/base.html" %}
+{% load wiki_tags %}
+
+{% block wiki_pagetitle %}{% if article %}{{ article.current_revision.title }}{% else %}Error{% endif %}{% endblock %}
+
+{% block wiki_breadcrumbs %}
+  {% include "wiki/includes/breadcrumbs.html" %}
+{% endblock %}
+
+{% block wiki_contents %}
+  {% if error_type == "ancestors_missing" %}
+    <h1 class="title">Not Found</h1>
+
+    <article class="message is-primary">
+      <div class="message-body">
+        <p>
+          We were unable to find that page. If you think this was in error, please let us know!
+        </p>
+        <a href="{% url 'wiki:get' path='' %}" class="button is-primary">
+          <span class="icon">
+            <i class="fas fa-arrow-left"></i>
+          </span>
+          <span>Back to homepage</span>
+        </a>
+      </div>
+    </article>
+  {% else %}
+    <h1 class="title">Error</h1>
+
+    <article class="message is-danger">
+      <div class="message-body">
+        <p>
+          {% if not error_msg %}
+            Unfortunately, an error occurred while retrieving that page. Please let us know!
+          {% else %}
+            {{ error_msg }}
+          {% endif %}
+        </p>
+
+        {% if article %}
+          <a href="{% url 'wiki:get' path=urlpath.path article_id=article.id %}" class="button is-primary">
+            <span class="icon">
+              <i class="fas fa-arrow-left"></i>
+            </span>
+            <span>Back to {{ article.current_revision.title }}</span>
+          </a>
+        {% endif %}
+      </div>
+    </article>
+  {% endif %}
+{% endblock %}

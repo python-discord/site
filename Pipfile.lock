@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "0ff5e3b68fa729ba88aa32dc3aae4012d1d54e5ad620f635bc5136603900ebc0"
+            "sha256": "78085b805ff9d797c2ce4720c4fc84a91347233b93e4b85615c9833e6b208ed8"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -163,6 +163,14 @@
             "index": "pypi",
             "version": "==2.8.2"
         },
+        "pygments": {
+            "hashes": [
+                "sha256:5ffada19f6203563680669ee7f53b64dabbeb100eb51b61996085e99c03b284a",
+                "sha256:e8218dd399a61674745138520d0d4cf2621d7e032439341bc3f647bff125818d"
+            ],
+            "index": "pypi",
+            "version": "==2.3.1"
+        },
         "pytz": {
             "hashes": [
                 "sha256:303879e36b721603cc54604edcac9d20401bdbe31e1e4fdee5b9f98d5d31dfda",
@@ -198,6 +206,10 @@
                 "sha256:9a247273df709c4fedb38c711e44292304f73f39ab01beda9f6b9fc375669ac3"
             ],
             "version": "==1.24.2"
+        },
+        "wiki": {
+            "git": "https://github.com/python-discord/django-wiki.git",
+            "ref": "66d443248279fb8decf23f68c5363ecf6362ee09"
         }
     },
     "develop": {

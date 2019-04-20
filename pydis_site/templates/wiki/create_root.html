@@ -1,0 +1,52 @@
+{% extends "wiki/base.html" %}
+{% load static %}
+{% load wiki_tags %}
+
+{% block wiki_pagetitle %}{Create root article{% endblock %}
+
+{% block head %}
+  {{ block.super }}
+
+  {% for js in editor.Media.js %}
+    <script type="text/javascript" src="{% static js %}"></script>
+  {% endfor %}
+
+  {% for media, srcs in editor.Media.css.items %}
+    {% for src in srcs %}
+      <link rel="stylesheet" media="{{ media }}" href="{% static src %}" />
+    {% endfor %}
+  {% endfor %}
+{% endblock %}
+
+{% block wiki_contents %}
+  <h2 class="title is-2">Create First Article</h2>
+
+  <p>
+    Please create the root article. This article will be available at the root of your wiki,
+    so consider creating a landing page here.
+  </p>
+  <p>
+    Please note that, to begin with, this article may only be modified by wiki administrators.
+    Once it's been created, you may edit the permissions and set up plugins, metadata, and so on.
+  </p>
+
+  <form method="POST" class="form-horizontal">
+    {% wiki_form form %}
+
+    <div class="field is-horizontal">
+      <div class="field-label">
+        {# Empty for spacing #}
+      </div>
+      <div class="field-body">
+        <div class="control">
+          <button type="submit" class="button is-primary" name="save_changes">
+            <span class="icon">
+              <i class="fas fa-plus"></i>
+            </span>
+            <span>Create</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+{% endblock %}

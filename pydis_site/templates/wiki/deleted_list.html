@@ -1,0 +1,45 @@
+{% extends "wiki/base.html" %}
+{% load wiki_tags %}
+
+{% block wiki_pagetitle %}Deleted Articles{% endblock %}
+
+{% block wiki_contents %}
+  <h1 class="title is-1">Deleted Articles</h1>
+
+  {% if deleted_articles %}
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Page Title</th>
+          <th>Date Deleted</th>
+          <th>Restore Article</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {% for article in deleted_articles %}
+          <tr>
+            <td>
+              <a href="{{article.get_absolute_url}}">{{ article }}</a>
+            </td>
+            <td>
+              {{article.modified}}
+            </td>
+            <td>
+              <a href="{% url 'wiki:deleted' article_id=article.id %}?restore=1" class="button is-primary">
+                <span class="icon">
+                  <i class="fas fa-sync"></i>
+                </span>
+                <span>Restore</span>
+              </a>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>
+      No deleted articles to display.
+    </p>
+  {% endif %}
+{% endblock %}

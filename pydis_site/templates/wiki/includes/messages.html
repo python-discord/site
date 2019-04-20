@@ -1,0 +1,11 @@
+{% if messages %}
+  <!-- Messages for this instance -->
+  {% for message in messages %}
+    <article class="message {{ message.css_class }}">
+      <div class="message-body">
+        {{ message }}
+      </div>
+    </article>
+
+  {% endfor %}
+{% endif %}

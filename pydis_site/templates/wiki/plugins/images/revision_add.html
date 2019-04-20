@@ -1,0 +1,43 @@
+{% extends "wiki/article.html" %}
+{% load wiki_tags %}
+{% load wiki_thumbnails %}
+
+{% block wiki_pagetitle %}Replace Image: {{ image }}{% endblock %}
+
+{% block wiki_contents_tab %}
+  <div class="columns">
+    <div class="column is-two-thirds">
+      <p>
+        Upload an image to replace the current one.
+      </p>
+
+      <form method="POST" class="form-horizontal" enctype="multipart/form-data">
+        {% wiki_form form %}
+
+        <a href="{% url 'wiki:images_index' path=urlpath.path article_id=article.id %}" class="button is-white">
+          <span class="icon">
+            <i class="fas fa-arrow-left"></i>
+          </span>
+          <span>Go Back</span>
+        </a>
+
+        <button class="button is-primary" type="submit">
+          <span class="icon">
+            <i class="fas fa-upload"></i>
+          </span>
+          <span>Upload</span>
+        </button>
+      </form>
+    </div>
+
+    <div class="column is-one-third">
+      {% thumbnail image.current_revision.imagerevision.image "250x250" as thumb %}
+        <figure class="image">
+          <a href="{{ image.current_revision.imagerevision.image.url }}">
+            <img src="{{ thumb.url }}" alt="{{ revision.get_filename }}" title="{{ revision.get_filename }}" />
+          </a>
+        </figure>
+      {% endthumbnail %}
+    </div>
+  </div>
+{% endblock %}

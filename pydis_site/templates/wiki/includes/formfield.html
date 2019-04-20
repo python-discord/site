@@ -1,0 +1,7 @@
+{% load wiki_extra %}
+
+{% if field.is_hidden %}
+  {{ field }}
+{% else %}
+  {% render_field field render_labels %}
+{% endif %}

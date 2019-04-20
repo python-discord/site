@@ -14,7 +14,7 @@ import os
 import sys
 
 import environ
-
+from django.contrib.messages import constants as messages
 
 env = environ.Env(
     DEBUG=(bool, False)
@@ -37,7 +37,7 @@ if DEBUG:
         'admin.pythondiscord.local',
         'api.pythondiscord.local',
         'staff.pythondiscord.local',
-        'wiki.pythondiscord.local'
+        'wiki.pythondiscord.local',
     ]
     SECRET_KEY = "+_x00w3e94##2-qm-v(5&-x_@*l3t9zlir1etu+7$@4%!it2##"
 
@@ -68,17 +68,30 @@ INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
+    'django.contrib.humanize.apps.HumanizeConfig',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'django.contrib.sites.apps.SitesConfig',
     'django.contrib.staticfiles',
 
     'crispy_forms',
+    'django_crispy_bulma',
     'django_hosts',
     'django_filters',
-    'django_crispy_bulma',
+    'django_nyt.apps.DjangoNytConfig',
     'django_simple_bulma',
+    'mptt',
     'rest_framework',
-    'rest_framework.authtoken'
+    'rest_framework.authtoken',
+    'sekizai',
+    'sorl.thumbnail',
+
+    'wiki.apps.WikiConfig',
+
+    'wiki.plugins.images.apps.ImagesConfig',
+    'wiki.plugins.links.apps.LinksConfig',
+    'wiki.plugins.redlinks.apps.RedlinksConfig',
+    'wiki.plugins.notifications.apps.NotificationsConfig',  # Required for migrations
 ]
 
 MIDDLEWARE = [
@@ -108,9 +121,13 @@ TEMPLATES = [
 
             'context_processors': [
                 'django.template.context_processors.debug',
+                'django.template.context_processors.media',
                 'django.template.context_processors.request',
+                'django.template.context_processors.static',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+
+                "sekizai.context_processors.sekizai",
             ],
         },
     },
@@ -167,6 +184,9 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'pydis_site', 'static')]
 STATIC_ROOT = env('STATIC_ROOT', default='staticfiles')
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = env('MEDIA_ROOT', default='media')
+
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
@@ -180,7 +200,12 @@ ROOT_HOSTCONF = 'pydis_site.hosts'
 DEFAULT_HOST = 'home'
 
 if DEBUG:
-    PARENT_HOST = 'pythondiscord.local:8000'
+    PARENT_HOST = env('PARENT_HOST', default='pythondiscord.local:8000')
+
+    if ":" in PARENT_HOST:
+        ALLOWED_HOSTS.append(PARENT_HOST.split(":", 1)[0])
+    else:
+        ALLOWED_HOSTS.append(PARENT_HOST)
 else:
     PARENT_HOST = env('PARENT_HOST', default='pythondiscord.com')
 
@@ -252,9 +277,52 @@ CRISPY_TEMPLATE_PACK = "bulma"
 # Custom settings for django-simple-bulma
 BULMA_SETTINGS = {
     "variables": {
+        "green": "#21c65c",  # Accessibility: Better contrast with the light text
         "primary": "#7289DA",
         "link": "$primary",
+
+        "dimensions": "16 24 32 48 64 96 128 256 512",  # Possible image dimensions
         "navbar-height": "4.75rem",
         "footer-padding": "1rem 1.5rem 1rem",
     }
+}
+
+# Required for the wiki
+LOGIN_URL = "/admin/login"  # TODO: Update this when the real login system is in place
+SITE_ID = 1
+
+WIKI_ACCOUNT_HANDLING = False
+WIKI_ACCOUNT_SIGNUP_ALLOWED = False
+
+WIKI_ANONYMOUS = True
+WIKI_ANONYMOUS_WRITE = False
+
+WIKI_MARKDOWN_KWARGS = {
+    "extension_configs": {
+        "wiki.plugins.macros.mdx.toc": {
+            "anchorlink": True,
+            "baselevel": 2
+        }
+    }, "extensions": [
+        "markdown.extensions.abbr",
+        "markdown.extensions.attr_list",
+        "markdown.extensions.extra",
+        "markdown.extensions.footnotes",
+        "markdown.extensions.nl2br",
+        "markdown.extensions.sane_lists",
+
+        "wiki.core.markdown.mdx.codehilite",
+        "wiki.core.markdown.mdx.previewlinks",
+        "wiki.core.markdown.mdx.responsivetable",
+        "wiki.plugins.macros.mdx.toc",
+        "wiki.plugins.macros.mdx.wikilinks",
+    ]
+}
+
+WIKI_MESSAGE_TAG_CSS_CLASS = {
+    messages.DEBUG: "",  # is-info isn't distinctive enough from blurple
+    messages.ERROR: "is-danger",
+    messages.INFO: "is-primary",
+    messages.SUCCESS: "is-success",
+    messages.WARNING: "is-warning",
 }

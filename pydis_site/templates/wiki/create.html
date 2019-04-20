@@ -1,0 +1,42 @@
+{% extends "wiki/base.html" %}
+{% load sekizai_tags %}
+{% load static %}
+{% load wiki_tags %}
+
+{% block wiki_pagetitle %}Add new article{% endblock %}
+
+{% block wiki_contents %}
+  {% addtoblock "js" %}
+    <script type="text/javascript" src="{% static "admin/js/urlify.js" %}"></script>
+
+    {% if not create_form.slug.value %}
+      <script type="text/javascript" src="{% static "js/wiki/create.js" %}"></script>
+    {% endif %}
+  {% endaddtoblock %}
+
+  {% include "wiki/includes/editormedia.html" %}
+  <h1 class="page-header">Add new article</h1>
+
+  <form method="POST" class="form-horizontal">
+    {% wiki_form create_form %}
+
+    <div class="field is-horizontal is-grouped">
+      <div class="control">
+        <a href="{% url 'wiki:get' path=parent_urlpath.path %}" class="button is-light">
+          <span class="icon">
+            <i class="fa fa-arrow-left"></i>
+          </span>
+          <span>Go back</span>
+        </a>
+      </div>
+      <div class="control">
+        <button type="submit" name="save_changes" class="button is-primary">
+          <span class="icon">
+            <i class="fa fa-plus"></i>
+          </span>
+          <span>Create Article</span>
+        </button>
+      </div>
+    </div>
+  </form>
+{% endblock %}

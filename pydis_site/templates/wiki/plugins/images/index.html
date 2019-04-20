@@ -1,0 +1,171 @@
+{% extends "wiki/article.html" %}
+{% load humanize %}
+{% load wiki_tags %}
+{% load wiki_thumbnails %}
+
+{# TODO: This page needs re-styling, but it's functional for now so we're not touching it until after wiki completion #}
+
+{% block wiki_pagetitle %}Images: {{ article.current_revision.title }}{% endblock %}
+
+{% block wiki_contents_tab %}
+  <p>The following images are available for this article. Copy the markdown tag to directly refer to an image from the article text.</p>
+
+  <p>
+    <a href="{% url 'wiki:edit' path=urlpath.path article_id=article.id %}" class="button is-white">
+      <span class="icon">
+        <i class="fas fa-arrow-left"></i>
+      </span>
+      <span>Back to edit page</span>
+    </a>
+  </p>
+
+  {% include "wiki/includes/pagination.html" %}
+
+  <table class="table is-fullwidth">
+    {% for image in images %}
+      {% with image.current_revision.imagerevision as revision %}
+        <thead>
+          <tr>
+            <th>{{ revision.get_filename|default:_("No filename") }}</th>
+            <th>Tag</th>
+            <th colspan="3">Updated</th>
+            <th>Size</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td rowspan="3">
+              <figure class="image is-128x128">
+                {% thumbnail revision.image "128x128" as thumb %}
+                  <a href="{{ revision.image.url }}">
+                    <img src="{{ thumb.url }}" alt="{{ revision.get_filename }}" title="{{ revision.get_filename }}" />
+                  </a>
+                {% endthumbnail %}
+              </figure>
+
+              {% if image|can_write:user %}
+                {% if revision.deleted %}
+                  <a class="button is-success" title="Upload and publish new image" href="{% url 'wiki:images_add_revision' path=urlpath.path article_id=article.id image_id=image.id %}">
+                    <span class="icon">
+                      <i class="fas fa-upload"></i>
+                    </span>
+                    <span>Upload</span>
+                  </a>
+                  <a class="button is-primary" title="Restore deleted image" href="{% url 'wiki:images_restore' path=urlpath.path article_id=article.id image_id=image.id %}">
+                    <span class="icon">
+                      <i class="fas fa-sync"></i>
+                    </span>
+                    <span>Restore</span>
+                  </a>
+                {% else %}
+                  <a class="button is-success" title="Upload replacement image" href="{% url 'wiki:images_add_revision' path=urlpath.path article_id=article.id image_id=image.id %}">
+                    <span class="icon">
+                      <i class="fas fa-upload"></i>
+                    </span>
+                    <span>Upload</span>
+                  </a>
+                  <a class="button is-warning" title="Remove image" href="{% url 'wiki:images_delete' path=urlpath.path article_id=article.id image_id=image.id %}">
+                    <span class="icon">
+                      <i class="fas fa-times"></i>
+                    </span>
+                    <span>Remove</span>
+                  </a>
+                {% endif %}
+                {% if article|can_moderate:user %}
+                  <a class="button is-danger" href="{% url 'wiki:images_purge' path=urlpath.path article_id=article.id image_id=image.id %}">
+                    <span class="icon">
+                      <i class="fas fa-trash"></i>
+                    </span>
+                    <span>Delete</span>
+                  </a>
+                {% endif %}
+              {% endif %}
+            </td>
+
+            <td>
+              <code>[image:{{ image.id }}]</code>
+            </td>
+
+            <td colspan="3">
+              {% include "wiki/includes/revision_info.html" %}
+            </td>
+
+            <td>
+              {{ revision.get_size|filesizeformat }}<br />{{ revision.width }}x{{ revision.height }} pixels
+            </td>
+          </tr>
+
+          <tr>
+            <th colspan="5">
+              History
+            </th>
+          </tr>
+
+          <tr>
+            <td class="is-paddingless" colspan="5">
+              <table class="table is-striped">
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th>Updated</th>
+                    <th>Size</th>
+                    <th>Dimensions</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for old_revision in image.revision_set.all %}
+                    <tr {% if forloop.first %}class="is-selected"{% endif %}>
+                      <td>
+                        <figure class="image">
+                          {% thumbnail old_revision.imagerevision.image "50x50" crop="center" as thumb %}
+                            <a href="{{ old_revision.imagerevision.image.url }}">
+                              <img src="{{ thumb.url }}" alt="{{ revision.imagerevision.get_filename }}" />
+                            </a>
+                          {% endthumbnail %}
+                        </figure>
+                      </td>
+
+                      <td>
+                        {% include "wiki/includes/revision_info.html" with current_revision=image.current_revision revision=old_revision %}
+                      </td>
+
+                      <td>
+                        {{ old_revision.imagerevision.get_size|filesizeformat }}
+                      </td>
+
+                      <td>
+                        {{ old_revision.imagerevision.width }}x{{ old_revision.imagerevision.height }} pixels
+                      </td>
+
+                      <td>
+                        {% if image|can_write:user and old_revision != image.current_revision %}
+                          <a class="button is-primary" href="{% url 'wiki:images_set_revision' path=urlpath.path article_id=article.id image_id=image.id rev_id=old_revision.id %}">
+                            <span class="icon">
+                              <i class="fas fa-sync"></i>
+                            </span>
+                            <span>Restore</span>
+                          </a>
+                        {% else %}
+                          <a class="button is-static has-text-grey">
+                            <span class="icon">
+                              <i class="fas fa-times"></i>
+                            </span>
+                            <span>Current</span>
+                          </a>
+                        {% endif %}
+                      </td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </td>
+          </tr>
+        </tbody>
+      {% endwith %}
+    {% endfor %}
+  </table>
+
+  {% include "wiki/includes/pagination.html" %}
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends "wiki/create_root.html" %}
+{% load wiki_tags %}
+
+{% block wiki_contents %}
+  <div class="columns">
+    <div class="column is-two-thirds is-offset-2">
+      <article class="message is-primary">
+        <div class="message-header">
+          <p>No articles found</p>
+        </div>
+        <div class="message-body">
+          <p>
+            It appears that there are no articles available on this wiki.
+          </p>
+
+          {% if not user.is_superuser %}
+            <p>
+              To get started, please login with a superuser account.
+            </p>
+
+            {% login_url as wiki_login_url %}
+
+            {% if wiki_login_url %}
+              <div class="has-text-centered">
+                <a href="{{ wiki_login_url }}" class="button is-primary">Login</a>
+              </div>
+            {% endif %}
+          {% else %}
+            <p>
+              Let's get started - click below to create the first article, or to read up on the
+              <code>django-wiki</code> documentation.
+            </p>
+
+            <a class="button is-primary" href="{% url 'wiki:root_create' %}">Create Article</a>
+            <a class="button is-info" href="http://django-wiki.readthedocs.org/">Documentation</a>
+          {% endif %}
+        </div>
+      </article>
+    </div>
+  </div>
+{% endblock %}

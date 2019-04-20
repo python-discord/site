@@ -1,0 +1,1 @@
+bulmaAccordion.attach();
