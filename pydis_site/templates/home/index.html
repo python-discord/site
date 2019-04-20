@@ -7,65 +7,88 @@
 {% endblock %}
 
 {% block content %}
-  <section class="hero is-primary">
-    <div class="hero-body">
-      <div class="container is-flex">
-        <img class="hero-image is-centered" src="{% static "images/logo_site_banner.svg" %}" alt="Python Discord logo" />
-      </div>
-      <div class="container has-text-centered">
-        <h1 class="title is-4">
-          The hottest Python community on the web
-        </h1>
-      </div>
-    </div>
-    <div class="hero-foot">
-      {% include "base/navbar.html" with active_item=False dropdowns=True icon_weight="fas" use_logo=False %}
-    </div>
-  </section>
+  {% include "base/navbar.html" %}
+
   <section class="section">
+
+    {# Who are we? #}
     <div class="container is-spaced">
+      <h1 class="is-size-1">Who are we?</h1>
+      <br>
       <div class="columns">
-        <div class="column is-two-thirds">
+        <div class="column is-half">
           <p>
-            We're a large, friendly community focused around the Python programming
-            language, open to those who wish to learn the language or improve their
-            skills, as well as those looking to help others.
+            We're a large community focused around the Python programming language.
+            We believe anyone can learn programming, and are very dedicated to helping
+            novice developers take their first steps into the world of code. We also
+            attract a lot of expert developers who are seeking friendships, collaborators,
+            or looking to hone their craft by teaching and getting involved in the community.
 
-            <br /><br />
+            <br/><br/>
 
-            We organise regular community events and have a dedicated staff of
-            talented Python developers available to assist around the clock.
+            We organise regular community events like code jams, open source hackathons,
+            seasonal events and community challenges. Through our sponsorships and with
+            help from donations, we are even able to award prizes to the winners of our events.
 
-            <br /><br />
+            <br/><br/>
 
-            Whether you're looking to learn the language or working on a complex project,
-            we've got someone who can help you if you get stuck.
+            You can find help with most Python-related problems in one of our help channels.
+            Our staff of nearly 50 dedicated expert Helpers are available around the clock
+            in every timezone. Whether you're looking to learn the language or working on a
+            complex project, we've got someone who can help you if you get stuck.
           </p>
         </div>
-        <div class="column is-one-third is-first has-text-centered">
-          <h1 class="title">Join the community</h1>
 
-          {# TODO: Fix URL #}
-          <a href="https://pythondiscord.com/invite">
-            <img class="discord-banner" src="https://discordapp.com/api/guilds/267624335836053506/embed.png?style=banner3" alt="Discord banner" />
-          </a>
+        {# Intro video #}
+        <div class="column is-half video-container">
+          <iframe src="https://www.youtube.com/embed/DIBXg8Qh7bA" frameborder="0"
+                  allow="accelerometer; encrypted-media; gyroscope; picture-in-picture"
+                  allowfullscreen></iframe>
         </div>
+      </div>
+
+      {# Projects #}
+      <h1 class="is-size-1">Projects</h1>
+      <br>
+      <div class="columns is-multiline">
+
+        {# Display projects from HomeView.repos #}
+        {% for repo in repo_data %}
+          <div class="column is-one-third">
+            <div class="card has-equal-height github-card">
+              <div class="card-content">
+                <div class="repo-headline">
+                  <i class="fab fa-github"></i>
+                  <a href="https://github.com/{{ repo.repo_name }}"> <strong>{{ repo.repo_name }}</strong></a>
+                </div>
+                <div>
+                  {{ repo.description }}
+                  <br><br>
+                  </span><span class="repo-language-dot {{ repo.language | lower }}"></span> {{ repo.language }}
+                  <span id="repo-footer-item"><i class="fas fa-star"></i> {{ repo.stargazers }}</span>
+                  <span id="repo-footer-item"><i class="fas fa-code-branch"></i> {{ repo.forks }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+
       </div>
     </div>
   </section>
 
+  {# Sponsors #}
   <section class="section-sp hero is-light">
-    <div class="hero-body">
+    <div id="sponsors-hero" class="hero-body">
       <div class="container">
         <h1 class="title is-6 has-text-grey">
           Sponsors
         </h1>
-        <img src="{% static "images/sponsors/linode.png" %}" alt="" />
-        <img src="{% static "images/sponsors/jetbrains.png" %}" alt="" />
-        <img src="{% static "images/sponsors/adafruit.png" %}" alt="" />
+        <a href="https://linode.com"><img src="{% static "images/sponsors/linode.png" %}" alt="Linode"/></a>
+        <a href="https://jetbrains.com"><img src="{% static "images/sponsors/jetbrains.png" %}" alt="JetBrains"/></a>
+        <a href="https://adafruit.com"><img src="{% static "images/sponsors/adafruit.png" %}" alt="Adafruit"/></a>
       </div>
     </div>
   </section>
 
-  {% include "base/footer.html" %}
 {% endblock %}

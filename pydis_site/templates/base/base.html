@@ -20,15 +20,20 @@
         crossorigin="anonymous"
   >
 
+  <link rel="stylesheet" href="{% static "css/base/base.css" %}">
   {% block head %}{% endblock %}
 
   {% render_block "css" %}
 </head>
-<body>
+<body class="site">
 
-{% block content %}
-  {{ block.super }}
-{% endblock %}
+<main class="site-content">
+  {% block content %}
+    {{ block.super }}
+  {% endblock %}
+</main>
+
+{% include "base/footer.html" %}
 
 {% render_block "js" %}
 </body>
