@@ -5,7 +5,7 @@ name = "pypi"
 
 [packages]
 flask = "==0.12.4"
-rethinkdb = "*"
+rethinkdb = "<2.4"
 requests = "*"
 gevent = "==1.2.2"
 gevent-websocket = "*"
