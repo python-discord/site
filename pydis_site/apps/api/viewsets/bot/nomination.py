@@ -13,6 +13,12 @@ class NominationViewSet(ModelViewSet):
     frozen_fields = ('author', 'inserted_at', 'user')
 
     def update(self, request, *args, **kwargs):
+        """
+        DRF method for updating a Nomination.
+
+        Called by the Django Rest Framework in response to the corresponding HTTP request.
+        """
+
         for field in request.data:
             if field in self.frozen_fields:
                 raise ValidationError({field: ['This field cannot be updated.']})

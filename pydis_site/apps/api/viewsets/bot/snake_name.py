@@ -41,6 +41,8 @@ class SnakeNameViewSet(ViewSet):
     serializer_class = SnakeNameSerializer
 
     def get_queryset(self):
+        """Returns a queryset that covers the entire SnakeName table."""
+
         return SnakeName.objects.all()
 
     def list(self, request):  # noqa

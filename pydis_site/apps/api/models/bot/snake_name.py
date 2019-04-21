@@ -20,4 +20,5 @@ class SnakeName(ModelReprMixin, models.Model):
     )
 
     def __str__(self):
+        """Returns the regular and scientific name of the current snake, for display purposes."""
         return f"{self.name} ({self.scientific})"

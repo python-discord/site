@@ -15,6 +15,8 @@ from .models import (
 
 class BotSettingSerializer(ModelSerializer):
     class Meta:
+        """Metadata defined for the Django REST Framework."""
+
         model = BotSetting
         fields = ('name', 'data')
 
@@ -25,12 +27,14 @@ class DeletedMessageSerializer(ModelSerializer):
     )
     deletion_context = PrimaryKeyRelatedField(
         queryset=MessageDeletionContext.objects.all(),
-        # This will be overriden in the `create` function
+        # This will be overridden in the `create` function
         # of the deletion context serializer.
         required=False
     )
 
     class Meta:
+        """Metadata defined for the Django REST Framework."""
+
         model = DeletedMessage
         fields = (
             'id', 'author',
@@ -43,6 +47,8 @@ class MessageDeletionContextSerializer(ModelSerializer):
     deletedmessage_set = DeletedMessageSerializer(many=True)
 
     class Meta:
+        """Metadata defined for the Django REST Framework."""
+
         model = MessageDeletionContext
         fields = ('actor', 'creation', 'id', 'deletedmessage_set')
         depth = 1
@@ -61,12 +67,16 @@ class MessageDeletionContextSerializer(ModelSerializer):
 
 class DocumentationLinkSerializer(ModelSerializer):
     class Meta:
+        """Metadata defined for the Django REST Framework."""
+
         model = DocumentationLink
         fields = ('package', 'base_url', 'inventory_url')
 
 
 class InfractionSerializer(ModelSerializer):
     class Meta:
+        """Metadata defined for the Django REST Framework."""
+
         model = Infraction
         fields = (
             'id', 'inserted_at', 'expires_at', 'active', 'user', 'actor', 'type', 'reason', 'hidden'
@@ -103,6 +113,8 @@ class ExpandedInfractionSerializer(InfractionSerializer):
 
 class LogEntrySerializer(ModelSerializer):
     class Meta:
+        """Metadata defined for the Django REST Framework."""
+
         model = LogEntry
         fields = (
             'application', 'logger_name', 'timestamp',
@@ -112,6 +124,8 @@ class LogEntrySerializer(ModelSerializer):
 
 class OffTopicChannelNameSerializer(ModelSerializer):
     class Meta:
+        """Metadata defined for the Django REST Framework."""
+
         model = OffTopicChannelName
         fields = ('name',)
 
@@ -121,24 +135,32 @@ class OffTopicChannelNameSerializer(ModelSerializer):
 
 class SnakeFactSerializer(ModelSerializer):
     class Meta:
+        """Metadata defined for the Django REST Framework."""
+
         model = SnakeFact
         fields = ('fact',)
 
 
 class SnakeIdiomSerializer(ModelSerializer):
     class Meta:
+        """Metadata defined for the Django REST Framework."""
+
         model = SnakeIdiom
         fields = ('idiom',)
 
 
 class SnakeNameSerializer(ModelSerializer):
     class Meta:
+        """Metadata defined for the Django REST Framework."""
+
         model = SnakeName
         fields = ('name', 'scientific')
 
 
 class SpecialSnakeSerializer(ModelSerializer):
     class Meta:
+        """Metadata defined for the Django REST Framework."""
+
         model = SpecialSnake
         fields = ('name', 'images', 'info')
 
@@ -147,18 +169,24 @@ class ReminderSerializer(ModelSerializer):
     author = PrimaryKeyRelatedField(queryset=User.objects.all())
 
     class Meta:
+        """Metadata defined for the Django REST Framework."""
+
         model = Reminder
         fields = ('active', 'author', 'channel_id', 'content', 'expiration', 'id')
 
 
 class RoleSerializer(ModelSerializer):
     class Meta:
+        """Metadata defined for the Django REST Framework."""
+
         model = Role
         fields = ('id', 'name', 'colour', 'permissions')
 
 
 class TagSerializer(ModelSerializer):
     class Meta:
+        """Metadata defined for the Django REST Framework."""
+
         model = Tag
         fields = ('title', 'embed')
 
@@ -167,6 +195,8 @@ class UserSerializer(BulkSerializerMixin, ModelSerializer):
     roles = PrimaryKeyRelatedField(many=True, queryset=Role.objects.all(), required=False)
 
     class Meta:
+        """Metadata defined for the Django REST Framework."""
+
         model = User
         fields = ('id', 'avatar_hash', 'name', 'discriminator', 'roles', 'in_guild')
         depth = 1
@@ -177,6 +207,8 @@ class NominationSerializer(ModelSerializer):
     user = PrimaryKeyRelatedField(queryset=User.objects.all())
 
     class Meta:
+        """Metadata defined for the Django REST Framework."""
+
         model = Nomination
         fields = ('active', 'author', 'reason', 'user', 'inserted_at')
         depth = 1
