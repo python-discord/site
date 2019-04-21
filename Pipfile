@@ -14,6 +14,7 @@ mccabe = "~=0.6.1"
 pep8-naming = "~=0.8.2"
 coverage = "~=4.5.3"
 unittest-xml-reporting = "~=2.5.1"
+flake8-docstrings = "*"
 
 [packages]
 django = "~=2.2"
