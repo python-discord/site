@@ -7,7 +7,8 @@ from pydis_site.apps.api.serializers import NominationSerializer
 
 
 class NominationViewSet(ModelViewSet):
-    # TODO: doc me
+    """View providing CRUD operations on helper nominations done through the bot."""
+
     serializer_class = NominationSerializer
     queryset = Nomination.objects.prefetch_related('author', 'user')
     frozen_fields = ('author', 'inserted_at', 'user')
