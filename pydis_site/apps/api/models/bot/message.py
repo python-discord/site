@@ -51,4 +51,5 @@ class Message(ModelReprMixin, models.Model):
 
     class Meta:
         """Metadata provided for Django's ORM."""
+
         abstract = True

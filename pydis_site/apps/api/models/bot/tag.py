@@ -184,4 +184,5 @@ class Tag(ModelReprMixin, models.Model):
 
     def __str__(self):
         """Returns the title of this tag, for display purposes."""
+
         return self.title

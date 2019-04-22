@@ -16,4 +16,5 @@ class OffTopicChannelName(ModelReprMixin, models.Model):
 
     def __str__(self):
         """Returns the current off-topic name, for display purposes."""
+
         return self.name

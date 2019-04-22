@@ -14,4 +14,5 @@ class SnakeIdiom(ModelReprMixin, models.Model):
 
     def __str__(self):
         """Returns the current idiom, for display purposes."""
+
         return self.idiom

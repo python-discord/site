@@ -45,7 +45,13 @@ class SnakeNameViewSet(ViewSet):
 
         return SnakeName.objects.all()
 
-    def list(self, request):  # noqa
+    def list(self, request):
+        """
+        DRF method for listing SnakeName entries.
+
+        Called by the Django Rest Framework in response to the corresponding HTTP request.
+        """
+
         if request.query_params.get('get_all'):
             queryset = self.get_queryset()
             serialized = self.serializer_class(queryset, many=True)
