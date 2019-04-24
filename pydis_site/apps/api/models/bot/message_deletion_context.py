@@ -5,6 +5,13 @@ from pydis_site.apps.api.models.utils import ModelReprMixin
 
 
 class MessageDeletionContext(ModelReprMixin, models.Model):
+    """
+    Represents the context for a deleted message.
+
+    The context includes its creation date, as well as the actor associated with the deletion.
+    This helps to keep track of message deletions on the server.
+    """
+
     actor = models.ForeignKey(
         User,
         on_delete=models.CASCADE,

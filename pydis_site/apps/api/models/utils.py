@@ -2,13 +2,11 @@ from operator import itemgetter
 
 
 class ModelReprMixin:
-    """
-    Adds a `__repr__` method to the model subclassing this
-    mixin which will display the model's class name along
-    with all parameters used to construct the object.
-    """
+    """Mixin providing a `__repr__()` to display model class name and initialisation parameters."""
 
     def __repr__(self):
+        """Returns the current model class name and initialisation parameters."""
+
         attributes = ' '.join(
             f'{attribute}={value!r}'
             for attribute, value in sorted(

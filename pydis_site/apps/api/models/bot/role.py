@@ -7,7 +7,7 @@ from pydis_site.apps.api.models.utils import ModelReprMixin
 class Role(ModelReprMixin, models.Model):
     """A role on our Discord server."""
 
-    id = models.BigIntegerField(  # noqa
+    id = models.BigIntegerField(
         primary_key=True,
         validators=(
             MinValueValidator(
@@ -45,4 +45,6 @@ class Role(ModelReprMixin, models.Model):
     )
 
     def __str__(self):
+        """Returns the name of the current role, for display purposes."""
+
         return self.name

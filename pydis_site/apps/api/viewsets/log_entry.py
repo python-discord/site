@@ -7,8 +7,7 @@ from pydis_site.apps.api.serializers import LogEntrySerializer
 
 class LogEntryViewSet(CreateModelMixin, GenericViewSet):
     """
-    View providing support for creating log entries in the site database
-    for viewing via the log browser.
+    View supporting the creation of log entries in the database for viewing via the log browser.
 
     ## Routes
     ### POST /logs

@@ -8,6 +8,8 @@ from pydis_site.apps.api.models.utils import ModelReprMixin
 
 
 class Message(ModelReprMixin, models.Model):
+    """A message, sent somewhere on the Discord server."""
+
     id = models.BigIntegerField(
         primary_key=True,
         help_text="The message ID as taken from Discord.",
@@ -48,4 +50,6 @@ class Message(ModelReprMixin, models.Model):
     )
 
     class Meta:
+        """Metadata provided for Django's ORM."""
+
         abstract = True

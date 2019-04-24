@@ -6,8 +6,9 @@ from pydis_site.apps.api.serializers import RoleSerializer
 
 class RoleViewSet(ModelViewSet):
     """
-    View providing CRUD access to the roles on our server, used
-    by the bot to keep a mirror of our server's roles on the site.
+    View providing CRUD access to the roles on our server.
+
+    This is used by the bot to keep a mirror of our server's roles on the site.
 
     ## Routes
     ### GET /bot/roles
