@@ -24,10 +24,18 @@ class Nomination(ModelReprMixin, models.Model):
         User,
         on_delete=models.CASCADE,
         help_text="The nominated user.",
-        primary_key=True,
         related_name='nomination'
     )
     inserted_at = models.DateTimeField(
         auto_now_add=True,
         help_text="The creation date of this nomination."
+    )
+    unnominate_reason = models.TextField(
+        help_text="Why the nomination was ended.",
+        default=""
+    )
+    unwatched_at = models.DateTimeField(
+        auto_now_add=False,
+        help_text="When the nomination was ended.",
+        null=True
     )

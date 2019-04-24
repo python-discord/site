@@ -10,7 +10,7 @@ class NominationViewSet(ModelViewSet):
     # TODO: doc me
     serializer_class = NominationSerializer
     queryset = Nomination.objects.prefetch_related('author', 'user')
-    frozen_fields = ('author', 'inserted_at', 'user')
+    frozen_fields = ('id', 'author', 'inserted_at', 'user')
 
     def update(self, request, *args, **kwargs):
         for field in request.data:

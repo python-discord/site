@@ -178,5 +178,7 @@ class NominationSerializer(ModelSerializer):
 
     class Meta:
         model = Nomination
-        fields = ('active', 'author', 'reason', 'user', 'inserted_at')
+        fields = (
+            'id', 'active', 'author', 'reason', 'user',
+            'inserted_at', 'unnominate_reason', 'unwatched_at')
         depth = 1
