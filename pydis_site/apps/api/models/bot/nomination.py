@@ -11,7 +11,7 @@ class Nomination(ModelReprMixin, models.Model):
         default=True,
         help_text="Whether this nomination is still relevant."
     )
-    author = models.ForeignKey(
+    actor = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
         help_text="The staff member that nominated this user.",
@@ -20,7 +20,7 @@ class Nomination(ModelReprMixin, models.Model):
     reason = models.TextField(
         help_text="Why this user was nominated."
     )
-    user = models.OneToOneField(
+    user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
         help_text="The nominated user.",
