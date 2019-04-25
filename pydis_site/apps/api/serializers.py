@@ -173,12 +173,22 @@ class UserSerializer(BulkSerializerMixin, ModelSerializer):
 
 
 class NominationSerializer(ModelSerializer):
-    author = PrimaryKeyRelatedField(queryset=User.objects.all())
+    actor = PrimaryKeyRelatedField(queryset=User.objects.all())
     user = PrimaryKeyRelatedField(queryset=User.objects.all())
 
     class Meta:
         model = Nomination
         fields = (
-            'id', 'active', 'author', 'reason', 'user',
+            'id', 'active', 'actor', 'reason', 'user',
             'inserted_at', 'unnominate_reason', 'unwatched_at')
         depth = 1
+
+    def validate(self, attrs):
+        active = attrs.get("active")
+
+        unnominate_reason = attrs.get("unnominate_reason")
+        if active and unnominate_reason:
+            raise ValidationError(
+                {'unnominate_reason': "An active nomination can't have an unnominate reason"}
+            )
+        return attrs
