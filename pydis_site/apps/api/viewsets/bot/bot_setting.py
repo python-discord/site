@@ -6,9 +6,7 @@ from pydis_site.apps.api.serializers import BotSettingSerializer
 
 
 class BotSettingViewSet(RetrieveModelMixin, UpdateModelMixin, GenericViewSet):
-    """
-    View providing update operations on bot setting routes.
-    """
+    """View providing update operations on bot setting routes."""
 
     serializer_class = BotSettingSerializer
     queryset = BotSetting.objects.all()

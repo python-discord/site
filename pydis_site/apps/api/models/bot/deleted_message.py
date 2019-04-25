@@ -5,6 +5,8 @@ from pydis_site.apps.api.models.bot.message_deletion_context import MessageDelet
 
 
 class DeletedMessage(Message):
+    """A deleted message, previously sent somewhere on the Discord server."""
+
     deletion_context = models.ForeignKey(
         MessageDeletionContext,
         help_text="The deletion context this message is part of.",

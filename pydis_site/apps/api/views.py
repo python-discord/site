@@ -58,8 +58,10 @@ class RulesView(APIView):
     @staticmethod
     def _format_link(description, link, target):
         """
-        Build the markup necessary to render `link` with `description`
-        as its description in the given `target` language.
+        Build the markup for rendering the link.
+
+        This will render `link` with `description` as its description in the given
+        `target` language.
 
         Arguments:
             description (str):

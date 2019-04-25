@@ -5,6 +5,8 @@ from pydis_site.apps.api.models.utils import ModelReprMixin
 
 
 class OffTopicChannelName(ModelReprMixin, models.Model):
+    """An off-topic channel name, used during the daily channel name shuffle."""
+
     name = models.CharField(
         primary_key=True,
         max_length=96,
@@ -13,4 +15,6 @@ class OffTopicChannelName(ModelReprMixin, models.Model):
     )
 
     def __str__(self):
+        """Returns the current off-topic name, for display purposes."""
+
         return self.name

@@ -9,6 +9,8 @@ from pydis_site.apps.api.models.utils import ModelReprMixin
 
 
 def validate_tag_embed_fields(fields):
+    """Raises a ValidationError if any of the given embed fields is invalid."""
+
     field_validators = {
         'name': (MaxLengthValidator(limit_value=256),),
         'value': (MaxLengthValidator(limit_value=1024),)
@@ -27,6 +29,8 @@ def validate_tag_embed_fields(fields):
 
 
 def validate_tag_embed_footer(footer):
+    """Raises a ValidationError if the given footer is invalid."""
+
     field_validators = {
         'text': (
             MinLengthValidator(
@@ -51,6 +55,8 @@ def validate_tag_embed_footer(footer):
 
 
 def validate_tag_embed_author(author):
+    """Raises a ValidationError if the given author is invalid."""
+
     field_validators = {
         'name': (
             MinLengthValidator(
@@ -77,8 +83,9 @@ def validate_tag_embed_author(author):
 
 def validate_tag_embed(embed):
     """
-    Validate a JSON document containing an embed as possible to send
-    on Discord. This attempts to rebuild the validation used by Discord
+    Validate a JSON document containing an embed as possible to send on Discord.
+
+    This attempts to rebuild the validation used by Discord
     as well as possible by checking for various embed limits so we can
     ensure that any embed we store here will also be accepted as a
     valid embed by the Discord API.
@@ -90,7 +97,7 @@ def validate_tag_embed(embed):
 
         >>> from django.contrib.postgres import fields as pgfields
         >>> from django.db import models
-        >>> from pydis_site.apps.api.validators import validate_tag_embed
+        >>> from pydis_site.apps.api.models.bot.tag import validate_tag_embed
         >>> class MyMessage(models.Model):
         ...     embed = pgfields.JSONField(
         ...         validators=(
@@ -176,4 +183,6 @@ class Tag(ModelReprMixin, models.Model):
     )
 
     def __str__(self):
+        """Returns the title of this tag, for display purposes."""
+
         return self.title

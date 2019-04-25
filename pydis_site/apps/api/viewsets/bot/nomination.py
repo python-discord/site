@@ -12,7 +12,8 @@ from pydis_site.apps.api.serializers import NominationSerializer
 
 
 class NominationViewSet(ModelViewSet):
-    # TODO: doc me
+    """View providing CRUD operations on helper nominations done through the bot."""
+
     serializer_class = NominationSerializer
     queryset = Nomination.objects.prefetch_related('actor', 'user')
     filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
@@ -32,6 +33,12 @@ class NominationViewSet(ModelViewSet):
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
     def update(self, request, *args, **kwargs):
+        """
+        DRF method for updating a Nomination.
+
+        Called by the Django Rest Framework in response to the corresponding HTTP request.
+        """
+
         for field in request.data:
             if field in self.frozen_fields:
                 raise ValidationError({field: ['This field cannot be updated.']})

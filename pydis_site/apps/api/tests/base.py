@@ -13,8 +13,10 @@ test_user, _created = User.objects.get_or_create(
 
 class APISubdomainTestCase(APITestCase):
     """
-    Configures the test client to use the proper subdomain
-    for requests and forces authentication for the test user.
+    Configures the test client.
+
+    This ensures that it uses the proper subdomain for requests, and forces authentication
+    for the test user.
 
     The test user is considered staff and superuser.
     If you want to test for a custom user (for example, to test model permissions),
