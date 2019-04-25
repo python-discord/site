@@ -19,12 +19,12 @@ class NominationViewSet(ModelViewSet):
     filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
     filter_fields = ('user__id', 'actor__id', 'active')
     frozen_fields = ('id', 'actor', 'inserted_at', 'user', 'unwatched_at', 'active')
-    frozen_on_create = ('unwatched_at', 'unnominate_reason')
+    frozen_on_create = ('unwatched_at', 'unnominate_reason', 'active', 'inserted_at')
 
     def create(self, request, *args, **kwargs):
         for field in request.data:
             if field in self.frozen_on_create:
-                raise ValidationError({field: ['This field cannot be updated.']})
+                raise ValidationError({field: ['This field cannot be set at creation.']})
 
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -53,8 +53,8 @@ class NominationViewSet(ModelViewSet):
     @action(detail=True, methods=['patch'])
     def end_nomination(self, request, pk=None):
         for field in request.data:
-            if field in self.frozen_fields:
-                raise ValidationError({field: ['This field cannot be updated.']})
+            if field != "unnominate_reason":
+                raise ValidationError({field: ['This field cannot be set at end_nomination']})
 
         if "unnominate_reason" not in request.data:
             raise ValidationError(
