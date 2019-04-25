@@ -1,5 +1,5 @@
-from django.db import migrations, models
 import django.db.models.deletion
+from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
@@ -12,7 +12,17 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='nomination',
             name='user',
-            field=models.OneToOneField(help_text='The nominated user.', on_delete=django.db.models.deletion.CASCADE, related_name='nomination', to='api.User'),
+            field=models.ForeignKey(help_text='The nominated user.', on_delete=django.db.models.deletion.CASCADE, related_name='nomination', to='api.User'),
+        ),
+        migrations.AlterField(
+            model_name='nomination',
+            name='author',
+            field=models.ForeignKey(help_text='The staff member that nominated this user.', on_delete=django.db.models.deletion.CASCADE, related_name='nomination_set', to='api.User'),
+        ),
+        migrations.RenameField(
+            model_name='nomination',
+            old_name='author',
+            new_name='actor',
         ),
         migrations.AddField(
             model_name='nomination',
