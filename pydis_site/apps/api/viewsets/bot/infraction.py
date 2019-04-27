@@ -28,11 +28,12 @@ class InfractionViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
 
     #### Query parameters
     - **active** `bool`: whether the infraction is still active
-    - **actor** `int`: snowflake of the user which applied the infraction
+    - **actor__id** `int`: snowflake of the user which applied the infraction
     - **hidden** `bool`: whether the infraction is a shadow infraction
     - **search** `str`: regular expression applied to the infraction's reason
     - **type** `str`: the type of the infraction
-    - **user** `int`: snowflake of the user to which the infraction was applied
+    - **user__id** `int`: snowflake of the user to which the infraction was applied
+    - **ordering** `str`: comma-separated sequence of fields to order the returned results
 
     Invalid query parameters are ignored.
 
