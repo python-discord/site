@@ -270,9 +270,6 @@ class UserSerializer(BulkSerializerMixin, ModelSerializer):
 class NominationSerializer(ModelSerializer):
     """A class providing (de-)serialization of `Nomination` instances."""
 
-    actor = PrimaryKeyRelatedField(queryset=User.objects.all())
-    user = PrimaryKeyRelatedField(queryset=User.objects.all())
-
     class Meta:
         """Metadata defined for the Django REST Framework."""
 
@@ -280,14 +277,3 @@ class NominationSerializer(ModelSerializer):
         fields = (
             'id', 'active', 'actor', 'reason', 'user',
             'inserted_at', 'unnominate_reason', 'unwatched_at')
-        depth = 1
-
-    def validate(self, attrs):
-        active = attrs.get("active")
-
-        unnominate_reason = attrs.get("unnominate_reason")
-        if active and unnominate_reason:
-            raise ValidationError(
-                {'unnominate_reason': "An active nomination can't have an unnominate reason"}
-            )
-        return attrs
