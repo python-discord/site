@@ -36,18 +36,18 @@ class NominationViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
     Invalid query parameters are ignored.
 
     #### Response format
-    [
-        {
-            'id': 1,
-            'active': false,
-            'actor': 336843820513755157,
-            'reason': 'They know how to explain difficult concepts',
-            'user': 336843820513755157,
-            'inserted_at': '2019-04-25T14:02:37.775587Z',
-            'unnominate_reason': 'They were helpered after a staff-vote',
-            'unwatched_at': '2019-04-26T15:12:22.123587Z'
-        }
-    ]
+    >>> [
+    ...     {
+    ...         'id': 1,
+    ...         'active': false,
+    ...         'actor': 336843820513755157,
+    ...         'reason': 'They know how to explain difficult concepts',
+    ...         'user': 336843820513755157,
+    ...         'inserted_at': '2019-04-25T14:02:37.775587Z',
+    ...         'unnominate_reason': 'They were helpered after a staff-vote',
+    ...         'unwatched_at': '2019-04-26T15:12:22.123587Z'
+    ...     }
+    ... ]
 
     #### Status codes
     - 200: returned on success
@@ -56,16 +56,16 @@ class NominationViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
     Retrieve a single nomination by ID.
 
     ### Response format
-    {
-        'id': 1,
-        'active': true,
-        'actor': 336843820513755157,
-        'reason': 'They know how to explain difficult concepts',
-        'user': 336843820513755157,
-        'inserted_at': '2019-04-25T14:02:37.775587Z',
-        'unnominate_reason': 'They were helpered after a staff-vote',
-        'unwatched_at': '2019-04-26T15:12:22.123587Z'
-    }
+    >>> {
+    ...     'id': 1,
+    ...     'active': true,
+    ...     'actor': 336843820513755157,
+    ...     'reason': 'They know how to explain difficult concepts',
+    ...     'user': 336843820513755157,
+    ...     'inserted_at': '2019-04-25T14:02:37.775587Z',
+    ...     'unnominate_reason': 'They were helpered after a staff-vote',
+    ...     'unwatched_at': '2019-04-26T15:12:22.123587Z'
+    ... }
 
     ### Status codes
     - 200: returned on succes
@@ -79,11 +79,11 @@ class NominationViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
     allowed one active nomination at a time.
 
     #### Request body
-    {
-        'actor': 409107086526644234
-        'reason': 'He would make a great helper',
-        'user': 409107086526644234
-    }
+    >>> {
+    ...     'actor': 409107086526644234
+    ...     'reason': 'He would make a great helper',
+    ...     'user': 409107086526644234
+    ... }
 
     ### Response format
     See `GET /bot/nominations/<id:int>`
@@ -101,10 +101,10 @@ class NominationViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
     nominations, both the `reason` and `unnominate_reason` may be updated.
 
     #### Request body
-    {
-        'reason': 'He would make a great helper',
-        'unnominate_reason': 'He needs some time to mature his Python knowledge'
-    }
+    >>> {
+    ...     'reason': 'He would make a great helper',
+    ...     'unnominate_reason': 'He needs some time to mature his Python knowledge'
+    ... }
 
     ### Response format
     See `GET /bot/nominations/<id:int>`
@@ -123,9 +123,9 @@ class NominationViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
     the `unwatched_at` field.
 
     #### Request body
-    {
-        'unnominate_reason': 'He needs some time to mature his Python knowledge'
-    }
+    >>> {
+    ...     'unnominate_reason': 'He needs some time to mature his Python knowledge'
+    ... }
 
     ### Response format
     See `GET /bot/nominations/<id:int>`
