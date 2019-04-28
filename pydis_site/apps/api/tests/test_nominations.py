@@ -269,7 +269,7 @@ class NominationTests(APISubdomainTestCase):
 
     def test_returns_200_on_valid_end_nomination(self):
         url = reverse(
-            'bot:nomination-end-nomination',
+            'bot:nomination-dismiss',
             args=(self.active_nomination.id,),
             host='api'
         )
@@ -291,7 +291,7 @@ class NominationTests(APISubdomainTestCase):
 
     def test_returns_400_on_invalid_field_end_nomination(self):
         url = reverse(
-            'bot:nomination-end-nomination',
+            'bot:nomination-dismiss',
             args=(self.active_nomination.id,),
             host='api'
         )
@@ -306,7 +306,7 @@ class NominationTests(APISubdomainTestCase):
 
     def test_returns_400_on_missing_unnominate_reason_end_nomination(self):
         url = reverse(
-            'bot:nomination-end-nomination',
+            'bot:nomination-dismiss',
             args=(self.active_nomination.id,),
             host='api'
         )
@@ -320,7 +320,7 @@ class NominationTests(APISubdomainTestCase):
 
     def test_returns_400_on_ending_inactive_nomination(self):
         url = reverse(
-            'bot:nomination-end-nomination',
+            'bot:nomination-dismiss',
             args=(self.inactive_nomination.id,),
             host='api'
         )
@@ -362,7 +362,7 @@ class NominationTests(APISubdomainTestCase):
 
     def test_returns_404_on_end_unknown_nomination(self):
         url = reverse(
-            'bot:nomination-end-nomination',
+            'bot:nomination-dismiss',
             args=(9999,),
             host='api'
         )
@@ -433,7 +433,7 @@ class NominationTests(APISubdomainTestCase):
 
     def test_returns_405_on_end_nomination_put(self):
         url = reverse(
-            'bot:nomination-end-nomination',
+            'bot:nomination-dismiss',
             args=(self.inactive_nomination.id,),
             host='api'
         )
@@ -446,7 +446,7 @@ class NominationTests(APISubdomainTestCase):
 
     def test_returns_405_on_end_nomination_post(self):
         url = reverse(
-            'bot:nomination-end-nomination',
+            'bot:nomination-dismiss',
             args=(self.inactive_nomination.id,),
             host='api'
         )
@@ -459,7 +459,7 @@ class NominationTests(APISubdomainTestCase):
 
     def test_returns_405_on_end_nomination_delete(self):
         url = reverse(
-            'bot:nomination-end-nomination',
+            'bot:nomination-dismiss',
             args=(self.inactive_nomination.id,),
             host='api'
         )
@@ -472,7 +472,7 @@ class NominationTests(APISubdomainTestCase):
 
     def test_returns_405_on_end_nomination_get(self):
         url = reverse(
-            'bot:nomination-end-nomination',
+            'bot:nomination-dismiss',
             args=(self.inactive_nomination.id,),
             host='api'
         )

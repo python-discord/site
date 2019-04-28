@@ -194,7 +194,7 @@ class NominationViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
         return Response(serializer.data)
 
     @action(detail=True, methods=['patch'])
-    def end_nomination(self, request, pk=None):
+    def dismiss(self, request, pk=None):
         """
         DRF action for ending an active nomination.
 
