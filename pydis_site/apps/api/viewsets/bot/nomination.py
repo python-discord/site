@@ -69,7 +69,7 @@ class NominationViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
 
     ### Status codes
     - 200: returned on succes
-    - 404: returned if an nomination with the given `id` could not be found
+    - 404: returned if a nomination with the given `id` could not be found
 
     ### POST /bot/nominations
     Create a new, active nomination returns the created nominations.
