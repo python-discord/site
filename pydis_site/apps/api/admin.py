@@ -4,11 +4,10 @@ from .models import (
     BotSetting, DeletedMessage,
     DocumentationLink, Infraction,
     MessageDeletionContext, Nomination,
-    OffTopicChannelName,
-    Role, SnakeFact,
-    SnakeIdiom, SnakeName,
-    SpecialSnake, Tag,
-    User
+    OffTopicChannelName, Role,
+    SnakeFact, SnakeIdiom,
+    SnakeName, SpecialSnake,
+    Tag, User
 )
 
 
