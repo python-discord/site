@@ -156,7 +156,7 @@ class NominationViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
                 raise ValidationError({field: ['This field cannot be set at creation.']})
 
         user_id = request.data.get("user")
-        if Nomination.objects.filter(active=True, user__id=user_id):
+        if Nomination.objects.filter(active=True, user__id=user_id).exists():
             raise ValidationError({'active': ['There can only be one active nomination.']})
 
         serializer = self.get_serializer(
@@ -194,7 +194,7 @@ class NominationViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
         return Response(serializer.data)
 
     @action(detail=True, methods=['patch'])
-    def dismiss(self, request, pk=None):
+    def end(self, request, pk=None):
         """
         DRF action for ending an active nomination.
 
