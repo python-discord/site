@@ -13,6 +13,54 @@
             "url": "https://www.reddit.com/r/Python/"
           }
         ]
+      },
+      "Discord: Functional Programming": {
+        "description": "Functional Programming is a server for discussing functional languages like Haskell, Idris, Elixir and Lisp as well as related academic fields such as type theory, category theory, proof assistants, and more!",
+        "payment": "free",
+        "payment_description": null,
+        "urls": [
+          {
+            "icon": "branding/discord",
+            "title": "Functional Programming Discord",
+            "url": "https://discord.gg/kWJYurV"
+          }
+        ]
+      },
+      "Discord: RLBot": {
+        "description": "RLBot is a community of programmers making awesome Rocket League bots. They've created a framework that you can use to write bots in a number of languages (including Python), and they host regular tournaments where botmakers can pit their creations against each other.",
+        "payment": "free",
+        "payment_description": null,
+        "urls": [
+          {
+            "icon": "branding/discord",
+            "title": "RLBot Discord",
+            "url": "https://discord.gg/4JJdJKb"
+          }
+        ]
+      },
+      "Discord: The Pallets Project": {
+        "description": "The Pallets Projects develop Python libraries such as the Flask web framework, the Jinja templating library, and the Click command line toolkit. Join to discuss and get help from the Pallets community.",
+        "payment": "free",
+        "payment_description": null,
+        "urls": [
+          {
+            "icon": "branding/discord",
+            "title": "The Pallets Project Discord",
+            "url": "https://discord.gg/t6rrQZH"
+          }
+        ]
+      },
+      "Discord: Adafruit": {
+        "description": "Adafruit is an open-source electronics manufacturer that makes all the components you need to start your own Python-powered hardware projects.\n\nTheir official community host regular show-and-tells, provide help with your projects, and the Adafruit devs do all the CircuitPython development right out in the open. Join the Maker Revolution today!",
+        "payment": "free",
+        "payment_description": null,
+        "urls": [
+          {
+            "icon": "branding/discord",
+            "title": "Adafruit Discord",
+            "url": "https://discord.gg/adafruit"
+          }
+        ]
       }
     }
   },
@@ -60,18 +108,6 @@
           }
         ]
       },
-      "Python Cheat Sheet": {
-        "description": "A Python 3 cheat sheet with useful information and tips, as well as common pitfalls for beginners. This is a PDF.",
-        "payment": "free",
-        "payment_description": null,
-        "urls": [
-          {
-            "icon": "regular/link",
-            "title": "Website",
-            "url": "https://perso.limsi.fr/pointal/_media/python:cours:mementopython3-english.pdf"
-          }
-        ]
-      },
       "The Hitchhiker's Guide to Python": {
         "description": "This opinionated guide exists to provide both novice and expert Python developers a best practice handbook to the installation, configuration, and usage of Python on a daily basis.",
         "payment": "free",
@@ -96,27 +132,15 @@
           }
         ]
       },
-      "Python Tutorials by The New Boston on YouTube": {
-        "description": "A Python basics tutorial based around Python 3.4 - A more casual feel when compared to Corey's tutorials, but still competent.",
+      "Python Tutorials by Sentdex on YouTube": {
+        "description": "A Python basics tutorial based around Python 3.7.",
         "payment": "free",
         "payment_description": null,
         "urls": [
           {
             "icon": "branding/youtube",
             "title": "YouTube",
-            "url": "https://www.youtube.com/playlist?list=PL6gx4Cwl9DGAcbMi1sH6oAMk4JHw91mC_"
-          }
-        ]
-      },
-      "The Modern Python 3 Bootcamp": {
-        "description": "A unique interactive python experience with nearly 200 exercises and quizzes.",
-        "payment": "paid",
-        "payment_description": "Paid course with a certificate of completion. Some sample videos are available for free.",
-        "urls": [
-          {
-            "icon": "regular/chalkboard-teacher",
-            "title": "Udemy",
-            "url": "https://www.udemy.com/the-modern-python3-bootcamp/"
+            "url": "https://www.youtube.com/playlist?list=PLQVvvaa0QuDeAams7fkdcwOGBpGdHpXln"
           }
         ]
       }
@@ -398,15 +422,27 @@
   "Miscellaneous": {
     "description": "Resources which do not fit into the other categories",
     "resources": {
-      "Issue Haven": {
-        "description": "Aggregates open issues from thousands of open source projects. This is a good place to look for your first open source contribution.",
+      "GitHub's 'Good First Issue' Tag": {
+        "description": "Searching for opportunities to contribute to a Python project? GitHub repository maintainers often mark issues appropriate for novice users with the 'Good First Issue' tag. These issues can be explored directly on GitHub.",
+        "payment": "free",
+        "payment_description": null,
+        "urls": [
+          {
+            "icon": "branding/github",
+            "title": "GitHub",
+            "url": "https://github.com/search?utf8=%E2%9C%93&q=label%3A%22good+first+issue%22+language%3APython+state%3Aopen&type=Issues&ref=advsearch&l=Python&l="
+          }
+        ]
+      },
+      "Python Cheat Sheet": {
+        "description": "A Python 3 cheat sheet with useful information and tips, as well as common pitfalls for beginners. This is a PDF.",
         "payment": "free",
         "payment_description": null,
         "urls": [
           {
             "icon": "regular/link",
             "title": "Website",
-            "url": "https://www.issuehaven.com/"
+            "url": "https://perso.limsi.fr/pointal/_media/python:cours:mementopython3-english.pdf"
           }
         ]
       }
