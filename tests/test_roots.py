@@ -13,9 +13,9 @@ class RootEndpoint(SiteTest):
         self.assertEqual(response.status_code, 200)
 
     def test_info_index(self):
-        """ Check the info index path responds with a 301 """
+        """ Check the info index path responds with a 308 """
         response = self.client.get('/info')
-        self.assertEqual(response.status_code, 301)
+        self.assertEqual(response.status_code, 308)
 
     def test_info_help(self):
         """ Check the info help path responds with 200 OK """
