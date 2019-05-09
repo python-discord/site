@@ -3,10 +3,5 @@
     "banner": "/static/images/partners/functional programming.png",
     "description": "Functional Programming is a server for discussing functional languages like Haskell, Idris, Elixir and Lisp as well as related academic fields such as type theory, category theory, proof assistants, and more!",
     "invite": "https://discord.gg/kWJYurV"
-  },
-  "STEM": {
-    "banner": "/static/images/partners/stem.png",
-    "description": "STEM is a growing server dedicated to discussion and education pertaining to subjects within the fields of Science, Technology, Engineering, and Mathematics. We aim to provide our members with an engaged, skilled, friendly community. We hope to see you soon!",
-    "invite": "https://discord.gg/XBGetGp"
   }
 }
