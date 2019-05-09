@@ -49,13 +49,9 @@ buildjs = "gulp"
 buildscss = "python scss.py scss/pysite:scss/pysite/style.scss:static/css/style.css scss/uikit:scss/uikit/uikit_blurple.scss:static/css/uikit_blurple.css"
 
 clean = "rm -rf __pycache__ htmlcov .coverage .pytest_cache"
-fixjs = "eslint static/js --fix"
 start = "gunicorn -w 12 -b 0.0.0.0:10012 -c gunicorn_config.py --log-level info -k geventwebsocket.gunicorn.workers.GeventWebSocketWorker app:app"
 
 lint = "python -m flake8"
-lintjs = "eslint js/src"
-lintscss = "scss-lint scss/pysite"
-
 precommit = "pre-commit install"
 
 push = "docker push pythondiscord/site:latest"
