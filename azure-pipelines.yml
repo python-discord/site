@@ -47,23 +47,14 @@ jobs:
   - script: sudo pip install pipenv
     displayName: 'Install pipenv'
 
-  - script: sudo gem install scss_lint
-    displayName: 'Install SCSS linter'
-
-  - script: sudo npm install -g eslint gulp-cli
-    displayName: 'Install ESLint and gulp'
+  - script: sudo npm install -g gulp-cli
+    displayName: 'Install gulp'
 
   - script: pipenv install --dev --deploy
     displayName: 'Install project using pipenv'
 
   - script: pipenv run lint
     displayName: 'Lint Python'
-
-  - script: pipenv run lintjs
-    displayName: 'Lint JS'
-
-  - script: pipenv run lintscss
-    displayName: 'Lint SCSS'
 
   - script: pipenv run python gunicorn_config.py
     displayName: 'Set up database'

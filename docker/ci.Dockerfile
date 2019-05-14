@@ -8,7 +8,6 @@ RUN apk add --update autoconf automake \
                      gcc git \
                      libtool \
                      nodejs nodejs-npm \
-                     ruby ruby-dev ruby-irb ruby-rdoc \
                      tini
 
 # Set up env vars
@@ -19,5 +18,4 @@ ENV PIPENV_HIDE_EMOJIS=1
 
 # Install toolchain
 RUN pip install pipenv
-RUN gem install scss_lint
-RUN npm install -g eslint gulp-cli
+RUN npm install -g gulp-cli
