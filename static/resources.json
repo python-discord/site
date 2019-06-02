@@ -498,6 +498,18 @@
             "url": "https://www.podcastinit.com/"
           }
         ]
+      },
+      "Test & Code": {
+        "description": "This weekly show covers a wide array of topics including software development, testing, Python programming, and many related topics.",
+        "payment": "free",
+        "payment_description": null,
+        "urls": [
+          {
+            "icon": "regular/link",
+            "title": "Website",
+            "url": "https://testandcode.com/"
+          }
+        ]
       }
     }
   },
