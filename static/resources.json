@@ -347,6 +347,18 @@
           }
         ]
       },
+      "Python Principles": {
+        "description": "An online Python course for total beginners. Lets you learn through clear explanations and lots of practical exercises. Very hands-on.",
+        "payment": "optional",
+        "payment_description": "The first lessons covering the most basic things are free, the rest require a one-time fee to unlock.",
+        "urls": [
+          {
+            "icon": "regular/link",
+            "title": "Website",
+            "url": "https://pythonprinciples.com/"
+          }
+        ]
+      },
       "MIT: Introduction to Computer Science and Programming Using Python": {
         "description": "This MITx offering teaches computer science with Python. It covers computational thinking, algorithms, data structures and the Python programming language itself.",
         "payment": "optional",
