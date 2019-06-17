@@ -302,5 +302,9 @@
     {
         "name": "Aretha Franklin",
         "image_url": "https://upload.wikimedia.org/wikipedia/commons/c/c6/Aretha_Franklin_1968.jpg"
+    },
+    {
+        "name": "Lil' Joseph",
+        "image_url": "http://beardfist.com/images/lil_joseph.png"
     }
 ]
