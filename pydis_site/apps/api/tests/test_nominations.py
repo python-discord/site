@@ -137,19 +137,19 @@ class CreationTests(APISubdomainTestCase):
             'end_reason': ['This field cannot be set at creation.']
         })
 
-    def test_returns_400_for_unwatched_at_at_creation(self):
+    def test_returns_400_for_ended_at_at_creation(self):
         url = reverse('bot:nomination-list', host='api')
         data = {
             'user': self.user.id,
             'reason': 'Joe Dart on Fender Bass',
             'actor': self.user.id,
-            'unwatched_at': "Joe Dart on the Joe Dart Bass"
+            'ended_at': "Joe Dart on the Joe Dart Bass"
         }
 
         response = self.client.post(url, data=data)
         self.assertEqual(response.status_code, 400)
         self.assertEqual(response.json(), {
-            'unwatched_at': ['This field cannot be set at creation.']
+            'ended_at': ['This field cannot be set at creation.']
         })
 
     def test_returns_400_for_inserted_at_at_creation(self):
@@ -204,7 +204,7 @@ class NominationTests(APISubdomainTestCase):
             reason="He's pretty funky",
             active=False,
             end_reason="His neck couldn't hold the funk",
-            unwatched_at="5018-11-20T15:52:00+00:00"
+            ended_at="5018-11-20T15:52:00+00:00"
         )
 
     def test_returns_200_update_reason_on_active(self):
@@ -282,7 +282,7 @@ class NominationTests(APISubdomainTestCase):
         nomination = Nomination.objects.get(id=response.json()['id'])
 
         self.assertAlmostEqual(
-            nomination.unwatched_at,
+            nomination.ended_at,
             dt.now(timezone.utc),
             delta=timedelta(seconds=2)
         )

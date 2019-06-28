@@ -276,4 +276,4 @@ class NominationSerializer(ModelSerializer):
         model = Nomination
         fields = (
             'id', 'active', 'actor', 'reason', 'user',
-            'inserted_at', 'end_reason', 'unwatched_at')
+            'inserted_at', 'end_reason', 'ended_at')

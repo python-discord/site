@@ -45,7 +45,7 @@ class NominationViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
     ...         'user': 336843820513755157,
     ...         'inserted_at': '2019-04-25T14:02:37.775587Z',
     ...         'end_reason': 'They were helpered after a staff-vote',
-    ...         'unwatched_at': '2019-04-26T15:12:22.123587Z'
+    ...         'ended_at': '2019-04-26T15:12:22.123587Z'
     ...     }
     ... ]
 
@@ -64,7 +64,7 @@ class NominationViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
     ...     'user': 336843820513755157,
     ...     'inserted_at': '2019-04-25T14:02:37.775587Z',
     ...     'end_reason': 'They were helpered after a staff-vote',
-    ...     'unwatched_at': '2019-04-26T15:12:22.123587Z'
+    ...     'ended_at': '2019-04-26T15:12:22.123587Z'
     ... }
 
     ### Status codes
@@ -120,7 +120,7 @@ class NominationViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
     The `end_reason` field is the only allowed and required field
     for this operation. The nomination will automatically be marked as
     `active = false` and the datetime of this operation will be added to
-    the `unwatched_at` field.
+    the `ended_at` field.
 
     #### Request body
     >>> {
@@ -142,8 +142,8 @@ class NominationViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
     queryset = Nomination.objects.all()
     filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
     filter_fields = ('user__id', 'actor__id', 'active')
-    frozen_fields = ('id', 'actor', 'inserted_at', 'user', 'unwatched_at', 'active')
-    frozen_on_create = ('unwatched_at', 'end_reason', 'active', 'inserted_at')
+    frozen_fields = ('id', 'actor', 'inserted_at', 'user', 'ended_at', 'active')
+    frozen_on_create = ('ended_at', 'end_reason', 'active', 'inserted_at')
 
     def create(self, request, *args, **kwargs):
         """
@@ -216,7 +216,7 @@ class NominationViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
         serializer = self.get_serializer(instance, data=request.data, partial=True)
         serializer.is_valid(raise_exception=True)
         instance.active = False
-        instance.unwatched_at = timezone.now()
+        instance.ended_at = timezone.now()
         serializer.save()
         instance.save()
 

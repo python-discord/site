@@ -34,7 +34,7 @@ class Nomination(ModelReprMixin, models.Model):
         help_text="Why the nomination was ended.",
         default=""
     )
-    unwatched_at = models.DateTimeField(
+    ended_at = models.DateTimeField(
         auto_now_add=False,
         help_text="When the nomination was ended.",
         null=True
