@@ -30,7 +30,7 @@ class Nomination(ModelReprMixin, models.Model):
         auto_now_add=True,
         help_text="The creation date of this nomination."
     )
-    unnominate_reason = models.TextField(
+    end_reason = models.TextField(
         help_text="Why the nomination was ended.",
         default=""
     )

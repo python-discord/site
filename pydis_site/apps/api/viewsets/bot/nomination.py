@@ -44,7 +44,7 @@ class NominationViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
     ...         'reason': 'They know how to explain difficult concepts',
     ...         'user': 336843820513755157,
     ...         'inserted_at': '2019-04-25T14:02:37.775587Z',
-    ...         'unnominate_reason': 'They were helpered after a staff-vote',
+    ...         'end_reason': 'They were helpered after a staff-vote',
     ...         'unwatched_at': '2019-04-26T15:12:22.123587Z'
     ...     }
     ... ]
@@ -63,7 +63,7 @@ class NominationViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
     ...     'reason': 'They know how to explain difficult concepts',
     ...     'user': 336843820513755157,
     ...     'inserted_at': '2019-04-25T14:02:37.775587Z',
-    ...     'unnominate_reason': 'They were helpered after a staff-vote',
+    ...     'end_reason': 'They were helpered after a staff-vote',
     ...     'unwatched_at': '2019-04-26T15:12:22.123587Z'
     ... }
 
@@ -98,12 +98,12 @@ class NominationViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
     ### PATCH /bot/nominations/<id:int>
     Update the nomination with the given `id` and return the updated nomination.
     For active nominations, only the `reason` may be updated; for inactive
-    nominations, both the `reason` and `unnominate_reason` may be updated.
+    nominations, both the `reason` and `end_reason` may be updated.
 
     #### Request body
     >>> {
     ...     'reason': 'He would make a great helper',
-    ...     'unnominate_reason': 'He needs some time to mature his Python knowledge'
+    ...     'end_reason': 'He needs some time to mature his Python knowledge'
     ... }
 
     ### Response format
@@ -117,14 +117,14 @@ class NominationViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
     ### PATCH /bot/nominations/<id:int>/end_nomination
     Ends an active nomination and returns the updated nomination.
 
-    The `unnominate_reason` field is the only allowed and required field
+    The `end_reason` field is the only allowed and required field
     for this operation. The nomination will automatically be marked as
     `active = false` and the datetime of this operation will be added to
     the `unwatched_at` field.
 
     #### Request body
     >>> {
-    ...     'unnominate_reason': 'He needs some time to mature his Python knowledge'
+    ...     'end_reason': 'He needs some time to mature his Python knowledge'
     ... }
 
     ### Response format
@@ -133,7 +133,7 @@ class NominationViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
     #### Status codes
     - 200: returned on success
     - 400: returned on failure for the following reasons:
-        - `unnominate_reason` is missing from the request body;
+        - `end_reason` is missing from the request body;
         - Any other field is present in the request body;
         - The nomination was already inactiive.
     - 404: if an infraction with the given `id` could not be found
@@ -143,7 +143,7 @@ class NominationViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
     filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
     filter_fields = ('user__id', 'actor__id', 'active')
     frozen_fields = ('id', 'actor', 'inserted_at', 'user', 'unwatched_at', 'active')
-    frozen_on_create = ('unwatched_at', 'unnominate_reason', 'active', 'inserted_at')
+    frozen_on_create = ('unwatched_at', 'end_reason', 'active', 'inserted_at')
 
     def create(self, request, *args, **kwargs):
         """
@@ -182,9 +182,9 @@ class NominationViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
 
         instance = self.get_object()
 
-        if instance.active and request.data.get('unnominate_reason'):
+        if instance.active and request.data.get('end_reason'):
             raise ValidationError(
-                {'unnominate_reason': ["An active nomination can't have an unnominate reason."]}
+                {'end_reason': ["An active nomination can't have an unnominate reason."]}
             )
 
         serializer = self.get_serializer(instance, data=request.data, partial=True)
@@ -193,8 +193,7 @@ class NominationViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
 
         return Response(serializer.data)
 
-    @action(detail=True, methods=['patch'])
-    def end(self, request, pk=None):
+    def update(self, request, *args, **kwargs):
         """
         DRF action for ending an active nomination.
 
@@ -202,12 +201,12 @@ class NominationViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
         the class docstring for documentation.
         """
         for field in request.data:
-            if field != "unnominate_reason":
+            if field != "end_reason":
                 raise ValidationError({field: ['This field cannot be set at end_nomination.']})
 
-        if "unnominate_reason" not in request.data:
+        if "end_reason" not in request.data:
             raise ValidationError(
-                {'unnominate_reason': ['This field is required when ending a nomination.']}
+                {'end_reason': ['This field is required when ending a nomination.']}
             )
 
         instance = self.get_object()

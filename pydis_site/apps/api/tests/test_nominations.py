@@ -122,19 +122,19 @@ class CreationTests(APISubdomainTestCase):
             'actor': ['Invalid pk "1024" - object does not exist.']
         })
 
-    def test_returns_400_for_unnominate_reason_at_creation(self):
+    def test_returns_400_for_end_reason_at_creation(self):
         url = reverse('bot:nomination-list', host='api')
         data = {
             'user': self.user.id,
             'reason': 'Joe Dart on Fender Bass',
             'actor': self.user.id,
-            'unnominate_reason': "Joe Dart on the Joe Dart Bass"
+            'end_reason': "Joe Dart on the Joe Dart Bass"
         }
 
         response = self.client.post(url, data=data)
         self.assertEqual(response.status_code, 400)
         self.assertEqual(response.json(), {
-            'unnominate_reason': ['This field cannot be set at creation.']
+            'end_reason': ['This field cannot be set at creation.']
         })
 
     def test_returns_400_for_unwatched_at_at_creation(self):
@@ -203,7 +203,7 @@ class NominationTests(APISubdomainTestCase):
             actor=cls.user,
             reason="He's pretty funky",
             active=False,
-            unnominate_reason="His neck couldn't hold the funk",
+            end_reason="His neck couldn't hold the funk",
             unwatched_at="5018-11-20T15:52:00+00:00"
         )
 
@@ -231,16 +231,16 @@ class NominationTests(APISubdomainTestCase):
             'user': ['This field cannot be updated.']
         })
 
-    def test_returns_400_update_unnominate_reason_on_active(self):
+    def test_returns_400_update_end_reason_on_active(self):
         url = reverse('bot:nomination-detail', args=(self.active_nomination.id,), host='api')
         data = {
-            'unnominate_reason': 'He started playing jazz'
+            'end_reason': 'He started playing jazz'
         }
 
         response = self.client.patch(url, data=data)
         self.assertEqual(response.status_code, 400)
         self.assertEqual(response.json(), {
-            'unnominate_reason': ["An active nomination can't have an unnominate reason."]
+            'end_reason': ["An active nomination can't have an unnominate reason."]
         })
 
     def test_returns_200_update_reason_on_inactive(self):
@@ -255,28 +255,28 @@ class NominationTests(APISubdomainTestCase):
         nomination = Nomination.objects.get(id=response.json()['id'])
         self.assertEqual(nomination.reason, data['reason'])
 
-    def test_returns_200_update_unnominate_reason_on_inactive(self):
+    def test_returns_200_update_end_reason_on_inactive(self):
         url = reverse('bot:nomination-detail', args=(self.inactive_nomination.id,), host='api')
         data = {
-            'unnominate_reason': 'He started playing jazz'
+            'end_reason': 'He started playing jazz'
         }
 
         response = self.client.patch(url, data=data)
         self.assertEqual(response.status_code, 200)
 
         nomination = Nomination.objects.get(id=response.json()['id'])
-        self.assertEqual(nomination.unnominate_reason, data['unnominate_reason'])
+        self.assertEqual(nomination.end_reason, data['end_reason'])
 
     def test_returns_200_on_valid_end_nomination(self):
         url = reverse(
-            'bot:nomination-end',
+            'bot:nomination-detail',
             args=(self.active_nomination.id,),
             host='api'
         )
         data = {
-            'unnominate_reason': 'He started playing jazz'
+            'end_reason': 'He started playing jazz'
         }
-        response = self.client.patch(url, data=data)
+        response = self.client.put(url, data=data)
         self.assertEqual(response.status_code, 200)
 
         nomination = Nomination.objects.get(id=response.json()['id'])
@@ -287,48 +287,48 @@ class NominationTests(APISubdomainTestCase):
             delta=timedelta(seconds=2)
         )
         self.assertFalse(nomination.active)
-        self.assertEqual(nomination.unnominate_reason, data['unnominate_reason'])
+        self.assertEqual(nomination.end_reason, data['end_reason'])
 
     def test_returns_400_on_invalid_field_end_nomination(self):
         url = reverse(
-            'bot:nomination-end',
+            'bot:nomination-detail',
             args=(self.active_nomination.id,),
             host='api'
         )
         data = {
             'reason': 'Why does a whale have feet?'
         }
-        response = self.client.patch(url, data=data)
+        response = self.client.put(url, data=data)
         self.assertEqual(response.status_code, 400)
         self.assertEqual(response.json(), {
             'reason': ['This field cannot be set at end_nomination.']
         })
 
-    def test_returns_400_on_missing_unnominate_reason_end_nomination(self):
+    def test_returns_400_on_missing_end_reason_end_nomination(self):
         url = reverse(
-            'bot:nomination-end',
+            'bot:nomination-detail',
             args=(self.active_nomination.id,),
             host='api'
         )
         data = {}
 
-        response = self.client.patch(url, data=data)
+        response = self.client.put(url, data=data)
         self.assertEqual(response.status_code, 400)
         self.assertEqual(response.json(), {
-            'unnominate_reason': ['This field is required when ending a nomination.']
+            'end_reason': ['This field is required when ending a nomination.']
         })
 
     def test_returns_400_on_ending_inactive_nomination(self):
         url = reverse(
-            'bot:nomination-end',
+            'bot:nomination-detail',
             args=(self.inactive_nomination.id,),
             host='api'
         )
         data = {
-            'unnominate_reason': 'He started playing jazz'
+            'end_reason': 'He started playing jazz'
         }
 
-        response = self.client.patch(url, data=data)
+        response = self.client.put(url, data=data)
         self.assertEqual(response.status_code, 400)
         self.assertEqual(response.json(), {
             'active': ['A nomination must be active to be ended.']
@@ -362,16 +362,16 @@ class NominationTests(APISubdomainTestCase):
 
     def test_returns_404_on_end_unknown_nomination(self):
         url = reverse(
-            'bot:nomination-end',
+            'bot:nomination-detail',
             args=(9999,),
             host='api'
         )
 
         data = {
-            'unnominate_reason': 'He started playing jazz'
+            'end_reason': 'He started playing jazz'
         }
 
-        response = self.client.patch(url, data=data)
+        response = self.client.put(url, data=data)
         self.assertEqual(response.status_code, 404)
         self.assertEqual(response.json(), {
             "detail": "Not found."
@@ -404,15 +404,6 @@ class NominationTests(APISubdomainTestCase):
             "detail": "Method \"DELETE\" not allowed."
         })
 
-    def test_returns_405_on_detail_put(self):
-        url = reverse('bot:nomination-detail', args=(self.active_nomination.id,), host='api')
-
-        response = self.client.put(url, data={})
-        self.assertEqual(response.status_code, 405)
-        self.assertEqual(response.json(), {
-            "detail": "Method \"PUT\" not allowed."
-        })
-
     def test_returns_405_on_detail_post(self):
         url = reverse('bot:nomination-detail', args=(self.active_nomination.id,), host='api')
 
@@ -429,58 +420,6 @@ class NominationTests(APISubdomainTestCase):
         self.assertEqual(response.status_code, 405)
         self.assertEqual(response.json(), {
             "detail": "Method \"DELETE\" not allowed."
-        })
-
-    def test_returns_405_on_end_nomination_put(self):
-        url = reverse(
-            'bot:nomination-end',
-            args=(self.inactive_nomination.id,),
-            host='api'
-        )
-
-        response = self.client.put(url, data={})
-        self.assertEqual(response.status_code, 405)
-        self.assertEqual(response.json(), {
-            "detail": "Method \"PUT\" not allowed."
-        })
-
-    def test_returns_405_on_end_nomination_post(self):
-        url = reverse(
-            'bot:nomination-end',
-            args=(self.inactive_nomination.id,),
-            host='api'
-        )
-
-        response = self.client.post(url, data={})
-        self.assertEqual(response.status_code, 405)
-        self.assertEqual(response.json(), {
-            "detail": "Method \"POST\" not allowed."
-        })
-
-    def test_returns_405_on_end_nomination_delete(self):
-        url = reverse(
-            'bot:nomination-end',
-            args=(self.inactive_nomination.id,),
-            host='api'
-        )
-
-        response = self.client.delete(url, data={})
-        self.assertEqual(response.status_code, 405)
-        self.assertEqual(response.json(), {
-            "detail": "Method \"DELETE\" not allowed."
-        })
-
-    def test_returns_405_on_end_nomination_get(self):
-        url = reverse(
-            'bot:nomination-end',
-            args=(self.inactive_nomination.id,),
-            host='api'
-        )
-
-        response = self.client.get(url, data={})
-        self.assertEqual(response.status_code, 405)
-        self.assertEqual(response.json(), {
-            "detail": "Method \"GET\" not allowed."
         })
 
     def test_filter_returns_0_objects_unknown_user__id(self):
