@@ -53,7 +53,8 @@ else:
             'admin.pythondiscord.com',
             'api.pythondiscord.com',
             'staff.pythondiscord.local',
-            'wiki.pythondiscord.local'
+            'wiki.pythondiscord.local',
+            'django.pythondiscord.com',
         ]
     )
     SECRET_KEY = env('SECRET_KEY')
