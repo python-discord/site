@@ -11,7 +11,7 @@ echo [i] Applying migrations.
 python manage.py migrate --verbosity 1
 
 echo [i] Collecting static files.
-python manage.py collectstatic --no-input --clear --verbosity 0
+python manage.py collectstatic --no-input --clear --verbosity 1
 
 echo [i] Creating a superuser.
 echo "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser('admin', 'admin', 'admin') if not User.objects.filter(username='admin').exists() else print('Admin user already exists')" | python manage.py shell

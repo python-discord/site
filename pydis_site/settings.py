@@ -99,6 +99,7 @@ MIDDLEWARE = [
     'django_hosts.middleware.HostsRequestMiddleware',
 
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -194,6 +195,7 @@ STATICFILES_FINDERS = [
 
     'django_simple_bulma.finders.SimpleBulmaFinder',
 ]
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # django-hosts
 # https://django-hosts.readthedocs.io/en/latest/
