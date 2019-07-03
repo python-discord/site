@@ -173,10 +173,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'pydis_site', 'static')]
-STATIC_ROOT = env('STATIC_ROOT', default='staticfiles')
+STATIC_ROOT = env('STATIC_ROOT', default='/app/staticfiles')
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = env('MEDIA_ROOT', default='media')
+MEDIA_ROOT = env('MEDIA_ROOT', default='/app/media')
 
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
