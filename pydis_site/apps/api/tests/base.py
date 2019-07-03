@@ -5,7 +5,7 @@ from rest_framework.test import APITestCase
 test_user, _created = User.objects.get_or_create(
     username='test',
     email='test@example.com',
-    password='testpass',  # noqa: S106
+    password='testpass',  # noqa
     is_superuser=True,
     is_staff=True
 )

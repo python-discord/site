@@ -20,11 +20,8 @@ env = environ.Env(
     DEBUG=(bool, False)
 )
 
-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-
 DEBUG = env('DEBUG')
 
 # Quick-start development settings - unsuitable for production
@@ -39,11 +36,11 @@ if DEBUG:
         'staff.pythondiscord.local',
         'wiki.pythondiscord.local',
     ]
-    SECRET_KEY = "+_x00w3e94##2-qm-v(5&-x_@*l3t9zlir1etu+7$@4%!it2##"
+    SECRET_KEY = "yellow polkadot bikini"
 
 elif 'CI' in os.environ:
     ALLOWED_HOSTS = ['*']
-    SECRET_KEY = "{©ø¬½.Þ7&Ñ`Q^Kº*~¢j<wxß¾±ðÛJ@q"
+    SECRET_KEY = "yellow polkadot bikini"
 
 else:
     ALLOWED_HOSTS = env.list(
@@ -137,14 +134,12 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'pydis_site.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
 DATABASES = {
     'default': env.db()
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
@@ -164,20 +159,13 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
-
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_L10N = True
-
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
@@ -223,7 +211,6 @@ REST_FRAMEWORK = {
     ),
     'TEST_REQUEST_DEFAULT_FORMAT': 'json'
 }
-
 
 # Logging
 # https://docs.djangoproject.com/en/2.1/topics/logging/
@@ -291,7 +278,7 @@ BULMA_SETTINGS = {
 }
 
 # Required for the wiki
-LOGIN_URL = "/admin/login"  # TODO: Update this when the real login system is in place
+LOGIN_URL = "/admin/login"  # Update this when the real login system is in place
 SITE_ID = 1
 
 WIKI_ACCOUNT_HANDLING = False
