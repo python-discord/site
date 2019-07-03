@@ -184,7 +184,6 @@ STATICFILES_FINDERS = [
 
     'django_simple_bulma.finders.SimpleBulmaFinder',
 ]
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # django-hosts
 # https://django-hosts.readthedocs.io/en/latest/
