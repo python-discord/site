@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
+import secrets
 import sys
 
 import environ
@@ -36,11 +37,11 @@ if DEBUG:
         'staff.pythondiscord.local',
         'wiki.pythondiscord.local',
     ]
-    SECRET_KEY = "yellow polkadot bikini"
+    SECRET_KEY = secrets.token_urlsafe(32)
 
 elif 'CI' in os.environ:
     ALLOWED_HOSTS = ['*']
-    SECRET_KEY = "yellow polkadot bikini"
+    SECRET_KEY = secrets.token_urlsafe(32)
 
 else:
     ALLOWED_HOSTS = env.list(
