@@ -57,6 +57,10 @@ span.repo-language-dot.css {
     background-color: #563d7c;
 }
 
+span.repo-language-dot.javascript {
+    background-color: #f1e05a;
+}
+
 #repo-footer-item {
     margin-left: 1.2rem;
 }
