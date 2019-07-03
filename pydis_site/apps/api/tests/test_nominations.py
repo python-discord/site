@@ -240,7 +240,7 @@ class NominationTests(APISubdomainTestCase):
         response = self.client.patch(url, data=data)
         self.assertEqual(response.status_code, 400)
         self.assertEqual(response.json(), {
-            'end_reason': ["An active nomination can't have an unnominate reason."]
+            'end_reason': ["An active nomination can't have an end reason."]
         })
 
     def test_returns_200_update_reason_on_inactive(self):
@@ -274,9 +274,10 @@ class NominationTests(APISubdomainTestCase):
             host='api'
         )
         data = {
+            'active': False,
             'end_reason': 'He started playing jazz'
         }
-        response = self.client.put(url, data=data)
+        response = self.client.patch(url, data=data)
         self.assertEqual(response.status_code, 200)
 
         nomination = Nomination.objects.get(id=response.json()['id'])
@@ -296,12 +297,13 @@ class NominationTests(APISubdomainTestCase):
             host='api'
         )
         data = {
-            'reason': 'Why does a whale have feet?'
+            'active': False,
+            'reason': 'Why does a whale have feet?',
         }
-        response = self.client.put(url, data=data)
+        response = self.client.patch(url, data=data)
         self.assertEqual(response.status_code, 400)
         self.assertEqual(response.json(), {
-            'reason': ['This field cannot be set at end_nomination.']
+            'reason': ['This field cannot be set when ending a nomination.']
         })
 
     def test_returns_400_on_missing_end_reason_end_nomination(self):
@@ -310,28 +312,30 @@ class NominationTests(APISubdomainTestCase):
             args=(self.active_nomination.id,),
             host='api'
         )
-        data = {}
+        data = {
+            'active': False,
+        }
 
-        response = self.client.put(url, data=data)
+        response = self.client.patch(url, data=data)
         self.assertEqual(response.status_code, 400)
         self.assertEqual(response.json(), {
             'end_reason': ['This field is required when ending a nomination.']
         })
 
-    def test_returns_400_on_ending_inactive_nomination(self):
+    def test_returns_400_on_invalid_use_of_active(self):
         url = reverse(
             'bot:nomination-detail',
             args=(self.inactive_nomination.id,),
             host='api'
         )
         data = {
-            'end_reason': 'He started playing jazz'
+            'active': False,
         }
 
-        response = self.client.put(url, data=data)
+        response = self.client.patch(url, data=data)
         self.assertEqual(response.status_code, 400)
         self.assertEqual(response.json(), {
-            'active': ['A nomination must be active to be ended.']
+            'active': ['This field can only be used to end a nomination']
         })
 
     def test_returns_404_on_get_unknown_nomination(self):
@@ -355,23 +359,6 @@ class NominationTests(APISubdomainTestCase):
         )
 
         response = self.client.patch(url, data={})
-        self.assertEqual(response.status_code, 404)
-        self.assertEqual(response.json(), {
-            "detail": "Not found."
-        })
-
-    def test_returns_404_on_end_unknown_nomination(self):
-        url = reverse(
-            'bot:nomination-detail',
-            args=(9999,),
-            host='api'
-        )
-
-        data = {
-            'end_reason': 'He started playing jazz'
-        }
-
-        response = self.client.put(url, data=data)
         self.assertEqual(response.status_code, 404)
         self.assertEqual(response.json(), {
             "detail": "Not found."
@@ -420,6 +407,15 @@ class NominationTests(APISubdomainTestCase):
         self.assertEqual(response.status_code, 405)
         self.assertEqual(response.json(), {
             "detail": "Method \"DELETE\" not allowed."
+        })
+
+    def test_returns_405_on_detail_put(self):
+        url = reverse('bot:nomination-detail', args=(self.active_nomination.id,), host='api')
+
+        response = self.client.put(url, data={})
+        self.assertEqual(response.status_code, 405)
+        self.assertEqual(response.json(), {
+            "detail": "Method \"PUT\" not allowed."
         })
 
     def test_filter_returns_0_objects_unknown_user__id(self):
