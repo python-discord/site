@@ -22,8 +22,8 @@ services:
   web:
     build:
       context: .
-      dockerfile: docker/app/Dockerfile
-    command: docker/app/migrate_and_serve.sh
+      dockerfile: docker/app/Dockerfile.local
+    command: docker/app/scripts/migrate_and_serve.sh
     ports:
       - "127.0.0.1:8000:8000"
     depends_on:
@@ -39,5 +39,3 @@ services:
 
 volumes:
   staticfiles:
-
-# vim: sw=2 ts=2:

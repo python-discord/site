@@ -17,10 +17,12 @@ pydis_site/apps/api/tests.py
 CHANGELOG.md
 CONTRIBUTING.md
 docker
-!docker/app/migrate_and_boot.sh
+!docker/app/scripts/migrate_and_boot.sh
+!docker/app/scripts/migrate.sh
 !docker/app/uwsgi.ini
 docker-compose.yml
 Dockerfile
+Dockerfile.local
 docs
 home/tests
 home/tests.py

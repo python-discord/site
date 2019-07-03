@@ -13,7 +13,7 @@ services:
     django:
         build:
             context: .
-        command: docker/app/migrate_and_serve.sh
+        command: docker/app/scripts/migrate_and_serve.sh
         ports:
             - "127.0.0.1:4000:4000"
         environment:

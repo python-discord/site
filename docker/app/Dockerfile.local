@@ -38,7 +38,7 @@ RUN python3 -m pip install pipenv \
 # Copy everything into the docker environment.
 COPY . .
 
-# RUN SECRET_KEY=placeholder DATABASE_URL=sqlite:// python3 manage.py collectstatic --no-input --clear --verbosity 0
+RUN SECRET_KEY=placeholder DATABASE_URL=sqlite:// python3 manage.py collectstatic --no-input --clear --verbosity 0
 
 # Remove the prerequisites, dependency installation is now complete.
 RUN apt-get purge -y \
@@ -46,7 +46,4 @@ RUN apt-get purge -y \
             libc-dev \
             libpq-dev
 
-# Migrate, collect and start the app.
-RUN chmod +x /docker/app/scripts/migrate.sh
-ENTRYPOINT ["/docker/app/scripts/migrate.sh"]
 CMD ["uwsgi", "--ini", "docker/app/uwsgi.ini"]
