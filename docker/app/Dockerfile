@@ -47,6 +47,6 @@ RUN apt-get purge -y \
             libpq-dev
 
 # Migrate, collect and start the app.
-RUN chmod +x /docker/app/scripts/migrate.sh
-ENTRYPOINT ["/docker/app/scripts/migrate.sh"]
+RUN chmod +x /app/docker/app/scripts/migrate.sh
+ENTRYPOINT ["/app/docker/app/scripts/migrate.sh"]
 CMD ["uwsgi", "--ini", "docker/app/uwsgi.ini"]
