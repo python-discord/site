@@ -20,7 +20,6 @@ An example Ansible task to deploy the site is shown below, it should read fairly
 humanly and give you a rough idea of steps needed to deploy the site.
 
 ```yml
----
 - name: ensure the `{{ pysite_pg_username }}` postgres user exists
   become: yes
   become_user: postgres
