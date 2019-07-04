@@ -103,7 +103,7 @@ class NominationViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
     3. Updating the `end_reason` or `reason` field of an `inactive` nomination.
 
     While the response format and status codes are the same for all three operations (see
-    below), the request bodies vary depending on the operation. For all operations holds
+    below), the request bodies vary depending on the operation. For all operations it holds
     that providing other valid fields is not allowed and invalid fields are ignored.
 
     ### 1. Updating the `reason` of `active` nomination
@@ -199,7 +199,7 @@ class NominationViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
                     {'end_reason': ["An active nomination can't have an end reason."]}
                 )
 
-        elif instance.active and not data.get('active'):
+        elif instance.active and not data['active']:
             # 2. We're ending an active nomination.
             if 'reason' in data:
                 raise ValidationError(
