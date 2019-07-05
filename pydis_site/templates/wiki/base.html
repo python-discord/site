@@ -2,9 +2,7 @@
 {% load static %}
 {% load wiki_tags %}
 
-{% block title %}
-  Wiki | {% block wiki_pagetitle %}{% endblock %}{% block wiki_site_title %}{% endblock %}
-{% endblock %}
+{% block title %} Wiki | {% block wiki_pagetitle %}{% endblock %}{% block wiki_site_title %}{% endblock %}{% endblock %}
 
 {% block head %}
   {{ block.super }}
