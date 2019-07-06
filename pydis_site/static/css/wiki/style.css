@@ -1,5 +1,6 @@
 #wikiNavbar {
     min-height: 3rem;
+    z-index: -1;
 }
 
 #wikiNavbar .container {
