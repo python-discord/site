@@ -14,6 +14,9 @@ class URL:
 
 
 class Resource:
+    """
+    A class representing a resource on the resource page
+    """
     description: str
     name: str
     payment: str
@@ -40,6 +43,9 @@ class Resource:
 
 
 class Category:
+    """
+    A class representing a resource on the resources page
+    """
     resources: typing.List[Resource]
     name: str
     description: str
@@ -51,7 +57,7 @@ class Category:
     def construct_from_directory(cls, directory: str) -> Category:  # noqa
         category = cls()
 
-        with open(f"{directory}/category_info.yaml") as category_info:
+        with open(f"{directory}/_category_info.yaml") as category_info:
             category_data = yaml.safe_load(category_info)
 
             category.__dict__.update(category_data)
@@ -59,7 +65,7 @@ class Category:
         category.resources = []
 
         for resource in glob.glob(f"{directory}/*.yaml"):
-            if resource == f"{directory}/category_info.yaml":
+            if resource == f"{directory}/_category_info.yaml":
                 continue
 
             with open(resource) as res_file:
@@ -71,6 +77,10 @@ class Category:
 
 
 def load_categories(order: typing.List[str]) -> typing.List[Category]:
+    """
+    Load the categories specified in the order list and return them
+    as a list.
+    """
     categories = []
     for cat in order:
         direc = "pydis_site/apps/home/resources/" + cat
