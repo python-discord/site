@@ -1,0 +1,10 @@
+description: Functional Programming is a server for discussing functional languages
+  like Haskell, Idris, Elixir and Lisp as well as related academic fields such as
+  type theory, category theory, proof assistants, and more!
+name: 'Discord: Functional Programming'
+payment: free
+payment_description: null
+urls:
+- icon: branding/discord
+  title: Functional Programming Discord
+  url: https://discord.gg/kWJYurV

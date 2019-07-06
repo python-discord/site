@@ -1,0 +1,12 @@
+description: An editor aimed at beginners for the purpose of learning how to code
+  without the distractions more advanced editors sometimes cause.
+name: Mu-Editor
+payment: free
+payment_description: null
+urls:
+- icon: regular/link
+  title: Website
+  url: https://codewith.mu/en/
+- icon: branding/github
+  title: GitHub
+  url: https://github.com/mu-editor/mu/

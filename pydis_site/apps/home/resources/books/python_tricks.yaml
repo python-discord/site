@@ -1,0 +1,12 @@
+description: Full of useful Python tips, tricks and features. Get this if you have
+  a good grasp of the basics and want to take your Python skills to the next level,
+  or are a experienced programmer looking to add to your toolbelt.
+name: Python Tricks
+payment: paid
+urls:
+- icon: regular/link
+  title: Website
+  url: https://realpython.com/products/python-tricks-book/
+- icon: branding/amazon
+  title: Amazon
+  url: https://www.amazon.com/Python-Tricks-Buffet-Awesome-Features/dp/1775093301

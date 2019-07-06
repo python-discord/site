@@ -1,0 +1,8 @@
+description: News about the Python programming language, and language-related discussion
+name: 'Subreddit: r/Python'
+payment: free
+payment_description: null
+urls:
+- icon: branding/reddit-alien
+  title: r/Python on Reddit
+  url: https://www.reddit.com/r/Python/

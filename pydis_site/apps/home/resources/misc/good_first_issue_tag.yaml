@@ -1,0 +1,10 @@
+description: Searching for opportunities to contribute to a Python project? GitHub
+  repository maintainers often mark issues appropriate for novice users with the 'Good
+  First Issue' tag. These issues can be explored directly on GitHub.
+name: GitHub's 'Good First Issue' Tag
+payment: free
+payment_description: null
+urls:
+- icon: branding/github
+  title: GitHub
+  url: https://github.com/search?utf8=%E2%9C%93&q=label%3A%22good+first+issue%22+language%3APython+state%3Aopen&type=Issues&ref=advsearch&l=Python&l=

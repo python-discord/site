@@ -1,0 +1,14 @@
+description: This book is chock-full of material that will help you with your Django
+  projects.
+name: Two Scoops of Django
+payment: paid
+urls:
+- icon: regular/link
+  title: Website
+  url: https://twoscoopspress.com/products/two-scoops-of-django-1-11
+- icon: branding/amazon
+  title: Amazon
+  url: https://www.amazon.com/Two-Scoops-Django-Best-Practices/dp/0981467342
+- icon: branding/github
+  title: GitHub
+  url: https://github.com/twoscoops/two-scoops-of-django-2.0-code-examples

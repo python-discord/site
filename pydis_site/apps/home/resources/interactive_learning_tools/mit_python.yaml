@@ -1,0 +1,10 @@
+description: This MITx offering teaches computer science with Python. It covers computational
+  thinking, algorithms, data structures and the Python programming language itself.
+name: 'MIT: Introduction to Computer Science and Programming Using Python'
+payment: optional
+payment_description: You can pay to enroll for a graded certificate, or choose to
+  take the full course for free.
+urls:
+- icon: regular/graduation-cap
+  title: edX Course
+  url: https://www.edx.org/course/introduction-computer-science-mitx-6-00-1x-11

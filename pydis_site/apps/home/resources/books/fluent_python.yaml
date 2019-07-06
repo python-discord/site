@@ -1,0 +1,14 @@
+description: A veritable tome of intermediate and advanced Python information. A must-read
+  for any Python professional.
+name: Fluent Python
+payment: paid
+urls:
+- icon: regular/link
+  title: Website
+  url: https://www.oreilly.com/library/view/fluent-python/9781491946237/
+- icon: branding/amazon
+  title: Amazon
+  url: https://www.amazon.com/Fluent-Python-Concise-Effective-Programming/dp/1491946008
+- icon: branding/github
+  title: GitHub
+  url: https://github.com/fluentpython

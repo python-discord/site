@@ -1,0 +1,10 @@
+description: The very best Python IDE, with a wealth of advanced features and convenience
+  functions.
+name: PyCharm
+payment: optional
+payment_description: There's a free Community Edition and a paid-for Professional
+  Edition with more features available
+urls:
+- icon: regular/link
+  title: Website
+  url: https://www.jetbrains.com/pycharm/

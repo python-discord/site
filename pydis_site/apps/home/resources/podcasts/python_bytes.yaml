@@ -1,0 +1,9 @@
+description: A byte-sized podcast where Michael Kennedy and Brian Okken work through
+  this week's notable Python headlines.
+name: Python Bytes
+payment: free
+payment_description: null
+urls:
+- icon: regular/link
+  title: Website
+  url: https://pythonbytes.fm/

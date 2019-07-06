@@ -1,0 +1,14 @@
+description: 'Adafruit is an open-source electronics manufacturer that makes all the
+  components you need to start your own Python-powered hardware projects.
+
+
+  Their official community host regular show-and-tells, provide help with your projects,
+  and the Adafruit devs do all the CircuitPython development right out in the open.
+  Join the Maker Revolution today!'
+name: 'Discord: Adafruit'
+payment: free
+payment_description: null
+urls:
+- icon: branding/discord
+  title: Adafruit Discord
+  url: https://discord.gg/adafruit

@@ -1,0 +1,14 @@
+description: Level up your programming skills with more than 2600 exercises across
+  47 programming languages, Python included. The website provides a mentored mode,
+  where you can get your code reviewed for each solution you submit. The mentors will
+  give you insightful advice to make you a better programmer.
+name: exercism.io
+payment: free
+payment_description: null
+urls:
+- icon: regular/link
+  title: Website
+  url: https://exercism.io/
+- icon: branding/github
+  title: GitHub
+  url: https://github.com/exercism/python

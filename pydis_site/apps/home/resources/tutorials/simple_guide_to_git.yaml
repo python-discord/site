@@ -1,0 +1,8 @@
+description: A simple, no-nonsense guide to the basics of using Git.
+name: A Simple Guide to Git
+payment: free
+payment_description: null
+urls:
+- icon: regular/link
+  title: Website
+  url: http://rogerdudler.github.io/git-guide/

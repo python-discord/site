@@ -1,0 +1,13 @@
+description: A 2-part course that teaches Python. Primarily intended for high school
+  students and first-year university students who want to learn programming.
+name: 'University of Toronto: Learn to Program'
+payment: optional
+payment_description: You can pay to enroll for a graded certificate, or choose to
+  audit for free.
+urls:
+- icon: regular/graduation-cap
+  title: 'Part 1: The Fundamentals'
+  url: https://www.coursera.org/learn/learn-to-program
+- icon: regular/graduation-cap
+  title: 'Part 2: Crafting Quality Code'
+  url: https://www.coursera.org/learn/program-code

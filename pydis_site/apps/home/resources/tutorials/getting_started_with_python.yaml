@@ -1,0 +1,12 @@
+description: The list of resources for programmers and non-programmers from Python's
+  official beginners' guide
+name: Getting Started with Python
+payment: free
+payment_description: null
+urls:
+- icon: regular/link
+  title: Beginners Guide for Non-Programmers
+  url: https://wiki.python.org/moin/BeginnersGuide/NonProgrammers
+- icon: regular/link
+  title: Beginners Guide for Programmers
+  url: https://wiki.python.org/moin/BeginnersGuide/Programmers

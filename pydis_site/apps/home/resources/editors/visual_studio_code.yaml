@@ -1,0 +1,11 @@
+description: A fully-featured editor based on Electron, extendable with plugins.
+name: Visual Studio Code
+payment: free
+payment_description: null
+urls:
+- icon: regular/link
+  title: Website
+  url: https://code.visualstudio.com/
+- icon: branding/github
+  title: GitHub
+  url: https://github.com/Microsoft/vscode

@@ -1,0 +1,14 @@
+description: Complete with 'recipes' for various Python topics, including moving from
+  Python 2 to Python 3.3
+name: Python Cookbook
+payment: paid
+urls:
+- icon: regular/link
+  title: Website
+  url: http://shop.oreilly.com/product/0636920027072.do
+- icon: branding/amazon
+  title: Amazon
+  url: https://www.amazon.com/Python-Cookbook-Third-David-Beazley/dp/1449340377
+- icon: branding/github
+  title: GitHub
+  url: https://github.com/dabeaz/python-cookbook
