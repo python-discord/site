@@ -1,0 +1,10 @@
+description: A 5-part specialization course that teaches Python from scratch. The
+  course has no pre-requisites and avoids all but the simplest mathematics.
+name: 'University of Michigan: Programming for Everybody'
+payment: optional
+payment_description: You can pay to enroll for a graded certificate and a capstone
+  project, or choose to audit for free.
+urls:
+- icon: regular/graduation-cap
+  title: Python for Everyone Specialization
+  url: https://www.coursera.org/learn/python

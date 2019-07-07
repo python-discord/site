@@ -1,0 +1,12 @@
+description: A Python IDE specifially aimed at learning programming. Has a lot of
+  helpful features to help you understand your code.
+name: Thonny
+payment: free
+payment_description: null
+urls:
+- icon: regular/link
+  title: Website
+  url: https://thonny.org/
+- icon: branding/github
+  title: GitHub
+  url: https://github.com/thonny/thonny/

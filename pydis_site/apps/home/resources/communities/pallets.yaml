@@ -1,0 +1,10 @@
+description: The Pallets Projects develop Python libraries such as the Flask web framework,
+  the Jinja templating library, and the Click command line toolkit. Join to discuss
+  and get help from the Pallets community.
+name: 'Discord: The Pallets Project'
+payment: free
+payment_description: null
+urls:
+- icon: branding/discord
+  title: The Pallets Project Discord
+  url: https://discord.gg/t6rrQZH

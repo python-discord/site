@@ -1,0 +1,14 @@
+description: A comprehensive Flask walkthrough that has you building a complete social
+  blogging application from scratch.
+name: Flask Web Development
+payment: paid
+urls:
+- icon: regular/link
+  title: Website
+  url: http://shop.oreilly.com/product/0636920031116.do
+- icon: branding/amazon
+  title: Amazon
+  url: https://www.amazon.com/Flask-Web-Development-Developing-Applications/dp/1449372627
+- icon: branding/github
+  title: GitHub
+  url: https://github.com/miguelgrinberg/flasky

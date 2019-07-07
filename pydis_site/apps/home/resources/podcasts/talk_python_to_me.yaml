@@ -1,0 +1,9 @@
+description: The essential weekly Python podcast. Michael Kennedy and a prominent
+  name within the Python community dive into a topic that relates to their experience.
+name: Talk Python To Me
+payment: free
+payment_description: null
+urls:
+- icon: regular/link
+  title: Website
+  url: https://talkpython.fm/

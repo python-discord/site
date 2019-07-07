@@ -1,0 +1,11 @@
+description: RLBot is a community of programmers making awesome Rocket League bots.
+  They've created a framework that you can use to write bots in a number of languages
+  (including Python), and they host regular tournaments where botmakers can pit their
+  creations against each other.
+name: 'Discord: RLBot'
+payment: free
+payment_description: null
+urls:
+- icon: branding/discord
+  title: RLBot Discord
+  url: https://discord.gg/4JJdJKb

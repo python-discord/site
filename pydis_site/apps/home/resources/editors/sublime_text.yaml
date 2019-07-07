@@ -1,0 +1,9 @@
+description: A powerful Python-backed editor with great community support and a wealth
+  of extensions.
+name: Sublime Text
+payment: optional
+payment_description: Nagware; will ask you to buy the full version after every X saves
+urls:
+- icon: regular/link
+  title: Website
+  url: https://www.sublimetext.com/

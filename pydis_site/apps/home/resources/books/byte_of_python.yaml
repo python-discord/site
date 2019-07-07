@@ -1,0 +1,17 @@
+description: A free book on programming using the Python language. It serves as a
+  tutorial or guide to the Python language for a beginner audience. If all you know
+  about computers is how to save text files, then this is the book for you.
+name: A Byte of Python
+payment: optional
+payment_description: A free e-book is available online, a paper version can be bought
+  from lulu.com.
+urls:
+- icon: regular/link
+  title: E-book
+  url: https://python.swaroopch.com/
+- icon: regular/book
+  title: Buy the book
+  url: http://www.lulu.com/shop/swaroop-c-h/a-byte-of-python/paperback/product-21142968.html
+- icon: regular/tablet-alt
+  title: Kindle edition
+  url: https://www.amazon.com/Byte-Python-Swaroop-C-H-ebook/dp/B00FJ7S2JU/

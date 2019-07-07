@@ -1,0 +1,13 @@
+description: Learn programming and Python while building a complete and awesome space-themed
+  game using cutting-edge Python 3.6 and Pygame Zero. Extensive use of code examples,
+  images, and walk-throughs make this a pleasure to both read and follow along. Excellent
+  book for beginners.
+name: Mission Python
+payment: paid
+urls:
+- icon: regular/link
+  title: Website
+  url: https://www.sean.co.uk/books/mission-python/index.shtm
+- icon: branding/amazon
+  title: Amazon
+  url: https://www.amazon.com/Mission-Python-Code-Space-Adventure/dp/1593278578

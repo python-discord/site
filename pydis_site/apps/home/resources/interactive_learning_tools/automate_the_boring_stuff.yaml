@@ -1,0 +1,11 @@
+description: The interactive course version of Al Sweigart's excellent book for beginners,
+  taught by the author himself. This link has a discounted version of the course which
+  will always cost 10 dollars. Thanks, Al!
+name: Automate the Boring Stuff with Python
+payment: paid
+payment_description: Paid course with a certificate of completion. Some sample videos
+  are available for free.
+urls:
+- icon: regular/graduation-cap
+  title: Udemy Course
+  url: https://www.udemy.com/automate/?couponCode=FOR_LIKE_10_BUCKS

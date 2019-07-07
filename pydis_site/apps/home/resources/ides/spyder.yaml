@@ -1,0 +1,12 @@
+description: The Scientific PYthon Development EnviRonment. Simpler and lighter than
+  PyCharm, but still packs a punch.
+name: Spyder
+payment: free
+payment_description: null
+urls:
+- icon: regular/link
+  title: Website
+  url: https://www.spyder-ide.org/
+- icon: branding/github
+  title: GitHub
+  url: https://github.com/spyder-ide/spyder

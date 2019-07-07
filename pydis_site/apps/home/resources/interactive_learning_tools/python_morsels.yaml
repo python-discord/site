@@ -1,0 +1,15 @@
+description: 'Learn to write more idiomatic Python code with deliberate practice!
+
+
+  Sign up for this service and receive one short Python exercise every week. After
+  you attempt to work through the exercise, you''ll receive a number of solutions
+  to the exercise with explanations of each one. Each exercise will include automated
+  tests and some may include bonuses for a little more of a challenge!'
+name: Python Morsels
+payment: paid
+payment_description: Paid service with monthly and annual plans. A 4 week free trial
+  is available without needing to enter payment information.
+urls:
+- icon: regular/link
+  title: Website
+  url: https://www.pythonmorsels.com/
