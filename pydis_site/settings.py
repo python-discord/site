@@ -316,3 +316,12 @@ WIKI_MESSAGE_TAG_CSS_CLASS = {
     messages.SUCCESS: "is-success",
     messages.WARNING: "is-warning",
 }
+
+WIKI_MARKDOWN_HTML_STYLES = [
+    'max-width',
+    'min-width',
+    'margin',
+    'padding',
+    'width',
+    'height',
+]

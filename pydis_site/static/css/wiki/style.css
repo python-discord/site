@@ -32,3 +32,16 @@ ul.pagination-list li + li {
     margin-top: 0.5rem;
     margin-bottom: 0.5rem;
 }
+
+/* FA icons used in wiki articles */
+i.is-orangered {
+    color:#FE640A;
+}
+
+i.is-blurple {
+    color:#7289DA;
+}
+
+i.has-icon-padding {
+    padding: 0 10px 25px 0;
+}
