@@ -35,15 +35,19 @@ ul.pagination-list li + li {
 
 /* FA icons used in wiki articles */
 i.is-orangered {
-    color:#FE640A;
+    color: #FE640A;
 }
 
 i.is-blurple {
-    color:#7289DA;
+    color: #7289DA;
+}
+
+i.is-youtube-red {
+    color: #BB0000;
 }
 
 i.is-teal {
-    color:#95DBE5;
+    color: #95DBE5;
 }
 
 i.has-icon-padding {
