@@ -334,3 +334,7 @@ WIKI_MARKDOWN_HTML_ATTRIBUTES = {
     'section': ['class', 'id'],
     'article': ['class', 'id'],
 }
+
+WIKI_MARKDOWN_HTML_WHITELIST = [
+    'article', 'section'
+]
