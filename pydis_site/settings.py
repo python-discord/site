@@ -328,3 +328,9 @@ WIKI_MARKDOWN_HTML_STYLES = [
     'width',
     'height',
 ]
+
+WIKI_MARKDOWN_HTML_ATTRIBUTES = {
+    'img': ['class', 'id', 'src', 'alt', 'width', 'height'],
+    'section': ['class', 'id'],
+    'article': ['class', 'id'],
+}
