@@ -38,25 +38,51 @@ i.is-orangered {
     color: #FE640A;
 }
 
+i.is-orangered:hover {
+    color: #fe9840;
+}
+
 i.is-blurple {
     color: #7289DA;
+}
+
+i.is-blurple:hover {
+    color: #93a8da;
 }
 
 i.is-black {
     color: #000000;
 }
 
+i.is-black:hover {
+    color: #191919;
+}
+
 i.is-youtube-red {
     color: #BB0000;
+}
+
+i.is-youtube-red:hover {
+    color: #f80000;
 }
 
 i.is-amazon-orange {
     color: #FF9900;
 }
 
+i.is-amazon-orange:hover {
+    color: #ffb71a;
+}
+
 i.is-teal {
     color: #95DBE5;
 }
+
+i.is-teal:hover {
+    color: #a9f5ff;
+}
+
+
 
 i.has-icon-padding {
     padding: 0 10px 25px 0;
