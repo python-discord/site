@@ -266,6 +266,9 @@ CRISPY_TEMPLATE_PACK = "bulma"
 
 # Custom settings for django-simple-bulma
 BULMA_SETTINGS = {
+    "extensions": [
+        "bulma-accordion",
+    ],
     "variables": {
         "green": "#21c65c",  # Accessibility: Better contrast with the light text
         "primary": "#7289DA",
