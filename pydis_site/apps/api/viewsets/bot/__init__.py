@@ -6,9 +6,5 @@ from .nomination import NominationViewSet  # noqa
 from .off_topic_channel_name import OffTopicChannelNameViewSet  # noqa
 from .reminder import ReminderViewSet  # noqa
 from .role import RoleViewSet  # noqa
-from .snake_fact import SnakeFactViewSet  # noqa
-from .snake_idiom import SnakeIdiomViewSet  # noqa
-from .snake_name import SnakeNameViewSet  # noqa
-from .special_snake import SpecialSnakeViewSet  # noqa
 from .tag import TagViewSet  # noqa
 from .user import UserViewSet  # noqa

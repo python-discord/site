@@ -9,8 +9,6 @@ from .models import (
     LogEntry, MessageDeletionContext,
     Nomination, OffTopicChannelName,
     Reminder, Role,
-    SnakeFact, SnakeIdiom,
-    SnakeName, SpecialSnake,
     Tag, User
 )
 
@@ -176,46 +174,6 @@ class OffTopicChannelNameSerializer(ModelSerializer):
         array of names instead of objects, saving on bandwidth.
         """
         return obj.name
-
-
-class SnakeFactSerializer(ModelSerializer):
-    """A class providing (de-)serialization of `SnakeFact` instances."""
-
-    class Meta:
-        """Metadata defined for the Django REST Framework."""
-
-        model = SnakeFact
-        fields = ('fact',)
-
-
-class SnakeIdiomSerializer(ModelSerializer):
-    """A class providing (de-)serialization of `SnakeIdiom` instances."""
-
-    class Meta:
-        """Metadata defined for the Django REST Framework."""
-
-        model = SnakeIdiom
-        fields = ('idiom',)
-
-
-class SnakeNameSerializer(ModelSerializer):
-    """A class providing (de-)serialization of `SnakeName` instances."""
-
-    class Meta:
-        """Metadata defined for the Django REST Framework."""
-
-        model = SnakeName
-        fields = ('name', 'scientific')
-
-
-class SpecialSnakeSerializer(ModelSerializer):
-    """A class providing (de-)serialization of `SpecialSnake` instances."""
-
-    class Meta:
-        """Metadata defined for the Django REST Framework."""
-
-        model = SpecialSnake
-        fields = ('name', 'images', 'info')
 
 
 class ReminderSerializer(ModelSerializer):

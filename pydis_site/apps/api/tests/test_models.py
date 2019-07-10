@@ -7,10 +7,7 @@ from ..models import (
     Infraction, Message,
     MessageDeletionContext, ModelReprMixin,
     OffTopicChannelName, Reminder,
-    Role, SnakeFact,
-    SnakeIdiom, SnakeName,
-    SpecialSnake, Tag,
-    User
+    Role, Tag, User
 )
 
 
@@ -52,13 +49,6 @@ class StringDunderMethodTests(SimpleTestCase):
                 'test', 'http://example.com', 'http://example.com'
             ),
             OffTopicChannelName(name='bob-the-builders-playground'),
-            SnakeFact(fact='snakes are cute'),
-            SnakeIdiom(idiom='snake snacks'),
-            SnakeName(name='python', scientific='3'),
-            SpecialSnake(
-                name='Pythagoras Pythonista',
-                info='The only python snake that is born a triangle'
-            ),
             Role(
                 id=5, name='test role',
                 colour=0x5, permissions=0
