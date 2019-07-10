@@ -10,6 +10,7 @@ import yaml
 @dataclass
 class URL:
     """A class representing a link to a resource"""
+
     icon: str
     title: str
     url: str
@@ -17,6 +18,7 @@ class URL:
 
 class Resource:
     """A class representing a resource on the resource page"""
+
     description: str
     name: str
     payment: str
@@ -45,6 +47,7 @@ class Resource:
 
 class Category:
     """A class representing a resource on the resources page"""
+
     resources: typing.List[Resource]
     name: str
     description: str

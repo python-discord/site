@@ -130,7 +130,6 @@ def render_urlpath(value: Union[URLPath, str]):
 
     Usage: `{{ url_path | render_urlpath }}`
     """
-
     if isinstance(value, str):
         return value or "/"
 
