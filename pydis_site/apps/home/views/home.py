@@ -28,11 +28,10 @@ class HomeView(View):
 
     def _get_api_data(self) -> Dict[str, Dict[str, str]]:
         """Call the GitHub API and get information about our repos."""
-        repo_dict = {repo_name: {} for repo_name in self.repos}
+        repo_dict: Dict[str, dict] = {repo_name: {} for repo_name in self.repos}
 
         # Fetch the data from the GitHub API
-        api_data = requests.get(self.github_api)
-        api_data = api_data.json()
+        api_data: List[dict] = requests.get(self.github_api).json()
 
         # Process the API data into our dict
         for repo in api_data:

@@ -24,5 +24,4 @@ class SpecialSnake(ModelReprMixin, models.Model):
 
     def __str__(self):
         """Returns the name of the current snake, for display purposes."""
-
         return self.name

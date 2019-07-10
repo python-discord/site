@@ -75,7 +75,6 @@ class MessageDeletionContextSerializer(ModelSerializer):
         itself, this serializer also allows for passing the `deletedmessage_set` element
         which contains messages that were deleted as part of this context.
         """
-
         messages = validated_data.pop('deletedmessage_set')
         deletion_context = MessageDeletionContext.objects.create(**validated_data)
         for message in messages:
@@ -110,7 +109,6 @@ class InfractionSerializer(ModelSerializer):
 
     def validate(self, attrs):
         """Validate data constraints for the given data and abort if it is invalid."""
-
         infr_type = attrs.get('type')
 
         expires_at = attrs.get('expires_at')
@@ -133,7 +131,6 @@ class ExpandedInfractionSerializer(InfractionSerializer):
 
     def to_representation(self, instance):
         """Return the dictionary representation of this infraction."""
-
         ret = super().to_representation(instance)
 
         user = User.objects.get(id=ret['user'])
@@ -178,7 +175,6 @@ class OffTopicChannelNameSerializer(ModelSerializer):
         Additionally, this allows off topic channel name routes to simply return an
         array of names instead of objects, saving on bandwidth.
         """
-
         return obj.name
 
 

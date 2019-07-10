@@ -60,14 +60,12 @@ class OffTopicChannelNameViewSet(DestroyModelMixin, ViewSet):
 
         If it doesn't, a HTTP 404 is returned by way of throwing an exception.
         """
-
         queryset = self.get_queryset()
         name = self.kwargs[self.lookup_field]
         return get_object_or_404(queryset, name=name)
 
     def get_queryset(self):
         """Returns a queryset that covers the entire OffTopicChannelName table."""
-
         return OffTopicChannelName.objects.all()
 
     def create(self, request):
@@ -76,7 +74,6 @@ class OffTopicChannelNameViewSet(DestroyModelMixin, ViewSet):
 
         Called by the Django Rest Framework in response to the corresponding HTTP request.
         """
-
         if 'name' in request.query_params:
             create_data = {'name': request.query_params['name']}
             serializer = OffTopicChannelNameSerializer(data=create_data)
@@ -95,7 +92,6 @@ class OffTopicChannelNameViewSet(DestroyModelMixin, ViewSet):
 
         Called by the Django Rest Framework in response to the corresponding HTTP request.
         """
-
         if 'random_items' in request.query_params:
             param = request.query_params['random_items']
             try:

@@ -10,7 +10,6 @@ from pydis_site.apps.api.models.utils import ModelReprMixin
 
 def validate_tag_embed_fields(fields):
     """Raises a ValidationError if any of the given embed fields is invalid."""
-
     field_validators = {
         'name': (MaxLengthValidator(limit_value=256),),
         'value': (MaxLengthValidator(limit_value=1024),)
@@ -30,7 +29,6 @@ def validate_tag_embed_fields(fields):
 
 def validate_tag_embed_footer(footer):
     """Raises a ValidationError if the given footer is invalid."""
-
     field_validators = {
         'text': (
             MinLengthValidator(
@@ -56,7 +54,6 @@ def validate_tag_embed_footer(footer):
 
 def validate_tag_embed_author(author):
     """Raises a ValidationError if the given author is invalid."""
-
     field_validators = {
         'name': (
             MinLengthValidator(
@@ -120,7 +117,6 @@ def validate_tag_embed(embed):
             is raised which in turn will allow Django to display errors
             as appropriate.
     """
-
     all_keys = {
         'title', 'type', 'description', 'url', 'timestamp',
         'color', 'footer', 'image', 'thumbnail', 'video',
@@ -184,5 +180,4 @@ class Tag(ModelReprMixin, models.Model):
 
     def __str__(self):
         """Returns the title of this tag, for display purposes."""
-
         return self.title

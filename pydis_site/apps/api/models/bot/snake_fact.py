@@ -14,5 +14,4 @@ class SnakeFact(ModelReprMixin, models.Model):
 
     def __str__(self):
         """Returns the current snake fact, for display purposes."""
-
         return self.fact

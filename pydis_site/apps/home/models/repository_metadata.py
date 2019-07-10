@@ -31,5 +31,4 @@ class RepositoryMetadata(models.Model):
 
     def __str__(self):
         """Returns the repo name, for display purposes."""
-
         return self.repo_name
