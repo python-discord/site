@@ -4,6 +4,7 @@ repos:
     hooks:
     - id: flake8
       additional_dependencies: [
+        "pydocstyle<4.0",
         "flake8-bandit",
         "flake8-bugbear",
         "flake8-docstrings",
