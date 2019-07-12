@@ -194,7 +194,7 @@ class NominationViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
         # There are three distinct PATCH scenarios we need to validate.
         if instance.active and 'active' not in data:
             # 1. We're updating an active nomination without ending it.
-            if request.data.get('end_reason'):
+            if 'end_reason' in data:
                 raise ValidationError(
                     {'end_reason': ["An active nomination can't have an end reason."]}
                 )
