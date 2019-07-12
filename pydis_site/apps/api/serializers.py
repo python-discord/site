@@ -270,12 +270,10 @@ class UserSerializer(BulkSerializerMixin, ModelSerializer):
 class NominationSerializer(ModelSerializer):
     """A class providing (de-)serialization of `Nomination` instances."""
 
-    author = PrimaryKeyRelatedField(queryset=User.objects.all())
-    user = PrimaryKeyRelatedField(queryset=User.objects.all())
-
     class Meta:
         """Metadata defined for the Django REST Framework."""
 
         model = Nomination
-        fields = ('active', 'author', 'reason', 'user', 'inserted_at')
-        depth = 1
+        fields = (
+            'id', 'active', 'actor', 'reason', 'user',
+            'inserted_at', 'end_reason', 'ended_at')
