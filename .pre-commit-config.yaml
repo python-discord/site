@@ -3,6 +3,7 @@ repos:
     rev: v2.2.3
     hooks:
     - id: flake8
+      exclude: migrations/
       additional_dependencies: [
         "pydocstyle<4.0",
         "flake8-bandit",
