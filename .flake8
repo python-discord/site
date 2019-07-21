@@ -4,7 +4,7 @@ ignore=
     # Missing Docstrings
     D100,D104,D107,
     # Docstring Whitespace
-    D202,D203,D204,D212,D214,D215,
+    D203,D212,D214,D215,
     # Docstring Quotes
     D301,D302,
     # Docstring Content

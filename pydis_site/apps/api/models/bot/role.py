@@ -46,5 +46,4 @@ class Role(ModelReprMixin, models.Model):
 
     def __str__(self):
         """Returns the name of the current role, for display purposes."""
-
         return self.name

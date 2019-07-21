@@ -143,6 +143,7 @@ class NominationViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
 
     See operation 1 for the response format and status codes.
     """
+
     serializer_class = NominationSerializer
     queryset = Nomination.objects.all()
     filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)

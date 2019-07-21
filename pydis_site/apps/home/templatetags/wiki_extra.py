@@ -1,4 +1,4 @@
-from typing import Any, Dict, Type, Union
+from typing import Any, Dict, List, Type, Union
 
 from django import template
 from django.forms import BooleanField, BoundField, CharField, Field, ImageField, ModelChoiceField
@@ -33,7 +33,6 @@ def get_unbound_field(field: Union[BoundField, Field]) -> Field:
     Bound fields often don't give you the same level of access to the field's underlying attributes,
     so sometimes it helps to have access to the underlying field object.
     """
-
     while isinstance(field, BoundField):
         field = field.field
 
@@ -47,7 +46,6 @@ def render(template_path: str, context: Dict[str, Any]):
     This was extracted mostly for the sake of mocking it out in the tests - but do note that
     the resulting rendered template is wrapped with `mark_safe`, so it will not be escaped.
     """
-
     return mark_safe(get_template(template_path).render(context))  # noqa: S703, S308
 
 
@@ -67,7 +65,6 @@ def render_field(field: Field, render_labels: bool = True):
 
     Usage: `{% render_field field_obj [render_labels=True/False] %}`
     """
-
     unbound_field = get_unbound_field(field)
 
     if not isinstance(render_labels, bool):
@@ -104,11 +101,10 @@ def get_field_options(context: Context, field: BoundField):
     {% endif %}
     ```
     """
-
     widget = field.field.widget
 
     if field.value() is None:
-        value = []
+        value: List[str] = []
     else:
         value = [str(field.value())]
 
@@ -130,7 +126,6 @@ def render_urlpath(value: Union[URLPath, str]):
 
     Usage: `{{ url_path | render_urlpath }}`
     """
-
     if isinstance(value, str):
         return value or "/"
 

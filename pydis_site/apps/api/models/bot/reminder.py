@@ -42,5 +42,4 @@ class Reminder(ModelReprMixin, models.Model):
 
     def __str__(self):
         """Returns some info on the current reminder, for display purposes."""
-
         return f"{self.content} on {self.expiration} by {self.author}"

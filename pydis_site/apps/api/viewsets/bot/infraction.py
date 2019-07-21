@@ -125,7 +125,6 @@ class InfractionViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
 
     def partial_update(self, request, *_args, **_kwargs):
         """Method that handles the nuts and bolts of updating an Infraction."""
-
         for field in request.data:
             if field in self.frozen_fields:
                 raise ValidationError({field: ['This field cannot be updated.']})
@@ -144,7 +143,6 @@ class InfractionViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
 
         Called by the Django Rest Framework in response to the corresponding HTTP request.
         """
-
         self.serializer_class = ExpandedInfractionSerializer
         return self.list(*args, **kwargs)
 
@@ -155,7 +153,6 @@ class InfractionViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
 
         Called by the Django Rest Framework in response to the corresponding HTTP request.
         """
-
         self.serializer_class = ExpandedInfractionSerializer
         return self.create(*args, **kwargs)
 
@@ -166,7 +163,6 @@ class InfractionViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
 
         Called by the Django Rest Framework in response to the corresponding HTTP request.
         """
-
         self.serializer_class = ExpandedInfractionSerializer
         return self.retrieve(*args, **kwargs)
 
@@ -177,6 +173,5 @@ class InfractionViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
 
         Called by the Django Rest Framework in response to the corresponding HTTP request.
         """
-
         self.serializer_class = ExpandedInfractionSerializer
         return self.partial_update(*args, **kwargs)

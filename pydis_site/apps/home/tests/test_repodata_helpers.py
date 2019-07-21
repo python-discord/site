@@ -34,13 +34,11 @@ class TestRepositoryMetadataHelpers(TestCase):
 
     def setUp(self):
         """Executed before each test method."""
-
         self.home_view = HomeView()
 
     @mock.patch('requests.get', side_effect=mocked_requests_get)
     def test_returns_metadata(self, _: mock.MagicMock):
         """Test if the _get_repo_data helper actually returns what it should."""
-
         metadata = self.home_view._get_repo_data()
 
         self.assertIsInstance(metadata[0], RepositoryMetadata)
@@ -48,7 +46,6 @@ class TestRepositoryMetadataHelpers(TestCase):
 
     def test_returns_cached_metadata(self):
         """Test if the _get_repo_data helper returns cached data when available."""
-
         repo_data = RepositoryMetadata(
             repo_name="python-discord/site",
             description="testrepo",
@@ -65,7 +62,6 @@ class TestRepositoryMetadataHelpers(TestCase):
     @mock.patch('requests.get', side_effect=mocked_requests_get)
     def test_refresh_stale_metadata(self, _: mock.MagicMock):
         """Test if the _get_repo_data helper will refresh when the data is stale"""
-
         repo_data = RepositoryMetadata(
             repo_name="python-discord/site",
             description="testrepo",
@@ -82,7 +78,6 @@ class TestRepositoryMetadataHelpers(TestCase):
     @mock.patch('requests.get', side_effect=mocked_requests_get)
     def test_returns_api_data(self, _: mock.MagicMock):
         """Tests if the _get_api_data helper returns what it should."""
-
         api_data = self.home_view._get_api_data()
         repo = self.home_view.repos[0]
 
@@ -94,7 +89,6 @@ class TestRepositoryMetadataHelpers(TestCase):
     @mock.patch('requests.get', side_effect=mocked_requests_get)
     def test_mocked_requests_get(self, mock_get: mock.MagicMock):
         """Tests if our mocked_requests_get is returning what it should."""
-
         success_data = mock_get(HomeView.github_api)
         fail_data = mock_get("failtest")
 

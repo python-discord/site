@@ -86,7 +86,6 @@ class RulesView(APIView):
             ValueError:
                 If `target` is not `'md'` or `'html'`.
         """
-
         if target == 'html':
             return f'<a href="{link}">{description}</a>'
         elif target == 'md':

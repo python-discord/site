@@ -7,10 +7,6 @@ from .bot import (  # noqa
     OffTopicChannelNameViewSet,
     ReminderViewSet,
     RoleViewSet,
-    SnakeFactViewSet,
-    SnakeIdiomViewSet,
-    SnakeNameViewSet,
-    SpecialSnakeViewSet,
     TagViewSet,
     UserViewSet
 )

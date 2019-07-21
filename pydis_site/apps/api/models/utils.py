@@ -6,7 +6,6 @@ class ModelReprMixin:
 
     def __repr__(self):
         """Returns the current model class name and initialisation parameters."""
-
         attributes = ' '.join(
             f'{attribute}={value!r}'
             for attribute, value in sorted(

@@ -10,6 +10,7 @@ import yaml
 @dataclass
 class URL:
     """A class representing a link to a resource"""
+
     icon: str
     title: str
     url: str
@@ -17,6 +18,7 @@ class URL:
 
 class Resource:
     """A class representing a resource on the resource page"""
+
     description: str
     name: str
     payment: str
@@ -28,7 +30,7 @@ class Resource:
         return f"<Resource name={self.name}>"
 
     @classmethod
-    def construct_from_yaml(cls, yaml_data: str) -> Resource:  # noqa
+    def construct_from_yaml(cls, yaml_data: typing.TextIO) -> Resource:  # noqa
         resource = cls()
 
         loaded = yaml.safe_load(yaml_data)
@@ -45,6 +47,7 @@ class Resource:
 
 class Category:
     """A class representing a resource on the resources page"""
+
     resources: typing.List[Resource]
     name: str
     description: str

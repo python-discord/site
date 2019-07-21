@@ -16,5 +16,4 @@ def starts_with(value: str, arg: str):
         {% endif %}
     ```
     """
-
     return value.startswith(arg)

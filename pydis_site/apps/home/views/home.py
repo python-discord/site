@@ -28,12 +28,10 @@ class HomeView(View):
 
     def _get_api_data(self) -> Dict[str, Dict[str, str]]:
         """Call the GitHub API and get information about our repos."""
-
-        repo_dict = {repo_name: {} for repo_name in self.repos}
+        repo_dict: Dict[str, dict] = {repo_name: {} for repo_name in self.repos}
 
         # Fetch the data from the GitHub API
-        api_data = requests.get(self.github_api)
-        api_data = api_data.json()
+        api_data: List[dict] = requests.get(self.github_api).json()
 
         # Process the API data into our dict
         for repo in api_data:
@@ -51,7 +49,6 @@ class HomeView(View):
 
     def _get_repo_data(self) -> List[RepositoryMetadata]:
         """Build a list of RepositoryMetadata objects that we can use to populate the front page."""
-
         # Try to get site data from the cache
         try:
             repo_data = RepositoryMetadata.objects.get(repo_name="python-discord/site")
@@ -110,6 +107,5 @@ class HomeView(View):
 
     def get(self, request: WSGIRequest) -> HttpResponse:
         """Collect repo data and render the homepage view"""
-
         repo_data = self._get_repo_data()
         return render(request, "home/index.html", {"repo_data": repo_data})

@@ -9,10 +9,6 @@ from .bot import (  # noqa
     OffTopicChannelName,
     Reminder,
     Role,
-    SnakeFact,
-    SnakeIdiom,
-    SnakeName,
-    SpecialSnake,
     Tag,
     User
 )
