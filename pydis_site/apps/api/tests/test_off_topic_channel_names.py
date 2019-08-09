@@ -88,9 +88,20 @@ class CreationTests(APISubdomainTestCase):
         super().setUp()
 
         url = reverse('bot:offtopicchannelname-list', host='api')
-        self.name = "lemonade-shop"
+        self.name = "abcdefghijklmnopqrstuvwxyz-0123456789"
         response = self.client.post(f'{url}?name={self.name}')
         self.assertEqual(response.status_code, 201)
+
+    def test_returns_201_for_unicode_chars(self):
+        url = reverse('bot:offtopicchannelname-list', host='api')
+        names = (
+            '𝖠𝖡𝖢𝖣𝖤𝖥𝖦𝖧𝖨𝖩𝖪𝖫𝖬𝖭𝖮𝖯𝖰𝖱𝖲𝖳𝖴𝖵𝖶𝖷𝖸𝖹',
+            'ǃ？’',
+        )
+
+        for name in names:
+            response = self.client.post(f'{url}?name={name}')
+            self.assertEqual(response.status_code, 201)
 
     def test_name_in_full_list(self):
         url = reverse('bot:offtopicchannelname-list', host='api')
@@ -111,8 +122,8 @@ class CreationTests(APISubdomainTestCase):
         url = reverse('bot:offtopicchannelname-list', host='api')
         invalid_names = (
             'space between words',
-            'UPPERCASE',
-            '$$$$$$$$'
+            'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+            '!?\'@#$%^&*()',
         )
 
         for name in invalid_names:
