@@ -103,13 +103,6 @@ class CreationTests(APISubdomainTestCase):
             response = self.client.post(f'{url}?name={name}')
             self.assertEqual(response.status_code, 201)
 
-    def test_name_in_full_list(self):
-        url = reverse('bot:offtopicchannelname-list', host='api')
-        response = self.client.get(url)
-
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.json(), [self.name])
-
     def test_returns_400_for_missing_name_param(self):
         url = reverse('bot:offtopicchannelname-list', host='api')
         response = self.client.post(url)
