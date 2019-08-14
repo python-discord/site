@@ -10,7 +10,7 @@ from ..models import LogEntry
 class DatabaseLogHandlerTests(TestCase):
     def test_logs_to_database(self):
         module_basename = __name__.split('.')[-1]
-        logger = logging.getLogger(module_basename)
+        logger = logging.getLogger(__name__)
         logger.handlers = [DatabaseLogHandler()]
         logger.warning("I am a test case!")
 
@@ -19,7 +19,7 @@ class DatabaseLogHandlerTests(TestCase):
         [entry] = LogEntry.objects.all()
 
         self.assertEqual(entry.application, 'site')
-        self.assertEqual(entry.logger_name, module_basename)
+        self.assertEqual(entry.logger_name, __name__)
         self.assertIsInstance(entry.timestamp, datetime)
         self.assertEqual(entry.level, 'warning')
         self.assertEqual(entry.module, module_basename)
