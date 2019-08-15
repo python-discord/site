@@ -145,5 +145,6 @@ class CreationTests(APISubdomainTestCase):
 
     def test_correct_top_role_property(self):
         """Tests if the top_role property returns the correct role."""
-        self.assertIsInstance(self.role_test_user.top_role, Role)
-        self.assertEqual(self.role_test_user.top_role.id, self.role_top.id)
+        top_role = self.role_test_user.top_role
+        self.assertIsInstance(top_role, Role)
+        self.assertEqual(top_role.id, self.role_top.id)
