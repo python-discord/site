@@ -1,0 +1,15 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    <h1>Message Context</h1>
+    <p>
+    Actor: {{ message_context.actor }} <br>
+    Date: {{  message_context.creation }} <br>
+    </p>
+    {% for message in message_context.deletedmessage_set.all %}
+        <p>{{   message.content | safe }}</p>
+    {%  endfor %}
+{% endblock %}
