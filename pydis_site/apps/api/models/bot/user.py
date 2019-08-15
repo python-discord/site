@@ -54,4 +54,5 @@ class User(ModelReprMixin, models.Model):
 
     @property
     def top_role(self) -> Role:
+        """Attribute that returns the user's top role."""
         return max(self.roles.all())
