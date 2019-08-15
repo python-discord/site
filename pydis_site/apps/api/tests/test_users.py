@@ -41,8 +41,31 @@ class CreationTests(APISubdomainTestCase):
             id=5,
             name="Test role pls ignore",
             colour=2,
-            permissions=0b01010010101
+            permissions=0b01010010101,
+            position=1
         )
+        cls.role_bottom = Role.objects.create(
+            id=6,
+            name="Low test role",
+            colour=2,
+            permissions=0b01010010101,
+            position=0,
+        )
+        cls.role_top = Role.objects.create(
+            id=7,
+            name="High test role",
+            colour=2,
+            permissions=0b01010010101,
+            position=10,
+        )
+        cls.role_test_user = User.objects.create(
+            id=1,
+            avatar_hash="coolavatarhash",
+            name="Test User",
+            discriminator=1111,
+            in_guild=True,
+        )
+        cls.role_test_user.roles.add(cls.role_bottom, cls.role_top)
 
     def test_accepts_valid_data(self):
         url = reverse('bot:user-list', host='api')
@@ -119,3 +142,8 @@ class CreationTests(APISubdomainTestCase):
 
         response = self.client.post(url, data=data)
         self.assertEqual(response.status_code, 400)
+
+    def test_correct_top_role_property(self):
+        """Tests if the top_role property returns the correct role."""
+        self.assertIsInstance(self.role_test_user.top_role, Role)
+        self.assertEqual(self.role_test_user.top_role.id, self.role_top.id)
