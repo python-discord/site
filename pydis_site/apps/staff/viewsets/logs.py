@@ -11,4 +11,5 @@ class LogView(View):
 
     def get(self, request: WSGIRequest, pk: int) -> HttpResponse:
         message_context = get_object_or_404(MessageDeletionContext, pk=pk)
-        return render(request, self.template_name, {"message_context": message_context})
+        messages = message_context.deletedmessage_set.all()
+        return render(request, self.template_name, {"message_context": message_context, "messages": messages})

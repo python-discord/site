@@ -1,15 +1,22 @@
 {% extends 'base/base.html' %}
 {% load static %}
 
-{% block title %}Home{% endblock %}
+{% block title %}Logs for Deleted Message Context {{ message_context.id }}{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static "css/staff/logs.css" %}">
+{% endblock %}
 
 {% block content %}
-    <h1>Message Context</h1>
-    <p>
-    Actor: {{ message_context.actor }} <br>
-    Date: {{  message_context.creation }} <br>
-    </p>
-    {% for message in message_context.deletedmessage_set.all %}
-        <p>{{   message.content | safe }}</p>
-    {%  endfor %}
+
+    {%  for message in messages %}
+        <div class="discord-message">
+            <div class="discord-message-header">
+                <span class="discord-username" style="color: #{{ message.author.top_role.hex_colour }}">{{ message.author.name }}#{{ message.author.discriminator }}</span><span class="discord-message-metadata">Today at 6:15 PM | #helpers | User ID: 190549806198816768</span>
+            </div>
+            <div class="discord-message-content">
+                {{ message.content|linebreaks }}
+            </div>
+        </div>
+    {% endfor %}
 {% endblock %}
