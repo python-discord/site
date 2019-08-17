@@ -56,6 +56,7 @@ class DeletedMessageSerializer(ModelSerializer):
 class MessageDeletionContextSerializer(ModelSerializer):
     """A class providing (de-)serialization of `MessageDeletionContext` instances."""
 
+    actor = PrimaryKeyRelatedField(queryset=User.objects.all(), allow_null=True)
     deletedmessage_set = DeletedMessageSerializer(many=True)
 
     class Meta:
