@@ -46,7 +46,6 @@ class Role(ModelReprMixin, models.Model):
         help_text="The integer value of the permission bitset of this role from Discord."
     )
     position = models.IntegerField(
-        default=-1,
         help_text="The position of the role in the role hierarchy of the Discord Guild."
     )
 
