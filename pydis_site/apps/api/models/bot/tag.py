@@ -1,4 +1,5 @@
 from collections.abc import Mapping
+from typing import Any
 
 from django.contrib.postgres import fields as pgfields
 from django.core.exceptions import ValidationError
@@ -8,11 +9,18 @@ from django.db import models
 from pydis_site.apps.api.models.utils import ModelReprMixin
 
 
+def is_bool_validator(value: Any) -> None:
+    """Validates if a given value is of type bool."""
+    if not isinstance(value, bool):
+        raise ValidationError(f"This field must be of type bool, not {type(value)}.")
+
+
 def validate_tag_embed_fields(fields):
     """Raises a ValidationError if any of the given embed fields is invalid."""
     field_validators = {
         'name': (MaxLengthValidator(limit_value=256),),
-        'value': (MaxLengthValidator(limit_value=1024),)
+        'value': (MaxLengthValidator(limit_value=1024),),
+        'inline': (is_bool_validator,),
     }
 
     for field in fields:
