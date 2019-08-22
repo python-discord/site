@@ -54,5 +54,12 @@ class User(ModelReprMixin, models.Model):
 
     @property
     def top_role(self) -> Role:
-        """Attribute that returns the user's top role."""
+        """
+        Attribute that returns the user's top role.
+
+        This will fall back to the Developers role if the user does not have any roles.
+        """
+        roles = self.roles.all()
+        if not roles:
+            return Role.objects.get(name="Developers")
         return max(self.roles.all())
