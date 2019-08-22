@@ -23,9 +23,14 @@ def validate_tag_embed_fields(fields):
         'inline': (is_bool_validator,),
     }
 
+    required_fields = ('name', 'value')
+
     for field in fields:
         if not isinstance(field, Mapping):
             raise ValidationError("Embed fields must be a mapping.")
+
+        if not all(required_field in field for required_field in required_fields):
+            raise ValidationError("Embed fields must contain both a 'name' and a 'value' field.")
 
         for field_name, value in field.items():
             if field_name not in field_validators:
