@@ -13,6 +13,11 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='role',
             name='position',
-            field=models.IntegerField(help_text='The position of the role in the role hierarchy of the Discord Guild.'),
+            field=models.IntegerField(default=-1, help_text='The position of the role in the role hierarchy of the Discord Guild.'),
         ),
+        migrations.AlterField(
+            model_name='role',
+            name='position',
+            field=models.IntegerField(help_text='The position of the role in the role hierarchy of the Discord Guild.'),
+        )
     ]
