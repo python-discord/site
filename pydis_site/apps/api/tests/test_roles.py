@@ -28,6 +28,13 @@ class CreationTests(APISubdomainTestCase):
             permissions=5,
             position=0,
         )
+        cls.lowest_position_duplicate = Role.objects.create(
+            id=6,
+            name="lowest position duplicate",
+            colour=6,
+            permissions=6,
+            position=0,
+        )
 
     def _validate_roledict(self, role_dict: dict) -> None:
         """Helper method to validate a dict representing a role."""
@@ -36,24 +43,49 @@ class CreationTests(APISubdomainTestCase):
         attributes = ('id', 'name', 'colour', 'permissions', 'position')
         self.assertTrue(all(attribute in role_dict for attribute in attributes))
 
-    def test_role_ordering(self):
+    def test_role_ordering_lt(self):
         """Tests the __lt__ comparisons based on role position in the hierarchy."""
         self.assertTrue(self.everyone_role < self.developers_role)
         self.assertFalse(self.developers_role > self.admins_role)
 
-        top_role = max([self.developers_role, self.admins_role, self.everyone_role])
-        self.assertIs(top_role, self.admins_role)
+    def test_role_ordering_le(self):
+        """Tests the __le__ comparisons based on role position in the hierarchy."""
+        self.assertTrue(self.everyone_role <= self.developers_role)
+        self.assertTrue(self.everyone_role <= self.lowest_position_duplicate)
+        self.assertTrue(self.everyone_role >= self.lowest_position_duplicate)
+        self.assertTrue(self.developers_role >= self.everyone_role)
+
+        self.assertFalse(self.developers_role >= self.admins_role)
+        self.assertFalse(self.developers_role <= self.everyone_role)
+
+    def test_role_min_max_ordering(self):
+        """Tests the `min` and `max` operations based on the role hierarchy."""
+        top_role_no_duplicates = max([self.developers_role, self.admins_role, self.everyone_role])
+        self.assertIs(top_role_no_duplicates, self.admins_role)
+
+        top_role_duplicates = max([self.developers_role, self.admins_role, self.admins_role])
+        self.assertIs(top_role_duplicates, self.admins_role)
+
+        bottom_role_no_duplicates = min(
+            [self.developers_role, self.admins_role, self.everyone_role]
+        )
+        self.assertIs(bottom_role_no_duplicates, self.everyone_role)
+
+        bottom_role_duplicates = min(
+            [self.lowest_position_duplicate, self.admins_role, self.everyone_role]
+        )
+        self.assertIs(bottom_role_duplicates, self.lowest_position_duplicate)
 
     def test_role_list(self):
         """Tests the GET list-view and validates the contents."""
         url = reverse('bot:role-list', host='api')
 
         response = self.client.get(url)
-        self.assertContains(response, text="id", count=3, status_code=200)
+        self.assertContains(response, text="id", count=4, status_code=200)
 
         roles = response.json()
         self.assertIsInstance(roles, list)
-        self.assertEqual(len(roles), 3)
+        self.assertEqual(len(roles), 4)
 
         for role in roles:
             self._validate_roledict(role)
