@@ -196,7 +196,7 @@ class RoleSerializer(ModelSerializer):
         """Metadata defined for the Django REST Framework."""
 
         model = Role
-        fields = ('id', 'name', 'colour', 'permissions')
+        fields = ('id', 'name', 'colour', 'permissions', 'position')
 
 
 class TagSerializer(ModelSerializer):

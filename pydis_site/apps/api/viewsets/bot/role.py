@@ -20,7 +20,8 @@ class RoleViewSet(ModelViewSet):
     ...         'id': 267628507062992896,
     ...         'name': "Admins",
     ...         'colour': 1337,
-    ...         'permissions': 8
+    ...         'permissions': 8,
+    ...         'position': 1
     ...     }
     ... ]
 
@@ -35,7 +36,8 @@ class RoleViewSet(ModelViewSet):
     ...     'id': 267628507062992896,
     ...     'name': "Admins",
     ...     'colour': 1337,
-    ...     'permissions': 8
+    ...     'permissions': 8,
+    ...     'position': 1
     ... }
 
     #### Status codes
@@ -51,6 +53,7 @@ class RoleViewSet(ModelViewSet):
     ...     'name': str,
     ...     'colour': int,
     ...     'permissions': int,
+    ...     'position': 1,
     ... }
 
     #### Status codes
@@ -66,23 +69,31 @@ class RoleViewSet(ModelViewSet):
     ...     'id': int,
     ...     'name': str,
     ...     'colour': int,
-    ...     'permissions': int
+    ...     'permissions': int,
+    ...     'position': 1,
     ... }
 
     #### Status codes
     - 200: returned on success
     - 400: if the request body was invalid
+    - 404: if a role with the given `snowflake` does not exist
 
     ### PATCH /bot/roles/<snowflake:int>
     Update the role with the given `snowflake`.
-    All fields in the request body are required.
 
+    #### Request body
     >>> {
     ...     'id': int,
     ...     'name': str,
     ...     'colour': int,
-    ...     'permissions': int
+    ...     'permissions': int,
+    ...     'position': 1,
     ... }
+
+    #### Status codes
+    - 200: returned on success
+    - 400: if the request body was invalid
+    - 404: if a role with the given `snowflake` does not exist
 
     ### DELETE /bot/roles/<snowflake:int>
     Deletes the role with the given `snowflake`.

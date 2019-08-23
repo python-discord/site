@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 
@@ -5,7 +7,12 @@ from pydis_site.apps.api.models.utils import ModelReprMixin
 
 
 class Role(ModelReprMixin, models.Model):
-    """A role on our Discord server."""
+    """
+    A role on our Discord server.
+
+    The comparison operators <, <=, >, >=, ==, != act the same as they do with Role-objects of the
+    discord.py library, see https://discordpy.readthedocs.io/en/latest/api.html#discord.Role
+    """
 
     id = models.BigIntegerField(
         primary_key=True,
@@ -43,7 +50,18 @@ class Role(ModelReprMixin, models.Model):
         ),
         help_text="The integer value of the permission bitset of this role from Discord."
     )
+    position = models.IntegerField(
+        help_text="The position of the role in the role hierarchy of the Discord Guild."
+    )
 
-    def __str__(self):
+    def __str__(self) -> str:
         """Returns the name of the current role, for display purposes."""
         return self.name
+
+    def __lt__(self, other: Role) -> bool:
+        """Compares the roles based on their position in the role hierarchy of the guild."""
+        return self.position < other.position
+
+    def __le__(self, other: Role) -> bool:
+        """Compares the roles based on their position in the role hierarchy of the guild."""
+        return self.position <= other.position

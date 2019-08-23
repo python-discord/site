@@ -41,7 +41,8 @@ class CreationTests(APISubdomainTestCase):
             id=5,
             name="Test role pls ignore",
             colour=2,
-            permissions=0b01010010101
+            permissions=0b01010010101,
+            position=1
         )
 
     def test_accepts_valid_data(self):
@@ -119,3 +120,57 @@ class CreationTests(APISubdomainTestCase):
 
         response = self.client.post(url, data=data)
         self.assertEqual(response.status_code, 400)
+
+
+class UserModelTests(APISubdomainTestCase):
+    @classmethod
+    def setUpTestData(cls):  # noqa
+        cls.role_top = Role.objects.create(
+            id=777,
+            name="High test role",
+            colour=2,
+            permissions=0b01010010101,
+            position=10,
+        )
+        cls.role_bottom = Role.objects.create(
+            id=888,
+            name="Low test role",
+            colour=2,
+            permissions=0b01010010101,
+            position=1,
+        )
+        cls.developers_role = Role.objects.create(
+            id=1234567,
+            name="Developers",
+            colour=1234,
+            permissions=0b01010010101,
+            position=2,
+        )
+        cls.user_with_roles = User.objects.create(
+            id=1,
+            avatar_hash="coolavatarhash",
+            name="Test User with two roles",
+            discriminator=1111,
+            in_guild=True,
+        )
+        cls.user_with_roles.roles.add(cls.role_bottom, cls.role_top)
+
+        cls.user_without_roles = User.objects.create(
+            id=2,
+            avatar_hash="coolavatarhash",
+            name="Test User without roles",
+            discriminator=2222,
+            in_guild=True,
+        )
+
+    def test_correct_top_role_property_user_with_roles(self):
+        """Tests if the top_role property returns the correct role."""
+        top_role = self.user_with_roles.top_role
+        self.assertIsInstance(top_role, Role)
+        self.assertEqual(top_role.id, self.role_top.id)
+
+    def test_correct_top_role_property_user_without_roles(self):
+        """Tests if the top_role property returns the correct role."""
+        top_role = self.user_without_roles.top_role
+        self.assertIsInstance(top_role, Role)
+        self.assertEqual(top_role.id, self.developers_role.id)

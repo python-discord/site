@@ -51,3 +51,15 @@ class User(ModelReprMixin, models.Model):
     def __str__(self):
         """Returns the name and discriminator for the current user, for display purposes."""
         return f"{self.name}#{self.discriminator}"
+
+    @property
+    def top_role(self) -> Role:
+        """
+        Attribute that returns the user's top role.
+
+        This will fall back to the Developers role if the user does not have any roles.
+        """
+        roles = self.roles.all()
+        if not roles:
+            return Role.objects.get(name="Developers")
+        return max(self.roles.all())
