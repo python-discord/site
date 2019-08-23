@@ -13,84 +13,85 @@
         <li>Deleted by: <span style="color: {{ actor_colour | hex_colour }}">{{ actor }}</span></li>
         <li>Date: {{ creation }}</li>
     </ul>
-
     <div class="is-divider has-small-margin"></div>
-    {%  for message in messages %}
+    {% for message in messages %}
         <div class="discord-message">
             <div class="discord-message-header">
-                <span class="discord-username" style="color: {{ message.author.top_role.colour | hex_colour }}">{{ message.author }}</span><span class="discord-message-metadata">{{ message.timestamp }} | User ID: {{ message.author.id }}</span>
+                <span class="discord-username"
+                      style="color: {{ message.author.top_role.colour | hex_colour }}">{{ message.author }}</span><span
+                    class="discord-message-metadata">{{ message.timestamp }} | User ID: {{ message.author.id }}</span>
             </div>
             <div class="discord-message-content">
                 {{ message.content|linebreaks }}
             </div>
-
-        {% for embed in message.embeds %}
-            <div class="discord-embed is-size-7">
-                <div class="discord-embed-color" style="background-color: {% if embed.color %}{{ embed.color | hex_colour }}{%  else %}#cacbce{% endif %}">
-                </div>
-                <div class="discord-embed-inner">
-                    <div class="discord-embed-content">
-                        <div class="discord-embed-main">
-
-                            {% if embed.author %}
-                                <div class="discord-embed-author">
-                                    {% if embed.author.icon_url %}<img alt="Author Icon" class="discord-embed-author-icon" src="{{ embed.author.icon_url }}">{% endif %}
-                                    {% if embed.author.url %}<a class="discord-embed-author-url" href="{{ embed.author.url }}">{% endif %}
-                                    <span class="discord-embed-author-name">{{ embed.author.name }}</span>
-                                    {% if embed.author.url %}</a>{% endif %}
-                                </div>
-                            {% endif %}
-
-                            {% if embed.title %}
-                            <div class="discord-embed-title">
-                                {%  if embed.url %}<a href="{{ embed.url }}">{% endif %}
-                                {{ embed.title }}
-                                {%  if embed.url %}</a>{% endif %}
-                            </div>
-                            {%  endif %}
-
-                            {% if embed.description %}
-                            <div class="discord-embed-description">
-                                {{ embed.description | linebreaksbr }}
-                            </div>
-                            {% endif %}
-
-                            {% if embed.fields %}
-                                <div class="discord-embed-fields">
-                                    {% for field in embed.fields %}
-                                    <div class="discord-embed-field{% if field.inline %} discord-embed-field-inline{% endif %}">
-                                        <div class="discord-embed-field-name">{{ field.name }}</div>
-                                        <div class="discord-embed-field-value">{{ field.value }}</div>
+            {% for embed in message.embeds %}
+                <div class="discord-embed is-size-7">
+                    <div class="discord-embed-color" style="background-color: {% if embed.color %}{{ embed.color | hex_colour }}{% else %}#cacbce{% endif %}"></div>
+                    <div class="discord-embed-inner">
+                        <div class="discord-embed-content">
+                            <div class="discord-embed-main">
+                                {% if embed.author %}
+                                    <div class="discord-embed-author">
+                                        {% if embed.author.icon_url %}
+                                            <img alt="Author Icon" class="discord-embed-author-icon"
+                                                 src="{{ embed.author.icon_url }}">{% endif %}
+                                        {% if embed.author.url %}<a class="discord-embed-author-url"
+                                                                    href="{{ embed.author.url }}">{% endif %}
+                                        <span class="discord-embed-author-name">{{ embed.author.name }}</span>
+                                        {% if embed.author.url %}</a>{% endif %}
                                     </div>
-                                    {% endfor %}
+                                {% endif %}
+                                {% if embed.title %}
+                                    <div class="discord-embed-title">
+                                        {% if embed.url %}<a href="{{ embed.url }}">{% endif %}
+                                        {{ embed.title }}
+                                        {% if embed.url %}</a>{% endif %}
+                                    </div>
+                                {% endif %}
+                                {% if embed.description %}
+                                    <div class="discord-embed-description">
+                                        {{ embed.description | linebreaksbr }}
+                                    </div>
+                                {% endif %}
+                                {% if embed.fields %}
+                                    <div class="discord-embed-fields">
+                                        {% for field in embed.fields %}
+                                            <div class="discord-embed-field{% if field.inline %} discord-embed-field-inline{% endif %}">
+                                                <div class="discord-embed-field-name">{{ field.name }}</div>
+                                                <div class="discord-embed-field-value">{{ field.value }}</div>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                                {% if embed.image %}
+                                    <div class="discord-embed-image">
+                                        <img alt="Discord Embed Image" src="{{ embed.image.url }}">
+                                    </div>
+                                {% endif %}
+                            </div>
+                            {% if embed.thumbnail %}
+                                <div class="discord-embed-thumbnail">
+                                    <img alt="Embed thumbnail" src="{{ embed.thumbnail.url }}">
                                 </div>
                             {% endif %}
-                            {% if embed.image %}
-                            <div class="discord-embed-image">
-                                <img alt="Discord Embed Image" src="{{ embed.image.url }}">
+                        </div>
+                        {% if embed.footer or embed.timestamp %}
+                            <div class="discord-embed-footer">
+                                {% if embed.footer.icon_url %}
+                                    <img class="discord-embed-footer-icon" alt="Footer Icon"
+                                         src="{{ embed.footer.icon_url }}">
+                                {% endif %}
+                                {% if embed.footer.text or embed.timestamp %}
+                                    <span class="discord-embed-footer-text">{% endif %}
+                                {% if embed.footer.text %}{{ embed.footer.text }}{% endif %}
+                                {% if embed.footer.text and embed.timestamp %} • {% endif %}
+                                {% if embed.timestamp %}{{ embed.timestamp | footer_datetime }}{% endif %}
+                                {% if embed.footer.text or embed.timestamp %}</span>{% endif %}
                             </div>
-                            {% endif %}
-                        </div>
-                    {% if embed.thumbnail %}
-                        <div class="discord-embed-thumbnail">
-                            <img alt="Embed thumbnail" src="{{ embed.thumbnail.url }}">
-                        </div>
-                    {% endif %}
+                        {% endif %}
                     </div>
-                {%  if embed.footer or embed.timestamp %}
-                <div class="discord-embed-footer">
-                    {% if embed.footer.icon_url %}
-                        <img class="discord-embed-footer-icon" alt="Footer Icon" src="{{ embed.footer.icon_url }}">
-                    {% endif %}
-
-                    {%  if embed.footer.text or embed.timestamp %}<span class="discord-embed-footer-text">{% endif %}
-                        {% if embed.footer.text %}{{ embed.footer.text }}{%  endif %}{% if embed.footer.text and embed.timestamp %} • {% endif %}{% if embed.timestamp %}{{ embed.timestamp | footer_datetime }}{% endif %}
-                    {%  if embed.footer.text or embed.timestamp %}</span>{% endif %}
                 </div>
-                {%  endif %}
-                </div>
-            </div>
-        {% endfor %}
+            {% endfor %}
         </div>
     {% endfor %}
 {% endblock %}
