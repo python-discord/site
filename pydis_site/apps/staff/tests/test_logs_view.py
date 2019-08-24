@@ -133,7 +133,7 @@ class TestLogsView(TestCase):
         self.assertIn("messages", response.context)
         self.assertListEqual(
             [self.deleted_message_one, self.deleted_message_two],
-            list(response.context["messages"])
+            list(response.context["deletion_context"].deletedmessage_set.all())
         )
 
     def test_if_both_embeds_are_included_html_response(self):

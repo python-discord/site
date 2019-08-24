@@ -10,11 +10,11 @@
 
 {% block content %}
     <ul class="is-size-7">
-        <li>Deleted by: <span style="color: {{ actor_colour | hex_colour }}">{{ actor }}</span></li>
-        <li>Date: {{ creation }}</li>
+        <li>Deleted by: <span style="color: {{ deletion_context.actor.top_role.colour | hex_colour }}">{{ deletion_context.actor }}</span></li>
+        <li>Date: {{ deletion_context.creation }}</li>
     </ul>
     <div class="is-divider has-small-margin"></div>
-    {% for message in messages %}
+    {% for message in deletion_context.deletedmessage_set.all %}
         <div class="discord-message">
             <div class="discord-message-header">
                 <span class="discord-username"
