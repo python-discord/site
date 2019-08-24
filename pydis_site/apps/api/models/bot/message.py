@@ -1,6 +1,5 @@
 from datetime import datetime
 
-import pytz
 from django.contrib.postgres import fields as pgfields
 from django.core.validators import MinValueValidator
 from django.db import models
@@ -58,7 +57,7 @@ class Message(ModelReprMixin, models.Model):
     def timestamp(self) -> datetime:
         """Attribute that represents the message timestamp as derived from the snowflake id."""
         tz_naive_datetime = datetime.utcfromtimestamp(((self.id >> 22) + 1420070400000) / 1000)
-        tz_aware_datetime = timezone.make_aware(tz_naive_datetime, timezone=pytz.timezone("UTC"))
+        tz_aware_datetime = timezone.make_aware(tz_naive_datetime, timezone=timezone.utc)
         return tz_aware_datetime
 
     class Meta:
