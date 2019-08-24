@@ -5,7 +5,6 @@ from django.core.validators import MinValueValidator
 from django.db import models
 from django.utils import timezone
 
-
 from pydis_site.apps.api.models.bot.tag import validate_tag_embed
 from pydis_site.apps.api.models.bot.user import User
 from pydis_site.apps.api.models.utils import ModelReprMixin

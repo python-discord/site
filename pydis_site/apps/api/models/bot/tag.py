@@ -30,7 +30,9 @@ def validate_tag_embed_fields(fields):
             raise ValidationError("Embed fields must be a mapping.")
 
         if not all(required_field in field for required_field in required_fields):
-            raise ValidationError(f"Embed fields must contain the following fields: {', '.join(required_fields)}.")
+            raise ValidationError(
+                f"Embed fields must contain the following fields: {', '.join(required_fields)}."
+            )
 
         for field_name, value in field.items():
             if field_name not in field_validators:
