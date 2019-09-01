@@ -3,7 +3,7 @@ from django.utils import timezone
 from django_hosts.resolvers import reverse, reverse_host
 
 from pydis_site.apps.api.models.bot import DeletedMessage, MessageDeletionContext, Role, User
-from ..templatetags.deletedmessage_filters import hex_colour
+from pydis_site.apps.staff.templatetags.deletedmessage_filters import hex_colour
 
 
 class TestLogsView(TestCase):
