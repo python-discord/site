@@ -10,7 +10,9 @@ class OffTopicChannelName(ModelReprMixin, models.Model):
     name = models.CharField(
         primary_key=True,
         max_length=96,
-        validators=(RegexValidator(regex=r'^[a-z0-9-]+$'),),
+        validators=(
+            RegexValidator(regex=r"^[a-z0-9\U0001d5a0-\U0001d5b9-ǃ？’']+$"),
+        ),
         help_text="The actual channel name that will be used on our Discord server."
     )
 
