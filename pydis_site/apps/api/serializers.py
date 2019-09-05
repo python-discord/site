@@ -122,7 +122,8 @@ class InfractionSerializer(ModelSerializer):
 
 
 class ExpandedInfractionSerializer(InfractionSerializer):
-    """A class providing expanded (de-)serialization of `Infraction` instances.
+    """
+    A class providing expanded (de-)serialization of `Infraction` instances.
 
     In addition to the fields of `Infraction` objects themselves, this
     serializer also attaches the `user` and `actor` fields when serializing.

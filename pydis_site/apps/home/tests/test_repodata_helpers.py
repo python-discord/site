@@ -11,7 +11,7 @@ from pydis_site.apps.home.views import HomeView
 
 
 def mocked_requests_get(*args, **kwargs) -> "MockResponse":  # noqa
-    """A mock version of requests.get, so we don't need to call the API every time we run a test"""
+    """A mock version of requests.get, so we don't need to call the API every time we run a test."""
     class MockResponse:
         def __init__(self, json_data, status_code):
             self.json_data = json_data
@@ -61,7 +61,7 @@ class TestRepositoryMetadataHelpers(TestCase):
 
     @mock.patch('requests.get', side_effect=mocked_requests_get)
     def test_refresh_stale_metadata(self, _: mock.MagicMock):
-        """Test if the _get_repo_data helper will refresh when the data is stale"""
+        """Test if the _get_repo_data helper will refresh when the data is stale."""
         repo_data = RepositoryMetadata(
             repo_name="python-discord/site",
             description="testrepo",
