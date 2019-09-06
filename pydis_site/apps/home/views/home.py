@@ -106,6 +106,6 @@ class HomeView(View):
             return database_repositories
 
     def get(self, request: WSGIRequest) -> HttpResponse:
-        """Collect repo data and render the homepage view"""
+        """Collect repo data and render the homepage view."""
         repo_data = self._get_repo_data()
         return render(request, "home/index.html", {"repo_data": repo_data})

@@ -9,7 +9,7 @@ import yaml
 
 @dataclass
 class URL:
-    """A class representing a link to a resource"""
+    """A class representing a link to a resource."""
 
     icon: str
     title: str
@@ -17,7 +17,7 @@ class URL:
 
 
 class Resource:
-    """A class representing a resource on the resource page"""
+    """A class representing a resource on the resource page."""
 
     description: str
     name: str
@@ -26,7 +26,7 @@ class Resource:
     urls: typing.List[URL]
 
     def __repr__(self):
-        """Return a representation of the resource"""
+        """Return a representation of the resource."""
         return f"<Resource name={self.name}>"
 
     @classmethod
@@ -46,14 +46,14 @@ class Resource:
 
 
 class Category:
-    """A class representing a resource on the resources page"""
+    """A class representing a resource on the resources page."""
 
     resources: typing.List[Resource]
     name: str
     description: str
 
     def __repr__(self):
-        """Return a representation of the category"""
+        """Return a representation of the category."""
         return f"<Category name={self.name}>"
 
     @classmethod
@@ -80,7 +80,7 @@ class Category:
 
 
 def load_categories(order: typing.List[str]) -> typing.List[Category]:
-    """Load the categories specified in the order list and return them"""
+    """Load the categories specified in the order list and return them."""
     categories = []
     for cat in order:
         direc = "pydis_site/apps/home/resources/" + cat
