@@ -12,3 +12,8 @@ class DeletedMessage(Message):
         help_text="The deletion context this message is part of.",
         on_delete=models.CASCADE
     )
+
+    class Meta:
+        """Sets the default ordering for list views to oldest first."""
+
+        ordering = ["id"]

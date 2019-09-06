@@ -119,7 +119,32 @@ class TagEmbedValidatorTests(TestCase):
                         'value': "LOOK AT ME"
                     },
                     {
+                        'name': "Totally valid",
+                        'value': "LOOK AT ME",
                         'oh': "what is this key?"
+                    }
+                ]
+            })
+
+    def test_rejects_missing_required_field_field(self):
+        with self.assertRaises(ValidationError):
+            validate_tag_embed({
+                'fields': [
+                    {
+                        'name': "Totally valid",
+                        'inline': True,
+                    }
+                ]
+            })
+
+    def test_rejects_invalid_inline_field_field(self):
+        with self.assertRaises(ValidationError):
+            validate_tag_embed({
+                'fields': [
+                    {
+                        'name': "Totally valid",
+                        'value': "LOOK AT ME",
+                        'inline': "Totally not a boolean",
                     }
                 ]
             })
@@ -129,8 +154,18 @@ class TagEmbedValidatorTests(TestCase):
             'fields': [
                 {
                     'name': "valid",
-                    'value': "field"
-                }
+                    'value': "field",
+                },
+                {
+                    'name': "valid",
+                    'value': "field",
+                    'inline': False,
+                },
+                {
+                    'name': "valid",
+                    'value': "field",
+                    'inline': True,
+                },
             ]
         })
 

@@ -10,10 +10,14 @@
 .vagrant
 .venv
 __pycache__
-admin/tests
-admin/tests.py
+pydis_site/apps/admin/tests
+pydis_site/apps/admin/tests.py
 pydis_site/apps/api/tests
 pydis_site/apps/api/tests.py
+pydis_site/apps/home/tests
+pydis_site/apps/home/tests.py
+pydis_site/apps/staff/tests
+pydis_site/apps/staff/tests.py
 CHANGELOG.md
 CONTRIBUTING.md
 docker
@@ -24,8 +28,6 @@ docker-compose.yml
 Dockerfile
 Dockerfile.local
 docs
-home/tests
-home/tests.py
 htmlcov
 LICENSE
 pysite.egg-info

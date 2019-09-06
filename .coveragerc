@@ -5,6 +5,7 @@ source =
     pydis_site/apps/admin
     pydis_site/apps/api
     pydis_site/apps/home
+    pydis_site/apps/staff
     pydis_site/apps/wiki
 omit =
     */admin.py
