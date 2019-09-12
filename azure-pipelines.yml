@@ -59,6 +59,7 @@ jobs:
       displayName: 'Install Project Environment'
 
     - script: |
+        python manage.py makemigrations --check
         python manage.py migrate
         coverage run --branch manage.py test --testrunner xmlrunner.extra.djangotestrunner.XMLTestRunner --no-input
       env:
