@@ -3,7 +3,8 @@ from rest_framework.filters import SearchFilter
 from rest_framework.mixins import (
     CreateModelMixin,
     DestroyModelMixin,
-    ListModelMixin
+    ListModelMixin,
+    UpdateModelMixin
 )
 from rest_framework.viewsets import GenericViewSet
 
@@ -11,7 +12,7 @@ from pydis_site.apps.api.models.bot.reminder import Reminder
 from pydis_site.apps.api.serializers import ReminderSerializer
 
 
-class ReminderViewSet(CreateModelMixin, ListModelMixin, DestroyModelMixin, GenericViewSet):
+class ReminderViewSet(CreateModelMixin, ListModelMixin, DestroyModelMixin, UpdateModelMixin, GenericViewSet):
     """
     View providing CRUD access to reminders.
 
