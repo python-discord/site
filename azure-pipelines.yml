@@ -92,6 +92,6 @@ jobs:
         command: 'login'
 
     - script: |
-        docker build -t pythondiscord/django:latest -f docker/app/Dockerfile .
-        docker push pythondiscord/django:latest
+        docker build -t pythondiscord/site:latest -f docker/app/Dockerfile .
+        docker push pythondiscord/site:latest
       displayName: 'Build & Push Docker Image'
