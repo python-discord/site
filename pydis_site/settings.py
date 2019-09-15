@@ -47,9 +47,9 @@ else:
     ALLOWED_HOSTS = env.list(
         'ALLOWED_HOSTS',
         default=[
-            'pythondiscord.com',
+            'django.pythondiscord.com',
             'admin.pythondiscord.com',
-            'api.pythondiscord.com',
+            'api.django.pythondiscord.com',
             'staff.pythondiscord.com',
             'wiki.pythondiscord.com',
         ]
