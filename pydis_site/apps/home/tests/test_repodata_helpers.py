@@ -97,3 +97,36 @@ class TestRepositoryMetadataHelpers(TestCase):
 
         self.assertIsNotNone(success_data.json_data)
         self.assertIsNone(fail_data.json_data)
+
+    @mock.patch('requests.get')
+    def test_falls_back_to_database_on_error(self, mock_get: mock.MagicMock):
+        """Tests that fallback to the database is performed when we get garbage back."""
+        repo_data = RepositoryMetadata(
+            repo_name="python-discord/site",
+            description="testrepo",
+            forks=42,
+            stargazers=42,
+            language="English",
+            last_updated=timezone.now() - timedelta(seconds=HomeView.repository_cache_ttl + 1),
+        )
+        repo_data.save()
+
+        mock_get.return_value.json.return_value = ['garbage']
+
+        metadata = self.home_view._get_repo_data()
+        [item] = metadata
+        self.assertEqual(item, repo_data)
+
+    @mock.patch('requests.get')
+    def test_falls_back_to_database_on_error_without_entries(self, mock_get: mock.MagicMock):
+        """Tests that fallback to the database is performed when we get garbage back."""
+        mock_get.return_value.json.return_value = ['garbage']
+
+        metadata = self.home_view._get_repo_data()
+        self.assertEquals(len(metadata), len(self.home_view.repos))
+        for item in metadata:
+            with self.subTest(item=item):
+                self.assertEqual(item.description, "Not available.")
+                self.assertEqual(item.forks, 999)
+                self.assertEqual(item.stargazers, 999)
+                self.assertEqual(item.language, "Python")
