@@ -12,7 +12,9 @@ from pydis_site.apps.api.models.bot.reminder import Reminder
 from pydis_site.apps.api.serializers import ReminderSerializer
 
 
-class ReminderViewSet(CreateModelMixin, ListModelMixin, DestroyModelMixin, UpdateModelMixin, GenericViewSet):
+class ReminderViewSet(
+    CreateModelMixin, ListModelMixin, DestroyModelMixin, UpdateModelMixin, GenericViewSet
+):
     """
     View providing CRUD access to reminders.
 
