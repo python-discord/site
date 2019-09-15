@@ -35,7 +35,6 @@ if DEBUG:
         'admin.pythondiscord.local',
         'api.pythondiscord.local',
         'staff.pythondiscord.local',
-        'wiki.pythondiscord.local',
     ]
     SECRET_KEY = secrets.token_urlsafe(32)
 
@@ -51,7 +50,10 @@ else:
             'admin.pythondiscord.com',
             'api.pythondiscord.com',
             'staff.pythondiscord.com',
-            'wiki.pythondiscord.com',
+            'pydis.com',
+            'api.pydis.com',
+            'admin.pydis.com',
+            'staff.pydis.com',
         ]
     )
     SECRET_KEY = env('SECRET_KEY')
