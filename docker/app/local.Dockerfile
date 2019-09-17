@@ -3,6 +3,10 @@ FROM bitnami/python:3.7-prod
 STOPSIGNAL SIGQUIT
 ARG EXTRAS=deploy
 
+ENV PIP_NO_CACHE_DIR=false \
+    PIPENV_HIDE_EMOJIS=1 \
+    PIPENV_NOSPIN=1
+
 # Create a user.
 RUN useradd --system --shell /bin/false --uid 1500 pysite
 
