@@ -1,6 +1,5 @@
 FROM bitnami/python:3.7-prod
 
-# I have no idea what this does.
 STOPSIGNAL SIGQUIT
 ARG EXTRAS=deploy
 
@@ -19,7 +18,6 @@ RUN rm -r /opt/bitnami/python/lib/python3.*/site-packages/setuptools* && \
     pip install --no-cache-dir -U setuptools pipenv
 RUN pipenv install --system --deploy
 
-# Migrate, collect and start the app.
-RUN chmod +x /app/docker/app/scripts/migrate.sh
-ENTRYPOINT ["/app/docker/app/scripts/migrate.sh"]
+RUN SECRET_KEY=placeholder DATABASE_URL=sqlite:// python3 manage.py collectstatic --no-input --clear --verbosity 0
+
 CMD ["uwsgi", "--ini", "docker/app/uwsgi.ini"]
