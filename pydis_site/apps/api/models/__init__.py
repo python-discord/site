@@ -1,4 +1,5 @@
-from .bot import (  # noqa
+# flake8: noqa
+from .bot import (
     BotSetting,
     DocumentationLink,
     DeletedMessage,
@@ -12,5 +13,5 @@ from .bot import (  # noqa
     Tag,
     User
 )
-from .log_entry import LogEntry  # noqa
-from .utils import ModelReprMixin  # noqa
+from .log_entry import LogEntry
+from .utils import ModelReprMixin

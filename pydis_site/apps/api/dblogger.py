@@ -4,7 +4,7 @@ from logging import LogRecord, StreamHandler
 class DatabaseLogHandler(StreamHandler):
     """Logs entries into the database."""
 
-    def emit(self, record: LogRecord):
+    def emit(self, record: LogRecord) -> None:
         """Write the given `record` into the database."""
         # This import needs to be deferred due to Django's application
         # registry instantiation logic loading this handler before the

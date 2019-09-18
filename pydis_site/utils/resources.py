@@ -30,7 +30,8 @@ class Resource:
         return f"<Resource name={self.name}>"
 
     @classmethod
-    def construct_from_yaml(cls, yaml_data: typing.TextIO) -> Resource:  # noqa
+    def construct_from_yaml(cls, yaml_data: typing.TextIO) -> Resource:
+        """Construct a Resource object from the provided YAML."""
         resource = cls()
 
         loaded = yaml.safe_load(yaml_data)
@@ -57,7 +58,8 @@ class Category:
         return f"<Category name={self.name}>"
 
     @classmethod
-    def construct_from_directory(cls, directory: str) -> Category:  # noqa
+    def construct_from_directory(cls, directory: str) -> Category:
+        """Construct a Category object from the provided directory."""
         category = cls()
 
         with open(f"{directory}/_category_info.yaml") as category_info:

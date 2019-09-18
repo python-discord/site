@@ -1,4 +1,5 @@
-from .bot import (  # noqa
+# flake8: noqa
+from .bot import (
     BotSettingViewSet,
     DeletedMessageViewSet,
     DocumentationLinkViewSet,
@@ -10,4 +11,4 @@ from .bot import (  # noqa
     TagViewSet,
     UserViewSet
 )
-from .log_entry import LogEntryViewSet  # noqa
+from .log_entry import LogEntryViewSet

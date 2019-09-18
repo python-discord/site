@@ -1,10 +1,11 @@
-from .bot_setting import BotSettingViewSet  # noqa
-from .deleted_message import DeletedMessageViewSet  # noqa
-from .documentation_link import DocumentationLinkViewSet  # noqa
-from .infraction import InfractionViewSet  # noqa
-from .nomination import NominationViewSet  # noqa
-from .off_topic_channel_name import OffTopicChannelNameViewSet  # noqa
-from .reminder import ReminderViewSet  # noqa
-from .role import RoleViewSet  # noqa
-from .tag import TagViewSet  # noqa
-from .user import UserViewSet  # noqa
+# flake8: noqa
+from .bot_setting import BotSettingViewSet
+from .deleted_message import DeletedMessageViewSet
+from .documentation_link import DocumentationLinkViewSet
+from .infraction import InfractionViewSet
+from .nomination import NominationViewSet
+from .off_topic_channel_name import OffTopicChannelNameViewSet
+from .reminder import ReminderViewSet
+from .role import RoleViewSet
+from .tag import TagViewSet
+from .user import UserViewSet

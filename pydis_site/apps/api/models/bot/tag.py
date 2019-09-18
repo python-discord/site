@@ -1,5 +1,5 @@
 from collections.abc import Mapping
-from typing import Any
+from typing import Any, Dict, List, Union
 
 from django.contrib.postgres import fields as pgfields
 from django.core.exceptions import ValidationError
@@ -15,7 +15,7 @@ def is_bool_validator(value: Any) -> None:
         raise ValidationError(f"This field must be of type bool, not {type(value)}.")
 
 
-def validate_tag_embed_fields(fields):
+def validate_tag_embed_fields(fields: dict) -> None:
     """Raises a ValidationError if any of the given embed fields is invalid."""
     field_validators = {
         'name': (MaxLengthValidator(limit_value=256),),
@@ -42,7 +42,7 @@ def validate_tag_embed_fields(fields):
                 validator(value)
 
 
-def validate_tag_embed_footer(footer):
+def validate_tag_embed_footer(footer: Any) -> None:
     """Raises a ValidationError if the given footer is invalid."""
     field_validators = {
         'text': (
@@ -67,7 +67,7 @@ def validate_tag_embed_footer(footer):
             validator(value)
 
 
-def validate_tag_embed_author(author):
+def validate_tag_embed_author(author: Any) -> None:
     """Raises a ValidationError if the given author is invalid."""
     field_validators = {
         'name': (
@@ -93,7 +93,7 @@ def validate_tag_embed_author(author):
             validator(value)
 
 
-def validate_tag_embed(embed):
+def validate_tag_embed(embed: Dict[str, Union[str, List[dict], dict]]) -> None:
     """
     Validate a JSON document containing an embed as possible to send on Discord.
 
