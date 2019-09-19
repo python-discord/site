@@ -1,3 +1,5 @@
+from django.db.models.query import QuerySet
+from django.http.request import HttpRequest
 from django.shortcuts import get_object_or_404
 from rest_framework.exceptions import ParseError
 from rest_framework.mixins import DestroyModelMixin
@@ -54,7 +56,7 @@ class OffTopicChannelNameViewSet(DestroyModelMixin, ViewSet):
     lookup_field = 'name'
     serializer_class = OffTopicChannelNameSerializer
 
-    def get_object(self):
+    def get_object(self) -> OffTopicChannelName:
         """
         Returns the OffTopicChannelName entry for this request, if it exists.
 
@@ -64,11 +66,11 @@ class OffTopicChannelNameViewSet(DestroyModelMixin, ViewSet):
         name = self.kwargs[self.lookup_field]
         return get_object_or_404(queryset, name=name)
 
-    def get_queryset(self):
+    def get_queryset(self) -> QuerySet:
         """Returns a queryset that covers the entire OffTopicChannelName table."""
         return OffTopicChannelName.objects.all()
 
-    def create(self, request):
+    def create(self, request: HttpRequest) -> Response:
         """
         DRF method for creating a new OffTopicChannelName.
 
@@ -86,7 +88,7 @@ class OffTopicChannelNameViewSet(DestroyModelMixin, ViewSet):
                 'name': ["This query parameter is required."]
             })
 
-    def list(self, request):
+    def list(self, request: HttpRequest) -> Response:
         """
         DRF method for listing OffTopicChannelName entries.
 

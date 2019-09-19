@@ -1,3 +1,4 @@
+from django.http.request import HttpRequest
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.decorators import action
 from rest_framework.exceptions import ValidationError
@@ -123,7 +124,7 @@ class InfractionViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
     search_fields = ('$reason',)
     frozen_fields = ('id', 'inserted_at', 'type', 'user', 'actor', 'hidden')
 
-    def partial_update(self, request, *_args, **_kwargs):
+    def partial_update(self, request: HttpRequest, *_args, **_kwargs) -> Response:
         """Method that handles the nuts and bolts of updating an Infraction."""
         for field in request.data:
             if field in self.frozen_fields:
@@ -137,7 +138,7 @@ class InfractionViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
         return Response(serializer.data)
 
     @action(url_path='expanded', detail=False)
-    def list_expanded(self, *args, **kwargs):
+    def list_expanded(self, *args, **kwargs) -> Response:
         """
         DRF method for listing Infraction entries.
 
@@ -147,7 +148,7 @@ class InfractionViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
         return self.list(*args, **kwargs)
 
     @list_expanded.mapping.post
-    def create_expanded(self, *args, **kwargs):
+    def create_expanded(self, *args, **kwargs) -> Response:
         """
         DRF method for creating an Infraction.
 
@@ -157,7 +158,7 @@ class InfractionViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
         return self.create(*args, **kwargs)
 
     @action(url_path='expanded', url_name='detail-expanded', detail=True)
-    def retrieve_expanded(self, *args, **kwargs):
+    def retrieve_expanded(self, *args, **kwargs) -> Response:
         """
         DRF method for retrieving a specific Infraction.
 
@@ -167,7 +168,7 @@ class InfractionViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
         return self.retrieve(*args, **kwargs)
 
     @retrieve_expanded.mapping.patch
-    def partial_update_expanded(self, *args, **kwargs):
+    def partial_update_expanded(self, *args, **kwargs) -> Response:
         """
         DRF method for updating an Infraction.
 
