@@ -3,7 +3,7 @@ max-line-length=100
 docstring-convention=all
 import-order-style=pycharm
 application_import_names=pydis_site
-exclude=__pycache__, venv, .venv, **/migrations
+exclude=__pycache__, venv, .venv, manage.py, **/migrations
 ignore=
     B311,W503,E226,S311,T000
     # Missing Docstrings
