@@ -1,4 +1,5 @@
-#!/bin/sh -eu
+#!/bin/sh
+set -eu
 
 ### NOTE
 # This file is intended to be used by local setups.
