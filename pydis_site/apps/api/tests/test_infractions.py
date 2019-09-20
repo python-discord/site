@@ -63,6 +63,7 @@ class InfractionTests(APISubdomainTestCase):
         )
 
     def test_list_all(self):
+        """Tests the list-view, which should be ordered by inserted_at (newest first)."""
         url = reverse('bot:infraction-list', host='api')
         response = self.client.get(url)
 
@@ -70,8 +71,8 @@ class InfractionTests(APISubdomainTestCase):
         infractions = response.json()
 
         self.assertEqual(len(infractions), 2)
-        self.assertEqual(infractions[0]['id'], self.ban_hidden.id)
-        self.assertEqual(infractions[1]['id'], self.ban_inactive.id)
+        self.assertEqual(infractions[0]['id'], self.ban_inactive.id)
+        self.assertEqual(infractions[1]['id'], self.ban_hidden.id)
 
     def test_filter_search(self):
         url = reverse('bot:infraction-list', host='api')

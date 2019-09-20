@@ -66,3 +66,8 @@ class Infraction(ModelReprMixin, models.Model):
         if self.hidden:
             s += " (hidden)"
         return s
+
+    class Meta:
+        """Defines the meta options for the infraction model."""
+
+        ordering = ['-inserted_at']
