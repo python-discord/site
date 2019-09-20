@@ -2,7 +2,6 @@ FROM bitnami/python:3.7-prod
 
 # I have no idea what this does.
 STOPSIGNAL SIGQUIT
-ARG EXTRAS=deploy
 
 ENV PIP_NO_CACHE_DIR=false \
     PIPENV_HIDE_EMOJIS=1 \
