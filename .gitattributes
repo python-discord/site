@@ -1,0 +1,3 @@
+# Declare files that will always have LF line endings on checkout
+# This prevents git on Windows from automatically inserting CRLF line endings
+* text=auto eol=lf

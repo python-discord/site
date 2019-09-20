@@ -75,23 +75,18 @@ jobs:
         testResultsFiles: "**/TEST-*.xml"
         testRunTitle: 'Site-Django Test Results'
 
-- job: docker
-  displayName: 'Build & Push Job'
+- job: build
+  displayName: 'Build & Push Container'
   dependsOn: coverage_test
   condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
-  pool:
-    vmImage: ubuntu-16.04
 
   steps:
-    - task: Docker@1
-      displayName: Login to Docker Hub
+    - task: Docker@2
+      displayName: 'Build & Push Container'
 
       inputs:
-        containerregistrytype: 'Container Registry'
-        dockerRegistryEndpoint: 'DockerHub'
-        command: 'login'
-
-    - script: |
-        docker build -t pythondiscord/site:latest -f docker/app/Dockerfile .
-        docker push pythondiscord/site:latest
-      displayName: 'Build & Push Docker Image'
+        containerRegistry: 'DockerHubV2'
+        repository: 'pythondiscord/site'
+        command: 'buildAndPush'
+        Dockerfile: 'docker/app/Dockerfile'
+        tags: 'latest'
