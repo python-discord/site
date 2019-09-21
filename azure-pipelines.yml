@@ -89,4 +89,5 @@ jobs:
         repository: 'pythondiscord/site'
         command: 'buildAndPush'
         Dockerfile: 'docker/app/Dockerfile'
+        buildContext: '.'
         tags: 'latest'
