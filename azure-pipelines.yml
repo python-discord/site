@@ -53,8 +53,8 @@ jobs:
           DATABASE_URL: postgres://pysite:pysite@localhost/pysite
         displayName: 'Run Tests'
 
-      - script: coverage report
-        displayName: 'Show Coverage Results'
+      - script: coverage report -m && coverage xml
+        displayName: 'Generate Coverage Reports'
 
       - task: PublishTestResults@2
         condition: succeededOrFailed()
@@ -62,6 +62,13 @@ jobs:
         inputs:
           testResultsFiles: '**/TEST-*.xml'
           testRunTitle: 'Site Test Results'
+
+      - task: PublishCodeCoverageResults@1
+        displayName: 'Publish Coverage Results'
+        condition: succeededOrFailed()
+        inputs:
+          codeCoverageTool: Cobertura
+          summaryFileLocation: '**/coverage.xml'
 
   - job: build
     displayName: 'Build & Push Container'
