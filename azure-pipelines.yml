@@ -16,6 +16,15 @@ jobs:
           versionSpec: '3.7.x'
           addToPath: true
 
+      - task: DockerCompose@0
+        displayName: 'Setup Database'
+        inputs:
+          action: Run a specific service
+          dockerComposeFile: docker-compose.yml
+          projectName: pydis_web
+          serviceName: postgres
+          ports: '7777:5432'
+
       - script: |
           pip install pipenv
           pipenv install --dev --system
@@ -26,21 +35,6 @@ jobs:
         displayName: 'Run Linter'
 
       - script: |
-          curl https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
-          sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
-          sudo apt-get update -y
-          sudo apt-get install -y postgresql-11
-        displayName: 'Install PostgreSQL'
-
-      - script: |
-          echo "$USER_CREATE_COMMAND;" > pgscript.sql
-          echo "CREATE DATABASE pysite OWNER pysite;" >> pgscript.sql
-          sudo su postgres -c "psql < pgscript.sql"
-        env:
-          USER_CREATE_COMMAND: CREATE USER pysite WITH PASSWORD 'pysite' CREATEDB
-        displayName: 'Setup Database'
-
-      - script: |
           python3 manage.py makemigrations --check
           python3 manage.py migrate
           coverage run \
@@ -49,7 +43,7 @@ jobs:
               --no-input
         env:
           CI: azure
-          DATABASE_URL: postgres://pysite:pysite@localhost/pysite
+          DATABASE_URL: postgres://pysite:pysite@localhost:7777/pysite
         displayName: 'Run Tests'
 
       - script: coverage report -m && coverage xml
@@ -78,7 +72,7 @@ jobs:
       - task: Docker@2
         displayName: 'Build & Push Container'
         inputs:
-          containerRegistry: 'DockerHubV2'
+          containerRegistry: 'DockerHub'
           repository: 'pythondiscord/site'
           command: 'buildAndPush'
           Dockerfile: 'docker/app/Dockerfile'

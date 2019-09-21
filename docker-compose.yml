@@ -16,7 +16,7 @@ services:
       - "127.0.0.1:7777:5432"
     environment:
       POSTGRES_DB: pysite
-      POSTGRES_PASSWORD: supersecretpassword
+      POSTGRES_PASSWORD: pysite
       POSTGRES_USER: pysite
 
   web:
@@ -32,7 +32,7 @@ services:
       - .:/app:ro
       - staticfiles:/var/www/static
     environment:
-      DATABASE_URL: postgres://pysite:supersecretpassword@postgres:5432/pysite
+      DATABASE_URL: postgres://pysite:pysite@postgres:5432/pysite
       DEBUG: "true"
       SECRET_KEY: suitable-for-development-only
       STATIC_ROOT: /var/www/static
