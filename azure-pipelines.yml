@@ -24,3 +24,13 @@ jobs:
     inputs:
       testResultsFiles: '**/test-*.xml'
       testRunTitle: 'Site-Django Lint Results'
+
+  - task: DockerCompose@0
+    displayName: Run PostgreSQL DB
+    inputs:
+      action: Run a specific service
+      dockerComposeFile: docker-compose.yml
+      projectName: pydis_web
+      ports: 7777
+      detached: true
+      serviceName: postgres
