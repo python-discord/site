@@ -50,6 +50,7 @@ jobs:
         displayName: 'Show Coverage Results'
 
       - task: PublishTestResults@2
+        condition: succeededOrFailed()
         inputs:
           testResultsFiles: "**/TEST-*.xml"
           testRunTitle: 'Site-Django Test Results'
