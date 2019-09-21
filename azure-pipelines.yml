@@ -44,7 +44,6 @@ jobs:
           python3 manage.py makemigrations --check
           python3 manage.py migrate
           coverage run \
-            --branch \
             manage.py test \
               --testrunner xmlrunner.extra.djangotestrunner.XMLTestRunner \
               --no-input
