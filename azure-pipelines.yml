@@ -6,9 +6,6 @@ jobs:
   pool:
     vmImage: ubuntu-16.04
 
-  variables:
-    PIP_CACHE_DIR: .cache/pip
-
   steps:
   - task: UsePythonVersion@0
     displayName: 'Set Python Version'
@@ -27,67 +24,3 @@ jobs:
     inputs:
       testResultsFiles: '**/test-*.xml'
       testRunTitle: 'Site-Django Lint Results'
-
-- job: coverage_test
-  displayName: 'Test Job'
-  dependsOn: python_lint
-  pool:
-    vmImage: ubuntu-16.04
-
-  steps:
-    - task: UsePythonVersion@0
-      inputs:
-        versionSpec: '3.7.x'
-        architecture: x64
-
-    - script: |
-        curl https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
-        sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
-        sudo apt-get update -y
-        sudo apt-get install -y postgresql-11
-      displayName: 'Install PostgreSQL'
-
-    - script: |
-        echo "$USER_CREATE_COMMAND;" > pgscript.sql
-        echo "CREATE DATABASE pysite OWNER pysite;" >> pgscript.sql
-        sudo su postgres -c "psql < pgscript.sql"
-      env:
-        USER_CREATE_COMMAND: CREATE USER pysite WITH PASSWORD 'pysite' CREATEDB
-      displayName: 'Setup Database'
-
-    - script: python3 -m pip install pipenv && pipenv install --dev --system
-      displayName: 'Install Project Environment'
-
-    - script: |
-        python manage.py makemigrations --check
-        python manage.py migrate
-        coverage run --branch manage.py test --testrunner xmlrunner.extra.djangotestrunner.XMLTestRunner --no-input
-      env:
-        CI: azure
-        DATABASE_URL: postgres://pysite:pysite@localhost/pysite
-      displayName: 'Run Test'
-
-    - script: coverage report
-      displayName: 'Show Coverage Results'
-
-    - task: PublishTestResults@2
-      inputs:
-        testResultsFiles: "**/TEST-*.xml"
-        testRunTitle: 'Site-Django Test Results'
-
-- job: build
-  displayName: 'Build & Push Container'
-  dependsOn: coverage_test
-  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
-
-  steps:
-    - task: Docker@2
-      displayName: 'Build & Push Container'
-
-      inputs:
-        containerRegistry: 'DockerHubV2'
-        repository: 'pythondiscord/site'
-        command: 'buildAndPush'
-        Dockerfile: 'docker/app/Dockerfile'
-        buildContext: '.'
-        tags: 'latest'
