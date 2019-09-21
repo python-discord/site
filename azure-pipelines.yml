@@ -16,10 +16,13 @@ jobs:
           versionSpec: '3.7.x'
           addToPath: true
 
-      - script: python3 -m pip install pipenv && pipenv install --dev --system && python3 -m pip install flake8-formatter-junit-xml
+      - script: |
+          pip install pipenv
+          pipenv install --dev --system
+          pip install flake8-formatter-junit-xml
         displayName: 'Install Project Environment'
 
-      - script: python3 -m flake8 --format junit-xml --output-file TEST-lint.xml
+      - script: flake8 --format junit-xml --output-file TEST-lint.xml
         displayName: 'Run Linter'
 
       - script: |
@@ -38,22 +41,27 @@ jobs:
         displayName: 'Setup Database'
 
       - script: |
-          python manage.py makemigrations --check
-          python manage.py migrate
-          coverage run --branch manage.py test --testrunner xmlrunner.extra.djangotestrunner.XMLTestRunner --no-input
+          python3 manage.py makemigrations --check
+          python3 manage.py migrate
+          coverage run \
+            --branch \
+            manage.py test \
+              --testrunner xmlrunner.extra.djangotestrunner.XMLTestRunner \
+              --no-input
         env:
           CI: azure
           DATABASE_URL: postgres://pysite:pysite@localhost/pysite
-        displayName: 'Run Test'
+        displayName: 'Run Tests'
 
       - script: coverage report
         displayName: 'Show Coverage Results'
 
       - task: PublishTestResults@2
         condition: succeededOrFailed()
+        displayName: 'Publish Test & Linting Results'
         inputs:
-          testResultsFiles: "**/TEST-*.xml"
-          testRunTitle: 'Site-Django Test Results'
+          testResultsFiles: '**/TEST-*.xml'
+          testRunTitle: 'Site Test Results'
 
   - job: build
     displayName: 'Build & Push Container'
@@ -63,7 +71,6 @@ jobs:
     steps:
       - task: Docker@2
         displayName: 'Build & Push Container'
-
         inputs:
           containerRegistry: 'DockerHubV2'
           repository: 'pythondiscord/site'
