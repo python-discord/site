@@ -11,7 +11,7 @@ ENV PIP_NO_CACHE_DIR=false \
 RUN useradd --system --shell /bin/false --uid 1500 pysite
 
 # Install prerequisites needed to complete the dependency installation.
-RUN install_packages git uwsgi
+RUN install_packages git gcc libc-dev libpq-dev
 
 # Copy the project files into the working directory.
 WORKDIR /app
@@ -19,7 +19,8 @@ COPY . .
 
 # Update setuptools by removing egg first, add other dependencies
 RUN rm -r /opt/bitnami/python/lib/python3.*/site-packages/setuptools* && \
-    pip install --no-cache-dir -U setuptools pipenv
+    pip install -U setuptools
+RUN pip install pipenv uwsgi
 RUN pipenv install --system --deploy
 
 # Migrate, collect and start the app.
