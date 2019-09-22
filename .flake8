@@ -17,4 +17,4 @@ ignore=
     # Type Annotations
     TYP002,TYP003,TYP101,TYP102,TYP204,TYP206
 per-file-ignores =
-    **/tests/**:D101,D102,D103,D105,D106,S106,TYP
+    **/tests/**:D1,S106,TYP

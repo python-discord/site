@@ -42,7 +42,7 @@ def validate_tag_embed_fields(fields: dict) -> None:
                 validator(value)
 
 
-def validate_tag_embed_footer(footer: Any) -> None:
+def validate_tag_embed_footer(footer: Dict[str, str]) -> None:
     """Raises a ValidationError if the given footer is invalid."""
     field_validators = {
         'text': (
