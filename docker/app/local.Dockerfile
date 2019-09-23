@@ -11,12 +11,15 @@ ENV PIP_NO_CACHE_DIR=false \
 # Create non-root user
 RUN useradd --system --shell /bin/false --uid 1500 pysite
 
+# Install pipenv & pyuwsgi
+RUN pip install -U pipenv pyuwsgi
+
 # Copy the project files into working directory
 WORKDIR /app
 COPY . .
 
 # Install project dependencies
-RUN pip install -U pipenv pyuwsgi && pipenv install --system --deploy
+RUN pipenv install --system --deploy
 
 # Prepare static files for site
 RUN SECRET_KEY=placeholder DATABASE_URL=sqlite:// \
