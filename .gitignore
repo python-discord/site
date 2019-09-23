@@ -117,5 +117,7 @@ media/
 pip-wheel-metadata/
 staticfiles/
 
+!docker/app/wheels
+
 *.js.tmp
 log.*
