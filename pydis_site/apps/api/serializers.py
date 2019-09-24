@@ -66,7 +66,7 @@ class MessageDeletionContextSerializer(ModelSerializer):
         fields = ('actor', 'creation', 'id', 'deletedmessage_set')
         depth = 1
 
-    def create(self, validated_data):
+    def create(self, validated_data: dict) -> MessageDeletionContext:
         """
         Return a `MessageDeletionContext` based on the given data.
 
@@ -106,7 +106,7 @@ class InfractionSerializer(ModelSerializer):
             'id', 'inserted_at', 'expires_at', 'active', 'user', 'actor', 'type', 'reason', 'hidden'
         )
 
-    def validate(self, attrs):
+    def validate(self, attrs: dict) -> dict:
         """Validate data constraints for the given data and abort if it is invalid."""
         infr_type = attrs.get('type')
 
@@ -129,7 +129,7 @@ class ExpandedInfractionSerializer(InfractionSerializer):
     serializer also attaches the `user` and `actor` fields when serializing.
     """
 
-    def to_representation(self, instance):
+    def to_representation(self, instance: Infraction) -> dict:
         """Return the dictionary representation of this infraction."""
         ret = super().to_representation(instance)
 
@@ -166,7 +166,7 @@ class OffTopicChannelNameSerializer(ModelSerializer):
         model = OffTopicChannelName
         fields = ('name',)
 
-    def to_representation(self, obj):
+    def to_representation(self, obj: OffTopicChannelName) -> str:
         """
         Return the representation of this `OffTopicChannelName`.
 

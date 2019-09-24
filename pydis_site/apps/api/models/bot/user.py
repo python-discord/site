@@ -8,7 +8,7 @@ from pydis_site.apps.api.models.utils import ModelReprMixin
 class User(ModelReprMixin, models.Model):
     """A Discord user."""
 
-    id = models.BigIntegerField(  # noqa
+    id = models.BigIntegerField(
         primary_key=True,
         validators=(
             MinValueValidator(

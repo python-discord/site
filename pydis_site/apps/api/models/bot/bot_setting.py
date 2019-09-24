@@ -5,7 +5,7 @@ from django.db import models
 from pydis_site.apps.api.models.utils import ModelReprMixin
 
 
-def validate_bot_setting_name(name):
+def validate_bot_setting_name(name: str) -> None:
     """Raises a ValidationError if the given name is not a known setting."""
     known_settings = (
         'defcon',

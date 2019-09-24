@@ -56,7 +56,7 @@ class RulesView(APIView):
     permission_classes = ()
 
     @staticmethod
-    def _format_link(description, link, target):
+    def _format_link(description: str, link: str, target: str) -> str:
         """
         Build the markup for rendering the link.
 

@@ -4,7 +4,7 @@ from django import template
 from django.forms import BooleanField, BoundField, CharField, Field, ImageField, ModelChoiceField
 from django.template import Context
 from django.template.loader import get_template
-from django.utils.safestring import mark_safe
+from django.utils.safestring import SafeText, mark_safe
 from wiki.editors.markitup import MarkItUpWidget
 from wiki.forms import WikiSlugField
 from wiki.models import URLPath
@@ -39,7 +39,7 @@ def get_unbound_field(field: Union[BoundField, Field]) -> Field:
     return field
 
 
-def render(template_path: str, context: Dict[str, Any]):
+def render(template_path: str, context: Dict[str, Any]) -> SafeText:
     """
     Renders a template at a specified path, with the provided context dictionary.
 
@@ -50,7 +50,7 @@ def render(template_path: str, context: Dict[str, Any]):
 
 
 @register.simple_tag
-def render_field(field: Field, render_labels: bool = True):
+def render_field(field: Field, render_labels: bool = True) -> SafeText:
     """
     Renders a form field using a custom template designed specifically for the wiki forms.
 
@@ -78,7 +78,7 @@ def render_field(field: Field, render_labels: bool = True):
 
 
 @register.simple_tag(takes_context=True)
-def get_field_options(context: Context, field: BoundField):
+def get_field_options(context: Context, field: BoundField) -> str:
     """
     Retrieves the field options for a multiple choice field, and stores it in the context.
 
@@ -113,7 +113,7 @@ def get_field_options(context: Context, field: BoundField):
 
 
 @register.filter
-def render_urlpath(value: Union[URLPath, str]):
+def render_urlpath(value: Union[URLPath, str]) -> str:
     """
     Simple filter to render a URLPath (or string) into a template.
 

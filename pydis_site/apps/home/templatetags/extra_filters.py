@@ -4,7 +4,7 @@ register = template.Library()
 
 
 @register.filter
-def starts_with(value: str, arg: str):
+def starts_with(value: str, arg: str) -> bool:
     """
     Simple filter for checking if a string value starts with another string.
 

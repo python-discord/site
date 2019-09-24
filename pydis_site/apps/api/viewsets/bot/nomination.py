@@ -1,5 +1,6 @@
 from collections import ChainMap
 
+from django.http.request import HttpRequest
 from django.utils import timezone
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import status
@@ -151,7 +152,7 @@ class NominationViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
     frozen_fields = ('id', 'actor', 'inserted_at', 'user', 'ended_at')
     frozen_on_create = ('ended_at', 'end_reason', 'active', 'inserted_at')
 
-    def create(self, request, *args, **kwargs):
+    def create(self, request: HttpRequest, *args, **kwargs) -> Response:
         """
         DRF method for creating a Nomination.
 
@@ -176,7 +177,7 @@ class NominationViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
-    def partial_update(self, request, *args, **kwargs):
+    def partial_update(self, request: HttpRequest, *args, **kwargs) -> Response:
         """
         DRF method for updating a Nomination.
 

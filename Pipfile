@@ -3,20 +3,6 @@ name = "pypi"
 url = "https://pypi.org/simple"
 verify_ssl = true
 
-[dev-packages]
-flake8 = "~=3.7.7"
-flake8-bandit = "==1.0.2"
-flake8-bugbear = "~=19.3.0"
-flake8-docstrings = "~=1.4.0"
-flake8-import-order = "~=0.18.1"
-flake8-string-format = "~=0.2.3"
-flake8-tidy-imports = "~=2.0.0"
-mccabe = "~=0.6.1"
-pep8-naming = "~=0.8.2"
-coverage = "~=4.5.3"
-unittest-xml-reporting = "~=2.5.1"
-pre-commit = "~=1.17.0"
-
 [packages]
 django = "~=2.2"
 django-crispy-forms = "~=1.7.2"
@@ -34,6 +20,22 @@ pygments = "~=2.3.1"
 #wiki = {git = "https://github.com/python-discord/django-wiki.git"}
 wiki = {path = "./docker/app/wheels/wiki-0.5.dev20190420204942-py3-none-any.whl"}
 pyyaml = "*"
+
+[dev-packages]
+coverage = "~=4.5.3"
+flake8 = "~=3.7"
+flake8-annotations = "~=1.0"
+flake8-bandit = "==1.0.2"
+flake8-bugbear = "~=19.8"
+flake8-docstrings = "~=1.4"
+flake8-import-order = "~=0.18"
+flake8-string-format = "~=0.2"
+flake8-tidy-imports = "~=2.0"
+flake8-todo = "~=0.7"
+mccabe = "~=0.6.1"
+pep8-naming = "~=0.8.2"
+pre-commit = "~=1.18"
+unittest-xml-reporting = "~=2.5.1"
 
 [requires]
 python_version = "3.7"
