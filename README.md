@@ -1,4 +1,10 @@
 # Python Discord: Site
+[![Discord](https://img.shields.io/discord/267624335836053506?color=%237289DA&label=Python%20Discord&logo=discord&logoColor=white)](https://discord.gg/2B963hn)
+[![Build Status](https://dev.azure.com/python-discord/Python%20Discord/_apis/build/status/Site?branchName=master)](https://dev.azure.com/python-discord/Python%20Discord/_build/latest?definitionId=2&branchName=master)
+[![Tests](https://img.shields.io/azure-devops/tests/python-discord/Python%20Discord/2?compact_message)](https://dev.azure.com/python-discord/Python%20Discord/_apis/build/status/Site?branchName=master)
+[![Coverage](https://img.shields.io/azure-devops/coverage/python-discord/Python%20Discord/2/master)](https://dev.azure.com/python-discord/Python%20Discord/_apis/build/status/Site?branchName=master)
+[![License](https://img.shields.io/github/license/python-discord/site)](LICENSE)
+[![Status](https://img.shields.io/website?url=https%3A%2F%2Fpythondiscord.com)](https://pythondiscord.com)
 
 This is all of the code that is responsible for maintaining
 [our website](https://pythondiscord.com), and all of its subdomains.

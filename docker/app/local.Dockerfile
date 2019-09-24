@@ -8,7 +8,7 @@ ENV PIP_NO_CACHE_DIR=false \
     PIPENV_HIDE_EMOJIS=1 \
     PIPENV_NOSPIN=1
 
-# Create non-root user.
+# Create non-root user
 RUN useradd --system --shell /bin/false --uid 1500 pysite
 
 # Install pipenv & pyuwsgi
@@ -21,7 +21,8 @@ COPY . .
 # Install project dependencies
 RUN pipenv install --system --deploy
 
-# Migrate, collect and start the app
-RUN chmod +x /app/docker/app/scripts/migrate.sh
-ENTRYPOINT ["/app/docker/app/scripts/migrate.sh"]
+# Prepare static files for site
+RUN SECRET_KEY=placeholder DATABASE_URL=sqlite:// \
+    python3 manage.py collectstatic --no-input --clear --verbosity 0
+
 CMD ["uwsgi", "--ini", "docker/app/uwsgi.ini"]

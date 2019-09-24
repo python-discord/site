@@ -1,97 +1,80 @@
 # https://aka.ms/yaml
 
 jobs:
-- job: python_lint
-  displayName: 'Lint Job'
-  pool:
-    vmImage: ubuntu-16.04
+  - job: test
+    displayName: 'Test & Lint'
+    pool:
+      vmImage: ubuntu-16.04
 
-  variables:
-    PIP_CACHE_DIR: .cache/pip
+    variables:
+      PIP_CACHE_DIR: .cache/pip
 
-  steps:
-  - task: UsePythonVersion@0
-    displayName: 'Set Python Version'
-    inputs:
-      versionSpec: '3.7.x'
-      addToPath: true
+    steps:
+      - task: UsePythonVersion@0
+        displayName: 'Set Python Version'
+        inputs:
+          versionSpec: '3.7.x'
+          addToPath: true
 
-  - script: python3 -m pip install pipenv && pipenv install --dev --system && python3 -m pip install flake8-formatter-junit-xml
-    displayName: 'Install Project Environment'
+      - task: DockerCompose@0
+        displayName: 'Setup Database'
+        inputs:
+          action: Run a specific service
+          dockerComposeFile: docker-compose.yml
+          projectName: pydis_web
+          serviceName: postgres
+          ports: '7777:5432'
 
-  - script: python3 -m flake8 --format junit-xml --output-file test-lint.xml
-    displayName: 'Run Linter'
+      - script: |
+          pip install pipenv
+          pipenv install --dev --system
+          pip install flake8-formatter-junit-xml
+        displayName: 'Install Project Environment'
 
-  - task: PublishTestResults@2
-    condition: succeededOrFailed()
-    inputs:
-      testResultsFiles: '**/test-*.xml'
-      testRunTitle: 'Site-Django Lint Results'
+      - script: flake8 --format junit-xml --output-file TEST-lint.xml
+        displayName: 'Run Linter'
 
-- job: coverage_test
-  displayName: 'Test Job'
-  dependsOn: python_lint
-  pool:
-    vmImage: ubuntu-16.04
+      - script: |
+          python3 manage.py makemigrations --check
+          python3 manage.py migrate
+          coverage run \
+            manage.py test \
+              --testrunner xmlrunner.extra.djangotestrunner.XMLTestRunner \
+              --no-input
+        env:
+          CI: azure
+          DATABASE_URL: postgres://pysite:pysite@localhost:7777/pysite
+        displayName: 'Run Tests'
 
-  steps:
-    - task: UsePythonVersion@0
-      inputs:
-        versionSpec: '3.7.x'
-        architecture: x64
+      - script: coverage report -m && coverage xml
+        displayName: 'Generate Coverage Reports'
 
-    - script: |
-        curl https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
-        sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
-        sudo apt-get update -y
-        sudo apt-get install -y postgresql-11
-      displayName: 'Install PostgreSQL'
+      - task: PublishTestResults@2
+        condition: succeededOrFailed()
+        displayName: 'Publish Test & Linting Results'
+        inputs:
+          testResultsFiles: '**/TEST-*.xml'
+          testRunTitle: 'Site Test Results'
 
-    - script: |
-        echo "$USER_CREATE_COMMAND;" > pgscript.sql
-        echo "CREATE DATABASE pysite OWNER pysite;" >> pgscript.sql
-        sudo su postgres -c "psql < pgscript.sql"
-      env:
-        USER_CREATE_COMMAND: CREATE USER pysite WITH PASSWORD 'pysite' CREATEDB
-      displayName: 'Setup Database'
+      - task: PublishCodeCoverageResults@1
+        displayName: 'Publish Coverage Results'
+        condition: succeededOrFailed()
+        inputs:
+          codeCoverageTool: Cobertura
+          summaryFileLocation: '**/coverage.xml'
 
-    - script: python3 -m pip install pipenv && pipenv install --dev --system
-      displayName: 'Install Project Environment'
+  - job: build
+    displayName: 'Build & Push Container'
+    dependsOn: test
+    condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
 
-    - script: |
-        python manage.py makemigrations --check
-        python manage.py migrate
-        coverage run --branch manage.py test --testrunner xmlrunner.extra.djangotestrunner.XMLTestRunner --no-input
-      env:
-        CI: azure
-        DATABASE_URL: postgres://pysite:pysite@localhost/pysite
-      displayName: 'Run Test'
-
-    - script: coverage report
-      displayName: 'Show Coverage Results'
-
-    - task: PublishTestResults@2
-      inputs:
-        testResultsFiles: "**/TEST-*.xml"
-        testRunTitle: 'Site-Django Test Results'
-
-- job: docker
-  displayName: 'Build & Push Job'
-  dependsOn: coverage_test
-  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
-  pool:
-    vmImage: ubuntu-16.04
-
-  steps:
-    - task: Docker@1
-      displayName: Login to Docker Hub
-
-      inputs:
-        containerregistrytype: 'Container Registry'
-        dockerRegistryEndpoint: 'DockerHub'
-        command: 'login'
-
-    - script: |
-        docker build -t pythondiscord/site:latest -f docker/app/Dockerfile .
-        docker push pythondiscord/site:latest
-      displayName: 'Build & Push Docker Image'
+    steps:
+      - task: Docker@2
+        displayName: 'Build & Push Container'
+        inputs:
+          containerRegistry: 'DockerHub'
+          repository: 'pythondiscord/site'
+          command: 'buildAndPush'
+          Dockerfile: 'docker/app/Dockerfile'
+          buildContext: '.'
+          tags: 'latest'
