@@ -1,5 +1,5 @@
 from collections.abc import Mapping
-from typing import Any, Dict, List, Union
+from typing import Any, Dict
 
 from django.contrib.postgres import fields as pgfields
 from django.core.exceptions import ValidationError
@@ -93,7 +93,7 @@ def validate_tag_embed_author(author: Any) -> None:
             validator(value)
 
 
-def validate_tag_embed(embed: Dict[str, Union[str, List[dict], dict]]) -> None:
+def validate_tag_embed(embed: Any) -> None:
     """
     Validate a JSON document containing an embed as possible to send on Discord.
 
@@ -120,7 +120,7 @@ def validate_tag_embed(embed: Dict[str, Union[str, List[dict], dict]]) -> None:
         ...
 
     Args:
-        embed (Dict[str, Union[str, List[dict], dict]]):
+        embed (Any):
             A dictionary describing the contents of this embed.
             See the official documentation for a full reference
             of accepted keys by this dictionary:
