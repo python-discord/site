@@ -15,7 +15,8 @@ from django.core.management import call_command, execute_from_command_line
 DEFAULT_ENVS = {
     "DJANGO_SETTINGS_MODULE": "pydis_site.settings",
     "SUPER_USERNAME": "admin",
-    "SUPER_PASSWORD": "admin"
+    "SUPER_PASSWORD": "admin",
+    "DEFAULT_BOT_API_KEY": "badbot13m0n8f570f942013fc818f234916ca531",
 }
 
 
@@ -34,8 +35,8 @@ class SiteManager:
 
     Options:
         --debug    Runs a development server with debug mode enabled.
-        --silent   Sets no output in console for preparation commands.
-        --verbose  Sets verbose output for preparation commands.
+        --silent   Sets minimal console output.
+        --verbose  Sets verbose console output.
     """
 
     def __init__(self, args: List[str]):
@@ -58,12 +59,27 @@ class SiteManager:
 
         name = os.environ["SUPER_USERNAME"]
         password = os.environ["SUPER_PASSWORD"]
+        bot_token = os.environ["DEFAULT_BOT_API_KEY"]
         user = get_user_model()
 
+        # Get or create admin superuser.
         if user.objects.filter(username=name).exists():
-            return print('Admin superuser already exists')
+            user = user.objects.get(username=name)
+            print('Admin superuser already exists.')
+        else:
+            user = user.objects.create_superuser(name, '', password)
+            print('Admin superuser created.')
 
-        user.objects.create_superuser(name, '', password)
+        # Setup a default bot token to connect with site API
+        from rest_framework.authtoken.models import Token
+        token, is_new = Token.objects.update_or_create(user=user)
+        if token.key != bot_token:
+            token.delete()
+        token, is_new = Token.objects.update_or_create(user=user, key=bot_token)
+        if is_new:
+            print(f"New bot token created: {token}")
+        else:
+            print(f"Existing bot token found: {token}")
 
     @staticmethod
     def wait_for_postgres() -> None:
