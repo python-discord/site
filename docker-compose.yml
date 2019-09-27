@@ -22,8 +22,8 @@ services:
   web:
     build:
       context: .
-      dockerfile: docker/app/local.Dockerfile
-    command: docker/app/scripts/migrate_and_serve.sh
+      dockerfile: docker/Dockerfile
+    command: ["run", "--debug"]
     ports:
       - "127.0.0.1:8000:8000"
     depends_on:
@@ -33,7 +33,6 @@ services:
       - staticfiles:/var/www/static
     environment:
       DATABASE_URL: postgres://pysite:pysite@postgres:5432/pysite
-      DEBUG: "true"
       SECRET_KEY: suitable-for-development-only
       STATIC_ROOT: /var/www/static
 
