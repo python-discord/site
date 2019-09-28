@@ -96,7 +96,9 @@ class SiteManager:
 
         # Attempt to connect to the database socket
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        while True:
+
+        attempts_left = 10
+        while attempts_left:
             try:
                 # Ignore 'incomplete startup packet'
                 s.connect((domain, port))
@@ -104,8 +106,12 @@ class SiteManager:
                 print("Database is ready.")
                 break
             except socket.error:
+                attempts_left -= 1
                 print("Not ready yet, retrying.")
                 time.sleep(0.5)
+        else:
+            print("Database could not be found, exiting.")
+            sys.exit(1)
 
     def prepare_server(self) -> None:
         """Perform preparation tasks before running the server."""
