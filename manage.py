@@ -48,7 +48,7 @@ class SiteManager:
         else:
             self.verbosity = 2 if "--verbose" in args else 1
 
-        if self.verbosity and self.debug:
+        if self.debug:
             os.environ.setdefault("DEBUG", "true")
             print("Starting in debug mode.")
 
