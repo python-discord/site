@@ -124,13 +124,13 @@ class SiteManager:
         """Prepare and run the web server."""
         in_reloader = os.environ.get('RUN_MAIN') == 'true'
 
-        # Prevent preparing twice when in debug mode due to reloader
+        # Prevent preparing twice when in dev mode due to reloader
         if not self.debug or in_reloader:
             self.prepare_server()
 
         print("Starting server.")
 
-        # Create a superuser and run the development server
+        # Run the development server
         if self.debug:
             call_command("runserver", "0.0.0.0:8000")
             return
