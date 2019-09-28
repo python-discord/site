@@ -24,6 +24,12 @@ services:
       context: .
       dockerfile: docker/Dockerfile
     command: ["run", "--debug"]
+    networks:
+      default:
+        aliases:
+          - api.web
+          - admin.web
+          - staff.web
     ports:
       - "127.0.0.1:8000:8000"
     depends_on:
