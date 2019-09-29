@@ -75,6 +75,6 @@ jobs:
           containerRegistry: 'DockerHub'
           repository: 'pythondiscord/site'
           command: 'buildAndPush'
-          Dockerfile: 'docker/app/Dockerfile'
+          Dockerfile: 'docker/Dockerfile'
           buildContext: '.'
           tags: 'latest'
