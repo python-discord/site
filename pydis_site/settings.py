@@ -30,12 +30,19 @@ DEBUG = env('DEBUG')
 
 # SECURITY WARNING: keep the secret key used in production secret!
 if DEBUG:
-    ALLOWED_HOSTS = [
-        'pythondiscord.local',
-        'admin.pythondiscord.local',
-        'api.pythondiscord.local',
-        'staff.pythondiscord.local',
-    ]
+    ALLOWED_HOSTS = env.list(
+        'ALLOWED_HOSTS',
+        default=[
+            'pythondiscord.local',
+            'api.pythondiscord.local',
+            'admin.pythondiscord.local',
+            'staff.pythondiscord.local',
+            'web',
+            'api.web',
+            'admin.web',
+            'staff.web'
+        ]
+    )
     SECRET_KEY = secrets.token_urlsafe(32)
 
 elif 'CI' in os.environ:
