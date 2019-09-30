@@ -119,12 +119,14 @@ class SiteManager:
 
         if self.debug:
             self.wait_for_postgres()
-            self.create_superuser()
 
         print("Applying migrations.")
         call_command("migrate", verbosity=self.verbosity)
         print("Collecting static files.")
         call_command("collectstatic", interactive=False, clear=True, verbosity=self.verbosity)
+
+        if self.debug:
+            self.create_superuser()
 
     def run_server(self) -> None:
         """Prepare and run the web server."""
