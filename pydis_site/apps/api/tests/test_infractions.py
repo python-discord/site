@@ -257,32 +257,52 @@ class CreationTests(APISubdomainTestCase):
 
     def test_returns_400_for_expiring_non_expirable_type(self):
         url = reverse('bot:infraction-list', host='api')
-        data = {
-            'user': self.user.id,
-            'actor': self.user.id,
-            'type': 'kick',
-            'expires_at': '5018-11-20T15:52:00+00:00'
-        }
 
-        response = self.client.post(url, data=data)
-        self.assertEqual(response.status_code, 400)
-        self.assertEqual(response.json(), {
-            'expires_at': [f'{data["type"]} infractions cannot expire.']
-        })
+        for infraction_type in ('kick', 'warning'):
+            data = {
+                'user': self.user.id,
+                'actor': self.user.id,
+                'type': infraction_type,
+                'expires_at': '5018-11-20T15:52:00+00:00'
+            }
+
+            response = self.client.post(url, data=data)
+            self.assertEqual(response.status_code, 400)
+            self.assertEqual(response.json(), {
+                'expires_at': [f'{data["type"]} infractions cannot expire.']
+            })
 
     def test_returns_400_for_hidden_non_hideable_type(self):
         url = reverse('bot:infraction-list', host='api')
+
+        for infraction_type in ('superstar', 'warning'):
+            data = {
+                'user': self.user.id,
+                'actor': self.user.id,
+                'type': infraction_type,
+                'hidden': True
+            }
+
+            response = self.client.post(url, data=data)
+            self.assertEqual(response.status_code, 400)
+            self.assertEqual(response.json(), {
+                'hidden': [f'{data["type"]} infractions cannot be hidden.']
+            })
+
+    def test_returns_400_for_non_hidden_required_hidden_type(self):
+        url = reverse('bot:infraction-list', host='api')
+
         data = {
             'user': self.user.id,
             'actor': self.user.id,
-            'type': 'superstar',
-            'hidden': True
+            'type': 'note',
+            'hidden': False,
         }
 
         response = self.client.post(url, data=data)
         self.assertEqual(response.status_code, 400)
         self.assertEqual(response.json(), {
-            'hidden': [f'{data["type"]} infractions cannot be hidden.']
+            'hidden': [f'{data["type"]} infractions must be hidden.']
         })
 
 
