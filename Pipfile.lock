@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "d0e378fcea422eb28537a91e60e7faab8ae08a4ad9e3f1bd71fe89d377d36a8d"
+            "sha256": "ec1cd3daf99e1b368137579c284c79b3dfe5c6eb151758aee102045fddcd09e4"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -262,6 +262,36 @@
             ],
             "version": "==2019.2"
         },
+        "pyuwsgi": {
+            "hashes": [
+                "sha256:15a4626740753b0d0dfeeac7d367f9b2e89ab6af16c195927e60f75359fc1bbc",
+                "sha256:24c40c3b889eb9f283d43feffbc0f7c7fc024e914451425156ddb68af3df1e71",
+                "sha256:393737bd43a7e38f0a4a1601a37a69c4bf893635b37665ff958170fdb604fdb7",
+                "sha256:5a08308f87e639573c1efaa5966a6d04410cd45a73c4586a932fe3ee4b56369d",
+                "sha256:5f4b36c0dbb9931c4da8008aa423158be596e3b4a23cec95a958631603a94e45",
+                "sha256:7c31794f71bbd0ccf542cab6bddf38aa69e84e31ae0f9657a2e18ebdc150c01a",
+                "sha256:802ec6dad4b6707b934370926ec1866603abe31ba03c472f56149001b3533ba1",
+                "sha256:814d73d4569add69a6c19bb4a27cd5adb72b196e5e080caed17dbda740402072",
+                "sha256:829299cd117cf8abe837796bf587e61ce6bfe18423a3a1c510c21e9825789c2c",
+                "sha256:85f2210ceae5f48b7d8fad2240d831f4b890cac85cd98ca82683ac6aa481dfc8",
+                "sha256:861c94442b28cd64af033e88e0f63c66dbd5609f67952dc18694098b47a43f3a",
+                "sha256:957bc6316ffc8463795d56d9953d58e7f32aa5aad1c5ac80bc45c69f3299961e",
+                "sha256:9760c3f56fb5f15852d163429096600906478e9ed2c189a52f2bb21d8a2a986c",
+                "sha256:a4b24703ea818196d0be1dc64b3b57b79c67e8dee0cfa207a4216220912035a7",
+                "sha256:ad7f4968c1ddbf139a306d9b075360d959cc554d994ba5e1f512af9a40e62357",
+                "sha256:b1127d34b90f74faf1707718c57a4193ac028b9f4aec0238638983132297d456",
+                "sha256:bcb04d6ec644b3e08d03c64851e06edd7110489261e50627a4bcadf66ff6920e",
+                "sha256:bebfebb9ee83d7cf37668bf54275b677b7ae283e84a944f9f3ac6a4b66f95d4b",
+                "sha256:c29892dafc65a8b6eb95823fa4bac7754ca3fd1c28ab8d2a973289531b340a27",
+                "sha256:cb296b50b51ba022b0090b28d032ff1dd395a6db03672b65a39e83532edad527",
+                "sha256:ce777ebdf49ce736fc04abf555b5c41ab3f130127543a689dcf8d4871cd18fe4",
+                "sha256:d8b4bf930b6a19bc9ee982b9163d948c87501ad91b71516924e8ed25fe85d2ee",
+                "sha256:e2a420f2c4d35f3ec0b7e752a80d7bd385e2c5a64f67c05f2d2d74230e3114b6",
+                "sha256:fed899ce96f4f2b4d1b9f338dd145a4040ee1d8a5152213af0dd8d4a4d36e9fe"
+            ],
+            "index": "pypi",
+            "version": "==2.0.18.post0"
+        },
         "pyyaml": {
             "hashes": [
                 "sha256:0113bc0ec2ad727182326b61326afa3d1d8280ae1122493553fd6f4397f33df9",
@@ -336,7 +366,7 @@
             "hashes": [
                 "sha256:73a53bc770ce6b1d2ea6916d81ccefe40751d87b30556fa3b992c85b7fde8534"
             ],
-            "path": "./docker/app/wheels/wiki-0.5.dev20190420204942-py3-none-any.whl",
+            "path": "./docker/wheels/wiki-0.5.dev20190420204942-py3-none-any.whl",
             "version": "==0.5.dev20190420204942"
         }
     },
@@ -368,14 +398,6 @@
                 "sha256:fbd93c9ab0a523bf7daec408f3be2ed99a980e20b2d19b50fc184ca6b820d289"
             ],
             "version": "==2.0.1"
-        },
-        "colorama": {
-            "hashes": [
-                "sha256:05eed71e2e327246ad6b38c540c4a3117230b19679b875190486ddd2d721422d",
-                "sha256:f8ac84de7840f5b9c4e3347b3c1eaa50f7e49c2b07596221daec5edaabbd7c48"
-            ],
-            "markers": "platform_system == 'Windows'",
-            "version": "==0.4.1"
         },
         "coverage": {
             "hashes": [
@@ -432,11 +454,11 @@
         },
         "flake8-annotations": {
             "hashes": [
-                "sha256:1309f2bc9853a2d77d578b089d331b0b832b40c97932641e136e1b49d3650c82",
-                "sha256:3ecdd27054c3eed6484139025698465e3c9f4e68dbd5043d0204fcb2550ee27b"
+                "sha256:6ac7ca1e706307686b60af8043ff1db31dc2cfc1233c8210d67a3d9b8f364736",
+                "sha256:b51131007000d67217608fa028a35ff80aa400b474e5972f1f99c2cf9d26bd2e"
             ],
             "index": "pypi",
-            "version": "==1.0.0"
+            "version": "==1.1.0"
         },
         "flake8-bandit": {
             "hashes": [
@@ -645,6 +667,26 @@
                 "sha256:235682dd292d5899d361a811df37e04a8828a5b1da3115886b73cf81ebc9100e"
             ],
             "version": "==0.10.0"
+        },
+        "typed-ast": {
+            "hashes": [
+                "sha256:18511a0b3e7922276346bcb47e2ef9f38fb90fd31cb9223eed42c85d1312344e",
+                "sha256:262c247a82d005e43b5b7f69aff746370538e176131c32dda9cb0f324d27141e",
+                "sha256:2b907eb046d049bcd9892e3076c7a6456c93a25bebfe554e931620c90e6a25b0",
+                "sha256:354c16e5babd09f5cb0ee000d54cfa38401d8b8891eefa878ac772f827181a3c",
+                "sha256:4e0b70c6fc4d010f8107726af5fd37921b666f5b31d9331f0bd24ad9a088e631",
+                "sha256:630968c5cdee51a11c05a30453f8cd65e0cc1d2ad0d9192819df9978984529f4",
+                "sha256:66480f95b8167c9c5c5c87f32cf437d585937970f3fc24386f313a4c97b44e34",
+                "sha256:71211d26ffd12d63a83e079ff258ac9d56a1376a25bc80b1cdcdf601b855b90b",
+                "sha256:95bd11af7eafc16e829af2d3df510cecfd4387f6453355188342c3e79a2ec87a",
+                "sha256:bc6c7d3fa1325a0c6613512a093bc2a2a15aeec350451cbdf9e1d4bffe3e3233",
+                "sha256:cc34a6f5b426748a507dd5d1de4c1978f2eb5626d51326e43280941206c209e1",
+                "sha256:d755f03c1e4a51e9b24d899561fec4ccaf51f210d52abdf8c07ee2849b212a36",
+                "sha256:d7c45933b1bdfaf9f36c579671fec15d25b06c8398f113dab64c18ed1adda01d",
+                "sha256:d896919306dd0aa22d0132f62a1b78d11aaf4c9fc5b3410d3c666b818191630a",
+                "sha256:ffde2fbfad571af120fcbfbbc61c72469e72f550d676c3342492a9dfdefb8f12"
+            ],
+            "version": "==1.4.0"
         },
         "unittest-xml-reporting": {
             "hashes": [
