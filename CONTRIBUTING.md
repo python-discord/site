@@ -38,8 +38,8 @@ All projects evolve over time, and this contribution guide is no different. This
 ##  Supplemental Information
 ### Developer Environment
 Instructions for setting up environments for both the site and the bot can be found on the PyDis Wiki:
-  * [Site](https://wiki.pythondiscord.com/wiki/contributing/project/site)
-  * [Bot](https://wiki.pythondiscord.com/wiki/contributing/project/bot)
+  * [Site](https://pythondiscord.com/pages/contributing/site/)
+  * [Bot](https://pythondiscord.com/pages/contributing/bot/)
 
 When pulling down changes from GitHub, remember to sync your environment using `pipenv sync --dev` to ensure you're using the most up-to-date versions the project's dependencies.
 
