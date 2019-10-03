@@ -22,6 +22,3 @@ class RoleMapping(models.Model):
     def __str__(self):
         """Returns the mapping, for display purposes."""
         return f"@{self.role.name} -> {self.group.name}"
-
-    class Meta:
-        app_label = 'auth'
