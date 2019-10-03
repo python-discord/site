@@ -9,6 +9,7 @@ app_name = 'home'
 urlpatterns = [
     path('', HomeView.as_view(), name='home'),
     path('pages/', include('wiki.urls')),
+    path('accounts/', include('allauth.urls'), name='auth'),
     path('admin/', admin.site.urls),
     path('notifications/', include('django_nyt.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
