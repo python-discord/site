@@ -82,6 +82,13 @@ INSTALLED_APPS = [
     'django.contrib.sites.apps.SitesConfig',
     'django.contrib.staticfiles',
 
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+
+    'allauth.socialaccount.providers.discord',
+    'allauth.socialaccount.providers.github',
+
     'crispy_forms',
     'django_crispy_bulma',
     'django_hosts',
@@ -347,3 +354,13 @@ WIKI_MARKDOWN_HTML_ATTRIBUTES = {
 WIKI_MARKDOWN_HTML_WHITELIST = [
     'article', 'section', 'button'
 ]
+
+# Django Allauth stuff
+
+AUTHENTICATION_BACKENDS = (
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
