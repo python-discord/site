@@ -1,0 +1,72 @@
+html {
+    overflow: auto;
+}
+
+body.site {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+main.site-content {
+    flex: 1;
+}
+
+div.card.has-equal-height {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.navbar-item.is-fullsize {
+    padding: 0;
+}
+
+.navbar-item.is-fullsize img {
+    max-height: 4.75rem;
+}
+
+.navbar-item.has-no-highlight:hover {
+    background-color: transparent;
+}
+
+.navbar-item.has-left-margin-1 {
+    margin-left: 1rem;
+}
+
+.navbar-item.has-left-margin-2 {
+    margin-left: 2rem;
+}
+
+.navbar-item.has-left-margin-3 {
+    margin-left: 3rem;
+}
+
+#navbar-banner {
+    background-color: transparent;
+}
+
+#navbar-banner img {
+    max-height: 3rem;
+}
+
+#django-logo {
+    padding-bottom: 2px;
+    background: url(https://static.djangoproject.com/img/logos/django-logo-negative.png) no-repeat center;
+    filter: grayscale(1) invert(0.02);
+    background-size: 52px 25.5px;
+    background-position: -1px -2px;
+    color: #00000000;
+}
+
+#bulma-logo {
+    padding-left: 18px;
+    height: 20px;
+    background: url(https://bulma.io/images/bulma-logo-white.png) no-repeat center;
+    background-size: 60px;
+    color: #00000000;
+}
+
+#pydis-text {
+    font-weight: bold;
+}

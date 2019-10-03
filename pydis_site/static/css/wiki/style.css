@@ -1,0 +1,89 @@
+#wikiNavbar {
+    min-height: 3rem;
+    z-index: 1;
+}
+
+#wikiNavbar .container {
+    min-height: 3rem;
+}
+
+#wikiNavbar .navbar-brand {
+    min-height: 3rem;
+}
+
+.breadcrumb-section {
+    padding: 1rem;
+}
+
+div.control.is-fullwidth {
+    width: 100%;
+}
+
+ul.pagination-list {
+    list-style: none;
+    margin: 0;
+}
+
+ul.pagination-list li + li {
+    margin: 0;
+}
+
+.pagination {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+/* FA icons used in wiki articles */
+i.is-orangered {
+    color: #FE640A;
+}
+
+i.is-orangered:hover {
+    color: #fe9840;
+}
+
+i.is-blurple {
+    color: #7289DA;
+}
+
+i.is-blurple:hover {
+    color: #93a8da;
+}
+
+i.is-black {
+    color: #000000;
+}
+
+i.is-black:hover {
+    color: #191919;
+}
+
+i.is-youtube-red {
+    color: #BB0000;
+}
+
+i.is-youtube-red:hover {
+    color: #f80000;
+}
+
+i.is-amazon-orange {
+    color: #FF9900;
+}
+
+i.is-amazon-orange:hover {
+    color: #ffb71a;
+}
+
+i.is-teal {
+    color: #95DBE5;
+}
+
+i.is-teal:hover {
+    color: #a9f5ff;
+}
+
+
+
+i.has-icon-padding {
+    padding: 0 10px 25px 0;
+}
