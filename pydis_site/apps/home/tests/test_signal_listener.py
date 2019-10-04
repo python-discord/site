@@ -28,9 +28,7 @@ class SignalListenerTests(TestCase):
             position=0
         )
 
-        cls.admin_group = Group.objects.create(
-            name="admin"
-        )
+        cls.admin_group = Group.objects.create(name="admin")
 
         cls.role_mapping = RoleMapping.objects.create(
             role=cls.admin_role,
@@ -80,13 +78,8 @@ class SignalListenerTests(TestCase):
         cls.discord_admin.roles.set([cls.admin_role])
         cls.discord_admin.save()
 
-        cls.django_user_discordless = DjangoUser.objects.create(
-            username="no-discord"
-        )
-
-        cls.django_user_never_joined = DjangoUser.objects.create(
-            username="never-joined"
-        )
+        cls.django_user_discordless = DjangoUser.objects.create(username="no-discord")
+        cls.django_user_never_joined = DjangoUser.objects.create(username="never-joined")
 
         cls.social_never_joined = SocialAccount.objects.create(
             user=cls.django_user_never_joined,
@@ -94,9 +87,7 @@ class SignalListenerTests(TestCase):
             uid=5
         )
 
-        cls.django_user = DjangoUser.objects.create(
-            username="user"
-        )
+        cls.django_user = DjangoUser.objects.create(username="user")
 
         cls.social_user = SocialAccount.objects.create(
             user=cls.django_user,
@@ -171,12 +162,15 @@ class SignalListenerTests(TestCase):
         with mock.patch.object(SignalListener, "_apply_groups", mock_obj):
             _ = SignalListener()
 
+            # Don't attempt to apply groups if the user doesn't have a linked Discord account
             pre_social_login.send(SocialLogin, sociallogin=github_login)
             mock_obj.assert_not_called()
 
+            # Don't attempt to apply groups if the user hasn't joined the Discord server
             pre_social_login.send(SocialLogin, sociallogin=unmapped_login)
             mock_obj.assert_not_called()
 
+            # Attempt to apply groups if everything checks out
             pre_social_login.send(SocialLogin, sociallogin=discord_login)
             mock_obj.assert_called_with(self.discord_user, self.social_user)
 
@@ -191,12 +185,15 @@ class SignalListenerTests(TestCase):
         with mock.patch.object(SignalListener, "_apply_groups", mock_obj):
             _ = SignalListener()
 
+            # Don't attempt to apply groups if the user doesn't have a linked Discord account
             social_account_added.send(SocialLogin, sociallogin=github_login)
             mock_obj.assert_not_called()
 
+            # Don't attempt to apply groups if the user hasn't joined the Discord server
             social_account_added.send(SocialLogin, sociallogin=unmapped_login)
             mock_obj.assert_not_called()
 
+            # Attempt to apply groups if everything checks out
             social_account_added.send(SocialLogin, sociallogin=discord_login)
             mock_obj.assert_called_with(self.discord_user, self.social_user)
 
@@ -211,12 +208,15 @@ class SignalListenerTests(TestCase):
         with mock.patch.object(SignalListener, "_apply_groups", mock_obj):
             _ = SignalListener()
 
+            # Don't attempt to apply groups if the user doesn't have a linked Discord account
             social_account_updated.send(SocialLogin, sociallogin=github_login)
             mock_obj.assert_not_called()
 
+            # Don't attempt to apply groups if the user hasn't joined the Discord server
             social_account_updated.send(SocialLogin, sociallogin=unmapped_login)
             mock_obj.assert_not_called()
 
+            # Attempt to apply groups if everything checks out
             social_account_updated.send(SocialLogin, sociallogin=discord_login)
             mock_obj.assert_called_with(self.discord_user, self.social_user)
 
@@ -227,12 +227,15 @@ class SignalListenerTests(TestCase):
         with mock.patch.object(SignalListener, "_apply_groups", mock_obj):
             _ = SignalListener()
 
+            # Don't attempt to remove groups if the user doesn't have a linked Discord account
             social_account_removed.send(SocialLogin, socialaccount=self.social_user_github)
             mock_obj.assert_not_called()
 
+            # Don't attempt to remove groups if the social account doesn't map to a Django user
             social_account_removed.send(SocialLogin, socialaccount=self.social_unmapped)
             mock_obj.assert_not_called()
 
+            # Attempt to remove groups if everything checks out
             social_account_removed.send(SocialLogin, socialaccount=self.social_user)
             mock_obj.assert_called_with(self.discord_user, self.social_user, True)
 
@@ -243,12 +246,15 @@ class SignalListenerTests(TestCase):
         with mock.patch.object(SignalListener, "_apply_groups", mock_obj):
             _ = SignalListener()
 
+            # Don't attempt to apply groups if the user doesn't have a linked Discord account
             user_logged_in.send(DjangoUser, user=self.django_user_discordless)
             mock_obj.assert_not_called()
 
+            # Don't attempt to apply groups if the user hasn't joined the Discord server
             user_logged_in.send(DjangoUser, user=self.django_user_never_joined)
             mock_obj.assert_not_called()
 
+            # Attempt to apply groups if everything checks out
             user_logged_in.send(DjangoUser, user=self.django_user)
             mock_obj.assert_called_with(self.discord_user, self.social_user)
 
@@ -258,15 +264,21 @@ class SignalListenerTests(TestCase):
 
         self.assertTrue(self.django_user_discordless.groups.all().count() == 0)
 
+        # Apply groups based on admin role being present on Discord
         handler._apply_groups(self.discord_admin, self.social_admin)
         self.assertTrue(self.admin_group in self.django_admin.groups.all())
 
+        # Remove groups based on the user apparently leaving the server
         handler._apply_groups(self.discord_admin, self.social_admin, True)
-        self.assertTrue(self.admin_group not in self.django_admin.groups.all())
+        self.assertTrue(self.django_user_discordless.groups.all().count() == 0)
 
+        # Apply the admin role again
         handler._apply_groups(self.discord_admin, self.social_admin)
+
+        # Remove all of the roles from the user
         self.discord_admin.roles.clear()
 
+        # Remove groups based on the user no longer having the admin role on Discord
         handler._apply_groups(self.discord_admin, self.social_admin)
         self.assertTrue(self.django_user_discordless.groups.all().count() == 0)
 
@@ -279,15 +291,15 @@ class SignalListenerTests(TestCase):
 
         self.assertTrue(self.django_user_discordless.groups.all().count() == 0)
 
+        # No groups should be applied when there's no user account yet
         handler._apply_groups(self.discord_unmapped, self.social_unmapped)
         self.assertTrue(self.django_user_discordless.groups.all().count() == 0)
 
+        # No groups should be applied when there are only unmapped roles to match
         handler._apply_groups(self.discord_unmapped, self.social_user)
         self.assertTrue(self.django_user.groups.all().count() == 0)
 
-        handler._apply_groups(self.discord_not_in_guild, self.social_user)
-        self.assertTrue(self.django_user.groups.all().count() == 0)
-
+        # No groups should be applied when the user isn't in the guild
         handler._apply_groups(self.discord_not_in_guild, self.social_user)
         self.assertTrue(self.django_user.groups.all().count() == 0)
 

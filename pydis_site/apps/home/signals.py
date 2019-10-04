@@ -42,9 +42,9 @@ class SignalListener:
         social_account_updated.connect(self.social_account_updated)
         social_account_removed.connect(self.social_account_removed)
 
-        user_logged_in.connect(self.user_login)
+        user_logged_in.connect(self.user_logged_in)
 
-    def user_login(self, sender: Type[DjangoUser], **kwargs) -> None:
+    def user_logged_in(self, sender: Type[DjangoUser], **kwargs) -> None:
         """Handles signals relating to Allauth logins."""
         user: DjangoUser = kwargs["user"]
 
