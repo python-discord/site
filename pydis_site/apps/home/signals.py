@@ -1,4 +1,4 @@
-from typing import List, Optional, Type
+from typing import List, Type
 
 from allauth.account.signals import user_logged_in
 from allauth.socialaccount.models import SocialAccount, SocialLogin
@@ -42,9 +42,9 @@ class SignalListener:
         social_account_updated.connect(self.social_account_updated)
         social_account_removed.connect(self.social_account_removed)
 
-        user_logged_in.connect(self.user_logged_in)
+        user_logged_in.connect(self.user_login)
 
-    def user_logged_in(self, sender: Type[DjangoUser], **kwargs) -> None:
+    def user_login(self, sender: Type[DjangoUser], **kwargs) -> None:
         """Handles signals relating to Allauth logins."""
         user: DjangoUser = kwargs["user"]
 
@@ -54,6 +54,7 @@ class SignalListener:
             )
         except SocialAccount.DoesNotExist:
             return  # User's never linked a Discord account
+
         try:
             discord_user: DiscordUser = DiscordUser.objects.get(id=int(account.uid))
         except DiscordUser.DoesNotExist:
@@ -106,14 +107,16 @@ class SignalListener:
             return
 
         try:
-            account: SocialAccount = SocialAccount.objects.get(uid=str(instance.id))
+            account: SocialAccount = SocialAccount.objects.get(
+                uid=str(instance.id), provider=DiscordProvider.id
+            )
         except SocialAccount.DoesNotExist:
             return  # User has never logged in with Discord on the site
 
         self._apply_groups(instance, account)
 
     def _apply_groups(
-            self, user: DiscordUser, account: Optional[SocialAccount], deletion: bool = False
+            self, user: DiscordUser, account: SocialAccount, deletion: bool = False
     ) -> None:
         mappings = RoleMapping.objects.all()
 
