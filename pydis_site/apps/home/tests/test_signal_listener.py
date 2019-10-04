@@ -19,6 +19,7 @@ from pydis_site.apps.staff.models import RoleMapping
 class SignalListenerTests(TestCase):
     @classmethod
     def setUpTestData(cls):
+        """Executed when testing begins."""
         cls.admin_role = Role.objects.create(
             id=0,
             name="admin",
@@ -110,12 +111,12 @@ class SignalListenerTests(TestCase):
         )
 
         cls.social_unmapped = SocialAccount(
-            # We instantiate it and don't put it in the DB, this is (surprisingly)
+            # We instantiate it and don't put it in the DB. This is (surprisingly)
             # a realistic test case, so we need to check for it
 
             provider=DiscordProvider.id,
             uid=5,
-            user_id=None  # Doesn't exist (yes, this is possible)
+            user_id=None  # No relation exists at all
         )
 
         cls.django_admin = DjangoUser.objects.create(
@@ -131,6 +132,7 @@ class SignalListenerTests(TestCase):
         )
 
     def test_model_save(self):
+        """Test signal handling for when Discord user model objects are saved to DB."""
         mock_obj = mock.Mock()
 
         with mock.patch.object(SignalListener, "_apply_groups", mock_obj):
@@ -141,7 +143,7 @@ class SignalListenerTests(TestCase):
                 instance=self.discord_user,
                 raw=True,
                 created=None,  # Not realistic, but we don't use it
-                using=None,   # Again, we don't use it
+                using=None,  # Again, we don't use it
                 update_fields=False  # Always false during integration testing
             )
 
@@ -152,13 +154,14 @@ class SignalListenerTests(TestCase):
                 instance=self.discord_user,
                 raw=False,
                 created=None,  # Not realistic, but we don't use it
-                using=None,   # Again, we don't use it
+                using=None,  # Again, we don't use it
                 update_fields=False  # Always false during integration testing
             )
 
             mock_obj.assert_called_with(self.discord_user, self.social_user)
 
     def test_pre_social_login(self):
+        """Test the pre-social-login Allauth signal handling."""
         mock_obj = mock.Mock()
 
         discord_login = SocialLogin(self.django_user, self.social_user)
@@ -178,6 +181,7 @@ class SignalListenerTests(TestCase):
             mock_obj.assert_called_with(self.discord_user, self.social_user)
 
     def test_social_added(self):
+        """Test the social-account-added Allauth signal handling."""
         mock_obj = mock.Mock()
 
         discord_login = SocialLogin(self.django_user, self.social_user)
@@ -197,6 +201,7 @@ class SignalListenerTests(TestCase):
             mock_obj.assert_called_with(self.discord_user, self.social_user)
 
     def test_social_updated(self):
+        """Test the social-account-updated Allauth signal handling."""
         mock_obj = mock.Mock()
 
         discord_login = SocialLogin(self.django_user, self.social_user)
@@ -216,6 +221,7 @@ class SignalListenerTests(TestCase):
             mock_obj.assert_called_with(self.discord_user, self.social_user)
 
     def test_social_removed(self):
+        """Test the social-account-removed Allauth signal handling."""
         mock_obj = mock.Mock()
 
         with mock.patch.object(SignalListener, "_apply_groups", mock_obj):
@@ -231,6 +237,7 @@ class SignalListenerTests(TestCase):
             mock_obj.assert_called_with(self.discord_user, self.social_user, True)
 
     def test_logged_in(self):
+        """Test the user-logged-in Allauth signal handling."""
         mock_obj = mock.Mock()
 
         with mock.patch.object(SignalListener, "_apply_groups", mock_obj):
@@ -246,6 +253,7 @@ class SignalListenerTests(TestCase):
             mock_obj.assert_called_with(self.discord_user, self.social_user)
 
     def test_apply_groups_admin(self):
+        """Test application of groups by role, relating to an admin user."""
         handler = SignalListener()
 
         self.assertTrue(self.django_user_discordless.groups.all().count() == 0)
@@ -266,6 +274,7 @@ class SignalListenerTests(TestCase):
         self.discord_admin.save()
 
     def test_apply_groups_other(self):
+        """Test application of groups by role, relating to non-standard cases."""
         handler = SignalListener()
 
         self.assertTrue(self.django_user_discordless.groups.all().count() == 0)
@@ -281,3 +290,9 @@ class SignalListenerTests(TestCase):
 
         handler._apply_groups(self.discord_not_in_guild, self.social_user)
         self.assertTrue(self.django_user.groups.all().count() == 0)
+
+    def test_role_mapping_str(self):
+        """Test that role mappings stringify correctly."""
+        self.assertTrue(
+            str(self.role_mapping) == f"@{self.admin_role.name} -> {self.admin_group.name}"
+        )
