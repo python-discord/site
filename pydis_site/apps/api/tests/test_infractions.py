@@ -305,6 +305,91 @@ class CreationTests(APISubdomainTestCase):
             'hidden': [f'{data["type"]} infractions must be hidden.']
         })
 
+    def test_returns_400_for_active_infraction_of_type_that_cannot_be_active(self):
+        """Test if the API rejects active infractions for types that cannot be active."""
+        url = reverse('bot:infraction-list', host='api')
+        restricted_types = ('note', 'warning', 'kick')
+
+        for infraction_type in restricted_types:
+            with self.subTest(infraction_type=infraction_type):
+                invalid_infraction = {
+                    'user': self.user.id,
+                    'actor': self.user.id,
+                    'type': infraction_type,
+                    'reason': 'Take me on!',
+                    'hidden': True,
+                    'active': True,
+                    'expires_at': '2019-10-04T12:52:00+00:00'
+                }
+                response = self.client.post(url, data=invalid_infraction)
+                self.assertEqual(response.status_code, 400)
+                self.assertEqual(response.json(), {
+                    'active': [f'{infraction_type} infractions cannot be active.']
+                })
+
+    def test_returns_400_for_second_active_infraction_of_the_same_type(self):
+        """Test if the API rejects a second active infraction of the same type for a given user."""
+        url = reverse('bot:infraction-list', host='api')
+        active_infraction_types = ('mute', 'ban', 'superstar')
+
+        for infraction_type in active_infraction_types:
+            with self.subTest(infraction_type=infraction_type):
+                first_active_infraction = {
+                    'user': self.user.id,
+                    'actor': self.user.id,
+                    'type': infraction_type,
+                    'reason': 'Take me on!',
+                    'active': True,
+                    'expires_at': '2019-10-04T12:52:00+00:00'
+                }
+
+                # Post the first active infraction of a type and confirm it's accepted.
+                first_response = self.client.post(url, data=first_active_infraction)
+                self.assertEqual(first_response.status_code, 201)
+
+                second_active_infraction = {
+                    'user': self.user.id,
+                    'actor': self.user.id,
+                    'type': infraction_type,
+                    'reason': 'Take on me!',
+                    'active': True,
+                    'expires_at': '2019-10-04T12:52:00+00:00'
+                }
+                second_response = self.client.post(url, data=second_active_infraction)
+                self.assertEqual(second_response.status_code, 400)
+                self.assertEqual(second_response.json(), {
+                    'active': [f'This user already has an active {infraction_type} infraction']
+                })
+
+    def test_returns_201_for_second_active_infraction_of_different_type(self):
+        """Test if the API accepts a second active infraction of a different type than the first."""
+        url = reverse('bot:infraction-list', host='api')
+        first_active_infraction = {
+            'user': self.user.id,
+            'actor': self.user.id,
+            'type': 'mute',
+            'reason': 'Be silent!',
+            'hidden': True,
+            'active': True,
+            'expires_at': '2019-10-04T12:52:00+00:00'
+        }
+        second_active_infraction = {
+            'user': self.user.id,
+            'actor': self.user.id,
+            'type': 'ban',
+            'reason': 'Be gone!',
+            'hidden': True,
+            'active': True,
+            'expires_at': '2019-10-05T12:52:00+00:00'
+        }
+        # Post the first active infraction of a type and confirm it's accepted.
+        first_response = self.client.post(url, data=first_active_infraction)
+        self.assertEqual(first_response.status_code, 201)
+
+        # Post the first active infraction of a type and confirm it's accepted.
+        second_response = self.client.post(url, data=second_active_infraction)
+        self.assertEqual(second_response.status_code, 201)
+
 
 class ExpandedTests(APISubdomainTestCase):
     @classmethod
