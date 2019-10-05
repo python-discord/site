@@ -1,3 +1,5 @@
+{% load account %}
+{% load socialaccount %}
 {% load static %}
 
 <nav class="navbar is-primary" role="navigation" aria-label="main navigation">
@@ -83,6 +85,25 @@
           <a class="navbar-item" href="{% url 'wiki:get' path="code-jams/" %}">
             Code Jams
           </a>
+          <hr class="navbar-divider">
+
+          {% if not user.is_authenticated %}
+            {% get_providers as socialaccount_providers %}
+
+            {% for provider in socialaccount_providers %}
+              {% if provider.id == "discord" %}
+                  <a class="navbar-item"
+                     href="{% provider_login_url provider.id process="login" scope=scope auth_params=auth_params %}"
+                  >Login with {{ provider.name }}</a>
+              {% endif %}
+            {% endfor %}
+          {% else %}
+            <form method="post" action="{% url 'logout' %}">
+              {% csrf_token %}
+              <button type="submit" class="navbar-item button is-white is-inline is-fullwidth has-text-left is-size-navbar-menu has-text-grey-dark">Logout</button>
+            </form>
+          {% endif %}
+
         </div>
       </div>
     </div>

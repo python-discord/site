@@ -376,3 +376,4 @@ AUTHENTICATION_BACKENDS = (
 )
 
 ACCOUNT_EMAIL_VERIFICATION = "none"  # No verification required; we don't use emails for anything
+LOGIN_REDIRECT_URL = "home"
