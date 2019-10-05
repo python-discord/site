@@ -272,6 +272,16 @@ LOGGING = {
     }
 }
 
+# Django Messages framework config
+
+MESSAGE_TAGS = {
+    messages.DEBUG: 'primary',
+    messages.INFO: 'info',
+    messages.SUCCESS: 'success',
+    messages.WARNING: 'warning',
+    messages.ERROR: 'danger',
+}
+
 # Custom settings for Crispyforms
 CRISPY_ALLOWED_TEMPLATE_PACKS = (
     "bootstrap",
