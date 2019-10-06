@@ -24,12 +24,12 @@
         <form method="post">
           {% csrf_token %}
 
-          <div class="card field is-horizontal">
-            <input class="is-checkradio is-circle is-dark" type="checkbox" id="consent" name="consent" />
-            <label for="consent">
-              I consent to Python Discord using my Discord email address to identify my account
-            </label>
-          </div>
+            <div class="field notification is-horizontal">
+              <input class="is-checkradio is-circle is-dark" type="checkbox" id="consent" name="consent" />
+              <label for="consent">
+                I consent to Python Discord using my Discord email address to identify my account
+              </label>
+            </div>
 
           <div class="field is-grouped-centered has-text-centered">
             <button class="button is-large is-primary" type="submit">
@@ -42,14 +42,6 @@
             </button>
           </div>
         </form>
-
-{#        {% for provider in socialaccount_providers %}#}
-{#          {% if provider.id == "discord" %}#}
-{#              <a class="navbar-item"#}
-{#                 href="{% provider_login_url provider.id process="login" scope=scope auth_params=auth_params %}"#}
-{#              >Login with {{ provider.name }}</a>#}
-{#          {% endif %}#}
-{#        {% endfor %}#}
       </div>
     </div>
   </div>
