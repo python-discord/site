@@ -1,3 +1,4 @@
+{% load socialaccount %}
 {% load static %}
 
 <nav class="navbar is-primary" role="navigation" aria-label="main navigation">
@@ -86,9 +87,15 @@
           <hr class="navbar-divider">
 
           {% if not user.is_authenticated %}
-            <a class="navbar-item" href="{% url 'login' %}">
-              Login
-            </a>
+            {% get_providers as socialaccount_providers %}
+
+            {% for provider in socialaccount_providers %}
+              {% if provider.id == "discord" %}
+                  <a class="navbar-item"
+                     href="{% provider_login_url provider.id process="login" scope=scope auth_params=auth_params %}"
+                  >Login with {{ provider.name }}</a>
+              {% endif %}
+            {% endfor %}
           {% else %}
             <form method="post" action="{% url 'logout' %}">
               {% csrf_token %}

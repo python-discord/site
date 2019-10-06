@@ -6,7 +6,6 @@ from django.contrib import admin
 from django.contrib.messages import ERROR
 from django.urls import include, path
 
-from pydis_site.apps.home.views.login import LoginView
 from pydis_site.utils.views import MessageRedirectView
 from .views import HomeView
 
@@ -31,7 +30,6 @@ urlpatterns = [
     ),
 
     path('connections', ConnectionsView.as_view()),
-    path('login', LoginView.as_view(), name="login"),
     path('logout', LogoutView.as_view(), name="logout"),
 
     path('admin/', admin.site.urls),
