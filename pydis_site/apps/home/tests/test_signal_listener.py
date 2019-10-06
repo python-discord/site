@@ -2,6 +2,7 @@ from unittest import mock
 
 from allauth.account.signals import user_logged_in
 from allauth.socialaccount.models import SocialAccount, SocialLogin
+from allauth.socialaccount.providers import registry
 from allauth.socialaccount.providers.discord.provider import DiscordProvider
 from allauth.socialaccount.providers.github.provider import GitHubProvider
 from allauth.socialaccount.signals import (
@@ -20,6 +21,14 @@ class SignalListenerTests(TestCase):
     @classmethod
     def setUpTestData(cls):
         """Executed when testing begins."""
+        # This needs to be registered so we can test the role linking logic with a user that
+        # doesn't have a Discord account linked, but is logged in somehow with another account
+        # type anyway. The logic this is testing was designed so that the system would be
+        # robust enough to handle that case, but it's impossible to fully test (and therefore
+        # to have coverage of) those lines without an extra provider, and GH was the second
+        # provider it was built with in mind.
+        registry.register(GitHubProvider)
+
         cls.admin_role = Role.objects.create(
             id=0,
             name="admin",
