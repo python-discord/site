@@ -77,25 +77,3 @@ div.card.has-equal-height {
 button.is-size-navbar-menu {
     font-size: 14px;
 }
-
-/* On-page message styling */
-
-@keyframes message-slide-in {
-    0% {
-        transform: translateX(100%);
-    }
-
-    100% {
-        transform: translateX(0);
-    }
-}
-
-div.messages {
-    animation: 0.5s ease-out 0s 1 message-slide-in;
-    padding: 0.5rem;
-    position: fixed;
-    right: 0;
-    top: 76px;
-
-    z-index: 1000;  /* On top of everything else */
-}

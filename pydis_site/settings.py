@@ -295,7 +295,7 @@ CRISPY_TEMPLATE_PACK = "bulma"
 
 # Custom settings for django-simple-bulma
 BULMA_SETTINGS = {
-    "variables": {
+    "variables": {  # If you update these colours, please update the notification.css file
         "green": "#21c65c",  # Accessibility: Better contrast with the light text
         "primary": "#7289DA",
         "link": "$primary",
@@ -303,6 +303,8 @@ BULMA_SETTINGS = {
         "dimensions": "16 24 32 48 64 96 128 256 512",  # Possible image dimensions
         "navbar-height": "4.75rem",
         "footer-padding": "1rem 1.5rem 1rem",
+
+        "notification-background-color": "#33353C",  # Discord embed background colour
     }
 }
 

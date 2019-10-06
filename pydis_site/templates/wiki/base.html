@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="{% static "css/wiki/simplemde-fixes.css" %}">
   <link rel="stylesheet" href="{% static "css/wiki/style.css" %}">
   <link rel="stylesheet" href="{% static "css/pygments/darcula.css" %}">
+  <link rel="stylesheet" href="{% static "css/base/notification.css" %}">
 {% endblock %}
 
 {% block content %}
@@ -23,6 +24,18 @@
   {% endblock %}
 
   {% block wiki_navbar %}{% endblock %}
+
+  {% if messages %}
+    <div class="messages">
+      {% for message in messages %}
+        <div class="notification {% if message.tags %}is-{{ message.tags }}{% endif %}">
+          <button class="delete"></button>
+
+          {{ message }}
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
 
   {% block wiki_breadcrumbs %}
     {% include "wiki/includes/breadcrumbs.html" %}
