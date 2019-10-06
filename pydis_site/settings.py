@@ -87,7 +87,6 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
 
     'allauth.socialaccount.providers.discord',
-    'allauth.socialaccount.providers.github',
 
     'crispy_forms',
     'django_crispy_bulma',

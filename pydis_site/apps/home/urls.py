@@ -15,7 +15,6 @@ urlpatterns = [
     path('pages/', include('wiki.urls')),
 
     path('accounts/', include('allauth.socialaccount.providers.discord.urls')),
-    path('accounts/', include('allauth.socialaccount.providers.github.urls')),
 
     path(
         'accounts/login/cancelled', MessageRedirectView.as_view(
