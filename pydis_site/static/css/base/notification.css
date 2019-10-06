@@ -22,38 +22,38 @@ div.messages {
 
 /* Discord light theme inspired notifications */
 
-.notification {
+.messages .notification {
     background-color: #fdfdfd;  /* Discord embed background */
     border: #eeeeee 1px solid;  /* Discord embed border */
     border-left: #4f545c 4px solid;  /* Discord default embed colour */
     color: #4a4a4a;  /* Bulma default colour */
 }
 
-.notification.is-primary {
+.messages .notification.is-primary {
     background-color: #fdfdfd;
     border-left-color: #7289DA;
     color: #4a4a4a;  /* Bulma default colour */
 }
 
-.notification.is-info {
+.messages .notification.is-info {
     background-color: #fdfdfd;
     border-left-color: #1c8ad3;  /* Bulma default colour */
     color: #4a4a4a;  /* Bulma default colour */
 }
 
-.notification.is-success {
+.messages .notification.is-success {
     background-color: #fdfdfd;
     border-left-color: #21c65c;
     color: #4a4a4a;  /* Bulma default colour */
 }
 
-.notification.is-warning {
+.messages .notification.is-warning {
     background-color: #fdfdfd;
     border-left-color: #ffdd57;  /* Bulma default colour */
     color: #4a4a4a;  /* Bulma default colour */
 }
 
-.notification.is-danger {
+.messages .notification.is-danger {
     background-color: #fdfdfd;
     border-left-color: #ff3860;  /* Bulma default colour */
     color: #4a4a4a;  /* Bulma default colour */
@@ -61,38 +61,38 @@ div.messages {
 
 /* Discord dark theme inspired notifications */
 
-.notification.is-dark {
+.messages .notification.is-dark {
     background-color: #33353C;  /* Discord embed background */
     border: #36393f 1px solid;  /* Discord embed border */
     border-left: #4f545c 4px solid;  /* Discord default embed colour */
     color: #fff;  /* Bulma default colour */
 }
 
-.notification.is-dark.is-primary {
+.messages .notification.is-dark.is-primary {
     background-color: #33353C;
     border-left-color: #7289DA;
     color: #fff;  /* Bulma default colour */
 }
 
-.notification.is-dark.is-info {
+.messages .notification.is-dark.is-info {
     background-color: #33353C;
     border-left-color: #1c8ad3;  /* Bulma default colour */
     color: #fff;  /* Bulma default colour */
 }
 
-.notification.is-dark.is-success {
+.messages .notification.is-dark.is-success {
     background-color: #33353C;
     border-left-color: #21c65c;
     color: #fff;  /* Bulma default colour */
 }
 
-.notification.is-dark.is-warning {
+.messages .notification.is-dark.is-warning {
     background-color: #33353C;
     border-left-color: #ffdd57;  /* Bulma default colour */
     color: #fff;  /* Bulma default colour */
 }
 
-.notification.is-dark.is-danger {
+.messages .notification.is-dark.is-danger {
     background-color: #33353C;
     border-left-color: #ff3860;  /* Bulma default colour */
     color: #fff;  /* Bulma default colour */
