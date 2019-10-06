@@ -26,6 +26,18 @@
 <body class="site">
 
 <main class="site-content">
+  {% if messages %}
+    <div class="messages is-full-mobile">
+      {% for message in messages %}
+        <div class="notification is-full-mobile {% if message.tags %}is-{{ message.tags }}{% endif %}">
+          <button class="delete"></button>
+
+          {{ message }}
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+
   {% block content %}
     {{ block.super }}
   {% endblock %}

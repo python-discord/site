@@ -9,22 +9,6 @@
 {% block content %}
   {% include "base/navbar.html" %}
 
-  {% if messages %}
-    <section class="section message-section is-centered">
-      <div class="columns is-mobile is-centered">
-        <div class="column is-one-third-desktop is-full-tablet is-full-mobile">
-          {% for message in messages %}
-            <div class="notification {% if message.tags %}is-{{ message.tags }}{% endif %}">
-              <button class="delete"></button>
-
-              {{ message }}
-            </div>
-          {% endfor %}
-        </div>
-      </div>
-    </section>
-  {% endif %}
-
   <section class="section">
 
     {# Who are we? #}
