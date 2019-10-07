@@ -94,6 +94,7 @@ class StringDunderMethodTests(SimpleTestCase):
                     discriminator=5, avatar_hash=None
                 ),
                 channel_id=555,
+                jump_url="billy's awsome message",
                 content="oh no",
                 expiration=dt(5018, 11, 20, 15, 52, tzinfo=timezone.utc)
             )
