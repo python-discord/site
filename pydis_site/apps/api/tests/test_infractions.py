@@ -1,6 +1,7 @@
 from datetime import datetime as dt, timedelta, timezone
 from urllib.parse import quote
 
+from django.db.utils import IntegrityError
 from django_hosts.resolvers import reverse
 
 from .base import APISubdomainTestCase
@@ -165,6 +166,12 @@ class CreationTests(APISubdomainTestCase):
             id=5,
             name='james',
             discriminator=1,
+            avatar_hash=None
+        )
+        cls.second_user = User.objects.create(
+            id=6,
+            name='carl',
+            discriminator=2,
             avatar_hash=None
         )
 
@@ -390,6 +397,82 @@ class CreationTests(APISubdomainTestCase):
         second_response = self.client.post(url, data=second_active_infraction)
         self.assertEqual(second_response.status_code, 201)
 
+    def test_unique_constraint_raises_integrity_error_on_second_active_of_same_type(self):
+        """Do we raise `IntegrityError` for the second active infraction of a type for a user?"""
+        Infraction.objects.create(
+            user=self.user,
+            actor=self.user,
+            type="ban",
+            active=True,
+            reason="The first active ban"
+        )
+        with self.assertRaises(IntegrityError):
+            Infraction.objects.create(
+                user=self.user,
+                actor=self.user,
+                type="ban",
+                active=True,
+                reason="The second active ban"
+            )
+
+    def test_unique_constraint_accepts_active_infraction_after_inactive_infraction(self):
+        """Do we accept an active infraction if the others of the same type are inactive?"""
+        Infraction.objects.create(
+            user=self.user,
+            actor=self.user,
+            type="ban",
+            active=False,
+            reason="The first inactive ban"
+        )
+        Infraction.objects.create(
+            user=self.user,
+            actor=self.user,
+            type="ban",
+            active=False,
+            reason="The second inactive ban"
+        )
+        Infraction.objects.create(
+            user=self.user,
+            actor=self.user,
+            type="ban",
+            active=True,
+            reason="The first active ban"
+        )
+
+    def test_unique_constraint_accepts_second_active_of_different_type(self):
+        """Do we accept a second active infraction of a different type for a given user?"""
+        Infraction.objects.create(
+            user=self.user,
+            actor=self.user,
+            type="ban",
+            active=True,
+            reason="The first active ban"
+        )
+        Infraction.objects.create(
+            user=self.user,
+            actor=self.user,
+            type="mute",
+            active=True,
+            reason="The first active mute"
+        )
+
+    def test_unique_constraint_accepts_active_infractions_for_different_users(self):
+        """Do we accept two active infractions of the same type for two different users?"""
+        Infraction.objects.create(
+            user=self.user,
+            actor=self.user,
+            type="ban",
+            active=True,
+            reason="An active ban for the first user"
+        )
+        Infraction.objects.create(
+            user=self.second_user,
+            actor=self.second_user,
+            type="ban",
+            active=False,
+            reason="An active ban for the second user"
+        )
+
 
 class ExpandedTests(APISubdomainTestCase):
     @classmethod
@@ -403,12 +486,14 @@ class ExpandedTests(APISubdomainTestCase):
         cls.kick = Infraction.objects.create(
             user_id=cls.user.id,
             actor_id=cls.user.id,
-            type='kick'
+            type='kick',
+            active=False
         )
         cls.warning = Infraction.objects.create(
             user_id=cls.user.id,
             actor_id=cls.user.id,
-            type='warning'
+            type='warning',
+            active=False,
         )
 
     def check_expanded_fields(self, infraction):
