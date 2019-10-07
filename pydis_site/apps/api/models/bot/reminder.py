@@ -32,6 +32,11 @@ class Reminder(ModelReprMixin, models.Model):
             ),
         )
     )
+    jump_url = models.CharFiels(
+        help_text=("The jump url of the message "
+                   "that created the reminder"
+                  )
+    )
     content = models.CharField(
         max_length=1500,
         help_text="The content that the user wants to be reminded of."
