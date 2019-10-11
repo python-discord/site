@@ -61,3 +61,8 @@ class LogEntry(ModelReprMixin, models.Model):
         level = self.level[:4].upper()
 
         return f'{timestamp} | {self.application} | {level} | {message}'
+
+    class Meta:
+        """Customizes the default generated plural name to valid English."""
+
+        verbose_name_plural = 'Log entries'
