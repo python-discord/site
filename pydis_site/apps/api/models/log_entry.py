@@ -1,7 +1,13 @@
+import textwrap
+
 from django.db import models
 from django.utils import timezone
 
 from pydis_site.apps.api.models.utils import ModelReprMixin
+
+
+# Used to shorten the timestamp length in the Django Admin.
+TIMESTAMP_WITH_SECONDS_LENGTH = len('YYYY-MM-DD HH:MM:SS')
 
 
 class LogEntry(ModelReprMixin, models.Model):
@@ -48,3 +54,10 @@ class LogEntry(ModelReprMixin, models.Model):
     message = models.TextField(
         help_text="The textual content of the log line."
     )
+
+    def __str__(self) -> str:
+        timestamp = str(self.timestamp)[:TIMESTAMP_WITH_SECONDS_LENGTH]
+        message = textwrap.shorten(self.message, width=140)
+        level = self.level[:4].upper()
+
+        return f'{timestamp} | {self.application} | {level} | {message}'
