@@ -19,6 +19,11 @@ class LogEntryAdmin(admin.ModelAdmin):
     """Allows viewing logs in the Django Admin without allowing edits."""
 
     list_display = ('timestamp', 'application', 'level', 'message')
+    fieldsets = (
+        ('Overview', {'fields': ('timestamp', 'application', 'logger_name')}),
+        ('Metadata', {'fields': ('level', 'module', 'line')}),
+        ('Contents', {'fields': ('message',)})
+    )
     readonly_fields = (
         'application',
         'logger_name',
