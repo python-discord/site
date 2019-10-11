@@ -1,6 +1,7 @@
-from datetime import datetime as dt, timezone
+from datetime import datetime as dt
 
 from django.test import SimpleTestCase
+from django.utils import timezone
 
 from ..models import (
     DeletedMessage,
