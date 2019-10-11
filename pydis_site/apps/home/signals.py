@@ -92,7 +92,7 @@ class SignalListener:
         except DiscordUser.DoesNotExist:
             return
 
-        self._apply_groups(user, account, True)
+        self._apply_groups(user, account, deletion=True)
 
     def model_updated(self, sender: Type[DiscordUser], **kwargs) -> None:
         """Handle signals related to the updating of Discord User model entries."""
