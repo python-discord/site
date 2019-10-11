@@ -7,7 +7,6 @@ from ..models import (
     DeletedMessage,
     DocumentationLink,
     Infraction,
-    LogEntry,
     Message,
     MessageDeletionContext,
     ModelReprMixin,
@@ -31,26 +30,6 @@ class ReprMixinTests(SimpleTestCase):
     def test_shows_attributes(self):
         expected = "<SimpleClass(the_cake='is a lie')>"
         self.assertEqual(repr(self.klass), expected)
-
-
-class LogEntryStringDunderTests(SimpleTestCase):
-    def setUp(self):
-        self.entry = LogEntry(
-            application='bot',
-            logger_name='bot.rules.antispam',
-            timestamp=timezone.now(),
-            level='debug',
-            module='bot.rules.antispam',
-            line=44,
-            message="One day computers might become useful."
-        )
-
-    def test_str_shows_content(self):
-        tokens = str(self.entry).split(' | ')
-        _timestamp, app, level, message = tokens
-        self.assertEqual(app, 'bot')
-        self.assertEqual(level, 'DEBU'),
-        self.assertEqual(message, "One day computers might become useful.")
 
 
 class StringDunderMethodTests(SimpleTestCase):
