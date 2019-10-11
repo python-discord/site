@@ -6,7 +6,7 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('api', '0043_infraction_hidden_warnings_to_notes'),
+        ('api', '0044_migrate_nominations_from_infraction_to_nomination_model'),
     ]
 
     operations = [
