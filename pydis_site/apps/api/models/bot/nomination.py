@@ -39,3 +39,8 @@ class Nomination(ModelReprMixin, models.Model):
         help_text="When the nomination was ended.",
         null=True
     )
+
+    def __str__(self):
+        """Representation that makes the target and state of the nomination immediately evident."""
+        status = "active" if self.active else "ended"
+        return f"Nomination of {self.user} ({status})"
