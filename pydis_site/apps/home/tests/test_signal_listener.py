@@ -246,7 +246,7 @@ class SignalListenerTests(TestCase):
 
             # Attempt to remove groups if everything checks out
             social_account_removed.send(SocialLogin, socialaccount=self.social_user)
-            mock_obj.assert_called_with(self.discord_user, self.social_user, True)
+            mock_obj.assert_called_with(self.discord_user, self.social_user, deletion=True)
 
     def test_logged_in(self):
         """Test the user-logged-in Allauth signal handling."""
