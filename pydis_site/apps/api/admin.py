@@ -18,6 +18,7 @@ from .models import (
 class LogEntryAdmin(admin.ModelAdmin):
     """Allows viewing logs in the Django Admin without allowing edits."""
 
+    actions = None
     list_display = ('timestamp', 'application', 'level', 'message')
     fieldsets = (
         ('Overview', {'fields': ('timestamp', 'application', 'logger_name')}),
@@ -35,6 +36,10 @@ class LogEntryAdmin(admin.ModelAdmin):
         'line',
         'message'
     )
+
+    def has_delete_permission(self, request, obj=None) -> bool:
+        """Deny LogEntry deletion."""
+        return False
 
 
 admin.site.register(BotSetting)
