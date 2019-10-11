@@ -24,6 +24,8 @@ class LogEntryAdmin(admin.ModelAdmin):
         ('Metadata', {'fields': ('level', 'module', 'line')}),
         ('Contents', {'fields': ('message',)})
     )
+    list_filter = ('application', 'level', 'timestamp')
+    search_fields = ('message',)
     readonly_fields = (
         'application',
         'logger_name',
