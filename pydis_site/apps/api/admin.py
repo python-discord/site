@@ -1,4 +1,7 @@
+from typing import Optional
+
 from django.contrib import admin
+from django.http import HttpRequest
 
 from .models import (
     BotSetting,
@@ -37,7 +40,11 @@ class LogEntryAdmin(admin.ModelAdmin):
         'message'
     )
 
-    def has_delete_permission(self, request, obj=None) -> bool:
+    def has_delete_permission(
+            self,
+            request: HttpRequest,
+            obj: Optional[LogEntry] = None
+    ) -> bool:
         """Deny LogEntry deletion."""
         return False
 
