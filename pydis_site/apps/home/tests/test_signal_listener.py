@@ -271,7 +271,7 @@ class SignalListenerTests(TestCase):
         """Test application of groups by role, relating to an admin user."""
         handler = SignalListener()
 
-        self.assertTrue(self.django_user_discordless.groups.all().count() == 0)
+        self.assertEqual(self.django_user_discordless.groups.all().count(), 0)
 
         # Apply groups based on admin role being present on Discord
         handler._apply_groups(self.discord_admin, self.social_admin)
@@ -279,7 +279,7 @@ class SignalListenerTests(TestCase):
 
         # Remove groups based on the user apparently leaving the server
         handler._apply_groups(self.discord_admin, self.social_admin, True)
-        self.assertTrue(self.django_user_discordless.groups.all().count() == 0)
+        self.assertEqual(self.django_user_discordless.groups.all().count(), 0)
 
         # Apply the admin role again
         handler._apply_groups(self.discord_admin, self.social_admin)
@@ -289,7 +289,7 @@ class SignalListenerTests(TestCase):
 
         # Remove groups based on the user no longer having the admin role on Discord
         handler._apply_groups(self.discord_admin, self.social_admin)
-        self.assertTrue(self.django_user_discordless.groups.all().count() == 0)
+        self.assertEqual(self.django_user_discordless.groups.all().count(), 0)
 
         self.discord_admin.roles.add(self.admin_role)
         self.discord_admin.save()
@@ -298,22 +298,23 @@ class SignalListenerTests(TestCase):
         """Test application of groups by role, relating to non-standard cases."""
         handler = SignalListener()
 
-        self.assertTrue(self.django_user_discordless.groups.all().count() == 0)
+        self.assertEqual(self.django_user_discordless.groups.all().count(), 0)
 
         # No groups should be applied when there's no user account yet
         handler._apply_groups(self.discord_unmapped, self.social_unmapped)
-        self.assertTrue(self.django_user_discordless.groups.all().count() == 0)
+        self.assertEqual(self.django_user_discordless.groups.all().count(), 0)
 
         # No groups should be applied when there are only unmapped roles to match
         handler._apply_groups(self.discord_unmapped, self.social_user)
-        self.assertTrue(self.django_user.groups.all().count() == 0)
+        self.assertEqual(self.django_user.groups.all().count(), 0)
 
         # No groups should be applied when the user isn't in the guild
         handler._apply_groups(self.discord_not_in_guild, self.social_user)
-        self.assertTrue(self.django_user.groups.all().count() == 0)
+        self.assertEqual(self.django_user.groups.all().count(), 0)
 
     def test_role_mapping_str(self):
         """Test that role mappings stringify correctly."""
-        self.assertTrue(
-            str(self.role_mapping) == f"@{self.admin_role.name} -> {self.admin_group.name}"
+        self.assertEqual(
+            str(self.role_mapping),
+            f"@{self.admin_role.name} -> {self.admin_group.name}"
         )
