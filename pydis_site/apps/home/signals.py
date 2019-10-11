@@ -146,14 +146,10 @@ class SignalListener:
                 except RoleMapping.DoesNotExist:
                     continue  # No mapping exists
 
-            remove_groups = [
-                mapping.group for mapping in mappings if mapping.group not in new_groups
-            ]
+                account.user.groups.add(
+                    group for group in new_groups if group not in current_groups
+                )
 
-            add_groups = [group for group in new_groups if group not in current_groups]
-
-            if remove_groups:
-                account.user.groups.remove(*remove_groups)
-
-            if add_groups:
-                account.user.groups.add(*add_groups)
+                account.user.groups.remove(
+                    mapping.group for mapping in mappings if mapping.group not in new_groups
+                )
