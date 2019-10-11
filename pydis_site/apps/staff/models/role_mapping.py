@@ -10,13 +10,15 @@ class RoleMapping(models.Model):
     role = models.OneToOneField(
         Role,
         on_delete=models.CASCADE,
-        help_text="The Discord role to use for this mapping."
+        help_text="The Discord role to use for this mapping.",
+        unique=True,  # Unique in order to simplify group assignment logic
     )
 
     group = models.OneToOneField(
         Group,
         on_delete=models.CASCADE,
-        help_text="The Django permissions group to use for this mapping."
+        help_text="The Django permissions group to use for this mapping.",
+        unique=True,  # Unique in order to simplify group assignment logic
     )
 
     def __str__(self):

@@ -1,4 +1,4 @@
-from typing import List, Type
+from typing import List, Optional, Type
 
 from allauth.account.signals import user_logged_in
 from allauth.socialaccount.models import SocialAccount, SocialLogin
@@ -8,7 +8,7 @@ from allauth.socialaccount.signals import (
     pre_social_login, social_account_added, social_account_removed,
     social_account_updated)
 from django.contrib.auth.models import Group, User as DjangoUser
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, pre_delete, pre_save
 
 from pydis_site.apps.api.models import User as DiscordUser
 from pydis_site.apps.staff.models import RoleMapping
@@ -35,7 +35,10 @@ class SignalListener:
     """
 
     def __init__(self):
-        post_save.connect(self.model_updated, sender=DiscordUser)
+        post_save.connect(self.user_model_updated, sender=DiscordUser)
+
+        pre_delete.connect(self.mapping_model_deleted, sender=RoleMapping)
+        pre_save.connect(self.mapping_model_updated, sender=RoleMapping)
 
         pre_social_login.connect(self.social_account_updated)
         social_account_added.connect(self.social_account_updated)
@@ -94,7 +97,41 @@ class SignalListener:
 
         self._apply_groups(user, account, deletion=True)
 
-    def model_updated(self, sender: Type[DiscordUser], **kwargs) -> None:
+    def mapping_model_deleted(self, sender: Type[RoleMapping], **kwargs) -> None:
+        """Handle signals related to the deletion of Role Mapping model entries."""
+        instance: RoleMapping = kwargs["instance"]
+
+        for user in instance.group.user_set.all():
+            user.groups.remove(instance.group)
+
+    def mapping_model_updated(self, sender: Type[RoleMapping], **kwargs) -> None:
+        """Handle signals related to the updating of Role Mapping model entries."""
+        instance: RoleMapping = kwargs["instance"]
+        raw: bool = kwargs["raw"]
+
+        if raw:
+            # Fixtures are being loaded, so don't touch anything
+            return
+
+        old_instance: Optional[RoleMapping] = None
+
+        if instance.id is not None:
+            # We don't try to catch DoesNotExist here because we can't test for it,
+            # it should never happen (unless we have a bad DB failure)
+
+            old_instance = RoleMapping.objects.get(id=instance.id)
+
+        if old_instance:
+            self.mapping_model_deleted(RoleMapping, instance=old_instance)
+
+        accounts = SocialAccount.objects.filter(
+            uid__in=(u.id for u in instance.role.user_set.all())
+        )
+
+        for account in accounts:
+            account.user.groups.add(instance.group)
+
+    def user_model_updated(self, sender: Type[DiscordUser], **kwargs) -> None:
         """Handle signals related to the updating of Discord User model entries."""
         instance: DiscordUser = kwargs["instance"]
         raw: bool = kwargs["raw"]

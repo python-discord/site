@@ -9,7 +9,7 @@ from allauth.socialaccount.signals import (
     pre_social_login, social_account_added, social_account_removed,
     social_account_updated)
 from django.contrib.auth.models import Group, User as DjangoUser
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, pre_save
 from django.test import TestCase
 
 from pydis_site.apps.api.models import Role, User as DiscordUser
@@ -37,19 +37,33 @@ class SignalListenerTests(TestCase):
             position=0
         )
 
-        cls.admin_group = Group.objects.create(name="admin")
-
-        cls.role_mapping = RoleMapping.objects.create(
-            role=cls.admin_role,
-            group=cls.admin_group
+        cls.moderator_role = Role.objects.create(
+            id=1,
+            name="moderator",
+            colour=0,
+            permissions=0,
+            position=1
         )
 
         cls.unmapped_role = Role.objects.create(
-            id=1,
+            id=2,
             name="unmapped",
             colour=0,
             permissions=0,
             position=1
+        )
+
+        cls.admin_group = Group.objects.create(name="admin")
+        cls.moderator_group = Group.objects.create(name="moderator")
+
+        cls.admin_mapping = RoleMapping.objects.create(
+            role=cls.admin_role,
+            group=cls.admin_group
+        )
+
+        cls.moderator_mapping = RoleMapping.objects.create(
+            role=cls.moderator_role,
+            group=cls.moderator_group
         )
 
         cls.discord_user = DiscordUser.objects.create(
@@ -86,6 +100,16 @@ class SignalListenerTests(TestCase):
 
         cls.discord_admin.roles.set([cls.admin_role])
         cls.discord_admin.save()
+
+        cls.discord_moderator = DiscordUser.objects.create(
+            id=4,
+            name="admin",
+            discriminator=0,
+            avatar_hash=None
+        )
+
+        cls.discord_moderator.roles.set([cls.moderator_role])
+        cls.discord_moderator.save()
 
         cls.django_user_discordless = DjangoUser.objects.create(username="no-discord")
         cls.django_user_never_joined = DjangoUser.objects.create(username="never-joined")
@@ -129,6 +153,18 @@ class SignalListenerTests(TestCase):
             user=cls.django_admin,
             provider=DiscordProvider.id,
             uid=cls.discord_admin.id
+        )
+
+        cls.django_moderator = DjangoUser.objects.create(
+            username="moderator",
+            is_staff=True,
+            is_superuser=False
+        )
+
+        cls.social_moderator = SocialAccount.objects.create(
+            user=cls.django_moderator,
+            provider=DiscordProvider.id,
+            uid=cls.discord_moderator.id
         )
 
     def test_model_save(self):
@@ -315,6 +351,42 @@ class SignalListenerTests(TestCase):
     def test_role_mapping_str(self):
         """Test that role mappings stringify correctly."""
         self.assertEqual(
-            str(self.role_mapping),
+            str(self.admin_mapping),
             f"@{self.admin_role.name} -> {self.admin_group.name}"
         )
+
+    def test_role_mapping_changes(self):
+        """Test that role mapping listeners work when changes are made."""
+        # Set up (just for this test)
+        self.django_moderator.groups.add(self.moderator_group)
+        self.django_admin.groups.add(self.admin_group)
+
+        self.assertEqual(self.django_moderator.groups.all().count(), 1)
+        self.assertEqual(self.django_admin.groups.all().count(), 1)
+
+        # Test mapping deletion
+        self.admin_mapping.delete()
+
+        self.assertEqual(self.django_admin.groups.all().count(), 0)
+
+        # Test mapping update
+        self.moderator_mapping.group = self.admin_group
+        self.moderator_mapping.save()
+
+        self.assertEqual(self.django_moderator.groups.all().count(), 1)
+        self.assertTrue(self.admin_group in self.django_moderator.groups.all())
+
+        # Test mapping creation
+        new_mapping = RoleMapping.objects.create(
+            role=self.admin_role,
+            group=self.moderator_group
+        )
+
+        self.assertEqual(self.django_admin.groups.all().count(), 1)
+        self.assertTrue(self.moderator_group in self.django_admin.groups.all())
+
+        # Test that nothing happens when fixtures are loaded
+        pre_save.send(RoleMapping, instance=new_mapping, raw=True)
+
+        self.assertEqual(self.django_admin.groups.all().count(), 1)
+        self.assertTrue(self.moderator_group in self.django_admin.groups.all())
