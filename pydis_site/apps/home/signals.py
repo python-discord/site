@@ -147,9 +147,9 @@ class SignalListener:
                     continue  # No mapping exists
 
                 account.user.groups.add(
-                    group for group in new_groups if group not in current_groups
+                    *[group for group in new_groups if group not in current_groups]
                 )
 
                 account.user.groups.remove(
-                    mapping.group for mapping in mappings if mapping.group not in new_groups
+                    *[mapping.group for mapping in mappings if mapping.group not in new_groups]
                 )
