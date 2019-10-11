@@ -40,6 +40,10 @@ class LogEntryAdmin(admin.ModelAdmin):
         'message'
     )
 
+    def has_add_permission(self, request: HttpRequest) -> bool:
+        """Deny manual LogEntry creation."""
+        return False
+
     def has_delete_permission(
             self,
             request: HttpRequest,
