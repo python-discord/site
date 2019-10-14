@@ -23,7 +23,7 @@ urlpatterns = [
     ),
     path(
         'accounts/login/error', MessageRedirectView.as_view(
-            pattern_name="home", message="Login failed due to an error, please try again.",
+            pattern_name="home", message="Login encountered an unknown error, please try again.",
             message_level=ERROR
         ), name='socialaccount_login_error'
     ),

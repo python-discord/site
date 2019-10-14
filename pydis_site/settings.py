@@ -295,16 +295,16 @@ CRISPY_TEMPLATE_PACK = "bulma"
 # Custom settings for django-simple-bulma
 BULMA_SETTINGS = {
     "variables": {  # If you update these colours, please update the notification.css file
-        "primary": "#7289DA",  # Discord blurple
+        "primary": "#7289DA",    # Discord blurple
 
-        "orange": "#ffb39b",  # Bulma default, but at a saturation of 100
-        "yellow": "#ffea9b",  # Bulma default, but at a saturation of 100
-        "green": "#7fd19c",  # Bulma default, but at a saturation of 100
+        "orange": "#ffb39b",     # Bulma default, but at a saturation of 100
+        "yellow": "#ffea9b",     # Bulma default, but at a saturation of 100
+        "green": "#7fd19c",      # Bulma default, but at a saturation of 100
         "turquoise": "#7289DA",  # Blurple, because Bulma uses this as the default primary
-        "cyan": "#91cbee",  # Bulma default, but at a saturation of 100
-        "blue": "#86a7dc",  # Bulma default, but at a saturation of 100
-        "purple": "#b86bff",  # Bulma default, but at a saturation of 100
-        "red": "#ffafc2",  # Bulma default, but at a saturation of 80
+        "cyan": "#91cbee",       # Bulma default, but at a saturation of 100
+        "blue": "#86a7dc",       # Bulma default, but at a saturation of 100
+        "purple": "#b86bff",     # Bulma default, but at a saturation of 100
+        "red": "#ffafc2",        # Bulma default, but at a saturation of 80
 
         "link": "$primary",
 

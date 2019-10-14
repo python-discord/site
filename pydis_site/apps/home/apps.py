@@ -11,9 +11,9 @@ class HomeConfig(AppConfig):
 
     def ready(self) -> None:
         """Run when the app has been loaded and is ready to serve requests."""
-        from pydis_site.apps.home.signals import SignalListener
+        from pydis_site.apps.home.signals import AllauthSignalListener
 
-        self.signal_listener = SignalListener()
+        self.signal_listener = AllauthSignalListener()
         self.patch_allauth()
 
     def patch_allauth(self) -> None:

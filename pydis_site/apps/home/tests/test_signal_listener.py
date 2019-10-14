@@ -13,14 +13,23 @@ from django.db.models.signals import post_save, pre_save
 from django.test import TestCase
 
 from pydis_site.apps.api.models import Role, User as DiscordUser
-from pydis_site.apps.home.signals import SignalListener
+from pydis_site.apps.home.signals import AllauthSignalListener
 from pydis_site.apps.staff.models import RoleMapping
 
 
 class SignalListenerTests(TestCase):
     @classmethod
     def setUpTestData(cls):
-        """Executed when testing begins."""
+        """
+        Executed when testing begins in order to set up database fixtures required for testing.
+
+        This sets up quite a lot of stuff, in order to try to cover every eventuality while
+        ensuring that everything works when every possible situation is in the database
+        at the same time.
+
+        That does unfortunately mean that half of this file is just test fixtures, but I couldn't
+        think of a better way to do this.
+        """
         # This needs to be registered so we can test the role linking logic with a user that
         # doesn't have a Discord account linked, but is logged in somehow with another account
         # type anyway. The logic this is testing was designed so that the system would be
@@ -171,15 +180,15 @@ class SignalListenerTests(TestCase):
         """Test signal handling for when Discord user model objects are saved to DB."""
         mock_obj = mock.Mock()
 
-        with mock.patch.object(SignalListener, "_apply_groups", mock_obj):
-            _ = SignalListener()
+        with mock.patch.object(AllauthSignalListener, "_apply_groups", mock_obj):
+            AllauthSignalListener()
 
             post_save.send(
                 DiscordUser,
                 instance=self.discord_user,
                 raw=True,
-                created=None,  # Not realistic, but we don't use it
-                using=None,  # Again, we don't use it
+                created=None,        # Not realistic, but we don't use it
+                using=None,          # Again, we don't use it
                 update_fields=False  # Always false during integration testing
             )
 
@@ -189,8 +198,8 @@ class SignalListenerTests(TestCase):
                 DiscordUser,
                 instance=self.discord_user,
                 raw=False,
-                created=None,  # Not realistic, but we don't use it
-                using=None,  # Again, we don't use it
+                created=None,        # Not realistic, but we don't use it
+                using=None,          # Again, we don't use it
                 update_fields=False  # Always false during integration testing
             )
 
@@ -204,8 +213,8 @@ class SignalListenerTests(TestCase):
         github_login = SocialLogin(self.django_user, self.social_user_github)
         unmapped_login = SocialLogin(self.django_user, self.social_unmapped)
 
-        with mock.patch.object(SignalListener, "_apply_groups", mock_obj):
-            _ = SignalListener()
+        with mock.patch.object(AllauthSignalListener, "_apply_groups", mock_obj):
+            AllauthSignalListener()
 
             # Don't attempt to apply groups if the user doesn't have a linked Discord account
             pre_social_login.send(SocialLogin, sociallogin=github_login)
@@ -227,8 +236,8 @@ class SignalListenerTests(TestCase):
         github_login = SocialLogin(self.django_user, self.social_user_github)
         unmapped_login = SocialLogin(self.django_user, self.social_unmapped)
 
-        with mock.patch.object(SignalListener, "_apply_groups", mock_obj):
-            _ = SignalListener()
+        with mock.patch.object(AllauthSignalListener, "_apply_groups", mock_obj):
+            AllauthSignalListener()
 
             # Don't attempt to apply groups if the user doesn't have a linked Discord account
             social_account_added.send(SocialLogin, sociallogin=github_login)
@@ -250,8 +259,8 @@ class SignalListenerTests(TestCase):
         github_login = SocialLogin(self.django_user, self.social_user_github)
         unmapped_login = SocialLogin(self.django_user, self.social_unmapped)
 
-        with mock.patch.object(SignalListener, "_apply_groups", mock_obj):
-            _ = SignalListener()
+        with mock.patch.object(AllauthSignalListener, "_apply_groups", mock_obj):
+            AllauthSignalListener()
 
             # Don't attempt to apply groups if the user doesn't have a linked Discord account
             social_account_updated.send(SocialLogin, sociallogin=github_login)
@@ -269,8 +278,8 @@ class SignalListenerTests(TestCase):
         """Test the social-account-removed Allauth signal handling."""
         mock_obj = mock.Mock()
 
-        with mock.patch.object(SignalListener, "_apply_groups", mock_obj):
-            _ = SignalListener()
+        with mock.patch.object(AllauthSignalListener, "_apply_groups", mock_obj):
+            AllauthSignalListener()
 
             # Don't attempt to remove groups if the user doesn't have a linked Discord account
             social_account_removed.send(SocialLogin, socialaccount=self.social_user_github)
@@ -288,8 +297,8 @@ class SignalListenerTests(TestCase):
         """Test the user-logged-in Allauth signal handling."""
         mock_obj = mock.Mock()
 
-        with mock.patch.object(SignalListener, "_apply_groups", mock_obj):
-            _ = SignalListener()
+        with mock.patch.object(AllauthSignalListener, "_apply_groups", mock_obj):
+            AllauthSignalListener()
 
             # Don't attempt to apply groups if the user doesn't have a linked Discord account
             user_logged_in.send(DjangoUser, user=self.django_user_discordless)
@@ -305,7 +314,7 @@ class SignalListenerTests(TestCase):
 
     def test_apply_groups_admin(self):
         """Test application of groups by role, relating to an admin user."""
-        handler = SignalListener()
+        handler = AllauthSignalListener()
 
         self.assertEqual(self.django_user_discordless.groups.all().count(), 0)
 
@@ -332,7 +341,7 @@ class SignalListenerTests(TestCase):
 
     def test_apply_groups_other(self):
         """Test application of groups by role, relating to non-standard cases."""
-        handler = SignalListener()
+        handler = AllauthSignalListener()
 
         self.assertEqual(self.django_user_discordless.groups.all().count(), 0)
 
