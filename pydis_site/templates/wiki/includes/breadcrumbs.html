@@ -1,14 +1,18 @@
 {% load wiki_tags %}
 
-{% if urlpath and article and article|can_write:user %}
+{% if urlpath and article %}
   <section class="breadcrumb-section section">
     <div class="container">
       <nav class="breadcrumb is-pulled-left" aria-label="breadcrumbs">
         <ul>
           {% for ancestor in urlpath.cached_ancestors %}
-            <li>
-              <a href="{% url 'wiki:get' path=ancestor.path %}">{{ ancestor.article.current_revision.title|truncatechars:25 }}</a>
-            </li>
+            {% if forloop.first and not article|can_write:user %}
+              {# Continue, we don't want to show the root element #}
+            {% else %}
+              <li>
+                <a href="{% url 'wiki:get' path=ancestor.path %}">{{ ancestor.article.current_revision.title|truncatechars:25 }}</a>
+              </li>
+            {% endif %}
           {% endfor %}
 
           <li class="is-active">
@@ -17,71 +21,73 @@
         </ul>
       </nav>
 
-      <div class="dropdown is-pulled-right is-right">
-        <div class="dropdown-trigger">
-          <a aria-haspopup="true" aria-controls="sub-article-dropdown">
-            <span>Sub-Articles</span>
-            <span class="icon">
-              <i class="fas fa-angle-down"></i>
-            </span>
-          </a>
-        </div>
-        <div class="dropdown-menu" id="sub-article-dropdown" role="menu">
-          <div class="dropdown-content">
-            {% if children_slice %}
-              {% for child in children_slice %}
-                <a class="dropdown-item" href="{% url 'wiki:get' path=child.path %}">
-                  {{ child.article.current_revision.title }}
-                </a>
-              {% endfor %}
-
-              {% if children_slice_more %}
-                <a class="dropdown-item" href="{% url 'wiki:dir' path=urlpath.path %}">
-                  ...and more.
-                </a>
-              {% endif %}
-
-              <hr class="dropdown-divider">
-            {% endif %}
-
-            <a class="dropdown-item" href="{% url 'wiki:dir' path=urlpath.path %}">
-              Browse other articles
-            </a>
-          </div>
-        </div>
-      </div>
-
-      {% if request.user.is_authenticated %}
+      {% if article|can_write:user %}
         <div class="dropdown is-pulled-right is-right">
           <div class="dropdown-trigger">
             <a aria-haspopup="true" aria-controls="sub-article-dropdown">
-              <span>Create Article</span>
+              <span>Sub-Articles</span>
               <span class="icon">
                 <i class="fas fa-angle-down"></i>
               </span>
-              &nbsp;
             </a>
           </div>
           <div class="dropdown-menu" id="sub-article-dropdown" role="menu">
             <div class="dropdown-content">
-              {% if urlpath.parent %}
-                <a class="dropdown-item" href="{% url 'wiki:create' path=urlpath.parent.path %}">
-                  <span class="icon">
-                    <i class="fas fa-arrow-right"></i>
-                  </span>
-                  <span>At current level</span>
-                </a>
+              {% if children_slice %}
+                {% for child in children_slice %}
+                  <a class="dropdown-item" href="{% url 'wiki:get' path=child.path %}">
+                    {{ child.article.current_revision.title }}
+                  </a>
+                {% endfor %}
+
+                {% if children_slice_more %}
+                  <a class="dropdown-item" href="{% url 'wiki:dir' path=urlpath.path %}">
+                    ...and more.
+                  </a>
+                {% endif %}
+
+                <hr class="dropdown-divider">
               {% endif %}
 
-              <a class="dropdown-item" href="{% url 'wiki:create' path=urlpath.path %}">
-                <span class="icon">
-                  <i class="fas fa-arrow-down"></i>
-                </span>
-                <span>Below current level</span>
+              <a class="dropdown-item" href="{% url 'wiki:dir' path=urlpath.path %}">
+                Browse other articles
               </a>
             </div>
           </div>
         </div>
+
+        {% if request.user.is_authenticated %}
+          <div class="dropdown is-pulled-right is-right">
+            <div class="dropdown-trigger">
+              <a aria-haspopup="true" aria-controls="sub-article-dropdown">
+                <span>Create Article</span>
+                <span class="icon">
+                  <i class="fas fa-angle-down"></i>
+                </span>
+                &nbsp;
+              </a>
+            </div>
+            <div class="dropdown-menu" id="sub-article-dropdown" role="menu">
+              <div class="dropdown-content">
+                {% if urlpath.parent %}
+                  <a class="dropdown-item" href="{% url 'wiki:create' path=urlpath.parent.path %}">
+                    <span class="icon">
+                      <i class="fas fa-arrow-right"></i>
+                    </span>
+                    <span>At current level</span>
+                  </a>
+                {% endif %}
+
+                <a class="dropdown-item" href="{% url 'wiki:create' path=urlpath.path %}">
+                  <span class="icon">
+                    <i class="fas fa-arrow-down"></i>
+                  </span>
+                  <span>Below current level</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        {% endif %}
       {% endif %}
 
     </div>
