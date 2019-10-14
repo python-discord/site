@@ -15,8 +15,8 @@
     <div class="container is-spaced">
       <h1 class="is-size-1">Who are we?</h1>
       <br>
-      <div class="columns">
-        <div class="column is-half">
+      <div class="columns is-desktop">
+        <div class="column is-half-desktop">
           <p>
             We're a large community focused around the Python programming language.
             We believe anyone can learn to code, and are very dedicated to helping
@@ -38,7 +38,7 @@
         </div>
 
         {# Intro video #}
-        <div class="column is-half video-container">
+        <div class="column is-half-desktop video-container">
           <iframe src="https://www.youtube.com/embed/DIBXg8Qh7bA" frameborder="0"
                   allow="accelerometer; encrypted-media; gyroscope; picture-in-picture"
                   allowfullscreen></iframe>
@@ -48,11 +48,11 @@
       {# Projects #}
       <h1 class="is-size-1">Projects</h1>
       <br>
-      <div class="columns is-multiline">
+      <div class="columns is-multiline is-tablet">
 
         {# Display projects from HomeView.repos #}
         {% for repo in repo_data %}
-          <div class="column is-one-third">
+          <div class="column is-one-third-desktop is-half-tablet">
             <div class="card has-equal-height github-card">
               <div class="card-content">
                 <div class="repo-headline">
@@ -82,11 +82,20 @@
         <h1 class="title is-6 has-text-grey">
           Sponsors
         </h1>
-        <a href="https://linode.com"><img src="{% static "images/sponsors/linode.png" %}" alt="Linode"/></a>
-        <a href="https://jetbrains.com"><img src="{% static "images/sponsors/jetbrains.png" %}" alt="JetBrains"/></a>
-        <a href="https://adafruit.com"><img src="{% static "images/sponsors/adafruit.png" %}" alt="Adafruit"/></a>
+        <div class="columns is-mobile is-multiline">
+          <a href="https://linode.com" class="column is-narrow">
+            <img src="{% static "images/sponsors/linode.png" %}" alt="Linode"/>
+          </a>
+          <a href="https://jetbrains.com" class="column is-narrow">
+            <img src="{% static "images/sponsors/jetbrains.png" %}" alt="JetBrains"/>
+          </a>
+          <a href="https://adafruit.com" class="column is-narrow">
+            <img src="{% static "images/sponsors/adafruit.png" %}" alt="Adafruit"/>
+          </a>
+        </div>
       </div>
     </div>
   </section>
 
 {% endblock %}
+
