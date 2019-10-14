@@ -70,3 +70,21 @@ div.card.has-equal-height {
 #pydis-text {
     font-weight: bold;
 }
+
+
+/* Navbar "more" menu should be on top of messages. I could not figure
+ * out a better way to fix this one without just applying a high z-index
+ * to everything - anyone have any better ideas? Does it matter since the
+ * navbar should be above everything anyway?
+ */
+
+.navbar, .navbar * {
+    z-index: 1001;
+}
+
+/* Fix for logout form submit button in navbar */
+
+button.is-size-navbar-menu {
+    font-size: 14px;
+}
+

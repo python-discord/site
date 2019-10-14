@@ -32,6 +32,7 @@
   <script src="https://kit.fontawesome.com/ae6a3152d8.js"></script>
 
   <link rel="stylesheet" href="{% static "css/base/base.css" %}">
+  <link rel="stylesheet" href="{% static "css/base/notification.css" %}">
   {% block head %}{% endblock %}
 
   {% render_block "css" %}
@@ -39,6 +40,18 @@
 <body class="site">
 
 <main class="site-content">
+  {% if messages %}
+    <div class="messages">
+      {% for message in messages %}
+        <div class="notification {% if message.tags %}is-{{ message.tags }}{% endif %}">
+          <button class="delete"></button>
+
+          {{ message }}
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+
   {% block content %}
     {{ block.super }}
   {% endblock %}

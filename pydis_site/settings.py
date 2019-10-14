@@ -82,6 +82,12 @@ INSTALLED_APPS = [
     'django.contrib.sites.apps.SitesConfig',
     'django.contrib.staticfiles',
 
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+
+    'allauth.socialaccount.providers.discord',
+
     'crispy_forms',
     'django_crispy_bulma',
     'django_hosts',
@@ -265,6 +271,16 @@ LOGGING = {
     }
 }
 
+# Django Messages framework config
+
+MESSAGE_TAGS = {
+    messages.DEBUG: 'primary',
+    messages.INFO: 'info',
+    messages.SUCCESS: 'success',
+    messages.WARNING: 'warning',
+    messages.ERROR: 'danger',
+}
+
 # Custom settings for Crispyforms
 CRISPY_ALLOWED_TEMPLATE_PACKS = (
     "bootstrap",
@@ -278,9 +294,18 @@ CRISPY_TEMPLATE_PACK = "bulma"
 
 # Custom settings for django-simple-bulma
 BULMA_SETTINGS = {
-    "variables": {
-        "green": "#21c65c",  # Accessibility: Better contrast with the light text
-        "primary": "#7289DA",
+    "variables": {  # If you update these colours, please update the notification.css file
+        "primary": "#7289DA",    # Discord blurple
+
+        "orange": "#ffb39b",     # Bulma default, but at a saturation of 100
+        "yellow": "#ffea9b",     # Bulma default, but at a saturation of 100
+        "green": "#7fd19c",      # Bulma default, but at a saturation of 100
+        "turquoise": "#7289DA",  # Blurple, because Bulma uses this as the default primary
+        "cyan": "#91cbee",       # Bulma default, but at a saturation of 100
+        "blue": "#86a7dc",       # Bulma default, but at a saturation of 100
+        "purple": "#b86bff",     # Bulma default, but at a saturation of 100
+        "red": "#ffafc2",        # Bulma default, but at a saturation of 80
+
         "link": "$primary",
 
         "dimensions": "16 24 32 48 64 96 128 256 512",  # Possible image dimensions
@@ -347,3 +372,16 @@ WIKI_MARKDOWN_HTML_ATTRIBUTES = {
 WIKI_MARKDOWN_HTML_WHITELIST = [
     'article', 'section', 'button'
 ]
+
+# Django Allauth stuff
+
+AUTHENTICATION_BACKENDS = (
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
+
+ACCOUNT_EMAIL_VERIFICATION = "none"  # No verification required; we don't use emails for anything
+LOGIN_REDIRECT_URL = "home"
