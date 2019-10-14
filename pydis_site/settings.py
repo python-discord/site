@@ -13,9 +13,14 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 import os
 import secrets
 import sys
+import typing
 
 import environ
 from django.contrib.messages import constants as messages
+
+if typing.TYPE_CHECKING:
+    from django.contrib.auth.models import User
+    from wiki.models import Article
 
 env = environ.Env(
     DEBUG=(bool, False)
@@ -372,6 +377,25 @@ WIKI_MARKDOWN_HTML_ATTRIBUTES = {
 WIKI_MARKDOWN_HTML_WHITELIST = [
     'article', 'section', 'button'
 ]
+
+
+# Wiki permissions
+
+
+def WIKI_CAN_DELETE(article: "Article", user: "User") -> bool:  # noqa: N802
+    """Check whether a user may delete an article."""
+    return user.has_perm('wiki.delete_article')
+
+
+def WIKI_CAN_MODERATE(article: "Article", user: "User") -> bool:  # noqa: N802
+    # """Check whether a user may moderate an article."""
+    return user.has_perm('wiki.moderate')
+
+
+def WIKI_CAN_WRITE(article: "Article", user: "User") -> bool:  # noqa: N802
+    """Check whether a user may create or edit an article."""
+    return user.has_perm('wiki.change_article')
+
 
 # Django Allauth stuff
 
