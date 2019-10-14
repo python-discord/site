@@ -1,4 +1,6 @@
-{% if urlpath and article and not user.is_anonymous %}
+{% load wiki_tags %}
+
+{% if urlpath and article and article|can_write:user %}
   <section class="breadcrumb-section section">
     <div class="container">
       <nav class="breadcrumb is-pulled-left" aria-label="breadcrumbs">
