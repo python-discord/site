@@ -25,18 +25,6 @@
 
   {% block wiki_navbar %}{% endblock %}
 
-  {% if messages %}
-    <div class="messages">
-      {% for message in messages %}
-        <div class="notification {% if message.tags %}is-{{ message.tags }}{% endif %}">
-          <button class="delete"></button>
-
-          {{ message }}
-        </div>
-      {% endfor %}
-    </div>
-  {% endif %}
-
   {% block wiki_breadcrumbs %}
     {% include "wiki/includes/breadcrumbs.html" %}
   {% endblock %}
@@ -44,8 +32,6 @@
   {% block wiki_body %}
     <section class="section">
       <div class="container">
-        {% wiki_messages %}
-
         <div class="content">
           {% block wiki_contents %}{% endblock %}
         </div>
