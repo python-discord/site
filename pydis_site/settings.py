@@ -388,7 +388,7 @@ def WIKI_CAN_DELETE(article: "Article", user: "User") -> bool:  # noqa: N802
 
 
 def WIKI_CAN_MODERATE(article: "Article", user: "User") -> bool:  # noqa: N802
-    # """Check whether a user may moderate an article."""
+    """Check whether a user may moderate an article."""
     return user.has_perm('wiki.moderate')
 
 
