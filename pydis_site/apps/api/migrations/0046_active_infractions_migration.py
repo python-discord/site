@@ -97,7 +97,7 @@ class Migration(migrations.Migration):
     """Data migration to get the database consistent with the new infraction validation rules."""
 
     dependencies = [
-        ('api', '0043_infraction_hidden_warnings_to_notes'),
+        ('api', '0045_add_plural_name_for_log_entry'),
     ]
 
     operations = [
