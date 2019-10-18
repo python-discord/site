@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="{% static "css/wiki/simplemde-fixes.css" %}">
   <link rel="stylesheet" href="{% static "css/wiki/style.css" %}">
   <link rel="stylesheet" href="{% static "css/pygments/darcula.css" %}">
+  <link rel="stylesheet" href="{% static "css/base/notification.css" %}">
 {% endblock %}
 
 {% block content %}
@@ -31,8 +32,6 @@
   {% block wiki_body %}
     <section class="section">
       <div class="container">
-        {% wiki_messages %}
-
         <div class="content">
           {% block wiki_contents %}{% endblock %}
         </div>

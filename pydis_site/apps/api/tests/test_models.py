@@ -1,13 +1,21 @@
-from datetime import datetime as dt, timezone
+from datetime import datetime as dt
 
 from django.test import SimpleTestCase
+from django.utils import timezone
 
 from ..models import (
-    DeletedMessage, DocumentationLink,
-    Infraction, Message,
-    MessageDeletionContext, ModelReprMixin,
-    OffTopicChannelName, Reminder,
-    Role, Tag, User
+    DeletedMessage,
+    DocumentationLink,
+    Infraction,
+    Message,
+    MessageDeletionContext,
+    ModelReprMixin,
+    Nomination,
+    OffTopicChannelName,
+    Reminder,
+    Role,
+    Tag,
+    User
 )
 
 
@@ -27,6 +35,19 @@ class ReprMixinTests(SimpleTestCase):
 
 class StringDunderMethodTests(SimpleTestCase):
     def setUp(self):
+        self.nomination = Nomination(
+            id=123,
+            actor=User(
+                id=9876, name='Mr. Hemlock',
+                discriminator=6666, avatar_hash=None
+            ),
+            user=User(
+                id=9876, name="Hemlock's Cat",
+                discriminator=7777, avatar_hash=None
+            ),
+            reason="He purrrrs like the best!",
+        )
+
         self.objects = (
             DeletedMessage(
                 id=45,
@@ -102,3 +123,9 @@ class StringDunderMethodTests(SimpleTestCase):
     def test_returns_string(self):
         for instance in self.objects:
             self.assertIsInstance(str(instance), str)
+
+    def test_nomination_str_representation(self):
+        self.assertEqual(
+            "Nomination of Hemlock's Cat#7777 (active)",
+            str(self.nomination)
+        )

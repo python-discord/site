@@ -1,0 +1,99 @@
+/* On-page message styling */
+
+@keyframes message-slide-in {
+    0% {
+        transform: translateX(100%);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+}
+
+div.messages {
+    animation: 0.5s ease-out 0s 1 message-slide-in;
+    padding: 0.5rem;
+    position: fixed;
+    right: 0;
+    top: 76px;
+
+    z-index: 1000;  /* On top of everything else */
+}
+
+/* Discord light theme inspired notifications */
+
+.messages .notification {
+    background-color: #fdfdfd;  /* Discord embed background */
+    border: #eeeeee 1px solid;  /* Discord embed border */
+    border-left: #4f545c 4px solid;  /* Discord default embed colour */
+    color: #4a4a4a;  /* Bulma default colour */
+}
+
+.messages .notification.is-primary {
+    background-color: #fdfdfd;
+    border-left-color: #7289DA;
+    color: #4a4a4a;  /* Bulma default colour */
+}
+
+.messages .notification.is-info {
+    background-color: #fdfdfd;
+    border-left-color: #1c8ad3;  /* Bulma default colour */
+    color: #4a4a4a;  /* Bulma default colour */
+}
+
+.messages .notification.is-success {
+    background-color: #fdfdfd;
+    border-left-color: #21c65c;
+    color: #4a4a4a;  /* Bulma default colour */
+}
+
+.messages .notification.is-warning {
+    background-color: #fdfdfd;
+    border-left-color: #ffdd57;  /* Bulma default colour */
+    color: #4a4a4a;  /* Bulma default colour */
+}
+
+.messages .notification.is-danger {
+    background-color: #fdfdfd;
+    border-left-color: #ff3860;  /* Bulma default colour */
+    color: #4a4a4a;  /* Bulma default colour */
+}
+
+/* Discord dark theme inspired notifications */
+
+.messages .notification.is-dark {
+    background-color: #33353C;  /* Discord embed background */
+    border: #36393f 1px solid;  /* Discord embed border */
+    border-left: #4f545c 4px solid;  /* Discord default embed colour */
+    color: #fff;  /* Bulma default colour */
+}
+
+.messages .notification.is-dark.is-primary {
+    background-color: #33353C;
+    border-left-color: #7289DA;
+    color: #fff;  /* Bulma default colour */
+}
+
+.messages .notification.is-dark.is-info {
+    background-color: #33353C;
+    border-left-color: #1c8ad3;  /* Bulma default colour */
+    color: #fff;  /* Bulma default colour */
+}
+
+.messages .notification.is-dark.is-success {
+    background-color: #33353C;
+    border-left-color: #21c65c;
+    color: #fff;  /* Bulma default colour */
+}
+
+.messages .notification.is-dark.is-warning {
+    background-color: #33353C;
+    border-left-color: #ffdd57;  /* Bulma default colour */
+    color: #fff;  /* Bulma default colour */
+}
+
+.messages .notification.is-dark.is-danger {
+    background-color: #33353C;
+    border-left-color: #ff3860;  /* Bulma default colour */
+    color: #fff;  /* Bulma default colour */
+}

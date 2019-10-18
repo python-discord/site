@@ -48,3 +48,8 @@ class LogEntry(ModelReprMixin, models.Model):
     message = models.TextField(
         help_text="The textual content of the log line."
     )
+
+    class Meta:
+        """Customizes the default generated plural name to valid English."""
+
+        verbose_name_plural = 'Log entries'
