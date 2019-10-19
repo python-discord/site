@@ -1,5 +1,5 @@
-from django.contrib.sites.models import Site
 from django.db import models
+from django_hosts.resolvers import reverse
 
 from pydis_site.apps.api.models.bot.user import User
 from pydis_site.apps.api.models.utils import ModelReprMixin
@@ -33,8 +33,7 @@ class MessageDeletionContext(ModelReprMixin, models.Model):
     @property
     def log_url(self) -> str:
         """Create the url for the deleted message logs."""
-        domain = Site.objects.get_current().domain
-        return f"http://staff.{domain}/bot/logs/{self.id}/"
+        return reverse('logs', host="staff", args=(self.id,))
 
     class Meta:
         """Set the ordering for list views to newest first."""
