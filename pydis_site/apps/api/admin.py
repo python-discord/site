@@ -203,6 +203,12 @@ class NominationAdmin(admin.ModelAdmin):
     list_filter = ("active",)
 
 
+class OffTopicChannelNameAdmin(admin.ModelAdmin):
+    """Admin formatting for the OffTopicChannelName model."""
+
+    search_fields = ("name",)
+
+
 class StaffRolesFilter(admin.SimpleListFilter):
     """Filter options for Staff Roles."""
 
@@ -250,7 +256,7 @@ admin.site.register(Infraction, InfractionAdmin)
 admin.site.register(LogEntry, LogEntryAdmin)
 admin.site.register(MessageDeletionContext, MessageDeletionContextAdmin)
 admin.site.register(Nomination, NominationAdmin)
-admin.site.register(OffTopicChannelName)
+admin.site.register(OffTopicChannelName, OffTopicChannelNameAdmin)
 admin.site.register(Role)
 admin.site.register(Tag)
 admin.site.register(User, UserAdmin)
