@@ -1,3 +1,4 @@
+from django.contrib.sites.models import Site
 from django.db import models
 
 from pydis_site.apps.api.models.bot.user import User
@@ -28,3 +29,14 @@ class MessageDeletionContext(ModelReprMixin, models.Model):
         # the deletion context does not take place in the future.
         help_text="When this deletion took place."
     )
+
+    @property
+    def log_url(self) -> str:
+        """Create the url for the deleted message logs."""
+        domain = Site.objects.get_current().domain
+        return f"http://staff.{domain}/bot/logs/{self.id}/"
+
+    class Meta:
+        """Set the ordering for list views to newest first."""
+
+        ordering = ("-creation",)
