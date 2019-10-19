@@ -209,6 +209,38 @@ class OffTopicChannelNameAdmin(admin.ModelAdmin):
     search_fields = ("name",)
 
 
+class RoleAdmin(admin.ModelAdmin):
+    """Admin formatting for the Role model."""
+
+    exclude = ("permissions", "colour")
+    readonly_fields = (
+        "name",
+        "id",
+        "colour_with_preview",
+        "permissions_with_calc_link",
+        "position"
+    )
+    search_fields = ("name", "id")
+
+    def colour_with_preview(self, instance: Role) -> str:
+        """Show colour value in both int and hex, in bolded and coloured style."""
+        return format_html(
+            "<span style='color: #{0}!important; font-weight: bold;'>{1} / #{0}</span>",
+            f"{instance.colour:06x}",
+            instance.colour
+        )
+
+    def permissions_with_calc_link(self, instance: Role) -> str:
+        """Show permissions with link to API permissions calculator page."""
+        return format_html(
+            "<a href='https://discordapi.com/permissions.html#{0}' target='_blank'>{0}</a>",
+            instance.permissions
+        )
+
+    colour_with_preview.short_description = "Colour"
+    permissions_with_calc_link.short_description = "Permissions"
+
+
 class StaffRolesFilter(admin.SimpleListFilter):
     """Filter options for Staff Roles."""
 
@@ -257,6 +289,6 @@ admin.site.register(LogEntry, LogEntryAdmin)
 admin.site.register(MessageDeletionContext, MessageDeletionContextAdmin)
 admin.site.register(Nomination, NominationAdmin)
 admin.site.register(OffTopicChannelName, OffTopicChannelNameAdmin)
-admin.site.register(Role)
+admin.site.register(Role, RoleAdmin)
 admin.site.register(Tag)
 admin.site.register(User, UserAdmin)
