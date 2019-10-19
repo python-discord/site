@@ -47,8 +47,8 @@ class InfractionFactory:
          - `expires_at` (default: None; i.e, permanent)
          - `hidden` (default: False).
 
-         The parameters `infraction_model` and `user_model` can be used to pass in an instance of
-         both model classes from a different migration/project state.
+        The parameters `infraction_model` and `user_model` can be used to pass in an instance of
+        both model classes from a different migration/project state.
         """
         user_id = next(cls.user_id)
         user = user_model.objects.create(

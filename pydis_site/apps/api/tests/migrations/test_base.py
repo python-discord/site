@@ -77,7 +77,7 @@ class MigrationsTestCaseNoSideEffectsTests(TestCase):
         self.assertEqual(migration_executor().loader.project_state.call_args_list, expected_args)
 
     def test_loader_build_graph_gets_called_once(self, migration_executor):
-        """We should rebuild the before applying the second set of migrations."""
+        """We should rebuild the migration graph before applying the second set of migrations."""
         self.test_case.setUpTestData()
 
         migration_executor().loader.build_graph.assert_called_once()
