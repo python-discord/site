@@ -102,7 +102,14 @@
           {% else %}
             <form method="post" action="{% url 'logout' %}">
               {% csrf_token %}
-              <button type="submit" class="navbar-item button is-white is-inline is-fullwidth has-text-left is-size-navbar-menu has-text-grey-dark">Logout</button>
+              <div class="field navbar-item is-paddingless is-fullwidth is-grouped">
+                <button type="submit" class="button is-white is-inline is-fullwidth has-text-left is-size-navbar-menu has-text-grey-dark">Logout</button>
+                <a title="Settings" class="button is-white is-inline has-text-right is-size-navbar-menu has-text-grey-dark" href="#">
+                  <span class="is-icon">
+                    <i class="fas fa-cog"></i>
+                  </span>
+                </a>
+              </div>
             </form>
           {% endif %}
 
