@@ -1,7 +1,10 @@
+import json
 from typing import Optional
 
+from django import urls
 from django.contrib import admin
 from django.http import HttpRequest
+from django.utils.html import format_html
 
 from .models import (
     BotSetting,
@@ -44,21 +47,86 @@ class LogEntryAdmin(admin.ModelAdmin):
         """Deny manual LogEntry creation."""
         return False
 
-    def has_delete_permission(
-            self,
-            request: HttpRequest,
-            obj: Optional[LogEntry] = None
-    ) -> bool:
+    def has_delete_permission(self, request: HttpRequest, obj: Optional[LogEntry] = None) -> bool:
         """Deny LogEntry deletion."""
         return False
 
 
+class DeletedMessageAdmin(admin.ModelAdmin):
+    """Admin formatting for the DeletedMessage model."""
+
+    readonly_fields = (
+        "id",
+        "author",
+        "channel_id",
+        "content",
+        "embed_data",
+        "context",
+        "view_full_log"
+    )
+
+    exclude = ("embeds", "deletion_context")
+
+    search_fields = (
+        "id",
+        "content",
+        "author__name",
+        "author__id",
+        "deletion_context__actor__name",
+        "deletion_context__actor__id"
+    )
+
+    @staticmethod
+    def embed_data(instance: DeletedMessage) -> Optional[str]:
+        """Format embed data in a code block for better readability."""
+        if instance.embeds:
+            return format_html(
+                "<pre><code>{0}</code></pre>",
+                json.dumps(instance.embeds, indent=4)
+            )
+
+    @staticmethod
+    def context(instance: DeletedMessage) -> str:
+        """Provide full context info with a link through to context admin view."""
+        link = urls.reverse(
+            "admin:api_messagedeletioncontext_change",
+            args=[instance.deletion_context.id]
+        )
+        details = (
+            f"Deleted by {instance.deletion_context.actor} at "
+            f"{instance.deletion_context.creation}"
+        )
+        return format_html("<a href='{0}'>{1}</a>", link, details)
+
+    @staticmethod
+    def view_full_log(instance: DeletedMessage) -> str:
+        """Provide a link to the message logs for the relevant context."""
+        return format_html(
+            "<a href='{0}'>Click to view full context log</a>",
+            instance.deletion_context.log_url
+        )
+
+
+class MessageDeletionContextAdmin(admin.ModelAdmin):
+    """Admin formatting for the MessageDeletionContext model."""
+
+    readonly_fields = ("actor", "creation", "message_log")
+
+    @staticmethod
+    def message_log(instance: MessageDeletionContext) -> str:
+        """Provide a formatted link to the message logs for the context."""
+        return format_html(
+            "<a href='{0}'>Click to see deleted message log</a>",
+            instance.log_url
+        )
+
+
 admin.site.register(BotSetting)
-admin.site.register(DeletedMessage)
+admin.site.register(DeletedMessage, DeletedMessageAdmin)
 admin.site.register(DocumentationLink)
 admin.site.register(Infraction)
 admin.site.register(LogEntry, LogEntryAdmin)
-admin.site.register(MessageDeletionContext)
+admin.site.register(MessageDeletionContext, MessageDeletionContextAdmin)
 admin.site.register(Nomination)
 admin.site.register(OffTopicChannelName)
 admin.site.register(Role)
