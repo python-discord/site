@@ -44,3 +44,8 @@ class Nomination(ModelReprMixin, models.Model):
         """Representation that makes the target and state of the nomination immediately evident."""
         status = "active" if self.active else "ended"
         return f"Nomination of {self.user} ({status})"
+
+    class Meta:
+        """Set the ordering of nominations to most recent first."""
+
+        ordering = ("-inserted_at",)

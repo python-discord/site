@@ -166,6 +166,43 @@ class InfractionAdmin(admin.ModelAdmin):
     )
 
 
+class NominationAdmin(admin.ModelAdmin):
+    """Admin formatting for the Nomination model."""
+
+    list_display = (
+        "user",
+        "active",
+        "reason",
+        "actor",
+        "inserted_at",
+        "ended_at"
+    )
+    fields = (
+        "user",
+        "active",
+        "actor",
+        "reason",
+        "inserted_at",
+        "ended_at",
+        "end_reason"
+    )
+    readonly_fields = (
+        "user",
+        "active",
+        "actor",
+        "inserted_at",
+        "ended_at"
+    )
+    search_fields = (
+        "actor__name",
+        "actor__id",
+        "user__name",
+        "user__id",
+        "reason"
+    )
+    list_filter = ("active",)
+
+
 class StaffRolesFilter(admin.SimpleListFilter):
     """Filter options for Staff Roles."""
 
@@ -212,7 +249,7 @@ admin.site.register(DocumentationLink)
 admin.site.register(Infraction, InfractionAdmin)
 admin.site.register(LogEntry, LogEntryAdmin)
 admin.site.register(MessageDeletionContext, MessageDeletionContextAdmin)
-admin.site.register(Nomination)
+admin.site.register(Nomination, NominationAdmin)
 admin.site.register(OffTopicChannelName)
 admin.site.register(Role)
 admin.site.register(Tag)
