@@ -1,7 +1,6 @@
 """Converters from Django models to data interchange formats and back."""
-import logging
-
 from rest_framework.serializers import ModelSerializer, PrimaryKeyRelatedField, ValidationError
+from rest_framework.validators import UniqueTogetherValidator
 from rest_framework_bulk import BulkSerializerMixin
 
 from .models import (
@@ -12,8 +11,6 @@ from .models import (
     Reminder, Role,
     Tag, User
 )
-
-log = logging.getLogger(__name__)
 
 
 class BotSettingSerializer(ModelSerializer):
@@ -108,6 +105,13 @@ class InfractionSerializer(ModelSerializer):
         fields = (
             'id', 'inserted_at', 'expires_at', 'active', 'user', 'actor', 'type', 'reason', 'hidden'
         )
+        validators = [
+            UniqueTogetherValidator(
+                queryset=Infraction.objects.filter(active=True),
+                fields=['user', 'type'],
+                message='This user already has an active infraction of this type.',
+            )
+        ]
 
     def validate(self, attrs: dict) -> dict:
         """Validate data constraints for the given data and abort if it is invalid."""
@@ -116,12 +120,6 @@ class InfractionSerializer(ModelSerializer):
         active = attrs.get('active')
         if active and infr_type in ('note', 'warning', 'kick'):
             raise ValidationError({'active': [f'{infr_type} infractions cannot be active.']})
-
-        user = attrs.get('user')
-        if active and Infraction.objects.filter(user=user, type=infr_type, active=True).exists():
-            raise ValidationError(
-                {'active': [f'This user already has an active {infr_type} infraction']}
-            )
 
         expires_at = attrs.get('expires_at')
         if expires_at and infr_type in ('kick', 'warning'):

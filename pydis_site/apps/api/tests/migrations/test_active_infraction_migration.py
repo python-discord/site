@@ -114,20 +114,15 @@ class InfractionFactoryTests(MigrationsTestCase):
 
     def test_infraction_factory_multiple_users(self):
         """Does the test database hold as many infractions as we tried to create?"""
-        created_infractions = {}
-        for user in range(5):
-            created_infractions.update(
-                {
-                    user: InfractionFactory.create(
-                        actor=self.actor,
-                        infractions=(
-                            {'type': 'kick', 'active': False, 'hidden': True},
-                            {'type': 'ban', 'active': True, 'hidden': False},
-                        ),
-                        infraction_model=self.infraction_model,
-                        user_model=self.user_model,
-                    )
-                }
+        for _user in range(5):
+            InfractionFactory.create(
+                actor=self.actor,
+                infractions=(
+                    {'type': 'kick', 'active': False, 'hidden': True},
+                    {'type': 'ban', 'active': True, 'hidden': False},
+                ),
+                infraction_model=self.infraction_model,
+                user_model=self.user_model,
             )
 
         # Check if infractions and users are recorded properly in the database
@@ -204,245 +199,199 @@ class ActiveInfractionMigrationTests(MigrationsTestCase):
         )
 
         # User #1: clean user with no infractions
-        cls.created_infractions.update(
-            {
-                1: InfractionFactory.create(
-                    actor=cls.user_moderator,
-                    infractions=[],
-                    infraction_model=cls.infraction_model,
-                    user_model=cls.user_model,
-                )
-            }
+        cls.created_infractions["no infractions"] = InfractionFactory.create(
+            actor=cls.user_moderator,
+            infractions=[],
+            infraction_model=cls.infraction_model,
+            user_model=cls.user_model,
         )
 
         # User #2: One inactive note infraction
-        cls.created_infractions.update(
-            {
-                2: InfractionFactory.create(
-                    actor=cls.user_moderator,
-                    infractions=(
-                        {'type': 'note', 'active': False, 'hidden': True},
-                    ),
-                    infraction_model=cls.infraction_model,
-                    user_model=cls.user_model,
-                )
-            }
+        cls.created_infractions["one inactive note"] = InfractionFactory.create(
+            actor=cls.user_moderator,
+            infractions=(
+                {'type': 'note', 'active': False, 'hidden': True},
+            ),
+            infraction_model=cls.infraction_model,
+            user_model=cls.user_model,
         )
 
         # User #3: One active note infraction
-        cls.created_infractions.update(
-            {
-                3: InfractionFactory.create(
-                    actor=cls.user_moderator,
-                    infractions=(
-                        {'type': 'note', 'active': True, 'hidden': True},
-                    ),
-                    infraction_model=cls.infraction_model,
-                    user_model=cls.user_model,
-                )
-            }
+        cls.created_infractions["one active note"] = InfractionFactory.create(
+            actor=cls.user_moderator,
+            infractions=(
+                {'type': 'note', 'active': True, 'hidden': True},
+            ),
+            infraction_model=cls.infraction_model,
+            user_model=cls.user_model,
         )
 
         # User #4: One active and one inactive note infraction
-        cls.created_infractions.update(
-            {
-                4: InfractionFactory.create(
-                    actor=cls.user_moderator,
-                    infractions=(
-                        {'type': 'note', 'active': False, 'hidden': True},
-                        {'type': 'note', 'active': True, 'hidden': True},
-                    ),
-                    infraction_model=cls.infraction_model,
-                    user_model=cls.user_model,
-                )
-            }
+        cls.created_infractions["one active and one inactive note"] = InfractionFactory.create(
+            actor=cls.user_moderator,
+            infractions=(
+                {'type': 'note', 'active': False, 'hidden': True},
+                {'type': 'note', 'active': True, 'hidden': True},
+            ),
+            infraction_model=cls.infraction_model,
+            user_model=cls.user_model,
         )
 
         # User #5: Once active note, one active kick, once active warning
-        cls.created_infractions.update(
-            {
-                5: InfractionFactory.create(
-                    actor=cls.user_moderator,
-                    infractions=(
-                        {'type': 'note', 'active': True, 'hidden': True},
-                        {'type': 'kick', 'active': True, 'hidden': True},
-                        {'type': 'warning', 'active': True, 'hidden': True},
-                    ),
-                    infraction_model=cls.infraction_model,
-                    user_model=cls.user_model,
-                )
-            }
+        cls.created_infractions["active note, kick, warning"] = InfractionFactory.create(
+            actor=cls.user_moderator,
+            infractions=(
+                {'type': 'note', 'active': True, 'hidden': True},
+                {'type': 'kick', 'active': True, 'hidden': True},
+                {'type': 'warning', 'active': True, 'hidden': True},
+            ),
+            infraction_model=cls.infraction_model,
+            user_model=cls.user_model,
         )
 
         # User #6: One inactive ban and one active ban
-        cls.created_infractions.update(
-            {
-                6: InfractionFactory.create(
-                    actor=cls.user_moderator,
-                    infractions=(
-                        {'type': 'ban', 'active': False, 'hidden': True},
-                        {'type': 'ban', 'active': True, 'hidden': True},
-                    ),
-                    infraction_model=cls.infraction_model,
-                    user_model=cls.user_model,
-                )
-            }
+        cls.created_infractions["one inactive and one active ban"] = InfractionFactory.create(
+            actor=cls.user_moderator,
+            infractions=(
+                {'type': 'ban', 'active': False, 'hidden': True},
+                {'type': 'ban', 'active': True, 'hidden': True},
+            ),
+            infraction_model=cls.infraction_model,
+            user_model=cls.user_model,
         )
 
         # User #7: Two active permanent bans
-        cls.created_infractions.update(
-            {
-                7: InfractionFactory.create(
-                    actor=cls.user_moderator,
-                    infractions=(
-                        {'type': 'ban', 'active': True, 'hidden': True},
-                        {'type': 'ban', 'active': True, 'hidden': True},
-                    ),
-                    infraction_model=cls.infraction_model,
-                    user_model=cls.user_model,
-                )
-            }
+        cls.created_infractions["two active perm bans"] = InfractionFactory.create(
+            actor=cls.user_moderator,
+            infractions=(
+                {'type': 'ban', 'active': True, 'hidden': True},
+                {'type': 'ban', 'active': True, 'hidden': True},
+            ),
+            infraction_model=cls.infraction_model,
+            user_model=cls.user_model,
         )
 
         # User #8: Multiple active temporary bans
-        cls.created_infractions.update(
-            {
-                8: InfractionFactory.create(
-                    actor=cls.user_moderator,
-                    infractions=(
-                        {
-                            'type': 'ban',
-                            'active': True,
-                            'hidden': True,
-                            'expires_at': timezone.now() + timedelta(days=1)
-                        },
-                        {
-                            'type': 'ban',
-                            'active': True,
-                            'hidden': True,
-                            'expires_at': timezone.now() + timedelta(days=10)
-                        },
-                        {
-                            'type': 'ban',
-                            'active': True,
-                            'hidden': True,
-                            'expires_at': timezone.now() + timedelta(days=20)
-                        },
-                        {
-                            'type': 'ban',
-                            'active': True,
-                            'hidden': True,
-                            'expires_at': timezone.now() + timedelta(days=5)
-                        },
-                    ),
-                    infraction_model=cls.infraction_model,
-                    user_model=cls.user_model,
-                )
-            }
+        cls.created_infractions["multiple active temp bans"] = InfractionFactory.create(
+            actor=cls.user_moderator,
+            infractions=(
+                {
+                    'type': 'ban',
+                    'active': True,
+                    'hidden': True,
+                    'expires_at': timezone.now() + timedelta(days=1)
+                },
+                {
+                    'type': 'ban',
+                    'active': True,
+                    'hidden': True,
+                    'expires_at': timezone.now() + timedelta(days=10)
+                },
+                {
+                    'type': 'ban',
+                    'active': True,
+                    'hidden': True,
+                    'expires_at': timezone.now() + timedelta(days=20)
+                },
+                {
+                    'type': 'ban',
+                    'active': True,
+                    'hidden': True,
+                    'expires_at': timezone.now() + timedelta(days=5)
+                },
+            ),
+            infraction_model=cls.infraction_model,
+            user_model=cls.user_model,
         )
 
         # User #9: One active permanent ban, two active temporary bans
-        cls.created_infractions.update(
-            {
-                9: InfractionFactory.create(
-                    actor=cls.user_moderator,
-                    infractions=(
-                        {
-                            'type': 'ban',
-                            'active': True,
-                            'hidden': True,
-                            'expires_at': timezone.now() + timedelta(days=10)
-                        },
-                        {
-                            'type': 'ban',
-                            'active': True,
-                            'hidden': True,
-                            'expires_at': None,
-                        },
-                        {
-                            'type': 'ban',
-                            'active': True,
-                            'hidden': True,
-                            'expires_at': timezone.now() + timedelta(days=7)
-                        },
-                    ),
-                    infraction_model=cls.infraction_model,
-                    user_model=cls.user_model,
-                )
-            }
+        cls.created_infractions["active perm, two active temp bans"] = InfractionFactory.create(
+            actor=cls.user_moderator,
+            infractions=(
+                {
+                    'type': 'ban',
+                    'active': True,
+                    'hidden': True,
+                    'expires_at': timezone.now() + timedelta(days=10)
+                },
+                {
+                    'type': 'ban',
+                    'active': True,
+                    'hidden': True,
+                    'expires_at': None,
+                },
+                {
+                    'type': 'ban',
+                    'active': True,
+                    'hidden': True,
+                    'expires_at': timezone.now() + timedelta(days=7)
+                },
+            ),
+            infraction_model=cls.infraction_model,
+            user_model=cls.user_model,
         )
 
         # User #10: One inactive permanent ban, two active temporary bans
-        cls.created_infractions.update(
-            {
-                10: InfractionFactory.create(
-                    actor=cls.user_moderator,
-                    infractions=(
-                        {
-                            'type': 'ban',
-                            'active': True,
-                            'hidden': True,
-                            'expires_at': timezone.now() + timedelta(days=10)
-                        },
-                        {
-                            'type': 'ban',
-                            'active': False,
-                            'hidden': True,
-                            'expires_at': None,
-                        },
-                        {
-                            'type': 'ban',
-                            'active': True,
-                            'hidden': True,
-                            'expires_at': timezone.now() + timedelta(days=7)
-                        },
-                    ),
-                    infraction_model=cls.infraction_model,
-                    user_model=cls.user_model,
-                )
-            }
+        cls.created_infractions["one inactive perm ban, two active temp bans"] = (
+            InfractionFactory.create(
+                actor=cls.user_moderator,
+                infractions=(
+                    {
+                        'type': 'ban',
+                        'active': True,
+                        'hidden': True,
+                        'expires_at': timezone.now() + timedelta(days=10)
+                    },
+                    {
+                        'type': 'ban',
+                        'active': False,
+                        'hidden': True,
+                        'expires_at': None,
+                    },
+                    {
+                        'type': 'ban',
+                        'active': True,
+                        'hidden': True,
+                        'expires_at': timezone.now() + timedelta(days=7)
+                    },
+                ),
+                infraction_model=cls.infraction_model,
+                user_model=cls.user_model,
+            )
         )
 
         # User #11: Active ban, active mute, active superstar
-        cls.created_infractions.update(
-            {
-                11: InfractionFactory.create(
-                    actor=cls.user_moderator,
-                    infractions=(
-                        {'type': 'ban', 'active': True, 'hidden': True},
-                        {'type': 'mute', 'active': True, 'hidden': True},
-                        {'type': 'superstar', 'active': True, 'hidden': True},
-                        {'type': 'watch', 'active': True, 'hidden': True},
-                    ),
-                    infraction_model=cls.infraction_model,
-                    user_model=cls.user_model,
-                )
-            }
+        cls.created_infractions["active ban, mute, and superstar"] = InfractionFactory.create(
+            actor=cls.user_moderator,
+            infractions=(
+                {'type': 'ban', 'active': True, 'hidden': True},
+                {'type': 'mute', 'active': True, 'hidden': True},
+                {'type': 'superstar', 'active': True, 'hidden': True},
+                {'type': 'watch', 'active': True, 'hidden': True},
+            ),
+            infraction_model=cls.infraction_model,
+            user_model=cls.user_model,
         )
 
         # User #12: Multiple active bans, active mutes, active superstars
-        cls.created_infractions.update(
-            {
-                12: InfractionFactory.create(
-                    actor=cls.user_moderator,
-                    infractions=(
-                        {'type': 'ban', 'active': True, 'hidden': True},
-                        {'type': 'ban', 'active': True, 'hidden': True},
-                        {'type': 'ban', 'active': True, 'hidden': True},
-                        {'type': 'mute', 'active': True, 'hidden': True},
-                        {'type': 'mute', 'active': True, 'hidden': True},
-                        {'type': 'mute', 'active': True, 'hidden': True},
-                        {'type': 'superstar', 'active': True, 'hidden': True},
-                        {'type': 'superstar', 'active': True, 'hidden': True},
-                        {'type': 'superstar', 'active': True, 'hidden': True},
-                        {'type': 'watch', 'active': True, 'hidden': True},
-                        {'type': 'watch', 'active': True, 'hidden': True},
-                        {'type': 'watch', 'active': True, 'hidden': True},
-                    ),
-                    infraction_model=cls.infraction_model,
-                    user_model=cls.user_model,
-                )
-            }
+        cls.created_infractions["multiple active bans, mutes, stars"] = InfractionFactory.create(
+            actor=cls.user_moderator,
+            infractions=(
+                {'type': 'ban', 'active': True, 'hidden': True},
+                {'type': 'ban', 'active': True, 'hidden': True},
+                {'type': 'ban', 'active': True, 'hidden': True},
+                {'type': 'mute', 'active': True, 'hidden': True},
+                {'type': 'mute', 'active': True, 'hidden': True},
+                {'type': 'mute', 'active': True, 'hidden': True},
+                {'type': 'superstar', 'active': True, 'hidden': True},
+                {'type': 'superstar', 'active': True, 'hidden': True},
+                {'type': 'superstar', 'active': True, 'hidden': True},
+                {'type': 'watch', 'active': True, 'hidden': True},
+                {'type': 'watch', 'active': True, 'hidden': True},
+                {'type': 'watch', 'active': True, 'hidden': True},
+            ),
+            infraction_model=cls.infraction_model,
+            user_model=cls.user_model,
         )
 
     def test_all_never_active_types_became_inactive(self):
@@ -454,14 +403,14 @@ class ActiveInfractionMigrationTests(MigrationsTestCase):
 
     def test_migration_left_clean_user_without_infractions(self):
         """Do users without infractions have no infractions after the migration?"""
-        user_id, infraction_history = self.created_infractions[1]
+        user_id, infraction_history = self.created_infractions["no infractions"]
         self.assertFalse(
             self.infraction_model.objects.filter(user__id=user_id).exists()
         )
 
     def test_migration_left_user_with_inactive_note_untouched(self):
         """Did the migration leave users with only an inactive note untouched?"""
-        user_id, infraction_history = self.created_infractions[2]
+        user_id, infraction_history = self.created_infractions["one inactive note"]
         inactive_note = infraction_history[0]
         self.assertTrue(
             self.infraction_model.objects.filter(**model_to_dict(inactive_note)).exists()
@@ -469,7 +418,7 @@ class ActiveInfractionMigrationTests(MigrationsTestCase):
 
     def test_migration_only_touched_active_field_of_active_note(self):
         """Does the migration only change the `active` field?"""
-        user_id, infraction_history = self.created_infractions[3]
+        user_id, infraction_history = self.created_infractions["one active note"]
         note = model_to_dict(infraction_history[0])
         note['active'] = False
         self.assertTrue(
@@ -478,7 +427,7 @@ class ActiveInfractionMigrationTests(MigrationsTestCase):
 
     def test_migration_only_touched_active_field_of_active_note_left_inactive_untouched(self):
         """Does the migration only change the `active` field of active notes?"""
-        user_id, infraction_history = self.created_infractions[4]
+        user_id, infraction_history = self.created_infractions["one active and one inactive note"]
         for note in infraction_history:
             with self.subTest(active=note.active):
                 note = model_to_dict(note)
@@ -489,14 +438,14 @@ class ActiveInfractionMigrationTests(MigrationsTestCase):
 
     def test_migration_migrates_all_nonactive_types_to_inactive(self):
         """Do we set the `active` field of all non-active infractions to `False`?"""
-        user_id, infraction_history = self.created_infractions[5]
+        user_id, infraction_history = self.created_infractions["active note, kick, warning"]
         self.assertFalse(
             self.infraction_model.objects.filter(user__id=user_id, active=True).exists()
         )
 
     def test_migration_leaves_user_with_one_active_ban_untouched(self):
         """Do we leave a user with one active and one inactive ban untouched?"""
-        user_id, infraction_history = self.created_infractions[6]
+        user_id, infraction_history = self.created_infractions["one inactive and one active ban"]
         for infraction in infraction_history:
             with self.subTest(active=infraction.active):
                 self.assertTrue(
@@ -505,37 +454,39 @@ class ActiveInfractionMigrationTests(MigrationsTestCase):
 
     def test_migration_turns_double_active_perm_ban_into_single_active_perm_ban(self):
         """Does the migration turn two active permanent bans into one active permanent ban?"""
-        user_id, infraction_history = self.created_infractions[7]
+        user_id, infraction_history = self.created_infractions["two active perm bans"]
         active_count = self.infraction_model.objects.filter(user__id=user_id, active=True).count()
         self.assertEqual(active_count, 1)
 
     def test_migration_leaves_temporary_ban_with_longest_duration_active(self):
         """Does the migration turn two active permanent bans into one active permanent ban?"""
-        user_id, infraction_history = self.created_infractions[8]
+        user_id, infraction_history = self.created_infractions["multiple active temp bans"]
         active_ban = self.infraction_model.objects.get(user__id=user_id, active=True)
         self.assertEqual(active_ban.expires_at, infraction_history[2].expires_at)
 
     def test_migration_leaves_permanent_ban_active(self):
         """Does the migration leave the permanent ban active?"""
-        user_id, infraction_history = self.created_infractions[9]
+        user_id, infraction_history = self.created_infractions["active perm, two active temp bans"]
         active_ban = self.infraction_model.objects.get(user__id=user_id, active=True)
         self.assertIsNone(active_ban.expires_at)
 
     def test_migration_leaves_longest_temp_ban_active_with_inactive_permanent_ban(self):
         """Does the longest temp ban stay active, even with an inactive perm ban present?"""
-        user_id, infraction_history = self.created_infractions[10]
+        user_id, infraction_history = self.created_infractions[
+            "one inactive perm ban, two active temp bans"
+        ]
         active_ban = self.infraction_model.objects.get(user__id=user_id, active=True)
         self.assertEqual(active_ban.expires_at, infraction_history[0].expires_at)
 
     def test_migration_leaves_all_active_types_active_if_one_of_each_exists(self):
         """Do all active infractions stay active if only one of each is present?"""
-        user_id, infraction_history = self.created_infractions[11]
+        user_id, infraction_history = self.created_infractions["active ban, mute, and superstar"]
         active_count = self.infraction_model.objects.filter(user__id=user_id, active=True).count()
         self.assertEqual(active_count, 4)
 
     def test_migration_reduces_all_active_types_to_a_single_active_infraction(self):
         """Do we reduce all of the infraction types to one active infraction?"""
-        user_id, infraction_history = self.created_infractions[12]
+        user_id, infraction_history = self.created_infractions["multiple active bans, mutes, stars"]
         active_infractions = self.infraction_model.objects.filter(user__id=user_id, active=True)
         self.assertEqual(len(active_infractions), 4)
         types_observed = [infraction.type for infraction in active_infractions]

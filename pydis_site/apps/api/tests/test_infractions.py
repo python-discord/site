@@ -1,4 +1,5 @@
 from datetime import datetime as dt, timedelta, timezone
+from unittest.mock import patch
 from urllib.parse import quote
 
 from django.db.utils import IntegrityError
@@ -330,9 +331,10 @@ class CreationTests(APISubdomainTestCase):
                 }
                 response = self.client.post(url, data=invalid_infraction)
                 self.assertEqual(response.status_code, 400)
-                self.assertEqual(response.json(), {
-                    'active': [f'{infraction_type} infractions cannot be active.']
-                })
+                self.assertEqual(
+                    response.json(),
+                    {'active': [f'{infraction_type} infractions cannot be active.']}
+                )
 
     def test_returns_400_for_second_active_infraction_of_the_same_type(self):
         """Test if the API rejects a second active infraction of the same type for a given user."""
@@ -364,9 +366,14 @@ class CreationTests(APISubdomainTestCase):
                 }
                 second_response = self.client.post(url, data=second_active_infraction)
                 self.assertEqual(second_response.status_code, 400)
-                self.assertEqual(second_response.json(), {
-                    'active': [f'This user already has an active {infraction_type} infraction']
-                })
+                self.assertEqual(
+                    second_response.json(),
+                    {
+                        'non_field_errors': [
+                            'This user already has an active infraction of this type.'
+                        ]
+                    }
+                )
 
     def test_returns_201_for_second_active_infraction_of_different_type(self):
         """Test if the API accepts a second active infraction of a different type than the first."""
@@ -417,27 +424,37 @@ class CreationTests(APISubdomainTestCase):
 
     def test_unique_constraint_accepts_active_infraction_after_inactive_infraction(self):
         """Do we accept an active infraction if the others of the same type are inactive?"""
-        Infraction.objects.create(
-            user=self.user,
-            actor=self.user,
-            type="ban",
-            active=False,
-            reason="The first inactive ban"
-        )
-        Infraction.objects.create(
-            user=self.user,
-            actor=self.user,
-            type="ban",
-            active=False,
-            reason="The second inactive ban"
-        )
-        Infraction.objects.create(
-            user=self.user,
-            actor=self.user,
-            type="ban",
-            active=True,
-            reason="The first active ban"
-        )
+        try:
+            Infraction.objects.create(
+                user=self.user,
+                actor=self.user,
+                type="ban",
+                active=False,
+                reason="The first inactive ban"
+            )
+            Infraction.objects.create(
+                user=self.user,
+                actor=self.user,
+                type="ban",
+                active=False,
+                reason="The second inactive ban"
+            )
+            Infraction.objects.create(
+                user=self.user,
+                actor=self.user,
+                type="ban",
+                active=True,
+                reason="The first active ban"
+            )
+        except IntegrityError:
+            self.fail("An unexpected IntegrityError was raised.")
+
+    @patch(f"{__name__}.Infraction")
+    def test_the_accepts_active_infraction_after_inactive_infractions_test(self, infraction_patch):
+        """Does the test properly catch the IntegrityError and raise an AssertionError?"""
+        infraction_patch.objects.create.side_effect = IntegrityError
+        with self.assertRaises(AssertionError, msg="An unexpected IntegrityError was raised."):
+            self.test_unique_constraint_accepts_active_infraction_after_inactive_infraction()
 
     def test_unique_constraint_accepts_second_active_of_different_type(self):
         """Do we accept a second active infraction of a different type for a given user?"""
