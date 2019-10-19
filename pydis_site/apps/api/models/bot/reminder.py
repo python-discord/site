@@ -16,6 +16,7 @@ class Reminder(ModelReprMixin, models.Model):
         )
     )
     jump_url = models.CharField(
+        max_length=88,
         help_text=(
             "The jump url to the message that created the reminder"
         )
