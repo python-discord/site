@@ -82,7 +82,8 @@ class DeletedMessageAdmin(admin.ModelAdmin):
         """Format embed data in a code block for better readability."""
         if instance.embeds:
             return format_html(
-                "<pre><code>{0}</code></pre>",
+                "<pre style='word-wrap: break-word; white-space: pre-wrap; overflow-x: auto;'>"
+                "<code>{0}</code></pre>",
                 json.dumps(instance.embeds, indent=4)
             )
 
@@ -241,6 +242,29 @@ class RoleAdmin(admin.ModelAdmin):
     permissions_with_calc_link.short_description = "Permissions"
 
 
+class TagAdmin(admin.ModelAdmin):
+    """Admin formatting for the Tag model."""
+
+    fields = ("title", "embed", "preview")
+    readonly_fields = ("preview",)
+    search_fields = ("title", "embed")
+
+    @staticmethod
+    def preview(instance: Tag) -> Optional[str]:
+        """Render tag markdown contents to preview actual appearance."""
+        if instance.embed:
+            import markdown
+            return format_html(
+                markdown.markdown(
+                    instance.embed["description"],
+                    extensions=[
+                        "markdown.extensions.nl2br",
+                        "markdown.extensions.extra"
+                    ]
+                )
+            )
+
+
 class StaffRolesFilter(admin.SimpleListFilter):
     """Filter options for Staff Roles."""
 
@@ -290,5 +314,5 @@ admin.site.register(MessageDeletionContext, MessageDeletionContextAdmin)
 admin.site.register(Nomination, NominationAdmin)
 admin.site.register(OffTopicChannelName, OffTopicChannelNameAdmin)
 admin.site.register(Role, RoleAdmin)
-admin.site.register(Tag)
+admin.site.register(Tag, TagAdmin)
 admin.site.register(User, UserAdmin)
