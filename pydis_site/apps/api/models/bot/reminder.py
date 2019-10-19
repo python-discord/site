@@ -15,6 +15,11 @@ class Reminder(ModelReprMixin, models.Model):
             "If not, it has been sent out to the user."
         )
     )
+    jump_url = models.CharField(
+        help_text=(
+            "The jump url to the message that created the reminder"
+        )
+    )
     author = models.ForeignKey(
         User,
         on_delete=models.CASCADE,

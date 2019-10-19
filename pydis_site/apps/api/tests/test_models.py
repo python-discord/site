@@ -115,6 +115,10 @@ class StringDunderMethodTests(SimpleTestCase):
                     discriminator=5, avatar_hash=None
                 ),
                 channel_id=555,
+                jump_url=(
+                    'https://discordapp.com/channels/'
+                    '267624335836053506/291284109232308226/463087129459949587'
+                ),
                 content="oh no",
                 expiration=dt(5018, 11, 20, 15, 52, tzinfo=timezone.utc)
             )
