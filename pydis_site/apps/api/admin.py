@@ -122,6 +122,50 @@ class MessageDeletionContextAdmin(admin.ModelAdmin):
         )
 
 
+class InfractionAdmin(admin.ModelAdmin):
+    """Admin formatting for the Infraction model."""
+
+    fields = (
+        "user",
+        "actor",
+        "type",
+        "reason",
+        "inserted_at",
+        "expires_at",
+        "active",
+        "hidden"
+    )
+    readonly_fields = (
+        "user",
+        "actor",
+        "type",
+        "inserted_at"
+    )
+    list_display = (
+        "type",
+        "user",
+        "actor",
+        "inserted_at",
+        "expires_at",
+        "reason",
+        "active",
+    )
+    search_fields = (
+        "id",
+        "user__name",
+        "user__id",
+        "actor__name",
+        "actor__id",
+        "reason",
+        "type"
+    )
+    list_filter = (
+        "type",
+        "hidden",
+        "active"
+    )
+
+
 class StaffRolesFilter(admin.SimpleListFilter):
     """Filter options for Staff Roles."""
 
@@ -165,7 +209,7 @@ class UserAdmin(admin.ModelAdmin):
 admin.site.register(BotSetting)
 admin.site.register(DeletedMessage, DeletedMessageAdmin)
 admin.site.register(DocumentationLink)
-admin.site.register(Infraction)
+admin.site.register(Infraction, InfractionAdmin)
 admin.site.register(LogEntry, LogEntryAdmin)
 admin.site.register(MessageDeletionContext, MessageDeletionContextAdmin)
 admin.site.register(Nomination)
