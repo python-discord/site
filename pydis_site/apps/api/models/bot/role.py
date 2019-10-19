@@ -65,3 +65,8 @@ class Role(ModelReprMixin, models.Model):
     def __le__(self, other: Role) -> bool:
         """Compares the roles based on their position in the role hierarchy of the guild."""
         return self.position <= other.position
+
+    class Meta:
+        """Set role ordering from highest to lowest position."""
+
+        ordering = ("-position",)

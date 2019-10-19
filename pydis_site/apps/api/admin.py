@@ -1,8 +1,9 @@
 import json
-from typing import Optional
+from typing import Optional, Tuple
 
 from django import urls
 from django.contrib import admin
+from django.db.models.query import QuerySet
 from django.http import HttpRequest
 from django.utils.html import format_html
 
@@ -121,6 +122,46 @@ class MessageDeletionContextAdmin(admin.ModelAdmin):
         )
 
 
+class StaffRolesFilter(admin.SimpleListFilter):
+    """Filter options for Staff Roles."""
+
+    title = "Staff Role"
+    parameter_name = "staff_role"
+
+    @staticmethod
+    def lookups(*_) -> Tuple[Tuple[str, str], ...]:
+        """Available filter options."""
+        return (
+            ("Owners", "Owners"),
+            ("Admins", "Admins"),
+            ("Moderators", "Moderators"),
+            ("Core Developers", "Core Developers"),
+            ("Helpers", "Helpers"),
+        )
+
+    def queryset(self, request: HttpRequest, queryset: QuerySet) -> Optional[QuerySet]:
+        """Returned data filter based on selected option."""
+        value = self.value()
+        if value:
+            return queryset.filter(roles__name=value)
+
+
+class UserAdmin(admin.ModelAdmin):
+    """Admin formatting for the User model."""
+
+    search_fields = ("name", "id", "roles__name", "roles__id")
+    list_filter = ("in_guild", StaffRolesFilter)
+    exclude = ("name", "discriminator")
+    readonly_fields = (
+        "__str__",
+        "id",
+        "avatar_hash",
+        "top_role",
+        "roles",
+        "in_guild",
+    )
+
+
 admin.site.register(BotSetting)
 admin.site.register(DeletedMessage, DeletedMessageAdmin)
 admin.site.register(DocumentationLink)
@@ -131,4 +172,4 @@ admin.site.register(Nomination)
 admin.site.register(OffTopicChannelName)
 admin.site.register(Role)
 admin.site.register(Tag)
-admin.site.register(User)
+admin.site.register(User, UserAdmin)
