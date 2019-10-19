@@ -316,18 +316,22 @@ class CreationTests(APISubdomainTestCase):
     def test_returns_400_for_active_infraction_of_type_that_cannot_be_active(self):
         """Test if the API rejects active infractions for types that cannot be active."""
         url = reverse('bot:infraction-list', host='api')
-        restricted_types = ('note', 'warning', 'kick')
+        restricted_types = (
+            ('note', True),
+            ('warning', False),
+            ('kick', False),
+        )
 
-        for infraction_type in restricted_types:
+        for infraction_type, hidden in restricted_types:
             with self.subTest(infraction_type=infraction_type):
                 invalid_infraction = {
                     'user': self.user.id,
                     'actor': self.user.id,
                     'type': infraction_type,
                     'reason': 'Take me on!',
-                    'hidden': True,
+                    'hidden': hidden,
                     'active': True,
-                    'expires_at': '2019-10-04T12:52:00+00:00'
+                    'expires_at': None,
                 }
                 response = self.client.post(url, data=invalid_infraction)
                 self.assertEqual(response.status_code, 400)
@@ -450,7 +454,7 @@ class CreationTests(APISubdomainTestCase):
             self.fail("An unexpected IntegrityError was raised.")
 
     @patch(f"{__name__}.Infraction")
-    def test_the_accepts_active_infraction_after_inactive_infractions_test(self, infraction_patch):
+    def test_if_accepts_active_infraction_test_catches_integrity_error(self, infraction_patch):
         """Does the test properly catch the IntegrityError and raise an AssertionError?"""
         infraction_patch.objects.create.side_effect = IntegrityError
         with self.assertRaises(AssertionError, msg="An unexpected IntegrityError was raised."):
