@@ -86,4 +86,13 @@ div.card.has-equal-height {
 
 button.is-size-navbar-menu, a.is-size-navbar-menu {
     font-size: 14px;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+}
+
+@media screen and (min-width: 1088px) {
+    button.is-size-navbar-menu, a.is-size-navbar-menu {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
 }
