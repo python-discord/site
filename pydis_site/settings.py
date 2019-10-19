@@ -92,6 +92,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
 
     'allauth.socialaccount.providers.discord',
+    'allauth.socialaccount.providers.github',
 
     'crispy_forms',
     'django_crispy_bulma',
@@ -407,5 +408,8 @@ AUTHENTICATION_BACKENDS = (
     'allauth.account.auth_backends.AuthenticationBackend',
 )
 
+ACCOUNT_ADAPTER = "pydis_site.utils.account.AccountAdapter"
+ACCOUNT_EMAIL_REQUIRED = False  # Undocumented allauth setting; don't require emails
 ACCOUNT_EMAIL_VERIFICATION = "none"  # No verification required; we don't use emails for anything
 LOGIN_REDIRECT_URL = "home"
+SOCIALACCOUNT_ADAPTER = "pydis_site.utils.account.SocialAccountAdapter"
