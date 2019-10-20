@@ -67,12 +67,14 @@ class SignalListenerTests(TestCase):
 
         cls.admin_mapping = RoleMapping.objects.create(
             role=cls.admin_role,
-            group=cls.admin_group
+            group=cls.admin_group,
+            is_staff=True
         )
 
         cls.moderator_mapping = RoleMapping.objects.create(
             role=cls.moderator_role,
-            group=cls.moderator_group
+            group=cls.moderator_group,
+            is_staff=False
         )
 
         cls.discord_user = DiscordUser.objects.create(
@@ -166,7 +168,7 @@ class SignalListenerTests(TestCase):
 
         cls.django_moderator = DjangoUser.objects.create(
             username="moderator",
-            is_staff=True,
+            is_staff=False,
             is_superuser=False
         )
 
@@ -373,10 +375,25 @@ class SignalListenerTests(TestCase):
         self.assertEqual(self.django_moderator.groups.all().count(), 1)
         self.assertEqual(self.django_admin.groups.all().count(), 1)
 
+        # Test is_staff changes
+        self.admin_mapping.is_staff = False
+        self.admin_mapping.save()
+
+        self.assertFalse(self.django_moderator.is_staff)
+        self.assertFalse(self.django_admin.is_staff)
+
+        self.admin_mapping.is_staff = True
+        self.admin_mapping.save()
+
+        self.django_admin.refresh_from_db(fields=("is_staff", ))
+        self.assertTrue(self.django_admin.is_staff)
+
         # Test mapping deletion
         self.admin_mapping.delete()
 
+        self.django_admin.refresh_from_db(fields=("is_staff",))
         self.assertEqual(self.django_admin.groups.all().count(), 0)
+        self.assertFalse(self.django_admin.is_staff)
 
         # Test mapping update
         self.moderator_mapping.group = self.admin_group
@@ -388,11 +405,15 @@ class SignalListenerTests(TestCase):
         # Test mapping creation
         new_mapping = RoleMapping.objects.create(
             role=self.admin_role,
-            group=self.moderator_group
+            group=self.moderator_group,
+            is_staff=True
         )
 
         self.assertEqual(self.django_admin.groups.all().count(), 1)
         self.assertTrue(self.moderator_group in self.django_admin.groups.all())
+
+        self.django_admin.refresh_from_db(fields=("is_staff",))
+        self.assertTrue(self.django_admin.is_staff)
 
         # Test that nothing happens when fixtures are loaded
         pre_save.send(RoleMapping, instance=new_mapping, raw=True)

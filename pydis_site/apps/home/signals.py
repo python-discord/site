@@ -192,7 +192,7 @@ class AllauthSignalListener:
             account.user.groups.add(instance.group)
 
             if instance.is_staff and not account.user.is_staff:
-                account.user.is_staff = True
+                account.user.is_staff = instance.is_staff
                 account.user.save(update_fields=("is_staff", ))
             else:
                 discord_user = DiscordUser.objects.get(id=int(account.uid))
