@@ -1,5 +1,4 @@
 from allauth.account.views import LogoutView
-from allauth.socialaccount.views import ConnectionsView
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
@@ -7,7 +6,7 @@ from django.contrib.messages import ERROR
 from django.urls import include, path
 
 from pydis_site.utils.views import MessageRedirectView
-from .views import HomeView
+from .views import AccountDeleteView, AccountSettingsView, HomeView
 
 app_name = 'home'
 urlpatterns = [
@@ -15,6 +14,7 @@ urlpatterns = [
     path('pages/', include('wiki.urls')),
 
     path('accounts/', include('allauth.socialaccount.providers.discord.urls')),
+    path('accounts/', include('allauth.socialaccount.providers.github.urls')),
 
     path(
         'accounts/login/cancelled', MessageRedirectView.as_view(
@@ -28,7 +28,9 @@ urlpatterns = [
         ), name='socialaccount_login_error'
     ),
 
-    path('connections', ConnectionsView.as_view()),
+    path('accounts/settings', AccountSettingsView.as_view(), name="account_settings"),
+    path('accounts/delete', AccountDeleteView.as_view(), name="account_delete"),
+
     path('logout', LogoutView.as_view(), name="logout"),
 
     path('admin/', admin.site.urls),
