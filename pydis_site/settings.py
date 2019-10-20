@@ -409,7 +409,12 @@ AUTHENTICATION_BACKENDS = (
 )
 
 ACCOUNT_ADAPTER = "pydis_site.utils.account.AccountAdapter"
-ACCOUNT_EMAIL_REQUIRED = False  # Undocumented allauth setting; don't require emails
+ACCOUNT_EMAIL_REQUIRED = False       # Undocumented allauth setting; don't require emails
 ACCOUNT_EMAIL_VERIFICATION = "none"  # No verification required; we don't use emails for anything
+
+# We use this validator because Allauth won't let us actually supply a list with no validators
+# in it, and we can't just give it a lambda - that'd be too easy, I suppose.
+ACCOUNT_USERNAME_VALIDATORS = "pydis_site.VALIDATORS"
+
 LOGIN_REDIRECT_URL = "home"
 SOCIALACCOUNT_ADAPTER = "pydis_site.utils.account.SocialAccountAdapter"

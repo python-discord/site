@@ -262,6 +262,13 @@ class AllauthSignalListener:
         except SocialAccount.user.RelatedObjectDoesNotExist:
             return  # There's no user account yet, this will be handled by another receiver
 
+        # Ensure that the username on this account is correct
+        new_username = f"{user.name}#{user.discriminator}"
+
+        if account.user.username != new_username:
+            account.user.username = new_username
+            account.user.first_name = new_username
+
         if not user.in_guild:
             deletion = True
 
@@ -278,7 +285,6 @@ class AllauthSignalListener:
             if account.user.is_staff:
                 # They're marked as a staff user and they shouldn't be, so let's fix that
                 account.user.is_staff = False
-                account.user.save(update_fields=("is_staff", ))
         else:
             new_groups = []
             is_staff = False
@@ -304,4 +310,5 @@ class AllauthSignalListener:
 
             if account.user.is_staff != is_staff:
                 account.user.is_staff = is_staff
-                account.user.save(update_fields=("is_staff", ))
+
+        account.user.save()

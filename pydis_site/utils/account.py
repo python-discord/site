@@ -1,7 +1,10 @@
+from typing import Any, Dict
+
 from allauth.account.adapter import DefaultAccountAdapter
 from allauth.exceptions import ImmediateHttpResponse
 from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
 from allauth.socialaccount.models import SocialLogin
+from django.contrib.auth.models import User
 from django.contrib.messages import ERROR, add_message
 from django.http import HttpRequest
 from django.shortcuts import redirect
@@ -42,3 +45,20 @@ class SocialAccountAdapter(DefaultSocialAccountAdapter):
             raise ImmediateHttpResponse(redirect(reverse("home")))
 
         return True
+
+    def populate_user(self, request: HttpRequest,
+                      social_login: SocialLogin,
+                      data: Dict[str, Any]) -> User:
+        """
+        Method used to populate a Django User with data.
+
+        We override this so that the Django user is created with the username#discriminator,
+        instead of just the username, as Django users must have unique usernames. For display
+        purposes, we also set the `name` key, which is used for `first_name` in the database.
+        """
+        if social_login.account.provider == "discord":
+            discriminator = social_login.account.extra_data["discriminator"]
+            data["username"] = f"{data['username']}#{discriminator}"
+            data["name"] = data["username"]
+
+        return super().populate_user(request, social_login, data)
