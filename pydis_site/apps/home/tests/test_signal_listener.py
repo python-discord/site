@@ -341,6 +341,33 @@ class SignalListenerTests(TestCase):
         self.discord_admin.roles.add(self.admin_role)
         self.discord_admin.save()
 
+    def test_apply_groups_moderator(self):
+        """Test application of groups by role, relating to a non-`is_staff` moderator user."""
+        handler = AllauthSignalListener()
+
+        self.assertEqual(self.django_user_discordless.groups.all().count(), 0)
+
+        # Apply groups based on moderator role being present on Discord
+        handler._apply_groups(self.discord_moderator, self.social_moderator)
+        self.assertTrue(self.moderator_group in self.django_moderator.groups.all())
+
+        # Remove groups based on the user apparently leaving the server
+        handler._apply_groups(self.discord_moderator, self.social_moderator, True)
+        self.assertEqual(self.django_user_discordless.groups.all().count(), 0)
+
+        # Apply the moderator role again
+        handler._apply_groups(self.discord_moderator, self.social_moderator)
+
+        # Remove all of the roles from the user
+        self.discord_moderator.roles.clear()
+
+        # Remove groups based on the user no longer having the moderator role on Discord
+        handler._apply_groups(self.discord_moderator, self.social_moderator)
+        self.assertEqual(self.django_user_discordless.groups.all().count(), 0)
+
+        self.discord_moderator.roles.add(self.moderator_role)
+        self.discord_moderator.save()
+
     def test_apply_groups_other(self):
         """Test application of groups by role, relating to non-standard cases."""
         handler = AllauthSignalListener()
@@ -414,6 +441,20 @@ class SignalListenerTests(TestCase):
 
         self.django_admin.refresh_from_db(fields=("is_staff",))
         self.assertTrue(self.django_admin.is_staff)
+
+        new_mapping.delete()
+
+        # Test mapping creation (without is_staff)
+        new_mapping = RoleMapping.objects.create(
+            role=self.admin_role,
+            group=self.moderator_group,
+        )
+
+        self.assertEqual(self.django_admin.groups.all().count(), 1)
+        self.assertTrue(self.moderator_group in self.django_admin.groups.all())
+
+        self.django_admin.refresh_from_db(fields=("is_staff",))
+        self.assertFalse(self.django_admin.is_staff)
 
         # Test that nothing happens when fixtures are loaded
         pre_save.send(RoleMapping, instance=new_mapping, raw=True)
