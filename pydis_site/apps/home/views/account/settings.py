@@ -15,6 +15,3 @@ class SettingsView(LoginRequiredMixin, View):
     def get(self, request: HttpRequest) -> HttpResponse:
         """HTTP GET: Return the view template."""
         return render(request, "home/account/settings.html")
-
-    def post(self, request: HttpRequest) -> HttpResponse:
-        """HTTP POST: Process account changes, as requested by the user."""
