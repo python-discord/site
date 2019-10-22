@@ -1,4 +1,6 @@
 {% extends 'base/base.html' %}
+
+{% load crispy_forms_tags %}
 {% load static %}
 
 {% block title %}Delete Account{% endblock %}
@@ -6,7 +8,37 @@
 {% block content %}
   {% include "base/navbar.html" %}
 
-  <section class="section">
+  <section class="section content">
+    <div class="container">
+      <h2 class="is-size-2 has-text-centered">Account Deletion</h2>
 
+      <div class="columns is-centered">
+        <div class="column is-half-desktop is-full-tablet is-full-mobile">
+
+          <article class="message is-danger">
+            <div class="message-body">
+              <p>
+                You have requested to delete the account with username
+                <strong><span class="has-text-dark is-family-monospace">{{ user.username }}</span></strong>.
+              </p>
+
+              <p>
+                Please note that this <strong>cannot be undone</strong>.
+              </p>
+
+              <p>
+                To verify that you'd like to remove your account, please type your username into the box below.
+              </p>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <div class="columns is-centered">
+        <div class="column is-half-desktop is-full-tablet is-full-mobile">
+          {% crispy form %}
+        </div>
+      </div>
+    </div>
   </section>
 {% endblock %}
