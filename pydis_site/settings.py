@@ -303,13 +303,13 @@ BULMA_SETTINGS = {
     "variables": {  # If you update these colours, please update the notification.css file
         "primary": "#7289DA",    # Discord blurple
 
-        # "orange": "",          # Apparently an unused colour
+        # "orange": "",          # Apparently unused, but the default is fine
         # "yellow": "",          # The default yellow looks pretty good
         "green": "#32ac66",      # Colour picked after Discord discussion
-        "turquoise": "#7289DA",  # Blurple, because Bulma uses this as the default primary
+        "turquoise": "#7289DA",  # Blurple, because Bulma uses this regardless of `primary` above
         "blue": "#2482c1",       # Colour picked after Discord discussion
         "cyan": "#2482c1",       # Colour picked after Discord discussion (matches the blue)
-        # "purple": "",          # Apparently an unused colour
+        "purple": "#aa55e4",     # Apparently unused, but changed for consistency
         "red": "#d63852",        # Colour picked after Discord discussion
 
         "link": "$primary",
