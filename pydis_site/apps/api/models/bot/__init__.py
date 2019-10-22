@@ -7,6 +7,7 @@ from .message import Message
 from .message_deletion_context import MessageDeletionContext
 from .nomination import Nomination
 from .off_topic_channel_name import OffTopicChannelName
+from .offensive_message import OffensiveMessage
 from .reminder import Reminder
 from .role import Role
 from .tag import Tag
