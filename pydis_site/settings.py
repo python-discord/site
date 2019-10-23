@@ -48,7 +48,7 @@ if DEBUG:
             'staff.web'
         ]
     )
-    SECRET_KEY = secrets.token_urlsafe(32)
+    SECRET_KEY = "yellow polkadot bikini"  # noqa: S105
 
 elif 'CI' in os.environ:
     ALLOWED_HOSTS = ['*']
