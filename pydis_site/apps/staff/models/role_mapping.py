@@ -22,7 +22,7 @@ class RoleMapping(models.Model):
     )
 
     is_staff = models.BooleanField(
-        help_text="Whether this role mapping related to a Django staff group",
+        help_text="Whether this role mapping relates to a Django staff group",
         default=False
     )
 

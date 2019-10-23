@@ -10,7 +10,10 @@ from .views import AccountDeleteView, AccountSettingsView, HomeView
 
 app_name = 'home'
 urlpatterns = [
+    # We do this twice because Allauth expects specific view names to exist
     path('', HomeView.as_view(), name='home'),
+    path('', HomeView.as_view(), name='socialaccount_connections'),
+
     path('pages/', include('wiki.urls')),
 
     path('accounts/', include('allauth.socialaccount.providers.discord.urls')),

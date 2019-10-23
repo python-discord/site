@@ -96,3 +96,13 @@ button.is-size-navbar-menu, a.is-size-navbar-menu {
         padding-right: 1rem;
     }
 }
+
+/* Fix for modals being behind the navbar */
+
+.modal * {
+    z-index: 1020;
+}
+
+.modal-background {
+    z-index: 1010;
+}
