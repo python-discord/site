@@ -1,3 +1,4 @@
+from allauth.socialaccount.models import SocialAccount
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.test import TestCase
@@ -91,6 +92,42 @@ class TestAccountSettingsView(TestCase):
             username="user#0000"
         )
 
+        self.user_unlinked = User.objects.create(
+            username="user#9999"
+        )
+
+        self.user_unlinked_discord = User.objects.create(
+            username="user#1234"
+        )
+
+        self.user_unlinked_github = User.objects.create(
+            username="user#1111"
+        )
+
+        self.github_account = SocialAccount.objects.create(
+            user=self.user,
+            provider="github",
+            uid="0"
+        )
+
+        self.discord_account = SocialAccount.objects.create(
+            user=self.user,
+            provider="discord",
+            uid="0000"
+        )
+
+        self.github_account_secondary = SocialAccount.objects.create(
+            user=self.user_unlinked_discord,
+            provider="github",
+            uid="1"
+        )
+
+        self.discord_account_secondary = SocialAccount.objects.create(
+            user=self.user_unlinked_github,
+            provider="discord",
+            uid="1111"
+        )
+
     def test_redirect_when_logged_out(self):
         """Check that the user is redirected to the homepage when not logged in."""
         url = reverse("account_settings")
@@ -107,6 +144,55 @@ class TestAccountSettingsView(TestCase):
         self.client.logout()
 
         self.assertEqual(resp.status_code, 200)
+
+        self.client.force_login(self.user_unlinked)
+        resp = self.client.get(url)
+        self.client.logout()
+
+        self.assertEqual(resp.status_code, 200)
+
+        self.client.force_login(self.user_unlinked_discord)
+        resp = self.client.get(url)
+        self.client.logout()
+
+        self.assertEqual(resp.status_code, 200)
+
+        self.client.force_login(self.user_unlinked_github)
+        resp = self.client.get(url)
+        self.client.logout()
+
+        self.assertEqual(resp.status_code, 200)
+
+    def test_post_invalid(self):
+        """Test the behaviour of invalid POST submissions."""
+        url = reverse("account_settings")
+
+        self.client.force_login(self.user_unlinked)
+
+        resp = self.client.post(url, {"provider": "discord"})
+        self.assertEqual(resp.status_code, 302)
+        self.assertTrue(check_redirect_url(resp, reverse("home")))
+
+        resp = self.client.post(url, {"provider": "github"})
+        self.assertEqual(resp.status_code, 302)
+        self.assertTrue(check_redirect_url(resp, reverse("home")))
+
+        self.client.logout()
+
+    def test_post_valid(self):
+        """Ensure that GitHub is unlinked with a valid POST submission."""
+        url = reverse("account_settings")
+
+        self.client.force_login(self.user)
+
+        resp = self.client.post(url, {"provider": "github"})
+        self.assertEqual(resp.status_code, 302)
+        self.assertTrue(check_redirect_url(resp, reverse("home")))
+
+        with self.assertRaises(SocialAccount.DoesNotExist):
+            SocialAccount.objects.get(user=self.user, provider="github")
+
+        self.client.logout()
 
 
 class TestIndexReturns200(TestCase):

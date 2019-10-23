@@ -36,7 +36,7 @@ class SettingsView(LoginRequiredMixin, View):
             if account.provider == "discord":
                 context["discord"] = account
 
-            elif account.provider == "github":
+            if account.provider == "github":
                 context["github"] = account
 
         return render(request, "home/account/settings.html", context=context)

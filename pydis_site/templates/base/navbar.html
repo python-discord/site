@@ -127,16 +127,21 @@
 
 {% if user.is_authenticated %}
   <script defer type="text/javascript">
+    // Script which loads and sets up the account settings modal.
+    // This script must be placed in a template, or rewritten to take the fetch
+    // URL as a function argument, in order to be used.
+
     "use strict";
 
+    // Create and prepend a new div for this modal
     let element = document.createElement("div");
     document.body.prepend(element);
 
-    fetch("{% url "account_settings" %}")
-      .then((response) => response.text())
+    fetch("{% url "account_settings" %}")   // Fetch the URL
+      .then((response) => response.text())  // Read in the data stream as text
       .then((text) => {
-        element.outerHTML = text;
-        setupModal(document.getElementById("account-modal"));
+        element.outerHTML = text;  // Replace the div's HTML with the loaded modal HTML
+        setupModal(document.getElementById("account-modal"));  // Set up the modal
       });
   </script>
 {% endif %}
