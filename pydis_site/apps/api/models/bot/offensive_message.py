@@ -9,7 +9,7 @@ from pydis_site.apps.api.models.utils import ModelReprMixin
 
 def future_date_validator(date: datetime.date) -> None:
     """Raise ValidationError if the date isn't a future date."""
-    if date < datetime.datetime.utcnow():
+    if date < datetime.datetime.now(datetime.timezone.utc):
         raise ValidationError("Date must be a future date")
 
 
