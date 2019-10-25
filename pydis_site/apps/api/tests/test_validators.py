@@ -1,7 +1,10 @@
+from datetime import date
+
 from django.core.exceptions import ValidationError
 from django.test import TestCase
 
 from ..models.bot.bot_setting import validate_bot_setting_name
+from ..models.bot.offensive_message import future_date_validator
 from ..models.bot.tag import validate_tag_embed
 
 
@@ -245,3 +248,12 @@ class TagEmbedValidatorTests(TestCase):
                 'name': "Bob"
             }
         })
+
+
+class OffensiveMessageValidatorsTests(TestCase):
+    def test_accepts_future_date(self):
+        future_date_validator(date(3000, 1, 1))
+
+    def test_rejects_non_future_date(self):
+        with self.assertRaises(ValidationError):
+            future_date_validator(date(1000, 1, 1))
