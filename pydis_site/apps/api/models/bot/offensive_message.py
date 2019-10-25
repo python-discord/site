@@ -9,7 +9,7 @@ from pydis_site.apps.api.models.utils import ModelReprMixin
 
 def future_date_validator(date: datetime.date) -> None:
     """Raise ValidationError if the date isn't a future date."""
-    if date < datetime.date.today():
+    if date < datetime.datetime.utcnow():
         raise ValidationError("Date must be a future date")
 
 
@@ -38,7 +38,7 @@ class OffensiveMessage(ModelReprMixin, models.Model):
             ),
         )
     )
-    delete_date = models.DateField(
+    delete_date = models.DateTimeField(
         help_text="The date on which the message will be auto-deleted.",
         validators=(future_date_validator,)
     )
