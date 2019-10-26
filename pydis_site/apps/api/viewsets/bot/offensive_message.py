@@ -1,5 +1,3 @@
-from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework.filters import SearchFilter
 from rest_framework.mixins import (
     CreateModelMixin,
     DestroyModelMixin,
@@ -62,5 +60,3 @@ class OffensiveMessageViewSet(
 
     serializer_class = OffensiveMessageSerializer
     queryset = OffensiveMessage.objects.all()
-    filter_backends = (DjangoFilterBackend, SearchFilter)
-    filter_fields = ('delete_date',)
