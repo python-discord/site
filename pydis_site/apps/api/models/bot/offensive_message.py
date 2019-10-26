@@ -42,3 +42,7 @@ class OffensiveMessage(ModelReprMixin, models.Model):
         help_text="The date on which the message will be auto-deleted.",
         validators=(future_date_validator,)
     )
+
+    def __str__(self):
+        """Return some info on this message, for display purposes only."""
+        return f"Message {self.id}, will be deleted at {self.delete_date}"
