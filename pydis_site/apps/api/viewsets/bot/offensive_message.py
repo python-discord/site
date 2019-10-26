@@ -27,7 +27,7 @@ class OffensiveMessageViewSet(
     ...     {
     ...         'id': '631953598091100200',
     ...         'channel_id': '291284109232308226',
-    ...         'delete_date': '2020-01-01'
+    ...         'delete_date': '2019-11-01T21:51:15.545000Z'
     ...     },
     ...     ...
     ... ]
@@ -42,7 +42,7 @@ class OffensiveMessageViewSet(
     >>> {
     ...     'id': int,
     ...     'channel_id': int,
-    ...     'delete_date': datetime.date  # ISO-8601-formatted date
+    ...     'delete_date': datetime.datetime  # ISO-8601-formatted date
     ... }
 
     #### Status codes
