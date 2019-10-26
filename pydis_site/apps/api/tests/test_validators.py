@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timezone
 
 from django.core.exceptions import ValidationError
 from django.test import TestCase
@@ -252,8 +252,8 @@ class TagEmbedValidatorTests(TestCase):
 
 class OffensiveMessageValidatorsTests(TestCase):
     def test_accepts_future_date(self):
-        future_date_validator(datetime(3000, 1, 1))
+        future_date_validator(datetime(3000, 1, 1, tzinfo=timezone.utc))
 
     def test_rejects_non_future_date(self):
         with self.assertRaises(ValidationError):
-            future_date_validator(datetime(1000, 1, 1))
+            future_date_validator(datetime(1000, 1, 1, tzinfo=timezone.utc))
