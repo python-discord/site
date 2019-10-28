@@ -190,7 +190,7 @@ class ReminderSerializer(ModelSerializer):
         """Metadata defined for the Django REST Framework."""
 
         model = Reminder
-        fields = ('active', 'author', 'channel_id', 'content', 'expiration', 'id')
+        fields = ('active', 'author', 'jump_url', 'channel_id', 'content', 'expiration', 'id')
 
 
 class RoleSerializer(ModelSerializer):
