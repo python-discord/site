@@ -103,60 +103,46 @@ class RulesView(APIView):
                 f"`format` must be `html` or `md`, got `{format}`."
             )
 
-        discord_community_guidelines_link = self._format_link(
+        discord_community_guidelines = self._format_link(
             'Discord Community Guidelines',
             'https://discordapp.com/guidelines',
             link_format
         )
-        channels_page_link = self._format_link(
-            'channels page',
-            'https://pythondiscord.com/about/channels',
+        discord_tos = self._format_link(
+            'Terms Of Service',
+            'https://discordapp.com/guidelines',
             link_format
         )
-        google_translate_link = self._format_link(
-            'Google Translate',
-            'https://translate.google.com/',
+        pydis_coc = self._format_link(
+            'Python Discord Code of Conduct',
+            'https://pythondiscord.com/pages/code-of-conduct/',
             link_format
         )
 
         return Response([
-            "Be polite, and do not spam.",
-            f"Follow the {discord_community_guidelines_link}.",
             (
-                "Don't intentionally make other people uncomfortable - if "
-                "someone asks you to stop discussing something, you should stop."
+                f"Follow the {discord_community_guidelines} and {discord_tos}."
             ),
             (
-                "Be patient both with users asking "
-                "questions, and the users answering them."
+                f"Follow the {pydis_coc}."
             ),
             (
-                "We will not help you with anything that might break a law or the "
-                "terms of service of any other community, site, service, or "
-                "otherwise - No piracy, brute-forcing, captcha circumvention, "
-                "sneaker bots, or anything else of that nature."
+                "Listen to and respect staff members and their instructions."
             ),
             (
-                "Listen to and respect the staff members - we're "
-                "here to help, but we're all human beings."
+                "This is an English-speaking server, "
+                "so please speak English to the best of your ability."
             ),
             (
-                "All discussion should be kept within the relevant "
-                "channels for the subject - See the "
-                f"{channels_page_link} for more information."
+                "Do not provide or request help on projects that may break laws, "
+                "breach terms of services, be considered malicious/inappropriate "
+                "or be for graded coursework/exams."
             ),
             (
-                "This is an English-speaking server, so please speak English "
-                f"to the best of your ability - {google_translate_link} "
-                "should be fine if you're not sure."
+                "No spamming or unapproved advertising, including requests for paid work. "
+                "Open-source projects can be showcased in #show-your-projects."
             ),
             (
-                "Keep all discussions safe for work - No gore, nudity, sexual "
-                "soliciting, references to suicide, or anything else of that nature"
+                "Keep discussions relevant to channel topics and guidelines."
             ),
-            (
-                "We do not allow advertisements for communities (including "
-                "other Discord servers) or commercial projects - Contact "
-                "us directly if you want to discuss a partnership!"
-            )
         ])

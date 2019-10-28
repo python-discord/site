@@ -10,13 +10,13 @@
               {# Continue, we don't want to show the root element #}
             {% else %}
               <li>
-                <a href="{% url 'wiki:get' path=ancestor.path %}">{{ ancestor.article.current_revision.title|truncatechars:25 }}</a>
+                <a href="{% url 'wiki:get' path=ancestor.path %}">{{ ancestor.article.current_revision.title }}</a>
               </li>
             {% endif %}
           {% endfor %}
 
           <li class="is-active">
-            <a href="{% url 'wiki:get' path=article.path %}">{{ article.current_revision.title|truncatechars:25 }}</a>
+            <a href="{% url 'wiki:get' path=article.path %}">{{ article.current_revision.title }}</a>
           </li>
         </ul>
       </nav>
