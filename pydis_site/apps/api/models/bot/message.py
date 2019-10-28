@@ -51,6 +51,12 @@ class Message(ModelReprMixin, models.Model):
         ),
         help_text="Embeds attached to this message."
     )
+    attachments = pgfields.ArrayField(
+        models.URLField(
+            max_length=512
+        ),
+        help_text="Attachments attached to this message."
+    )
 
     @property
     def timestamp(self) -> datetime:

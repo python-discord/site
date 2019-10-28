@@ -49,7 +49,8 @@ class DeletedMessageSerializer(ModelSerializer):
         fields = (
             'id', 'author',
             'channel_id', 'content',
-            'embeds', 'deletion_context'
+            'embeds', 'deletion_context',
+            'attachments'
         )
 
 
