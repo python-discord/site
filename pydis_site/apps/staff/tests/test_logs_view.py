@@ -37,6 +37,7 @@ class TestLogsView(TestCase):
             channel_id=1984,
             content='<em>I think my tape has run out...</em>',
             embeds=[],
+            attachments=[],
             deletion_context=cls.deletion_context,
         )
 
@@ -101,6 +102,7 @@ class TestLogsView(TestCase):
             channel_id=1984,
             content='Does that mean this thing will halt?',
             embeds=[cls.embed_one, cls.embed_two],
+            attachments=['https://http.cat/100', 'https://http.cat/402'],
             deletion_context=cls.deletion_context,
         )
 
