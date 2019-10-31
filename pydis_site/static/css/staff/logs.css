@@ -39,7 +39,6 @@ main.site-content {
 }
 
 .discord-message-metadata {
-    color: hsla(0, 0%, 100%, .2);
     font-size: 0.75rem;
     font-weight: 400;
     margin: 0 .3rem;
