@@ -81,8 +81,8 @@ class InfractionFactoryTests(MigrationsTestCase):
     """Tests for the InfractionFactory."""
 
     app = "api"
-    migration_prior = "0045_add_plural_name_for_log_entry"
-    migration_target = "0045_add_plural_name_for_log_entry"
+    migration_prior = "0046_reminder_jump_url"
+    migration_target = "0046_reminder_jump_url"
 
     @classmethod
     def setUpPostMigrationData(cls, apps):
@@ -178,8 +178,8 @@ class ActiveInfractionMigrationTests(MigrationsTestCase):
     """
 
     app = "api"
-    migration_prior = "0045_add_plural_name_for_log_entry"
-    migration_target = "0046_active_infractions_migration"
+    migration_prior = "0046_reminder_jump_url"
+    migration_target = "0047_active_infractions_migration"
 
     @classmethod
     def setUpMigrationData(cls, apps):

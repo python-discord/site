@@ -93,8 +93,8 @@ class MigrationsTestCaseNoSideEffectsTests(TestCase):
 
 class LifeOfBrian(MigrationsTestCase):
     app = "api"
-    migration_prior = "0045_add_plural_name_for_log_entry"
-    migration_target = "0047_add_infractions_unique_constraints_active"
+    migration_prior = "0046_reminder_jump_url"
+    migration_target = "0048_add_infractions_unique_constraints_active"
 
     @classmethod
     def log_last_migration(cls):
