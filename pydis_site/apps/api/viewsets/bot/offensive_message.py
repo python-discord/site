@@ -1,8 +1,7 @@
 from rest_framework.mixins import (
     CreateModelMixin,
     DestroyModelMixin,
-    ListModelMixin,
-    UpdateModelMixin
+    ListModelMixin
 )
 from rest_framework.viewsets import GenericViewSet
 
@@ -11,7 +10,7 @@ from pydis_site.apps.api.serializers import OffensiveMessageSerializer
 
 
 class OffensiveMessageViewSet(
-    CreateModelMixin, ListModelMixin, DestroyModelMixin, UpdateModelMixin, GenericViewSet
+    CreateModelMixin, ListModelMixin, DestroyModelMixin, GenericViewSet
 ):
     """
     View providing CRUD access to offensive messages.
