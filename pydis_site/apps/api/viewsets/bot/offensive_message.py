@@ -14,7 +14,7 @@ class OffensiveMessageViewSet(
     CreateModelMixin, ListModelMixin, DestroyModelMixin, UpdateModelMixin, GenericViewSet
 ):
     """
-    View providing CRUD access to reminders.
+    View providing CRUD access to offensive messages.
 
     ## Routes
     ### GET /bot/offensive-message
