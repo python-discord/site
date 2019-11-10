@@ -40,6 +40,9 @@ class CreationTests(APISubdomainTestCase):
         }
         response = self.client.post(url, data=data)
         self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.json(), {
+            'delete_date': ['Date must be a future date']
+        })
 
     def test_returns_400_on_negative_id_or_channel_id(self):
         url = reverse('bot:offensivemessage-list', host='api')
@@ -51,6 +54,9 @@ class CreationTests(APISubdomainTestCase):
         }
         response = self.client.post(url, data=data)
         self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.json(), {
+            'id': ['Ensure this value is greater than or equal to 0.']
+        })
 
         data = {
             'id': '602951077675139072',
@@ -59,3 +65,6 @@ class CreationTests(APISubdomainTestCase):
         }
         response = self.client.post(url, data=data)
         self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.json(), {
+            'channel_id': ['Ensure this value is greater than or equal to 0.']
+        })
