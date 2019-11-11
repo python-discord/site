@@ -70,6 +70,30 @@ class CreationTests(APISubdomainTestCase):
         })
 
 
+class DeletionTests(APISubdomainTestCase):
+    @classmethod
+    def setUpTestData(cls):  # noqa
+        delete_at = datetime.datetime.now(tz=datetime.timezone.utc) + datetime.timedelta(days=1)
+
+        cls.valid_offensive_message = OffensiveMessage.objects.create(
+            id=602951077675139072,
+            channel_id=291284109232308226,
+            delete_date=delete_at.isoformat()
+        )
+
+    def test_delete_data(self):
+        url = reverse(
+            'bot:offensivemessage-detail', host='api', args=(self.valid_offensive_message.id,)
+        )
+
+        response = self.client.delete(url)
+        self.assertEqual(response.status_code, 204)
+
+        url = reverse('bot:offensivemessage-list', host='api')
+        response = self.client.get(url)
+        self.assertNotIn(self.valid_offensive_message.id, response.json())
+
+
 class NotAllowedMethodsTests(APISubdomainTestCase):
     @classmethod
     def setUpTestData(cls):  # noqa
