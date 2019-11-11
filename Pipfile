@@ -4,7 +4,7 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [packages]
-django = "~=2.2"
+django = "~=2.2.0"
 django-crispy-forms = "~=1.7.2"
 django-environ = "~=0.4.5"
 django-filter = "~=2.1.0"
@@ -26,8 +26,8 @@ django-allauth = "~=0.40"
 [dev-packages]
 coverage = "~=4.5.3"
 flake8 = "~=3.7"
-flake8-annotations = "~=1.0"
-flake8-bandit = "==1.0.2"
+flake8-annotations = "~=1.1"
+flake8-bandit = "~=2.1"
 flake8-bugbear = "~=19.8"
 flake8-docstrings = "~=1.4"
 flake8-import-order = "~=0.18"
