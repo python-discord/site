@@ -43,6 +43,7 @@ unittest-xml-reporting = "~=2.5.1"
 python_version = "3.7"
 
 [scripts]
+start = "python manage.py run"
 makemigrations = "python manage.py makemigrations"
 django_shell = "python manage.py shell"
 test = "coverage run manage.py test"
