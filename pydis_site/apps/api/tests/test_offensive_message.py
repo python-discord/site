@@ -97,12 +97,12 @@ class DeletionTests(APISubdomainTestCase):
 class NotAllowedMethodsTests(APISubdomainTestCase):
     @classmethod
     def setUpTestData(cls):  # noqa
-        delete_at = datetime.datetime.now() + datetime.timedelta(days=1)
+        delete_at = datetime.datetime.now(tz=datetime.timezone.utc) + datetime.timedelta(days=1)
 
         cls.valid_offensive_message = OffensiveMessage.objects.create(
             id=602951077675139072,
             channel_id=291284109232308226,
-            delete_date=delete_at.isoformat()[:-1]
+            delete_date=delete_at.isoformat()
         )
 
     def test_returns_405_for_patch_and_put_requests(self):
