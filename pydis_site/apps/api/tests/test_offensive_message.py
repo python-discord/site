@@ -68,3 +68,25 @@ class CreationTests(APISubdomainTestCase):
         self.assertEqual(response.json(), {
             'channel_id': ['Ensure this value is greater than or equal to 0.']
         })
+
+
+class NotAllowedMethodsTests(APISubdomainTestCase):
+    @classmethod
+    def setUpTestData(cls):  # noqa
+        delete_at = datetime.datetime.now() + datetime.timedelta(days=1)
+
+        cls.valid_offensive_message = OffensiveMessage.objects.create(
+            id=602951077675139072,
+            channel_id=291284109232308226,
+            delete_date=delete_at.isoformat()[:-1]
+        )
+
+    def test_returns_405_for_patch_and_put_requests(self):
+        url = reverse(
+            'bot:offensivemessage-detail', host='api', args=(self.valid_offensive_message.id,)
+        )
+
+        response = self.client.patch(url, {})
+        self.assertEqual(response.status_code, 405)
+        response = self.client.put(url, {})
+        self.assertEqual(response.status_code, 405)
