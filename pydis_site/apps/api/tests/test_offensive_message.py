@@ -48,26 +48,25 @@ class CreationTests(APISubdomainTestCase):
         url = reverse('bot:offensivemessage-list', host='api')
         delete_at = datetime.datetime.now() + datetime.timedelta(days=1)
         data = {
-            'id': '-602951077675139072',
+            'id': '602951077675139072',
             'channel_id': '291284109232308226',
             'delete_date': delete_at.isoformat()[:-1]
         }
-        response = self.client.post(url, data=data)
-        self.assertEqual(response.status_code, 400)
-        self.assertEqual(response.json(), {
-            'id': ['Ensure this value is greater than or equal to 0.']
-        })
+        cases = (
+            ('id', '-602951077675139072'),
+            ('channel_id', '-291284109232308226')
+        )
 
-        data = {
-            'id': '602951077675139072',
-            'channel_id': '-291284109232308226',
-            'delete_date': delete_at.isoformat()[:-1]
-        }
-        response = self.client.post(url, data=data)
-        self.assertEqual(response.status_code, 400)
-        self.assertEqual(response.json(), {
-            'channel_id': ['Ensure this value is greater than or equal to 0.']
-        })
+        for field, invalid_value in cases:
+            with self.subTest(fied=field, invalid_value=invalid_value):
+                test_data = data.copy()
+                test_data.update({field: invalid_value})
+
+                response = self.client.post(url, test_data)
+                self.assertEqual(response.status_code, 400)
+                self.assertEqual(response.json(), {
+                    field: ['Ensure this value is greater than or equal to 0.']
+                })
 
 
 class DeletionTests(APISubdomainTestCase):
@@ -109,8 +108,9 @@ class NotAllowedMethodsTests(APISubdomainTestCase):
         url = reverse(
             'bot:offensivemessage-detail', host='api', args=(self.valid_offensive_message.id,)
         )
+        not_allowed_methods = (self.client.patch, self.client.put)
 
-        response = self.client.patch(url, {})
-        self.assertEqual(response.status_code, 405)
-        response = self.client.put(url, {})
-        self.assertEqual(response.status_code, 405)
+        for method in not_allowed_methods:
+            with self.subTest(method=method):
+                response = method(url, {})
+                self.assertEqual(response.status_code, 405)
