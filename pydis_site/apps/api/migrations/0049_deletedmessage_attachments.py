@@ -7,7 +7,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('api', '0046_reminder_jump_url'),
+        ('api', '0048_add_infractions_unique_constraints_active'),
     ]
 
     operations = [
