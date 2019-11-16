@@ -21,6 +21,11 @@ class RoleMapping(models.Model):
         unique=True,  # Unique in order to simplify group assignment logic
     )
 
+    is_staff = models.BooleanField(
+        help_text="Whether this role mapping relates to a Django staff group",
+        default=False
+    )
+
     def __str__(self):
         """Returns the mapping, for display purposes."""
         return f"@{self.role.name} -> {self.group.name}"

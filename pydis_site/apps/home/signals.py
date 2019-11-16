@@ -1,3 +1,4 @@
+from contextlib import suppress
 from typing import List, Optional, Type
 
 from allauth.account.signals import user_logged_in
@@ -8,7 +9,7 @@ from allauth.socialaccount.signals import (
     pre_social_login, social_account_added, social_account_removed,
     social_account_updated)
 from django.contrib.auth.models import Group, User as DjangoUser
-from django.db.models.signals import post_save, pre_delete, pre_save
+from django.db.models.signals import post_delete, post_save, pre_save
 
 from pydis_site.apps.api.models import User as DiscordUser
 from pydis_site.apps.staff.models import RoleMapping
@@ -37,7 +38,7 @@ class AllauthSignalListener:
     def __init__(self):
         post_save.connect(self.user_model_updated, sender=DiscordUser)
 
-        pre_delete.connect(self.mapping_model_deleted, sender=RoleMapping)
+        post_delete.connect(self.mapping_model_deleted, sender=RoleMapping)
         pre_save.connect(self.mapping_model_updated, sender=RoleMapping)
 
         pre_social_login.connect(self.social_account_updated)
@@ -133,12 +134,28 @@ class AllauthSignalListener:
         Processes deletion signals from the RoleMapping model, removing perms from users.
 
         We need to do this to ensure that users aren't left with permissions groups that
-        they shouldn't have assigned to them when a RoleMapping is deleted from the database.
+        they shouldn't have assigned to them when a RoleMapping is deleted from the database,
+        and to remove their staff status if they should no longer have it.
         """
         instance: RoleMapping = kwargs["instance"]
 
         for user in instance.group.user_set.all():
+            # Firstly, remove their related user group
             user.groups.remove(instance.group)
+
+            with suppress(SocialAccount.DoesNotExist, DiscordUser.DoesNotExist):
+                # If we get either exception, then the user could not have been assigned staff
+                # with our system in the first place.
+
+                social_account = SocialAccount.objects.get(user=user, provider=DiscordProvider.id)
+                discord_user = DiscordUser.objects.get(id=int(social_account.uid))
+
+                mappings = RoleMapping.objects.filter(role__in=discord_user.roles.all()).all()
+                is_staff = any(m.is_staff for m in mappings)
+
+                if user.is_staff != is_staff:
+                    user.is_staff = is_staff
+                    user.save(update_fields=("is_staff", ))
 
     def mapping_model_updated(self, sender: Type[RoleMapping], **kwargs) -> None:
         """
@@ -173,6 +190,21 @@ class AllauthSignalListener:
 
         for account in accounts:
             account.user.groups.add(instance.group)
+
+            if instance.is_staff and not account.user.is_staff:
+                account.user.is_staff = instance.is_staff
+                account.user.save(update_fields=("is_staff", ))
+            else:
+                discord_user = DiscordUser.objects.get(id=int(account.uid))
+
+                mappings = RoleMapping.objects.filter(
+                    role__in=discord_user.roles.all()
+                ).exclude(id=instance.id).all()
+                is_staff = any(m.is_staff for m in mappings)
+
+                if account.user.is_staff != is_staff:
+                    account.user.is_staff = is_staff
+                    account.user.save(update_fields=("is_staff",))
 
     def user_model_updated(self, sender: Type[DiscordUser], **kwargs) -> None:
         """
@@ -230,31 +262,53 @@ class AllauthSignalListener:
         except SocialAccount.user.RelatedObjectDoesNotExist:
             return  # There's no user account yet, this will be handled by another receiver
 
+        # Ensure that the username on this account is correct
+        new_username = f"{user.name}#{user.discriminator}"
+
+        if account.user.username != new_username:
+            account.user.username = new_username
+            account.user.first_name = new_username
+
         if not user.in_guild:
             deletion = True
 
         if deletion:
             # They've unlinked Discord or left the server, so we have to remove their groups
+            # and their staff status
 
-            if not current_groups:
-                return  # They have no groups anyway, no point in processing
+            if current_groups:
+                # They do have groups, so let's remove them
+                account.user.groups.remove(
+                    *(mapping.group for mapping in mappings)
+                )
 
-            account.user.groups.remove(
-                *(mapping.group for mapping in mappings)
-            )
+            if account.user.is_staff:
+                # They're marked as a staff user and they shouldn't be, so let's fix that
+                account.user.is_staff = False
         else:
             new_groups = []
+            is_staff = False
 
             for role in user.roles.all():
                 try:
-                    new_groups.append(mappings.get(role=role).group)
+                    mapping = mappings.get(role=role)
                 except RoleMapping.DoesNotExist:
                     continue  # No mapping exists
 
-                account.user.groups.add(
-                    *[group for group in new_groups if group not in current_groups]
-                )
+                new_groups.append(mapping.group)
 
-                account.user.groups.remove(
-                    *[mapping.group for mapping in mappings if mapping.group not in new_groups]
-                )
+                if mapping.is_staff:
+                    is_staff = True
+
+            account.user.groups.add(
+                *[group for group in new_groups if group not in current_groups]
+            )
+
+            account.user.groups.remove(
+                *[mapping.group for mapping in mappings if mapping.group not in new_groups]
+            )
+
+            if account.user.is_staff != is_staff:
+                account.user.is_staff = is_staff
+
+        account.user.save()
