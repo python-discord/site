@@ -127,9 +127,9 @@ class DeletionTests(APISubdomainTestCase):
         response = self.client.delete(url)
         self.assertEqual(response.status_code, 204)
 
-        url = reverse('bot:offensivemessage-list', host='api')
-        response = self.client.get(url)
-        self.assertNotIn(self.valid_offensive_message.id, response.json())
+        self.assertFalse(
+            OffensiveMessage.objects.filter(id=self.valid_offensive_message.id).exists()
+        )
 
 
 class NotAllowedMethodsTests(APISubdomainTestCase):
