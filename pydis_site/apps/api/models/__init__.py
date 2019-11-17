@@ -11,7 +11,8 @@ from .bot import (
     Reminder,
     Role,
     Tag,
-    User
+    User,
+    Whitelist
 )
 from .log_entry import LogEntry
 from .utils import ModelReprMixin
