@@ -66,8 +66,12 @@ class Migration(migrations.Migration):
             for item in whitelisted_items:
                 Whitelist.objects.create(type=whitelist_type, whitelisted_item=item)
 
+    def delete_all_whitelist(app, schema_editor):
+        Whitelist = app.get_model("api", "Whitelist")
+        Whitelist.objects.delete()
+
     dependencies = [("api", "0049_whitelist")]
 
     operations = [
-        migrations.RunPython(create_whitelist)
+        migrations.RunPython(create_whitelist, delete_all_whitelist)
     ]
