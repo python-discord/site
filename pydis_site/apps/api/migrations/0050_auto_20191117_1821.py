@@ -68,7 +68,7 @@ class Migration(migrations.Migration):
 
     def delete_all_whitelist(app, schema_editor):
         Whitelist = app.get_model("api", "Whitelist")
-        Whitelist.objects.delete()
+        Whitelist.objects.all().delete()
 
     dependencies = [("api", "0049_whitelist")]
 
