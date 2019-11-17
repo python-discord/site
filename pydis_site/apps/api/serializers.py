@@ -3,6 +3,7 @@ from rest_framework.serializers import ModelSerializer, PrimaryKeyRelatedField, 
 from rest_framework.validators import UniqueTogetherValidator
 from rest_framework_bulk import BulkSerializerMixin
 
+from pydis_site.apps.api.models.bot import Whitelist
 from .models import (
     BotSetting, DeletedMessage,
     DocumentationLink, Infraction,
@@ -247,3 +248,13 @@ class NominationSerializer(ModelSerializer):
         fields = (
             'id', 'active', 'actor', 'reason', 'user',
             'inserted_at', 'end_reason', 'ended_at')
+
+
+class WhitelistSerializer(ModelSerializer):
+    """A class providing (de-)serialization of `Whitelist` instances."""
+
+    class Meta:
+        """Metadata defined for the Django REST Framework."""
+
+        model = Whitelist
+        fields = ('id', 'type', 'whitelisted_item')

@@ -9,6 +9,7 @@ from .bot import (
     ReminderViewSet,
     RoleViewSet,
     TagViewSet,
-    UserViewSet
+    UserViewSet,
+    WhitelistViewSet
 )
 from .log_entry import LogEntryViewSet

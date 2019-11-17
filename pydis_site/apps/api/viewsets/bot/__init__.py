@@ -9,3 +9,4 @@ from .reminder import ReminderViewSet
 from .role import RoleViewSet
 from .tag import TagViewSet
 from .user import UserViewSet
+from .whitelist import WhitelistViewSet

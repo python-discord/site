@@ -7,7 +7,7 @@ from .viewsets import (
     DocumentationLinkViewSet, InfractionViewSet,
     LogEntryViewSet, NominationViewSet,
     OffTopicChannelNameViewSet, ReminderViewSet,
-    RoleViewSet, TagViewSet, UserViewSet
+    RoleViewSet, TagViewSet, UserViewSet, WhitelistViewSet
 )
 
 
@@ -53,6 +53,10 @@ bot_router.register(
 bot_router.register(
     'users',
     UserViewSet
+)
+bot_router.register(
+    'whitelist',
+    WhitelistViewSet
 )
 
 app_name = 'api'

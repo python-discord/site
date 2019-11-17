@@ -11,3 +11,4 @@ from .reminder import Reminder
 from .role import Role
 from .tag import Tag
 from .user import User
+from .whitelist import Whitelist

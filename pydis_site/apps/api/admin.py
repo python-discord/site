@@ -3,6 +3,7 @@ from typing import Optional
 from django.contrib import admin
 from django.http import HttpRequest
 
+from pydis_site.apps.api.models.bot import Whitelist
 from .models import (
     BotSetting,
     DeletedMessage,
@@ -64,3 +65,4 @@ admin.site.register(OffTopicChannelName)
 admin.site.register(Role)
 admin.site.register(Tag)
 admin.site.register(User)
+admin.site.register(Whitelist)
