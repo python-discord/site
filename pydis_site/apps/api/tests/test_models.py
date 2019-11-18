@@ -15,7 +15,8 @@ from ..models import (
     Reminder,
     Role,
     Tag,
-    User
+    User,
+    Whitelist
 )
 
 
@@ -121,6 +122,10 @@ class StringDunderMethodTests(SimpleTestCase):
                 ),
                 content="oh no",
                 expiration=dt(5018, 11, 20, 15, 52, tzinfo=timezone.utc)
+            ),
+            Whitelist(
+                type="channel",
+                whitelisted_item="123"
             )
         )
 
