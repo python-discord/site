@@ -55,6 +55,7 @@ class Message(ModelReprMixin, models.Model):
         models.URLField(
             max_length=512
         ),
+        blank=True,
         help_text="Attachments attached to this message."
     )
 

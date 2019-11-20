@@ -71,3 +71,10 @@ class Infraction(ModelReprMixin, models.Model):
         """Defines the meta options for the infraction model."""
 
         ordering = ['-inserted_at']
+        constraints = (
+            models.UniqueConstraint(
+                fields=["user", "type"],
+                condition=models.Q(active=True),
+                name="unique_active_infraction_per_type_per_user"
+            ),
+        )

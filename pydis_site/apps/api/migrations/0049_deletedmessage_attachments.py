@@ -7,14 +7,14 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('api', '0046_reminder_jump_url'),
+        ('api', '0048_add_infractions_unique_constraints_active'),
     ]
 
     operations = [
         migrations.AddField(
             model_name='deletedmessage',
             name='attachments',
-            field=django.contrib.postgres.fields.ArrayField(base_field=models.URLField(max_length=512), default=[], help_text='Attachments attached to this message.', size=None),
+            field=django.contrib.postgres.fields.ArrayField(base_field=models.URLField(max_length=512), default=[], blank=True, help_text='Attachments attached to this message.', size=None),
             preserve_default=False,
         ),
     ]
