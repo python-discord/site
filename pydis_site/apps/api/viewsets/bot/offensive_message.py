@@ -16,7 +16,7 @@ class OffensiveMessageViewSet(
     View providing CRUD access to offensive messages.
 
     ## Routes
-    ### GET /bot/offensive-message
+    ### GET /bot/offensive-messages
     Returns all offensive messages in the database.
 
     #### Response format
@@ -32,7 +32,7 @@ class OffensiveMessageViewSet(
     #### Status codes
     - 200: returned on success
 
-    ### POST /bot/offensive-message
+    ### POST /bot/offensive-messages
     Create a new offensive message object.
 
     #### Request body
@@ -46,7 +46,7 @@ class OffensiveMessageViewSet(
     - 201: returned on success
     - 400: if the body format is invalid
 
-    ### DELETE /bot/offensive-message/<id:int>
+    ### DELETE /bot/offensive-messages/<id:int>
     Delete the offensive message object with the given `id`.
 
     #### Status codes

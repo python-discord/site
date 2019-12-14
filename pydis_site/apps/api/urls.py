@@ -35,7 +35,7 @@ bot_router.register(
     NominationViewSet
 )
 bot_router.register(
-    'offensive-message',
+    'offensive-messages',
     OffensiveMessageViewSet
 )
 bot_router.register(
