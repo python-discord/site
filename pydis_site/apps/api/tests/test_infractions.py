@@ -612,3 +612,17 @@ class SerializerTests(APISubdomainTestCase):
         msg = 'This user already has an active infraction of this type'
         with self.assertRaisesRegex(ValidationError, msg):
             serializer.is_valid(raise_exception=True)
+
+    def test_is_valid_for_new_active_infraction(self):
+        self.create_infraction('ban', active=False)
+
+        data = {
+            'user': self.user.id,
+            'actor': self.user.id,
+            'type': 'ban',
+            'reason': 'A reason.',
+            'active': True
+        }
+        serializer = InfractionSerializer(data=data)
+
+        self.assertTrue(serializer.is_valid())
