@@ -634,7 +634,7 @@ class SerializerTests(APISubdomainTestCase):
             code = serializer.errors['non_field_errors'][0].code
             msg = f'Expected failure on unique validator but got {serializer.errors}'
             self.assertEqual(code, 'unique', msg=msg)
-        else:
+        else:  # pragma: no cover
             self.fail('Validation unexpectedly succeeded.')
 
     def test_is_valid_for_new_active_infraction(self):
@@ -666,5 +666,5 @@ class SerializerTests(APISubdomainTestCase):
             code = serializer.errors['active'][0].code
             msg = f'Expected failure on required active field but got {serializer.errors}'
             self.assertEqual(code, 'required', msg=msg)
-        else:
+        else:  # pragma: no cover
             self.fail('Validation unexpectedly succeeded.')
