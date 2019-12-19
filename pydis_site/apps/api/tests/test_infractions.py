@@ -4,7 +4,6 @@ from urllib.parse import quote
 
 from django.db.utils import IntegrityError
 from django_hosts.resolvers import reverse
-from rest_framework.exceptions import ValidationError
 
 from .base import APISubdomainTestCase
 from ..models import Infraction, User
@@ -600,7 +599,7 @@ class SerializerTests(APISubdomainTestCase):
         data = {'reason': 'hello'}
         serializer = InfractionSerializer(instance, data=data, partial=True)
 
-        self.assertTrue(serializer.is_valid())
+        self.assertTrue(serializer.is_valid(), msg=serializer.errors)
 
     def test_validation_error_if_active_duplicate(self):
         self.create_infraction('ban', active=True)
@@ -609,9 +608,14 @@ class SerializerTests(APISubdomainTestCase):
         data = {'active': True}
         serializer = InfractionSerializer(instance, data=data, partial=True)
 
-        msg = 'This user already has an active infraction of this type'
-        with self.assertRaisesRegex(ValidationError, msg):
-            serializer.is_valid(raise_exception=True)
+        if not serializer.is_valid():
+            self.assertIn('non_field_errors', serializer.errors)
+
+            code = serializer.errors['non_field_errors'][0].code
+            msg = f'Expected failure on unique validator but got {serializer.errors}'
+            self.assertEqual(code, 'unique', msg=msg)
+        else:
+            self.fail('Validation unexpectedly succeeded.')
 
     def test_is_valid_for_new_active_infraction(self):
         self.create_infraction('ban', active=False)
@@ -625,4 +629,4 @@ class SerializerTests(APISubdomainTestCase):
         }
         serializer = InfractionSerializer(data=data)
 
-        self.assertTrue(serializer.is_valid())
+        self.assertTrue(serializer.is_valid(), msg=serializer.errors)
