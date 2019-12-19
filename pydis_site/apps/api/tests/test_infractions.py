@@ -4,9 +4,11 @@ from urllib.parse import quote
 
 from django.db.utils import IntegrityError
 from django_hosts.resolvers import reverse
+from rest_framework.exceptions import ValidationError
 
 from .base import APISubdomainTestCase
 from ..models import Infraction, User
+from ..serializers import InfractionSerializer
 
 
 class UnauthenticatedTests(APISubdomainTestCase):
@@ -569,3 +571,42 @@ class ExpandedTests(APISubdomainTestCase):
         infraction = Infraction.objects.get(id=self.kick.id)
         self.assertEqual(infraction.active, data['active'])
         self.check_expanded_fields(response.json())
+
+
+class SerializerTests(APISubdomainTestCase):
+    @classmethod
+    def setUpTestData(cls):  # noqa
+        cls.user = User.objects.create(
+            id=5,
+            name='james',
+            discriminator=1,
+            avatar_hash=None
+        )
+        cls.ban_active = Infraction.objects.create(
+            user_id=cls.user.id,
+            actor_id=cls.user.id,
+            type='ban',
+            reason='He terk my jerb!',
+            expires_at=dt(5018, 11, 20, 15, 52, tzinfo=timezone.utc)
+        )
+        cls.ban_inactive = Infraction.objects.create(
+            user_id=cls.user.id,
+            actor_id=cls.user.id,
+            type='ban',
+            reason='James is an ass, and we won\'t be working with him again.',
+            active=False
+        )
+
+    def test_is_valid_if_active_infraction_with_same_fields_exists(self):
+        data = {'reason': 'hello'}
+        serializer = InfractionSerializer(self.ban_inactive, data=data, partial=True)
+
+        self.assertTrue(serializer.is_valid())
+
+    def test_validation_error_if_active_duplicate(self):
+        data = {'active': True}
+        serializer = InfractionSerializer(self.ban_inactive, data=data, partial=True)
+
+        msg = 'This user already has an active infraction of this type'
+        with self.assertRaisesRegex(ValidationError, msg):
+            serializer.is_valid(raise_exception=True)
