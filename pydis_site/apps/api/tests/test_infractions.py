@@ -575,37 +575,39 @@ class ExpandedTests(APISubdomainTestCase):
 
 class SerializerTests(APISubdomainTestCase):
     @classmethod
-    def setUpTestData(cls):  # noqa
+    def setUpTestData(cls):
         cls.user = User.objects.create(
             id=5,
             name='james',
             discriminator=1,
             avatar_hash=None
         )
-        cls.ban_active = Infraction.objects.create(
-            user_id=cls.user.id,
-            actor_id=cls.user.id,
-            type='ban',
-            reason='He terk my jerb!',
-            expires_at=dt(5018, 11, 20, 15, 52, tzinfo=timezone.utc)
-        )
-        cls.ban_inactive = Infraction.objects.create(
-            user_id=cls.user.id,
-            actor_id=cls.user.id,
-            type='ban',
-            reason='James is an ass, and we won\'t be working with him again.',
-            active=False
+
+    def create_infraction(self, _type: str, active: bool):
+        return Infraction.objects.create(
+            user_id=self.user.id,
+            actor_id=self.user.id,
+            type=_type,
+            reason='A reason.',
+            expires_at=dt(5018, 11, 20, 15, 52, tzinfo=timezone.utc),
+            active=active
         )
 
     def test_is_valid_if_active_infraction_with_same_fields_exists(self):
+        self.create_infraction('ban', active=True)
+        instance = self.create_infraction('ban', active=False)
+
         data = {'reason': 'hello'}
-        serializer = InfractionSerializer(self.ban_inactive, data=data, partial=True)
+        serializer = InfractionSerializer(instance, data=data, partial=True)
 
         self.assertTrue(serializer.is_valid())
 
     def test_validation_error_if_active_duplicate(self):
+        self.create_infraction('ban', active=True)
+        instance = self.create_infraction('ban', active=False)
+
         data = {'active': True}
-        serializer = InfractionSerializer(self.ban_inactive, data=data, partial=True)
+        serializer = InfractionSerializer(instance, data=data, partial=True)
 
         msg = 'This user already has an active infraction of this type'
         with self.assertRaisesRegex(ValidationError, msg):
