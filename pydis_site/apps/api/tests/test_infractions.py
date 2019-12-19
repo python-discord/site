@@ -504,6 +504,16 @@ class CreationTests(APISubdomainTestCase):
             reason="An active ban for the second user"
         )
 
+    def test_integrity_error_if_missing_active_field(self):
+        pattern = 'null value in column "active" violates not-null constraint'
+        with self.assertRaisesRegex(IntegrityError, pattern):
+            Infraction.objects.create(
+                user=self.user,
+                actor=self.user,
+                type='ban',
+                reason='A reason.',
+            )
+
 
 class ExpandedTests(APISubdomainTestCase):
     @classmethod
@@ -640,3 +650,21 @@ class SerializerTests(APISubdomainTestCase):
         serializer = InfractionSerializer(data=data)
 
         self.assertTrue(serializer.is_valid(), msg=serializer.errors)
+
+    def test_validation_error_if_missing_active_field(self):
+        data = {
+            'user': self.user.id,
+            'actor': self.user.id,
+            'type': 'ban',
+            'reason': 'A reason.',
+        }
+        serializer = InfractionSerializer(data=data)
+
+        if not serializer.is_valid():
+            self.assertIn('active', serializer.errors)
+
+            code = serializer.errors['active'][0].code
+            msg = f'Expected failure on required active field but got {serializer.errors}'
+            self.assertEqual(code, 'required', msg=msg)
+        else:
+            self.fail('Validation unexpectedly succeeded.')
