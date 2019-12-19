@@ -29,7 +29,6 @@ class Infraction(ModelReprMixin, models.Model):
         )
     )
     active = models.BooleanField(
-        default=True,
         help_text="Whether the infraction is still active."
     )
     user = models.ForeignKey(

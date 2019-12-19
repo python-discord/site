@@ -55,7 +55,8 @@ class InfractionTests(APISubdomainTestCase):
             type='ban',
             reason='He terk my jerb!',
             hidden=True,
-            expires_at=dt(5018, 11, 20, 15, 52, tzinfo=timezone.utc)
+            expires_at=dt(5018, 11, 20, 15, 52, tzinfo=timezone.utc),
+            active=True
         )
         cls.ban_inactive = Infraction.objects.create(
             user_id=cls.user.id,
@@ -185,7 +186,8 @@ class CreationTests(APISubdomainTestCase):
             'type': 'ban',
             'reason': 'He terk my jerb!',
             'hidden': True,
-            'expires_at': '5018-11-20T15:52:00+00:00'
+            'expires_at': '5018-11-20T15:52:00+00:00',
+            'active': True,
         }
 
         response = self.client.post(url, data=data)
@@ -209,7 +211,8 @@ class CreationTests(APISubdomainTestCase):
         url = reverse('bot:infraction-list', host='api')
         data = {
             'actor': self.user.id,
-            'type': 'kick'
+            'type': 'kick',
+            'active': False,
         }
 
         response = self.client.post(url, data=data)
@@ -223,7 +226,8 @@ class CreationTests(APISubdomainTestCase):
         data = {
             'user': 1337,
             'actor': self.user.id,
-            'type': 'kick'
+            'type': 'kick',
+            'active': True,
         }
 
         response = self.client.post(url, data=data)
@@ -237,7 +241,8 @@ class CreationTests(APISubdomainTestCase):
         data = {
             'user': self.user.id,
             'actor': self.user.id,
-            'type': 'hug'
+            'type': 'hug',
+            'active': True,
         }
 
         response = self.client.post(url, data=data)
@@ -252,7 +257,8 @@ class CreationTests(APISubdomainTestCase):
             'user': self.user.id,
             'actor': self.user.id,
             'type': 'ban',
-            'expires_at': '20/11/5018 15:52:00'
+            'expires_at': '20/11/5018 15:52:00',
+            'active': True,
         }
 
         response = self.client.post(url, data=data)
@@ -272,7 +278,8 @@ class CreationTests(APISubdomainTestCase):
                 'user': self.user.id,
                 'actor': self.user.id,
                 'type': infraction_type,
-                'expires_at': '5018-11-20T15:52:00+00:00'
+                'expires_at': '5018-11-20T15:52:00+00:00',
+                'active': False,
             }
 
             response = self.client.post(url, data=data)
@@ -289,7 +296,8 @@ class CreationTests(APISubdomainTestCase):
                 'user': self.user.id,
                 'actor': self.user.id,
                 'type': infraction_type,
-                'hidden': True
+                'hidden': True,
+                'active': False,
             }
 
             response = self.client.post(url, data=data)
@@ -306,6 +314,7 @@ class CreationTests(APISubdomainTestCase):
             'actor': self.user.id,
             'type': 'note',
             'hidden': False,
+            'active': False,
         }
 
         response = self.client.post(url, data=data)
@@ -541,7 +550,8 @@ class ExpandedTests(APISubdomainTestCase):
         data = {
             'user': self.user.id,
             'actor': self.user.id,
-            'type': 'warning'
+            'type': 'warning',
+            'active': False
         }
 
         response = self.client.post(url, data=data)
