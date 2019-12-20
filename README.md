@@ -15,4 +15,4 @@ If you're looking to contribute or play around with the code, take a look at [th
 
 [1]: https://pythondiscord.com
 [2]: https://pythondiscord.com/pages/contributing/site/
-[3]: https://gitlab.com/python-discord/projects/site/issues
+[3]: https://github.com/python-discord/site/issues
