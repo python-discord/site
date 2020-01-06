@@ -376,7 +376,7 @@ WIKI_MARKDOWN_HTML_ATTRIBUTES = {
 }
 
 WIKI_MARKDOWN_HTML_WHITELIST = [
-    'article', 'section', 'button'
+    'article', 'section', 'button', 'iframe'
 ]
 
 
