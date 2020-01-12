@@ -106,3 +106,8 @@ button.is-size-navbar-menu, a.is-size-navbar-menu {
 .modal-background {
     z-index: 1010;
 }
+
+/* Wiki style tweaks */
+.codehilite-wrap {
+    margin-bottom: 1em;
+}

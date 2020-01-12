@@ -373,10 +373,11 @@ WIKI_MARKDOWN_HTML_ATTRIBUTES = {
     'img': ['class', 'id', 'src', 'alt', 'width', 'height'],
     'section': ['class', 'id'],
     'article': ['class', 'id'],
+    'iframe': ['width', 'height', 'src', 'frameborder', 'allow', 'allowfullscreen'],
 }
 
 WIKI_MARKDOWN_HTML_WHITELIST = [
-    'article', 'section', 'button'
+    'article', 'section', 'button', 'iframe'
 ]
 
 
