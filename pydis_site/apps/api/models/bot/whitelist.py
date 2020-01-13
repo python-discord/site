@@ -33,3 +33,8 @@ class Whitelist(ModelReprMixin, models.Model):
     def __str__(self):
         """Returns the whitelisted_item, for display purposes."""
         return self.whitelisted_item
+
+    class Meta:
+        """Defines the meta options for the Whitelist model."""
+
+        unique_together = ("type", "whitelisted_item")
