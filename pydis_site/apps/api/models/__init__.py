@@ -7,6 +7,7 @@ from .bot import (
     Message,
     MessageDeletionContext,
     Nomination,
+    OffensiveMessage,
     OffTopicChannelName,
     Reminder,
     Role,

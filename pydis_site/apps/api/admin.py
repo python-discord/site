@@ -12,6 +12,7 @@ from .models import (
     MessageDeletionContext,
     Nomination,
     OffTopicChannelName,
+    OffensiveMessage,
     Role,
     Tag,
     User,
@@ -61,6 +62,7 @@ admin.site.register(Infraction)
 admin.site.register(LogEntry, LogEntryAdmin)
 admin.site.register(MessageDeletionContext)
 admin.site.register(Nomination)
+admin.site.register(OffensiveMessage)
 admin.site.register(OffTopicChannelName)
 admin.site.register(Role)
 admin.site.register(Tag)

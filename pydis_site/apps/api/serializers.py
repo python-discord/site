@@ -9,6 +9,7 @@ from .models import (
     DocumentationLink, Infraction,
     LogEntry, MessageDeletionContext,
     Nomination, OffTopicChannelName,
+    OffensiveMessage,
     Reminder, Role,
     Tag, User
 )
@@ -258,3 +259,13 @@ class WhitelistSerializer(ModelSerializer):
 
         model = Whitelist
         fields = ('id', 'type', 'whitelisted_item')
+
+
+class OffensiveMessageSerializer(ModelSerializer):
+    """A class providing (de-)serialization of `OffensiveMessage` instances."""
+
+    class Meta:
+        """Metadata defined for the Django REST Framework."""
+
+        model = OffensiveMessage
+        fields = ('id', 'channel_id', 'delete_date')

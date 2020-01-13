@@ -110,7 +110,7 @@ class RulesView(APIView):
         )
         discord_tos = self._format_link(
             'Terms Of Service',
-            'https://discordapp.com/guidelines',
+            'https://discordapp.com/terms',
             link_format
         )
         pydis_coc = self._format_link(

@@ -6,8 +6,9 @@ from .viewsets import (
     BotSettingViewSet, DeletedMessageViewSet,
     DocumentationLinkViewSet, InfractionViewSet,
     LogEntryViewSet, NominationViewSet,
-    OffTopicChannelNameViewSet, ReminderViewSet,
-    RoleViewSet, TagViewSet, UserViewSet, WhitelistViewSet
+    OffTopicChannelNameViewSet,
+    OffensiveMessageViewSet, ReminderViewSet,
+    RoleViewSet, TagViewSet, UserViewSet
 )
 
 
@@ -32,6 +33,10 @@ bot_router.register(
 bot_router.register(
     'nominations',
     NominationViewSet
+)
+bot_router.register(
+    'offensive-messages',
+    OffensiveMessageViewSet
 )
 bot_router.register(
     'off-topic-channel-names',
