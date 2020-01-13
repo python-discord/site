@@ -90,7 +90,7 @@ class ReminderDeletionTests(APISubdomainTestCase):
         cls.reminder = Reminder.objects.create(
             author=cls.author,
             content="Don't forget to set yourself a reminder",
-            expiration= datetime.utcnow().isoformat(),
+            expiration=datetime.utcnow().isoformat(),
             jump_url="https://www.decliningmentalfaculties.com",
             channel_id=123
         )
