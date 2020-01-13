@@ -11,10 +11,10 @@ class Whitelist(ModelReprMixin, models.Model):
     CHANNEL = "channel"
     ROLE = "role"
     TYPE_CHOICES = (
-        ("invite", INVITE),
-        ("extension", EXTENSION),
-        ("channel", CHANNEL),
-        ("role", ROLE)
+        ("invite", "invite"),
+        ("extension", "extension"),
+        ("channel", "channel"),
+        ("role", "role")
     )
     type = models.CharField(
         choices=TYPE_CHOICES,

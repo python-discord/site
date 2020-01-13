@@ -8,7 +8,8 @@ from .viewsets import (
     LogEntryViewSet, NominationViewSet,
     OffTopicChannelNameViewSet,
     OffensiveMessageViewSet, ReminderViewSet,
-    RoleViewSet, TagViewSet, UserViewSet
+    RoleViewSet, TagViewSet,
+    UserViewSet, WhitelistViewSet,
 )
 
 

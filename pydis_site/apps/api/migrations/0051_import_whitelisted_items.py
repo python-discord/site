@@ -70,7 +70,7 @@ class Migration(migrations.Migration):
         Whitelist = app.get_model("api", "Whitelist")
         Whitelist.objects.all().delete()
 
-    dependencies = [("api", "0049_whitelist")]
+    dependencies = [("api", "0050_whitelist")]
 
     operations = [
         migrations.RunPython(create_whitelist, delete_all_whitelist)

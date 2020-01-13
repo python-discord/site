@@ -7,7 +7,7 @@ import pydis_site.apps.api.models.utils
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('api', '0048_add_infractions_unique_constraints_active'),
+        ('api', '0049_offensivemessage'),
     ]
 
     operations = [
