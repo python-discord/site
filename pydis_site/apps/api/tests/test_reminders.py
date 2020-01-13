@@ -3,7 +3,7 @@ from datetime import datetime
 from django_hosts.resolvers import reverse
 
 from .base import APISubdomainTestCase
-from ..models import User
+from ..models import Reminder, User
 
 
 class UnauthedReminderAPITests(APISubdomainTestCase):
@@ -75,3 +75,34 @@ class ReminderCreationTests(APISubdomainTestCase):
         self.data['active'] = True
         self.data['id'] = 1
         self.assertEqual(response.json(), [self.data])
+
+
+class ReminderDeletionTests(APISubdomainTestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.author = User.objects.create(
+            id=6789,
+            name='Barnacle Boy',
+            discriminator=6789,
+            avatar_hash=None,
+        )
+
+        cls.reminder = Reminder.objects.create(
+            author=cls.author,
+            content="Don't forget to set yourself a reminder",
+            expiration= datetime.utcnow().isoformat(),
+            jump_url="https://www.decliningmentalfaculties.com",
+            channel_id=123
+        )
+
+    def test_delete_unknown_reminder_returns_404(self):
+        url = reverse('bot:reminder-detail', args=('something',), host='api')
+        response = self.client.delete(url)
+
+        self.assertEqual(response.status_code, 404)
+
+    def test_delete_known_reminder_returns_204(self):
+        url = reverse('bot:reminder-detail', args=(self.reminder.id,), host='api')
+        response = self.client.delete(url)
+
+        self.assertEqual(response.status_code, 204)
