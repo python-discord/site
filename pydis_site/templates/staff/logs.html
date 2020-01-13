@@ -24,6 +24,11 @@
             <div class="discord-message-content">
                 {{ message.content|linebreaks }}
             </div>
+            <div class="discord-message-attachments">
+                {% for attachment in message.attachments %}
+                    <img alt="Attachment" class="discord-attachment" src="{{ attachment }}">
+                {% endfor %}
+            </div>
             {% for embed in message.embeds %}
                 <div class="discord-embed is-size-7">
                     <div class="discord-embed-color" style="background-color: {% if embed.color %}{{ embed.color | hex_colour }}{% else %}#cacbce{% endif %}"></div>
