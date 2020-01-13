@@ -106,3 +106,34 @@ class ReminderDeletionTests(APISubdomainTestCase):
         response = self.client.delete(url)
 
         self.assertEqual(response.status_code, 204)
+
+
+class ReminderUpdateTests(APISubdomainTestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.author = User.objects.create(
+            id=666,
+            name='Man Ray',
+            discriminator=666,
+            avatar_hash=None,
+        )
+
+        cls.reminder = Reminder.objects.create(
+            author=cls.author,
+            content="Squash those do-gooders",
+            expiration=datetime.utcnow().isoformat(),
+            jump_url="https://www.decliningmentalfaculties.com",
+            channel_id=123
+        )
+
+        cls.data = {'content': 'Oops I forgot'}
+
+    def test_patch_updates_record(self):
+        url = reverse('bot:reminder-detail', args=(self.reminder.id,), host='api')
+        response = self.client.patch(url, data=self.data)
+        self.assertEqual(response.status_code, 200)
+
+        url = reverse('bot:reminder-list', host='api')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json()[0]['content'], self.data['content'])
