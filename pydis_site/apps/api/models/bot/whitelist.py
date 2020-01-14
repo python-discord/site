@@ -6,10 +6,6 @@ from pydis_site.apps.api.models.utils import ModelReprMixin
 class Whitelist(ModelReprMixin, models.Model):
     """Whitelisted item for a type."""
 
-    INVITE = "invite"
-    EXTENSION = "extension"
-    CHANNEL = "channel"
-    ROLE = "role"
     TYPE_CHOICES = (
         ("invite", "invite"),
         ("extension", "extension"),
