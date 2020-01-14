@@ -25,14 +25,16 @@ class DeletedMessagesWithoutActorTests(APISubdomainTestCase):
                     'id': 55,
                     'channel_id': 5555,
                     'content': "Terror Billy is a meanie",
-                    'embeds': []
+                    'embeds': [],
+                    'attachments': []
                 },
                 {
                     'author': cls.author.id,
                     'id': 56,
                     'channel_id': 5555,
                     'content': "If you purge this, you're evil",
-                    'embeds': []
+                    'embeds': [],
+                    'attachments': []
                 }
             ]
         }
@@ -64,7 +66,8 @@ class DeletedMessagesWithActorTests(APISubdomainTestCase):
                     'id': 12903,
                     'channel_id': 1824,
                     'content': "I hate trailing commas",
-                    'embeds': []
+                    'embeds': [],
+                    'attachments': []
                 },
             ]
         }
