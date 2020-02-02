@@ -1,5 +1,6 @@
 from datetime import datetime
 
+from django.forms.models import model_to_dict
 from django_hosts.resolvers import reverse
 
 from .base import APISubdomainTestCase
@@ -108,6 +109,42 @@ class ReminderDeletionTests(APISubdomainTestCase):
 
         self.assertEqual(response.status_code, 204)
         self.assertRaises(Reminder.DoesNotExist, Reminder.objects.get, **{'id': self.reminder.id})
+
+
+class ReminderListTests(APISubdomainTestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.author = User.objects.create(
+            id=6789,
+            name='Patrick Star',
+            discriminator=6789,
+            avatar_hash=None,
+        )
+
+        cls.reminder = Reminder.objects.create(
+            author=cls.author,
+            content="We should take Bikini Bottom, and push it somewhere else!",
+            expiration=datetime.utcnow().isoformat(),
+            jump_url="https://www.icantseemyforehead.com",
+            channel_id=123
+        )
+
+        cls.rem_dict = model_to_dict(cls.reminder)
+        cls.rem_dict['expiration'] += 'Z'  # Massaging a quirk of the response time format
+
+    def test_reminder_in_full_list(self):
+        url = reverse('bot:reminder-list', host='api')
+        response = self.client.get(url)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json(), [self.rem_dict])
+
+    def test_filter_search(self):
+        url = reverse('bot:reminder-list', host='api')
+        response = self.client.get(f'{url}?search={self.author.name}')
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json(), [self.rem_dict])
 
 
 class ReminderUpdateTests(APISubdomainTestCase):
