@@ -46,15 +46,17 @@ class EmptyDatabaseReminderAPITests(APISubdomainTestCase):
 
 
 class ReminderCreationTests(APISubdomainTestCase):
-    def setUp(self):
-        super().setUp()
-        self.author = User.objects.create(
+    @classmethod
+    def setUpTestData(cls):
+        cls.author = User.objects.create(
             id=1234,
             name='Mermaid Man',
             discriminator=1234,
             avatar_hash=None,
         )
-        self.data = {
+
+    def test_accepts_valid_data(self):
+        data = {
             'author': self.author.id,
             'content': 'Remember to...wait what was it again?',
             'expiration': datetime.utcnow().isoformat(),
@@ -62,19 +64,18 @@ class ReminderCreationTests(APISubdomainTestCase):
             'channel_id': 123,
         }
         url = reverse('bot:reminder-list', host='api')
-        response = self.client.post(url, data=self.data)
+        response = self.client.post(url, data=data)
         self.assertEqual(response.status_code, 201)
+        self.assertIsNotNone(Reminder.objects.get(id=1))
 
-    def test_reminder_in_full_list(self):
+    def test_rejects_invalid_data(self):
+        data = {
+            'author': self.author.id,  # Missing multiple required fields
+        }
         url = reverse('bot:reminder-list', host='api')
-        response = self.client.get(url)
-
-        self.assertEqual(response.status_code, 200)
-
-        self.data['expiration'] += 'Z'  # Massaging a quirk of the response time format
-        self.data['active'] = True
-        self.data['id'] = 1
-        self.assertEqual(response.json(), [self.data])
+        response = self.client.post(url, data=data)
+        self.assertEqual(response.status_code, 400)
+        self.assertRaises(Reminder.DoesNotExist, Reminder.objects.get, **{'id': 1})
 
 
 class ReminderDeletionTests(APISubdomainTestCase):
