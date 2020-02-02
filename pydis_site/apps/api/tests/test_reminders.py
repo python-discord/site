@@ -132,9 +132,6 @@ class ReminderUpdateTests(APISubdomainTestCase):
     def test_patch_updates_record(self):
         url = reverse('bot:reminder-detail', args=(self.reminder.id,), host='api')
         response = self.client.patch(url, data=self.data)
-        self.assertEqual(response.status_code, 200)
 
-        url = reverse('bot:reminder-list', host='api')
-        response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.json()[0]['content'], self.data['content'])
+        self.assertEqual(Reminder.objects.get(id=self.reminder.id).content, self.data['content'])
