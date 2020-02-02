@@ -4,7 +4,7 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [packages]
-django = "~=2.2.0"
+django = "~=2.2.8"
 django-crispy-forms = "~=1.7.2"
 django-environ = "~=0.4.5"
 django-filter = "~=2.1.0"
@@ -43,6 +43,7 @@ unittest-xml-reporting = "~=2.5.1"
 python_version = "3.7"
 
 [scripts]
+start = "python manage.py run --debug"
 makemigrations = "python manage.py makemigrations"
 django_shell = "python manage.py shell"
 test = "coverage run manage.py test"

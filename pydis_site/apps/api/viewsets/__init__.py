@@ -5,6 +5,7 @@ from .bot import (
     DocumentationLinkViewSet,
     InfractionViewSet,
     NominationViewSet,
+    OffensiveMessageViewSet,
     OffTopicChannelNameViewSet,
     ReminderViewSet,
     RoleViewSet,

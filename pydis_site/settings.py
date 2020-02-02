@@ -92,6 +92,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
 
     'allauth.socialaccount.providers.discord',
+    'allauth.socialaccount.providers.github',
 
     'crispy_forms',
     'django_crispy_bulma',
@@ -302,14 +303,14 @@ BULMA_SETTINGS = {
     "variables": {  # If you update these colours, please update the notification.css file
         "primary": "#7289DA",    # Discord blurple
 
-        "orange": "#ffb39b",     # Bulma default, but at a saturation of 100
-        "yellow": "#ffea9b",     # Bulma default, but at a saturation of 100
-        "green": "#7fd19c",      # Bulma default, but at a saturation of 100
-        "turquoise": "#7289DA",  # Blurple, because Bulma uses this as the default primary
-        "cyan": "#91cbee",       # Bulma default, but at a saturation of 100
-        "blue": "#86a7dc",       # Bulma default, but at a saturation of 100
-        "purple": "#b86bff",     # Bulma default, but at a saturation of 100
-        "red": "#ffafc2",        # Bulma default, but at a saturation of 80
+        # "orange": "",          # Apparently unused, but the default is fine
+        # "yellow": "",          # The default yellow looks pretty good
+        "green": "#32ac66",      # Colour picked after Discord discussion
+        "turquoise": "#7289DA",  # Blurple, because Bulma uses this regardless of `primary` above
+        "blue": "#2482c1",       # Colour picked after Discord discussion
+        "cyan": "#2482c1",       # Colour picked after Discord discussion (matches the blue)
+        "purple": "#aa55e4",     # Apparently unused, but changed for consistency
+        "red": "#d63852",        # Colour picked after Discord discussion
 
         "link": "$primary",
 
@@ -372,10 +373,11 @@ WIKI_MARKDOWN_HTML_ATTRIBUTES = {
     'img': ['class', 'id', 'src', 'alt', 'width', 'height'],
     'section': ['class', 'id'],
     'article': ['class', 'id'],
+    'iframe': ['width', 'height', 'src', 'frameborder', 'allow', 'allowfullscreen'],
 }
 
 WIKI_MARKDOWN_HTML_WHITELIST = [
-    'article', 'section', 'button'
+    'article', 'section', 'button', 'iframe'
 ]
 
 
@@ -407,5 +409,13 @@ AUTHENTICATION_BACKENDS = (
     'allauth.account.auth_backends.AuthenticationBackend',
 )
 
+ACCOUNT_ADAPTER = "pydis_site.utils.account.AccountAdapter"
+ACCOUNT_EMAIL_REQUIRED = False       # Undocumented allauth setting; don't require emails
 ACCOUNT_EMAIL_VERIFICATION = "none"  # No verification required; we don't use emails for anything
+
+# We use this validator because Allauth won't let us actually supply a list with no validators
+# in it, and we can't just give it a lambda - that'd be too easy, I suppose.
+ACCOUNT_USERNAME_VALIDATORS = "pydis_site.VALIDATORS"
+
 LOGIN_REDIRECT_URL = "home"
+SOCIALACCOUNT_ADAPTER = "pydis_site.utils.account.SocialAccountAdapter"

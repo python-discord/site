@@ -50,7 +50,7 @@ class User(ModelReprMixin, models.Model):
 
     def __str__(self):
         """Returns the name and discriminator for the current user, for display purposes."""
-        return f"{self.name}#{self.discriminator}"
+        return f"{self.name}#{self.discriminator:0>4}"
 
     @property
     def top_role(self) -> Role:

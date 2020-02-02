@@ -12,6 +12,7 @@ from ..models import (
     ModelReprMixin,
     Nomination,
     OffTopicChannelName,
+    OffensiveMessage,
     Reminder,
     Role,
     Tag,
@@ -68,6 +69,11 @@ class StringDunderMethodTests(SimpleTestCase):
             ),
             DocumentationLink(
                 'test', 'http://example.com', 'http://example.com'
+            ),
+            OffensiveMessage(
+                id=602951077675139072,
+                channel_id=291284109232308226,
+                delete_date=dt(3000, 1, 1)
             ),
             OffTopicChannelName(name='bob-the-builders-playground'),
             Role(

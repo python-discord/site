@@ -1,6 +1,6 @@
 """Converters from Django models to data interchange formats and back."""
-
 from rest_framework.serializers import ModelSerializer, PrimaryKeyRelatedField, ValidationError
+from rest_framework.validators import UniqueTogetherValidator
 from rest_framework_bulk import BulkSerializerMixin
 
 from .models import (
@@ -8,6 +8,7 @@ from .models import (
     DocumentationLink, Infraction,
     LogEntry, MessageDeletionContext,
     Nomination, OffTopicChannelName,
+    OffensiveMessage,
     Reminder, Role,
     Tag, User
 )
@@ -49,7 +50,8 @@ class DeletedMessageSerializer(ModelSerializer):
         fields = (
             'id', 'author',
             'channel_id', 'content',
-            'embeds', 'deletion_context'
+            'embeds', 'deletion_context',
+            'attachments'
         )
 
 
@@ -105,10 +107,21 @@ class InfractionSerializer(ModelSerializer):
         fields = (
             'id', 'inserted_at', 'expires_at', 'active', 'user', 'actor', 'type', 'reason', 'hidden'
         )
+        validators = [
+            UniqueTogetherValidator(
+                queryset=Infraction.objects.filter(active=True),
+                fields=['user', 'type'],
+                message='This user already has an active infraction of this type.',
+            )
+        ]
 
     def validate(self, attrs: dict) -> dict:
         """Validate data constraints for the given data and abort if it is invalid."""
         infr_type = attrs.get('type')
+
+        active = attrs.get('active')
+        if active and infr_type in ('note', 'warning', 'kick'):
+            raise ValidationError({'active': [f'{infr_type} infractions cannot be active.']})
 
         expires_at = attrs.get('expires_at')
         if expires_at and infr_type in ('kick', 'warning'):
@@ -236,3 +249,13 @@ class NominationSerializer(ModelSerializer):
         fields = (
             'id', 'active', 'actor', 'reason', 'user',
             'inserted_at', 'end_reason', 'ended_at')
+
+
+class OffensiveMessageSerializer(ModelSerializer):
+    """A class providing (de-)serialization of `OffensiveMessage` instances."""
+
+    class Meta:
+        """Metadata defined for the Django REST Framework."""
+
+        model = OffensiveMessage
+        fields = ('id', 'channel_id', 'delete_date')
