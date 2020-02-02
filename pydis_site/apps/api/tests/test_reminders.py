@@ -107,6 +107,7 @@ class ReminderDeletionTests(APISubdomainTestCase):
         response = self.client.delete(url)
 
         self.assertEqual(response.status_code, 204)
+        self.assertRaises(Reminder.DoesNotExist, Reminder.objects.get, **{'id': self.reminder.id})
 
 
 class ReminderUpdateTests(APISubdomainTestCase):
