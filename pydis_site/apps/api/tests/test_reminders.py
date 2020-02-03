@@ -67,7 +67,7 @@ class ReminderCreationTests(APISubdomainTestCase):
         url = reverse('bot:reminder-list', host='api')
         response = self.client.post(url, data=data)
         self.assertEqual(response.status_code, 201)
-        self.assertIsNotNone(Reminder.objects.get(id=1))
+        self.assertIsNotNone(Reminder.objects.filter(id=1).first())
 
     def test_rejects_invalid_data(self):
         data = {
@@ -172,4 +172,4 @@ class ReminderUpdateTests(APISubdomainTestCase):
         response = self.client.patch(url, data=self.data)
 
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(Reminder.objects.get(id=self.reminder.id).content, self.data['content'])
+        self.assertEqual(Reminder.objects.filter(id=self.reminder.id).first().content, self.data['content'])
