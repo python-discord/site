@@ -76,7 +76,7 @@ class ReminderCreationTests(APISubdomainTestCase):
         url = reverse('bot:reminder-list', host='api')
         response = self.client.post(url, data=data)
         self.assertEqual(response.status_code, 400)
-        self.assertRaises(Reminder.DoesNotExist, Reminder.objects.get, **{'id': 1})
+        self.assertRaises(Reminder.DoesNotExist, Reminder.objects.get, id=1)
 
 
 class ReminderDeletionTests(APISubdomainTestCase):
@@ -108,7 +108,7 @@ class ReminderDeletionTests(APISubdomainTestCase):
         response = self.client.delete(url)
 
         self.assertEqual(response.status_code, 204)
-        self.assertRaises(Reminder.DoesNotExist, Reminder.objects.get, **{'id': self.reminder.id})
+        self.assertRaises(Reminder.DoesNotExist, Reminder.objects.get, id=self.reminder.id)
 
 
 class ReminderListTests(APISubdomainTestCase):
