@@ -8,6 +8,7 @@ from .models import (
     DocumentationLink, Infraction,
     LogEntry, MessageDeletionContext,
     Nomination, OffTopicChannelName,
+    OffensiveMessage,
     Reminder, Role,
     Tag, User
 )
@@ -49,7 +50,8 @@ class DeletedMessageSerializer(ModelSerializer):
         fields = (
             'id', 'author',
             'channel_id', 'content',
-            'embeds', 'deletion_context'
+            'embeds', 'deletion_context',
+            'attachments'
         )
 
 
@@ -247,3 +249,13 @@ class NominationSerializer(ModelSerializer):
         fields = (
             'id', 'active', 'actor', 'reason', 'user',
             'inserted_at', 'end_reason', 'ended_at')
+
+
+class OffensiveMessageSerializer(ModelSerializer):
+    """A class providing (de-)serialization of `OffensiveMessage` instances."""
+
+    class Meta:
+        """Metadata defined for the Django REST Framework."""
+
+        model = OffensiveMessage
+        fields = ('id', 'channel_id', 'delete_date')
