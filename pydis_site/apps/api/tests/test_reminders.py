@@ -121,7 +121,7 @@ class ReminderListTests(APISubdomainTestCase):
             avatar_hash=None,
         )
 
-        cls.reminder = Reminder.objects.create(
+        cls.reminder_one = Reminder.objects.create(
             author=cls.author,
             content="We should take Bikini Bottom, and push it somewhere else!",
             expiration=datetime.utcnow().isoformat(),
@@ -129,22 +129,40 @@ class ReminderListTests(APISubdomainTestCase):
             channel_id=123
         )
 
-        cls.rem_dict = model_to_dict(cls.reminder)
-        cls.rem_dict['expiration'] += 'Z'  # Massaging a quirk of the response time format
+        cls.reminder_two = Reminder.objects.create(
+            author=cls.author,
+            content="Gahhh-I love being purple!",
+            expiration=datetime.utcnow().isoformat(),
+            jump_url="https://www.goofygoobersicecreampartyboat.com",
+            channel_id=123,
+            active=False
+        )
 
-    def test_reminder_in_full_list(self):
+        cls.rem_dict_one = model_to_dict(cls.reminder_one)
+        cls.rem_dict_one['expiration'] += 'Z'  # Massaging a quirk of the response time format
+        cls.rem_dict_two = model_to_dict(cls.reminder_two)
+        cls.rem_dict_two['expiration'] += 'Z'  # Massaging a quirk of the response time format
+
+    def test_reminders_in_full_list(self):
         url = reverse('bot:reminder-list', host='api')
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.json(), [self.rem_dict])
+        self.assertEqual(response.json(), [self.rem_dict_one, self.rem_dict_two])
 
     def test_filter_search(self):
         url = reverse('bot:reminder-list', host='api')
         response = self.client.get(f'{url}?search={self.author.name}')
 
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.json(), [self.rem_dict])
+        self.assertEqual(response.json(), [self.rem_dict_one, self.rem_dict_two])
+
+    def test_filter_field(self):
+        url = reverse('bot:reminder-list', host='api')
+        response = self.client.get(f'{url}?active=true')
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json(), [self.rem_dict_one])
 
 
 class ReminderUpdateTests(APISubdomainTestCase):
