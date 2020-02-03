@@ -172,4 +172,7 @@ class ReminderUpdateTests(APISubdomainTestCase):
         response = self.client.patch(url, data=self.data)
 
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(Reminder.objects.filter(id=self.reminder.id).first().content, self.data['content'])
+        self.assertEqual(
+            Reminder.objects.filter(id=self.reminder.id).first().content,
+            self.data['content']
+        )
