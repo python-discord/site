@@ -148,14 +148,14 @@ class ReminderListTests(APISubdomainTestCase):
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.json(), [self.rem_dict_one, self.rem_dict_two])
+        self.assertCountEqual(response.json(), [self.rem_dict_one, self.rem_dict_two])
 
     def test_filter_search(self):
         url = reverse('bot:reminder-list', host='api')
         response = self.client.get(f'{url}?search={self.author.name}')
 
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.json(), [self.rem_dict_one, self.rem_dict_two])
+        self.assertCountEqual(response.json(), [self.rem_dict_one, self.rem_dict_two])
 
     def test_filter_field(self):
         url = reverse('bot:reminder-list', host='api')
