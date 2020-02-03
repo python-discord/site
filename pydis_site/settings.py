@@ -360,25 +360,7 @@ WIKI_MESSAGE_TAG_CSS_CLASS = {
     messages.WARNING: "is-warning",
 }
 
-WIKI_MARKDOWN_HTML_STYLES = [
-    'max-width',
-    'min-width',
-    'margin',
-    'padding',
-    'width',
-    'height',
-]
-
-WIKI_MARKDOWN_HTML_ATTRIBUTES = {
-    'img': ['class', 'id', 'src', 'alt', 'width', 'height'],
-    'section': ['class', 'id'],
-    'article': ['class', 'id'],
-    'iframe': ['width', 'height', 'src', 'frameborder', 'allow', 'allowfullscreen'],
-}
-
-WIKI_MARKDOWN_HTML_WHITELIST = [
-    'article', 'section', 'button', 'iframe'
-]
+WIKI_MARKDOWN_SANITIZE_HTML = False
 
 
 # Wiki permissions
