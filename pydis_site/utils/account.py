@@ -73,7 +73,7 @@ class SocialAccountAdapter(DefaultSocialAccountAdapter):
         """
         if social_login.account.provider == "discord":
             discriminator = social_login.account.extra_data["discriminator"]
-            data["username"] = f"{data['username']}#{discriminator}"
+            data["username"] = f"{data['username']}#{discriminator:0>4}"
             data["name"] = data["username"]
 
         return super().populate_user(request, social_login, data)
