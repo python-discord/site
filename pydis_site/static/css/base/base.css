@@ -111,3 +111,12 @@ button.is-size-navbar-menu, a.is-size-navbar-menu {
 .codehilite-wrap {
     margin-bottom: 1em;
 }
+.tags-listings{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+@media(max-width: 1087px){
+    .tags-listings{
+        grid-template-columns: 1fr;
+    }
+}
