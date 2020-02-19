@@ -196,3 +196,13 @@ class Tag(ModelReprMixin, models.Model):
     def __str__(self):
         """Returns the title of this tag, for display purposes."""
         return self.title
+
+    def save(self, *args, **kwargs) -> None:
+        """Make the starting letter of the title capital."""
+        self.title = self.title.capitalize()
+        super().save(*args, **kwargs)
+
+    class Meta:
+        """Set ordering in terms of the Tag title."""
+
+        ordering = ['title']
