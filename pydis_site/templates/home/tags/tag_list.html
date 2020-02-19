@@ -1,0 +1,20 @@
+{% extends 'base/base.html' %}
+
+{% load static %}
+
+{% block title %}Tags{% endblock %}
+
+{% block content %}
+{% include "base/navbar.html" %}
+<section class="section">
+<div class="content container is-medium tags-section">
+    <h1>Tags</h1>
+    <p class="is-size-6">You can make use of tags using <code>!tag &lt;tagname&gt;</code> on Discord. The following tags are available:</p>
+    <ul class="tags-listings">
+        {% for obj in object_list %}
+        <li class="is-size-5 is-capitalized"><a href="{% url 'detail_tags' title=obj.title %}">{{ obj.title }}</a></li>
+        {% endfor %}
+    </ul>
+</div>
+</section>
+{% endblock %}

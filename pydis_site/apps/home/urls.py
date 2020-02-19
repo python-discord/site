@@ -6,7 +6,7 @@ from django.contrib.messages import ERROR
 from django.urls import include, path
 
 from pydis_site.utils.views import MessageRedirectView
-from .views import AccountDeleteView, AccountSettingsView, HomeView
+from .views import AccountDeleteView, AccountSettingsView, HomeView, TagsDetailView, TagsListView
 
 app_name = 'home'
 urlpatterns = [
@@ -14,6 +14,8 @@ urlpatterns = [
     path('', HomeView.as_view(), name='home'),
     path('', HomeView.as_view(), name='socialaccount_connections'),
 
+    path('pages/tags', TagsListView.as_view(), name="list_tags"),
+    path('pages/tags/<str:title>', TagsDetailView.as_view(), name="detail_tags"),
     path('pages/', include('wiki.urls')),
 
     path('accounts/', include('allauth.socialaccount.providers.discord.urls')),

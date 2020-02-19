@@ -1,0 +1,73 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% load markdown_extras %}
+
+{% block title %}Tag - {{ object.title }}{% endblock %}
+
+{% block content %}
+    {% include "base/navbar.html" %}
+    <section class="section messages">
+        <div class="container">
+            <nav class="breadcrumb" aria-label="breadcrumbs">
+                <ul>
+                  <li><a href="{% url 'list_tags' %}">Tags</a></li>
+                  {% if object.embed.url != "" %}
+                    <li class="is-active"><a href="{{ object.embed.url }}" aria-current="page">{{ object.title }}</a></li>
+                  {% else %}
+                    <li class="is-active"><a href="#" aria-current="page">{{ object.title }}</a></li>
+                  {% endif %}
+                </ul>
+            </nav>
+        </div>
+        <br>
+        <div class="content container">
+            <h2 class="is-capitalized">{{ object.title }} Tag</h2>
+            <span class="tag is-lowercase is-size-6">
+                Command: !tags {{ object.title }}
+            </span>
+            <br>
+            {% if object.embed.author %}
+                <span class="tag is-size-6">Author: {{ object.embed.author.name }}</span>
+            {% endif %}
+            <hr class="has-background-grey-lighter">
+            <div class="notification is-info">
+                <div class="columns">
+                    <div class="column">
+                        <p class="has-text-dark">{{ object.embed.description | markdown | safe }}</p>
+                    </div>
+                    <div class="column">
+                    {% if object.embed.image.url != "" %}
+                        <img src="{{ object.embed.image.url }}" alt="" height="250" width="300">
+                    {% endif %}
+                    </div>
+                </div>
+                {% if object.embed.fields %}
+                    {% for field in object.embed.fields %}
+                        <h6 class="has-text-black">{{ field.name }}</h6>
+                        <p class="has-text-dark">{{ field.value | markdown | safe }}</p>
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+            {% if first_tag == object.title %}
+                <form method="POST">
+                    {% csrf_token %}
+                    <button class="button" disabled>Prev</button>
+                    <button class="button is-link" type="submit" name= "next" value= "{{ object.title }}" >Next</button>
+                </form>
+            {% elif last_tag == object.title %}
+                <form method="POST">
+                    {% csrf_token %}
+                    <button class="button is-link" type="submit" name= "prev" value= "{{ object.title }}" >Prev</button>
+                    <button class="button" disabled>Next</button>
+                </form>
+            {% else %}
+                <form method="POST">
+                    {% csrf_token %}
+                    <button class="button is-link" type="submit" name= "prev" value= "{{ object.title }}" >Prev</button>
+                    <button class="button is-link" type="submit" name= "next" value= "{{ object.title }}" >Next</button>
+                </form>
+            {% endif %}
+        </div>
+    </section>
+{% endblock %}
