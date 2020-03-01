@@ -17,8 +17,7 @@ django-crispy-bulma = ">=0.1.2,<2.0"
 whitenoise = "==4.1.2"
 requests = "~=2.21"
 pygments = "~=2.3.1"
-#wiki = {git = "https://github.com/python-discord/django-wiki.git"}
-wiki = {path = "./docker/wheels/wiki-0.5.dev20190420204942-py3-none-any.whl"}
+wiki = "~=0.5.0"
 pyyaml = "~=5.1"
 pyuwsgi = {version = "~=2.0", sys_platform = "!='win32'"}
 django-allauth = "~=0.40"
