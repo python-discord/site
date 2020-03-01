@@ -110,7 +110,7 @@ class InfractionSerializer(ModelSerializer):
         validators = [
             UniqueTogetherValidator(
                 queryset=Infraction.objects.filter(active=True),
-                fields=['user', 'type'],
+                fields=['user', 'type', 'active'],
                 message='This user already has an active infraction of this type.',
             )
         ]

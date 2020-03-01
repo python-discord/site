@@ -101,6 +101,9 @@ ENV/
 # PyCharm
 .idea/
 
+# VSCode
+.vscode/
+
 # RethinkDB data
 rethinkdb_data/
 

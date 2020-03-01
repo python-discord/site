@@ -34,6 +34,7 @@ services:
       - "127.0.0.1:8000:8000"
     depends_on:
       - postgres
+    tty: true
     volumes:
       - .:/app:ro
       - staticfiles:/var/www/static

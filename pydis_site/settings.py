@@ -16,14 +16,24 @@ import sys
 import typing
 
 import environ
+import sentry_sdk
 from django.contrib.messages import constants as messages
+from sentry_sdk.integrations.django import DjangoIntegration
+
 
 if typing.TYPE_CHECKING:
     from django.contrib.auth.models import User
     from wiki.models import Article
 
 env = environ.Env(
-    DEBUG=(bool, False)
+    DEBUG=(bool, False),
+    SITE_SENTRY_DSN=(str, "")
+)
+
+sentry_sdk.init(
+    dsn=env('SITE_SENTRY_DSN'),
+    integrations=[DjangoIntegration()],
+    send_default_pii=True
 )
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -197,7 +207,7 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'pydis_site', 'static')]
 STATIC_ROOT = env('STATIC_ROOT', default='/app/staticfiles')
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = env('MEDIA_ROOT', default='/app/media')
+MEDIA_ROOT = env('MEDIA_ROOT', default='/site/media')
 
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
@@ -360,25 +370,7 @@ WIKI_MESSAGE_TAG_CSS_CLASS = {
     messages.WARNING: "is-warning",
 }
 
-WIKI_MARKDOWN_HTML_STYLES = [
-    'max-width',
-    'min-width',
-    'margin',
-    'padding',
-    'width',
-    'height',
-]
-
-WIKI_MARKDOWN_HTML_ATTRIBUTES = {
-    'img': ['class', 'id', 'src', 'alt', 'width', 'height'],
-    'section': ['class', 'id'],
-    'article': ['class', 'id'],
-    'iframe': ['width', 'height', 'src', 'frameborder', 'allow', 'allowfullscreen'],
-}
-
-WIKI_MARKDOWN_HTML_WHITELIST = [
-    'article', 'section', 'button', 'iframe'
-]
+WIKI_MARKDOWN_SANITIZE_HTML = False
 
 
 # Wiki permissions
