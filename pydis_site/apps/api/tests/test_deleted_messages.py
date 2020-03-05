@@ -8,7 +8,7 @@ from ..models import MessageDeletionContext, User
 
 class DeletedMessagesWithoutActorTests(APISubdomainTestCase):
     @classmethod
-    def setUpTestData(cls):  # noqa
+    def setUpTestData(cls):
         cls.author = User.objects.create(
             id=55,
             name='Robbie Rotten',
@@ -49,7 +49,7 @@ class DeletedMessagesWithoutActorTests(APISubdomainTestCase):
 
 class DeletedMessagesWithActorTests(APISubdomainTestCase):
     @classmethod
-    def setUpTestData(cls):  # noqa
+    def setUpTestData(cls):
         cls.author = cls.actor = User.objects.create(
             id=12904,
             name='Joe Armstrong',

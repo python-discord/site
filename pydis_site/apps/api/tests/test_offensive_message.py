@@ -71,7 +71,7 @@ class CreationTests(APISubdomainTestCase):
 
 class ListTests(APISubdomainTestCase):
     @classmethod
-    def setUpTestData(cls):  # noqa
+    def setUpTestData(cls):
         delete_at = datetime.datetime.now() + datetime.timedelta(days=1)
         aware_delete_at = delete_at.replace(tzinfo=datetime.timezone.utc)
 
@@ -110,7 +110,7 @@ class ListTests(APISubdomainTestCase):
 
 class DeletionTests(APISubdomainTestCase):
     @classmethod
-    def setUpTestData(cls):  # noqa
+    def setUpTestData(cls):
         delete_at = datetime.datetime.now(tz=datetime.timezone.utc) + datetime.timedelta(days=1)
 
         cls.valid_offensive_message = OffensiveMessage.objects.create(
@@ -134,7 +134,7 @@ class DeletionTests(APISubdomainTestCase):
 
 class NotAllowedMethodsTests(APISubdomainTestCase):
     @classmethod
-    def setUpTestData(cls):  # noqa
+    def setUpTestData(cls):
         delete_at = datetime.datetime.now(tz=datetime.timezone.utc) + datetime.timedelta(days=1)
 
         cls.valid_offensive_message = OffensiveMessage.objects.create(

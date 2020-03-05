@@ -24,7 +24,7 @@ class HealthcheckView(APIView):
     authentication_classes = ()
     permission_classes = ()
 
-    def get(self, request, format=None):  # noqa
+    def get(self, request, format=None):  # noqa: D102,ANN001,ANN201
         return Response({'status': 'ok'})
 
 
@@ -96,7 +96,7 @@ class RulesView(APIView):
             )
 
     # `format` here is the result format, we have a link format here instead.
-    def get(self, request, format=None):  # noqa
+    def get(self, request, format=None):  # noqa: D102,ANN001,ANN201
         link_format = request.query_params.get('link_format', 'md')
         if link_format not in ('html', 'md'):
             raise ParseError(
