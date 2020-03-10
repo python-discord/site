@@ -8,7 +8,7 @@ from ..models import Nomination, User
 
 class CreationTests(APISubdomainTestCase):
     @classmethod
-    def setUpTestData(cls):  # noqa
+    def setUpTestData(cls):
         cls.user = User.objects.create(
             id=1234,
             name='joe dart',
@@ -185,7 +185,7 @@ class CreationTests(APISubdomainTestCase):
 
 class NominationTests(APISubdomainTestCase):
     @classmethod
-    def setUpTestData(cls):  # noqa
+    def setUpTestData(cls):
         cls.user = User.objects.create(
             id=1234,
             name='joe dart',

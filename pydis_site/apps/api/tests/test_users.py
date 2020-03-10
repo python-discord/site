@@ -36,7 +36,7 @@ class UnauthedUserAPITests(APISubdomainTestCase):
 
 class CreationTests(APISubdomainTestCase):
     @classmethod
-    def setUpTestData(cls):  # noqa
+    def setUpTestData(cls):
         cls.role = Role.objects.create(
             id=5,
             name="Test role pls ignore",
@@ -124,7 +124,7 @@ class CreationTests(APISubdomainTestCase):
 
 class UserModelTests(APISubdomainTestCase):
     @classmethod
-    def setUpTestData(cls):  # noqa
+    def setUpTestData(cls):
         cls.role_top = Role.objects.create(
             id=777,
             name="High test role",

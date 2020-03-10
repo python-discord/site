@@ -42,7 +42,7 @@ class UnauthenticatedTests(APISubdomainTestCase):
 
 class InfractionTests(APISubdomainTestCase):
     @classmethod
-    def setUpTestData(cls):  # noqa
+    def setUpTestData(cls):
         cls.user = User.objects.create(
             id=5,
             name='james',
@@ -164,7 +164,7 @@ class InfractionTests(APISubdomainTestCase):
 
 class CreationTests(APISubdomainTestCase):
     @classmethod
-    def setUpTestData(cls):  # noqa
+    def setUpTestData(cls):
         cls.user = User.objects.create(
             id=5,
             name='james',
@@ -517,7 +517,7 @@ class CreationTests(APISubdomainTestCase):
 
 class ExpandedTests(APISubdomainTestCase):
     @classmethod
-    def setUpTestData(cls):  # noqa
+    def setUpTestData(cls):
         cls.user = User.objects.create(
             id=5,
             name='james',
