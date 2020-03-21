@@ -41,7 +41,7 @@ bot_router.register(
 bot_router.register(
     'off-topic-channel-names',
     OffTopicChannelNameViewSet,
-    base_name='offtopicchannelname'
+    basename='offtopicchannelname'
 )
 bot_router.register(
     'reminders',
