@@ -21,6 +21,10 @@ class OffTopicChannelNameViewSet(DestroyModelMixin, ViewSet):
     If the `random_items` query parameter is given, for example using...
         $ curl api.pythondiscord.local:8000/bot/off-topic-channel-names?random_items=5
     ... then the API will return `5` random items from the database.
+    If the `mark_used` query parameter is given like...
+        $ curl api.pydis.local:8000/bot/off-topic-channel-names?random_items=5&mark_used=true
+    ... then the API will mark returned `5` items `used`.
+    When running out of names, API will mark all names to not used and start new round.
 
     #### Response format
     Return a list of off-topic-channel names:
@@ -105,6 +109,31 @@ class OffTopicChannelNameViewSet(DestroyModelMixin, ViewSet):
                 raise ParseError(detail={
                     'random_items': ["Must be a positive integer."]
                 })
+
+            if 'mark_used' in request.query_params and request.query_params['mark_used']:
+                queryset = self.get_queryset().order_by('?').exclude(used=True)[:random_count]
+                self.get_queryset().filter(
+                    name__in=(query.name for query in queryset)
+                ).update(used=True)
+
+                # When client request more channel names than non-used names is available, start
+                # new round of names.
+                if len(queryset) < random_count:
+                    # Get how much names still missing and don't fetch duplicate names.
+                    need_more = random_count - len(queryset)
+                    ext = self.get_queryset().order_by('?').exclude(
+                        name__in=(query.name for query in queryset)
+                    )[:need_more]
+
+                    # Set all names `used` field to False except these that we just used.
+                    self.get_queryset().exclude(name__in=(
+                        query.name for query in ext)
+                    ).update(used=False)
+                    # Join original queryset (that had missing names)
+                    # and extension with these missing names.
+                    queryset = list(queryset) + list(ext)
+                serialized = self.serializer_class(queryset, many=True)
+                return Response(serialized.data)
 
             queryset = self.get_queryset().order_by('?')[:random_count]
             serialized = self.serializer_class(queryset, many=True)
