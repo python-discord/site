@@ -16,6 +16,11 @@ class OffTopicChannelName(ModelReprMixin, models.Model):
         help_text="The actual channel name that will be used on our Discord server."
     )
 
+    used = models.BooleanField(
+        default=False,
+        help_text="Show is channel already used as channel name in this round."
+    )
+
     def __str__(self):
         """Returns the current off-topic name, for display purposes."""
         return self.name
