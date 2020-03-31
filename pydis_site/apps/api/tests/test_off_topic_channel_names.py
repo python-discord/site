@@ -65,8 +65,8 @@ class EmptyDatabaseTests(APISubdomainTestCase):
 class ListTests(APISubdomainTestCase):
     @classmethod
     def setUpTestData(cls):
-        cls.test_name = OffTopicChannelName.objects.create(name='lemons-lemonade-stand')
-        cls.test_name_2 = OffTopicChannelName.objects.create(name='bbq-with-bisk')
+        cls.test_name = OffTopicChannelName.objects.create(name='lemons-lemonade-stand', used=False)
+        cls.test_name_2 = OffTopicChannelName.objects.create(name='bbq-with-bisk', used=True)
 
     def test_returns_name_in_list(self):
         url = reverse('bot:offtopicchannelname-list', host='api')
