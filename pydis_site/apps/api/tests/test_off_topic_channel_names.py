@@ -88,6 +88,13 @@ class ListTests(APISubdomainTestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(response.json()), 1)
 
+    def test_returns_single_correct_item_with_mark_used_parameter_true_and_random_items_1(self):
+        url = reverse('bot:offtopicchannelname-list', host='api')
+        response = self.client.get(f'{url}?random_items=1&mark_used=true')
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json(), [self.test_name.name])
+
 
 class CreationTests(APISubdomainTestCase):
     def setUp(self):
