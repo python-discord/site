@@ -95,6 +95,13 @@ class ListTests(APISubdomainTestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json(), [self.test_name.name])
 
+    def test_running_out_of_names_with_mark_used_parameter(self):
+        url = reverse('bot:offtopicchannelname-list', host='api')
+        response = self.client.get(f'{url}?random_items=2&mark_used=true')
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json(), [self.test_name.name, self.test_name_2.name])
+
 
 class CreationTests(APISubdomainTestCase):
     def setUp(self):
