@@ -21,6 +21,12 @@ class UnauthenticatedTests(APISubdomainTestCase):
 
         self.assertEqual(response.status_code, 401)
 
+    def test_cannot_read_off_topic_channel_name_list_with_random_item_and_mark_used_param(self):
+        url = reverse('bot:offtopicchannelname-list', host='api')
+        response = self.client.get(f'{url}?random_items=no&mark_used=true')
+
+        self.assertEqual(response.status_code, 401)
+
 
 class EmptyDatabaseTests(APISubdomainTestCase):
     def test_returns_empty_object(self):
