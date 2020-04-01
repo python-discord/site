@@ -12,7 +12,7 @@ def is_bool_validator(value: Any) -> None:
         raise ValidationError(f"This field must be of type bool, not {type(value)}.")
 
 
-def validate_tag_embed_fields(fields: dict) -> None:
+def validate_embed_fields(fields: dict) -> None:
     """Raises a ValidationError if any of the given embed fields is invalid."""
     field_validators = {
         'name': (MaxLengthValidator(limit_value=256),),
@@ -39,7 +39,7 @@ def validate_tag_embed_fields(fields: dict) -> None:
                 validator(value)
 
 
-def validate_tag_embed_footer(footer: Dict[str, str]) -> None:
+def validate_embed_footer(footer: Dict[str, str]) -> None:
     """Raises a ValidationError if the given footer is invalid."""
     field_validators = {
         'text': (
@@ -64,7 +64,7 @@ def validate_tag_embed_footer(footer: Dict[str, str]) -> None:
             validator(value)
 
 
-def validate_tag_embed_author(author: Any) -> None:
+def validate_embed_author(author: Any) -> None:
     """Raises a ValidationError if the given author is invalid."""
     field_validators = {
         'name': (
@@ -90,7 +90,7 @@ def validate_tag_embed_author(author: Any) -> None:
             validator(value)
 
 
-def validate_tag_embed(embed: Any) -> None:
+def validate_embed(embed: Any) -> None:
     """
     Validate a JSON document containing an embed as possible to send on Discord.
 
@@ -106,11 +106,11 @@ def validate_tag_embed(embed: Any) -> None:
 
         >>> from django.contrib.postgres import fields as pgfields
         >>> from django.db import models
-        >>> from pydis_site.apps.api.models.bot.tag import validate_tag_embed
+        >>> from pydis_site.apps.api.models.utils import validate_embed
         >>> class MyMessage(models.Model):
         ...     embed = pgfields.JSONField(
         ...         validators=(
-        ...             validate_tag_embed,
+        ...             validate_embed,
         ...         )
         ...     )
         ...     # ...
@@ -146,10 +146,10 @@ def validate_tag_embed(embed: Any) -> None:
         'description': (MaxLengthValidator(limit_value=2048),),
         'fields': (
             MaxLengthValidator(limit_value=25),
-            validate_tag_embed_fields
+            validate_embed_fields
         ),
-        'footer': (validate_tag_embed_footer,),
-        'author': (validate_tag_embed_author,)
+        'footer': (validate_embed_footer,),
+        'author': (validate_embed_author,)
     }
 
     if not embed:
