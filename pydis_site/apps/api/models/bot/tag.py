@@ -1,12 +1,8 @@
 from collections.abc import Mapping
 from typing import Any, Dict
 
-from django.contrib.postgres import fields as pgfields
 from django.core.exceptions import ValidationError
 from django.core.validators import MaxLengthValidator, MinLengthValidator
-from django.db import models
-
-from pydis_site.apps.api.models.mixins import ModelReprMixin
 
 
 def is_bool_validator(value: Any) -> None:
@@ -175,24 +171,3 @@ def validate_tag_embed(embed: Any) -> None:
         if field_name in field_validators:
             for validator in field_validators[field_name]:
                 validator(value)
-
-
-class Tag(ModelReprMixin, models.Model):
-    """A tag providing (hopefully) useful information."""
-
-    title = models.CharField(
-        max_length=100,
-        help_text=(
-            "The title of this tag, shown in searches and providing "
-            "a quick overview over what this embed contains."
-        ),
-        primary_key=True
-    )
-    embed = pgfields.JSONField(
-        help_text="The actual embed shown by this tag.",
-        validators=(validate_tag_embed,)
-    )
-
-    def __str__(self):
-        """Returns the title of this tag, for display purposes."""
-        return self.title
