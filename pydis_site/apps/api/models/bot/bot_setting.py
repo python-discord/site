@@ -9,6 +9,7 @@ def validate_bot_setting_name(name: str) -> None:
     """Raises a ValidationError if the given name is not a known setting."""
     known_settings = (
         'defcon',
+        'news',
     )
 
     if name not in known_settings:
