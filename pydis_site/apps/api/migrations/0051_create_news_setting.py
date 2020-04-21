@@ -11,7 +11,7 @@ def up(apps, schema_editor):
 
 def down(apps, schema_editor):
     BotSetting = apps.get_model('api', 'BotSetting')
-    BotSetting.get(name='news').delete()
+    BotSetting.objects.get(name='news').delete()
 
 
 class Migration(migrations.Migration):
