@@ -53,7 +53,6 @@ class ReminderCreationTests(APISubdomainTestCase):
             id=1234,
             name='Mermaid Man',
             discriminator=1234,
-            avatar_hash=None,
         )
 
     def test_accepts_valid_data(self):
@@ -86,7 +85,6 @@ class ReminderDeletionTests(APISubdomainTestCase):
             id=6789,
             name='Barnacle Boy',
             discriminator=6789,
-            avatar_hash=None,
         )
 
         cls.reminder = Reminder.objects.create(
@@ -118,7 +116,6 @@ class ReminderListTests(APISubdomainTestCase):
             id=6789,
             name='Patrick Star',
             discriminator=6789,
-            avatar_hash=None,
         )
 
         cls.reminder_one = Reminder.objects.create(
@@ -172,7 +169,6 @@ class ReminderUpdateTests(APISubdomainTestCase):
             id=666,
             name='Man Ray',
             discriminator=666,
-            avatar_hash=None,
         )
 
         cls.reminder = Reminder.objects.create(

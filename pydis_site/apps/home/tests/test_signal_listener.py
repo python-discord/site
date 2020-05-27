@@ -81,14 +81,12 @@ class SignalListenerTests(TestCase):
             id=0,
             name="user",
             discriminator=0,
-            avatar_hash=None
         )
 
         cls.discord_unmapped = DiscordUser.objects.create(
             id=2,
             name="unmapped",
             discriminator=0,
-            avatar_hash=None
         )
 
         cls.discord_unmapped.roles.add(cls.unmapped_role)
@@ -98,7 +96,6 @@ class SignalListenerTests(TestCase):
             id=3,
             name="not-in-guild",
             discriminator=0,
-            avatar_hash=None,
             in_guild=False
         )
 
@@ -106,7 +103,6 @@ class SignalListenerTests(TestCase):
             id=1,
             name="admin",
             discriminator=0,
-            avatar_hash=None
         )
 
         cls.discord_admin.roles.set([cls.admin_role])
@@ -116,7 +112,6 @@ class SignalListenerTests(TestCase):
             id=4,
             name="admin",
             discriminator=0,
-            avatar_hash=None
         )
 
         cls.discord_moderator.roles.set([cls.moderator_role])
