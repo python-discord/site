@@ -13,6 +13,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='offtopicchannelname',
             name='used',
-            field=models.BooleanField(default=False, help_text='Show is channel already used as channel name in this round.'),
+            field=models.BooleanField(default=False, help_text='Whether or not this name has already been used during this rotation'),
         ),
     ]

@@ -18,7 +18,7 @@ class OffTopicChannelName(ModelReprMixin, models.Model):
 
     used = models.BooleanField(
         default=False,
-        help_text="Show is channel already used as channel name in this round."
+        help_text="Whether or not this name has already been used during this rotation",
     )
 
     def __str__(self):
