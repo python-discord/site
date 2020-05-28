@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('api', '0050_remove_infractions_active_default_value'),
+        ('api', '0051_create_news_setting'),
     ]
 
     operations = [
