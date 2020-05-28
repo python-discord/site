@@ -113,16 +113,16 @@ class OffTopicChannelNameViewSet(DestroyModelMixin, ViewSet):
                 name__in=(query.name for query in queryset)
             ).update(used=True)
 
-            # When client request more channel names than non-used names is available, start
-            # new round of names.
+            # When the client requests more channel names than are available,
+            # we reset all names to used=False and start a new round of names.
             if len(queryset) < random_count:
-                # Get how much names still missing and don't fetch duplicate names.
+                # Figure out how many additional names we need, and don't fetch duplicate names.
                 need_more = random_count - len(queryset)
                 ext = self.get_queryset().order_by('?').exclude(
                     name__in=(query.name for query in queryset)
                 )[:need_more]
 
-                # Set all names `used` field to False except these that we just used.
+                # Reset the `used` field to False for all names except the ones we just used.
                 self.get_queryset().exclude(name__in=(
                     query.name for query in ext)
                 ).update(used=False)
