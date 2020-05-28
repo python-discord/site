@@ -118,18 +118,18 @@ class OffTopicChannelNameViewSet(DestroyModelMixin, ViewSet):
             if len(queryset) < random_count:
                 # Figure out how many additional names we need, and don't fetch duplicate names.
                 names_needed = random_count - len(queryset)
-                ext = self.get_queryset().order_by('?').exclude(
+                other_names = self.get_queryset().order_by('?').exclude(
                     name__in=(query.name for query in queryset)
                 )[:names_needed]
 
                 # Reset the `used` field to False for all names except the ones we just used.
                 self.get_queryset().exclude(name__in=(
-                    query.name for query in ext)
+                    query.name for query in other_names)
                 ).update(used=False)
 
                 # Join original queryset (that had missing names)
                 # and extension with these missing names.
-                queryset = list(queryset) + list(ext)
+                queryset = list(queryset) + list(other_names)
 
             serialized = self.serializer_class(queryset, many=True)
             return Response(serialized.data)
