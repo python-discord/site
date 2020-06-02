@@ -21,7 +21,6 @@ class TestLogsView(TestCase):
             id=12345678901,
             name='Alan Turing',
             discriminator=1912,
-            avatar_hash=None
         )
 
         cls.author.roles.add(cls.developers_role)

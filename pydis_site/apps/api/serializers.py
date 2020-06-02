@@ -235,7 +235,7 @@ class UserSerializer(BulkSerializerMixin, ModelSerializer):
         """Metadata defined for the Django REST Framework."""
 
         model = User
-        fields = ('id', 'avatar_hash', 'name', 'discriminator', 'roles', 'in_guild')
+        fields = ('id', 'name', 'discriminator', 'roles', 'in_guild')
         depth = 1
 
 

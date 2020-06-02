@@ -31,14 +31,6 @@ class User(ModelReprMixin, models.Model):
         ),
         help_text="The discriminator of this user, taken from Discord."
     )
-    avatar_hash = models.CharField(
-        max_length=100,
-        help_text=(
-            "The user's avatar hash, taken from Discord. "
-            "Null if the user does not have any custom avatar."
-        ),
-        null=True
-    )
     roles = models.ManyToManyField(
         Role,
         help_text="Any roles this user has on our server."
