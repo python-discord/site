@@ -118,4 +118,4 @@ class UserViewSet(BulkCreateModelMixin, ModelViewSet):
     """
 
     serializer_class = UserSerializer
-    queryset = User.objects.prefetch_related('roles')
+    queryset = User.objects

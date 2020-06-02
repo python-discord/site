@@ -146,7 +146,7 @@ class UserModelTests(APISubdomainTestCase):
             discriminator=1111,
             in_guild=True,
         )
-        cls.user_with_roles.roles.add(cls.role_bottom, cls.role_top)
+        cls.user_with_roles.roles.extend([cls.role_bottom.id, cls.role_top.id])
 
         cls.user_without_roles = User.objects.create(
             id=2,
