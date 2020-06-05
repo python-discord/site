@@ -12,9 +12,7 @@ def _validate_existing_role(value: int) -> None:
     role = Role.objects.filter(id=value)
 
     if not role:
-        raise ValidationError(
-            f"Role with ID {value} does not exist"
-        )
+        raise ValidationError(f"Role with ID {value} does not exist")
 
 
 class User(ModelReprMixin, models.Model):
