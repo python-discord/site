@@ -23,7 +23,7 @@ class TestLogsView(TestCase):
             discriminator=1912,
         )
 
-        cls.author.roles.add(cls.developers_role)
+        cls.author.roles.append(cls.developers_role.id)
 
         cls.deletion_context = MessageDeletionContext.objects.create(
             actor=cls.actor,
