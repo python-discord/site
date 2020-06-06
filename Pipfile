@@ -4,7 +4,7 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [packages]
-django = "~=2.2.8"
+django = "~=2.2.13"
 django-crispy-forms = "~=1.7.2"
 django-environ = "~=0.4.5"
 django-filter = "~=2.1.0"
