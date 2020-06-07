@@ -23,8 +23,8 @@ class HomeView(View):
         "python-discord/bot",
         "python-discord/snekbox",
         "python-discord/seasonalbot",
+        "python-discord/flake8-annotations",
         "python-discord/django-simple-bulma",
-        "python-discord/django-crispy-bulma",
     ]
 
     def _get_api_data(self) -> Dict[str, Dict[str, str]]:
