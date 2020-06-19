@@ -19,6 +19,8 @@ urlpatterns = [
     path('accounts/', include('allauth.socialaccount.providers.discord.urls')),
     path('accounts/', include('allauth.socialaccount.providers.github.urls')),
 
+    path('forms/', include('pydis_site.apps.forms.urls')),
+
     path(
         'accounts/login/cancelled', MessageRedirectView.as_view(
             pattern_name="home", message="Login cancelled."
