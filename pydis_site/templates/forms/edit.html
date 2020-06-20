@@ -2,13 +2,45 @@
 
 {% block title %}{{ form.title }}{% endblock %}
 
+{% load static %}
+
 {% block content %}
+{# Load form questions into a JSON object for Vue to pick up #}
+
+{{ form.questions|json_script:"questions"}}
+
+<script>
+    window.formID = "{{ form.id }}";
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i].trim();
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    window.csrftoken = getCookie('csrftoken');
+</script>
+
+
 {% url 'forms:forms_index' as index_url %}
 <button class="secondary button" onclick="document.location.href = '{{ index_url }}'">Return to form list</button>
 <h1>Form properties</h1>
 
 <form method="POST">
     {% csrf_token %}
+    Form title: <input type="text" name="title" class="text" placeholder="Form title" value="{{ form.title }}"/><br/>
+    </br>
+    Form ID: <input type="text" name="id" class="text" placeholder="Form ID" value="{{ form.id }}"/><br/>
+    <br/>
+
     <label class="checkbox">Make form public
         <input name="public" type="checkbox" {% if form.public %}checked{% endif %}>
         <span class="checkmark"></span>
@@ -19,6 +51,33 @@
         <span class="checkmark"></span>
     </label>
 
+
     <input type="submit" class="button primary" value="Save changes"/>
 </form>
+
+<h1>Form editor</h1>
+
+<div id="app">
+    <transition-group name="fade" tag="div" >
+        <question
+        style="animation-duration: 0.5s"
+        v-for="(question, index) in questions"
+        v-bind:question="question"
+        v-bind:questions="questions"
+        v-bind:key="index"
+        ></question>
+    </transition-group>
+
+  <br/>
+  <button class="button primary" v-on:click="addNewQuestion">New question</button>
+  <button class="button success" v-on:click="saveQuestions">Save questions</button>
+</div>
+
+<script src="{% static 'js/forms/editor.js' %}"></script>
+{% endblock %}
+
+
+{% block extra_head %}
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/vue2-animate/dist/vue2-animate.min.css"/>
 {% endblock %}
