@@ -1,0 +1,76 @@
+/* Base body CSS */
+body {
+    background-color: #2C2F33;
+    color: #ffffff;
+    font-family: "Hind Siliguri", "Helvetica", "Arial", sans-serif;
+    margin: 0px;
+}
+
+a {
+    color: inherit;
+    text-decoration: inherit;
+}
+
+/* Set padding */
+.content {
+    padding-left: 30px;
+}
+
+/* Font sizes */
+.hero h1 {
+    margin-top: 10px;
+    font-size: 4em;
+}
+
+/* SVG header background CSS */
+.hero-background svg {
+    z-index: -1;
+    top: 0;
+    position: absolute;
+    width: 100%;
+}
+
+/* Move content below SVGs */
+.body {
+    position: absolute;
+    top: 270px;
+    width: 90%;
+}
+
+/* Form listing in management portal */
+.forms-list {
+    width: 100%;
+}
+
+.form-item {
+    background-color: #99AAB5;
+    width: 90%;
+    padding: 10px;
+    padding-left: 50px;
+    border-radius: 20px;
+    display: flex;
+    transition: 200ms;
+    margin-bottom: 20px;
+}
+
+.form-item h2 {
+    display: inline;
+}
+
+.form-item i {
+    display: inline;
+    align-self: center;
+    padding-left: 2%;
+    font-size: 1.5em;
+}
+
+.form-item:hover {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    transition: 200ms;
+}
+
+/* Public tags */
+.public-True {
+    background-color: #a1cfa1;
+}
