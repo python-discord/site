@@ -19,3 +19,15 @@ class FormIndexView(View):
         forms = Form.objects.all()
 
         return render(request, "forms/index.html", {"forms": forms})
+
+    def post(self, request: HttpRequest) -> HttpResponse:
+        """Create a new form with provided title and ID."""
+        if not request.user.has_perm("forms.change_form"):
+            add_message(request, ERROR, "You do not have permission to access this page.")
+            return redirect(reverse("home"))
+
+        form = Form(id=request.POST["id"], title=request.POST["title"])
+
+        form.save()
+
+        return redirect(reverse("forms:edit_form", kwargs={"form_id": form.id}))
