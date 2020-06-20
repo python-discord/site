@@ -17,4 +17,15 @@ class Form(models.Model):
         help_text="Whether this form should be publicly accessible"
     )
 
-    questions = JSONField(help_text="The questions on the form in JSON format")
+    needs_oauth = models.BooleanField(
+        default=False,
+        help_text="Collect OAuth2 data from users filling out the form"
+    )
+
+    # Questions should not be editable since it is too complex ffor the Django Admin UI
+    # Instead we set editable to false and we edit forms through the form management portal
+    questions = JSONField(
+        help_text="The questions on the form in JSON format",
+        editable=False,
+        default=dict
+    )
