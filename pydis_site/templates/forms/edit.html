@@ -1,0 +1,24 @@
+{% extends 'forms/base.html' %}
+
+{% block title %}{{ form.title }}{% endblock %}
+
+{% block content %}
+{% url 'forms:forms_index' as index_url %}
+<button class="secondary button" onclick="document.location.href = '{{ index_url }}'">Return to form list</button>
+<h1>Form properties</h1>
+
+<form method="POST">
+    {% csrf_token %}
+    <label class="checkbox">Make form public
+        <input name="public" type="checkbox" {% if form.public %}checked{% endif %}>
+        <span class="checkmark"></span>
+    </label>
+
+    <label class="checkbox">Collect OAuth2 data from users
+        <input name="needs_oauth" type="checkbox" {% if form.needs_oauth %}checked{% endif %}>
+        <span class="checkmark"></span>
+    </label>
+
+    <input type="submit" class="button primary" value="Save changes"/>
+</form>
+{% endblock %}
