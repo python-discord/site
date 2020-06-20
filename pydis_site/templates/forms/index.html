@@ -1,0 +1,19 @@
+{% extends 'forms/base.html' %}
+
+{% block title %}Form management{% endblock %}
+
+{% block content %}
+<h1>Welcome {{ request.user.first_name }}</h1>
+
+<div class="forms-list">
+    {% for form in forms %}
+        {% url 'forms:edit_form' form.id as edit_url %}
+        <a href="{{ edit_url }}">
+        <div class="form-item public-{{ form.public }}">
+            <h2>{{ form.title }}</h2>
+            <i class="fa fa-arrow-right"></i>
+        </div>
+        </a>
+    {% endfor %}
+</div>
+{% endblock %}
