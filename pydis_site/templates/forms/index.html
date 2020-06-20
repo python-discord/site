@@ -5,9 +5,12 @@
 {% block content %}
 <h1>Welcome {{ request.user.first_name }}</h1>
 
+<button id="createButton" class="button primary">Create new form</button>
+<br/><br/>
 <div class="forms-list">
     {% for form in forms %}
         {% url 'forms:edit_form' form.id as edit_url %}
+
         <a href="{{ edit_url }}">
         <div class="form-item public-{{ form.public }}">
             <h2>{{ form.title }}</h2>
@@ -16,4 +19,39 @@
         </a>
     {% endfor %}
 </div>
+
+<div id="createForm" class="modal">
+    <div class="modal-content">
+      <span id="createFormClose" class="close">&times;</span>
+      <h1>Form creation</h1>
+      <form action="{% url 'forms:forms_index' %}" method="POST">
+            {% csrf_token %}
+            Form title: <input type="text" name="title" class="text" placeholder="Form title" value="{{ form.title }}"/><br/>
+            </br>
+            Form ID: <input type="text" name="id" class="text" placeholder="Form ID" value="{{ form.id }}"/><br/>
+            <br/>
+            <input class="button success" type="submit" value="Create form"/>
+      </form>
+    </div>
+</div>
+
+<script>
+var modal = document.getElementById("createForm");
+var button = document.getElementById("createButton");
+var close = document.getElementById("createFormClose");
+
+button.onclick = function() {
+  modal.style.display = "block";
+}
+
+close.onclick = function() {
+  modal.style.display = "none";
+}
+
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+</script>
 {% endblock %}
