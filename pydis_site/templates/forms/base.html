@@ -1,0 +1,51 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description"
+        content="{% block meta-description %}We're a large, friendly community focused around the Python programming language. Our community is open to those who wish to learn the language, as well as those looking to help others.{% endblock %}">
+
+  {# Generated with https://realfavicongenerator.net/ #}
+  <link rel="apple-touch-icon" sizes="180x180" href="/static/favicons/apple-touch-icon.png?v=9B9vkE5q7O">
+  <link rel="icon" type="image/png" sizes="32x32" href="/static/favicons/favicon-32x32.png?v=9B9vkE5q7O">
+  <link rel="icon" type="image/png" sizes="16x16" href="/static/favicons/favicon-16x16.png?v=9B9vkE5q7O">
+  <link rel="manifest" href="/static/favicons/site.webmanifest?v=9B9vkE5q7O">
+  <link rel="mask-icon" href="/static/favicons/safari-pinned-tab.svg?v=9B9vkE5q7O" color="#7289da">
+  <link rel="shortcut icon" href="/static/favicons/favicon.ico?v=9B9vkE5q7O">
+  <meta name="msapplication-TileColor" content="#7289da">
+  <meta name="msapplication-config" content="/static/favicons/browserconfig.xml?v=9B9vkE5q7O">
+  <meta name="theme-color" content="#7289da">
+
+  <title>Python Discord Forms</title>
+
+  {# Font-awesome here is defined explicitly so that we can have Pro #}
+  <script src="https://kit.fontawesome.com/ae6a3152d8.js"></script>
+
+  {# Nice Google Font for forms #}
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="{% static "css/forms/base.css" %}">
+  <link rel="stylesheet" href="{% static "css/forms/components.css" %}">
+</head>
+<body class="site">
+
+<main class="site-content">
+  <div class="hero content">
+    <h1>{% block title %}{% endblock %}</h1>
+  </div>
+
+  <div class="hero-background">
+    {% include 'forms/header_1.svg' %}
+    {% include 'forms/header_2.svg' %}
+  </div>
+  
+  <div class="body content">
+    {% block content %}
+      {{ block.super }}
+    {% endblock %}
+  </div>
+</main>
+</body>
+</html>
