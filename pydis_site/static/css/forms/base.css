@@ -11,6 +11,23 @@ a {
     text-decoration: inherit;
 }
 
+/* Spacing */
+#app {
+    margin-top: 10px;
+}
+
+.question {
+    background-color: #23272A;
+    padding: 10px;
+    padding-left: 30px;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+.question h2 {
+    margin-bottom: 0px;
+}
+
 /* Set padding */
 .content {
     padding-left: 30px;
