@@ -1,4 +1,5 @@
 {% load static %}
+{% load sekizai_tags %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,6 +29,8 @@
 
   <link rel="stylesheet" href="{% static "css/forms/base.css" %}">
   <link rel="stylesheet" href="{% static "css/forms/components.css" %}">
+
+  {% block extra_head %}{% endblock %}
 </head>
 <body class="site">
 
