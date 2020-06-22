@@ -61,7 +61,7 @@ class HomeView(View):
                 # Try to get new data from the API. If it fails, return the cached data.
                 try:
                     api_repositories = self._get_api_data()
-                except TypeError:
+                except (TypeError, ConnectionError):
                     return RepositoryMetadata.objects.all()
                 database_repositories = []
 
