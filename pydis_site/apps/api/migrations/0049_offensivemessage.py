@@ -3,7 +3,7 @@
 import django.core.validators
 from django.db import migrations, models
 import pydis_site.apps.api.models.bot.offensive_message
-import pydis_site.apps.api.models.utils
+import pydis_site.apps.api.models.mixins
 
 
 class Migration(migrations.Migration):
@@ -20,6 +20,6 @@ class Migration(migrations.Migration):
                 ('channel_id', models.BigIntegerField(help_text='The channel ID that the message was sent in, taken from Discord.', validators=[django.core.validators.MinValueValidator(limit_value=0, message='Channel IDs cannot be negative.')])),
                 ('delete_date', models.DateTimeField(help_text='The date on which the message will be auto-deleted.', validators=[pydis_site.apps.api.models.bot.offensive_message.future_date_validator])),
             ],
-            bases=(pydis_site.apps.api.models.utils.ModelReprMixin, models.Model),
+            bases=(pydis_site.apps.api.models.mixins.ModelReprMixin, models.Model),
         ),
     ]
