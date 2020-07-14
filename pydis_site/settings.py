@@ -52,7 +52,7 @@ if DEBUG:
             'api.pythondiscord.local',
             'admin.pythondiscord.local',
             'staff.pythondiscord.local',
-            '0.0.0.0',
+            '0.0.0.0',  # noqa: S104
             'localhost',
             'web',
             'api.web',
