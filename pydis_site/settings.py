@@ -52,6 +52,8 @@ if DEBUG:
             'api.pythondiscord.local',
             'admin.pythondiscord.local',
             'staff.pythondiscord.local',
+            '0.0.0.0',
+            'localhost',
             'web',
             'api.web',
             'admin.web',
@@ -105,7 +107,6 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.github',
 
     'crispy_forms',
-    'django_crispy_bulma',
     'django_hosts',
     'django_filters',
     'django_nyt.apps.DjangoNytConfig',
