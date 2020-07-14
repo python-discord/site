@@ -39,12 +39,14 @@ class StringDunderMethodTests(SimpleTestCase):
         self.nomination = Nomination(
             id=123,
             actor=User(
-                id=9876, name='Mr. Hemlock',
-                discriminator=6666, avatar_hash=None
+                id=9876,
+                name='Mr. Hemlock',
+                discriminator=6666,
             ),
             user=User(
-                id=9876, name="Hemlock's Cat",
-                discriminator=7777, avatar_hash=None
+                id=9876,
+                name="Hemlock's Cat",
+                discriminator=7777,
             ),
             reason="He purrrrs like the best!",
         )
@@ -53,15 +55,17 @@ class StringDunderMethodTests(SimpleTestCase):
             DeletedMessage(
                 id=45,
                 author=User(
-                    id=444, name='bill',
-                    discriminator=5, avatar_hash=None
+                    id=444,
+                    name='bill',
+                    discriminator=5,
                 ),
                 channel_id=666,
                 content="wooey",
                 deletion_context=MessageDeletionContext(
                     actor=User(
-                        id=5555, name='shawn',
-                        discriminator=555, avatar_hash=None
+                        id=5555,
+                        name='shawn',
+                        discriminator=555,
                     ),
                     creation=dt.utcnow()
                 ),
@@ -84,8 +88,9 @@ class StringDunderMethodTests(SimpleTestCase):
             Message(
                 id=45,
                 author=User(
-                    id=444, name='bill',
-                    discriminator=5, avatar_hash=None
+                    id=444,
+                    name='bill',
+                    discriminator=5,
                 ),
                 channel_id=666,
                 content="wooey",
@@ -93,8 +98,9 @@ class StringDunderMethodTests(SimpleTestCase):
             ),
             MessageDeletionContext(
                 actor=User(
-                    id=5555, name='shawn',
-                    discriminator=555, avatar_hash=None
+                    id=5555,
+                    name='shawn',
+                    discriminator=555,
                 ),
                 creation=dt.utcnow()
             ),
@@ -103,22 +109,29 @@ class StringDunderMethodTests(SimpleTestCase):
                 embed={'content': "the builder"}
             ),
             User(
-                id=5, name='bob',
-                discriminator=1, avatar_hash=None
+                id=5,
+                name='bob',
+                discriminator=1,
             ),
             Infraction(
-                user_id=5, actor_id=5,
-                type='kick', reason='He terk my jerb!'
+                user_id=5,
+                actor_id=5,
+                type='kick',
+                reason='He terk my jerb!'
             ),
             Infraction(
-                user_id=5, actor_id=5, hidden=True,
-                type='kick', reason='He terk my jerb!',
+                user_id=5,
+                actor_id=5,
+                hidden=True,
+                type='kick',
+                reason='He terk my jerb!',
                 expires_at=dt(5018, 11, 20, 15, 52, tzinfo=timezone.utc)
             ),
             Reminder(
                 author=User(
-                    id=452, name='billy',
-                    discriminator=5, avatar_hash=None
+                    id=452,
+                    name='billy',
+                    discriminator=5,
                 ),
                 channel_id=555,
                 jump_url=(

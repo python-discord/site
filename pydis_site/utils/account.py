@@ -54,7 +54,7 @@ class SocialAccountAdapter(DefaultSocialAccountAdapter):
 
             raise ImmediateHttpResponse(redirect(reverse("home")))
 
-        if user.roles.count() <= 1:
+        if len(user.roles) <= 1:
             add_message(request, ERROR, ERROR_JOIN_DISCORD)
 
             raise ImmediateHttpResponse(redirect(reverse("home")))

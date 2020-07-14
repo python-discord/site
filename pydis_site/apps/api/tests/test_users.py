@@ -49,7 +49,6 @@ class CreationTests(APISubdomainTestCase):
         url = reverse('bot:user-list', host='api')
         data = {
             'id': 42,
-            'avatar_hash': "validavatarhashiswear",
             'name': "Test",
             'discriminator': 42,
             'roles': [
@@ -63,7 +62,6 @@ class CreationTests(APISubdomainTestCase):
         self.assertEqual(response.json(), data)
 
         user = User.objects.get(id=42)
-        self.assertEqual(user.avatar_hash, data['avatar_hash'])
         self.assertEqual(user.name, data['name'])
         self.assertEqual(user.discriminator, data['discriminator'])
         self.assertEqual(user.in_guild, data['in_guild'])
@@ -73,7 +71,6 @@ class CreationTests(APISubdomainTestCase):
         data = [
             {
                 'id': 5,
-                'avatar_hash': "hahayes",
                 'name': "test man",
                 'discriminator': 42,
                 'roles': [
@@ -83,7 +80,6 @@ class CreationTests(APISubdomainTestCase):
             },
             {
                 'id': 8,
-                'avatar_hash': "maybenot",
                 'name': "another test man",
                 'discriminator': 555,
                 'roles': [],
@@ -99,7 +95,6 @@ class CreationTests(APISubdomainTestCase):
         url = reverse('bot:user-list', host='api')
         data = {
             'id': 5,
-            'avatar_hash': "hahayes",
             'name': "test man",
             'discriminator': 42,
             'roles': [
@@ -114,7 +109,6 @@ class CreationTests(APISubdomainTestCase):
         url = reverse('bot:user-list', host='api')
         data = {
             'id': True,
-            'avatar_hash': 1902831,
             'discriminator': "totally!"
         }
 
@@ -148,16 +142,14 @@ class UserModelTests(APISubdomainTestCase):
         )
         cls.user_with_roles = User.objects.create(
             id=1,
-            avatar_hash="coolavatarhash",
             name="Test User with two roles",
             discriminator=1111,
             in_guild=True,
         )
-        cls.user_with_roles.roles.add(cls.role_bottom, cls.role_top)
+        cls.user_with_roles.roles.extend([cls.role_bottom.id, cls.role_top.id])
 
         cls.user_without_roles = User.objects.create(
             id=2,
-            avatar_hash="coolavatarhash",
             name="Test User without roles",
             discriminator=2222,
             in_guild=True,

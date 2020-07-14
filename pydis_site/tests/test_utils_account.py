@@ -61,16 +61,18 @@ class AccountUtilsTests(TestCase):
             position=0
         )
 
-        self.discord_user_role.roles.add(everyone_role)
-        self.discord_user_two_roles.roles.add(everyone_role)
+        self.discord_user_role.roles.append(everyone_role.id)
+        self.discord_user_two_roles.roles.append(everyone_role.id)
 
-        self.discord_user_two_roles.roles.add(Role.objects.create(
+        developers_role = Role.objects.create(
             id=1,
             name="Developers",
             colour=0,
             permissions=0,
             position=1
-        ))
+        )
+
+        self.discord_user_two_roles.roles.append(developers_role.id)
 
     def test_account_adapter(self):
         """Test that our Allauth account adapter functions correctly."""

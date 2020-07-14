@@ -13,7 +13,6 @@ class CreationTests(APISubdomainTestCase):
             id=1234,
             name='joe dart',
             discriminator=1111,
-            avatar_hash=None
         )
 
     def test_accepts_valid_data(self):
@@ -190,7 +189,6 @@ class NominationTests(APISubdomainTestCase):
             id=1234,
             name='joe dart',
             discriminator=1111,
-            avatar_hash=None
         )
 
         cls.active_nomination = Nomination.objects.create(

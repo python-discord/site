@@ -47,7 +47,6 @@ class InfractionTests(APISubdomainTestCase):
             id=5,
             name='james',
             discriminator=1,
-            avatar_hash=None
         )
         cls.ban_hidden = Infraction.objects.create(
             user_id=cls.user.id,
@@ -169,13 +168,11 @@ class CreationTests(APISubdomainTestCase):
             id=5,
             name='james',
             discriminator=1,
-            avatar_hash=None
         )
         cls.second_user = User.objects.create(
             id=6,
             name='carl',
             discriminator=2,
-            avatar_hash=None
         )
 
     def test_accepts_valid_data(self):
@@ -522,7 +519,6 @@ class ExpandedTests(APISubdomainTestCase):
             id=5,
             name='james',
             discriminator=1,
-            avatar_hash=None
         )
         cls.kick = Infraction.objects.create(
             user_id=cls.user.id,
@@ -540,7 +536,7 @@ class ExpandedTests(APISubdomainTestCase):
     def check_expanded_fields(self, infraction):
         for key in ('user', 'actor'):
             obj = infraction[key]
-            for field in ('id', 'name', 'discriminator', 'avatar_hash', 'roles', 'in_guild'):
+            for field in ('id', 'name', 'discriminator', 'roles', 'in_guild'):
                 self.assertTrue(field in obj, msg=f'field "{field}" missing from {key}')
 
     def test_list_expanded(self):
@@ -599,7 +595,6 @@ class SerializerTests(APISubdomainTestCase):
             id=5,
             name='james',
             discriminator=1,
-            avatar_hash=None
         )
 
     def create_infraction(self, _type: str, active: bool):

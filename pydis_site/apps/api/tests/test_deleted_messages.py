@@ -13,7 +13,6 @@ class DeletedMessagesWithoutActorTests(APISubdomainTestCase):
             id=55,
             name='Robbie Rotten',
             discriminator=55,
-            avatar_hash=None
         )
 
         cls.data = {
@@ -54,7 +53,6 @@ class DeletedMessagesWithActorTests(APISubdomainTestCase):
             id=12904,
             name='Joe Armstrong',
             discriminator=1245,
-            avatar_hash=None
         )
 
         cls.data = {

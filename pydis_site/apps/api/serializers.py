@@ -229,13 +229,11 @@ class TagSerializer(ModelSerializer):
 class UserSerializer(BulkSerializerMixin, ModelSerializer):
     """A class providing (de-)serialization of `User` instances."""
 
-    roles = PrimaryKeyRelatedField(many=True, queryset=Role.objects.all(), required=False)
-
     class Meta:
         """Metadata defined for the Django REST Framework."""
 
         model = User
-        fields = ('id', 'avatar_hash', 'name', 'discriminator', 'roles', 'in_guild')
+        fields = ('id', 'name', 'discriminator', 'roles', 'in_guild')
         depth = 1
 
 

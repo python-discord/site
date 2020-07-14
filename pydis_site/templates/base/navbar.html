@@ -84,8 +84,14 @@
             Privacy
           </a>
           <hr class="navbar-divider">
-          <a class="navbar-item" href="{% url 'wiki:get' path="code-jams/" %}">
-            Code Jams
+          <div class="navbar-item">
+            <strong>Events</strong>
+          </div>
+          <a class="navbar-item" href="{% url 'wiki:get' path="code-jams/code-jam-7/" %}">
+            Upcoming: Code Jam 7
+          </a>
+          <a class="navbar-item" href="{% url 'wiki:get' path="events/" %}">
+            All events
           </a>
           <hr class="navbar-divider">
 
