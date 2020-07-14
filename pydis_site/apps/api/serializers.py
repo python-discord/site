@@ -8,7 +8,7 @@ from .models import (
     DocumentationLink, Infraction,
     LogEntry, MessageDeletionContext,
     Nomination, OffTopicChannelName,
-    OffensiveMessage,
+    OffensiveMessage, AllowList,
     Reminder, Role,
     Tag, User
 )
@@ -95,6 +95,16 @@ class DocumentationLinkSerializer(ModelSerializer):
 
         model = DocumentationLink
         fields = ('package', 'base_url', 'inventory_url')
+
+
+class AllowListSerializer(ModelSerializer):
+    """A class providing (de-)serialization of `AllowList` instances."""
+
+    class Meta:
+        """Metadata defined for the Django REST Framework."""
+
+        model = AllowList
+        fields = ('created_at', 'updated_at', 'type', 'allowed', 'content')
 
 
 class InfractionSerializer(ModelSerializer):
