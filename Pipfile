@@ -13,11 +13,11 @@ djangorestframework = "~=3.11.0"
 djangorestframework-bulk = "~=0.2.1"
 psycopg2-binary = "~=2.8"
 django-simple-bulma = "~=1.2"
-django-crispy-bulma = {git = "https://github.com/python-discord/django-crispy-bulma.git", ref = "feat/deps/31/django-3.0", editable = true}
+django-crispy-bulma = {git = "https://github.com/python-discord/django-crispy-bulma.git", ref = "0.3"}
 whitenoise = "~=5.0"
 requests = "~=2.21"
 pygments = "~=2.3.1"
-wiki = {git = "https://github.com/django-wiki/django-wiki.git", ref = "beta/0.6b1", editable = true}
+wiki = "~=0.6.0"
 pyyaml = "~=5.1"
 pyuwsgi = {version = "~=2.0", sys_platform = "!='win32'"}
 django-allauth = "~=0.41"
