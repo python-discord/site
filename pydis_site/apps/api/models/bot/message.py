@@ -49,6 +49,7 @@ class Message(ModelReprMixin, models.Model):
         pgfields.JSONField(
             validators=(validate_tag_embed,)
         ),
+        blank=True,
         help_text="Embeds attached to this message."
     )
     attachments = pgfields.ArrayField(
