@@ -4,13 +4,20 @@ from rest_framework.validators import UniqueTogetherValidator
 from rest_framework_bulk import BulkSerializerMixin
 
 from .models import (
-    BotSetting, DeletedMessage,
-    DocumentationLink, Infraction,
-    LogEntry, MessageDeletionContext,
-    Nomination, OffTopicChannelName,
-    OffensiveMessage, AllowList,
-    Reminder, Role,
-    Tag, User
+    AllowList,
+    BotSetting,
+    DeletedMessage,
+    DocumentationLink,
+    Infraction,
+    LogEntry,
+    MessageDeletionContext,
+    Nomination,
+    OffTopicChannelName,
+    OffensiveMessage,
+    Reminder,
+    Role,
+    Tag,
+    User,
 )
 
 
@@ -104,7 +111,7 @@ class AllowListSerializer(ModelSerializer):
         """Metadata defined for the Django REST Framework."""
 
         model = AllowList
-        fields = ('created_at', 'updated_at', 'type', 'allowed', 'content')
+        fields = ('id', 'created_at', 'updated_at', 'type', 'allowed', 'content')
 
 
 class InfractionSerializer(ModelSerializer):
