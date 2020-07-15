@@ -1,23 +1,21 @@
 from django.db import models
 
-from pydis_site.apps.api.models import ModelReprMixin, ModelTimestampMixin
+from pydis_site.apps.api.models.mixins import ModelReprMixin, ModelTimestampMixin
 
 
 class AllowList(ModelTimestampMixin, ModelReprMixin, models.Model):
     """An item that is either allowed or denied."""
 
     AllowListType = models.TextChoices(
-        'guild_invite_id',
-        'file_format',
-        'domain_name',
-        'word_watchlist',
+        'AllowListType',
+        'GUILD_INVITE_ID '
+        'FILE_FORMAT '
+        'DOMAIN_NAME '
+        'WORD_WATCHLIST '
     )
     type = models.CharField(
         max_length=50,
-        help_text=(
-            "The type of allowlist this is on. The value must be one of the following: "
-            f"{','.join(AllowListType.choices)}."
-        ),
+        help_text="The type of allowlist this is on.",
         choices=AllowListType.choices,
     )
     allowed = models.BooleanField(
