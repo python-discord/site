@@ -52,6 +52,7 @@ class User(ModelReprMixin, models.Model):
             )
         ),
         default=list,
+        blank=True,
         help_text="IDs of roles the user has on the server"
     )
     in_guild = models.BooleanField(
