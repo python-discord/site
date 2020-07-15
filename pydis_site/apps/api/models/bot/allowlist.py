@@ -24,3 +24,16 @@ class AllowList(ModelTimestampMixin, ModelReprMixin, models.Model):
     content = models.TextField(
         help_text="The data to add to the allowlist."
     )
+
+    class Meta:
+        """Metaconfig for this model."""
+
+        db_table = 'allow_list'
+
+        # This constraint ensures only one allowlist with the same content
+        # can exist per type.This means that we cannot have both an allow
+        # and a deny for the same item, and we cannot have duplicates of the
+        # same item.
+        constraints = [
+            models.UniqueConstraint(fields=['content', 'type'], name='unique_allowlist'),
+        ]

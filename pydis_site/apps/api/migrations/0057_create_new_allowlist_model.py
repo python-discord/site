@@ -26,4 +26,12 @@ class Migration(migrations.Migration):
             },
             bases=(pydis_site.apps.api.models.mixins.ModelReprMixin, models.Model),
         ),
+        migrations.AlterModelTable(
+            name='allowlist',
+            table='allow_list',
+        ),
+        migrations.AddConstraint(
+            model_name='allowlist',
+            constraint=models.UniqueConstraint(fields=('content', 'type'), name='unique_allowlist'),
+        )
     ]
