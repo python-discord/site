@@ -5,7 +5,6 @@ verify_ssl = true
 
 [packages]
 django = "~=2.2.13"
-django-crispy-forms = "~=1.7.2"
 django-environ = "~=0.4.5"
 django-filter = "~=2.1.0"
 django-hosts = "~=3.0"
@@ -13,7 +12,6 @@ djangorestframework = "~=3.9.2"
 djangorestframework-bulk = "~=0.2.1"
 psycopg2-binary = "~=2.8"
 django-simple-bulma = ">=1.1.7,<2.0"
-django-crispy-bulma = ">=0.1.2,<2.0"
 whitenoise = "==4.1.2"
 requests = "~=2.21"
 pygments = "~=2.3.1"

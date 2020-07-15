@@ -1,6 +1,4 @@
 {% extends 'base/base.html' %}
-
-{% load crispy_forms_tags %}
 {% load static %}
 
 {% block title %}Delete Account{% endblock %}
@@ -36,7 +34,12 @@
 
       <div class="columns is-centered">
         <div class="column is-half-desktop is-full-tablet is-full-mobile">
-          {% crispy form %}
+          <form method="post">
+            {% csrf_token %}
+            <label for="id_username" class="label requiredField">Username</label>
+            <input id="id_username" class="input" type="text" required name="username">
+            <input style="margin-top: 1em;" type="submit" value="I understand, delete my account" class="button is-primary">
+          </form>
         </div>
       </div>
     </div>
