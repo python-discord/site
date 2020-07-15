@@ -5,7 +5,6 @@ verify_ssl = true
 
 [packages]
 django = "~=3.0.4"
-django-crispy-forms = "~=1.9.0"
 django-environ = "~=0.4.5"
 django-filter = "~=2.1.0"
 django-hosts = "~=4.0"
@@ -13,7 +12,6 @@ djangorestframework = "~=3.11.0"
 djangorestframework-bulk = "~=0.2.1"
 psycopg2-binary = "~=2.8"
 django-simple-bulma = "~=1.2"
-django-crispy-bulma = {git = "https://github.com/python-discord/django-crispy-bulma.git", ref = "0.3"}
 whitenoise = "~=5.0"
 requests = "~=2.21"
 pygments = "~=2.3.1"

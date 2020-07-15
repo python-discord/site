@@ -52,6 +52,8 @@ if DEBUG:
             'api.pythondiscord.local',
             'admin.pythondiscord.local',
             'staff.pythondiscord.local',
+            '0.0.0.0',  # noqa: S104
+            'localhost',
             'web',
             'api.web',
             'admin.web',
@@ -104,8 +106,6 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.discord',
     'allauth.socialaccount.providers.github',
 
-    'crispy_forms',
-    'django_crispy_bulma',
     'django_hosts',
     'django_filters',
     'django_nyt.apps.DjangoNytConfig',
@@ -288,7 +288,6 @@ LOGGING = {
 }
 
 # Django Messages framework config
-
 MESSAGE_TAGS = {
     messages.DEBUG: 'primary',
     messages.INFO: 'info',
@@ -296,17 +295,6 @@ MESSAGE_TAGS = {
     messages.WARNING: 'warning',
     messages.ERROR: 'danger',
 }
-
-# Custom settings for Crispyforms
-CRISPY_ALLOWED_TEMPLATE_PACKS = (
-    "bootstrap",
-    "uni_form",
-    "bootstrap3",
-    "bootstrap4",
-    "bulma",
-)
-
-CRISPY_TEMPLATE_PACK = "bulma"
 
 # Custom settings for django-simple-bulma
 BULMA_SETTINGS = {

@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "a9a46956f5519f67344309a42bf24adc3b33a19363d0c5a73ba79273d1029f9c"
+            "sha256": "edc59f1c711954bd22606d68e00f44c21c68a7b3193b20e44a86438e24c0f54b"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -74,18 +74,6 @@
                 "sha256:ad6a25fc2b58a098f00d86bd5e5dad47922f5ca4e744bc3cccb7b4be5bc35eb1"
             ],
             "version": "==1.0.0"
-        },
-        "django-crispy-bulma": {
-            "git": "https://github.com/python-discord/django-crispy-bulma.git",
-            "ref": "c741d399b2eaf08865cba6880cee851c9c9a7ece"
-        },
-        "django-crispy-forms": {
-            "hashes": [
-                "sha256:888bb316db89b60050a42ec35080facb361d823eec38010ccb0702f45642d3b8",
-                "sha256:f2f1e0fbb458851636447cfb6be1a611b40c8ac9e41a74ba923011378670b43b"
-            ],
-            "index": "pypi",
-            "version": "==1.9.2"
         },
         "django-environ": {
             "hashes": [
