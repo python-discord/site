@@ -17,6 +17,6 @@ class Migration(migrations.Migration):
                 ('name', models.CharField(max_length=140, primary_key=True, serialize=False)),
                 ('info', models.TextField()),
             ],
-            bases=(pydis_site.apps.api.models.ModelReprMixin, models.Model),
+            bases=(pydis_site.apps.api.models.mixins.ModelReprMixin, models.Model),
         ),
     ]

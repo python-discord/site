@@ -16,4 +16,3 @@ from .bot import (
     User
 )
 from .log_entry import LogEntry
-from .mixins import ModelReprMixin, ModelTimestampMixin

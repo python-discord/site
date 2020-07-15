@@ -1,5 +1,6 @@
 # flake8: noqa
 from .bot import (
+    AllowListViewSet,
     BotSettingViewSet,
     DeletedMessageViewSet,
     DocumentationLinkViewSet,

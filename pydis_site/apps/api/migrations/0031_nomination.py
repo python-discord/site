@@ -21,6 +21,6 @@ class Migration(migrations.Migration):
                 ('inserted_at', models.DateTimeField(auto_now_add=True, help_text='The creation date of this nomination.')),
                 ('author', models.ForeignKey(help_text='The staff member that nominated this user.', on_delete=django.db.models.deletion.CASCADE, related_name='nomination_set', to='api.User')),
             ],
-            bases=(pydis_site.apps.api.models.ModelReprMixin, models.Model),
+            bases=(pydis_site.apps.api.models.mixins.ModelReprMixin, models.Model),
         ),
     ]
