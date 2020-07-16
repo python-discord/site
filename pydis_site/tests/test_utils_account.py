@@ -122,13 +122,18 @@ class AccountUtilsTests(TestCase):
             account=self.discord_account,
             user=self.django_user
         )
-
         discord_login.account.extra_data["discriminator"] = "0000"
 
-        user = adapter.populate_user(
+        discord_user = adapter.populate_user(
             self.request_factory.get("/"), discord_login,
             {"username": "user"}
         )
+        self.assertEqual(discord_user.username, "user#0000")
+        self.assertEqual(discord_user.first_name, "user#0000")
 
-        self.assertEqual(user.username, "user#0000")
-        self.assertEqual(user.first_name, "user#0000")
+        discord_login.account.provider = "not_discord"
+        not_discord_user = adapter.populate_user(
+            self.request_factory.get("/"), discord_login,
+            {"username": "user"}
+        )
+        self.assertEqual(not_discord_user.username, "user")
