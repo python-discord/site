@@ -13,28 +13,43 @@ from pydis_site.utils.account import AccountAdapter, SocialAccountAdapter
 
 class AccountUtilsTests(TestCase):
     def setUp(self):
+        # Create the user
         self.django_user = User.objects.create(username="user")
 
+        # Create the roles
+        developers_role = Role.objects.create(
+            id=1,
+            name="Developers",
+            colour=0,
+            permissions=0,
+            position=1
+        )
+        everyone_role = Role.objects.create(
+            id=0,
+            name="@everyone",
+            colour=0,
+            permissions=0,
+            position=0
+        )
+
+        # Create the social accounts
         self.discord_account = SocialAccount.objects.create(
             user=self.django_user, provider="discord", uid=0
         )
-
-        self.discord_account_role = SocialAccount.objects.create(
+        self.discord_account_one_role = SocialAccount.objects.create(
             user=self.django_user, provider="discord", uid=1
         )
-
         self.discord_account_two_roles = SocialAccount.objects.create(
             user=self.django_user, provider="discord", uid=2
         )
-
         self.discord_account_not_present = SocialAccount.objects.create(
             user=self.django_user, provider="discord", uid=3
         )
-
         self.github_account = SocialAccount.objects.create(
             user=self.django_user, provider="github", uid=0
         )
 
+        # Create DiscordUsers
         self.discord_user = DiscordUser.objects.create(
             id=0,
             name="user",
@@ -44,35 +59,16 @@ class AccountUtilsTests(TestCase):
         self.discord_user_role = DiscordUser.objects.create(
             id=1,
             name="user present",
-            discriminator=0
+            discriminator=0,
+            roles=[everyone_role.id]
         )
 
         self.discord_user_two_roles = DiscordUser.objects.create(
             id=2,
             name="user with both roles",
-            discriminator=0
+            discriminator=0,
+            roles=[everyone_role.id, developers_role.id]
         )
-
-        everyone_role = Role.objects.create(
-            id=0,
-            name="@everyone",
-            colour=0,
-            permissions=0,
-            position=0
-        )
-
-        self.discord_user_role.roles.append(everyone_role.id)
-        self.discord_user_two_roles.roles.append(everyone_role.id)
-
-        developers_role = Role.objects.create(
-            id=1,
-            name="Developers",
-            colour=0,
-            permissions=0,
-            position=1
-        )
-
-        self.discord_user_two_roles.roles.append(developers_role.id)
 
         self.request_factory = RequestFactory()
 
@@ -87,8 +83,9 @@ class AccountUtilsTests(TestCase):
         adapter = SocialAccountAdapter()
 
         discord_login = SocialLogin(account=self.discord_account)
-        discord_login_role = SocialLogin(account=self.discord_account_role)
+        discord_login_role = SocialLogin(account=self.discord_account_one_role)
         discord_login_not_present = SocialLogin(account=self.discord_account_not_present)
+        discord_login_two_roles = SocialLogin(account=self.discord_account_two_roles)
 
         github_login = SocialLogin(account=self.github_account)
 
@@ -108,6 +105,10 @@ class AccountUtilsTests(TestCase):
 
                 with self.assertRaises(ImmediateHttpResponse):
                     adapter.is_open_for_signup(messages_request, discord_login_not_present)
+
+                self.assertTrue(
+                    adapter.is_open_for_signup(messages_request, discord_login_two_roles)
+                )
 
                 self.assertEqual(len(messages_request._messages._queued_messages), 4)
                 self.assertEqual(mock_redirect.call_count, 4)
