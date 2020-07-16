@@ -4,7 +4,7 @@ from django.forms.models import model_to_dict
 from django_hosts.resolvers import reverse
 
 from .base import APISubdomainTestCase
-from ..models import Reminder, User
+from ..models import Reminder, Role, User
 
 
 class UnauthedReminderAPITests(APISubdomainTestCase):
@@ -54,6 +54,18 @@ class ReminderCreationTests(APISubdomainTestCase):
             name='Mermaid Man',
             discriminator=1234,
         )
+        cls.user = User.objects.create(
+            id=5678,
+            name='Fish Dude',
+            discriminator=5678,
+        )
+        cls.role = Role.objects.create(
+            id=555,
+            name="Random role",
+            colour=2,
+            permissions=0b01010010101,
+            position=10,
+        )
 
     def test_accepts_valid_data(self):
         data = {
@@ -62,6 +74,7 @@ class ReminderCreationTests(APISubdomainTestCase):
             'expiration': datetime.utcnow().isoformat(),
             'jump_url': "https://www.google.com",
             'channel_id': 123,
+            'mentions': [self.user.id, self.role.id],
         }
         url = reverse('bot:reminder-list', host='api')
         response = self.client.post(url, data=data)
