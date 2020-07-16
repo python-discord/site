@@ -34,7 +34,9 @@ class ReminderViewSet(
     ...         ],
     ...         'content': "Make dinner",
     ...         'expiration': '5018-11-20T15:52:00Z',
-    ...         'id': 11
+    ...         'id': 11,
+    ...         'channel_id': 634547009956872193,
+    ...         'jump_url': "https://discord.com/channels/<guild_id>/<channel_id>/<message_id>"
     ...     },
     ...     ...
     ... ]
@@ -50,7 +52,9 @@ class ReminderViewSet(
     ...     'author': int,
     ...     'mentions': List[int],
     ...     'content': str,
-    ...     'expiration': str  # ISO-formatted datetime
+    ...     'expiration': str,  # ISO-formatted datetime
+    ...     'channel_id': int,
+    ...     'jump_url': Optional[str]
     ... }
 
     #### Status codes
