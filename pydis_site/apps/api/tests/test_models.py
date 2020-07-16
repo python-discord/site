@@ -3,13 +3,12 @@ from datetime import datetime as dt
 from django.test import SimpleTestCase
 from django.utils import timezone
 
-from ..models import (
+from pydis_site.apps.api.models import (
     DeletedMessage,
     DocumentationLink,
     Infraction,
     Message,
     MessageDeletionContext,
-    ModelReprMixin,
     Nomination,
     OffTopicChannelName,
     OffensiveMessage,
@@ -18,6 +17,7 @@ from ..models import (
     Tag,
     User
 )
+from pydis_site.apps.api.models.mixins import ModelReprMixin
 
 
 class SimpleClass(ModelReprMixin):

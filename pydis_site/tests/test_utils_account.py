@@ -5,7 +5,7 @@ from allauth.socialaccount.models import SocialAccount, SocialLogin
 from django.contrib.auth.models import User
 from django.contrib.messages.storage.base import BaseStorage
 from django.http import HttpRequest
-from django.test import TestCase
+from django.test import RequestFactory, TestCase
 
 from pydis_site.apps.api.models import Role, User as DiscordUser
 from pydis_site.utils.account import AccountAdapter, SocialAccountAdapter
@@ -74,6 +74,8 @@ class AccountUtilsTests(TestCase):
 
         self.discord_user_two_roles.roles.append(developers_role.id)
 
+        self.request_factory = RequestFactory()
+
     def test_account_adapter(self):
         """Test that our Allauth account adapter functions correctly."""
         adapter = AccountAdapter()
@@ -86,12 +88,11 @@ class AccountUtilsTests(TestCase):
 
         discord_login = SocialLogin(account=self.discord_account)
         discord_login_role = SocialLogin(account=self.discord_account_role)
-        discord_login_two_roles = SocialLogin(account=self.discord_account_two_roles)
         discord_login_not_present = SocialLogin(account=self.discord_account_not_present)
 
         github_login = SocialLogin(account=self.github_account)
 
-        messages_request = HttpRequest()
+        messages_request = self.request_factory.get("/")
         messages_request._messages = BaseStorage(messages_request)
 
         with patch("pydis_site.utils.account.reverse") as mock_reverse:
@@ -112,8 +113,6 @@ class AccountUtilsTests(TestCase):
                 self.assertEqual(mock_redirect.call_count, 4)
             self.assertEqual(mock_reverse.call_count, 4)
 
-        self.assertTrue(adapter.is_open_for_signup(HttpRequest(), discord_login_two_roles))
-
     def test_social_account_adapter_populate(self):
         """Test that our Allauth social account adapter correctly handles data population."""
         adapter = SocialAccountAdapter()
@@ -126,7 +125,7 @@ class AccountUtilsTests(TestCase):
         discord_login.account.extra_data["discriminator"] = "0000"
 
         user = adapter.populate_user(
-            HttpRequest(), discord_login,
+            self.request_factory.get("/"), discord_login,
             {"username": "user"}
         )
 
