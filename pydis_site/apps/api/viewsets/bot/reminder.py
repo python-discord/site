@@ -58,6 +58,22 @@ class ReminderViewSet(
     - 400: if the body format is invalid
     - 404: if no user with the given ID could be found
 
+    ### PATCH /bot/reminders/<id:int>
+    Update the user with the given `id`.
+    All fields in the request body are optional.
+
+    #### Request body
+    >>> {
+    ...     'mentions': List[int],
+    ...     'content': str,
+    ...     'expiration': str  # ISO-formatted datetime
+    ... }
+
+    #### Status codes
+    - 200: returned on success
+    - 400: if the body format is invalid
+    - 404: if no user with the given ID could be found
+
     ### DELETE /bot/reminders/<id:int>
     Delete the reminder with the given `id`.
 
