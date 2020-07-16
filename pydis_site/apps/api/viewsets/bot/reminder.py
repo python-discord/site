@@ -27,6 +27,11 @@ class ReminderViewSet(
     ...     {
     ...         'active': True,
     ...         'author': 1020103901030,
+    ...         'mentions': [
+    ...             336843820513755157,
+    ...             165023948638126080,
+    ...             267628507062992896
+    ...         ],
     ...         'content': "Make dinner",
     ...         'expiration': '5018-11-20T15:52:00Z',
     ...         'id': 11
