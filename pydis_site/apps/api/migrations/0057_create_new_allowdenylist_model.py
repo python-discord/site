@@ -5,33 +5,28 @@ import pydis_site.apps.api.models.mixins
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ('api', '0056_allow_blank_user_roles'),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='AllowList',
+            name='AllowDenyList',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('updated_at', models.DateTimeField(auto_now=True)),
-                ('type', models.CharField(choices=[('GUILD_INVITE_ID', 'Guild Invite Id'), ('FILE_FORMAT', 'File Format'), ('DOMAIN_NAME', 'Domain Name'), ('WORD_WATCHLIST', 'Word Watchlist')], help_text='The type of allowlist this is on.', max_length=50)),
+                ('type', models.CharField(
+                    choices=[('GUILD_INVITE_ID', 'Guild Invite Id'), ('FILE_FORMAT', 'File Format'),
+                             ('DOMAIN_NAME', 'Domain Name'), ('WORD_WATCHLIST', 'Word Watchlist')],
+                    help_text='The type of allowlist this is on.', max_length=50)),
                 ('allowed', models.BooleanField(help_text='Whether this item is on the allowlist or the denylist.')),
-                ('content', models.TextField(help_text='The data to add to the allowlist.')),
+                ('content', models.TextField(help_text='The data to add to the allow or denylist.')),
             ],
-            options={
-                'abstract': False,
-            },
             bases=(pydis_site.apps.api.models.mixins.ModelReprMixin, models.Model),
         ),
-        migrations.AlterModelTable(
-            name='allowlist',
-            table='allow_list',
-        ),
         migrations.AddConstraint(
-            model_name='allowlist',
-            constraint=models.UniqueConstraint(fields=('content', 'type'), name='unique_allowlist'),
+            model_name='allowdenylist',
+            constraint=models.UniqueConstraint(fields=('content', 'type'), name='unique_allow_deny_list'),
         )
     ]

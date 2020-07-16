@@ -1,9 +1,9 @@
 from django_hosts.resolvers import reverse
 
-from .base import APISubdomainTestCase
-from ..models import AllowList
+from pydis_site.apps.api.models import AllowDenyList
+from pydis_site.apps.api.tests.base import APISubdomainTestCase
 
-URL = reverse('bot:allowlist-list', host='api')
+URL = reverse('bot:allowdenylist-list', host='api')
 JPEG_ALLOWLIST = {
     "type": 'FILE_FORMAT',
     "allowed": True,
@@ -38,8 +38,8 @@ class EmptyDatabaseTests(APISubdomainTestCase):
 class FetchTests(APISubdomainTestCase):
     @classmethod
     def setUpTestData(cls):
-        cls.jpeg_format = AllowList.objects.create(**JPEG_ALLOWLIST)
-        cls.png_format = AllowList.objects.create(**PNG_ALLOWLIST)
+        cls.jpeg_format = AllowDenyList.objects.create(**JPEG_ALLOWLIST)
+        cls.png_format = AllowDenyList.objects.create(**PNG_ALLOWLIST)
 
     def test_returns_name_in_list(self):
         response = self.client.get(URL)
@@ -83,8 +83,8 @@ class CreationTests(APISubdomainTestCase):
 class DeletionTests(APISubdomainTestCase):
     @classmethod
     def setUpTestData(cls):
-        cls.jpeg_format = AllowList.objects.create(**JPEG_ALLOWLIST)
-        cls.png_format = AllowList.objects.create(**PNG_ALLOWLIST)
+        cls.jpeg_format = AllowDenyList.objects.create(**JPEG_ALLOWLIST)
+        cls.png_format = AllowDenyList.objects.create(**PNG_ALLOWLIST)
 
     def test_deleting_unknown_id_returns_404(self):
         response = self.client.delete(f"{URL}/200")

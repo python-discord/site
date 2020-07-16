@@ -4,7 +4,7 @@ from rest_framework.validators import UniqueTogetherValidator
 from rest_framework_bulk import BulkSerializerMixin
 
 from .models import (
-    AllowList,
+    AllowDenyList,
     BotSetting,
     DeletedMessage,
     DocumentationLink,
@@ -104,13 +104,13 @@ class DocumentationLinkSerializer(ModelSerializer):
         fields = ('package', 'base_url', 'inventory_url')
 
 
-class AllowListSerializer(ModelSerializer):
-    """A class providing (de-)serialization of `AllowList` instances."""
+class AllowDenyListSerializer(ModelSerializer):
+    """A class providing (de-)serialization of `AllowDenyList` instances."""
 
     class Meta:
         """Metadata defined for the Django REST Framework."""
 
-        model = AllowList
+        model = AllowDenyList
         fields = ('id', 'created_at', 'updated_at', 'type', 'allowed', 'content')
 
 

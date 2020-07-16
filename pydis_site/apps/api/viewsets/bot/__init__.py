@@ -1,5 +1,5 @@
 # flake8: noqa
-from .allowlist import AllowListViewSet
+from .allow_deny_list import AllowDenyListViewSet
 from .bot_setting import BotSettingViewSet
 from .deleted_message import DeletedMessageViewSet
 from .documentation_link import DocumentationLinkViewSet
