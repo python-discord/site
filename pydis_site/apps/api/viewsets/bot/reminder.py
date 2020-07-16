@@ -48,6 +48,7 @@ class ReminderViewSet(
     #### Request body
     >>> {
     ...     'author': int,
+    ...     'mentions': List[int],
     ...     'content': str,
     ...     'expiration': str  # ISO-formatted datetime
     ... }
