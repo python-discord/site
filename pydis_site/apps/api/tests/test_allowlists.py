@@ -54,6 +54,14 @@ class FetchTests(APISubdomainTestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json().get("content"), self.jpeg_format.content)
 
+    def test_returns_allow_deny_list_types(self):
+        response = self.client.get(f'{URL}/get_types')
+
+        self.assertEqual(response.status_code, 200)
+        for api_type, model_type in zip(response.json(), AllowDenyList.AllowDenyListType.choices):
+            self.assertEquals(api_type[0], model_type[0])
+            self.assertEquals(api_type[1], model_type[1])
+
 
 class CreationTests(APISubdomainTestCase):
     def test_returns_400_for_missing_params(self):

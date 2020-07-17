@@ -1,3 +1,6 @@
+from rest_framework.decorators import action
+from rest_framework.request import Request
+from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
 from pydis_site.apps.api.models.bot.allow_deny_list import AllowDenyList
@@ -70,3 +73,8 @@ class AllowDenyListViewSet(ModelViewSet):
 
     serializer_class = AllowDenyListSerializer
     queryset = AllowDenyList.objects.all()
+
+    @action(detail=False, methods=["get"])
+    def get_types(self, _: Request) -> Response:
+        """Get a list of all the types of AllowDenyLists we support."""
+        return Response(AllowDenyList.AllowDenyListType.choices)
