@@ -80,8 +80,9 @@ class CreationTests(APISubdomainTestCase):
         cases = [{}, no_type_json, no_allowed_json, no_content_json]
 
         for case in cases:
-            response = self.client.post(URL, data=case)
-            self.assertEqual(response.status_code, 400)
+            with self.subTest(case=case):
+                response = self.client.post(URL, data=case)
+                self.assertEqual(response.status_code, 400)
 
     def test_returns_201_for_successful_creation(self):
         response = self.client.post(URL, data=JPEG_ALLOWLIST)
@@ -96,17 +97,11 @@ class DeletionTests(APISubdomainTestCase):
 
     def test_deleting_unknown_id_returns_404(self):
         response = self.client.delete(f"{URL}/200")
-
         self.assertEqual(response.status_code, 404)
 
     def test_deleting_known_id_returns_204(self):
         response = self.client.delete(f"{URL}/{self.jpeg_format.id}")
-
         self.assertEqual(response.status_code, 204)
 
-    def test_name_gets_deleted(self):
-        response = self.client.delete(f"{URL}/{self.png_format.id}")
-        self.assertEqual(response.status_code, 204)
-
-        response = self.client.get(f"{URL}/{self.png_format.id}")
+        response = self.client.get(f"{URL}/{self.jpeg_format.id}")
         self.assertNotIn(self.png_format.content, response.json())
