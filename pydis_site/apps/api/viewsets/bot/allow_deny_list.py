@@ -51,6 +51,20 @@ class AllowDenyListViewSet(ModelViewSet):
     - 200: returned on success
     - 404: returned if the id was not found.
 
+    ### GET /bot/allow_deny_lists/get_types
+    Returns a list of valid list types that can be used in POST requests.
+
+    #### Response format
+    >>> [
+    ...     ["GUILD_INVITE","Guild Invite"],
+    ...     ["FILE_FORMAT","File Format"],
+    ...     ["DOMAIN_NAME","Domain Name"],
+    ...     ["FILTER_TOKEN","Filter Token"]
+    ... ]
+
+    #### Status codes
+    - 200: returned on success
+
     ### POST /bot/allow_deny_lists
     Adds a single AllowDenyList item to the database.
 
