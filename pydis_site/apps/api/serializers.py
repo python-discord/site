@@ -111,7 +111,7 @@ class AllowDenyListSerializer(ModelSerializer):
         """Metadata defined for the Django REST Framework."""
 
         model = AllowDenyList
-        fields = ('id', 'created_at', 'updated_at', 'type', 'allowed', 'content')
+        fields = ('id', 'created_at', 'updated_at', 'type', 'allowed', 'content', 'comment')
 
 
 class InfractionSerializer(ModelSerializer):

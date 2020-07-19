@@ -24,6 +24,10 @@ class AllowDenyList(ModelTimestampMixin, ModelReprMixin, models.Model):
     content = models.TextField(
         help_text="The data to add to the allow or denylist."
     )
+    comment = models.TextField(
+        help_text="Optional comment on this entry.",
+        null=True
+    )
 
     class Meta:
         """Metaconfig for this model."""

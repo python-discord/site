@@ -24,6 +24,7 @@ class AllowDenyListViewSet(ModelViewSet):
     ...         'type': "file_format",
     ...         'allowed': 'true',
     ...         'content': ".jpeg",
+    ...         'comment': "Popular image format.",
     ...     },
     ...     ...
     ... ]
@@ -43,6 +44,7 @@ class AllowDenyListViewSet(ModelViewSet):
     ...     'type': "file_format",
     ...     'allowed': 'true',
     ...     'content': ".jpeg",
+    ...     'comment': "Popular image format.",
     ... }
 
     #### Status codes
@@ -57,6 +59,7 @@ class AllowDenyListViewSet(ModelViewSet):
     ...    'type': str,
     ...    'allowed': bool,
     ...    'content': str,
+    ...    'comment': Optional[str],
     ... }
 
     #### Status codes
