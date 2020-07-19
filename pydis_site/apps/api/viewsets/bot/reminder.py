@@ -54,7 +54,7 @@ class ReminderViewSet(
     ...     'content': str,
     ...     'expiration': str,  # ISO-formatted datetime
     ...     'channel_id': int,
-    ...     'jump_url': Optional[str]
+    ...     'jump_url': str
     ... }
 
     #### Status codes
