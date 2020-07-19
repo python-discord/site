@@ -17,8 +17,8 @@ class Migration(migrations.Migration):
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('updated_at', models.DateTimeField(auto_now=True)),
                 ('type', models.CharField(
-                    choices=[('GUILD_INVITE_ID', 'Guild Invite Id'), ('FILE_FORMAT', 'File Format'),
-                             ('DOMAIN_NAME', 'Domain Name'), ('WORD_WATCHLIST', 'Word Watchlist')],
+                    choices=[('GUILD_INVITE', 'Guild Invite'), ('FILE_FORMAT', 'File Format'),
+                             ('DOMAIN_NAME', 'Domain Name'), ('FILTER_TOKEN', 'Filter Token')],
                     help_text='The type of allowlist this is on.', max_length=50)),
                 ('allowed', models.BooleanField(help_text='Whether this item is on the allowlist or the denylist.')),
                 ('content', models.TextField(help_text='The data to add to the allow or denylist.')),

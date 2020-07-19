@@ -8,10 +8,10 @@ class AllowDenyList(ModelTimestampMixin, ModelReprMixin, models.Model):
 
     AllowDenyListType = models.TextChoices(
         'AllowDenyListType',
-        'GUILD_INVITE_ID '
+        'GUILD_INVITE '
         'FILE_FORMAT '
         'DOMAIN_NAME '
-        'WORD_WATCHLIST '
+        'FILTER_TOKEN '
     )
     type = models.CharField(
         max_length=50,
