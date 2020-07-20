@@ -62,6 +62,7 @@ class ReminderCreationTests(APISubdomainTestCase):
             'expiration': datetime.utcnow().isoformat(),
             'jump_url': "https://www.google.com",
             'channel_id': 123,
+            'mentions': [8888, 9999],
         }
         url = reverse('bot:reminder-list', host='api')
         response = self.client.post(url, data=data)

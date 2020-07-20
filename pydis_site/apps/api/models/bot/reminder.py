@@ -1,3 +1,4 @@
+from django.contrib.postgres.fields import ArrayField
 from django.core.validators import MinValueValidator
 from django.db import models
 
@@ -44,6 +45,19 @@ class Reminder(ModelReprMixin, models.Model):
     )
     expiration = models.DateTimeField(
         help_text="When this reminder should be sent."
+    )
+    mentions = ArrayField(
+        models.BigIntegerField(
+            validators=(
+                MinValueValidator(
+                    limit_value=0,
+                    message="Mention IDs cannot be negative."
+                ),
+            )
+        ),
+        default=list,
+        blank=True,
+        help_text="IDs of roles or users to ping with the reminder."
     )
 
     def __str__(self):
