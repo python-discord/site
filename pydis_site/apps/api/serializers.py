@@ -4,10 +4,10 @@ from rest_framework.validators import UniqueTogetherValidator
 from rest_framework_bulk import BulkSerializerMixin
 
 from .models import (
-    AllowDenyList,
     BotSetting,
     DeletedMessage,
     DocumentationLink,
+    FilterList,
     Infraction,
     LogEntry,
     MessageDeletionContext,
@@ -17,7 +17,7 @@ from .models import (
     Reminder,
     Role,
     Tag,
-    User,
+    User
 )
 
 
@@ -104,13 +104,13 @@ class DocumentationLinkSerializer(ModelSerializer):
         fields = ('package', 'base_url', 'inventory_url')
 
 
-class AllowDenyListSerializer(ModelSerializer):
-    """A class providing (de-)serialization of `AllowDenyList` instances."""
+class FilterListSerializer(ModelSerializer):
+    """A class providing (de-)serialization of `FilterList` instances."""
 
     class Meta:
         """Metadata defined for the Django REST Framework."""
 
-        model = AllowDenyList
+        model = FilterList
         fields = ('id', 'created_at', 'updated_at', 'type', 'allowed', 'content', 'comment')
 
 

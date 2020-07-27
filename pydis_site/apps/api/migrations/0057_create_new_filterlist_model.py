@@ -11,7 +11,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='AllowDenyList',
+            name='FilterList',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
@@ -27,7 +27,7 @@ class Migration(migrations.Migration):
             bases=(pydis_site.apps.api.models.mixins.ModelReprMixin, models.Model),
         ),
         migrations.AddConstraint(
-            model_name='allowdenylist',
-            constraint=models.UniqueConstraint(fields=('content', 'type'), name='unique_allow_deny_list'),
+            model_name='filterlist',
+            constraint=models.UniqueConstraint(fields=('content', 'type'), name='unique_filter_list'),
         )
     ]

@@ -3,10 +3,10 @@ from rest_framework.routers import DefaultRouter
 
 from .views import HealthcheckView, RulesView
 from .viewsets import (
-    AllowDenyListViewSet,
     BotSettingViewSet,
     DeletedMessageViewSet,
     DocumentationLinkViewSet,
+    FilterListViewSet,
     InfractionViewSet,
     LogEntryViewSet,
     NominationViewSet,
@@ -18,12 +18,11 @@ from .viewsets import (
     UserViewSet
 )
 
-
 # http://www.django-rest-framework.org/api-guide/routers/#defaultrouter
 bot_router = DefaultRouter(trailing_slash=False)
 bot_router.register(
-    'allow_deny_lists',
-    AllowDenyListViewSet
+    'filter-lists',
+    FilterListViewSet
 )
 bot_router.register(
     'bot-settings',
