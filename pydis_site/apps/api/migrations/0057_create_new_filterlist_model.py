@@ -25,9 +25,5 @@ class Migration(migrations.Migration):
                 ('comment', models.TextField(help_text="Optional comment on this entry.", null=True)),
             ],
             bases=(pydis_site.apps.api.models.mixins.ModelReprMixin, models.Model),
-        ),
-        migrations.AddConstraint(
-            model_name='filterlist',
-            constraint=models.UniqueConstraint(fields=('content', 'type'), name='unique_filter_list'),
         )
     ]

@@ -113,6 +113,21 @@ class FilterListSerializer(ModelSerializer):
         model = FilterList
         fields = ('id', 'created_at', 'updated_at', 'type', 'allowed', 'content', 'comment')
 
+        # This validator ensures only one filterlist with the
+        # same content can exist. This means that we cannot have both an allow
+        # and a deny for the same item, and we cannot have duplicates of the
+        # same item.
+        validators = [
+            UniqueTogetherValidator(
+                queryset=FilterList.objects.all(),
+                fields=['content', 'type'],
+                message=(
+                    "A filterlist for this item already exists. "
+                    "Please note that you cannot add the same item to both allow and deny."
+                )
+            ),
+        ]
+
 
 class InfractionSerializer(ModelSerializer):
     """A class providing (de-)serialization of `Infraction` instances."""

@@ -28,14 +28,3 @@ class FilterList(ModelTimestampMixin, ModelReprMixin, models.Model):
         help_text="Optional comment on this entry.",
         null=True
     )
-
-    class Meta:
-        """Metaconfig for this model."""
-
-        # This constraint ensures only one filterlist with the
-        # same content can exist. This means that we cannot have both an allow
-        # and a deny for the same item, and we cannot have duplicates of the
-        # same item.
-        constraints = [
-            models.UniqueConstraint(fields=['content', 'type'], name='unique_filter_list'),
-        ]
