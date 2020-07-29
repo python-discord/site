@@ -88,6 +88,11 @@ class CreationTests(APISubdomainTestCase):
         response = self.client.post(URL, data=JPEG_ALLOWLIST)
         self.assertEqual(response.status_code, 201)
 
+    def test_returns_400_for_duplicate_creation(self):
+        self.client.post(URL, data=JPEG_ALLOWLIST)
+        response = self.client.post(URL, data=JPEG_ALLOWLIST)
+        self.assertEqual(response.status_code, 400)
+
 
 class DeletionTests(APISubdomainTestCase):
     @classmethod
