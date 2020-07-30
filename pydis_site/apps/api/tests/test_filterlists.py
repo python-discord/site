@@ -28,6 +28,10 @@ class UnauthenticatedTests(APISubdomainTestCase):
 
 
 class EmptyDatabaseTests(APISubdomainTestCase):
+    @classmethod
+    def setUpTestData(cls):
+        FilterList.objects.all().delete()
+
     def test_returns_empty_object(self):
         response = self.client.get(URL)
 
@@ -38,6 +42,7 @@ class EmptyDatabaseTests(APISubdomainTestCase):
 class FetchTests(APISubdomainTestCase):
     @classmethod
     def setUpTestData(cls):
+        FilterList.objects.all().delete()
         cls.jpeg_format = FilterList.objects.create(**JPEG_ALLOWLIST)
         cls.png_format = FilterList.objects.create(**PNG_ALLOWLIST)
 
@@ -64,6 +69,10 @@ class FetchTests(APISubdomainTestCase):
 
 
 class CreationTests(APISubdomainTestCase):
+    @classmethod
+    def setUpTestData(cls):
+        FilterList.objects.all().delete()
+
     def test_returns_400_for_missing_params(self):
         no_type_json = {
             "allowed": True,
@@ -97,6 +106,7 @@ class CreationTests(APISubdomainTestCase):
 class DeletionTests(APISubdomainTestCase):
     @classmethod
     def setUpTestData(cls):
+        FilterList.objects.all().delete()
         cls.jpeg_format = FilterList.objects.create(**JPEG_ALLOWLIST)
         cls.png_format = FilterList.objects.create(**PNG_ALLOWLIST)
 
