@@ -14,6 +14,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='infraction',
             name='inserted_at',
-            field=models.DateTimeField(default=timezone.now(), help_text='The date and time of the creation of this infraction.'),
+            field=models.DateTimeField(default=timezone.now, help_text='The date and time of the creation of this infraction.'),
         ),
     ]
