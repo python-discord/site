@@ -1,5 +1,6 @@
 # flake8: noqa
 from .bot import (
+    FilterList,
     BotSetting,
     DocumentationLink,
     DeletedMessage,
@@ -15,4 +16,3 @@ from .bot import (
     User
 )
 from .log_entry import LogEntry
-from .utils import ModelReprMixin

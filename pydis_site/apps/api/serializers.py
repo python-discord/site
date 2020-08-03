@@ -4,13 +4,20 @@ from rest_framework.validators import UniqueTogetherValidator
 from rest_framework_bulk import BulkSerializerMixin
 
 from .models import (
-    BotSetting, DeletedMessage,
-    DocumentationLink, Infraction,
-    LogEntry, MessageDeletionContext,
-    Nomination, OffTopicChannelName,
+    BotSetting,
+    DeletedMessage,
+    DocumentationLink,
+    FilterList,
+    Infraction,
+    LogEntry,
+    MessageDeletionContext,
+    Nomination,
+    OffTopicChannelName,
     OffensiveMessage,
-    Reminder, Role,
-    Tag, User
+    Reminder,
+    Role,
+    Tag,
+    User
 )
 
 
@@ -95,6 +102,31 @@ class DocumentationLinkSerializer(ModelSerializer):
 
         model = DocumentationLink
         fields = ('package', 'base_url', 'inventory_url')
+
+
+class FilterListSerializer(ModelSerializer):
+    """A class providing (de-)serialization of `FilterList` instances."""
+
+    class Meta:
+        """Metadata defined for the Django REST Framework."""
+
+        model = FilterList
+        fields = ('id', 'created_at', 'updated_at', 'type', 'allowed', 'content', 'comment')
+
+        # This validator ensures only one filterlist with the
+        # same content can exist. This means that we cannot have both an allow
+        # and a deny for the same item, and we cannot have duplicates of the
+        # same item.
+        validators = [
+            UniqueTogetherValidator(
+                queryset=FilterList.objects.all(),
+                fields=['content', 'type'],
+                message=(
+                    "A filterlist for this item already exists. "
+                    "Please note that you cannot add the same item to both allow and deny."
+                )
+            ),
+        ]
 
 
 class InfractionSerializer(ModelSerializer):
