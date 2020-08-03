@@ -1,3 +1,4 @@
+from django.core.validators import RegexValidator
 from django.db import models
 
 from pydis_site.apps.api.models.mixins import ModelReprMixin
@@ -9,6 +10,12 @@ class DocumentationLink(ModelReprMixin, models.Model):
     package = models.CharField(
         primary_key=True,
         max_length=50,
+        validators=(
+            RegexValidator(
+                regex=r"^[a-z_]+$",
+                message="Package names can only consist of lowercase a-z letters and underscores."
+            ),
+        ),
         help_text="The Python package name that this documentation link belongs to."
     )
     base_url = models.URLField(
