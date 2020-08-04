@@ -12,8 +12,8 @@ class DocumentationLink(ModelReprMixin, models.Model):
         max_length=50,
         validators=(
             RegexValidator(
-                regex=r"^[a-z_]+$",
-                message="Package names can only consist of lowercase a-z letters and underscores."
+                regex=r"^[a-z0-9_]+$",
+                message="Package names can only consist of lowercase a-z letters, digits, and underscores."
             ),
         ),
         help_text="The Python package name that this documentation link belongs to."
