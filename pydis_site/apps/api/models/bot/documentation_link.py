@@ -3,6 +3,11 @@ from django.db import models
 
 from pydis_site.apps.api.models.mixins import ModelReprMixin
 
+package_name_validator = RegexValidator(
+    regex=r"^[a-z0-9_]+$",
+    message="Package names can only consist of lowercase a-z letters, digits, and underscores."
+)
+
 
 class DocumentationLink(ModelReprMixin, models.Model):
     """A documentation link used by the `!docs` command of the bot."""
@@ -10,12 +15,7 @@ class DocumentationLink(ModelReprMixin, models.Model):
     package = models.CharField(
         primary_key=True,
         max_length=50,
-        validators=(
-            RegexValidator(
-                regex=r"^[a-z0-9_]+$",
-                message="Package names can only consist of lowercase a-z letters, digits, and underscores."
-            ),
-        ),
+        validators=package_name_validator,
         help_text="The Python package name that this documentation link belongs to."
     )
     base_url = models.URLField(
