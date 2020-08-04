@@ -3,9 +3,11 @@ from django.db import models
 
 from pydis_site.apps.api.models.mixins import ModelReprMixin
 
-package_name_validator = RegexValidator(
-    regex=r"^[a-z0-9_]+$",
-    message="Package names can only consist of lowercase a-z letters, digits, and underscores."
+package_name_validator = (
+    RegexValidator(
+        regex=r"^[a-z0-9_]+$",
+        message="Package names can only consist of lowercase a-z letters, digits, and underscores."
+    ),
 )
 
 
