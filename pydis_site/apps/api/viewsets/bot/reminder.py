@@ -4,6 +4,7 @@ from rest_framework.mixins import (
     CreateModelMixin,
     DestroyModelMixin,
     ListModelMixin,
+    RetrieveModelMixin,
     UpdateModelMixin
 )
 from rest_framework.viewsets import GenericViewSet
@@ -13,7 +14,12 @@ from pydis_site.apps.api.serializers import ReminderSerializer
 
 
 class ReminderViewSet(
-    CreateModelMixin, ListModelMixin, DestroyModelMixin, UpdateModelMixin, GenericViewSet
+    CreateModelMixin,
+    RetrieveModelMixin,
+    ListModelMixin,
+    DestroyModelMixin,
+    UpdateModelMixin,
+    GenericViewSet,
 ):
     """
     View providing CRUD access to reminders.
@@ -43,6 +49,30 @@ class ReminderViewSet(
 
     #### Status codes
     - 200: returned on success
+
+    ### GET /bot/reminders/<id:int>
+    Fetches the reminder with the given id.
+
+    #### Response format
+    >>>
+    ... {
+    ...     'active': True,
+    ...     'author': 1020103901030,
+    ...     'mentions': [
+    ...         336843820513755157,
+    ...         165023948638126080,
+    ...         267628507062992896
+    ...     ],
+    ...     'content': "Make dinner",
+    ...     'expiration': '5018-11-20T15:52:00Z',
+    ...     'id': 11,
+    ...     'channel_id': 634547009956872193,
+    ...     'jump_url': "https://discord.com/channels/<guild_id>/<channel_id>/<message_id>"
+    ... }
+
+    #### Status codes
+    - 200: returned on success
+    - 404: returned when the reminder doesn't exist
 
     ### POST /bot/reminders
     Create a new reminder.
