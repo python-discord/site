@@ -1,4 +1,3 @@
-import git
 from wiki.plugins.macros.mdx import toc
 
 # Remove the toc header prefix. There's no option for this, so we gotta monkey patch it.
@@ -8,7 +7,3 @@ toc.HEADER_ID_PREFIX = ''
 # by a string because Allauth won't let us just give it a list _there_, we have to point
 # at a list _somewhere else_ instead.
 VALIDATORS = []
-
-# Git SHA
-repo = git.Repo(search_parent_directories=True)
-GIT_SHA = repo.head.object.hexsha
