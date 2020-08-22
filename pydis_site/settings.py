@@ -20,6 +20,7 @@ import sentry_sdk
 from django.contrib.messages import constants as messages
 from sentry_sdk.integrations.django import DjangoIntegration
 
+from pydis_site import GIT_SHA
 
 if typing.TYPE_CHECKING:
     from django.contrib.auth.models import User
@@ -33,7 +34,8 @@ env = environ.Env(
 sentry_sdk.init(
     dsn=env('SITE_SENTRY_DSN'),
     integrations=[DjangoIntegration()],
-    send_default_pii=True
+    send_default_pii=True,
+    release=f"pydis-site@{GIT_SHA}"
 )
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
