@@ -9,9 +9,6 @@ ENV PIP_NO_CACHE_DIR=false \
     PIPENV_NOSPIN=1
 
 # Install git
-RUN apt-get update
-RUN apt-get install -y git
-
 RUN apt-get -y update \
     && apt-get install -y \
         git \
