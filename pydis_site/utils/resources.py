@@ -4,12 +4,7 @@ import glob
 import typing
 from dataclasses import dataclass
 
-import git
 import yaml
-
-# Git SHA
-repo = git.Repo(search_parent_directories=True)
-GIT_SHA = repo.head.object.hexsha
 
 
 @dataclass
@@ -94,8 +89,3 @@ def load_categories(order: typing.List[str]) -> typing.List[Category]:
         categories.append(Category.construct_from_directory(direc))
 
     return categories
-
-
-def get_git_sha() -> str:
-    """Get the Git SHA for this repo."""
-    return GIT_SHA

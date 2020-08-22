@@ -1,6 +1,6 @@
 from django.template import RequestContext
 
-from pydis_site.utils.resources import get_git_sha
+from pydis_site.utils import get_git_sha
 
 
 def git_sha_processor(_: RequestContext) -> dict:
