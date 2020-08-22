@@ -163,6 +163,34 @@ class ReminderListTests(APISubdomainTestCase):
         self.assertEqual(response.json(), [self.rem_dict_one])
 
 
+class ReminderRetrieveTests(APISubdomainTestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.author = User.objects.create(
+            id=6789,
+            name='Reminder author',
+            discriminator=6789,
+        )
+
+        cls.reminder = Reminder.objects.create(
+            author=cls.author,
+            content="Reminder content",
+            expiration=datetime.utcnow().isoformat(),
+            jump_url="http://example.com/",
+            channel_id=123
+        )
+
+    def test_retrieve_unknown_returns_404(self):
+        url = reverse('bot:reminder-detail', args=("not_an_id",), host='api')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 404)
+
+    def test_retrieve_known_returns_200(self):
+        url = reverse('bot:reminder-detail', args=(self.reminder.id,), host='api')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+
+
 class ReminderUpdateTests(APISubdomainTestCase):
     @classmethod
     def setUpTestData(cls):
