@@ -14,6 +14,7 @@ omit =
     */urls.py
     pydis_site/wsgi.py
     pydis_site/settings.py
+    pydis_site/utils/resources.py
 
 [report]
 fail_under = 100
