@@ -1,8 +1,16 @@
+from rest_framework.pagination import PageNumberPagination
 from rest_framework.viewsets import ModelViewSet
 from rest_framework_bulk import BulkCreateModelMixin
 
 from pydis_site.apps.api.models.bot.user import User
 from pydis_site.apps.api.serializers import UserSerializer
+
+
+class UserListPagination(PageNumberPagination):
+    """Custom pagination class for the User Model."""
+
+    page_size = 10000
+    page_size_query_param = "page_size"
 
 
 class UserViewSet(BulkCreateModelMixin, ModelViewSet):
@@ -11,11 +19,15 @@ class UserViewSet(BulkCreateModelMixin, ModelViewSet):
 
     ## Routes
     ### GET /bot/users
-    Returns all users currently known.
+    Returns all users currently known with pagination.
 
     #### Response format
-    >>> [
-    ...     {
+    >>> {
+    ...     'count': 95000,
+    ...     'next': "http://api.pythondiscord.com/bot/users?page=2",
+    ...     'previous': None,
+    ...     'results': [
+    ...      {
     ...         'id': 409107086526644234,
     ...         'name': "Python",
     ...         'discriminator': 4329,
@@ -26,8 +38,13 @@ class UserViewSet(BulkCreateModelMixin, ModelViewSet):
     ...             458226699344019457
     ...         ],
     ...         'in_guild': True
-    ...     }
-    ... ]
+    ...     },
+    ...     ]
+    ... }
+
+    #### Query Parameters
+    - page_size: Number of Users in one page.
+    - page: Page number
 
     #### Status codes
     - 200: returned on success
@@ -118,4 +135,5 @@ class UserViewSet(BulkCreateModelMixin, ModelViewSet):
     """
 
     serializer_class = UserSerializer
-    queryset = User.objects
+    queryset = User.objects.all()
+    pagination_class = UserListPagination
