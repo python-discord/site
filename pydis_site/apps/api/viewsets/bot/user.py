@@ -1,4 +1,8 @@
+from rest_framework import status
+from rest_framework.decorators import action
 from rest_framework.pagination import PageNumberPagination
+from rest_framework.request import Request
+from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 from rest_framework_bulk import BulkCreateModelMixin
 
@@ -137,3 +141,59 @@ class UserViewSet(BulkCreateModelMixin, ModelViewSet):
     serializer_class = UserSerializer
     queryset = User.objects.all()
     pagination_class = UserListPagination
+
+    @action(detail=False, methods=["PATCH"])
+    def bulk_patch(self, request: Request) -> Response:
+        """
+        Update multiple User objects in a single request.
+
+        ## Route
+        ### PATCH /bot/users/bulk_patch
+        Update all users with the IDs.
+        `id` field is mandatory, rest are optional.
+
+        #### Request body
+        >>> [
+        ...     {
+        ...     'id': int,
+        ...     'name': str,
+        ...     'discriminator': int,
+        ...     'roles': List[int],
+        ...     'in_guild': bool
+        ...     },
+        ...     {
+        ...     'id': int,
+        ...     'name': str,
+        ...     'discriminator': int,
+        ...     'roles': List[int],
+        ...     'in_guild': bool
+        ...     },
+        ... ]
+
+        #### Status codes
+        - 200: Returned on success.
+        - 400: if the request body was invalid, see response body for details.
+        """
+        queryset = self.get_queryset()
+        try:
+            object_ids = [item["id"] for item in request.data]
+        except KeyError:
+            # user ID not provided in request body.
+            resp = {
+                "Error": "User ID not provided."
+            }
+            return Response(resp, status=status.HTTP_400_BAD_REQUEST)
+
+        filtered_instances = queryset.filter(id__in=object_ids)
+
+        serializer = self.get_serializer(
+            instance=filtered_instances,
+            data=request.data,
+            many=True,
+            partial=True
+        )
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
