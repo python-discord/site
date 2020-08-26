@@ -275,6 +275,8 @@ class UserListSerializer(ListSerializer):
         """
         Overriding `to_internal_value` function with a few changes to support bulk updates.
 
+        ref: https://github.com/miki725/django-rest-framework-bulk/issues/68
+
         List of dicts of native values <- List of dicts of primitive datatypes.
         """
         if html.is_html_input(data):
@@ -299,7 +301,6 @@ class UserListSerializer(ListSerializer):
 
         for item in data:
             # inserted code
-            # bug: https://github.com/miki725/django-rest-framework-bulk/issues/68
             # -----------------
             try:
                 self.child.instance = self.instance.get(id=item['id'])
@@ -321,7 +322,11 @@ class UserListSerializer(ListSerializer):
         return ret
 
     def update(self, instance: QuerySet, validated_data: list) -> list:
-        """Override update method to support bulk updates."""
+        """
+        Override update method to support bulk updates.
+
+        ref:https://www.django-rest-framework.org/api-guide/serializers/#customizing-multiple-update
+        """
         instance_mapping = {user.id: user for user in instance}
         data_mapping = {item['id']: item for item in validated_data}
 
