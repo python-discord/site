@@ -304,7 +304,7 @@ class UserListSerializer(ListSerializer):
             # -----------------
             try:
                 self.child.instance = self.instance.get(id=item['id'])
-            except User.DoesNotExist:
+            except (User.DoesNotExist, AttributeError):
                 self.child.instance = None
             # -----------------
             self.child.initial_data = item
