@@ -25,6 +25,6 @@ class Migration(migrations.Migration):
             options={
                 'abstract': False,
             },
-            bases=(pydis_site.apps.api.models.ModelReprMixin, models.Model),
+            bases=(pydis_site.apps.api.models.mixins.ModelReprMixin, models.Model),
         ),
     ]

@@ -4,7 +4,7 @@ from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator
 from django.db import models
 
-from pydis_site.apps.api.models.utils import ModelReprMixin
+from pydis_site.apps.api.models.mixins import ModelReprMixin
 
 
 def future_date_validator(date: datetime.date) -> None:

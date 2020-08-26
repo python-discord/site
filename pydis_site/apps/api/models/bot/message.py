@@ -7,7 +7,7 @@ from django.utils import timezone
 
 from pydis_site.apps.api.models.bot.tag import validate_tag_embed
 from pydis_site.apps.api.models.bot.user import User
-from pydis_site.apps.api.models.utils import ModelReprMixin
+from pydis_site.apps.api.models.mixins import ModelReprMixin
 
 
 class Message(ModelReprMixin, models.Model):
@@ -49,6 +49,7 @@ class Message(ModelReprMixin, models.Model):
         pgfields.JSONField(
             validators=(validate_tag_embed,)
         ),
+        blank=True,
         help_text="Embeds attached to this message."
     )
     attachments = pgfields.ArrayField(

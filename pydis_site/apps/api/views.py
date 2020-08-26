@@ -140,7 +140,8 @@ class RulesView(APIView):
             ),
             (
                 "No spamming or unapproved advertising, including requests for paid work. "
-                "Open-source projects can be showcased in #show-your-projects."
+                "Open-source projects can be shared with others in #python-general and "
+                "code reviews can be asked for in a help channel."
             ),
             (
                 "Keep discussions relevant to channel topics and guidelines."

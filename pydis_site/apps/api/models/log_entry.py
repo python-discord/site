@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils import timezone
 
-from pydis_site.apps.api.models.utils import ModelReprMixin
+from pydis_site.apps.api.models.mixins import ModelReprMixin
 
 
 class LogEntry(ModelReprMixin, models.Model):

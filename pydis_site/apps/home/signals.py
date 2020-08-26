@@ -150,7 +150,7 @@ class AllauthSignalListener:
                 social_account = SocialAccount.objects.get(user=user, provider=DiscordProvider.id)
                 discord_user = DiscordUser.objects.get(id=int(social_account.uid))
 
-                mappings = RoleMapping.objects.filter(role__in=discord_user.roles.all()).all()
+                mappings = RoleMapping.objects.filter(role__id__in=discord_user.roles).all()
                 is_staff = any(m.is_staff for m in mappings)
 
                 if user.is_staff != is_staff:
@@ -185,7 +185,7 @@ class AllauthSignalListener:
             self.mapping_model_deleted(RoleMapping, instance=old_instance)
 
         accounts = SocialAccount.objects.filter(
-            uid__in=(u.id for u in instance.role.user_set.all())
+            uid__in=(u.id for u in DiscordUser.objects.filter(roles__contains=[instance.role.id]))
         )
 
         for account in accounts:
@@ -198,7 +198,7 @@ class AllauthSignalListener:
                 discord_user = DiscordUser.objects.get(id=int(account.uid))
 
                 mappings = RoleMapping.objects.filter(
-                    role__in=discord_user.roles.all()
+                    role__id__in=discord_user.roles
                 ).exclude(id=instance.id).all()
                 is_staff = any(m.is_staff for m in mappings)
 
@@ -289,9 +289,9 @@ class AllauthSignalListener:
             new_groups = []
             is_staff = False
 
-            for role in user.roles.all():
+            for role in user.roles:
                 try:
-                    mapping = mappings.get(role=role)
+                    mapping = mappings.get(role__id=role)
                 except RoleMapping.DoesNotExist:
                     continue  # No mapping exists
 

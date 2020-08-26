@@ -1,4 +1,5 @@
 # flake8: noqa
+from .filter_list import FilterListViewSet
 from .bot_setting import BotSettingViewSet
 from .deleted_message import DeletedMessageViewSet
 from .documentation_link import DocumentationLinkViewSet

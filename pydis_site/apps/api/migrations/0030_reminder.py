@@ -22,6 +22,6 @@ class Migration(migrations.Migration):
                 ('expiration', models.DateTimeField(help_text='When this reminder should be sent.')),
                 ('author', models.ForeignKey(help_text='The creator of this reminder.', on_delete=django.db.models.deletion.CASCADE, to='api.User')),
             ],
-            bases=(pydis_site.apps.api.models.ModelReprMixin, models.Model),
+            bases=(pydis_site.apps.api.models.mixins.ModelReprMixin, models.Model),
         ),
     ]

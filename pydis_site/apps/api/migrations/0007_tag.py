@@ -18,6 +18,6 @@ class Migration(migrations.Migration):
                 ('title', models.CharField(help_text='The title of this tag, shown in searches and providing a quick overview over what this embed contains.', max_length=100, primary_key=True, serialize=False)),
                 ('embed', django.contrib.postgres.fields.jsonb.JSONField(help_text='The actual embed shown by this tag.')),
             ],
-            bases=(pydis_site.apps.api.models.ModelReprMixin, models.Model),
+            bases=(pydis_site.apps.api.models.mixins.ModelReprMixin, models.Model),
         ),
     ]

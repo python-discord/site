@@ -81,24 +81,21 @@ class SignalListenerTests(TestCase):
             id=0,
             name="user",
             discriminator=0,
-            avatar_hash=None
         )
 
         cls.discord_unmapped = DiscordUser.objects.create(
             id=2,
             name="unmapped",
             discriminator=0,
-            avatar_hash=None
         )
 
-        cls.discord_unmapped.roles.add(cls.unmapped_role)
+        cls.discord_unmapped.roles.append(cls.unmapped_role.id)
         cls.discord_unmapped.save()
 
         cls.discord_not_in_guild = DiscordUser.objects.create(
             id=3,
             name="not-in-guild",
             discriminator=0,
-            avatar_hash=None,
             in_guild=False
         )
 
@@ -106,20 +103,18 @@ class SignalListenerTests(TestCase):
             id=1,
             name="admin",
             discriminator=0,
-            avatar_hash=None
         )
 
-        cls.discord_admin.roles.set([cls.admin_role])
+        cls.discord_admin.roles = [cls.admin_role.id]
         cls.discord_admin.save()
 
         cls.discord_moderator = DiscordUser.objects.create(
             id=4,
             name="admin",
             discriminator=0,
-            avatar_hash=None
         )
 
-        cls.discord_moderator.roles.set([cls.moderator_role])
+        cls.discord_moderator.roles = [cls.moderator_role.id]
         cls.discord_moderator.save()
 
         cls.django_user_discordless = DjangoUser.objects.create(username="no-discord")
@@ -338,7 +333,7 @@ class SignalListenerTests(TestCase):
         handler._apply_groups(self.discord_admin, self.social_admin)
         self.assertEqual(self.django_user_discordless.groups.all().count(), 0)
 
-        self.discord_admin.roles.add(self.admin_role)
+        self.discord_admin.roles.append(self.admin_role.id)
         self.discord_admin.save()
 
     def test_apply_groups_moderator(self):
@@ -365,7 +360,7 @@ class SignalListenerTests(TestCase):
         handler._apply_groups(self.discord_moderator, self.social_moderator)
         self.assertEqual(self.django_user_discordless.groups.all().count(), 0)
 
-        self.discord_moderator.roles.add(self.moderator_role)
+        self.discord_moderator.roles.append(self.moderator_role.id)
         self.discord_moderator.save()
 
     def test_apply_groups_other(self):
