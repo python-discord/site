@@ -1,5 +1,4 @@
 from collections.abc import Mapping
-from operator import itemgetter
 from typing import Any, Dict
 
 from django.core.exceptions import ValidationError
