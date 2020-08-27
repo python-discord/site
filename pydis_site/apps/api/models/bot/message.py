@@ -6,7 +6,8 @@ from django.db import models
 from django.utils import timezone
 
 from pydis_site.apps.api.models.bot.user import User
-from pydis_site.apps.api.models.utils import ModelReprMixin, validate_embed
+from pydis_site.apps.api.models.mixins import ModelReprMixin
+from pydis_site.apps.api.models.utils import validate_embed
 
 
 class Message(ModelReprMixin, models.Model):
