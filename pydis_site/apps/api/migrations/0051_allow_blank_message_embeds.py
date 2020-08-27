@@ -3,7 +3,7 @@
 import django.contrib.postgres.fields
 import django.contrib.postgres.fields.jsonb
 from django.db import migrations
-import pydis_site.apps.api.models.bot.tag
+import pydis_site.apps.api.models.utils
 
 
 class Migration(migrations.Migration):
