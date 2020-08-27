@@ -4,6 +4,7 @@ from typing import Any, Dict
 
 from django.core.exceptions import ValidationError
 from django.core.validators import MaxLengthValidator, MinLengthValidator
+from django.db import models
 
 
 def is_bool_validator(value: Any) -> None:
@@ -172,8 +173,6 @@ def validate_embed(embed: Any) -> None:
         if field_name in field_validators:
             for validator in field_validators[field_name]:
                 validator(value)
-
-from django.db import models
 
 
 class ModelReprMixin:
