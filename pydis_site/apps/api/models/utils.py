@@ -1,8 +1,10 @@
 from collections.abc import Mapping
+from operator import itemgetter
 from typing import Any, Dict
 
 from django.core.exceptions import ValidationError
 from django.core.validators import MaxLengthValidator, MinLengthValidator
+from django.db import models
 
 
 def is_bool_validator(value: Any) -> None:
@@ -171,3 +173,31 @@ def validate_embed(embed: Any) -> None:
         if field_name in field_validators:
             for validator in field_validators[field_name]:
                 validator(value)
+
+
+class ModelReprMixin:
+    """Mixin providing a `__repr__()` to display model class name and initialisation parameters."""
+
+    def __repr__(self):
+        """Returns the current model class name and initialisation parameters."""
+        attributes = ' '.join(
+            f'{attribute}={value!r}'
+            for attribute, value in sorted(
+                self.__dict__.items(),
+                key=itemgetter(0)
+            )
+            if not attribute.startswith('_')
+        )
+        return f'<{self.__class__.__name__}({attributes})>'
+
+
+class ModelTimestampMixin(models.Model):
+    """Mixin providing created_at and updated_at fields."""
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        """Metaconfig for the mixin."""
+
+        abstract = True
