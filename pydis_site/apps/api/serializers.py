@@ -293,9 +293,8 @@ class UserListSerializer(ListSerializer):
 
         updated = []
         for user_id, data in data_mapping.items():
-            user = instance_mapping.get(user_id, None)
-            if user:
-                updated.append(self.child.update(user, data))
+            user = instance_mapping.get(user_id)
+            updated.append(self.child.update(user, data))
 
         return updated
 
