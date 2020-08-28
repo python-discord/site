@@ -3,8 +3,8 @@ from rest_framework.decorators import action
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.request import Request
 from rest_framework.response import Response
+from rest_framework.serializers import ModelSerializer
 from rest_framework.viewsets import ModelViewSet
-from rest_framework_bulk import BulkCreateModelMixin
 
 from pydis_site.apps.api.models.bot.user import User
 from pydis_site.apps.api.serializers import UserSerializer
@@ -17,7 +17,7 @@ class UserListPagination(PageNumberPagination):
     page_size_query_param = "page_size"
 
 
-class UserViewSet(BulkCreateModelMixin, ModelViewSet):
+class UserViewSet(ModelViewSet):
     """
     View providing CRUD operations on Discord users through the bot.
 
@@ -142,7 +142,14 @@ class UserViewSet(BulkCreateModelMixin, ModelViewSet):
     queryset = User.objects.all()
     pagination_class = UserListPagination
 
-    @action(detail=False, methods=["PATCH"])
+    def get_serializer(self, *args, **kwargs) -> ModelSerializer:
+        """Set Serializer many attribute to True if request body contains a list."""
+        if isinstance(kwargs.get('data', {}), list):
+            kwargs['many'] = True
+
+        return super().get_serializer(*args, **kwargs)
+
+    @action(detail=False, methods=["PATCH"], name='user-bulk-patch')
     def bulk_patch(self, request: Request) -> Response:
         """
         Update multiple User objects in a single request.
@@ -185,6 +192,13 @@ class UserViewSet(BulkCreateModelMixin, ModelViewSet):
             return Response(resp, status=status.HTTP_400_BAD_REQUEST)
 
         filtered_instances = queryset.filter(id__in=object_ids)
+
+        if filtered_instances.count() != len(object_ids):
+            # If all user objects passed in request.body are not present in the database.
+            resp = {
+                "Error": "User object not found."
+            }
+            return Response(resp, status=status.HTTP_404_NOT_FOUND)
 
         serializer = self.get_serializer(
             instance=filtered_instances,
