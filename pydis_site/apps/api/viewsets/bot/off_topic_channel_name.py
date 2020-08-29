@@ -1,3 +1,4 @@
+from django.db.models import Case, When, Value
 from django.db.models.query import QuerySet
 from django.http.request import HttpRequest
 from django.shortcuts import get_object_or_404
@@ -108,28 +109,22 @@ class OffTopicChannelNameViewSet(DestroyModelMixin, ViewSet):
                     'random_items': ["Must be a positive integer."]
                 })
 
-            queryset = self.get_queryset().order_by('?').exclude(used=True)[:random_count]
-            self.get_queryset().filter(
-                name__in=(query.name for query in queryset)
-            ).update(used=True)
+            queryset = self.get_queryset().order_by('used', '?')[:random_count]
 
-            # When the client requests more channel names than are available,
-            # we reset all names to used=False and start a new round of names.
-            if len(queryset) < random_count:
-                # Figure out how many additional names we need, and don't fetch duplicate names.
-                names_needed = random_count - len(queryset)
-                other_names = self.get_queryset().order_by('?').exclude(
-                    name__in=(query.name for query in queryset)
-                )[:names_needed]
-
-                # Reset the `used` field to False for all names except the ones we just used.
-                self.get_queryset().exclude(name__in=(
-                    query.name for query in other_names)
-                ).update(used=False)
-
-                # Join original queryset (that had missing names)
-                # and extension with these missing names.
-                queryset = list(queryset) + list(other_names)
+            # When any name is used in our listing then this means we reached end of round
+            # and we need to reset all other names `used` to False
+            if any(offtopic_name.used for offtopic_name in queryset):
+                self.get_queryset().update(
+                    used=Case(  # These names that we just got have to be excluded from updating to False
+                        When(name__in=(offtopic_name.name for offtopic_name in queryset), then=Value(True)),
+                        default=Value(False)
+                    )
+                )
+            else:
+                # Otherwise mark selected names `used` to True
+                self.get_queryset().filter(
+                    name__in=(offtopic_name.name for offtopic_name in queryset)
+                ).update(used=True)
 
             serialized = self.serializer_class(queryset, many=True)
             return Response(serialized.data)
