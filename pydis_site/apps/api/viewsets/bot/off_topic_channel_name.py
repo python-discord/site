@@ -1,4 +1,4 @@
-from django.db.models import Case, When, Value
+from django.db.models import Case, Value, When
 from django.db.models.query import QuerySet
 from django.http.request import HttpRequest
 from django.shortcuts import get_object_or_404
@@ -114,9 +114,13 @@ class OffTopicChannelNameViewSet(DestroyModelMixin, ViewSet):
             # When any name is used in our listing then this means we reached end of round
             # and we need to reset all other names `used` to False
             if any(offtopic_name.used for offtopic_name in queryset):
+                # These names that we just got have to be excluded from updating used to False
                 self.get_queryset().update(
-                    used=Case(  # These names that we just got have to be excluded from updating to False
-                        When(name__in=(offtopic_name.name for offtopic_name in queryset), then=Value(True)),
+                    used=Case(
+                        When(
+                            name__in=(offtopic_name.name for offtopic_name in queryset),
+                            then=Value(True)
+                        ),
                         default=Value(False)
                     )
                 )
