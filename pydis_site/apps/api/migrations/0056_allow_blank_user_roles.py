@@ -9,7 +9,7 @@ import pydis_site.apps.api.models.bot.user
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('api', '0057_reminder_mentions'),
+        ('api', '0055_merge_20200714_2027'),
     ]
 
     operations = [
