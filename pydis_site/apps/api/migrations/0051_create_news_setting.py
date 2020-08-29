@@ -17,7 +17,7 @@ def down(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('api', '0051_allow_blank_message_embeds'),
+        ('api', '0050_remove_infractions_active_default_value'),
     ]
 
     operations = [

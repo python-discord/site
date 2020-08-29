@@ -6,7 +6,7 @@ import pydis_site.apps.api.models.mixins
 
 class Migration(migrations.Migration):
     dependencies = [
-        ('api', '0058_allow_blank_user_roles'),
+        ('api', '0057_merge_20200716_0751'),
     ]
 
     operations = [
