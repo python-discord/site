@@ -54,7 +54,7 @@ guild_invite_whitelist = [
 
 
 class Migration(migrations.Migration):
-    dependencies = [("api", "0059_populate_filterlists")]
+    dependencies = [("api", "0060_populate_filterlists")]
 
     def fix_filterlist(app, _):
         FilterList = app.get_model("api", "FilterList")
