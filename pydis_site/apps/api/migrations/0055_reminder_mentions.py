@@ -8,7 +8,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('api', '0056_user_invalidate_unknown_role'),
+        ('api', '0054_user_invalidate_unknown_role'),
     ]
 
     operations = [

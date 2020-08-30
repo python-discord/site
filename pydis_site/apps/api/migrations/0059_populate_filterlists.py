@@ -130,7 +130,7 @@ populate_data = {
 
 
 class Migration(migrations.Migration):
-    dependencies = [("api", "0059_create_new_filterlist_model")]
+    dependencies = [("api", "0058_create_new_filterlist_model")]
 
     def populate_filterlists(app, _):
         FilterList = app.get_model("api", "FilterList")

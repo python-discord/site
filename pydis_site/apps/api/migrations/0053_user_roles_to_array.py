@@ -8,7 +8,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('api', '0054_remove_user_avatar_hash'),
+        ('api', '0052_remove_user_avatar_hash'),
     ]
 
     operations = [
