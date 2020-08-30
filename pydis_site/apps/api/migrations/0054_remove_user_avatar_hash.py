@@ -6,7 +6,7 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('api', '0051_create_news_setting'),
+        ('api', '0053_offtopicchannelname_used'),
     ]
 
     operations = [

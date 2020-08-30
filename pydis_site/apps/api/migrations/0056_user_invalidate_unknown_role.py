@@ -9,7 +9,7 @@ import pydis_site.apps.api.models.bot.user
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('api', '0053_user_roles_to_array'),
+        ('api', '0055_user_roles_to_array'),
     ]
 
     operations = [
