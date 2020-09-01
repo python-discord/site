@@ -14,7 +14,6 @@ from pydis_site.apps.api.models import (
     OffensiveMessage,
     Reminder,
     Role,
-    Tag,
     User
 )
 from pydis_site.apps.api.models.mixins import ModelReprMixin
@@ -103,10 +102,6 @@ class StringDunderMethodTests(SimpleTestCase):
                     discriminator=555,
                 ),
                 creation=dt.utcnow()
-            ),
-            Tag(
-                title='bob',
-                embed={'content': "the builder"}
             ),
             User(
                 id=5,

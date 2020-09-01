@@ -14,7 +14,6 @@ from .viewsets import (
     OffensiveMessageViewSet,
     ReminderViewSet,
     RoleViewSet,
-    TagViewSet,
     UserViewSet
 )
 
@@ -60,10 +59,6 @@ bot_router.register(
 bot_router.register(
     'roles',
     RoleViewSet
-)
-bot_router.register(
-    'tags',
-    TagViewSet
 )
 bot_router.register(
     'users',
