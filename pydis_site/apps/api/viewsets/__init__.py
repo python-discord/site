@@ -10,7 +10,6 @@ from .bot import (
     OffTopicChannelNameViewSet,
     ReminderViewSet,
     RoleViewSet,
-    TagViewSet,
     UserViewSet
 )
 from .log_entry import LogEntryViewSet

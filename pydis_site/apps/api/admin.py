@@ -14,7 +14,6 @@ from .models import (
     OffTopicChannelName,
     OffensiveMessage,
     Role,
-    Tag,
     User
 )
 
@@ -64,5 +63,4 @@ admin.site.register(Nomination)
 admin.site.register(OffensiveMessage)
 admin.site.register(OffTopicChannelName)
 admin.site.register(Role)
-admin.site.register(Tag)
 admin.site.register(User)

@@ -1,3 +1,4 @@
+from django.db.models import Case, Value, When
 from django.db.models.query import QuerySet
 from django.http.request import HttpRequest
 from django.shortcuts import get_object_or_404
@@ -20,7 +21,9 @@ class OffTopicChannelNameViewSet(DestroyModelMixin, ViewSet):
     Return all known off-topic channel names from the database.
     If the `random_items` query parameter is given, for example using...
         $ curl api.pythondiscord.local:8000/bot/off-topic-channel-names?random_items=5
-    ... then the API will return `5` random items from the database.
+    ... then the API will return `5` random items from the database
+    that is not used in current rotation.
+    When running out of names, API will mark all names to not used and start new rotation.
 
     #### Response format
     Return a list of off-topic-channel names:
@@ -106,7 +109,27 @@ class OffTopicChannelNameViewSet(DestroyModelMixin, ViewSet):
                     'random_items': ["Must be a positive integer."]
                 })
 
-            queryset = self.get_queryset().order_by('?')[:random_count]
+            queryset = self.get_queryset().order_by('used', '?')[:random_count]
+
+            # When any name is used in our listing then this means we reached end of round
+            # and we need to reset all other names `used` to False
+            if any(offtopic_name.used for offtopic_name in queryset):
+                # These names that we just got have to be excluded from updating used to False
+                self.get_queryset().update(
+                    used=Case(
+                        When(
+                            name__in=(offtopic_name.name for offtopic_name in queryset),
+                            then=Value(True)
+                        ),
+                        default=Value(False)
+                    )
+                )
+            else:
+                # Otherwise mark selected names `used` to True
+                self.get_queryset().filter(
+                    name__in=(offtopic_name.name for offtopic_name in queryset)
+                ).update(used=True)
+
             serialized = self.serializer_class(queryset, many=True)
             return Response(serialized.data)
 
