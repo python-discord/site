@@ -6,7 +6,7 @@ from django.contrib.messages import ERROR
 from django.urls import include, path
 
 from pydis_site.utils.views import MessageRedirectView
-from .views import AccountDeleteView, AccountSettingsView, HomeView
+from .views import AccountDeleteView, AccountSettingsView, HomeView, timeline
 
 app_name = 'home'
 urlpatterns = [
@@ -38,4 +38,5 @@ urlpatterns = [
 
     path('admin/', admin.site.urls),
     path('notifications/', include('django_nyt.urls')),
+    path('timeline/', timeline),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
