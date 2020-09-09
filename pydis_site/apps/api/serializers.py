@@ -22,7 +22,6 @@ from .models import (
     OffensiveMessage,
     Reminder,
     Role,
-    Tag,
     User
 )
 
@@ -254,16 +253,6 @@ class RoleSerializer(ModelSerializer):
 
         model = Role
         fields = ('id', 'name', 'colour', 'permissions', 'position')
-
-
-class TagSerializer(ModelSerializer):
-    """A class providing (de-)serialization of `Tag` instances."""
-
-    class Meta:
-        """Metadata defined for the Django REST Framework."""
-
-        model = Tag
-        fields = ('title', 'embed')
 
 
 class UserListSerializer(ListSerializer):
