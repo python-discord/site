@@ -18,7 +18,9 @@ class Nomination(ModelReprMixin, models.Model):
         related_name='nomination_set'
     )
     reason = models.TextField(
-        help_text="Why this user was nominated."
+        help_text="Why this user was nominated.",
+        null=True,
+        blank=True
     )
     user = models.ForeignKey(
         User,
