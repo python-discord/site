@@ -80,7 +80,7 @@ class CreationTests(APISubdomainTestCase):
             'actor': ['This field is required.']
         })
 
-    def test_returns_400_for_missing_reason(self):
+    def test_returns_201_for_missing_reason(self):
         url = reverse('bot:nomination-list', host='api')
         data = {
             'user': self.user.id,
@@ -88,10 +88,7 @@ class CreationTests(APISubdomainTestCase):
         }
 
         response = self.client.post(url, data=data)
-        self.assertEqual(response.status_code, 400)
-        self.assertEqual(response.json(), {
-            'reason': ['This field is required.']
-        })
+        self.assertEqual(response.status_code, 201)
 
     def test_returns_400_for_bad_user(self):
         url = reverse('bot:nomination-list', host='api')
