@@ -242,29 +242,6 @@ class RoleAdmin(admin.ModelAdmin):
     permissions_with_calc_link.short_description = "Permissions"
 
 
-class TagAdmin(admin.ModelAdmin):
-    """Admin formatting for the Tag model."""
-
-    fields = ("title", "embed", "preview")
-    readonly_fields = ("preview",)
-    search_fields = ("title", "embed")
-
-    @staticmethod
-    def preview(instance: Tag) -> Optional[str]:
-        """Render tag markdown contents to preview actual appearance."""
-        if instance.embed:
-            import markdown
-            return format_html(
-                markdown.markdown(
-                    instance.embed["description"],
-                    extensions=[
-                        "markdown.extensions.nl2br",
-                        "markdown.extensions.extra"
-                    ]
-                )
-            )
-
-
 class StaffRolesFilter(admin.SimpleListFilter):
     """Filter options for Staff Roles."""
 
