@@ -1,0 +1,136 @@
+{% load socialaccount %}
+
+{# This template is just for a modal, which is actually inserted into the navbar #}
+{# template. Take a look at `navbar.html` to see how it's inserted. #}
+
+<div class="modal" id="account-modal">
+  <div class="modal-background"></div>
+  <div class="modal-card">
+    <div class="modal-card-head">
+      <div class="modal-card-title">Settings for {{ user.username }}</div>
+
+      {% if groups %}
+        <div>
+          {% for group in groups %}
+            <span class="tag is-primary">{{ group.name }}</span>
+          {% endfor %}
+        </div>
+      {% else %}
+        <span class="tag is-dark">No groups</span>
+      {% endif %}
+    </div>
+    <div class="modal-card-body">
+      <h3 class="title">Connections</h3>
+      <div class="columns">
+        {% if discord_provider is not None %}
+          <div class="column">
+            <div class="box">
+              {% if not discord %}
+                <div class="media">
+                  <div class="media-left">
+                    <div class="image">
+                      <i class="fab fa-discord fa-3x has-text-primary"></i>
+                    </div>
+                  </div>
+                  <div class="media-content">
+                    <div class="title is-5">Discord</div>
+                    <div class="subtitle is-6">Not connected</div>
+                  </div>
+                </div>
+                <div>
+                  <br />
+                  <a class="button is-primary" href="{% provider_login_url "discord" process="connect" %}">
+                    <span class="icon">
+                      <i class="fad fa-link"></i>
+                    </span>
+                    <span>Connect</span>
+                  </a>
+                </div>
+              {% else %}
+                <div class="media">
+                  <div class="media-left">
+                    <div class="image">
+                      <i class="fab fa-discord fa-3x has-text-primary"></i>
+                    </div>
+                  </div>
+                  <div class="media-content">
+                    <div class="title is-5">Discord</div>
+                    <div class="subtitle is-6">{{ user.username }}</div>
+                  </div>
+                </div>
+                <div>
+                  <br />
+                  <button class="button" disabled>
+                    <span class="icon">
+                      <i class="fas fa-check"></i>
+                    </span>
+                    <span>Connected</span>
+                  </button>
+                </div>
+              {% endif %}
+            </div>
+          </div>
+        {% endif %}
+
+        {% if github_provider is not None %}
+          <div class="column">
+            <div class="box">
+              {% if not github %}
+                <div class="media">
+                  <div class="media-left">
+                    <div class="image">
+                      <i class="fab fa-github fa-3x"></i>
+                    </div>
+                  </div>
+                  <div class="media-content">
+                    <div class="title is-5">GitHub</div>
+                    <div class="subtitle is-6">Not connected</div>
+                  </div>
+                </div>
+                <div>
+                  <br />
+                  <a class="button is-primary" href="{% provider_login_url "github" process="connect" %}">
+                    <span class="icon">
+                      <i class="fad fa-link"></i>
+                    </span>
+                    <span>Connect</span>
+                  </a>
+                </div>
+              {% else %}
+                <div class="media">
+                  <div class="media-left">
+                    <div class="image">
+                      <i class="fab fa-github fa-3x"></i>
+                    </div>
+                  </div>
+                  <div class="media-content">
+                    <div class="title is-5">GitHub</div>
+                    <div class="subtitle is-6">{{ github.extra_data.name }}</div>
+                  </div>
+                </div>
+                <div>
+                  <form method="post" action="{% url "account_settings" %}" type="submit">
+                  {% csrf_token %}
+
+                  <input type="hidden" name="provider" value="github" />
+
+                  <br />
+                  <button type="submit" class="button is-danger">
+                    <span class="icon">
+                      <i class="fas fa-times"></i>
+                    </span>
+                    <span>Disconnect</span>
+                  </button>
+                </form>
+                </div>
+              {% endif %}
+            </div>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+    <div class="modal-card-foot">
+      <a class="button is-danger" href="{% url "account_delete" %}">Delete Account</a>
+    </div>
+  </div>
+</div>

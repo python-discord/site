@@ -17,7 +17,6 @@ class UserViewSet(BulkCreateModelMixin, ModelViewSet):
     >>> [
     ...     {
     ...         'id': 409107086526644234,
-    ...         'avatar': "3ba3c1acce584c20b1e96fc04bbe80eb",
     ...         'name': "Python",
     ...         'discriminator': 4329,
     ...         'roles': [
@@ -39,7 +38,6 @@ class UserViewSet(BulkCreateModelMixin, ModelViewSet):
     #### Response format
     >>> {
     ...     'id': 409107086526644234,
-    ...     'avatar': "3ba3c1acce584c20b1e96fc04bbe80eb",
     ...     'name': "Python",
     ...     'discriminator': 4329,
     ...     'roles': [
@@ -62,7 +60,6 @@ class UserViewSet(BulkCreateModelMixin, ModelViewSet):
     #### Request body
     >>> {
     ...     'id': int,
-    ...     'avatar': str,
     ...     'name': str,
     ...     'discriminator': int,
     ...     'roles': List[int],
@@ -83,7 +80,6 @@ class UserViewSet(BulkCreateModelMixin, ModelViewSet):
     #### Request body
     >>> {
     ...     'id': int,
-    ...     'avatar': str,
     ...     'name': str,
     ...     'discriminator': int,
     ...     'roles': List[int],
@@ -102,7 +98,6 @@ class UserViewSet(BulkCreateModelMixin, ModelViewSet):
     #### Request body
     >>> {
     ...     'id': int,
-    ...     'avatar': str,
     ...     'name': str,
     ...     'discriminator': int,
     ...     'roles': List[int],
@@ -123,4 +118,4 @@ class UserViewSet(BulkCreateModelMixin, ModelViewSet):
     """
 
     serializer_class = UserSerializer
-    queryset = User.objects.prefetch_related('roles')
+    queryset = User.objects

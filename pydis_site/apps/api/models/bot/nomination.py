@@ -1,7 +1,7 @@
 from django.db import models
 
 from pydis_site.apps.api.models.bot.user import User
-from pydis_site.apps.api.models.utils import ModelReprMixin
+from pydis_site.apps.api.models.mixins import ModelReprMixin
 
 
 class Nomination(ModelReprMixin, models.Model):
@@ -18,7 +18,9 @@ class Nomination(ModelReprMixin, models.Model):
         related_name='nomination_set'
     )
     reason = models.TextField(
-        help_text="Why this user was nominated."
+        help_text="Why this user was nominated.",
+        null=True,
+        blank=True
     )
     user = models.ForeignKey(
         User,

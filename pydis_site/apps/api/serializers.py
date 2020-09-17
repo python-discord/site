@@ -1,15 +1,22 @@
 """Converters from Django models to data interchange formats and back."""
-
 from rest_framework.serializers import ModelSerializer, PrimaryKeyRelatedField, ValidationError
+from rest_framework.validators import UniqueTogetherValidator
 from rest_framework_bulk import BulkSerializerMixin
 
 from .models import (
-    BotSetting, DeletedMessage,
-    DocumentationLink, Infraction,
-    LogEntry, MessageDeletionContext,
-    Nomination, OffTopicChannelName,
-    Reminder, Role,
-    Tag, User
+    BotSetting,
+    DeletedMessage,
+    DocumentationLink,
+    FilterList,
+    Infraction,
+    LogEntry,
+    MessageDeletionContext,
+    Nomination,
+    OffTopicChannelName,
+    OffensiveMessage,
+    Reminder,
+    Role,
+    User
 )
 
 
@@ -49,7 +56,8 @@ class DeletedMessageSerializer(ModelSerializer):
         fields = (
             'id', 'author',
             'channel_id', 'content',
-            'embeds', 'deletion_context'
+            'embeds', 'deletion_context',
+            'attachments'
         )
 
 
@@ -95,6 +103,31 @@ class DocumentationLinkSerializer(ModelSerializer):
         fields = ('package', 'base_url', 'inventory_url')
 
 
+class FilterListSerializer(ModelSerializer):
+    """A class providing (de-)serialization of `FilterList` instances."""
+
+    class Meta:
+        """Metadata defined for the Django REST Framework."""
+
+        model = FilterList
+        fields = ('id', 'created_at', 'updated_at', 'type', 'allowed', 'content', 'comment')
+
+        # This validator ensures only one filterlist with the
+        # same content can exist. This means that we cannot have both an allow
+        # and a deny for the same item, and we cannot have duplicates of the
+        # same item.
+        validators = [
+            UniqueTogetherValidator(
+                queryset=FilterList.objects.all(),
+                fields=['content', 'type'],
+                message=(
+                    "A filterlist for this item already exists. "
+                    "Please note that you cannot add the same item to both allow and deny."
+                )
+            ),
+        ]
+
+
 class InfractionSerializer(ModelSerializer):
     """A class providing (de-)serialization of `Infraction` instances."""
 
@@ -105,10 +138,21 @@ class InfractionSerializer(ModelSerializer):
         fields = (
             'id', 'inserted_at', 'expires_at', 'active', 'user', 'actor', 'type', 'reason', 'hidden'
         )
+        validators = [
+            UniqueTogetherValidator(
+                queryset=Infraction.objects.filter(active=True),
+                fields=['user', 'type', 'active'],
+                message='This user already has an active infraction of this type.',
+            )
+        ]
 
     def validate(self, attrs: dict) -> dict:
         """Validate data constraints for the given data and abort if it is invalid."""
         infr_type = attrs.get('type')
+
+        active = attrs.get('active')
+        if active and infr_type in ('note', 'warning', 'kick'):
+            raise ValidationError({'active': [f'{infr_type} infractions cannot be active.']})
 
         expires_at = attrs.get('expires_at')
         if expires_at and infr_type in ('kick', 'warning'):
@@ -190,7 +234,9 @@ class ReminderSerializer(ModelSerializer):
         """Metadata defined for the Django REST Framework."""
 
         model = Reminder
-        fields = ('active', 'author', 'channel_id', 'content', 'expiration', 'id')
+        fields = (
+            'active', 'author', 'jump_url', 'channel_id', 'content', 'expiration', 'id', 'mentions'
+        )
 
 
 class RoleSerializer(ModelSerializer):
@@ -203,26 +249,14 @@ class RoleSerializer(ModelSerializer):
         fields = ('id', 'name', 'colour', 'permissions', 'position')
 
 
-class TagSerializer(ModelSerializer):
-    """A class providing (de-)serialization of `Tag` instances."""
-
-    class Meta:
-        """Metadata defined for the Django REST Framework."""
-
-        model = Tag
-        fields = ('title', 'embed')
-
-
 class UserSerializer(BulkSerializerMixin, ModelSerializer):
     """A class providing (de-)serialization of `User` instances."""
-
-    roles = PrimaryKeyRelatedField(many=True, queryset=Role.objects.all(), required=False)
 
     class Meta:
         """Metadata defined for the Django REST Framework."""
 
         model = User
-        fields = ('id', 'avatar_hash', 'name', 'discriminator', 'roles', 'in_guild')
+        fields = ('id', 'name', 'discriminator', 'roles', 'in_guild')
         depth = 1
 
 
@@ -236,3 +270,13 @@ class NominationSerializer(ModelSerializer):
         fields = (
             'id', 'active', 'actor', 'reason', 'user',
             'inserted_at', 'end_reason', 'ended_at')
+
+
+class OffensiveMessageSerializer(ModelSerializer):
+    """A class providing (de-)serialization of `OffensiveMessage` instances."""
+
+    class Meta:
+        """Metadata defined for the Django REST Framework."""
+
+        model = OffensiveMessage
+        fields = ('id', 'channel_id', 'delete_date')

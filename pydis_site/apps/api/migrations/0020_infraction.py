@@ -25,6 +25,6 @@ class Migration(migrations.Migration):
                 ('actor', models.ForeignKey(help_text='The user which applied the infraction.', on_delete=django.db.models.deletion.CASCADE, related_name='infractions_given', to='api.User')),
                 ('user', models.ForeignKey(help_text='The user to which the infraction was applied.', on_delete=django.db.models.deletion.CASCADE, related_name='infractions_received', to='api.User')),
             ],
-            bases=(pydis_site.apps.api.models.ModelReprMixin, models.Model),
+            bases=(pydis_site.apps.api.models.mixins.ModelReprMixin, models.Model),
         ),
     ]

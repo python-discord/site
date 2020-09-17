@@ -1,7 +1,7 @@
 from django.core.validators import RegexValidator
 from django.db import models
 
-from pydis_site.apps.api.models.utils import ModelReprMixin
+from pydis_site.apps.api.models.mixins import ModelReprMixin
 
 
 class OffTopicChannelName(ModelReprMixin, models.Model):
@@ -14,6 +14,11 @@ class OffTopicChannelName(ModelReprMixin, models.Model):
             RegexValidator(regex=r"^[a-z0-9\U0001d5a0-\U0001d5b9-ǃ？’']+$"),
         ),
         help_text="The actual channel name that will be used on our Discord server."
+    )
+
+    used = models.BooleanField(
+        default=False,
+        help_text="Whether or not this name has already been used during this rotation",
     )
 
     def __str__(self):

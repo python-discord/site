@@ -2,7 +2,7 @@ from django.db import models
 from django.utils import timezone
 
 from pydis_site.apps.api.models.bot.user import User
-from pydis_site.apps.api.models.utils import ModelReprMixin
+from pydis_site.apps.api.models.mixins import ModelReprMixin
 
 
 class Infraction(ModelReprMixin, models.Model):
@@ -29,7 +29,6 @@ class Infraction(ModelReprMixin, models.Model):
         )
     )
     active = models.BooleanField(
-        default=True,
         help_text="Whether the infraction is still active."
     )
     user = models.ForeignKey(
@@ -71,3 +70,10 @@ class Infraction(ModelReprMixin, models.Model):
         """Defines the meta options for the infraction model."""
 
         ordering = ['-inserted_at']
+        constraints = (
+            models.UniqueConstraint(
+                fields=["user", "type"],
+                condition=models.Q(active=True),
+                name="unique_active_infraction_per_type_per_user"
+            ),
+        )

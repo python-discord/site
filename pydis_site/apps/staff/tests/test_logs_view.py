@@ -21,10 +21,9 @@ class TestLogsView(TestCase):
             id=12345678901,
             name='Alan Turing',
             discriminator=1912,
-            avatar_hash=None
         )
 
-        cls.author.roles.add(cls.developers_role)
+        cls.author.roles.append(cls.developers_role.id)
 
         cls.deletion_context = MessageDeletionContext.objects.create(
             actor=cls.actor,
@@ -37,6 +36,7 @@ class TestLogsView(TestCase):
             channel_id=1984,
             content='<em>I think my tape has run out...</em>',
             embeds=[],
+            attachments=[],
             deletion_context=cls.deletion_context,
         )
 
@@ -101,6 +101,7 @@ class TestLogsView(TestCase):
             channel_id=1984,
             content='Does that mean this thing will halt?',
             embeds=[cls.embed_one, cls.embed_two],
+            attachments=['https://http.cat/100', 'https://http.cat/402'],
             deletion_context=cls.deletion_context,
         )
 
@@ -148,6 +149,21 @@ class TestLogsView(TestCase):
         embed_two_colour = "#cacbce"
         self.assertInHTML(embed_colour_needle.format(colour=embed_one_colour), html_response)
         self.assertInHTML(embed_colour_needle.format(colour=embed_two_colour), html_response)
+
+    def test_if_both_attachments_are_included_html_response(self):
+        url = reverse('logs', host="staff", args=(self.deletion_context.id,))
+        response = self.client.get(url)
+
+        html_response = response.content.decode()
+        attachment_needle = '<img alt="Attachment" class="discord-attachment" src="{url}">'
+        self.assertInHTML(
+            attachment_needle.format(url=self.deleted_message_two.attachments[0]),
+            html_response
+        )
+        self.assertInHTML(
+            attachment_needle.format(url=self.deleted_message_two.attachments[1]),
+            html_response
+        )
 
     def test_if_html_in_content_is_properly_escaped(self):
         url = reverse('logs', host="staff", args=(self.deletion_context.id,))

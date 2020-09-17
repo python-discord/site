@@ -16,6 +16,6 @@ class Migration(migrations.Migration):
             fields=[
                 ('idiom', models.CharField(help_text='A snake idiom', max_length=140, primary_key=True, serialize=False)),
             ],
-            bases=(pydis_site.apps.api.models.ModelReprMixin, models.Model),
+            bases=(pydis_site.apps.api.models.mixins.ModelReprMixin, models.Model),
         ),
     ]

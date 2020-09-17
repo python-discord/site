@@ -24,6 +24,6 @@ class Migration(migrations.Migration):
                 ('line', models.PositiveSmallIntegerField(help_text='The line at which the log line was emitted.')),
                 ('message', models.TextField(help_text='The textual content of the log line.')),
             ],
-            bases=(pydis_site.apps.api.models.ModelReprMixin, models.Model),
+            bases=(pydis_site.apps.api.models.mixins.ModelReprMixin, models.Model),
         ),
     ]

@@ -9,12 +9,11 @@ from ..models import MessageDeletionContext, User
 
 class DeletedMessagesWithoutActorTests(APISubdomainTestCase):
     @classmethod
-    def setUpTestData(cls):  # noqa
+    def setUpTestData(cls):
         cls.author = User.objects.create(
             id=55,
             name='Robbie Rotten',
             discriminator=55,
-            avatar_hash=None
         )
 
         cls.data = {
@@ -26,14 +25,16 @@ class DeletedMessagesWithoutActorTests(APISubdomainTestCase):
                     'id': 55,
                     'channel_id': 5555,
                     'content': "Terror Billy is a meanie",
-                    'embeds': []
+                    'embeds': [],
+                    'attachments': []
                 },
                 {
                     'author': cls.author.id,
                     'id': 56,
                     'channel_id': 5555,
                     'content': "If you purge this, you're evil",
-                    'embeds': []
+                    'embeds': [],
+                    'attachments': []
                 }
             ]
         }
@@ -48,12 +49,11 @@ class DeletedMessagesWithoutActorTests(APISubdomainTestCase):
 
 class DeletedMessagesWithActorTests(APISubdomainTestCase):
     @classmethod
-    def setUpTestData(cls):  # noqa
+    def setUpTestData(cls):
         cls.author = cls.actor = User.objects.create(
             id=12904,
             name='Joe Armstrong',
             discriminator=1245,
-            avatar_hash=None
         )
 
         cls.data = {
@@ -65,7 +65,8 @@ class DeletedMessagesWithActorTests(APISubdomainTestCase):
                     'id': 12903,
                     'channel_id': 1824,
                     'content': "I hate trailing commas",
-                    'embeds': []
+                    'embeds': [],
+                    'attachments': []
                 },
             ]
         }

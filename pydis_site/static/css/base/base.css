@@ -84,7 +84,30 @@ div.card.has-equal-height {
 
 /* Fix for logout form submit button in navbar */
 
-button.is-size-navbar-menu {
+button.is-size-navbar-menu, a.is-size-navbar-menu {
     font-size: 14px;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
 }
 
+@media screen and (min-width: 1088px) {
+    button.is-size-navbar-menu, a.is-size-navbar-menu {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+}
+
+/* Fix for modals being behind the navbar */
+
+.modal * {
+    z-index: 1020;
+}
+
+.modal-background {
+    z-index: 1010;
+}
+
+/* Wiki style tweaks */
+.codehilite-wrap {
+    margin-bottom: 1em;
+}

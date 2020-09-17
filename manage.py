@@ -87,7 +87,7 @@ class SiteManager:
 
         # Get database URL based on environmental variable passed in compose
         database_url = os.environ["DATABASE_URL"]
-        match = re.search(r"@(\w+):(\d+)/", database_url)
+        match = re.search(r"@([\w.]+):(\d+)/", database_url)
         if not match:
             raise OSError("Valid DATABASE_URL environmental variable not found.")
         domain = match.group(1)

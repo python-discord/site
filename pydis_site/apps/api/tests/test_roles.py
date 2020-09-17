@@ -6,7 +6,7 @@ from ..models import Role
 
 class CreationTests(APISubdomainTestCase):
     @classmethod
-    def setUpTestData(cls):  # noqa
+    def setUpTestData(cls):
         cls.admins_role = Role.objects.create(
             id=1,
             name="Admins",

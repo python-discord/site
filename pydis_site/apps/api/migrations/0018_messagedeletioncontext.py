@@ -19,6 +19,6 @@ class Migration(migrations.Migration):
                 ('creation', models.DateTimeField(help_text='When this deletion took place.')),
                 ('actor', models.ForeignKey(help_text='The original actor causing this deletion. Could be the author of a manual clean command invocation, the bot when executing automatic actions, or nothing to indicate that the bulk deletion was not issued by us.', null=True, on_delete=django.db.models.deletion.CASCADE, to='api.User')),
             ],
-            bases=(pydis_site.apps.api.models.ModelReprMixin, models.Model),
+            bases=(pydis_site.apps.api.models.mixins.ModelReprMixin, models.Model),
         ),
     ]

@@ -18,6 +18,6 @@ class Migration(migrations.Migration):
                 ('name', models.CharField(max_length=50, primary_key=True, serialize=False)),
                 ('data', django.contrib.postgres.fields.jsonb.JSONField(help_text='The actual settings of this setting.')),
             ],
-            bases=(pydis_site.apps.api.models.ModelReprMixin, models.Model),
+            bases=(pydis_site.apps.api.models.mixins.ModelReprMixin, models.Model),
         ),
     ]

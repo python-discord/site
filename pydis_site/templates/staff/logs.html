@@ -19,10 +19,15 @@
             <div class="discord-message-header">
                 <span class="discord-username"
                       style="color: {{ message.author.top_role.colour | hex_colour }}">{{ message.author }}</span><span
-                    class="discord-message-metadata">{{ message.timestamp }} | User ID: {{ message.author.id }}</span>
+                    class="discord-message-metadata has-text-grey">{{ message.timestamp }} | User ID: {{ message.author.id }}</span>
             </div>
             <div class="discord-message-content">
-                {{ message.content|linebreaks }}
+                {{ message.content | escape | visible_newlines | safe }}
+            </div>
+            <div class="discord-message-attachments">
+                {% for attachment in message.attachments %}
+                    <img alt="Attachment" class="discord-attachment" src="{{ attachment }}">
+                {% endfor %}
             </div>
             {% for embed in message.embeds %}
                 <div class="discord-embed is-size-7">

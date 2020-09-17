@@ -16,7 +16,7 @@
       <h1 class="is-size-1">Who are we?</h1>
       <br>
       <div class="columns is-desktop">
-        <div class="column is-half-desktop">
+        <div class="column is-half-desktop content">
           <p>
             We're a large community focused around the Python programming language.
             We believe anyone can learn to code, and are very dedicated to helping
@@ -37,11 +37,11 @@
           </p>
         </div>
 
-        {# Intro video #}
-        <div class="column is-half-desktop video-container">
-          <iframe src="https://www.youtube.com/embed/DIBXg8Qh7bA" frameborder="0"
-                  allow="accelerometer; encrypted-media; gyroscope; picture-in-picture"
-                  allowfullscreen></iframe>
+        {# Right column container #}
+        <div class="column is-half-desktop">
+          <a href="https://pythondiscord.com/pages/code-jams/code-jam-7/">
+            <img src="{% static "images/events/summer_code_jam_2020.png" %}">
+          </a>
         </div>
       </div>
 
@@ -92,10 +92,12 @@
           <a href="https://adafruit.com" class="column is-narrow">
             <img src="{% static "images/sponsors/adafruit.png" %}" alt="Adafruit"/>
           </a>
+          <a href="https://sentry.io" class="column is-narrow">
+            <img src="{% static "images/sponsors/sentry.png" %}" alt="Sentry"/>
+          </a>
         </div>
       </div>
     </div>
   </section>
 
 {% endblock %}
-

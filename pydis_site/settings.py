@@ -16,14 +16,26 @@ import sys
 import typing
 
 import environ
+import sentry_sdk
 from django.contrib.messages import constants as messages
+from sentry_sdk.integrations.django import DjangoIntegration
+
+from pydis_site.constants import GIT_SHA
 
 if typing.TYPE_CHECKING:
     from django.contrib.auth.models import User
     from wiki.models import Article
 
 env = environ.Env(
-    DEBUG=(bool, False)
+    DEBUG=(bool, False),
+    SITE_SENTRY_DSN=(str, "")
+)
+
+sentry_sdk.init(
+    dsn=env('SITE_SENTRY_DSN'),
+    integrations=[DjangoIntegration()],
+    send_default_pii=True,
+    release=f"pydis-site@{GIT_SHA}"
 )
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -42,13 +54,15 @@ if DEBUG:
             'api.pythondiscord.local',
             'admin.pythondiscord.local',
             'staff.pythondiscord.local',
+            '0.0.0.0',  # noqa: S104
+            'localhost',
             'web',
             'api.web',
             'admin.web',
             'staff.web'
         ]
     )
-    SECRET_KEY = secrets.token_urlsafe(32)
+    SECRET_KEY = "yellow polkadot bikini"  # noqa: S105
 
 elif 'CI' in os.environ:
     ALLOWED_HOSTS = ['*']
@@ -92,9 +106,8 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
 
     'allauth.socialaccount.providers.discord',
+    'allauth.socialaccount.providers.github',
 
-    'crispy_forms',
-    'django_crispy_bulma',
     'django_hosts',
     'django_filters',
     'django_nyt.apps.DjangoNytConfig',
@@ -146,8 +159,8 @@ TEMPLATES = [
                 'django.template.context_processors.static',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-
                 "sekizai.context_processors.sekizai",
+                "pydis_site.context_processors.git_sha_processor"
             ],
         },
     },
@@ -196,7 +209,7 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'pydis_site', 'static')]
 STATIC_ROOT = env('STATIC_ROOT', default='/app/staticfiles')
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = env('MEDIA_ROOT', default='/app/media')
+MEDIA_ROOT = env('MEDIA_ROOT', default='/site/media')
 
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
@@ -277,7 +290,6 @@ LOGGING = {
 }
 
 # Django Messages framework config
-
 MESSAGE_TAGS = {
     messages.DEBUG: 'primary',
     messages.INFO: 'info',
@@ -286,30 +298,19 @@ MESSAGE_TAGS = {
     messages.ERROR: 'danger',
 }
 
-# Custom settings for Crispyforms
-CRISPY_ALLOWED_TEMPLATE_PACKS = (
-    "bootstrap",
-    "uni_form",
-    "bootstrap3",
-    "bootstrap4",
-    "bulma",
-)
-
-CRISPY_TEMPLATE_PACK = "bulma"
-
 # Custom settings for django-simple-bulma
 BULMA_SETTINGS = {
     "variables": {  # If you update these colours, please update the notification.css file
         "primary": "#7289DA",    # Discord blurple
 
-        "orange": "#ffb39b",     # Bulma default, but at a saturation of 100
-        "yellow": "#ffea9b",     # Bulma default, but at a saturation of 100
-        "green": "#7fd19c",      # Bulma default, but at a saturation of 100
-        "turquoise": "#7289DA",  # Blurple, because Bulma uses this as the default primary
-        "cyan": "#91cbee",       # Bulma default, but at a saturation of 100
-        "blue": "#86a7dc",       # Bulma default, but at a saturation of 100
-        "purple": "#b86bff",     # Bulma default, but at a saturation of 100
-        "red": "#ffafc2",        # Bulma default, but at a saturation of 80
+        # "orange": "",          # Apparently unused, but the default is fine
+        # "yellow": "",          # The default yellow looks pretty good
+        "green": "#32ac66",      # Colour picked after Discord discussion
+        "turquoise": "#7289DA",  # Blurple, because Bulma uses this regardless of `primary` above
+        "blue": "#2482c1",       # Colour picked after Discord discussion
+        "cyan": "#2482c1",       # Colour picked after Discord discussion (matches the blue)
+        "purple": "#aa55e4",     # Apparently unused, but changed for consistency
+        "red": "#d63852",        # Colour picked after Discord discussion
 
         "link": "$primary",
 
@@ -359,24 +360,7 @@ WIKI_MESSAGE_TAG_CSS_CLASS = {
     messages.WARNING: "is-warning",
 }
 
-WIKI_MARKDOWN_HTML_STYLES = [
-    'max-width',
-    'min-width',
-    'margin',
-    'padding',
-    'width',
-    'height',
-]
-
-WIKI_MARKDOWN_HTML_ATTRIBUTES = {
-    'img': ['class', 'id', 'src', 'alt', 'width', 'height'],
-    'section': ['class', 'id'],
-    'article': ['class', 'id'],
-}
-
-WIKI_MARKDOWN_HTML_WHITELIST = [
-    'article', 'section', 'button'
-]
+WIKI_MARKDOWN_SANITIZE_HTML = False
 
 
 # Wiki permissions
@@ -407,5 +391,13 @@ AUTHENTICATION_BACKENDS = (
     'allauth.account.auth_backends.AuthenticationBackend',
 )
 
+ACCOUNT_ADAPTER = "pydis_site.utils.account.AccountAdapter"
+ACCOUNT_EMAIL_REQUIRED = False       # Undocumented allauth setting; don't require emails
 ACCOUNT_EMAIL_VERIFICATION = "none"  # No verification required; we don't use emails for anything
+
+# We use this validator because Allauth won't let us actually supply a list with no validators
+# in it, and we can't just give it a lambda - that'd be too easy, I suppose.
+ACCOUNT_USERNAME_VALIDATORS = "pydis_site.VALIDATORS"
+
 LOGIN_REDIRECT_URL = "home"
+SOCIALACCOUNT_ADAPTER = "pydis_site.utils.account.SocialAccountAdapter"

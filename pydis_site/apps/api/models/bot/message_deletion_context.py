@@ -2,7 +2,7 @@ from django.db import models
 from django_hosts.resolvers import reverse
 
 from pydis_site.apps.api.models.bot.user import User
-from pydis_site.apps.api.models.utils import ModelReprMixin
+from pydis_site.apps.api.models.mixins import ModelReprMixin
 
 
 class MessageDeletionContext(ModelReprMixin, models.Model):

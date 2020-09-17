@@ -10,7 +10,7 @@ from pydis_site.apps.home.models import RepositoryMetadata
 from pydis_site.apps.home.views import HomeView
 
 
-def mocked_requests_get(*args, **kwargs) -> "MockResponse":  # noqa
+def mocked_requests_get(*args, **kwargs) -> "MockResponse":  # noqa: F821
     """A mock version of requests.get, so we don't need to call the API every time we run a test."""
     class MockResponse:
         def __init__(self, json_data, status_code):
