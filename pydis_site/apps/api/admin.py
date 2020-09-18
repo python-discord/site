@@ -1,9 +1,10 @@
+from __future__ import annotations
+
 import json
-from typing import Optional, Tuple
+from typing import Optional
 
 from django import urls
 from django.contrib import admin
-from django.db.models.query import QuerySet
 from django.http import HttpRequest
 from django.utils.html import format_html
 
@@ -249,45 +250,58 @@ class RoleAdmin(admin.ModelAdmin):
     permissions_with_calc_link.short_description = "Permissions"
 
 
-class StaffRolesFilter(admin.SimpleListFilter):
-    """Filter options for Staff Roles."""
+class UserTopRoleFilter(admin.SimpleListFilter):
+    """List Filter for User list Admin page."""
 
-    title = "Staff Role"
-    parameter_name = "staff_role"
+    title = "Role"
+    parameter_name = "role"
 
-    @staticmethod
-    def lookups(*_) -> Tuple[Tuple[str, str], ...]:
-        """Available filter options."""
-        return (
-            ("Owners", "Owners"),
-            ("Admins", "Admins"),
-            ("Moderators", "Moderators"),
-            ("Core Developers", "Core Developers"),
-            ("Helpers", "Helpers"),
-        )
+    def lookups(self, request, model_admin: UserAdmin):
+        """Selectable values for viewer to filter by."""
+        roles = Role.objects.all()
+        return ((r.name, r.name) for r in roles)
 
-    def queryset(self, request: HttpRequest, queryset: QuerySet) -> Optional[QuerySet]:
-        """Returned data filter based on selected option."""
-        value = self.value()
-        if value:
-            return queryset.filter(roles__name=value)
+    def queryset(self, request, queryset):
+        if not self.value():
+            return
+        role = Role.objects.get(name=self.value())
+        return queryset.filter(roles__contains=[role.id])
 
 
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
     """Admin formatting for the User model."""
 
-    search_fields = ("name", "id", "roles__name", "roles__id")
-    list_filter = ("in_guild", StaffRolesFilter)
-    exclude = ("name", "discriminator")
-    readonly_fields = (
-        "__str__",
-        "id",
-        "avatar_hash",
-        "top_role",
-        "roles",
-        "in_guild",
-    )
+    def top_role_coloured(self, obj: User):
+        """Returns the top role of the user with html style matching role colour."""
+        return format_html(
+            f'<span style="color: #{obj.top_role.colour:06X}; font-weight: bold;">{obj.top_role.name}</span>'
+        )
+
+    top_role_coloured.short_description = "Top Role"
+
+    def all_roles_coloured(self, obj: User):
+        """Returns all user roles with html style matching role colours."""
+        roles = Role.objects.filter(id__in=obj.roles)
+        return format_html(
+            "</br>".join(
+                f'<span style="color: #{r.colour:06X}; font-weight: bold;">{r.name}</span>' for r in roles
+            )
+        )
+
+    all_roles_coloured.short_description = "All Roles"
+
+    search_fields = ("name", "id", "roles")
+    list_filter = (UserTopRoleFilter, "in_guild")
+    list_display = ("username", "top_role_coloured", "in_guild")
+    fields = ("username", "id", "in_guild", "all_roles_coloured")
+    sortable_by = ("username",)
+
+    def has_add_permission(self, request):
+        return False
+
+    def has_change_permission(self, request, obj=None):
+        return False
 
 
 admin.site.register(BotSetting)

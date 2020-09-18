@@ -75,3 +75,7 @@ class User(ModelReprMixin, models.Model):
         if not roles:
             return Role.objects.get(name="Developers")
         return max(roles)
+
+    @property
+    def username(self):
+        return f"{self.name}#{self.discriminator:04d}"
