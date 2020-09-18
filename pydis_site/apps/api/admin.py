@@ -49,6 +49,25 @@ class DocumentationLinkAdmin(admin.ModelAdmin):
     search_fields = ("package",)
 
 
+class InfractionActorFilter(admin.SimpleListFilter):
+    """Actor Filter for Infraction Admin list page."""
+
+    title = "Actor"
+    parameter_name = "actor"
+
+    def lookups(self, request: HttpRequest, model: NominationAdmin) -> Iterable[Tuple[int, str]]:
+        """Selectable values for viewer to filter by."""
+        actor_ids = Infraction.objects.order_by().values_list("actor").distinct()
+        actors = User.objects.filter(id__in=actor_ids)
+        return ((a.id, a.username) for a in actors)
+
+    def queryset(self, request: HttpRequest, queryset: QuerySet) -> Optional[QuerySet]:
+        """Query to filter the list of Users against."""
+        if not self.value():
+            return
+        return queryset.filter(actor__id=self.value())
+
+
 @admin.register(Infraction)
 class InfractionAdmin(admin.ModelAdmin):
     """Admin formatting for the Infraction model."""
@@ -67,16 +86,16 @@ class InfractionAdmin(admin.ModelAdmin):
         "user",
         "actor",
         "type",
-        "inserted_at"
+        "inserted_at",
+        "active",
+        "hidden"
     )
     list_display = (
         "type",
-        "user",
-        "actor",
-        "inserted_at",
-        "expires_at",
-        "reason",
         "active",
+        "user",
+        "inserted_at",
+        "reason",
     )
     search_fields = (
         "id",
@@ -90,7 +109,8 @@ class InfractionAdmin(admin.ModelAdmin):
     list_filter = (
         "type",
         "hidden",
-        "active"
+        "active",
+        InfractionActorFilter
     )
 
     def has_add_permission(self, *args) -> bool:
