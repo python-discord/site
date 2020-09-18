@@ -216,6 +216,7 @@ class OffTopicChannelNameAdmin(admin.ModelAdmin):
     """Admin formatting for the OffTopicChannelName model."""
 
     search_fields = ("name",)
+    list_filter = ("used",)
 
 
 @admin.register(OffensiveMessage)
