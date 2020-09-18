@@ -277,8 +277,8 @@ class UserAdmin(admin.ModelAdmin):
     def top_role_coloured(self, user: User) -> SafeString:
         """Returns the top role of the user with html style matching role colour."""
         return format_html(
-            '<span style="color: #{0:06X}; font-weight: bold;">{1}</span>',
-            user.top_role.colour,
+            '<span style="color: {0}; font-weight: bold;">{1}</span>',
+            f"#{user.top_role.colour:06X}",
             user.top_role.name
         )
 
