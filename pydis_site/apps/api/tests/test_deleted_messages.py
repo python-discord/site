@@ -81,7 +81,7 @@ class DeletedMessagesWithActorTests(APISubdomainTestCase):
 
 class DeletedMessagesLogURLTests(APISubdomainTestCase):
     @classmethod
-    def setUpTestData(cls):  # noqa
+    def setUpTestData(cls):
         cls.author = cls.actor = User.objects.create(
             id=324888,
             name='Black Knight',
