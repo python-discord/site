@@ -27,6 +27,28 @@ admin.site.site_header = "Python Discord | Administration"
 admin.site.site_title = "Python Discord"
 
 
+@admin.register(BotSetting)
+class BotSettingAdmin(admin.ModelAdmin):
+    """Admin formatting for the BotSetting model."""
+
+    fields = ("name", "data")
+    list_display = ("name",)
+
+    def has_add_permission(self, *args) -> bool:
+        """Prevent adding from django admin."""
+        return False
+
+
+@admin.register(DocumentationLink)
+class DocumentationLinkAdmin(admin.ModelAdmin):
+    """Admin formatting for the DocumentationLink model."""
+
+    fields = ("package", "base_url", "inventory_url")
+    list_display = ("package", "base_url", "inventory_url")
+    list_editable = ("base_url", "inventory_url")
+    search_fields = ("package",)
+
+
 @admin.register(Infraction)
 class InfractionAdmin(admin.ModelAdmin):
     """Admin formatting for the Infraction model."""
@@ -70,6 +92,10 @@ class InfractionAdmin(admin.ModelAdmin):
         "hidden",
         "active"
     )
+
+    def has_add_permission(self, *args) -> bool:
+        """Prevent adding from django admin."""
+        return False
 
 
 @admin.register(LogEntry)
@@ -123,6 +149,8 @@ class DeletedMessageAdmin(admin.ModelAdmin):
         "deletion_context__actor__name",
         "deletion_context__actor__id"
     )
+
+    list_display = ("id", "author", "channel_id")
 
     def embed_data(self, message: DeletedMessage) -> Optional[str]:
         """Format embed data in a code block for better readability."""
@@ -389,7 +417,3 @@ class UserAdmin(admin.ModelAdmin):
     def has_change_permission(self, *args) -> bool:
         """Prevent editing from django admin."""
         return False
-
-
-admin.site.register(BotSetting)
-admin.site.register(DocumentationLink)
