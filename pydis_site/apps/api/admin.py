@@ -222,33 +222,46 @@ class OffTopicChannelNameAdmin(admin.ModelAdmin):
 class RoleAdmin(admin.ModelAdmin):
     """Admin formatting for the Role model."""
 
-    exclude = ("permissions", "colour")
-    readonly_fields = (
-        "name",
-        "id",
-        "colour_with_preview",
-        "permissions_with_calc_link",
-        "position"
-    )
-    search_fields = ("name", "id")
-
-    def colour_with_preview(self, instance: Role) -> str:
-        """Show colour value in both int and hex, in bolded and coloured style."""
+    def coloured_name(self, role: Role) -> SafeString:
+        """Role name with html style colouring."""
         return format_html(
-            "<span style='color: #{0}!important; font-weight: bold;'>{1} / #{0}</span>",
-            f"{instance.colour:06x}",
-            instance.colour
+            '<span style="color: {0}!important; font-weight: bold;">{1}</span>',
+            f"#{role.colour:06X}",
+            role.name
         )
 
-    def permissions_with_calc_link(self, instance: Role) -> str:
-        """Show permissions with link to API permissions calculator page."""
+    coloured_name.short_description = "Name"
+
+    def colour_with_preview(self, role: Role) -> SafeString:
+        """Show colour value in both int and hex, in bolded and coloured style."""
         return format_html(
-            "<a href='https://discordapi.com/permissions.html#{0}' target='_blank'>{0}</a>",
-            instance.permissions
+            "<span style='color: {0}; font-weight: bold;'>{0} ({1})</span>",
+            f"#{role.colour:06x}",
+            role.colour
         )
 
     colour_with_preview.short_description = "Colour"
+
+    def permissions_with_calc_link(self, role: Role) -> SafeString:
+        """Show permissions with link to API permissions calculator page."""
+        return format_html(
+            "<a href='https://discordapi.com/permissions.html#{0}' target='_blank'>{0}</a>",
+            role.permissions
+        )
+
     permissions_with_calc_link.short_description = "Permissions"
+
+    search_fields = ("name", "id")
+    list_display = ("coloured_name",)
+    fields = ("id", "name", "colour_with_preview", "permissions_with_calc_link", "position")
+
+    def has_add_permission(self, *args) -> bool:
+        """Prevent adding from django admin."""
+        return False
+
+    def has_change_permission(self, *args) -> bool:
+        """Prevent editing from django admin."""
+        return False
 
 
 class UserTopRoleFilter(admin.SimpleListFilter):

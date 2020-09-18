@@ -22,7 +22,8 @@ class Role(ModelReprMixin, models.Model):
                 message="Role IDs cannot be negative."
             ),
         ),
-        help_text="The role ID, taken from Discord."
+        help_text="The role ID, taken from Discord.",
+        verbose_name="ID"
     )
     name = models.CharField(
         max_length=100,
