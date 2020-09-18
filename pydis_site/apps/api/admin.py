@@ -23,109 +23,8 @@ from .models import (
     User
 )
 
-
-@admin.register(LogEntry)
-class LogEntryAdmin(admin.ModelAdmin):
-    """Allows viewing logs in the Django Admin without allowing edits."""
-
-    actions = None
-    list_display = ('timestamp', 'application', 'level', 'message')
-    fieldsets = (
-        ('Overview', {'fields': ('timestamp', 'application', 'logger_name')}),
-        ('Metadata', {'fields': ('level', 'module', 'line')}),
-        ('Contents', {'fields': ('message',)})
-    )
-    list_filter = ('application', 'level', 'timestamp')
-    search_fields = ('message',)
-    readonly_fields = (
-        'application',
-        'logger_name',
-        'timestamp',
-        'level',
-        'module',
-        'line',
-        'message'
-    )
-
-    def has_add_permission(self, request: HttpRequest) -> bool:
-        """Deny manual LogEntry creation."""
-        return False
-
-    def has_delete_permission(self, request: HttpRequest, obj: Optional[LogEntry] = None) -> bool:
-        """Deny LogEntry deletion."""
-        return False
-
-
-@admin.register(DeletedMessage)
-class DeletedMessageAdmin(admin.ModelAdmin):
-    """Admin formatting for the DeletedMessage model."""
-
-    readonly_fields = (
-        "id",
-        "author",
-        "channel_id",
-        "content",
-        "embed_data",
-        "context",
-        "view_full_log"
-    )
-
-    exclude = ("embeds", "deletion_context")
-
-    search_fields = (
-        "id",
-        "content",
-        "author__name",
-        "author__id",
-        "deletion_context__actor__name",
-        "deletion_context__actor__id"
-    )
-
-    @staticmethod
-    def embed_data(instance: DeletedMessage) -> Optional[str]:
-        """Format embed data in a code block for better readability."""
-        if instance.embeds:
-            return format_html(
-                "<pre style='word-wrap: break-word; white-space: pre-wrap; overflow-x: auto;'>"
-                "<code>{0}</code></pre>",
-                json.dumps(instance.embeds, indent=4)
-            )
-
-    @staticmethod
-    def context(instance: DeletedMessage) -> str:
-        """Provide full context info with a link through to context admin view."""
-        link = urls.reverse(
-            "admin:api_messagedeletioncontext_change",
-            args=[instance.deletion_context.id]
-        )
-        details = (
-            f"Deleted by {instance.deletion_context.actor} at "
-            f"{instance.deletion_context.creation}"
-        )
-        return format_html("<a href='{0}'>{1}</a>", link, details)
-
-    @staticmethod
-    def view_full_log(instance: DeletedMessage) -> str:
-        """Provide a link to the message logs for the relevant context."""
-        return format_html(
-            "<a href='{0}'>Click to view full context log</a>",
-            instance.deletion_context.log_url
-        )
-
-
-@admin.register(MessageDeletionContext)
-class MessageDeletionContextAdmin(admin.ModelAdmin):
-    """Admin formatting for the MessageDeletionContext model."""
-
-    readonly_fields = ("actor", "creation", "message_log")
-
-    @staticmethod
-    def message_log(instance: MessageDeletionContext) -> str:
-        """Provide a formatted link to the message logs for the context."""
-        return format_html(
-            "<a href='{0}'>Click to see deleted message log</a>",
-            instance.log_url
-        )
+admin.site.site_header = "Python Discord | Administration"
+admin.site.site_title = "Python Discord"
 
 
 @admin.register(Infraction)
@@ -173,13 +72,129 @@ class InfractionAdmin(admin.ModelAdmin):
     )
 
 
+@admin.register(LogEntry)
+class LogEntryAdmin(admin.ModelAdmin):
+    """Allows viewing logs in the Django Admin without allowing edits."""
+
+    actions = None
+    list_display = ('timestamp', 'level', 'message')
+    fieldsets = (
+        ('Overview', {'fields': ('timestamp', 'application', 'logger_name')}),
+        ('Metadata', {'fields': ('level', 'module', 'line')}),
+        ('Contents', {'fields': ('message',)})
+    )
+    list_filter = ('level', 'timestamp')
+    search_fields = ('message',)
+
+    def has_add_permission(self, request: HttpRequest) -> bool:
+        """Deny manual LogEntry creation."""
+        return False
+
+    def has_change_permission(self, *args) -> bool:
+        """Prevent editing from django admin."""
+        return False
+
+    def has_delete_permission(self, request: HttpRequest, obj: Optional[LogEntry] = None) -> bool:
+        """Deny LogEntry deletion."""
+        return False
+
+
+@admin.register(DeletedMessage)
+class DeletedMessageAdmin(admin.ModelAdmin):
+    """Admin formatting for the DeletedMessage model."""
+
+    fields = (
+        "id",
+        "author",
+        "channel_id",
+        "content",
+        "embed_data",
+        "context",
+        "view_full_log"
+    )
+
+    exclude = ("embeds", "deletion_context")
+
+    search_fields = (
+        "id",
+        "content",
+        "author__name",
+        "author__id",
+        "deletion_context__actor__name",
+        "deletion_context__actor__id"
+    )
+
+    def embed_data(self, message: DeletedMessage) -> Optional[str]:
+        """Format embed data in a code block for better readability."""
+        if message.embeds:
+            return format_html(
+                "<pre style='word-wrap: break-word; white-space: pre-wrap; overflow-x: auto;'>"
+                "<code>{0}</code></pre>",
+                json.dumps(message.embeds, indent=4)
+            )
+
+    embed_data.short_description = "Embeds"
+
+    @staticmethod
+    def context(message: DeletedMessage) -> str:
+        """Provide full context info with a link through to context admin view."""
+        link = urls.reverse(
+            "admin:api_messagedeletioncontext_change",
+            args=[message.deletion_context.id]
+        )
+        details = (
+            f"Deleted by {message.deletion_context.actor} at "
+            f"{message.deletion_context.creation}"
+        )
+        return format_html("<a href='{0}'>{1}</a>", link, details)
+
+    @staticmethod
+    def view_full_log(message: DeletedMessage) -> str:
+        """Provide a link to the message logs for the relevant context."""
+        return format_html(
+            "<a href='{0}'>Click to view full context log</a>",
+            message.deletion_context.log_url
+        )
+
+    def has_add_permission(self, *args) -> bool:
+        """Prevent adding from django admin."""
+        return False
+
+    def has_change_permission(self, *args) -> bool:
+        """Prevent editing from django admin."""
+        return False
+
+
+class DeletedMessageInline(admin.TabularInline):
+    """Tabular Inline Admin model for Deleted Message to be viewed within Context."""
+
+    model = DeletedMessage
+
+
+@admin.register(MessageDeletionContext)
+class MessageDeletionContextAdmin(admin.ModelAdmin):
+    """Admin formatting for the MessageDeletionContext model."""
+
+    fields = ("actor", "creation")
+    list_display = ("id", "creation", "actor")
+    inlines = (DeletedMessageInline,)
+
+    def has_add_permission(self, *args) -> bool:
+        """Prevent adding from django admin."""
+        return False
+
+    def has_change_permission(self, *args) -> bool:
+        """Prevent editing from django admin."""
+        return False
+
+
 class NominationActorFilter(admin.SimpleListFilter):
     """Actor Filter for Nomination Admin list page."""
 
     title = "Actor"
     parameter_name = "actor"
 
-    def lookups(self, request: HttpRequest, model_admin: NominationAdmin) -> Iterable[Tuple[int, str]]:
+    def lookups(self, request: HttpRequest, model: NominationAdmin) -> Iterable[Tuple[int, str]]:
         """Selectable values for viewer to filter by."""
         actor_ids = Nomination.objects.order_by().values_list("actor").distinct()
         actors = User.objects.filter(id__in=actor_ids)
@@ -322,7 +337,7 @@ class UserTopRoleFilter(admin.SimpleListFilter):
     title = "Role"
     parameter_name = "role"
 
-    def lookups(self, request: HttpRequest, model_admin: UserAdmin) -> Iterable[Tuple[str, str]]:
+    def lookups(self, request: HttpRequest, model: UserAdmin) -> Iterable[Tuple[str, str]]:
         """Selectable values for viewer to filter by."""
         roles = Role.objects.all()
         return ((r.name, r.name) for r in roles)
