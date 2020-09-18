@@ -87,6 +87,7 @@ class InfractionAdmin(admin.ModelAdmin):
         "actor",
         "type",
         "inserted_at",
+        "expires_at",
         "active",
         "hidden"
     )
