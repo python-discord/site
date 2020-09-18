@@ -173,18 +173,47 @@ class InfractionAdmin(admin.ModelAdmin):
     )
 
 
+class NominationActorFilter(admin.SimpleListFilter):
+    """Actor Filter for Nomination Admin list page."""
+
+    title = "Actor"
+    parameter_name = "actor"
+
+    def lookups(self, request: HttpRequest, model_admin: NominationAdmin) -> Iterable[Tuple[int, str]]:
+        """Selectable values for viewer to filter by."""
+        actor_ids = Nomination.objects.order_by().values_list("actor").distinct()
+        actors = User.objects.filter(id__in=actor_ids)
+        return ((a.id, a.username) for a in actors)
+
+    def queryset(self, request: HttpRequest, queryset: QuerySet) -> Optional[QuerySet]:
+        """Query to filter the list of Users against."""
+        if not self.value():
+            return
+        return queryset.filter(actor__id=self.value())
+
+
 @admin.register(Nomination)
 class NominationAdmin(admin.ModelAdmin):
     """Admin formatting for the Nomination model."""
+
+    search_fields = (
+        "user__name",
+        "user__id",
+        "actor__name",
+        "actor__id",
+        "reason",
+        "end_reason"
+    )
+
+    list_filter = ("active", NominationActorFilter)
 
     list_display = (
         "user",
         "active",
         "reason",
         "actor",
-        "inserted_at",
-        "ended_at"
     )
+
     fields = (
         "user",
         "active",
@@ -194,6 +223,8 @@ class NominationAdmin(admin.ModelAdmin):
         "ended_at",
         "end_reason"
     )
+
+    # only allow reason fields to be edited.
     readonly_fields = (
         "user",
         "active",
@@ -201,14 +232,10 @@ class NominationAdmin(admin.ModelAdmin):
         "inserted_at",
         "ended_at"
     )
-    search_fields = (
-        "actor__name",
-        "actor__id",
-        "user__name",
-        "user__id",
-        "reason"
-    )
-    list_filter = ("active",)
+
+    def has_add_permission(self, *args) -> bool:
+        """Prevent adding from django admin."""
+        return False
 
 
 @admin.register(OffTopicChannelName)
