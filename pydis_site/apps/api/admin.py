@@ -22,6 +22,7 @@ from .models import (
 )
 
 
+@admin.register(LogEntry)
 class LogEntryAdmin(admin.ModelAdmin):
     """Allows viewing logs in the Django Admin without allowing edits."""
 
@@ -53,6 +54,7 @@ class LogEntryAdmin(admin.ModelAdmin):
         return False
 
 
+@admin.register(DeletedMessage)
 class DeletedMessageAdmin(admin.ModelAdmin):
     """Admin formatting for the DeletedMessage model."""
 
@@ -109,6 +111,7 @@ class DeletedMessageAdmin(admin.ModelAdmin):
         )
 
 
+@admin.register(MessageDeletionContext)
 class MessageDeletionContextAdmin(admin.ModelAdmin):
     """Admin formatting for the MessageDeletionContext model."""
 
@@ -123,6 +126,7 @@ class MessageDeletionContextAdmin(admin.ModelAdmin):
         )
 
 
+@admin.register(Infraction)
 class InfractionAdmin(admin.ModelAdmin):
     """Admin formatting for the Infraction model."""
 
@@ -167,6 +171,7 @@ class InfractionAdmin(admin.ModelAdmin):
     )
 
 
+@admin.register(Nomination)
 class NominationAdmin(admin.ModelAdmin):
     """Admin formatting for the Nomination model."""
 
@@ -204,12 +209,14 @@ class NominationAdmin(admin.ModelAdmin):
     list_filter = ("active",)
 
 
+@admin.register(OffTopicChannelName)
 class OffTopicChannelNameAdmin(admin.ModelAdmin):
     """Admin formatting for the OffTopicChannelName model."""
 
     search_fields = ("name",)
 
 
+@admin.register(Role)
 class RoleAdmin(admin.ModelAdmin):
     """Admin formatting for the Role model."""
 
@@ -266,6 +273,7 @@ class StaffRolesFilter(admin.SimpleListFilter):
             return queryset.filter(roles__name=value)
 
 
+@admin.register(User)
 class UserAdmin(admin.ModelAdmin):
     """Admin formatting for the User model."""
 
@@ -283,13 +291,5 @@ class UserAdmin(admin.ModelAdmin):
 
 
 admin.site.register(BotSetting)
-admin.site.register(DeletedMessage, DeletedMessageAdmin)
 admin.site.register(DocumentationLink)
-admin.site.register(Infraction, InfractionAdmin)
-admin.site.register(LogEntry, LogEntryAdmin)
-admin.site.register(MessageDeletionContext, MessageDeletionContextAdmin)
-admin.site.register(Nomination, NominationAdmin)
 admin.site.register(OffensiveMessage)
-admin.site.register(OffTopicChannelName, OffTopicChannelNameAdmin)
-admin.site.register(Role, RoleAdmin)
-admin.site.register(User, UserAdmin)
