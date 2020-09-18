@@ -26,11 +26,12 @@ class User(ModelReprMixin, models.Model):
                 message="User IDs cannot be negative."
             ),
         ),
+        verbose_name="ID",
         help_text="The ID of this user, taken from Discord."
     )
     name = models.CharField(
         max_length=32,
-        help_text="The username, taken from Discord."
+        help_text="The username, taken from Discord.",
     )
     discriminator = models.PositiveSmallIntegerField(
         validators=(
@@ -57,7 +58,8 @@ class User(ModelReprMixin, models.Model):
     )
     in_guild = models.BooleanField(
         default=True,
-        help_text="Whether this user is in our server."
+        help_text="Whether this user is in our server.",
+        verbose_name="In Guild"
     )
 
     def __str__(self):
