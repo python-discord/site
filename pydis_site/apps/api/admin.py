@@ -1,12 +1,13 @@
 from __future__ import annotations
 
 import json
-from typing import Optional
+from typing import Iterable, Optional, Tuple
 
 from django import urls
 from django.contrib import admin
+from django.db.models import QuerySet
 from django.http import HttpRequest
-from django.utils.html import format_html
+from django.utils.html import SafeString, format_html
 
 from .models import (
     BotSetting,
@@ -256,12 +257,13 @@ class UserTopRoleFilter(admin.SimpleListFilter):
     title = "Role"
     parameter_name = "role"
 
-    def lookups(self, request, model_admin: UserAdmin):
+    def lookups(self, request: HttpRequest, model_admin: UserAdmin) -> Iterable[Tuple[str, str]]:
         """Selectable values for viewer to filter by."""
         roles = Role.objects.all()
         return ((r.name, r.name) for r in roles)
 
-    def queryset(self, request, queryset):
+    def queryset(self, request: HttpRequest, queryset: QuerySet) -> Optional[QuerySet]:
+        """Query to filter the list of Users against."""
         if not self.value():
             return
         role = Role.objects.get(name=self.value())
@@ -272,20 +274,23 @@ class UserTopRoleFilter(admin.SimpleListFilter):
 class UserAdmin(admin.ModelAdmin):
     """Admin formatting for the User model."""
 
-    def top_role_coloured(self, obj: User):
+    def top_role_coloured(self, user: User) -> SafeString:
         """Returns the top role of the user with html style matching role colour."""
         return format_html(
-            f'<span style="color: #{obj.top_role.colour:06X}; font-weight: bold;">{obj.top_role.name}</span>'
+            '<span style="color: #{0:06X}; font-weight: bold;">{1}</span>',
+            user.top_role.colour,
+            user.top_role.name
         )
 
     top_role_coloured.short_description = "Top Role"
 
-    def all_roles_coloured(self, obj: User):
+    def all_roles_coloured(self, user: User) -> SafeString:
         """Returns all user roles with html style matching role colours."""
-        roles = Role.objects.filter(id__in=obj.roles)
+        roles = Role.objects.filter(id__in=user.roles)
         return format_html(
             "</br>".join(
-                f'<span style="color: #{r.colour:06X}; font-weight: bold;">{r.name}</span>' for r in roles
+                f'<span style="color: #{r.colour:06X}; font-weight: bold;">{r.name}</span>'
+                for r in roles
             )
         )
 
@@ -297,10 +302,12 @@ class UserAdmin(admin.ModelAdmin):
     fields = ("username", "id", "in_guild", "all_roles_coloured")
     sortable_by = ("username",)
 
-    def has_add_permission(self, request):
+    def has_add_permission(self, *args) -> bool:
+        """Prevent adding from django admin."""
         return False
 
-    def has_change_permission(self, request, obj=None):
+    def has_change_permission(self, *args) -> bool:
+        """Prevent editing from django admin."""
         return False
 
 

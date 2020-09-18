@@ -64,7 +64,7 @@ class User(ModelReprMixin, models.Model):
 
     def __str__(self):
         """Returns the name and discriminator for the current user, for display purposes."""
-        return f"{self.name}#{self.discriminator:0>4}"
+        return f"{self.name}#{self.discriminator:04d}"
 
     @property
     def top_role(self) -> Role:
@@ -79,5 +79,10 @@ class User(ModelReprMixin, models.Model):
         return max(roles)
 
     @property
-    def username(self):
-        return f"{self.name}#{self.discriminator:04d}"
+    def username(self) -> str:
+        """
+        Returns the display version with name and discriminator as a standard attribute.
+
+        For usability in read-only fields such as Django Admin.
+        """
+        return str(self)
