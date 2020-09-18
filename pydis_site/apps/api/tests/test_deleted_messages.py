@@ -86,7 +86,6 @@ class DeletedMessagesLogURLTests(APISubdomainTestCase):
             id=324888,
             name='Black Knight',
             discriminator=1975,
-            avatar_hash=None
         )
 
         cls.deletion_context = MessageDeletionContext.objects.create(
