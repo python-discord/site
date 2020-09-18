@@ -218,6 +218,30 @@ class OffTopicChannelNameAdmin(admin.ModelAdmin):
     search_fields = ("name",)
 
 
+@admin.register(OffensiveMessage)
+class OffensiveMessageAdmin(admin.ModelAdmin):
+    """Admin formatting for the OffensiveMessage model."""
+
+    def message_jumplink(self, message: OffensiveMessage) -> SafeString:
+        """Message ID hyperlinked to the direct discord jumplink."""
+        return format_html(
+            '<a href="https://canary.discordapp.com/channels/267624335836053506/{0}/{1}">{1}</a>',
+            message.channel_id,
+            message.id
+        )
+
+    message_jumplink.short_description = "Message ID"
+
+    search_fields = ("id", "channel_id")
+    list_display = ("id", "channel_id", "delete_date")
+    fields = ("message_jumplink", "channel_id", "delete_date")
+    readonly_fields = ("message_jumplink", "channel_id")
+
+    def has_add_permission(self, *args) -> bool:
+        """Prevent adding from django admin."""
+        return False
+
+
 @admin.register(Role)
 class RoleAdmin(admin.ModelAdmin):
     """Admin formatting for the Role model."""
@@ -326,4 +350,3 @@ class UserAdmin(admin.ModelAdmin):
 
 admin.site.register(BotSetting)
 admin.site.register(DocumentationLink)
-admin.site.register(OffensiveMessage)
