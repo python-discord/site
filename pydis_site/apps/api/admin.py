@@ -72,15 +72,11 @@ class InfractionActorFilter(admin.SimpleListFilter):
 class InfractionAdmin(admin.ModelAdmin):
     """Admin formatting for the Infraction model."""
 
-    fields = (
-        "user",
-        "actor",
-        "type",
-        "reason",
-        "inserted_at",
-        "expires_at",
-        "active",
-        "hidden"
+    fieldsets = (
+        ("Members", {"fields": ("user", "actor")}),
+        ("Action", {"fields": ("type", "hidden", "active")}),
+        ("Dates", {"fields": ("inserted_at", "expires_at")}),
+        ("Reason", {"fields": ("reason",)}),
     )
     readonly_fields = (
         "user",
