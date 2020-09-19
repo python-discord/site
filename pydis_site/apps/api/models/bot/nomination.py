@@ -34,7 +34,8 @@ class Nomination(ModelReprMixin, models.Model):
     )
     end_reason = models.TextField(
         help_text="Why the nomination was ended.",
-        default=""
+        default="",
+        blank=True
     )
     ended_at = models.DateTimeField(
         auto_now_add=False,
