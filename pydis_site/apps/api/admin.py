@@ -380,7 +380,7 @@ class RoleAdmin(admin.ModelAdmin):
         return False
 
 
-class UserTopRoleFilter(admin.SimpleListFilter):
+class UserRoleFilter(admin.SimpleListFilter):
     """List Filter for User list Admin page."""
 
     title = "Role"
@@ -426,7 +426,7 @@ class UserAdmin(admin.ModelAdmin):
     all_roles_coloured.short_description = "All Roles"
 
     search_fields = ("name", "id", "roles")
-    list_filter = (UserTopRoleFilter, "in_guild")
+    list_filter = (UserRoleFilter, "in_guild")
     list_display = ("username", "top_role_coloured", "in_guild")
     fields = ("username", "id", "in_guild", "all_roles_coloured")
     sortable_by = ("username",)
