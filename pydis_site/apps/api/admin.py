@@ -33,9 +33,14 @@ class BotSettingAdmin(admin.ModelAdmin):
 
     fields = ("name", "data")
     list_display = ("name",)
+    readonly_fields = ("name",)
 
     def has_add_permission(self, *args) -> bool:
         """Prevent adding from django admin."""
+        return False
+
+    def has_delete_permission(self, *args) -> bool:
+        """Prevent deleting from django admin."""
         return False
 
 
