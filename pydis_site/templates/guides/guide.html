@@ -1,0 +1,55 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}{{ metadata.title|first }}{% endblock %}
+{% block head %}
+  <link rel="stylesheet" href="{% static "css/guides/guide.css" %}">
+{% endblock %}
+
+{% block content %}
+    {% include "base/navbar.html" %}
+
+    <section class="breadcrumb-section section">
+        <div class="container">
+            <nav class="breadcrumb is-pulled-left" aria-label="breadcrumbs">
+                <ul>
+                    <li><a href="/guides">Guides</a></li>
+                    {% if category_data.name is not None %}
+                        <li><a href="/guides/category/{{ category_data.name }}">{{ category_data.title }}</a></li>
+                    {% endif %}
+                    <li class="is-active"><a href="#">{{ metadata.title|first }}</a></li>
+                </ul>
+            </nav>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="content">
+            <div class="container">
+                <h1 class="title">{{ metadata.title|first }}</h1>
+                <div class="columns is-variable is-8">
+                    <div class="column is-two-thirds">
+                        {{ guide|safe }}
+                        <p class="has-text-weight-light is-size-7">
+                            <strong>Last modified:</strong> {{ last_modified }}<br/>
+                            <strong>Contributors:</strong> {{ metadata.contributors|join:", " }}
+                        </p>
+                    </div>
+                    <div class="column">
+                        {% if relevant_links|length > 0 %}
+                        <div class="box">
+                            <p class="menu-label">Relevant links</p>
+                            <ul class="menu-list">
+                                {% for link, value in relevant_links.items %}
+                                    <li><a class="has-text-link" href="{{link}}">{{ value }}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
