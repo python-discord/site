@@ -26,7 +26,7 @@ class GuideView(View):
                 category_name = yaml.load(f.read())["name"]
 
         if not os.path.exists(path) or not os.path.isfile(path):
-            raise Http404(f"Guide not found {path}")
+            raise Http404(f"Guide not found")
 
         md = Markdown(extensions=['meta', 'attr_list', 'fenced_code'])
         with open(path) as f:
