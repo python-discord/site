@@ -3,6 +3,10 @@
 
 {% block title %}{{ metadata.title|first }}{% endblock %}
 {% block head %}
+
+  <meta property="og:title" content="Python Discord - {{ metadata.title|first }}" />
+  <meta property="og:type" content="website" />
+  <meta property="og:description" content="{{ metadata.shortdescription }}" />
   <link rel="stylesheet" href="{% static "css/guides/guide.css" %}">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.2.0/build/styles/default.min.css">
   <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.2.0/build/highlight.min.js"></script>
