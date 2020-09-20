@@ -21,6 +21,9 @@ class GuideView(View):
             category_name = None
         else:
             dir_path = os.path.join(settings.BASE_DIR, "pydis_site", "apps", "guides", "resources", "guides", category)
+            if not os.path.exists(dir_path) or not os.path.isdir(dir_path):
+                raise Http404("Category not found.")
+
             path = os.path.join(dir_path, f"{guide}.md")
             with open(os.path.join(dir_path, "_info.yml")) as f:
                 category_name = yaml.load(f.read())["name"]
