@@ -34,7 +34,8 @@ class Nomination(ModelReprMixin, models.Model):
     )
     end_reason = models.TextField(
         help_text="Why the nomination was ended.",
-        default=""
+        default="",
+        blank=True
     )
     ended_at = models.DateTimeField(
         auto_now_add=False,
@@ -46,3 +47,8 @@ class Nomination(ModelReprMixin, models.Model):
         """Representation that makes the target and state of the nomination immediately evident."""
         status = "active" if self.active else "ended"
         return f"Nomination of {self.user} ({status})"
+
+    class Meta:
+        """Set the ordering of nominations to most recent first."""
+
+        ordering = ("-inserted_at",)

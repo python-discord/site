@@ -26,11 +26,12 @@ class User(ModelReprMixin, models.Model):
                 message="User IDs cannot be negative."
             ),
         ),
+        verbose_name="ID",
         help_text="The ID of this user, taken from Discord."
     )
     name = models.CharField(
         max_length=32,
-        help_text="The username, taken from Discord."
+        help_text="The username, taken from Discord.",
     )
     discriminator = models.PositiveSmallIntegerField(
         validators=(
@@ -57,12 +58,13 @@ class User(ModelReprMixin, models.Model):
     )
     in_guild = models.BooleanField(
         default=True,
-        help_text="Whether this user is in our server."
+        help_text="Whether this user is in our server.",
+        verbose_name="In Guild"
     )
 
     def __str__(self):
         """Returns the name and discriminator for the current user, for display purposes."""
-        return f"{self.name}#{self.discriminator:0>4}"
+        return f"{self.name}#{self.discriminator:04d}"
 
     @property
     def top_role(self) -> Role:
@@ -75,3 +77,12 @@ class User(ModelReprMixin, models.Model):
         if not roles:
             return Role.objects.get(name="Developers")
         return max(roles)
+
+    @property
+    def username(self) -> str:
+        """
+        Returns the display version with name and discriminator as a standard attribute.
+
+        For usability in read-only fields such as Django Admin.
+        """
+        return str(self)
