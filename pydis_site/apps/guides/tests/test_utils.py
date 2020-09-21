@@ -34,3 +34,22 @@ class TestGetCategory(TestCase):
             p.return_value = path
             with self.assertRaises(Http404):
                 utils.get_category("test.md")
+
+
+class TestGetCategories(TestCase):
+    def test_get_categories(self):
+        """Check does this return test guides categories."""
+        path = os.path.join(settings.BASE_DIR, "pydis_site", "apps", "guides", "tests", "test_guides")
+
+        side_effects = [path]
+        for name in os.listdir(path):
+            side_effects.append(os.path.join(path, name))
+            if os.path.isdir(os.path.join(path, name)):
+                side_effects.append(os.path.join(path, name))
+                side_effects.append(os.path.join(path, name, "_info.yml"))
+
+        with patch("pydis_site.apps.guides.utils.os.path.join") as p:
+            p.side_effect = side_effects
+            result = utils.get_categories()
+
+        self.assertEqual(result, {"category": {"name": "My Category", "description": "My Description"}})
