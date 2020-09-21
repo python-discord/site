@@ -281,10 +281,16 @@ class UserListSerializer(ListSerializer):
         data_mapping = {item['id']: item for item in validated_data}
 
         updated = []
+        fields_to_update = set()
         for user_id, data in data_mapping.items():
+            for key in data:
+                fields_to_update.add(key)
             user = instance_mapping.get(user_id)
-            updated.append(self.child.update(user, data))
+            user.__dict__.update(data)
+            updated.append(user)
 
+        fields_to_update.remove("id")
+        User.objects.bulk_update(updated, fields_to_update)
         return updated
 
 
