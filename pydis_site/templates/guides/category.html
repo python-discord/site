@@ -3,6 +3,9 @@
 
 {% block title %}{{ category_info.name }}{% endblock %}
 {% block head %}
+  <meta property="og:title" content="Python Discord - {{ category_info.name }}" />
+  <meta property="og:type" content="website" />
+  <meta property="og:description" content="{{ category_info.description }}" />
   <link rel="stylesheet" href="{% static "css/guides/guide.css" %}">
 {% endblock %}
 
