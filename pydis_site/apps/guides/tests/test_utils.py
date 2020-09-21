@@ -59,7 +59,7 @@ class TestGetGuides(TestCase):
         for case in ["test", "test2"]:
             with self.subTest(guide=case):
                 md = Markdown(extensions=['meta'])
-                with open(os.path.join(path, f"{case}.md")) as f:
+                with open(os.path.join(BASE_PATH, f"{case}.md")) as f:
                     md.convert(f.read())
 
                 self.assertIn(case, result)
