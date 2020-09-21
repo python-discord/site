@@ -1,9 +1,10 @@
 import os
-from unittest.mock import patch
+from unittest.mock import patch, DEFAULT
 
 from django.conf import settings
 from django.http import Http404
 from django.test import TestCase
+from markdown import Markdown
 
 from pydis_site.apps.guides import utils
 
@@ -53,3 +54,35 @@ class TestGetCategories(TestCase):
             result = utils.get_categories()
 
         self.assertEqual(result, {"category": {"name": "My Category", "description": "My Description"}})
+
+
+class TestGetGuides(TestCase):
+    def test_get_all_root_guides(self):
+        """Check does this return all root level testing guides."""
+        path = os.path.join(settings.BASE_DIR, "pydis_site", "apps", "guides", "tests", "test_guides")
+
+        with patch("pydis_site.apps.guides.utils._get_base_path", return_value=path):
+            result = utils.get_guides()
+
+        for case in ["test", "test2"]:
+            with self.subTest(guide=case):
+                md = Markdown(extensions=['meta'])
+                with open(os.path.join(path, f"{case}.md")) as f:
+                    md.convert(f.read())
+
+                self.assertIn(case, result)
+                self.assertEqual(md.Meta, result[case])
+
+    def test_get_all_category_guides(self):
+        """Check does this return all category testing guides."""
+        path = os.path.join(settings.BASE_DIR, "pydis_site", "apps", "guides", "tests", "test_guides")
+
+        with patch("pydis_site.apps.guides.utils._get_base_path", return_value=path):
+            result = utils.get_guides("category")
+
+        md = Markdown(extensions=['meta'])
+        with open(os.path.join(path, "category", "test3.md")) as f:
+            md.convert(f.read())
+
+        self.assertIn("test3", result)
+        self.assertEqual(md.Meta, result["test3"])
