@@ -39,9 +39,10 @@ def get_guides(category: Optional[str] = None) -> Dict[str, Dict]:
     guides = {}
 
     for filename in os.listdir(base_dir):
-        if os.path.isfile(os.path.join(base_dir, filename)) and filename.endswith(".md"):
+        full_path = os.path.join(base_dir, filename)
+        if os.path.isfile(full_path) and filename.endswith(".md"):
             md = Markdown(extensions=['meta'])
-            with open(os.path.join(base_dir, filename)) as f:
+            with open(full_path) as f:
                 md.convert(f.read())
 
             guides[os.path.splitext(filename)[0]] = md.Meta
