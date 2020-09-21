@@ -19,7 +19,7 @@ def get_category(category: str) -> Dict[str, str]:
         raise Http404("Category not found.")
 
     with open(os.path.join(path, "_info.yml")) as f:
-        return yaml.load(f.read())
+        return yaml.safe_load(f.read())
 
 
 def get_categories() -> Dict[str, Dict]:
