@@ -11,6 +11,9 @@ First, you have to have a good idea, that match with PyDis theme. We can't accep
 Best way to find out is your idea good is to discuss about it in #dev-core channel. There can other peoples give their opinion about your idea. Even better, open issue in site repository first, then PyDis staff can see it and approve/decline this idea.
 It's good idea to wait for staff decision before starting to write guide to avoid case when you write a long long guide, but then this don't get approved.
 
+To start with contributing, you should read [how to contribute to site](https://pythondiscord.com/pages/contributing/site/).
+You should also read our [Git workflow](https://pythondiscord.com/pages/contributing/working-with-git/), because you need to push your guide to GitHub.
+
 ## [Creating a File](#creating-a-file){: id="creating-a-file" }
 All guides is located at `site` repository, in `pydis_site/apps/guides/resources/guides`. Under this is root level guides (.md files) and categories (directories). Learn more about categories in [categories section](#categories).
 
