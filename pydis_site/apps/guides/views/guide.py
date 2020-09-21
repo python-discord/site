@@ -2,13 +2,13 @@ import os
 from datetime import datetime
 from typing import Optional
 
-import yaml
 from django.conf import settings
 from django.core.handlers.wsgi import WSGIRequest
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse
 from django.shortcuts import render
 from django.views import View
-from markdown import Markdown
+
+from pydis_site.apps.guides.utils import get_category, get_guide
 
 
 class GuideView(View):
@@ -16,44 +16,33 @@ class GuideView(View):
 
     def get(self, request: WSGIRequest, guide: str, category: Optional[str] = None) -> HttpResponse:
         """Collect guide content and display it. When guide don't exist, return 404."""
-        if category is None:
-            path = os.path.join(settings.BASE_DIR, "pydis_site", "apps", "guides", "resources", "guides", f"{guide}.md")
-            category_name = None
+        guide_result = get_guide(guide, category)
+
+        if category is not None:
+            path = os.path.join(
+                settings.BASE_DIR, "pydis_site", "apps", "guides", "resources", "guides", category, f"{guide}.md"
+            )
         else:
-            dir_path = os.path.join(settings.BASE_DIR, "pydis_site", "apps", "guides", "resources", "guides", category)
-            if not os.path.exists(dir_path) or not os.path.isdir(dir_path):
-                raise Http404("Category not found.")
+            path = os.path.join(settings.BASE_DIR, "pydis_site", "apps", "guides", "resources", "guides", f"{guide}.md")
 
-            path = os.path.join(dir_path, f"{guide}.md")
-            with open(os.path.join(dir_path, "_info.yml")) as f:
-                category_name = yaml.load(f.read())["name"]
-
-        if not os.path.exists(path) or not os.path.isfile(path):
-            raise Http404(f"Guide not found")
-
-        md = Markdown(extensions=['meta', 'attr_list', 'fenced_code'])
-        with open(path) as f:
-            html = md.convert(f.read())
-            f.close()
-
-        category_data = {
-            "title": category_name,
-            "name": category,
-        }
+        if category is not None:
+            category_data = get_category(category)
+            category_data["raw_name"] = category
+        else:
+            category_data = {"name": None, "raw_name": None}
 
         return render(
             request,
             "guides/guide.html",
             {
-                "guide": html,
-                "metadata": md.Meta,
+                "guide": guide_result,
                 "last_modified": datetime.fromtimestamp(os.path.getmtime(path)).strftime("%dth %B %Y"),
+                "category_data": category_data,
                 "relevant_links": {
                     link: value for link, value in zip(
-                        md.Meta.get("relevantlinks", []),
-                        md.Meta.get("relevantlinkvalues", [])
+                        guide_result["metadata"].get("relevantlinks", []),
+                        guide_result["metadata"].get("relevantlinkvalues", [])
                     )
-                },
-                "category_data": category_data,
+                }
             }
         )
