@@ -9,6 +9,15 @@ from markdown import Markdown
 from pydis_site.apps.guides import utils
 
 
+class TestGetBasePath(TestCase):
+    def test_get_base_path(self):
+        """Test does function return guides base path."""
+        self.assertEqual(
+            utils._get_base_path(),
+            os.path.join(settings.BASE_DIR, "pydis_site", "apps", "guides", "resources", "guides")
+        )
+
+
 class TestGetCategory(TestCase):
     def test_get_category_successfully(self):
         """Check does this get right data from category data file."""
