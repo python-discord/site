@@ -7,9 +7,14 @@ from django.http import Http404
 from markdown import Markdown
 
 
+def _get_base_path() -> str:
+    """Have extra function for base path getting for testability."""
+    return os.path.join(settings.BASE_DIR, "pydis_site", "apps", "guides", "resources", "guides")
+
+
 def get_category(category: str) -> Dict[str, str]:
     """Load category information by name from _info.yml."""
-    path = os.path.join(settings.BASE_DIR, "pydis_site", "apps", "guides", "resources", "guides", category)
+    path = os.path.join(_get_base_path(), category)
     if not os.path.exists(path) or not os.path.isdir(path):
         raise Http404("Category not found.")
 
@@ -19,7 +24,7 @@ def get_category(category: str) -> Dict[str, str]:
 
 def get_categories() -> Dict[str, Dict]:
     """Get all categories information."""
-    base_path = os.path.join(settings.BASE_DIR, "pydis_site", "apps", "guides", "resources", "guides")
+    base_path = _get_base_path()
     categories = {}
 
     for name in os.listdir(base_path):
@@ -32,9 +37,9 @@ def get_categories() -> Dict[str, Dict]:
 def get_guides(category: Optional[str] = None) -> Dict[str, Dict]:
     """Get all root guides when category is not specified. Otherwise get all this category guides."""
     if category is None:
-        base_dir = os.path.join(settings.BASE_DIR, "pydis_site", "apps", "guides", "resources", "guides")
+        base_dir = _get_base_path()
     else:
-        base_dir = os.path.join(settings.BASE_DIR, "pydis_site", "apps", "guides", "resources", "guides", category)
+        base_dir = os.path.join(_get_base_path(), category)
 
     guides = {}
 
@@ -53,9 +58,9 @@ def get_guides(category: Optional[str] = None) -> Dict[str, Dict]:
 def get_guide(guide: str, category: Optional[str]) -> Dict[str, Union[str, Dict]]:
     """Get one specific guide. When category is specified, get it from there."""
     if category is None:
-        base_path = os.path.join(settings.BASE_DIR, "pydis_site", "apps", "guides", "resources", "guides")
+        base_path = _get_base_path()
     else:
-        base_path = os.path.join(settings.BASE_DIR, "pydis_site", "apps", "guides", "resources", "guides", category)
+        base_path = os.path.join(_get_base_path(), category)
 
         if not os.path.exists(base_path) or not os.path.isdir(base_path):
             raise Http404("Category not found.")
