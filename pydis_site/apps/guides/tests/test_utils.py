@@ -76,3 +76,47 @@ class TestGetGuides(TestCase):
 
         self.assertIn("test3", result)
         self.assertEqual(md.Meta, result["test3"])
+
+
+class TestGetGuide(TestCase):
+    def test_get_root_guide_success(self):
+        """Check does this return guide HTML and metadata when root guide exist."""
+        with patch("pydis_site.apps.guides.utils._get_base_path", return_value=BASE_PATH):
+            result = utils.get_guide("test", None)
+
+        md = Markdown(extensions=['meta', 'attr_list', 'fenced_code'])
+
+        with open(os.path.join(BASE_PATH, "test.md")) as f:
+            html = md.convert(f.read())
+
+        self.assertEqual(result, {"guide": html, "metadata": md.Meta})
+
+    def test_get_root_guide_dont_exist(self):
+        """Check does this raise Http404 when root guide don't exist."""
+        with patch("pydis_site.apps.guides.utils._get_base_path", return_value=BASE_PATH):
+            with self.assertRaises(Http404):
+                result = utils.get_guide("invalid", None)
+
+    def test_get_category_guide_success(self):
+        """Check does this return guide HTML and metadata when category guide exist."""
+        with patch("pydis_site.apps.guides.utils._get_base_path", return_value=BASE_PATH):
+            result = utils.get_guide("test3", "category")
+
+        md = Markdown(extensions=['meta', 'attr_list', 'fenced_code'])
+
+        with open(os.path.join(BASE_PATH, "category", "test3.md")) as f:
+            html = md.convert(f.read())
+
+        self.assertEqual(result, {"guide": html, "metadata": md.Meta})
+
+    def test_get_category_guide_dont_exist(self):
+        """Check does this raise Http404 when category guide don't exist."""
+        with patch("pydis_site.apps.guides.utils._get_base_path", return_value=BASE_PATH):
+            with self.assertRaises(Http404):
+                result = utils.get_guide("invalid", "category")
+
+    def test_get_category_guide_category_dont_exist(self):
+        """Check does this raise Http404 when category don't exist."""
+        with patch("pydis_site.apps.guides.utils._get_base_path", return_value=BASE_PATH):
+            with self.assertRaises(Http404):
+                result = utils.get_guide("some-guide", "invalid")
