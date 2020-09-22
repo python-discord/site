@@ -38,4 +38,6 @@ urlpatterns = [
 
     path('admin/', admin.site.urls),
     path('notifications/', include('django_nyt.urls')),
+
+    path('resources/', include('pydis_site.apps.resources.urls', namespace="resources")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
