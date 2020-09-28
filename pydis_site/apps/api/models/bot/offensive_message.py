@@ -24,7 +24,8 @@ class OffensiveMessage(ModelReprMixin, models.Model):
                 limit_value=0,
                 message="Message IDs cannot be negative."
             ),
-        )
+        ),
+        verbose_name="Message ID"
     )
     channel_id = models.BigIntegerField(
         help_text=(
@@ -36,11 +37,13 @@ class OffensiveMessage(ModelReprMixin, models.Model):
                 limit_value=0,
                 message="Channel IDs cannot be negative."
             ),
-        )
+        ),
+        verbose_name="Channel ID"
     )
     delete_date = models.DateTimeField(
         help_text="The date on which the message will be auto-deleted.",
-        validators=(future_date_validator,)
+        validators=(future_date_validator,),
+        verbose_name="To Be Deleted"
     )
 
     def __str__(self):
