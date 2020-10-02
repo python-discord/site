@@ -401,3 +401,10 @@ ACCOUNT_USERNAME_VALIDATORS = "pydis_site.VALIDATORS"
 
 LOGIN_REDIRECT_URL = "home"
 SOCIALACCOUNT_ADAPTER = "pydis_site.utils.account.SocialAccountAdapter"
+SOCIALACCOUNT_PROVIDERS = {
+    'discord': {
+        'SCOPE': [
+            'identify',
+        ],
+    }
+}
