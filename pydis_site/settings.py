@@ -264,7 +264,7 @@ LOGGING = {
     },
     'loggers': {
         'django': {
-            'handlers': ['console', 'database'],
+            'handlers': ['console'],
             'propagate': True,
             'level': env(
                 'LOG_LEVEL',
