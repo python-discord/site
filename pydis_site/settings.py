@@ -260,9 +260,6 @@ LOGGING = {
     'handlers': {
         'console': {
             'class': 'logging.StreamHandler'
-        },
-        'database': {
-            'class': 'pydis_site.apps.api.dblogger.DatabaseLogHandler'
         }
     },
     'loggers': {
