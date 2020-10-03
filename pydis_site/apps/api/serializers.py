@@ -9,7 +9,6 @@ from .models import (
     DocumentationLink,
     FilterList,
     Infraction,
-    LogEntry,
     MessageDeletionContext,
     Nomination,
     OffTopicChannelName,
