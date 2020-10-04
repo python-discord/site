@@ -14,8 +14,6 @@ psycopg2-binary = "~=2.8"
 django-simple-bulma = "~=1.2"
 whitenoise = "~=5.0"
 requests = "~=2.21"
-pygments = "~=2.3.1"
-wiki = "~=0.6.0"
 pyyaml = "~=5.1"
 pyuwsgi = {version = "~=2.0", sys_platform = "!='win32'"}
 django-allauth = "~=0.41"

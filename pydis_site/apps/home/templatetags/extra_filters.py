@@ -11,7 +11,7 @@ def starts_with(value: str, arg: str) -> bool:
     Usage:
 
     ```django
-        {% if request.url | starts_with:"/wiki" %}
+        {% if request.url | starts_with:"/events" %}
           ...
         {% endif %}
     ```

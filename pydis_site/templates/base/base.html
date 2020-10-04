@@ -1,6 +1,5 @@
 {# Base template, with a few basic style definitions. #}
 {% load django_simple_bulma %}
-{% load sekizai_tags %}
 {% load static %}
 
 <!DOCTYPE html>
@@ -34,7 +33,6 @@
   <link rel="stylesheet" href="{% static "css/base/notification.css" %}">
   {% block head %}{% endblock %}
 
-  {% render_block "css" %}
 </head>
 <body class="site">
   <!-- Git hash for this release: {{ git_sha }} -->
@@ -61,6 +59,5 @@
   {% include "base/footer.html" %}
 {% endblock %}
 
-{% render_block "js" %}
 </body>
 </html>
