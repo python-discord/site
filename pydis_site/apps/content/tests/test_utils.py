@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 from unittest.mock import patch
 
 from django.conf import settings
@@ -8,7 +9,7 @@ from markdown import Markdown
 
 from pydis_site.apps.content import utils
 
-BASE_PATH = os.path.join(settings.BASE_DIR, "pydis_site", "apps", "content", "tests", "test_content")
+BASE_PATH = Path(settings.BASE_DIR, "pydis_site", "apps", "content", "tests", "test_content")
 
 
 class TestGetBasePath(TestCase):
@@ -16,7 +17,7 @@ class TestGetBasePath(TestCase):
         """Test does function return content base path."""
         self.assertEqual(
             utils._get_base_path(),
-            os.path.join(settings.BASE_DIR, "pydis_site", "apps", "content", "resources", "content")
+            Path(settings.BASE_DIR, "pydis_site", "apps", "content", "resources", "content")
         )
 
 
@@ -59,8 +60,7 @@ class TestGetArticles(TestCase):
         for case in ["test", "test2"]:
             with self.subTest(guide=case):
                 md = Markdown(extensions=['meta'])
-                with open(os.path.join(BASE_PATH, f"{case}.md")) as f:
-                    md.convert(f.read())
+                md.convert(BASE_PATH.joinpath(f"{case}.md").read_text())
 
                 self.assertIn(case, result)
                 self.assertEqual(md.Meta, result[case])
@@ -71,8 +71,7 @@ class TestGetArticles(TestCase):
             result = utils.get_articles("category")
 
         md = Markdown(extensions=['meta'])
-        with open(os.path.join(BASE_PATH, "category", "test3.md")) as f:
-            md.convert(f.read())
+        md.convert(BASE_PATH.joinpath("category", "test3.md").read_text())
 
         self.assertIn("test3", result)
         self.assertEqual(md.Meta, result["test3"])
@@ -85,9 +84,7 @@ class TestGetArticle(TestCase):
             result = utils.get_article("test", None)
 
         md = Markdown(extensions=['meta', 'attr_list', 'fenced_code'])
-
-        with open(os.path.join(BASE_PATH, "test.md")) as f:
-            html = md.convert(f.read())
+        html = md.convert(BASE_PATH.joinpath("test.md").read_text())
 
         self.assertEqual(result, {"article": html, "metadata": md.Meta})
 
@@ -103,9 +100,7 @@ class TestGetArticle(TestCase):
             result = utils.get_article("test3", "category")
 
         md = Markdown(extensions=['meta', 'attr_list', 'fenced_code'])
-
-        with open(os.path.join(BASE_PATH, "category", "test3.md")) as f:
-            html = md.convert(f.read())
+        html = md.convert(BASE_PATH.joinpath("category", "test3.md").read_text())
 
         self.assertEqual(result, {"article": html, "metadata": md.Meta})
 

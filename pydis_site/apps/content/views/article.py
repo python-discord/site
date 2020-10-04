@@ -1,5 +1,6 @@
 import os
 from datetime import datetime
+from pathlib import Path
 from typing import Optional
 
 from django.conf import settings
@@ -19,11 +20,11 @@ class ArticleView(View):
         article_result = get_article(article, category)
 
         if category is not None:
-            path = os.path.join(
+            path = Path(
                 settings.BASE_DIR, "pydis_site", "apps", "content", "resources", "content", category, f"{article}.md"
             )
         else:
-            path = os.path.join(
+            path = Path(
                 settings.BASE_DIR, "pydis_site", "apps", "content", "resources", "content", f"{article}.md"
             )
 

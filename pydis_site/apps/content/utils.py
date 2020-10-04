@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 from typing import Dict, Optional, Union
 
 import yaml
@@ -7,19 +8,18 @@ from django.http import Http404
 from markdown import Markdown
 
 
-def _get_base_path() -> str:
+def _get_base_path() -> Path:
     """Have extra function for base path getting for testability."""
-    return os.path.join(settings.BASE_DIR, "pydis_site", "apps", "content", "resources", "content")
+    return Path(settings.BASE_DIR, "pydis_site", "apps", "content", "resources", "content")
 
 
 def get_category(category: str) -> Dict[str, str]:
     """Load category information by name from _info.yml."""
-    path = os.path.join(_get_base_path(), category)
-    if not os.path.exists(path) or not os.path.isdir(path):
+    path = _get_base_path().joinpath(category)
+    if not path.exists() or not path.is_dir():
         raise Http404("Category not found.")
 
-    with open(os.path.join(path, "_info.yml")) as f:
-        return yaml.safe_load(f.read())
+    return yaml.safe_load(path.joinpath("_info.yml").read_text())
 
 
 def get_categories() -> Dict[str, Dict]:
@@ -27,9 +27,9 @@ def get_categories() -> Dict[str, Dict]:
     base_path = _get_base_path()
     categories = {}
 
-    for name in os.listdir(base_path):
-        if os.path.isdir(os.path.join(base_path, name)):
-            categories[name] = get_category(name)
+    for name in base_path.iterdir():
+        if name.is_dir():
+            categories[name.name] = get_category(name.name)
 
     return categories
 
@@ -39,18 +39,16 @@ def get_articles(category: Optional[str] = None) -> Dict[str, Dict]:
     if category is None:
         base_dir = _get_base_path()
     else:
-        base_dir = os.path.join(_get_base_path(), category)
+        base_dir = _get_base_path().joinpath(category)
 
     articles = {}
 
-    for filename in os.listdir(base_dir):
-        full_path = os.path.join(base_dir, filename)
-        if os.path.isfile(full_path) and filename.endswith(".md"):
+    for item in base_dir.iterdir():
+        if item.is_file() and item.name.endswith(".md"):
             md = Markdown(extensions=['meta'])
-            with open(full_path) as f:
-                md.convert(f.read())
+            md.convert(item.read_text())
 
-            articles[os.path.splitext(filename)[0]] = md.Meta
+            articles[os.path.splitext(item.name)[0]] = md.Meta
 
     return articles
 
@@ -60,18 +58,16 @@ def get_article(article: str, category: Optional[str]) -> Dict[str, Union[str, D
     if category is None:
         base_path = _get_base_path()
     else:
-        base_path = os.path.join(_get_base_path(), category)
+        base_path = _get_base_path().joinpath(category)
 
-        if not os.path.exists(base_path) or not os.path.isdir(base_path):
+        if not base_path.exists() or not base_path.is_dir():
             raise Http404("Category not found.")
 
-    article_path = os.path.join(base_path, f"{article}.md")
-    if not os.path.exists(article_path) or not os.path.isfile(article_path):
+    article_path = base_path.joinpath(f"{article}.md")
+    if not article_path.exists() or not article_path.is_file():
         raise Http404("Article not found.")
 
     md = Markdown(extensions=['meta', 'attr_list', 'fenced_code'])
-
-    with open(article_path) as f:
-        html = md.convert(f.read())
+    html = md.convert(article_path.read_text())
 
     return {"article": html, "metadata": md.Meta}
