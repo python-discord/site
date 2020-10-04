@@ -3,10 +3,10 @@
 
 {% block title %}{{ metadata.title|first }}{% endblock %}
 {% block head %}
-  <meta property="og:title" content="Python Discord - {{ guide.metadata.title|first }}" />
+  <meta property="og:title" content="Python Discord - {{ article.metadata.title|first }}" />
   <meta property="og:type" content="website" />
-  <meta property="og:description" content="{{ guide.metadata.shortdescription|first }}" />
-  <link rel="stylesheet" href="{% static "css/guides/guide.css" %}">
+  <meta property="og:description" content="{{ article.metadata.shortdescription|first }}" />
+  <link rel="stylesheet" href="{% static "css/content/articles.css" %}">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.2.0/build/styles/default.min.css">
   <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.2.0/build/highlight.min.js"></script>
   <script>hljs.initHighlightingOnLoad();</script>
@@ -19,11 +19,11 @@
         <div class="container">
             <nav class="breadcrumb is-pulled-left" aria-label="breadcrumbs">
                 <ul>
-                    <li><a href="/guides">Guides</a></li>
+                    <li><a href="/content">Pages</a></li>
                     {% if category_data.raw_name is not None %}
-                        <li><a href="/guides/category/{{ category_data.raw_name }}">{{ category_data.name }}</a></li>
+                        <li><a href="/content/category/{{ category_data.raw_name }}">{{ category_data.name }}</a></li>
                     {% endif %}
-                    <li class="is-active"><a href="#">{{ guide.metadata.title|first }}</a></li>
+                    <li class="is-active"><a href="#">{{ article.metadata.title|first }}</a></li>
                 </ul>
             </nav>
         </div>
@@ -32,13 +32,13 @@
     <section class="section">
         <div class="content">
             <div class="container">
-                <h1 class="title">{{ guide.metadata.title|first }}</h1>
+                <h1 class="title">{{ article.metadata.title|first }}</h1>
                 <div class="columns is-variable is-8">
                     <div class="column is-two-thirds">
-                        {{ guide.guide|safe }}
+                        {{ article.article|safe }}
                         <p class="has-text-weight-light is-size-7">
                             <strong>Last modified:</strong> {{ last_modified }}<br/>
-                            <strong>Contributors:</strong> {{ guide.metadata.contributors|join:", " }}
+                            <strong>Contributors:</strong> {{ article.metadata.contributors|join:", " }}
                         </p>
                     </div>
                     <div class="column">

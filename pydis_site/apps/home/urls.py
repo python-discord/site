@@ -39,5 +39,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('notifications/', include('django_nyt.urls')),
 
-    path('guides/', include('pydis_site.apps.guides.urls', namespace='guide')),
+    path('content/', include('pydis_site.apps.content.urls', namespace='content')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

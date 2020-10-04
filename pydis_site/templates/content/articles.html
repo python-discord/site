@@ -1,12 +1,9 @@
 {% extends 'base/base.html' %}
 {% load static %}
 
-{% block title %}{{ category_info.name }}{% endblock %}
+{% block title %}Guides{% endblock %}
 {% block head %}
-  <meta property="og:title" content="Python Discord - {{ category_info.name }}" />
-  <meta property="og:type" content="website" />
-  <meta property="og:description" content="{{ category_info.description }}" />
-  <link rel="stylesheet" href="{% static "css/guides/guide.css" %}">
+  <link rel="stylesheet" href="{% static "css/content/articles.css" %}">
 {% endblock %}
 
 {% block content %}
@@ -16,8 +13,7 @@
         <div class="container">
             <nav class="breadcrumb is-pulled-left" aria-label="breadcrumbs">
                 <ul>
-                    <li><a href="/guides">Guides</a></li>
-                    <li class="is-active"><a href="#">{{ category_info.name }}</a></li>
+                    <li class="is-active"><a href="/content">Pages</a></li>
                 </ul>
             </nav>
         </div>
@@ -26,16 +22,29 @@
     <section class="section">
         <div class="container">
             <div class="content">
-                <h1>{{ category_info.name }}</h1>
-                {% for guide, data in guides.items %}
+                <h1>Articles</h1>
+                {% for article, data in content.items %}
                     <div class="box" style="max-width: 800px;">
                         <span class="icon is-size-4 is-medium">
                             <i class="fab fa-python is-size-3 is-black has-icon-padding" aria-hidden="true"></i>
                         </span>
-                        <a href="/guides/category/{{ category_name }}/{{ guide }}/">
+                        <a href="{{ article }}/">
                                 <span class="is-size-4 has-text-weight-bold">{{ data.title.0 }}</span>
                         </a>
                         <p class="is-italic">{{ data.shortdescription.0 }}</p>
+                    </div>
+                {% endfor %}
+                {% for category, data in categories.items %}
+                    <div class="box" style="max-width: 800px;">
+                        <span class="icon is-size-4 is-medium">
+                            <i class="fas fa-folder is-size-3 is-black has-icon-padding" aria-hidden="true"></i>
+                        </span>
+
+
+                        <a href="category/{{ category }}/">
+                            <span class="is-size-4 has-text-weight-bold">{{ data.name }}</span>
+                        </a>
+                        <p class="is-italic">{{ data.description }}</p>
                     </div>
                 {% endfor %}
             </div>
