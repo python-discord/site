@@ -116,7 +116,6 @@ rethinkdb_data/
 # Node modules
 node_modules/
 
-media/
 pip-wheel-metadata/
 staticfiles/
 

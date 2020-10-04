@@ -13,7 +13,6 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 import os
 import secrets
 import sys
-import typing
 
 import environ
 import sentry_sdk
@@ -21,10 +20,6 @@ from django.contrib.messages import constants as messages
 from sentry_sdk.integrations.django import DjangoIntegration
 
 from pydis_site.constants import GIT_SHA
-
-if typing.TYPE_CHECKING:
-    from django.contrib.auth.models import User
-    from wiki.models import Article
 
 env = environ.Env(
     DEBUG=(bool, False),
@@ -84,9 +79,7 @@ else:
     )
     SECRET_KEY = env('SECRET_KEY')
 
-
 # Application definition
-
 INSTALLED_APPS = [
     'pydis_site.apps.api',
     'pydis_site.apps.home',
@@ -95,10 +88,9 @@ INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
-    'django.contrib.humanize.apps.HumanizeConfig',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.sites.apps.SitesConfig',
+    'django.contrib.sites',
     'django.contrib.staticfiles',
 
     'allauth',
@@ -112,18 +104,8 @@ INSTALLED_APPS = [
     'django_filters',
     'django_nyt.apps.DjangoNytConfig',
     'django_simple_bulma',
-    'mptt',
     'rest_framework',
-    'rest_framework.authtoken',
-    'sekizai',
-    'sorl.thumbnail',
-
-    'wiki.apps.WikiConfig',
-
-    'wiki.plugins.images.apps.ImagesConfig',
-    'wiki.plugins.links.apps.LinksConfig',
-    'wiki.plugins.redlinks.apps.RedlinksConfig',
-    'wiki.plugins.notifications.apps.NotificationsConfig',  # Required for migrations
+    'rest_framework.authtoken'
 ]
 
 MIDDLEWARE = [
@@ -154,12 +136,9 @@ TEMPLATES = [
 
             'context_processors': [
                 'django.template.context_processors.debug',
-                'django.template.context_processors.media',
                 'django.template.context_processors.request',
-                'django.template.context_processors.static',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                "sekizai.context_processors.sekizai",
                 "pydis_site.context_processors.git_sha_processor"
             ],
         },
@@ -207,9 +186,6 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'pydis_site', 'static')]
 STATIC_ROOT = env('STATIC_ROOT', default='/app/staticfiles')
-
-MEDIA_URL = '/media/'
-MEDIA_ROOT = env('MEDIA_ROOT', default='/site/media')
 
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
@@ -320,69 +296,7 @@ BULMA_SETTINGS = {
     }
 }
 
-# Required for the wiki
-LOGIN_URL = "/admin/login"  # Update this when the real login system is in place
-SITE_ID = 1
-
-WIKI_ACCOUNT_HANDLING = False
-WIKI_ACCOUNT_SIGNUP_ALLOWED = False
-
-WIKI_ANONYMOUS = True
-WIKI_ANONYMOUS_WRITE = False
-
-WIKI_MARKDOWN_KWARGS = {
-    "extension_configs": {
-        "wiki.plugins.macros.mdx.toc": {
-            "anchorlink": True,
-            "baselevel": 2
-        }
-    }, "extensions": [
-        "markdown.extensions.abbr",
-        "markdown.extensions.attr_list",
-        "markdown.extensions.extra",
-        "markdown.extensions.footnotes",
-        "markdown.extensions.nl2br",
-        "markdown.extensions.sane_lists",
-
-        "wiki.core.markdown.mdx.codehilite",
-        "wiki.core.markdown.mdx.previewlinks",
-        "wiki.core.markdown.mdx.responsivetable",
-        "wiki.plugins.macros.mdx.toc",
-        "wiki.plugins.macros.mdx.wikilinks",
-    ]
-}
-
-WIKI_MESSAGE_TAG_CSS_CLASS = {
-    messages.DEBUG: "",  # is-info isn't distinctive enough from blurple
-    messages.ERROR: "is-danger",
-    messages.INFO: "is-primary",
-    messages.SUCCESS: "is-success",
-    messages.WARNING: "is-warning",
-}
-
-WIKI_MARKDOWN_SANITIZE_HTML = False
-
-
-# Wiki permissions
-
-
-def WIKI_CAN_DELETE(article: "Article", user: "User") -> bool:  # noqa: N802
-    """Check whether a user may delete an article."""
-    return user.has_perm('wiki.delete_article')
-
-
-def WIKI_CAN_MODERATE(article: "Article", user: "User") -> bool:  # noqa: N802
-    """Check whether a user may moderate an article."""
-    return user.has_perm('wiki.moderate')
-
-
-def WIKI_CAN_WRITE(article: "Article", user: "User") -> bool:  # noqa: N802
-    """Check whether a user may create or edit an article."""
-    return user.has_perm('wiki.change_article')
-
-
 # Django Allauth stuff
-
 AUTHENTICATION_BACKENDS = (
     # Needed to login by username in Django admin, regardless of `allauth`
     'django.contrib.auth.backends.ModelBackend',
