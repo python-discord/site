@@ -259,7 +259,7 @@ class UserModelTests(APISubdomainTestCase):
         cls.user_with_roles = User.objects.create(
             id=1,
             name="Test User with two roles",
-            discriminator=1111,
+            discriminator=1,
             in_guild=True,
         )
         cls.user_with_roles.roles.extend([cls.role_bottom.id, cls.role_top.id])
@@ -282,3 +282,7 @@ class UserModelTests(APISubdomainTestCase):
         top_role = self.user_without_roles.top_role
         self.assertIsInstance(top_role, Role)
         self.assertEqual(top_role.id, self.developers_role.id)
+
+    def test_correct_username_formatting(self):
+        """Tests the username property with both name and discriminator formatted together."""
+        self.assertEqual(self.user_with_roles.username, "Test User with two roles#0001")
