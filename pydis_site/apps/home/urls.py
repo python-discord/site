@@ -33,5 +33,4 @@ urlpatterns = [
     path('logout', LogoutView.as_view(), name="logout"),
 
     path('admin/', admin.site.urls),
-    path('notifications/', include('django_nyt.urls')),
 ]

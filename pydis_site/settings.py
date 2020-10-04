@@ -102,7 +102,6 @@ INSTALLED_APPS = [
 
     'django_hosts',
     'django_filters',
-    'django_nyt.apps.DjangoNytConfig',
     'django_simple_bulma',
     'rest_framework',
     'rest_framework.authtoken'
