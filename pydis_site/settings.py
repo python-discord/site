@@ -16,7 +16,6 @@ import sys
 
 import environ
 import sentry_sdk
-from django.contrib.messages import constants as messages
 from sentry_sdk.integrations.django import DjangoIntegration
 
 from pydis_site.constants import GIT_SHA
@@ -92,13 +91,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.sites',
     'django.contrib.staticfiles',
-
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-
-    'allauth.socialaccount.providers.discord',
-    'allauth.socialaccount.providers.github',
 
     'django_hosts',
     'django_filters',
@@ -264,22 +256,10 @@ LOGGING = {
     }
 }
 
-# Django Messages framework config
-MESSAGE_TAGS = {
-    messages.DEBUG: 'primary',
-    messages.INFO: 'info',
-    messages.SUCCESS: 'success',
-    messages.WARNING: 'warning',
-    messages.ERROR: 'danger',
-}
-
 # Custom settings for django-simple-bulma
 BULMA_SETTINGS = {
     "variables": {  # If you update these colours, please update the notification.css file
         "primary": "#7289DA",    # Discord blurple
-
-        # "orange": "",          # Apparently unused, but the default is fine
-        # "yellow": "",          # The default yellow looks pretty good
         "green": "#32ac66",      # Colour picked after Discord discussion
         "turquoise": "#7289DA",  # Blurple, because Bulma uses this regardless of `primary` above
         "blue": "#2482c1",       # Colour picked after Discord discussion
@@ -294,23 +274,3 @@ BULMA_SETTINGS = {
         "footer-padding": "1rem 1.5rem 1rem",
     }
 }
-
-# Django Allauth stuff
-AUTHENTICATION_BACKENDS = (
-    # Needed to login by username in Django admin, regardless of `allauth`
-    'django.contrib.auth.backends.ModelBackend',
-
-    # `allauth` specific authentication methods, such as login by e-mail
-    'allauth.account.auth_backends.AuthenticationBackend',
-)
-
-ACCOUNT_ADAPTER = "pydis_site.utils.account.AccountAdapter"
-ACCOUNT_EMAIL_REQUIRED = False       # Undocumented allauth setting; don't require emails
-ACCOUNT_EMAIL_VERIFICATION = "none"  # No verification required; we don't use emails for anything
-
-# We use this validator because Allauth won't let us actually supply a list with no validators
-# in it, and we can't just give it a lambda - that'd be too easy, I suppose.
-ACCOUNT_USERNAME_VALIDATORS = "pydis_site.VALIDATORS"
-
-LOGIN_REDIRECT_URL = "home"
-SOCIALACCOUNT_ADAPTER = "pydis_site.utils.account.SocialAccountAdapter"
