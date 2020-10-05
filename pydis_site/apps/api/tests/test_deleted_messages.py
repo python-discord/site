@@ -1,5 +1,6 @@
 from datetime import datetime
 
+from django.utils import timezone
 from django_hosts.resolvers import reverse
 
 from .base import APISubdomainTestCase
@@ -76,3 +77,23 @@ class DeletedMessagesWithActorTests(APISubdomainTestCase):
         self.assertEqual(response.status_code, 201)
         [context] = MessageDeletionContext.objects.all()
         self.assertEqual(context.actor.id, self.actor.id)
+
+
+class DeletedMessagesLogURLTests(APISubdomainTestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.author = cls.actor = User.objects.create(
+            id=324888,
+            name='Black Knight',
+            discriminator=1975,
+        )
+
+        cls.deletion_context = MessageDeletionContext.objects.create(
+            actor=cls.actor,
+            creation=timezone.now()
+        )
+
+    def test_valid_log_url(self):
+        expected_url = reverse('logs', host="staff", args=(1,))
+        [context] = MessageDeletionContext.objects.all()
+        self.assertEqual(context.log_url, expected_url)

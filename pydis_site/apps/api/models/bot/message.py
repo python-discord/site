@@ -21,7 +21,8 @@ class Message(ModelReprMixin, models.Model):
                 limit_value=0,
                 message="Message IDs cannot be negative."
             ),
-        )
+        ),
+        verbose_name="ID"
     )
     author = models.ForeignKey(
         User,
@@ -38,7 +39,8 @@ class Message(ModelReprMixin, models.Model):
                 limit_value=0,
                 message="Channel IDs cannot be negative."
             ),
-        )
+        ),
+        verbose_name="Channel ID"
     )
     content = models.CharField(
         max_length=2_000,

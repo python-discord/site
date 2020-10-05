@@ -1,6 +1,4 @@
 from allauth.account.views import LogoutView
-from django.conf import settings
-from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.messages import ERROR
 from django.urls import include, path
@@ -13,8 +11,6 @@ urlpatterns = [
     # We do this twice because Allauth expects specific view names to exist
     path('', HomeView.as_view(), name='home'),
     path('', HomeView.as_view(), name='socialaccount_connections'),
-
-    path('pages/', include('wiki.urls')),
 
     path('accounts/', include('allauth.socialaccount.providers.discord.urls')),
     path('accounts/', include('allauth.socialaccount.providers.github.urls')),
@@ -37,7 +33,5 @@ urlpatterns = [
     path('logout', LogoutView.as_view(), name="logout"),
 
     path('admin/', admin.site.urls),
-    path('notifications/', include('django_nyt.urls')),
-
     path('content/', include('pydis_site.apps.content.urls', namespace='content')),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]

@@ -79,8 +79,6 @@ Make sure you add the following to your hosts file:
 127.0.0.1   api.pythondiscord.local
 127.0.0.1   staff.pythondiscord.local
 127.0.0.1   admin.pythondiscord.local
-127.0.0.1   wiki.pythondiscord.local
-127.0.0.1   ws.pythondiscord.local
 ```
 When trying to access the site, you'll be using the domains above instead of the usual `localhost:8000`.
 

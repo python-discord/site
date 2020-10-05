@@ -14,6 +14,6 @@ class DeletedMessage(Message):
     )
 
     class Meta:
-        """Sets the default ordering for list views to oldest first."""
+        """Sets the default ordering for list views to newest first."""
 
-        ordering = ["id"]
+        ordering = ("-id",)

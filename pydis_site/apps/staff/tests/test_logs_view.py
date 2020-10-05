@@ -133,7 +133,7 @@ class TestLogsView(TestCase):
         response = self.client.get(url)
         self.assertIn("messages", response.context)
         self.assertListEqual(
-            [self.deleted_message_one, self.deleted_message_two],
+            [self.deleted_message_two, self.deleted_message_one],
             list(response.context["deletion_context"].deletedmessage_set.all())
         )
 
