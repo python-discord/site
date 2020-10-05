@@ -1,9 +1,5 @@
-import os
-from datetime import datetime
-from pathlib import Path
 from typing import Optional
 
-from django.conf import settings
 from django.core.handlers.wsgi import WSGIRequest
 from django.http import HttpResponse
 from django.shortcuts import render
@@ -18,15 +14,6 @@ class ArticleView(View):
     def get(self, request: WSGIRequest, article: str, category: Optional[str] = None) -> HttpResponse:
         """Collect guide content and display it. When guide don't exist, return 404."""
         article_result = get_article(article, category)
-
-        if category is not None:
-            path = Path(
-                settings.BASE_DIR, "pydis_site", "apps", "content", "resources", "content", category, f"{article}.md"
-            )
-        else:
-            path = Path(
-                settings.BASE_DIR, "pydis_site", "apps", "content", "resources", "content", f"{article}.md"
-            )
 
         if category is not None:
             category_data = get_category(category)
@@ -49,7 +36,6 @@ class ArticleView(View):
             "content/article.html",
             {
                 "article": article_result,
-                "last_modified": datetime.fromtimestamp(os.path.getmtime(path)).strftime("%dth %B %Y"),
                 "category_data": category_data,
                 "relevant_links": relevant_links
             }

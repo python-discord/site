@@ -36,9 +36,6 @@
                 <div class="columns is-variable is-8">
                     <div class="column is-two-thirds">
                         {{ article.article|safe }}
-                        <p class="has-text-weight-light is-size-7">
-                            <strong>Last modified:</strong> {{ last_modified }}<br/>
-                        </p>
                     </div>
                     <div class="column">
                         {% if relevant_links|length > 0 %}
