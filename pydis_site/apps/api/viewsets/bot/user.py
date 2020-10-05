@@ -1,3 +1,5 @@
+from collections import OrderedDict
+
 from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.pagination import PageNumberPagination
@@ -15,6 +17,30 @@ class UserListPagination(PageNumberPagination):
 
     page_size = 10000
     page_size_query_param = "page_size"
+
+    def get_next_page_number(self) -> int:
+        """Get the next page number."""
+        if not self.page.has_next():
+            return None
+        page_number = self.page.next_page_number()
+        return page_number
+
+    def get_previous_page_number(self) -> int:
+        """Get the previous page number."""
+        if not self.page.has_previous():
+            return None
+
+        page_number = self.page.previous_page_number()
+        return page_number
+
+    def get_paginated_response(self, data: list) -> Response:
+        """Override method to send modified response."""
+        return Response(OrderedDict([
+            ('count', self.page.paginator.count),
+            ('next_page_no', self.get_next_page_number()),
+            ('previous_page_no', self.get_previous_page_number()),
+            ('results', data)
+        ]))
 
 
 class UserViewSet(ModelViewSet):
@@ -193,13 +219,6 @@ class UserViewSet(ModelViewSet):
 
         filtered_instances = queryset.filter(id__in=object_ids)
 
-        if filtered_instances.count() != len(object_ids):
-            # If all user objects passed in request.body are not present in the database.
-            resp = {
-                "Error": "User object not found."
-            }
-            return Response(resp, status=status.HTTP_404_NOT_FOUND)
-
         serializer = self.get_serializer(
             instance=filtered_instances,
             data=request.data,
@@ -207,7 +226,7 @@ class UserViewSet(ModelViewSet):
             partial=True
         )
 
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
