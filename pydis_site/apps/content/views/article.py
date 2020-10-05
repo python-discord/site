@@ -34,6 +34,16 @@ class ArticleView(View):
         else:
             category_data = {"name": None, "raw_name": None}
 
+        relevant_links = {
+            link: value for link, value in zip(
+                article_result["metadata"].get("relevant_links", "").split(","),
+                article_result["metadata"].get("relevant_link_values", "").split(",")
+            )
+        }
+
+        if relevant_links == {"": ""}:
+            relevant_links = {}
+
         return render(
             request,
             "content/article.html",
@@ -41,11 +51,6 @@ class ArticleView(View):
                 "article": article_result,
                 "last_modified": datetime.fromtimestamp(os.path.getmtime(path)).strftime("%dth %B %Y"),
                 "category_data": category_data,
-                "relevant_links": {
-                    link: value for link, value in zip(
-                        article_result["metadata"].get("relevantlinks", []),
-                        article_result["metadata"].get("relevantlinkvalues", [])
-                    )
-                }
+                "relevant_links": relevant_links
             }
         )

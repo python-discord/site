@@ -5,7 +5,7 @@ from typing import Dict, Optional, Union
 import yaml
 from django.conf import settings
 from django.http import Http404
-from markdown import Markdown
+from markdown2 import markdown
 
 
 def _get_base_path() -> Path:
@@ -45,10 +45,8 @@ def get_articles(category: Optional[str] = None) -> Dict[str, Dict]:
 
     for item in base_dir.iterdir():
         if item.is_file() and item.name.endswith(".md"):
-            md = Markdown(extensions=['meta'])
-            md.convert(item.read_text())
-
-            articles[os.path.splitext(item.name)[0]] = md.Meta
+            md = markdown(item.read_text(), extras=["metadata"])
+            articles[os.path.splitext(item.name)[0]] = md.metadata
 
     return articles
 
@@ -67,7 +65,9 @@ def get_article(article: str, category: Optional[str]) -> Dict[str, Union[str, D
     if not article_path.exists() or not article_path.is_file():
         raise Http404("Article not found.")
 
-    md = Markdown(extensions=['meta', 'attr_list', 'fenced_code'])
-    html = md.convert(article_path.read_text())
+    html = markdown(
+        article_path.read_text(),
+        extras=["metadata", "fenced-code-blocks", "header-ids", "strike", "target-blank-links", "tables", "task_list"]
+    )
 
-    return {"article": html, "metadata": md.Meta}
+    return {"article": str(html), "metadata": html.metadata}

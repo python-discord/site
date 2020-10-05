@@ -1,5 +1,6 @@
-Title: Test 2
-ShortDescription: Testing 2
-Contributors: user2
+---
+title: Test 2
+short_description: Testing 2
+---
 
 This is too test content.

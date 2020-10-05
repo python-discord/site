@@ -1,11 +1,10 @@
-import os
 from pathlib import Path
 from unittest.mock import patch
 
 from django.conf import settings
 from django.http import Http404
 from django.test import TestCase
-from markdown import Markdown
+from markdown2 import markdown
 
 from pydis_site.apps.content import utils
 
@@ -59,22 +58,20 @@ class TestGetArticles(TestCase):
 
         for case in ["test", "test2"]:
             with self.subTest(guide=case):
-                md = Markdown(extensions=['meta'])
-                md.convert(BASE_PATH.joinpath(f"{case}.md").read_text())
+                md = markdown(BASE_PATH.joinpath(f"{case}.md").read_text(), extras=["metadata"])
 
                 self.assertIn(case, result)
-                self.assertEqual(md.Meta, result[case])
+                self.assertEqual(md.metadata, result[case])
 
     def test_get_all_category_articles(self):
         """Check does this return all category testing content."""
         with patch("pydis_site.apps.content.utils._get_base_path", return_value=BASE_PATH):
             result = utils.get_articles("category")
 
-        md = Markdown(extensions=['meta'])
-        md.convert(BASE_PATH.joinpath("category", "test3.md").read_text())
+        md = markdown(BASE_PATH.joinpath("category", "test3.md").read_text(), extras=["metadata"])
 
         self.assertIn("test3", result)
-        self.assertEqual(md.Meta, result["test3"])
+        self.assertEqual(md.metadata, result["test3"])
 
 
 class TestGetArticle(TestCase):
@@ -83,10 +80,20 @@ class TestGetArticle(TestCase):
         with patch("pydis_site.apps.content.utils._get_base_path", return_value=BASE_PATH):
             result = utils.get_article("test", None)
 
-        md = Markdown(extensions=['meta', 'attr_list', 'fenced_code'])
-        html = md.convert(BASE_PATH.joinpath("test.md").read_text())
+        md = markdown(
+            BASE_PATH.joinpath("test.md").read_text(),
+            extras=[
+                "metadata",
+                "fenced-code-blocks",
+                "header-ids",
+                "strike",
+                "target-blank-links",
+                "tables",
+                "task_list"
+            ]
+        )
 
-        self.assertEqual(result, {"article": html, "metadata": md.Meta})
+        self.assertEqual(result, {"article": str(md), "metadata": md.metadata})
 
     def test_get_root_article_dont_exist(self):
         """Check does this raise Http404 when root article don't exist."""
@@ -99,10 +106,20 @@ class TestGetArticle(TestCase):
         with patch("pydis_site.apps.content.utils._get_base_path", return_value=BASE_PATH):
             result = utils.get_article("test3", "category")
 
-        md = Markdown(extensions=['meta', 'attr_list', 'fenced_code'])
-        html = md.convert(BASE_PATH.joinpath("category", "test3.md").read_text())
+        md = markdown(
+            BASE_PATH.joinpath("category", "test3.md").read_text(),
+            extras=[
+                "metadata",
+                "fenced-code-blocks",
+                "header-ids",
+                "strike",
+                "target-blank-links",
+                "tables",
+                "task_list"
+            ]
+        )
 
-        self.assertEqual(result, {"article": html, "metadata": md.Meta})
+        self.assertEqual(result, {"article": str(md), "metadata": md.metadata})
 
     def test_get_category_article_dont_exist(self):
         """Check does this raise Http404 when category article don't exist."""
