@@ -213,7 +213,7 @@ class MultiPatchTests(APISubdomainTestCase):
             }
         ]
         response = self.client.patch(url, data=data)
-        self.assertEqual(response.status_code, 404)
+        self.assertEqual(response.status_code, 400)
 
     def test_returns_400_for_bad_data(self):
         url = reverse("bot:user-bulk-patch", host="api")
