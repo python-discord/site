@@ -35,7 +35,7 @@ def get_categories() -> Dict[str, Dict]:
 
 
 def get_articles(category: Optional[str] = None) -> Dict[str, Dict]:
-    """Get all root content when category is not specified. Otherwise get all this category content."""
+    """Get all root or category articles."""
     if category is None:
         base_dir = _get_base_path()
     else:
@@ -67,7 +67,15 @@ def get_article(article: str, category: Optional[str]) -> Dict[str, Union[str, D
 
     html = markdown(
         article_path.read_text(),
-        extras=["metadata", "fenced-code-blocks", "header-ids", "strike", "target-blank-links", "tables", "task_list"]
+        extras=[
+            "metadata",
+            "fenced-code-blocks",
+            "header-ids",
+            "strike",
+            "target-blank-links",
+            "tables",
+            "task_list"
+        ]
     )
 
     return {"article": str(html), "metadata": html.metadata}

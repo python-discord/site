@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.views import View
 
-from pydis_site.apps.content.utils import get_category, get_articles
+from pydis_site.apps.content.utils import get_articles, get_category
 
 
 class CategoryView(View):
@@ -14,5 +14,9 @@ class CategoryView(View):
         return render(
             request,
             "content/category.html",
-            {"category_info": get_category(category), "content": get_articles(category), "category_name": category}
+            {
+                "category_info": get_category(category),
+                "content": get_articles(category),
+                "category_name": category
+            }
         )

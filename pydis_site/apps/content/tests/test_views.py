@@ -21,10 +21,9 @@ class TestGuidesIndexView(TestCase):
 
 
 class TestGuideView(TestCase):
-    @patch("pydis_site.apps.content.views.article.os.path.getmtime")
     @patch("pydis_site.apps.content.views.article.get_article")
     @patch("pydis_site.apps.content.views.article.get_category")
-    def test_guide_return_code_200(self, get_category_mock, get_article_mock, get_time_mock):
+    def test_guide_return_code_200(self, get_category_mock, get_article_mock):
         get_article_mock.return_value = {"guide": "test", "metadata": {}}
 
         url = reverse("content:article", args=["test-guide"])
@@ -33,10 +32,9 @@ class TestGuideView(TestCase):
         get_category_mock.assert_not_called()
         get_article_mock.assert_called_once_with("test-guide", None)
 
-    @patch("pydis_site.apps.content.views.article.os.path.getmtime")
     @patch("pydis_site.apps.content.views.article.get_article")
     @patch("pydis_site.apps.content.views.article.get_category")
-    def test_guide_return_404(self, get_category_mock, get_article_mock, get_time_mock):
+    def test_guide_return_404(self, get_category_mock, get_article_mock):
         """Check that return code is 404 when invalid article provided."""
         get_article_mock.side_effect = Http404("Article not found.")
 
@@ -77,10 +75,9 @@ class TestCategoryView(TestCase):
 
 
 class TestCategoryGuidesView(TestCase):
-    @patch("pydis_site.apps.content.views.article.os.path.getmtime")
     @patch("pydis_site.apps.content.views.article.get_article")
     @patch("pydis_site.apps.content.views.article.get_category")
-    def test_valid_category_article_code_200(self, get_category_mock, get_article_mock, get_time_mock):
+    def test_valid_category_article_code_200(self, get_category_mock, get_article_mock):
         """Check that return code is 200 when visiting valid category article."""
         get_article_mock.return_value = {"guide": "test", "metadata": {}}
 
@@ -90,10 +87,9 @@ class TestCategoryGuidesView(TestCase):
         get_article_mock.assert_called_once_with("test3", "category")
         get_category_mock.assert_called_once_with("category")
 
-    @patch("pydis_site.apps.content.views.article.os.path.getmtime")
     @patch("pydis_site.apps.content.views.article.get_article")
     @patch("pydis_site.apps.content.views.article.get_category")
-    def test_invalid_category_article_code_404(self, get_category_mock, get_article_mock, get_time_mock):
+    def test_invalid_category_article_code_404(self, get_category_mock, get_article_mock):
         """Check that return code is 200 when trying to visit invalid category article."""
         get_article_mock.side_effect = Http404("Article not found.")
 

@@ -47,7 +47,9 @@ class TestGetCategories(TestCase):
         with patch("pydis_site.apps.content.utils._get_base_path", return_value=BASE_PATH):
             result = utils.get_categories()
 
-        self.assertEqual(result, {"category": {"name": "My Category", "description": "My Description"}})
+        self.assertEqual(
+            result, {"category": {"name": "My Category", "description": "My Description"}}
+        )
 
 
 class TestGetArticles(TestCase):

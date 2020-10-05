@@ -5,13 +5,18 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.views import View
 
-from pydis_site.apps.content.utils import get_category, get_article
+from pydis_site.apps.content.utils import get_article, get_category
 
 
 class ArticleView(View):
     """Shows specific guide page."""
 
-    def get(self, request: WSGIRequest, article: str, category: Optional[str] = None) -> HttpResponse:
+    def get(
+            self,
+            request: WSGIRequest,
+            article: str,
+            category: Optional[str] = None
+    ) -> HttpResponse:
         """Collect guide content and display it. When guide don't exist, return 404."""
         article_result = get_article(article, category)
 
