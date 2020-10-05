@@ -278,16 +278,20 @@ class UserListSerializer(ListSerializer):
         ref:https://www.django-rest-framework.org/api-guide/serializers/#customizing-multiple-update
         """
         instance_mapping = {user.id: user for user in instance}
-        data_mapping = {item['id']: item for item in validated_data}
 
         updated = []
         fields_to_update = set()
-        for user_id, data in data_mapping.items():
-            for key in data:
+        for user_data in validated_data:
+            for key in user_data:
                 fields_to_update.add(key)
-            user = instance_mapping.get(user_id)
-            user.__dict__.update(data)
-            updated.append(user)
+
+                try:
+                    user = instance_mapping[user_data["id"]]
+                except KeyError:
+                    raise ValidationError({"id": f"User with id {user_data['id']} not found."})
+
+                user.__dict__.update(user_data)
+                updated.append(user)
 
         fields_to_update.remove("id")
         User.objects.bulk_update(updated, fields_to_update)
@@ -297,6 +301,7 @@ class UserListSerializer(ListSerializer):
 class UserSerializer(ModelSerializer):
     """A class providing (de-)serialization of `User` instances."""
 
+    # ID field must be explicitly set as the default id field is read-only.
     id = IntegerField(min_value=0)
 
     class Meta:
