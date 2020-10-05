@@ -1,6 +1,8 @@
 ---
 title: How to Write a Guide
 short_description: Learn how to write a guide for this website
+icon_class: fas
+icon: fa-info
 ---
 
 When you are interested about how to write guide for this site (like this), then you can learn about it here.

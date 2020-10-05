@@ -30,7 +30,7 @@
                 {% for article, data in content.items %}
                     <div class="box" style="max-width: 800px;">
                         <span class="icon is-size-4 is-medium">
-                            <i class="fab fa-python is-size-3 is-black has-icon-padding" aria-hidden="true"></i>
+                            <i class="{{ data.icon_class|default:"fab" }} {{ data.icon|default:"fa-python" }} is-size-3 is-black has-icon-padding" aria-hidden="true"></i>
                         </span>
                         <a href="/content/category/{{ category_name }}/{{ article }}/">
                                 <span class="is-size-4 has-text-weight-bold">{{ data.title }}</span>
