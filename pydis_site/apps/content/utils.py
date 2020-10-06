@@ -113,5 +113,5 @@ def get_github_information(
     else:
         return {
             "last_modified": "N/A",
-            "contributors": []
+            "contributors": {}
         }

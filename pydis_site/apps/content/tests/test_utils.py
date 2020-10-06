@@ -1,6 +1,8 @@
+from datetime import datetime
 from pathlib import Path
-from unittest.mock import patch
+from unittest.mock import patch, MagicMock
 
+from dateutil.parser import isoparse
 from django.conf import settings
 from django.http import Http404
 from django.test import TestCase
@@ -134,3 +136,43 @@ class TestGetArticle(TestCase):
         with patch("pydis_site.apps.content.utils._get_base_path", return_value=BASE_PATH):
             with self.assertRaises(Http404):
                 utils.get_article("some-guide", "invalid")
+
+
+class GetGitHubInformationTests(TestCase):
+    @patch("pydis_site.apps.content.utils.requests.get")
+    @patch("pydis_site.apps.content.utils.COMMITS_URL", "foobar")
+    def test_call_get_github_information_requests_get(self, requests_get_mock):
+        """Check does this call requests.get function with proper URL."""
+        utils.get_github_information("foo", None)
+        requests_get_mock.assert_called_once_with("foobar")
+
+    @patch("pydis_site.apps.content.utils.requests.get")
+    def test_github_status_code_200_response(self, requests_get_mock):
+        """Check does this return provided modified date and contributors."""
+        requests_get_mock.return_value = MagicMock(status_code=200)
+        requests_get_mock.return_value.json.return_value = [{
+            "commit": {
+                "committer": {
+                    "date": datetime(2020, 10, 1).isoformat(),
+                    "name": "foobar",
+                }
+            },
+            "committer": {
+                "html_url": "abc1234"
+            }
+        }]
+        result = utils.get_github_information("foo", None)
+        self.assertEqual(result, {
+            "last_modified": datetime(2020, 10, 1).strftime("%dth %B %Y"),
+            "contributors": {"foobar": "abc1234"}
+        })
+
+    @patch("pydis_site.apps.content.utils.requests.get")
+    def test_github_other_status_code_response(self, requests_get_mock):
+        """Check does this return provided modified date and contributors."""
+        requests_get_mock.return_value = MagicMock(status_code=404)
+        result = utils.get_github_information("foo", None)
+        self.assertEqual(result, {
+            "last_modified": "N/A",
+            "contributors": {}
+        })

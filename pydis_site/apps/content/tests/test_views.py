@@ -23,7 +23,8 @@ class TestArticlesIndexView(TestCase):
 class TestArticleView(TestCase):
     @patch("pydis_site.apps.content.views.article.get_article")
     @patch("pydis_site.apps.content.views.article.get_category")
-    def test_article_return_code_200(self, get_category_mock, get_article_mock):
+    @patch("pydis_site.apps.content.views.article.get_github_information")
+    def test_article_return_code_200(self, gh_info_mock, get_category_mock, get_article_mock):
         get_article_mock.return_value = {"guide": "test", "metadata": {}}
 
         url = reverse("articles:article", args=["test-guide"])
@@ -31,6 +32,7 @@ class TestArticleView(TestCase):
         self.assertEqual(response.status_code, 200)
         get_category_mock.assert_not_called()
         get_article_mock.assert_called_once_with("test-guide", None)
+        gh_info_mock.assert_called_once()
 
     @patch("pydis_site.apps.content.views.article.get_article")
     @patch("pydis_site.apps.content.views.article.get_category")
