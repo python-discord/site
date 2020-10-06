@@ -315,3 +315,8 @@ ACCOUNT_USERNAME_VALIDATORS = "pydis_site.VALIDATORS"
 
 LOGIN_REDIRECT_URL = "home"
 SOCIALACCOUNT_ADAPTER = "pydis_site.utils.account.SocialAccountAdapter"
+
+# Information about site repository
+SITE_REPOSITORY_OWNER = "python-discord"
+SITE_REPOSITORY_NAME = "site"
+SITE_REPOSITORY_BRANCH = "master"
