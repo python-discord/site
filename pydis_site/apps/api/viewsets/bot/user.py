@@ -145,8 +145,6 @@ class UserViewSet(BulkCreateModelMixin, ModelViewSet):
     #### Status codes
     - 204: returned on success
     - 404: if a user with the given `snowflake` does not exist
-
-
     """
 
     serializer_class = UserSerializer
