@@ -1,3 +1,4 @@
+import typing
 from collections import OrderedDict
 
 from rest_framework import status
@@ -18,14 +19,14 @@ class UserListPagination(PageNumberPagination):
     page_size = 10000
     page_size_query_param = "page_size"
 
-    def get_next_page_number(self) -> int:
+    def get_next_page_number(self) -> typing.Optional[int]:
         """Get the next page number."""
         if not self.page.has_next():
             return None
         page_number = self.page.next_page_number()
         return page_number
 
-    def get_previous_page_number(self) -> int:
+    def get_previous_page_number(self) -> typing.Optional[int]:
         """Get the previous page number."""
         if not self.page.has_previous():
             return None
@@ -54,8 +55,8 @@ class UserViewSet(ModelViewSet):
     #### Response format
     >>> {
     ...     'count': 95000,
-    ...     'next': "http://api.pythondiscord.com/bot/users?page=2",
-    ...     'previous': None,
+    ...     'next_page_no': "2",
+    ...     'previous_page_no': None,
     ...     'results': [
     ...      {
     ...         'id': 409107086526644234,
