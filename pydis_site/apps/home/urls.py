@@ -1,6 +1,4 @@
 from allauth.account.views import LogoutView
-from django.conf import settings
-from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.messages import ERROR
 from django.urls import include, path
