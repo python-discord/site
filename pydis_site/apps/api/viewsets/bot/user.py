@@ -1,5 +1,3 @@
-import json
-
 from django.db import connections
 from rest_framework import status
 from rest_framework.decorators import action
@@ -65,18 +63,7 @@ class UserViewSet(BulkCreateModelMixin, ModelViewSet):
 
     #### Response format
     >>> {
-    ...    "id": "0",
-    ...    "name": "foo",
-    ...    "avatar_hash": "bar",
-    ...    "joined_at": "2020-10-06T18:17:30.101677",
-    ...    "created_at": "2020-10-06T18:17:30.101677",
-    ...    "is_staff": False,
-    ...    "opt_out": False,
-    ...    "bot": False,
-    ...    "is_guild": True,
-    ...    "is_verified": False,
-    ...    "public_flags": {},
-    ...    "verified_at": None,
+    ...    "verified_at": "2020-10-06T21:54:23.540766",
     ...    "total_messages": 2
     ...}
 
@@ -155,18 +142,10 @@ class UserViewSet(BulkCreateModelMixin, ModelViewSet):
     def metricity_data(self, request: Request, pk: str = None) -> Response:
         """Request handler for metricity_data endpoint."""
         user = self.get_object()
-        column_keys = ["id", "name", "avatar_hash", "joined_at", "created_at", "is_staff",
-                       "opt_out", "bot", "is_guild", "is_verified", "public_flags", "verified_at"]
         with connections['metricity'].cursor() as cursor:
-            # Get user data
-            query = f"SELECT {','.join(column_keys)} FROM users WHERE id = '%s'"
-            cursor.execute(query, [user.id])
-            values = cursor.fetchone()
-            data = dict(zip(column_keys, values))
-            data["public_flags"] = json.loads(data["public_flags"])
-
-            # Get message count
+            data = {}
+            cursor.execute("SELECT verified_at FROM users WHERE id = '%s'", [user.id])
+            data["verified_at"], = cursor.fetchone()
             cursor.execute("SELECT COUNT(*) FROM messages WHERE author_id = '%s'", [user.id])
             data["total_messages"], = cursor.fetchone()
-
             return Response(data, status=status.HTTP_200_OK)
