@@ -12,4 +12,3 @@ from .bot import (
     RoleViewSet,
     UserViewSet
 )
-from .log_entry import LogEntryViewSet
