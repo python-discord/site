@@ -33,11 +33,29 @@
         <div class="content">
             <div class="container">
                 <h1 class="title">{{ article.metadata.title }}</h1>
+                <p class="subtitle is-size-6"><strong>Last modified:</strong> {{ github_data.last_modified }}</p>
                 <div class="columns is-variable is-8">
                     <div class="column is-two-thirds">
                         {{ article.article|safe }}
                     </div>
                     <div class="column">
+                        <div class="card">
+                            <div class="card-header">
+                                <p class="card-header-title">Contributors</p>
+                            </div>
+                            <div class="card-content">
+                                {% if github_data.contributors|length %}
+                                    <div class="tags">
+                                        {% for user, profile_url in github_data.contributors.items %}
+                                            <span class="tag"><a href="{{ profile_url }}">{{ user }}</a></span>
+                                        {% endfor %}
+                                    </div>
+                                {% else %}
+                                <p>N/A</p>
+                                {% endif %}
+                            </div>
+                        </div>
+
                         {% if relevant_links|length > 0 %}
                         <div class="box">
                             <p class="menu-label">Relevant links</p>

@@ -5,7 +5,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.views import View
 
-from pydis_site.apps.content.utils import get_article, get_category
+from pydis_site.apps.content.utils import get_article, get_category, get_github_information
 
 
 class ArticleView(View):
@@ -38,5 +38,6 @@ class ArticleView(View):
                         article_result["metadata"].get("relevant_link_values", "").split(",")
                     ) if link != "" and value != ""
                 },
+                "github_data": get_github_information(article, category),
             }
         )
