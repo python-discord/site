@@ -261,14 +261,11 @@ LOGGING = {
     'handlers': {
         'console': {
             'class': 'logging.StreamHandler'
-        },
-        'database': {
-            'class': 'pydis_site.apps.api.dblogger.DatabaseLogHandler'
         }
     },
     'loggers': {
         'django': {
-            'handlers': ['console', 'database'],
+            'handlers': ['console'],
             'propagate': True,
             'level': env(
                 'LOG_LEVEL',
