@@ -3,7 +3,7 @@
 
 {% block title %}{{ article.metadata.title }}{% endblock %}
 {% block head %}
-  <meta property="og:title" content="Python Discord - {{ article.metadata.title|first }}" />
+  <meta property="og:title" content="Python Discord - {{ article.metadata.title }}" />
   <meta property="og:type" content="website" />
   <meta property="og:description" content="{{ article.metadata.short_description }}" />
   <link rel="stylesheet" href="{% static "css/content/articles.css" %}">
@@ -19,9 +19,9 @@
         <div class="container">
             <nav class="breadcrumb is-pulled-left" aria-label="breadcrumbs">
                 <ul>
-                    <li><a href="/content">Pages</a></li>
+                    <li><a href="/articles">Articles</a></li>
                     {% if category_data.raw_name is not None %}
-                        <li><a href="/content/category/{{ category_data.raw_name }}">{{ category_data.name }}</a></li>
+                        <li><a href="/articles/category/{{ category_data.raw_name }}">{{ category_data.name }}</a></li>
                     {% endif %}
                     <li class="is-active"><a href="#">{{ article.metadata.title }}</a></li>
                 </ul>

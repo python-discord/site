@@ -13,7 +13,7 @@ class TestGuidesIndexView(TestCase):
         get_categories_mock.return_value = {}
         get_articles_mock.return_value = {}
 
-        url = reverse('content:content')
+        url = reverse('articles:articles')
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
         get_articles_mock.assert_called_once()
@@ -26,7 +26,7 @@ class TestGuideView(TestCase):
     def test_guide_return_code_200(self, get_category_mock, get_article_mock):
         get_article_mock.return_value = {"guide": "test", "metadata": {}}
 
-        url = reverse("content:article", args=["test-guide"])
+        url = reverse("articles:article", args=["test-guide"])
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
         get_category_mock.assert_not_called()
@@ -38,7 +38,7 @@ class TestGuideView(TestCase):
         """Check that return code is 404 when invalid article provided."""
         get_article_mock.side_effect = Http404("Article not found.")
 
-        url = reverse("content:article", args=["invalid-guide"])
+        url = reverse("articles:article", args=["invalid-guide"])
         response = self.client.get(url)
         self.assertEqual(response.status_code, 404)
         get_article_mock.assert_called_once_with("invalid-guide", None)
@@ -53,7 +53,7 @@ class TestCategoryView(TestCase):
         get_category_mock.return_value = {"name": "test", "description": "test"}
         get_articles_mock.return_value = {}
 
-        url = reverse("content:category", args=["category"])
+        url = reverse("articles:category", args=["category"])
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, 200)
@@ -66,7 +66,7 @@ class TestCategoryView(TestCase):
         """Check that return code is 404 when trying to visit invalid category."""
         get_category_mock.side_effect = Http404("Category not found.")
 
-        url = reverse("content:category", args=["invalid-category"])
+        url = reverse("articles:category", args=["invalid-category"])
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, 404)
@@ -81,7 +81,7 @@ class TestCategoryGuidesView(TestCase):
         """Check that return code is 200 when visiting valid category article."""
         get_article_mock.return_value = {"guide": "test", "metadata": {}}
 
-        url = reverse("content:category_article", args=["category", "test3"])
+        url = reverse("articles:category_article", args=["category", "test3"])
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
         get_article_mock.assert_called_once_with("test3", "category")
@@ -93,7 +93,7 @@ class TestCategoryGuidesView(TestCase):
         """Check that return code is 200 when trying to visit invalid category article."""
         get_article_mock.side_effect = Http404("Article not found.")
 
-        url = reverse("content:category_article", args=["category", "invalid"])
+        url = reverse("articles:category_article", args=["category", "invalid"])
         response = self.client.get(url)
         self.assertEqual(response.status_code, 404)
         get_article_mock.assert_called_once_with("invalid", "category")

@@ -1,4 +1,6 @@
 from allauth.account.views import LogoutView
+from django.conf import settings
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.messages import ERROR
 from django.urls import include, path
@@ -33,5 +35,5 @@ urlpatterns = [
     path('logout', LogoutView.as_view(), name="logout"),
 
     path('admin/', admin.site.urls),
-    path('content/', include('pydis_site.apps.content.urls', namespace='content')),
-]
+    path('articles/', include('pydis_site.apps.content.urls', namespace='articles')),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
