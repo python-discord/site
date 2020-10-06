@@ -1,3 +1,10 @@
+import json
+
+from django.db import connections
+from rest_framework import status
+from rest_framework.decorators import action
+from rest_framework.request import Request
+from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 from rest_framework_bulk import BulkCreateModelMixin
 
@@ -48,6 +55,29 @@ class UserViewSet(BulkCreateModelMixin, ModelViewSet):
     ...     ],
     ...     'in_guild': True
     ... }
+
+    #### Status codes
+    - 200: returned on success
+    - 404: if a user with the given `snowflake` could not be found
+
+    ### GET /bot/users/<snowflake:int>/metricity_data
+    Gets metricity data for a single user by ID.
+
+    #### Response format
+    >>> {
+    ...    "id": "0",
+    ...    "name": "foo",
+    ...    "avatar_hash": "bar",
+    ...    "joined_at": "2020-10-06T18:17:30.101677",
+    ...    "created_at": "2020-10-06T18:17:30.101677",
+    ...    "is_staff": False,
+    ...    "opt_out": False,
+    ...    "bot": False,
+    ...    "is_guild": True,
+    ...    "is_verified": False,
+    ...    "public_flags": {},
+    ...    "verified_at": null
+    ...}
 
     #### Status codes
     - 200: returned on success
@@ -115,7 +145,23 @@ class UserViewSet(BulkCreateModelMixin, ModelViewSet):
     #### Status codes
     - 204: returned on success
     - 404: if a user with the given `snowflake` does not exist
+
+
     """
 
     serializer_class = UserSerializer
     queryset = User.objects
+
+    @action(detail=True)
+    def metricity_data(self, request: Request, pk: str = None) -> Response:
+        """Request handler for metricity_data endpoint."""
+        user = self.get_object()
+        column_keys = ["id", "name", "avatar_hash", "joined_at", "created_at", "is_staff",
+                       "opt_out", "bot", "is_guild", "is_verified", "public_flags", "verified_at"]
+        with connections['metricity'].cursor() as cursor:
+            query = f"SELECT {','.join(column_keys)} FROM users WHERE id = '%s'"
+            cursor.execute(query, [user.id])
+            values = cursor.fetchone()
+            data = dict(zip(column_keys, values))
+            data["public_flags"] = json.loads(data["public_flags"])
+            return Response(data, status=status.HTTP_200_OK)

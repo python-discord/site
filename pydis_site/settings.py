@@ -172,7 +172,8 @@ WSGI_APPLICATION = 'pydis_site.wsgi.application'
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
 DATABASES = {
-    'default': env.db()
+    'default': env.db(),
+    'metricity': env.db('METRICITY_DB_URL'),
 }
 
 # Password validation
