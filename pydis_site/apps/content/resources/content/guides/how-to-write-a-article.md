@@ -43,6 +43,8 @@ You can read more about Markdown metadata [here](https://github.com/trentm/pytho
 - **Name:** Easily-readable name for your article.
 - **Short Description:** Small, 1-2 line description that describe what your article explain.
 - **Relevant Links and Values:** URLs and values is under different fields, separated with comma.
+- **Icon class:** `icon_class` field have one of the favicons classes. Default is `fab`.
+- **Icon:** `icon` field have favicon name. Default `fa-python`.
 
 ## Content
 For content, mostly you can use standard markdown, but there is a few addition that is available.
