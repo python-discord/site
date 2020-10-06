@@ -36,4 +36,4 @@ urlpatterns = [
 
     path('admin/', admin.site.urls),
     path('articles/', include('pydis_site.apps.content.urls', namespace='articles')),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]
