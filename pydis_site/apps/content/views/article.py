@@ -26,22 +26,17 @@ class ArticleView(View):
         else:
             category_data = {"name": None, "raw_name": None}
 
-        relevant_links = {
-            link: value for link, value in zip(
-                article_result["metadata"].get("relevant_links", "").split(","),
-                article_result["metadata"].get("relevant_link_values", "").split(",")
-            )
-        }
-
-        if relevant_links == {"": ""}:
-            relevant_links = {}
-
         return render(
             request,
             "content/article.html",
             {
                 "article": article_result,
                 "category_data": category_data,
-                "relevant_links": relevant_links
+                "relevant_links": {
+                    link: value for link, value in zip(
+                        article_result["metadata"].get("relevant_links", "").split(","),
+                        article_result["metadata"].get("relevant_link_values", "").split(",")
+                    ) if link != "" and value != ""
+                },
             }
         )
