@@ -9,7 +9,6 @@ from .models import (
     DocumentationLink,
     FilterList,
     Infraction,
-    LogEntry,
     MessageDeletionContext,
     Nomination,
     OffTopicChannelName,
@@ -189,19 +188,6 @@ class ExpandedInfractionSerializer(InfractionSerializer):
         ret['actor'] = actor_data
 
         return ret
-
-
-class LogEntrySerializer(ModelSerializer):
-    """A class providing (de-)serialization of `LogEntry` instances."""
-
-    class Meta:
-        """Metadata defined for the Django REST Framework."""
-
-        model = LogEntry
-        fields = (
-            'application', 'logger_name', 'timestamp',
-            'level', 'module', 'line', 'message'
-        )
 
 
 class OffTopicChannelNameSerializer(ModelSerializer):
