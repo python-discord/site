@@ -23,7 +23,10 @@ from pydis_site.constants import GIT_SHA
 
 env = environ.Env(
     DEBUG=(bool, False),
-    SITE_SENTRY_DSN=(str, "")
+    SITE_SENTRY_DSN=(str, ""),
+    SITE_REPOSITORY_OWNER=(str, "python-discord"),
+    SITE_REPOSITORY_NAME=(str, "site"),
+    SITE_REPOSITORY_BRANCH=(str, "master")
 )
 
 sentry_sdk.init(
@@ -317,6 +320,6 @@ LOGIN_REDIRECT_URL = "home"
 SOCIALACCOUNT_ADAPTER = "pydis_site.utils.account.SocialAccountAdapter"
 
 # Information about site repository
-SITE_REPOSITORY_OWNER = "python-discord"
-SITE_REPOSITORY_NAME = "site"
-SITE_REPOSITORY_BRANCH = "master"
+SITE_REPOSITORY_OWNER = env("SITE_REPOSITORY_OWNER")
+SITE_REPOSITORY_NAME = env("SITE_REPOSITORY_NAME")
+SITE_REPOSITORY_BRANCH = env("SITE_REPOSITORY_BRANCH")
