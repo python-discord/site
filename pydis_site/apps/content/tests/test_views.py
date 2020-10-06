@@ -5,7 +5,7 @@ from django.test import TestCase
 from django_hosts.resolvers import reverse
 
 
-class TestGuidesIndexView(TestCase):
+class TestArticlesIndexView(TestCase):
     @patch("pydis_site.apps.content.views.articles.get_articles")
     @patch("pydis_site.apps.content.views.articles.get_categories")
     def test_articles_index_return_200(self, get_categories_mock, get_articles_mock):
@@ -20,10 +20,10 @@ class TestGuidesIndexView(TestCase):
         get_categories_mock.assert_called_once()
 
 
-class TestGuideView(TestCase):
+class TestArticleView(TestCase):
     @patch("pydis_site.apps.content.views.article.get_article")
     @patch("pydis_site.apps.content.views.article.get_category")
-    def test_guide_return_code_200(self, get_category_mock, get_article_mock):
+    def test_article_return_code_200(self, get_category_mock, get_article_mock):
         get_article_mock.return_value = {"guide": "test", "metadata": {}}
 
         url = reverse("articles:article", args=["test-guide"])
@@ -34,7 +34,7 @@ class TestGuideView(TestCase):
 
     @patch("pydis_site.apps.content.views.article.get_article")
     @patch("pydis_site.apps.content.views.article.get_category")
-    def test_guide_return_404(self, get_category_mock, get_article_mock):
+    def test_article_return_404(self, get_category_mock, get_article_mock):
         """Check that return code is 404 when invalid article provided."""
         get_article_mock.side_effect = Http404("Article not found.")
 
@@ -74,7 +74,7 @@ class TestCategoryView(TestCase):
         get_articles_mock.assert_not_called()
 
 
-class TestCategoryGuidesView(TestCase):
+class TestCategoryArticlesView(TestCase):
     @patch("pydis_site.apps.content.views.article.get_article")
     @patch("pydis_site.apps.content.views.article.get_category")
     def test_valid_category_article_code_200(self, get_category_mock, get_article_mock):
