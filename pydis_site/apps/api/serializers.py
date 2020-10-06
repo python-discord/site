@@ -1,5 +1,6 @@
 """Converters from Django models to data interchange formats and back."""
 from django.db.models.query import QuerySet
+from rest_framework.exceptions import NotFound
 from rest_framework.serializers import (
     IntegerField,
     ListSerializer,
@@ -260,16 +261,16 @@ class UserListSerializer(ListSerializer):
 
     def create(self, validated_data: list) -> list:
         """Override create method to optimize django queries."""
-        present_users = User.objects.all()
         new_users = []
-        present_user_ids = [user.id for user in present_users]
+        request_user_ids = [user["id"] for user in validated_data]
 
         for user_dict in validated_data:
-            if user_dict["id"] in present_user_ids:
-                raise ValidationError({"id": "User already exists."})
+            if request_user_ids.count(user_dict["id"]) > 1:
+                raise ValidationError({"id": f"User with ID {user_dict['id']} "
+                                             f"given multiple times."})
             new_users.append(User(**user_dict))
 
-        return User.objects.bulk_create(new_users)
+        return User.objects.bulk_create(new_users, ignore_conflicts=True)
 
     def update(self, instance: QuerySet, validated_data: list) -> list:
         """
@@ -288,7 +289,7 @@ class UserListSerializer(ListSerializer):
                 try:
                     user = instance_mapping[user_data["id"]]
                 except KeyError:
-                    raise ValidationError({"id": f"User with id {user_data['id']} not found."})
+                    raise NotFound({"id": f"User with id {user_data['id']} not found."})
 
                 user.__dict__.update(user_data)
                 updated.append(user)
