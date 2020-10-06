@@ -76,7 +76,8 @@ class UserViewSet(BulkCreateModelMixin, ModelViewSet):
     ...    "is_guild": True,
     ...    "is_verified": False,
     ...    "public_flags": {},
-    ...    "verified_at": null
+    ...    "verified_at": None,
+    ...    "total_messages": 2
     ...}
 
     #### Status codes
@@ -157,9 +158,15 @@ class UserViewSet(BulkCreateModelMixin, ModelViewSet):
         column_keys = ["id", "name", "avatar_hash", "joined_at", "created_at", "is_staff",
                        "opt_out", "bot", "is_guild", "is_verified", "public_flags", "verified_at"]
         with connections['metricity'].cursor() as cursor:
+            # Get user data
             query = f"SELECT {','.join(column_keys)} FROM users WHERE id = '%s'"
             cursor.execute(query, [user.id])
             values = cursor.fetchone()
             data = dict(zip(column_keys, values))
             data["public_flags"] = json.loads(data["public_flags"])
+
+            # Get message count
+            cursor.execute("SELECT COUNT(*) FROM messages WHERE author_id = '%s'", [user.id])
+            data["total_messages"], = cursor.fetchone()
+
             return Response(data, status=status.HTTP_200_OK)

@@ -32,3 +32,19 @@ INSERT INTO users VALUES (
     '{}',
     NULL
 );
+
+CREATE TABLE messages (
+    id varchar(255),
+    author_id varchar(255) references users(id),
+    primary key(id)
+);
+
+INSERT INTO messages VALUES(
+    0,
+    0
+);
+
+INSERT INTO messages VALUES(
+    1,
+    0
+);
