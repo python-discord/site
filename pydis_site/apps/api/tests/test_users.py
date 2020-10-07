@@ -251,6 +251,20 @@ class MultiPatchTests(APISubdomainTestCase):
         response = self.client.patch(url, data=data)
         self.assertEqual(response.status_code, 400)
 
+    def test_returns_400_for_insufficient_data(self):
+        url = reverse("bot:user-bulk-patch", host="api")
+        data = [
+            {
+                "id": 1,
+
+            },
+            {
+                "id": 2,
+            }
+        ]
+        response = self.client.patch(url, data=data)
+        self.assertEqual(response.status_code, 400)
+
 
 class UserModelTests(APISubdomainTestCase):
     @classmethod
