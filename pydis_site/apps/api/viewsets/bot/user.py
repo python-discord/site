@@ -105,7 +105,6 @@ class UserViewSet(ModelViewSet):
     Adds a single or multiple new users.
     The roles attached to the user(s) must be roles known by the site.
     User creation process will be skipped if user is already present in the database.
-    multiple users with the same id in the request data will raise an error.
 
     #### Request body
     >>> {
@@ -122,7 +121,7 @@ class UserViewSet(ModelViewSet):
     #### Status codes
     - 201: returned on success
     - 400: if one of the given roles does not exist, or one of the given fields is invalid
-    - 400: if multiple user objects with the same id is given.
+    - 400: if multiple user objects with the same id are given.
 
     ### PUT /bot/users/<snowflake:int>
     Update the user with the given `snowflake`.
@@ -208,8 +207,9 @@ class UserViewSet(ModelViewSet):
         ... ]
 
         #### Status codes
-        - 200: Returned on success.
+        - 200: returned on success.
         - 400: if the request body was invalid, see response body for details.
+        - 404: if the user with the given id does not exist.
         """
         queryset = self.get_queryset()
         try:
