@@ -104,6 +104,8 @@ class UserViewSet(ModelViewSet):
     ### POST /bot/users
     Adds a single or multiple new users.
     The roles attached to the user(s) must be roles known by the site.
+    User creation process will be skipped if user is already present in the database.
+    multiple users with the same id in the request data will raise an error.
 
     #### Request body
     >>> {
@@ -120,6 +122,7 @@ class UserViewSet(ModelViewSet):
     #### Status codes
     - 201: returned on success
     - 400: if one of the given roles does not exist, or one of the given fields is invalid
+    - 400: if multiple user objects with the same id is given.
 
     ### PUT /bot/users/<snowflake:int>
     Update the user with the given `snowflake`.
