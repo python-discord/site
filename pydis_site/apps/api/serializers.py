@@ -297,6 +297,11 @@ class UserListSerializer(ListSerializer):
                 updated.append(user)
 
         fields_to_update.remove("id")
+
+        if not fields_to_update:
+            # Raise ValidationError when only id field is given.
+            raise ValidationError({"data": "Insufficient data provided."})
+
         User.objects.bulk_update(updated, fields_to_update)
         return updated
 
