@@ -8,7 +8,6 @@ from .viewsets import (
     DocumentationLinkViewSet,
     FilterListViewSet,
     InfractionViewSet,
-    LogEntryViewSet,
     NominationViewSet,
     OffTopicChannelNameViewSet,
     OffensiveMessageViewSet,
@@ -71,7 +70,6 @@ urlpatterns = (
     #
     # from django_hosts.resolvers import reverse
     path('bot/', include((bot_router.urls, 'api'), namespace='bot')),
-    path('logs', LogEntryViewSet.as_view({'post': 'create'}), name='logs'),
     path('healthcheck', HealthcheckView.as_view(), name='healthcheck'),
     path('rules', RulesView.as_view(), name='rules')
 )

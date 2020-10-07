@@ -14,4 +14,3 @@ from .bot import (
     Role,
     User
 )
-from .log_entry import LogEntry
