@@ -262,12 +262,14 @@ class UserListSerializer(ListSerializer):
     def create(self, validated_data: list) -> list:
         """Override create method to optimize django queries."""
         new_users = []
-        request_user_ids = [user["id"] for user in validated_data]
+        seen = set()
 
         for user_dict in validated_data:
-            if request_user_ids.count(user_dict["id"]) > 1:
-                raise ValidationError({"id": f"User with ID {user_dict['id']} "
-                                             f"given multiple times."})
+            if user_dict["id"] in seen:
+                raise ValidationError(
+                    {"id": f"User with ID {user_dict['id']} given multiple times."}
+                )
+            seen.add(user_dict["id"])
             new_users.append(User(**user_dict))
 
         return User.objects.bulk_create(new_users, ignore_conflicts=True)
