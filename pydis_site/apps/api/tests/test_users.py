@@ -1,7 +1,10 @@
+from unittest.mock import patch
+
 from django_hosts.resolvers import reverse
 
 from .base import APISubdomainTestCase
 from ..models import Role, User
+from ..models.bot.metricity import NotFound
 
 
 class UnauthedUserAPITests(APISubdomainTestCase):
@@ -170,3 +173,58 @@ class UserModelTests(APISubdomainTestCase):
     def test_correct_username_formatting(self):
         """Tests the username property with both name and discriminator formatted together."""
         self.assertEqual(self.user_with_roles.username, "Test User with two roles#0001")
+
+
+class UserMetricityTests(APISubdomainTestCase):
+    @classmethod
+    def setUpTestData(cls):
+        User.objects.create(
+            id=0,
+            name="Test user",
+            discriminator=1,
+            in_guild=True,
+        )
+
+    def test_get_metricity_data(self):
+        # Given
+        verified_at = "foo"
+        total_messages = 1
+        self.mock_metricity_user(verified_at, total_messages)
+
+        # When
+        url = reverse('bot:user-metricity-data', args=[0], host='api')
+        response = self.client.get(url)
+
+        # Then
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json(), {
+            "verified_at": verified_at,
+            "total_messages": total_messages,
+        })
+
+    def test_no_metricity_user(self):
+        # Given
+        self.mock_no_metricity_user()
+
+        # When
+        url = reverse('bot:user-metricity-data', args=[0], host='api')
+        response = self.client.get(url)
+
+        # Then
+        self.assertEqual(response.status_code, 404)
+
+    def mock_metricity_user(self, verified_at, total_messages):
+        patcher = patch("pydis_site.apps.api.viewsets.bot.user.Metricity")
+        self.metricity = patcher.start()
+        self.addCleanup(patcher.stop)
+        self.metricity = self.metricity.return_value.__enter__.return_value
+        self.metricity.user.return_value = dict(verified_at=verified_at)
+        self.metricity.total_messages.return_value = total_messages
+
+    def mock_no_metricity_user(self):
+        patcher = patch("pydis_site.apps.api.viewsets.bot.user.Metricity")
+        self.metricity = patcher.start()
+        self.addCleanup(patcher.stop)
+        self.metricity = self.metricity.return_value.__enter__.return_value
+        self.metricity.user.side_effect = NotFound()
+        self.metricity.total_messages.side_effect = NotFound()

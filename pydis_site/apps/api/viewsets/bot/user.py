@@ -1,4 +1,3 @@
-from django.db import connections
 from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.request import Request
@@ -6,6 +5,7 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 from rest_framework_bulk import BulkCreateModelMixin
 
+from pydis_site.apps.api.models.bot.metricity import Metricity, NotFound
 from pydis_site.apps.api.models.bot.user import User
 from pydis_site.apps.api.serializers import UserSerializer
 
@@ -142,10 +142,11 @@ class UserViewSet(BulkCreateModelMixin, ModelViewSet):
     def metricity_data(self, request: Request, pk: str = None) -> Response:
         """Request handler for metricity_data endpoint."""
         user = self.get_object()
-        with connections['metricity'].cursor() as cursor:
-            data = {}
-            cursor.execute("SELECT verified_at FROM users WHERE id = '%s'", [user.id])
-            data["verified_at"], = cursor.fetchone()
-            cursor.execute("SELECT COUNT(*) FROM messages WHERE author_id = '%s'", [user.id])
-            data["total_messages"], = cursor.fetchone()
-            return Response(data, status=status.HTTP_200_OK)
+        with Metricity() as metricity:
+            try:
+                data = metricity.user(user.id)
+                data["total_messages"] = metricity.total_messages(user.id)
+                return Response(data, status=status.HTTP_200_OK)
+            except NotFound:
+                return Response(dict(detail="User not found in metricity"),
+                                status=status.HTTP_404_NOT_FOUND)
