@@ -276,6 +276,22 @@ class MultiPatchTests(APISubdomainTestCase):
         response = self.client.patch(url, data=data)
         self.assertEqual(response.status_code, 400)
 
+    def test_returns_400_for_duplicate_request_users(self):
+        """Return 400 if 2 Users with same ID is passed in the request data."""
+        url = reverse("bot:user-bulk-patch", host="api")
+        data = [
+            {
+                'id': 1,
+                'name': 'You saw nothing.',
+            },
+            {
+                'id': 1,
+                'name': 'You saw nothing part 2.',
+            }
+        ]
+        response = self.client.patch(url, data=data)
+        self.assertEqual(response.status_code, 400)
+
 
 class UserModelTests(APISubdomainTestCase):
     @classmethod
