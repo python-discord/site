@@ -293,7 +293,7 @@ class UserListSerializer(ListSerializer):
                 try:
                     user = instance_mapping[user_data["id"]]
                 except KeyError:
-                    raise NotFound({"id": f"User with id {user_data['id']} not found."})
+                    raise NotFound({"detail": [f"User with id {user_data['id']} not found."]})
 
                 user.__dict__.update(user_data)
             updated.append(user)
@@ -329,7 +329,7 @@ class UserSerializer(ModelSerializer):
         try:
             return super().create(validated_data)
         except IntegrityError:
-            raise ValidationError({"ID": "User with ID already present."})
+            raise ValidationError({"id": ["User with ID already present."]})
 
 
 class NominationSerializer(ModelSerializer):
