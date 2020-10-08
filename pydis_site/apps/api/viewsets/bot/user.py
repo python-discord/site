@@ -6,7 +6,7 @@ from rest_framework.decorators import action
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.request import Request
 from rest_framework.response import Response
-from rest_framework.serializers import ModelSerializer
+from rest_framework.serializers import ModelSerializer, ValidationError
 from rest_framework.viewsets import ModelViewSet
 
 from pydis_site.apps.api.models.bot.user import User
@@ -212,14 +212,20 @@ class UserViewSet(ModelViewSet):
         - 404: if the user with the given id does not exist.
         """
         queryset = self.get_queryset()
-        try:
-            object_ids = [item["id"] for item in request.data]
-        except KeyError:
-            # user ID not provided in request body.
-            resp = {
-                "Error": "User ID not provided."
-            }
-            return Response(resp, status=status.HTTP_400_BAD_REQUEST)
+        object_ids = set()
+        for data in request.data:
+            try:
+                if data["id"] in object_ids:
+                    # If request data contains users with same ID.
+                    raise ValidationError(
+                        {"id": [f"User with ID {data['id']} given multiple times."]}
+                    )
+            except KeyError:
+                # If user ID not provided in request body.
+                raise ValidationError(
+                    {"id": ["This field is required."]}
+                )
+            object_ids.add(data["id"])
 
         filtered_instances = queryset.filter(id__in=object_ids)
 
