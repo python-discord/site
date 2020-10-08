@@ -9,6 +9,7 @@ from rest_framework.serializers import (
     PrimaryKeyRelatedField,
     ValidationError
 )
+from rest_framework.settings import api_settings
 from rest_framework.validators import UniqueTogetherValidator
 
 from .models import (
@@ -301,7 +302,9 @@ class UserListSerializer(ListSerializer):
 
         if not fields_to_update:
             # Raise ValidationError when only id field is given.
-            raise ValidationError({"data": "Insufficient data provided."})
+            raise ValidationError(
+                {api_settings.NON_FIELD_ERRORS_KEY: ["Insufficient data provided."]}
+            )
 
         User.objects.bulk_update(updated, fields_to_update)
         return updated
