@@ -197,7 +197,7 @@ class UserViewSet(ModelViewSet):
     """
 
     serializer_class = UserSerializer
-    queryset = User.objects.all()
+    queryset = User.objects.all().order_by("id")
     pagination_class = UserListPagination
 
     def get_serializer(self, *args, **kwargs) -> ModelSerializer:
