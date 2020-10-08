@@ -280,7 +280,7 @@ class UserListSerializer(ListSerializer):
                 try:
                     user = instance_mapping[user_data["id"]]
                 except KeyError:
-                    raise NotFound({"detail": [f"User with id {user_data['id']} not found."]})
+                    raise NotFound({"detail": f"User with id {user_data['id']} not found."})
 
                 user.__dict__.update(user_data)
             updated.append(user)
