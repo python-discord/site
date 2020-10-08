@@ -116,7 +116,8 @@ class UserViewSet(ModelViewSet):
     ... }
 
     Alternatively, request users can be POSTed as a list of above objects,
-    in which case multiple users will be created at once.
+    in which case multiple users will be created at once. In this case,
+    the response is an empty list.
 
     #### Status codes
     - 201: returned on success
