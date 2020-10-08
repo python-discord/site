@@ -274,7 +274,8 @@ class UserListSerializer(ListSerializer):
             seen.add(user_dict["id"])
             new_users.append(User(**user_dict))
 
-        return User.objects.bulk_create(new_users, ignore_conflicts=True)
+        users = User.objects.bulk_create(new_users, ignore_conflicts=True)
+        return User.objects.filter(id__in=[user.id for user in users])
 
     def update(self, instance: QuerySet, validated_data: list) -> list:
         """
