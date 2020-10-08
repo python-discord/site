@@ -6,7 +6,7 @@ from rest_framework.decorators import action
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.request import Request
 from rest_framework.response import Response
-from rest_framework.serializers import ModelSerializer, ValidationError
+from rest_framework.serializers import ModelSerializer
 from rest_framework.viewsets import ModelViewSet
 
 from pydis_site.apps.api.models.bot.user import User
@@ -210,26 +210,8 @@ class UserViewSet(ModelViewSet):
     @action(detail=False, methods=["PATCH"], name='user-bulk-patch')
     def bulk_patch(self, request: Request) -> Response:
         """Update multiple User objects in a single request."""
-        queryset = self.get_queryset()
-        object_ids = set()
-        for data in request.data:
-            try:
-                if data["id"] in object_ids:
-                    # If request data contains users with same ID.
-                    raise ValidationError(
-                        {"id": [f"User with ID {data['id']} given multiple times."]}
-                    )
-            except KeyError:
-                # If user ID not provided in request body.
-                raise ValidationError(
-                    {"id": ["This field is required."]}
-                )
-            object_ids.add(data["id"])
-
-        filtered_instances = queryset.filter(id__in=object_ids)
-
         serializer = self.get_serializer(
-            instance=filtered_instances,
+            instance=self.get_queryset(),
             data=request.data,
             many=True,
             partial=True

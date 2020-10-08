@@ -263,13 +263,32 @@ class UserListSerializer(ListSerializer):
         User.objects.bulk_create(new_users, ignore_conflicts=True)
         return []
 
-    def update(self, instance: QuerySet, validated_data: list) -> list:
+    def update(self, queryset: QuerySet, validated_data: list) -> list:
         """
         Override update method to support bulk updates.
 
         ref:https://www.django-rest-framework.org/api-guide/serializers/#customizing-multiple-update
         """
-        instance_mapping = {user.id: user for user in instance}
+        object_ids = set()
+
+        for data in validated_data:
+            try:
+                if data["id"] in object_ids:
+                    # If request data contains users with same ID.
+                    raise ValidationError(
+                        {"id": [f"User with ID {data['id']} given multiple times."]}
+                    )
+            except KeyError:
+                # If user ID not provided in request body.
+                raise ValidationError(
+                    {"id": ["This field is required."]}
+                )
+            object_ids.add(data["id"])
+
+        # filter queryset
+        filtered_instances = queryset.filter(id__in=object_ids)
+
+        instance_mapping = {user.id: user for user in filtered_instances}
 
         updated = []
         fields_to_update = set()
