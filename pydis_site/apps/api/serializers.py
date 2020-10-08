@@ -295,7 +295,7 @@ class UserListSerializer(ListSerializer):
                     raise NotFound({"id": f"User with id {user_data['id']} not found."})
 
                 user.__dict__.update(user_data)
-                updated.append(user)
+            updated.append(user)
 
         fields_to_update.remove("id")
 
