@@ -73,9 +73,9 @@ class UserViewSet(ModelViewSet):
     ...     ]
     ... }
 
-    #### Query Parameters
-    - page_size: Number of Users in one page.
-    - page: Page number
+    #### Optional Query Parameters
+    - page_size: number of Users in one page, defaults to 10,000
+    - page: page number
 
     #### Status codes
     - 200: returned on success
@@ -104,7 +104,7 @@ class UserViewSet(ModelViewSet):
     ### POST /bot/users
     Adds a single or multiple new users.
     The roles attached to the user(s) must be roles known by the site.
-    User creation process will be skipped if user is already present in the database.
+    Users that already exist in the database will be skipped.
 
     #### Request body
     >>> {
@@ -121,7 +121,7 @@ class UserViewSet(ModelViewSet):
     #### Status codes
     - 201: returned on success
     - 400: if one of the given roles does not exist, or one of the given fields is invalid
-    - 400: if multiple user objects with the same id are given.
+    - 400: if multiple user objects with the same id are given
 
     ### PUT /bot/users/<snowflake:int>
     Update the user with the given `snowflake`.
@@ -159,6 +159,34 @@ class UserViewSet(ModelViewSet):
     - 400: if the request body was invalid, see response body for details
     - 404: if the user with the given `snowflake` could not be found
 
+    ### BULK PATCH /bot/users/bulk_patch
+    Update users with the given `ids` and `details`.
+    `id` field and at least one other field is mandatory.
+
+    #### Request body
+    >>> [
+    ...     {
+    ...     'id': int,
+    ...     'name': str,
+    ...     'discriminator': int,
+    ...     'roles': List[int],
+    ...     'in_guild': bool
+    ...     },
+    ...     {
+    ...     'id': int,
+    ...     'name': str,
+    ...     'discriminator': int,
+    ...     'roles': List[int],
+    ...     'in_guild': bool
+    ...     },
+    ... ]
+
+    #### Status codes
+    - 200: returned on success
+    - 400: if the request body was invalid, see response body for details
+    - 400: if multiple user objects with the same id are given
+    - 404: if the user with the given id does not exist
+
     ### DELETE /bot/users/<snowflake:int>
     Deletes the user with the given `snowflake`.
 
@@ -180,37 +208,7 @@ class UserViewSet(ModelViewSet):
 
     @action(detail=False, methods=["PATCH"], name='user-bulk-patch')
     def bulk_patch(self, request: Request) -> Response:
-        """
-        Update multiple User objects in a single request.
-
-        ## Route
-        ### PATCH /bot/users/bulk_patch
-        Update all users with the IDs.
-        `id` field is mandatory, rest are optional.
-
-        #### Request body
-        >>> [
-        ...     {
-        ...     'id': int,
-        ...     'name': str,
-        ...     'discriminator': int,
-        ...     'roles': List[int],
-        ...     'in_guild': bool
-        ...     },
-        ...     {
-        ...     'id': int,
-        ...     'name': str,
-        ...     'discriminator': int,
-        ...     'roles': List[int],
-        ...     'in_guild': bool
-        ...     },
-        ... ]
-
-        #### Status codes
-        - 200: returned on success.
-        - 400: if the request body was invalid, see response body for details.
-        - 404: if the user with the given id does not exist.
-        """
+        """Update multiple User objects in a single request."""
         queryset = self.get_queryset()
         object_ids = set()
         for data in request.data:
