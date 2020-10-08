@@ -166,18 +166,18 @@ class UserViewSet(ModelViewSet):
     #### Request body
     >>> [
     ...     {
-    ...     'id': int,
-    ...     'name': str,
-    ...     'discriminator': int,
-    ...     'roles': List[int],
-    ...     'in_guild': bool
+    ...         'id': int,
+    ...         'name': str,
+    ...         'discriminator': int,
+    ...         'roles': List[int],
+    ...         'in_guild': bool
     ...     },
     ...     {
-    ...     'id': int,
-    ...     'name': str,
-    ...     'discriminator': int,
-    ...     'roles': List[int],
-    ...     'in_guild': bool
+    ...         'id': int,
+    ...         'name': str,
+    ...         'discriminator': int,
+    ...         'roles': List[int],
+    ...         'in_guild': bool
     ...     },
     ... ]
 
