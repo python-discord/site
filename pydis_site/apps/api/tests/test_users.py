@@ -154,6 +154,18 @@ class CreationTests(APISubdomainTestCase):
         response = self.client.post(url, data=data)
         self.assertEqual(response.status_code, 400)
 
+    def test_returns_400_for_existing_user(self):
+        """Returns 400 if user is already present in DB."""
+        url = reverse('bot:user-list', host='api')
+        data = {
+            'id': 11,
+            'name': 'You saw nothing part 3.',
+            'discriminator': 1122,
+            'in_guild': True
+        }
+        response = self.client.post(url, data=data)
+        self.assertEqual(response.status_code, 400)
+
 
 class MultiPatchTests(APISubdomainTestCase):
     @classmethod
@@ -256,7 +268,6 @@ class MultiPatchTests(APISubdomainTestCase):
         data = [
             {
                 "id": 1,
-
             },
             {
                 "id": 2,
