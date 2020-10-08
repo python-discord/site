@@ -1,5 +1,6 @@
 """Converters from Django models to data interchange formats and back."""
 from django.db.models.query import QuerySet
+from django.db.utils import IntegrityError
 from rest_framework.exceptions import NotFound
 from rest_framework.serializers import (
     IntegerField,
@@ -319,6 +320,13 @@ class UserSerializer(ModelSerializer):
         fields = ('id', 'name', 'discriminator', 'roles', 'in_guild')
         depth = 1
         list_serializer_class = UserListSerializer
+
+    def create(self, validated_data: dict) -> User:
+        """Override create method to catch IntegrityError."""
+        try:
+            return super().create(validated_data)
+        except IntegrityError:
+            raise ValidationError({"ID": "User with ID already present."})
 
 
 class NominationSerializer(ModelSerializer):
