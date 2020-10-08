@@ -255,7 +255,7 @@ class UserListSerializer(ListSerializer):
         for user_dict in validated_data:
             if user_dict["id"] in seen:
                 raise ValidationError(
-                    {"id": f"User with ID {user_dict['id']} given multiple times."}
+                    {"id": [f"User with ID {user_dict['id']} given multiple times."]}
                 )
             seen.add(user_dict["id"])
             new_users.append(User(**user_dict))
