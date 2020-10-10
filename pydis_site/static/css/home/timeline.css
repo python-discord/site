@@ -7,6 +7,12 @@ h2 {
     font-size: 2em;
 }
 
+@media (max-width: 500px) {
+    h2 {
+        font-size: 1em;
+    }
+}
+
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section, main, form legend {
     display: block
 }
