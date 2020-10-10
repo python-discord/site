@@ -16,7 +16,8 @@ from .models import (
     OffensiveMessage,
     Reminder,
     Role,
-    User
+    User,
+    UserEvent
 )
 
 
@@ -280,3 +281,13 @@ class OffensiveMessageSerializer(ModelSerializer):
 
         model = OffensiveMessage
         fields = ('id', 'channel_id', 'delete_date')
+
+
+class UserEventSerializer(ModelSerializer):
+    """A class providing (de-)serialization of `UserEvent` instances."""
+
+    class Meta:
+        """Metadata defined for the Django REST Framework."""
+
+        model = UserEvent
+        fields = ("id", "name", "organizer", "subscriptions")
