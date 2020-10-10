@@ -454,7 +454,6 @@ class UserMetricityTests(APISubdomainTestCase):
                     self.assertEqual(response.status_code, 200)
                     self.assertEqual(response.json()["voice_banned"], case["voice_banned"])
 
-
     def mock_metricity_user(self, verified_at, total_messages):
         patcher = patch("pydis_site.apps.api.viewsets.bot.user.Metricity")
         self.metricity = patcher.start()
