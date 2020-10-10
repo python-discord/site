@@ -9,6 +9,7 @@ from rest_framework.response import Response
 from rest_framework.serializers import ModelSerializer
 from rest_framework.viewsets import ModelViewSet
 
+from pydis_site.apps.api.models.bot.metricity import Metricity, NotFound
 from pydis_site.apps.api.models.bot.user import User
 from pydis_site.apps.api.serializers import UserSerializer
 
@@ -96,6 +97,19 @@ class UserViewSet(ModelViewSet):
     ...     ],
     ...     'in_guild': True
     ... }
+
+    #### Status codes
+    - 200: returned on success
+    - 404: if a user with the given `snowflake` could not be found
+
+    ### GET /bot/users/<snowflake:int>/metricity_data
+    Gets metricity data for a single user by ID.
+
+    #### Response format
+    >>> {
+    ...    "verified_at": "2020-10-06T21:54:23.540766",
+    ...    "total_messages": 2
+    ...}
 
     #### Status codes
     - 200: returned on success
@@ -221,3 +235,16 @@ class UserViewSet(ModelViewSet):
         serializer.save()
 
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+    @action(detail=True)
+    def metricity_data(self, request: Request, pk: str = None) -> Response:
+        """Request handler for metricity_data endpoint."""
+        user = self.get_object()
+        with Metricity() as metricity:
+            try:
+                data = metricity.user(user.id)
+                data["total_messages"] = metricity.total_messages(user.id)
+                return Response(data, status=status.HTTP_200_OK)
+            except NotFound:
+                return Response(dict(detail="User not found in metricity"),
+                                status=status.HTTP_404_NOT_FOUND)
