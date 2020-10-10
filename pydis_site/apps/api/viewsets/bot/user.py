@@ -1,7 +1,7 @@
 import typing
 from collections import OrderedDict
 
-from django.core.exceptions import MultipleObjectsReturned, ObjectDoesNotExist
+from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.pagination import PageNumberPagination
@@ -247,8 +247,6 @@ class UserViewSet(ModelViewSet):
             Infraction.objects.get(user__id=user.id, active=True, type="voice_ban")
         except ObjectDoesNotExist:
             voice_banned = False
-        except MultipleObjectsReturned:
-            voice_banned = True
         else:
             voice_banned = True
 
