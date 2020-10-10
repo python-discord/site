@@ -12,3 +12,4 @@ from .offensive_message import OffensiveMessage
 from .reminder import Reminder
 from .role import Role
 from .user import User
+from .user_event import UserEvent
