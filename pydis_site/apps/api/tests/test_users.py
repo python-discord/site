@@ -1,6 +1,6 @@
 from unittest.mock import patch
 
-from django.core.exceptions import MultipleObjectsReturned, ObjectDoesNotExist
+from django.core.exceptions import ObjectDoesNotExist
 from django_hosts.resolvers import reverse
 
 from .base import APISubdomainTestCase
@@ -438,7 +438,6 @@ class UserMetricityTests(APISubdomainTestCase):
         cases = [
             {'exception': None, 'voice_banned': True},
             {'exception': ObjectDoesNotExist, 'voice_banned': False},
-            {'exception': MultipleObjectsReturned, 'voice_banned': True},
         ]
 
         self.mock_metricity_user("foo", 1)
