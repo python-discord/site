@@ -16,7 +16,7 @@ class Infraction(ModelReprMixin, models.Model):
         ("kick", "Kick"),
         ("ban", "Ban"),
         ("superstar", "Superstar"),
-        ("voice_ban", "Voice Ban")
+        ("voice_ban", "Voice Ban"),
     )
     inserted_at = models.DateTimeField(
         default=timezone.now,
