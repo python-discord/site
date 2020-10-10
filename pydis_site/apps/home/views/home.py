@@ -23,7 +23,7 @@ class HomeView(View):
         "python-discord/bot",
         "python-discord/snekbox",
         "python-discord/seasonalbot",
-        "python-discord/flake8-annotations",
+        "python-discord/metricity",
         "python-discord/django-simple-bulma",
     ]
 

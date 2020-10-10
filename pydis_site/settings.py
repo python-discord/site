@@ -20,6 +20,7 @@ import sentry_sdk
 from django.contrib.messages import constants as messages
 from sentry_sdk.integrations.django import DjangoIntegration
 
+from pydis_site.constants import GIT_SHA
 
 if typing.TYPE_CHECKING:
     from django.contrib.auth.models import User
@@ -33,7 +34,8 @@ env = environ.Env(
 sentry_sdk.init(
     dsn=env('SITE_SENTRY_DSN'),
     integrations=[DjangoIntegration()],
-    send_default_pii=True
+    send_default_pii=True,
+    release=f"pydis-site@{GIT_SHA}"
 )
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -157,8 +159,8 @@ TEMPLATES = [
                 'django.template.context_processors.static',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-
                 "sekizai.context_processors.sekizai",
+                "pydis_site.context_processors.git_sha_processor"
             ],
         },
     },
@@ -258,14 +260,11 @@ LOGGING = {
     'handlers': {
         'console': {
             'class': 'logging.StreamHandler'
-        },
-        'database': {
-            'class': 'pydis_site.apps.api.dblogger.DatabaseLogHandler'
         }
     },
     'loggers': {
         'django': {
-            'handlers': ['console', 'database'],
+            'handlers': ['console'],
             'propagate': True,
             'level': env(
                 'LOG_LEVEL',
@@ -399,3 +398,11 @@ ACCOUNT_USERNAME_VALIDATORS = "pydis_site.VALIDATORS"
 
 LOGIN_REDIRECT_URL = "home"
 SOCIALACCOUNT_ADAPTER = "pydis_site.utils.account.SocialAccountAdapter"
+SOCIALACCOUNT_PROVIDERS = {
+    "discord": {
+        "SCOPE": [
+            "identify",
+        ],
+        "AUTH_PARAMS": {"prompt": "none"}
+    }
+}

@@ -135,8 +135,9 @@ class RulesView(APIView):
             ),
             (
                 "Do not provide or request help on projects that may break laws, "
-                "breach terms of services, be considered malicious/inappropriate "
-                "or be for graded coursework/exams."
+                "breach terms of services, be considered malicious or inappropriate. "
+                "Do not help with ongoing exams. Do not provide or request solutions "
+                "for graded assignments, although general guidance is okay."
             ),
             (
                 "No spamming or unapproved advertising, including requests for paid work. "

@@ -112,6 +112,19 @@ class SiteManager:
             print("Database could not be found, exiting.")
             sys.exit(1)
 
+    @staticmethod
+    def set_dev_site_name() -> None:
+        """Set the development site domain in admin from default example."""
+        # import Site model now after django setup
+        from django.contrib.sites.models import Site
+        query = Site.objects.filter(id=1)
+        site = query.get()
+        if site.domain == "example.com":
+            query.update(
+                domain="pythondiscord.local:8000",
+                name="pythondiscord.local:8000"
+            )
+
     def prepare_server(self) -> None:
         """Perform preparation tasks before running the server."""
         django.setup()
@@ -125,6 +138,7 @@ class SiteManager:
         call_command("collectstatic", interactive=False, clear=True, verbosity=self.verbosity)
 
         if self.debug:
+            self.set_dev_site_name()
             self.create_superuser()
 
     def run_server(self) -> None:

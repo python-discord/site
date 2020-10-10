@@ -12,7 +12,5 @@ from .bot import (
     OffTopicChannelName,
     Reminder,
     Role,
-    Tag,
     User
 )
-from .log_entry import LogEntry
