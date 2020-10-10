@@ -247,7 +247,7 @@ class UserViewSet(ModelViewSet):
             Infraction.objects.get(user__id=user.id, active=True, type="voice_ban")
         except ObjectDoesNotExist:
             voice_banned = False
-        except MultipleObjectReturned:
+        except MultipleObjectsReturned:
             voice_banned = True
         else:
             voice_banned = True
