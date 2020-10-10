@@ -1,15 +1,10 @@
-@import url("https://fonts.googleapis.com/css?family=Droid+Serif|Open+Sans:400,700");
-*, *::after, *::before {
-    box-sizing: inherit
-}
-
-html {
-    box-sizing: border-box
-}
-
 body {
     background-color: hsl(0, 0%, 100%);
     background-color: var(--color-bg, white)
+}
+
+h2 {
+    font-size: 2em;
 }
 
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section, main, form legend {
@@ -936,10 +931,6 @@ img, video, svg {
 }
 
 body {
-    font-size: 1em;
-    font-size: var(--text-base-size, 1em);
-    font-family: 'Droid Serif', serif;
-    font-family: var(--font-primary, sans-serif);
     color: hsl(240, 4%, 20%);
     color: var(--color-contrast-high, #313135)
 }
@@ -956,26 +947,6 @@ h1, h2, h3, h4 {
     font-size: var(--text-xxxl, 2.488em)
 }
 
-h1, .text-xxl {
-    font-size: 2.0736em;
-    font-size: var(--text-xxl, 2.074em)
-}
-
-h2, .text-xl {
-    font-size: 1.728em;
-    font-size: var(--text-xl, 1.728em)
-}
-
-h3, .text-lg {
-    font-size: 1.44em;
-    font-size: var(--text-lg, 1.44em)
-}
-
-h4, .text-md {
-    font-size: 1.2em;
-    font-size: var(--text-md, 1.2em)
-}
-
 small, .text-sm {
     font-size: 0.83333em;
     font-size: var(--text-sm, 0.833em)
@@ -984,12 +955,6 @@ small, .text-sm {
 .text-xs {
     font-size: 0.69444em;
     font-size: var(--text-xs, 0.694em)
-}
-
-a, .link {
-    color: hsl(220, 90%, 56%);
-    color: var(--color-primary, #2a6df4);
-    text-decoration: underline
 }
 
 strong, .text-bold {
@@ -1004,10 +969,6 @@ u, .text-underline {
     text-decoration: underline
 }
 
-.text-component {
-    --component-body-line-height: calc(var(--body-line-height)*var(--line-height-multiplier, 1));
-    --component-heading-line-height: calc(var(--heading-line-height)*var(--line-height-multiplier, 1))
-}
 
 .text-component h1, .text-component h2, .text-component h3, .text-component h4 {
     line-height: 1.2;
@@ -1128,17 +1089,6 @@ u, .text-underline {
     --icon-lg: 48px;
     --icon-xl: 64px;
     --icon-xxl: 128px
-}
-
-.icon {
-    display: inline-block;
-    color: inherit;
-    fill: currentColor;
-    height: 1em;
-    width: 1em;
-    line-height: 1;
-    -ms-flex-negative: 0;
-    flex-shrink: 0
 }
 
 .icon--xxs {
@@ -3414,8 +3364,6 @@ mark {
 }
 
 .cd-main-header h1 {
-    font-family: 'Open Sans', sans-serif;
-    font-family: var(--font-secondary);
     color: inherit
 }
 
@@ -3427,13 +3375,9 @@ mark {
     color: var(--cd-color-3);
     background-color: hsl(205, 38%, 93.45%);
     background-color: hsl(var(--cd-color-2-h), var(--cd-color-2-s), calc(var(--cd-color-2-l)*1.05));
-    font-family: 'Droid Serif', serif;
-    font-family: var(--font-primary)
 }
 
 .cd-timeline h2 {
-    font-family: 'Open Sans', sans-serif;
-    font-family: var(--font-secondary);
     font-weight: 700
 }
 
