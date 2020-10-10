@@ -20,7 +20,8 @@ from .models import (
     OffTopicChannelName,
     OffensiveMessage,
     Role,
-    User
+    User,
+    UserEvent
 )
 
 admin.site.site_header = "Python Discord | Administration"
@@ -439,3 +440,42 @@ class UserAdmin(admin.ModelAdmin):
     def has_change_permission(self, *args) -> bool:
         """Prevent editing from django admin."""
         return False
+
+
+class UserEventOrganizerFilter(admin.SimpleListFilter):
+    """List Filter for User Event list Admin page."""
+
+    title = "Organizer"
+    parameter_name = "organizer"
+
+    def lookups(self, request: HttpRequest, model: UserAdmin) -> Iterable[Tuple[str, str]]:
+        """Selectable values for viewer to filter by."""
+        user_events = UserEvent.objects.all()
+        organizers = {event.organizer for event in user_events}
+        return ((organizer.id, organizer.username) for organizer in organizers)
+
+    def queryset(self, request: HttpRequest, queryset: QuerySet) -> Optional[QuerySet]:
+        """Query to filter the list of User Events against."""
+        if not self.value():
+            return
+        return queryset.filter(organizer=self.value())
+
+
+@admin.register(UserEvent)
+class UserEventAdmin(admin.ModelAdmin):
+    """Admin formatting for UserEvents model."""
+
+    def organizer_username(self, user_event: UserEvent) -> str:
+        """Return organizer's username."""
+        return user_event.organizer.username
+
+    organizer_username.short_description = "Organizer"
+
+    def subscriptions_count(self, user_event: UserEvent) -> int:
+        """Return number of subscriptions."""
+        return user_event.subscriptions.count()
+
+    subscriptions_count.short_description = "Subscriptions"
+
+    list_display = ("id", "name", "organizer_username", "subscriptions_count")
+    list_filter = ("name", UserEventOrganizerFilter)
