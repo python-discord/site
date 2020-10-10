@@ -20,9 +20,6 @@ class UserEventViewSet(ModelViewSet):
     - **subscriber's id**
 
     #### Response format
-
-
-    #### Response format
     >>> [
     ...     {
     ...         'id': 1,
