@@ -1,6 +1,7 @@
 import typing
 from collections import OrderedDict
 
+from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.pagination import PageNumberPagination
@@ -9,6 +10,7 @@ from rest_framework.response import Response
 from rest_framework.serializers import ModelSerializer
 from rest_framework.viewsets import ModelViewSet
 
+from pydis_site.apps.api.models.bot.infraction import Infraction
 from pydis_site.apps.api.models.bot.metricity import Metricity, NotFound
 from pydis_site.apps.api.models.bot.user import User
 from pydis_site.apps.api.serializers import UserSerializer
@@ -240,10 +242,19 @@ class UserViewSet(ModelViewSet):
     def metricity_data(self, request: Request, pk: str = None) -> Response:
         """Request handler for metricity_data endpoint."""
         user = self.get_object()
+
+        try:
+            Infraction.objects.get(user__id=user.id, active=True, type="voice_ban")
+        except ObjectDoesNotExist:
+            voice_banned = False
+        else:
+            voice_banned = True
+
         with Metricity() as metricity:
             try:
                 data = metricity.user(user.id)
                 data["total_messages"] = metricity.total_messages(user.id)
+                data["voice_banned"] = voice_banned
                 return Response(data, status=status.HTTP_200_OK)
             except NotFound:
                 return Response(dict(detail="User not found in metricity"),
