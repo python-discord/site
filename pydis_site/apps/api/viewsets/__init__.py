@@ -13,4 +13,3 @@ from .bot import (
     UserViewSet,
     UserEventViewSet
 )
-from .log_entry import LogEntryViewSet

@@ -1,7 +1,16 @@
 """Converters from Django models to data interchange formats and back."""
-from rest_framework.serializers import ModelSerializer, PrimaryKeyRelatedField, ValidationError
+from django.db.models.query import QuerySet
+from django.db.utils import IntegrityError
+from rest_framework.exceptions import NotFound
+from rest_framework.serializers import (
+    IntegerField,
+    ListSerializer,
+    ModelSerializer,
+    PrimaryKeyRelatedField,
+    ValidationError
+)
+from rest_framework.settings import api_settings
 from rest_framework.validators import UniqueTogetherValidator
-from rest_framework_bulk import BulkSerializerMixin
 
 from .models import (
     BotSetting,
@@ -9,7 +18,6 @@ from .models import (
     DocumentationLink,
     FilterList,
     Infraction,
-    LogEntry,
     MessageDeletionContext,
     Nomination,
     OffTopicChannelName,
@@ -192,19 +200,6 @@ class ExpandedInfractionSerializer(InfractionSerializer):
         return ret
 
 
-class LogEntrySerializer(ModelSerializer):
-    """A class providing (de-)serialization of `LogEntry` instances."""
-
-    class Meta:
-        """Metadata defined for the Django REST Framework."""
-
-        model = LogEntry
-        fields = (
-            'application', 'logger_name', 'timestamp',
-            'level', 'module', 'line', 'message'
-        )
-
-
 class OffTopicChannelNameSerializer(ModelSerializer):
     """A class providing (de-)serialization of `OffTopicChannelName` instances."""
 
@@ -250,8 +245,83 @@ class RoleSerializer(ModelSerializer):
         fields = ('id', 'name', 'colour', 'permissions', 'position')
 
 
-class UserSerializer(BulkSerializerMixin, ModelSerializer):
+class UserListSerializer(ListSerializer):
+    """List serializer for User model to handle bulk updates."""
+
+    def create(self, validated_data: list) -> list:
+        """Override create method to optimize django queries."""
+        new_users = []
+        seen = set()
+
+        for user_dict in validated_data:
+            if user_dict["id"] in seen:
+                raise ValidationError(
+                    {"id": [f"User with ID {user_dict['id']} given multiple times."]}
+                )
+            seen.add(user_dict["id"])
+            new_users.append(User(**user_dict))
+
+        User.objects.bulk_create(new_users, ignore_conflicts=True)
+        return []
+
+    def update(self, queryset: QuerySet, validated_data: list) -> list:
+        """
+        Override update method to support bulk updates.
+
+        ref:https://www.django-rest-framework.org/api-guide/serializers/#customizing-multiple-update
+        """
+        object_ids = set()
+
+        for data in validated_data:
+            try:
+                if data["id"] in object_ids:
+                    # If request data contains users with same ID.
+                    raise ValidationError(
+                        {"id": [f"User with ID {data['id']} given multiple times."]}
+                    )
+            except KeyError:
+                # If user ID not provided in request body.
+                raise ValidationError(
+                    {"id": ["This field is required."]}
+                )
+            object_ids.add(data["id"])
+
+        # filter queryset
+        filtered_instances = queryset.filter(id__in=object_ids)
+
+        instance_mapping = {user.id: user for user in filtered_instances}
+
+        updated = []
+        fields_to_update = set()
+        for user_data in validated_data:
+            for key in user_data:
+                fields_to_update.add(key)
+
+                try:
+                    user = instance_mapping[user_data["id"]]
+                except KeyError:
+                    raise NotFound({"detail": f"User with id {user_data['id']} not found."})
+
+                user.__dict__.update(user_data)
+            updated.append(user)
+
+        fields_to_update.remove("id")
+
+        if not fields_to_update:
+            # Raise ValidationError when only id field is given.
+            raise ValidationError(
+                {api_settings.NON_FIELD_ERRORS_KEY: ["Insufficient data provided."]}
+            )
+
+        User.objects.bulk_update(updated, fields_to_update)
+        return updated
+
+
+class UserSerializer(ModelSerializer):
     """A class providing (de-)serialization of `User` instances."""
+
+    # ID field must be explicitly set as the default id field is read-only.
+    id = IntegerField(min_value=0)
 
     class Meta:
         """Metadata defined for the Django REST Framework."""
@@ -259,6 +329,14 @@ class UserSerializer(BulkSerializerMixin, ModelSerializer):
         model = User
         fields = ('id', 'name', 'discriminator', 'roles', 'in_guild')
         depth = 1
+        list_serializer_class = UserListSerializer
+
+    def create(self, validated_data: dict) -> User:
+        """Override create method to catch IntegrityError."""
+        try:
+            return super().create(validated_data)
+        except IntegrityError:
+            raise ValidationError({"id": ["User with ID already present."]})
 
 
 class NominationSerializer(ModelSerializer):

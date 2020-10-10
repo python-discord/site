@@ -15,4 +15,3 @@ from .bot import (
     User,
     UserEvent
 )
-from .log_entry import LogEntry

@@ -172,7 +172,8 @@ WSGI_APPLICATION = 'pydis_site.wsgi.application'
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
 DATABASES = {
-    'default': env.db()
+    'default': env.db(),
+    'metricity': env.db('METRICITY_DB_URL'),
 }
 
 # Password validation
@@ -260,14 +261,11 @@ LOGGING = {
     'handlers': {
         'console': {
             'class': 'logging.StreamHandler'
-        },
-        'database': {
-            'class': 'pydis_site.apps.api.dblogger.DatabaseLogHandler'
         }
     },
     'loggers': {
         'django': {
-            'handlers': ['console', 'database'],
+            'handlers': ['console'],
             'propagate': True,
             'level': env(
                 'LOG_LEVEL',
@@ -401,3 +399,11 @@ ACCOUNT_USERNAME_VALIDATORS = "pydis_site.VALIDATORS"
 
 LOGIN_REDIRECT_URL = "home"
 SOCIALACCOUNT_ADAPTER = "pydis_site.utils.account.SocialAccountAdapter"
+SOCIALACCOUNT_PROVIDERS = {
+    "discord": {
+        "SCOPE": [
+            "identify",
+        ],
+        "AUTH_PARAMS": {"prompt": "none"}
+    }
+}
