@@ -10,3 +10,4 @@ from .offensive_message import OffensiveMessageViewSet
 from .reminder import ReminderViewSet
 from .role import RoleViewSet
 from .user import UserViewSet
+from .user_event import UserEventViewSet
