@@ -14,6 +14,7 @@ from .viewsets import (
     OffensiveMessageViewSet,
     ReminderViewSet,
     RoleViewSet,
+    UserEventViewSet,
     UserViewSet
 )
 
@@ -63,6 +64,10 @@ bot_router.register(
 bot_router.register(
     'users',
     UserViewSet
+)
+bot_router.register(
+    'user-events',
+    UserEventViewSet
 )
 
 app_name = 'api'
