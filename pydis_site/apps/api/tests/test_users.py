@@ -1,7 +1,11 @@
+from unittest.mock import patch
+
+from django.core.exceptions import ObjectDoesNotExist
 from django_hosts.resolvers import reverse
 
 from .base import APISubdomainTestCase
 from ..models import Role, User
+from ..models.bot.metricity import NotFound
 
 
 class UnauthedUserAPITests(APISubdomainTestCase):
@@ -389,3 +393,78 @@ class UserPaginatorTests(APISubdomainTestCase):
         url = reverse("bot:user-list", host="api")
         response = self.client.get(url, {"page": 2}).json()
         self.assertEqual(1, response["previous_page_no"])
+
+
+class UserMetricityTests(APISubdomainTestCase):
+    @classmethod
+    def setUpTestData(cls):
+        User.objects.create(
+            id=0,
+            name="Test user",
+            discriminator=1,
+            in_guild=True,
+        )
+
+    def test_get_metricity_data(self):
+        # Given
+        verified_at = "foo"
+        total_messages = 1
+        self.mock_metricity_user(verified_at, total_messages)
+
+        # When
+        url = reverse('bot:user-metricity-data', args=[0], host='api')
+        response = self.client.get(url)
+
+        # Then
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json(), {
+            "verified_at": verified_at,
+            "total_messages": total_messages,
+            "voice_banned": False,
+        })
+
+    def test_no_metricity_user(self):
+        # Given
+        self.mock_no_metricity_user()
+
+        # When
+        url = reverse('bot:user-metricity-data', args=[0], host='api')
+        response = self.client.get(url)
+
+        # Then
+        self.assertEqual(response.status_code, 404)
+
+    def test_metricity_voice_banned(self):
+        cases = [
+            {'exception': None, 'voice_banned': True},
+            {'exception': ObjectDoesNotExist, 'voice_banned': False},
+        ]
+
+        self.mock_metricity_user("foo", 1)
+
+        for case in cases:
+            with self.subTest(exception=case['exception'], voice_banned=case['voice_banned']):
+                with patch("pydis_site.apps.api.viewsets.bot.user.Infraction.objects.get") as p:
+                    p.side_effect = case['exception']
+
+                    url = reverse('bot:user-metricity-data', args=[0], host='api')
+                    response = self.client.get(url)
+
+                    self.assertEqual(response.status_code, 200)
+                    self.assertEqual(response.json()["voice_banned"], case["voice_banned"])
+
+    def mock_metricity_user(self, verified_at, total_messages):
+        patcher = patch("pydis_site.apps.api.viewsets.bot.user.Metricity")
+        self.metricity = patcher.start()
+        self.addCleanup(patcher.stop)
+        self.metricity = self.metricity.return_value.__enter__.return_value
+        self.metricity.user.return_value = dict(verified_at=verified_at)
+        self.metricity.total_messages.return_value = total_messages
+
+    def mock_no_metricity_user(self):
+        patcher = patch("pydis_site.apps.api.viewsets.bot.user.Metricity")
+        self.metricity = patcher.start()
+        self.addCleanup(patcher.stop)
+        self.metricity = self.metricity.return_value.__enter__.return_value
+        self.metricity.user.side_effect = NotFound()
+        self.metricity.total_messages.side_effect = NotFound()
