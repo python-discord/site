@@ -30,7 +30,6 @@
   <script src="{% static "js/base/modal.js" %}"></script>
 
   <link rel="stylesheet" href="{% static "css/base/base.css" %}">
-  <link rel="stylesheet" href="{% static "css/base/notification.css" %}">
   {% block head %}{% endblock %}
 
 </head>
@@ -38,18 +37,6 @@
   <!-- Git hash for this release: {{ git_sha }} -->
 
 <main class="site-content">
-  {% if messages %}
-    <div class="messages">
-      {% for message in messages %}
-        <div class="notification {% if message.tags %}is-{{ message.tags }}{% endif %}">
-          <button class="delete"></button>
-
-          {{ message }}
-        </div>
-      {% endfor %}
-    </div>
-  {% endif %}
-
   {% block content %}
     {{ block.super }}
   {% endblock %}
