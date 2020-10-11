@@ -17,6 +17,9 @@ class UserEvent(ModelReprMixin, models.Model):
         User,
         on_delete=models.CASCADE
     )
+    description = models.TextField(
+        blank=True
+    )
     subscriptions = models.ManyToManyField(
         User,
         blank=True,
