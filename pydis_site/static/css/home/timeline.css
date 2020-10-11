@@ -29,6 +29,20 @@ button, input, textarea, select {
     margin: 0
 }
 
+.video-container {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 56.25%;
+}
+.video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
 .btn, .form-control, .link, .reset {
     background-color: transparent;
     padding: 0;
