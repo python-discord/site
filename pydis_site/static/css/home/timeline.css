@@ -43,6 +43,15 @@ button, input, textarea, select {
     height: 100%;
 }
 
+.pydis-logo-banner {
+    background-color: #7289DA !important;
+    border-radius: 10px;
+}
+
+.pydis-logo-banner img {
+    padding-right: 20px;
+}
+
 .btn, .form-control, .link, .reset {
     background-color: transparent;
     padding: 0;
