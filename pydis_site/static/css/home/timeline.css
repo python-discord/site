@@ -29,6 +29,38 @@ button, input, textarea, select {
     margin: 0
 }
 
+.pastel-red {
+    background-color: #FF7878 !important;
+}
+
+.pastel-orange {
+    background-color: #FFBF76 !important;
+}
+
+.pastel-green {
+    background-color: #8bd6a7 !important;
+}
+
+.pastel-blue {
+    background-color: #8edbec !important;
+}
+
+.pastel-purple {
+    background-color: #CBB1FF !important;
+}
+
+.pastel-pink {
+    background-color: #F6ACFF !important;
+}
+
+.pastel-lime {
+    background-color: #c7f835 !important;
+}
+
+.pastel-dark-blue {
+    background-color: #6982FF !important;
+}
+
 .video-container {
     position: relative;
     width: 100%;
