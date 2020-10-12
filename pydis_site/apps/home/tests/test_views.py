@@ -202,6 +202,13 @@ class TestIndexReturns200(TestCase):
         resp = self.client.get(url)
         self.assertEqual(resp.status_code, 200)
 
+class TestTimelineReturns200(TestCase):
+    def test_timeline_returns_200(self):
+        """Check that the timeline page returns a HTTP 200 response."""
+        url = reverse('timeline')
+        resp = self.client.get(url)
+        self.assertEqual(resp.status_code, 200)
+
 
 class TestLoginCancelledReturns302(TestCase):
     def test_login_cancelled_returns_302(self):

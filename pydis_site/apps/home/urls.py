@@ -38,5 +38,5 @@ urlpatterns = [
 
     path('admin/', admin.site.urls),
     path('notifications/', include('django_nyt.urls')),
-    path('timeline/', timeline),
+    path('timeline/', timeline, name="timeline"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
