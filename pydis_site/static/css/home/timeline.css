@@ -3594,7 +3594,7 @@ mark {
         flex-grow: 0;
         will-change: transform;
         margin: 0;
-        font-size: 0.8em;
+        font-size: 0.9em;
         --line-height-multiplier: 1.2
     }
     .cd-timeline__content::before {
