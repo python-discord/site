@@ -80,6 +80,7 @@ else:
             'api.pydis.com',
             'admin.pydis.com',
             'staff.pydis.com',
+            'api.site',
         ]
     )
     SECRET_KEY = env('SECRET_KEY')
