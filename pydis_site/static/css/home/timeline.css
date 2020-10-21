@@ -3497,8 +3497,8 @@ mark {
     align-items: center;
     -ms-flex-negative: 0;
     flex-shrink: 0;
-    width: 40px;
-    height: 40px;
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
     box-shadow: 0 0 0 4px hsl(0, 0%, 100%), inset 0 2px 0 rgba(0, 0, 0, 0.08), 0 3px 0 4px rgba(0, 0, 0, 0.05);
     box-shadow: 0 0 0 4px var(--color-white), inset 0 2px 0 rgba(0, 0, 0, 0.08), 0 3px 0 4px rgba(0, 0, 0, 0.05)
@@ -3509,17 +3509,23 @@ mark {
     color: white;
 }
 
+@media (max-width: 64rem) {
+    .cd-timeline__img i {
+	font-size: 0.9em;
+    }
+}
+
 .cd-timeline__img img {
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     margin-left: 2px;
     margin-top: 2px;
 }
 
 @media (max-width: 64rem) {
     .cd-timeline__img img {
-        width: 30px;
-        height: 30px;
+        width: 20px;
+        height: 20px;
         margin-left: 2px;
         margin-top: 2px;
     }
@@ -3532,7 +3538,7 @@ mark {
         -ms-flex-order: 1;
         order: 1;
         margin-left: calc(5% - 30px);
-        will-change: transform
+        will-change: transform;
     }
 
     .cd-timeline__block:nth-child(even) .cd-timeline__img {
