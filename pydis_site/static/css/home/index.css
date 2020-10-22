@@ -111,7 +111,7 @@ span.repo-language-dot.javascript {
 }
 
 .bottom-wave {
-    background: url(https://svgur.com/i/QVH.svg) repeat-x;
+    background: url(../../images/waves/wave_white.svg) repeat-x;
     position: absolute;
     bottom: 0;
     width: 6400px;
@@ -126,7 +126,7 @@ span.repo-language-dot.javascript {
 }
 
 .wave {
-    background: url(https://svgur.com/i/QSd.svg) repeat-x;
+    background: url(../../images/waves/wave_dark.svg) repeat-x;
     position: absolute;
     bottom: 0;
     width: 6400px;
