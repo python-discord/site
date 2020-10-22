@@ -104,6 +104,7 @@ span.repo-language-dot.javascript {
     background-color: #7289DA;
     color: #fff;
     height: 32vw;
+    min-height: 270px;
     max-height: 500px;
     overflow-x: hidden;
     width: 100%;
@@ -183,4 +184,8 @@ span.repo-language-dot.javascript {
 .mtl-item:hover {
     box-shadow: 0 2px 5px rgba(0,0,0,0.16), 0 2px 5px rgba(0,0,0,0.23);
     transform: scale(1.5);
+}
+
+.message {
+    margin: 5px;
 }
