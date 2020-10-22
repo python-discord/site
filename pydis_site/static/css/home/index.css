@@ -186,6 +186,7 @@ span.repo-language-dot.javascript {
     transform: scale(1.5);
 }
 
-.message {
+.notice {
     margin: 5px;
+    margin-bottom: -10px!important;
 }
