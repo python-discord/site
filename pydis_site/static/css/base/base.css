@@ -30,16 +30,22 @@ div.card.has-equal-height {
     background-color: transparent;
 }
 
-.navbar-item.has-left-margin-1 {
-    margin-left: 1rem;
+.navbar-link:not(.is-arrowless) {
+    padding-left: 2rem;
+    padding-right: 3.5em;
 }
 
-.navbar-item.has-left-margin-2 {
-    margin-left: 2rem;
+.navbar-link:not(.is-arrowless)::after {
+    right: 2em;
+    margin-top: -0.42em;
 }
 
-.navbar-item.has-left-margin-3 {
-    margin-left: 3rem;
+/* Dropdown nav needs to be viewable at edge of canvas */
+@media screen and (min-width: 1024px) {
+    .navbar-dropdown {
+        left: unset;
+        right: 0;
+    }
 }
 
 #navbar-banner {
