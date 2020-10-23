@@ -9,7 +9,8 @@
 {% block content %}
   {% include "base/navbar.html" %}
 
-  <article class="message is-primary is-hidden-tablet notice">
+  <!-- Mobile-only Notice -->
+  <section id="mobile-notice" class="message is-primary is-hidden-tablet">
     <div class="message-header">
       <p>100K Member Milestone!</p>
     </div>
@@ -19,42 +20,58 @@
       As a nice treat, we've created a <a href="{% url 'timeline' %}">Timeline page</a> for people
       to discover the events that made our community what it is today. Be sure to check it out!
     </div>
-  </article>
-  <section class="section main-head is-hidden-mobile">
-      <div class="container is-spaced above-waves">
-        <div class="columns">
-          <div class="column is-half">
-            <div class="aspect-wrapper">
+  </section>
+
+  <!-- Wave Hero -->
+  <section id="wave-hero" class="section is-hidden-mobile">
+
+      <div class="container">
+        <div class="columns is-variable is-8">
+
+          {# Embedded Welcome video #}
+          <div id="wave-hero-left" class="column is-half">
+            <div class="force-aspect-container">
               <iframe
-              class="welcome-video aspect-content"
+              class="force-aspect-content"
               src="https://www.youtube.com/embed/ZH26PuX3re0"
-              srcdoc="<style>*{padding:0;margin:0;overflow:hidden}html,body{height:100%}img,span{position:absolute;width:100%;top:0;bottom:0;margin:auto}span{height:1.5em;text-align:center;font:68px/1.5 sans-serif;color:#FFFFFFEE;text-shadow:0 0 0.1em #00000020}</style><a href=https://www.youtube.com/embed/ZH26PuX3re0?autoplay=1><img src=https://i.ytimg.com/vi/ZH26PuX3re0/maxresdefault.jpg alt='Welcome to Python Discord'><span>▶</span></a>"
-              frameborder="0"
+              srcdoc="
+              <style>
+                *{padding:0;margin:0;overflow:hidden}
+                html,body{height:100%}
+                img,span{position:absolute;width:100%;top:0;bottom:0;margin:auto}
+                span{height:1.5em;text-align:center;font:68px/1.5 sans-serif;color:#FFFFFFEE;text-shadow:0 0 0.1em #00000020}
+              </style>
+              <a href=https://www.youtube.com/embed/ZH26PuX3re0?autoplay=1>
+                <img src=https://i.ytimg.com/vi/ZH26PuX3re0/maxresdefault.jpg alt='Welcome to Python Discord'>
+                <span>▶</span>
+              </a>"
               allow="autoplay; accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowfullscreen
               ></iframe>
             </div>
           </div>
 
-          <div class="column is-half hero-card has-text-right">
-              <img src="{% static "images/events/100k.png" %}" alt="100K members!">
+          {# Right side content #}
+          <div id="wave-hero-right" class="column is-half">
+            <img src="{% static "images/events/100k.png" %}" alt="100K members!">
           </div>
 
         </div>
-
       </div>
 
-    <div class="wave"></div>
-    <div class="wave"></div>
-    <div class="bottom-wave"></div>
+    {# Animated wave elements #}
+    <span id="front-wave" class="wave"></span>
+    <span id="back-wave" class="wave"></span>
+    <span id="bottom-wave" class="wave"></span>
 
   </section>
-  <section class="section">
 
-    {# Who are we? #}
-    <div class="container is-spaced">
+  <!-- Main Body -->
+  <section id="body" class="section">
+
+    <div class="container">
       <h1 class="is-size-1">Who are we?</h1>
-      <br>
+
       <div class="columns is-desktop">
         <div class="column is-half-desktop content">
           <p>
@@ -77,70 +94,97 @@
           </p>
         </div>
 
-        {# Right column container #}
-        <div class="column is-half-desktop showcase has-text-centered">
-          <div class="box">
-            <p class="title">
-              New Timeline!
-            </p>
+        {# Showcase box #}
+        <section id="showcase" class="column is-half-desktop has-text-centered">
+          <article class="box">
+
+            <header class="title">New Timeline!</header>
+
             <div class="mini-timeline">
-              <i class="fa fa-asterisk mtl-item"></i>
-              <i class="fa fa-code mtl-item"></i>
-              <i class="fab fa-python mtl-item"></i>
-              <i class="fa fa-alien-monster mtl-item"></i>
-              <i class="fa fa-duck mtl-item"></i>
-              <i class="fa fa-bug mtl-item"></i>
+              <i class="fa fa-asterisk"></i>
+              <i class="fa fa-code"></i>
+              <i class="fab fa-python"></i>
+              <i class="fa fa-alien-monster"></i>
+              <i class="fa fa-duck"></i>
+              <i class="fa fa-bug"></i>
             </div>
+
             <p class="subtitle">
               Start from our humble beginnings to discover the events that made our community what it is today.
             </p>
+
             <div class="buttons are-large is-centered">
-              <a href="{% url 'timeline' %}">
-                <button class="button is-primary">
-                  <span>Check it out!</span>
-                  <span class="icon">
-                    <i class="fas fa-arrow-right"></i>
-                  </span>
-                </button>
+              <a href="{% url 'timeline' %}" class="button is-primary">
+                <span>Check it out!</span>
+                <span class="icon">
+                  <i class="fas fa-arrow-right"></i>
+                </span>
               </a>
             </div>
-          </div>
-        </div>
-      </div>
 
-      {# Projects #}
-      <h1 class="is-size-1">Projects</h1>
-      <br>
-      <div class="columns is-multiline is-tablet">
-
-        {# Display projects from HomeView.repos #}
-        {% for repo in repo_data %}
-          <div class="column is-one-third-desktop is-half-tablet">
-            <div class="card has-equal-height github-card">
-              <div class="card-content">
-                <div class="repo-headline">
-                  <i class="fab fa-github"></i>
-                  <a href="https://github.com/{{ repo.repo_name }}"> <strong>{{ repo.repo_name }}</strong></a>
-                </div>
-                <div>
-                  {{ repo.description }}
-                  <br><br>
-                  </span><span class="repo-language-dot {{ repo.language | lower }}"></span> {{ repo.language }}
-                  <span id="repo-footer-item"><i class="fas fa-star"></i> {{ repo.stargazers }}</span>
-                  <span id="repo-footer-item"><i class="fas fa-code-branch"></i> {{ repo.forks }}</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        {% endfor %}
+          </article>
+        </section>
 
       </div>
     </div>
   </section>
 
-  {# Sponsors #}
-  <section class="section-sp hero is-light">
-    <div id="sponsors-hero" class="hero-body">
+  <!-- Projects -->
+  <section id="projects" class="section">
+    <div class="container">
+      <h1 class="is-size-1">Projects</h1>
+
+      <div class="columns is-multiline is-tablet">
+
+        {# Generate project data from HomeView.repos #}
+        {% for repo in repo_data %}
+          <div class="column is-one-third-desktop is-half-tablet">
+
+            <a href="https://github.com/{{ repo.repo_name }}">
+              <article class="card">
+
+                <header class="card-header">
+                  <span class="card-header-icon">
+                    <span class="icon"><i class="fab fa-github"></i></span>
+                  </span>
+                  <div class="card-header-title">
+                    {{ repo.repo_name|cut:"python-discord/" }}
+                  </div>
+                </header>
+
+                <p class="card-content">
+                  {{ repo.description }}
+                </p>
+
+                <footer class="card-footer">
+                  <div class="card-footer-item">
+                    <i class="repo-language-dot {{ repo.language | lower }}"></i>
+                    {{ repo.language }}
+                  </div>
+                  <div class="card-footer-item">
+                    <i class="fas fa-star"></i>
+                    {{ repo.stargazers }}
+                  </div>
+                  <div class="card-footer-item">
+                    <i class="fas fa-code-branch"></i>
+                    {{ repo.forks }}
+                  </div>
+                </footer>
+
+              </article>
+            </a>
+
+          </div>
+        {% endfor %}
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Sponsors -->
+  <section id="sponsors" class="hero is-light">
+    <div class="hero-body">
       <div class="container">
         <h1 class="title is-6 has-text-grey">
           Sponsors

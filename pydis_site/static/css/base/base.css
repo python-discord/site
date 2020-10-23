@@ -12,7 +12,7 @@ main.site-content {
     flex: 1;
 }
 
-div.card.has-equal-height {
+.card.has-equal-height {
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -116,4 +116,18 @@ button.is-size-navbar-menu, a.is-size-navbar-menu {
 /* Wiki style tweaks */
 .codehilite-wrap {
     margin-bottom: 1em;
+}
+
+/* 16:9 aspect ratio fixing */
+.force-aspect-container {
+    position: relative;
+    padding-bottom: 56.25%;
+}
+
+.force-aspect-content {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    position: absolute;
 }
