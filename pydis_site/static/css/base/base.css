@@ -18,34 +18,22 @@ main.site-content {
     flex-direction: column;
 }
 
-.navbar-item.is-fullsize {
-    padding: 0;
+.navbar {
+    padding-right: 0.8em;
 }
 
-.navbar-item.is-fullsize img {
-    max-height: 4.75rem;
+.navbar-item .navbar-link {
+    padding-left: 1.5em;
+    padding-right: 2.5em;
+}
+
+.navbar-link:not(.is-arrowless)::after {
+    right: 1.125em;
+    margin-top: -0.455em;
 }
 
 .navbar-item.has-no-highlight:hover {
     background-color: transparent;
-}
-
-.navbar-link:not(.is-arrowless) {
-    padding-left: 2rem;
-    padding-right: 3.5em;
-}
-
-.navbar-link:not(.is-arrowless)::after {
-    right: 2em;
-    margin-top: -0.42em;
-}
-
-/* Dropdown nav needs to be viewable at edge of canvas */
-@media screen and (min-width: 1024px) {
-    .navbar-dropdown {
-        left: unset;
-        right: 0;
-    }
 }
 
 #navbar-banner {
@@ -54,6 +42,31 @@ main.site-content {
 
 #navbar-banner img {
     max-height: 3rem;
+}
+
+#discord-btn a {
+    color: transparent;
+    background-image: url(../../images/navbar/discord.svg);
+    background-size: 200%;
+    background-position: 100% 50%;
+    background-repeat: no-repeat;
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+    background-color: #697ec4ff;
+    margin-left: 0.5rem;
+    transition: all 0.2s cubic-bezier(.25,.8,.25,1);
+    overflow: hidden;
+}
+
+#discord-btn:hover a {
+    box-shadow: 0 1px 4px rgba(0,0,0,0.16), 0 1px 6px rgba(0,0,0,0.23);
+    /*transform: scale(1.03) translate3d(0,0,0);*/
+    background-size: 200%;
+    background-position: 5% 50%;
+}
+
+#discord-btn:hover {
+    background-color: transparent;
 }
 
 #django-logo {
