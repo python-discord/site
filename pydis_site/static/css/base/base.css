@@ -62,7 +62,7 @@ main.site-content {
     box-shadow: 0 1px 4px rgba(0,0,0,0.16), 0 1px 6px rgba(0,0,0,0.23);
     /*transform: scale(1.03) translate3d(0,0,0);*/
     background-size: 200%;
-    background-position: 5% 50%;
+    background-position: 1% 50%;
 }
 
 #discord-btn:hover {

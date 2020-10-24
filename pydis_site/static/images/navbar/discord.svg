@@ -13,7 +13,7 @@
    version="1.1"
    id="svg8"
    inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)"
-   sodipodi:docname="navbar_discordjoin2.svg">
+   sodipodi:docname="discord.svg">
   <defs
      id="defs2">
     <rect
@@ -66,7 +66,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -106,7 +106,7 @@
     </g>
     <g
        id="g904"
-       transform="matrix(0.90000009,0,0,0.90000009,11.522588,9.7980333)">
+       transform="matrix(0.90000009,0,0,0.90000009,10.464254,9.7980333)">
       <g
          id="g850-3"
          transform="matrix(0.06491223,0,0,0.06491223,52.083661,82.07218)">
@@ -128,14 +128,36 @@
          d="m 107.16039,90.382629 -3.19204,3.19205 c -0.15408,0.15408 -0.40352,0.15408 -0.55746,0 l -0.37229,-0.37231 c -0.15368,-0.15369 -0.15408,-0.40277 -5.3e-4,-0.55681 l 2.52975,-2.54167 -2.52975,-2.54164 c -0.15329,-0.15408 -0.15309,-0.40312 5.3e-4,-0.55681 l 0.37229,-0.37228 c 0.15408,-0.15408 0.40353,-0.15408 0.55746,0 l 3.19204,3.19201 c 0.15408,0.15407 0.15408,0.40354 0,0.55746 z"
          inkscape:connector-curvature="0"
          style="fill:#7289da;fill-opacity:1;stroke-width:0.0164247" />
-      <text
-         xml:space="preserve"
+      <g
+         aria-label="JOIN US"
+         transform="matrix(1.2501707,0,0,1.2501707,-25.160061,-36.966352)"
          id="text951"
-         style="font-style:normal;font-weight:normal;font-size:6.35px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;white-space:pre;shape-inside:url(#rect953-0);fill:#7289da;fill-opacity:1;stroke:none;"
-         transform="matrix(1.2501707,0,0,1.2501707,-25.160061,-36.966352)"><tspan
-           x="75.820312"
-           y="103.88389"><tspan
-             style="font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;font-family:'Uni Sans';-inkscape-font-specification:'Uni Sans Heavy';fill:#7289da;fill-opacity:1">JOIN US</tspan></tspan></text>
+         style="font-style:normal;font-weight:normal;font-size:6.35px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;white-space:pre;shape-inside:url(#rect953-0);fill:#7289da;fill-opacity:1;stroke:none">
+        <path
+           d="m 75.839362,102.56309 c 0.127,0.9525 0.89535,1.3843 1.67005,1.3843 0.85725,0 1.7145,-0.55245 1.7145,-1.53035 v -3.028953 h -2.1463 v 1.028703 h 1.02235 v 2.00025 c 0,0.26035 -0.2667,0.4318 -0.5461,0.4318 -0.2794,0 -0.57785,-0.14605 -0.64135,-0.508 z"
+           style="font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;font-family:'Uni Sans';-inkscape-font-specification:'Uni Sans Heavy';fill:#7289da;fill-opacity:1"
+           id="path850" />
+        <path
+           d="m 79.795412,102.40434 c 0,1.0287 0.93345,1.54305 1.8669,1.54305 0.93345,0 1.86055,-0.51435 1.86055,-1.54305 v -1.5367 c 0,-1.028703 -0.93345,-1.543053 -1.8669,-1.543053 -0.93345,0 -1.86055,0.508 -1.86055,1.543053 z m 1.13665,-1.5367 c 0,-0.3302 0.3556,-0.508 0.7112,-0.508 0.3683,0 0.74295,0.15875 0.74295,0.508 v 1.5367 c 0,0.32385 -0.36195,0.48895 -0.7239,0.48895 -0.36195,0 -0.73025,-0.15875 -0.73025,-0.48895 z"
+           style="font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;font-family:'Uni Sans';-inkscape-font-specification:'Uni Sans Heavy';fill:#7289da;fill-opacity:1"
+           id="path852" />
+        <path
+           d="m 85.262755,99.388087 h -1.13665 v 4.495803 h 1.13665 z"
+           style="font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;font-family:'Uni Sans';-inkscape-font-specification:'Uni Sans Heavy';fill:#7289da;fill-opacity:1"
+           id="path854" />
+        <path
+           d="m 85.973945,103.88389 h 1.13665 v -1.79705 l -0.14605,-0.86995 0.03175,-0.006 0.3937,0.9017 1.016,1.77165 h 1.14935 v -4.495803 h -1.1303 v 2.038353 c 0.0063,0 0.12065,0.7747 0.127,0.7747 l -0.03175,0.006 -0.381,-0.9017 -1.08585,-1.917703 h -1.0795 z"
+           style="font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;font-family:'Uni Sans';-inkscape-font-specification:'Uni Sans Heavy';fill:#7289da;fill-opacity:1"
+           id="path856" />
+        <path
+           d="m 92.546182,99.388087 h -1.14935 v 2.990853 c -0.0063,2.1082 3.5814,2.1082 3.58775,0 v -2.990853 h -1.14935 v 2.990853 c -0.0064,0.7239 -1.28905,0.7239 -1.28905,0 z"
+           style="font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;font-family:'Uni Sans';-inkscape-font-specification:'Uni Sans Heavy';fill:#7289da;fill-opacity:1"
+           id="path858" />
+        <path
+           d="m 95.44178,103.13459 c 0.4191,0.53975 0.9906,0.8128 1.53035,0.8128 0.8255,0 1.7399,-0.47625 1.778,-1.3462 0.0508,-1.1049 -0.7493,-1.3843 -1.5494,-1.53035 -0.34925,-0.0762 -0.5842,-0.2032 -0.5969,-0.4191 0.01905,-0.5207 0.8255,-0.53975 1.2954,-0.0381 l 0.74295,-0.5715 c -0.46355,-0.565153 -0.9906,-0.717553 -1.5367,-0.717553 -0.8255,0 -1.6256,0.46355 -1.6256,1.346203 0,0.85725 0.6604,1.31445 1.3843,1.42875 0.3683,0.0508 0.78105,0.19685 0.76835,0.45085 -0.03175,0.4826 -1.02235,0.4572 -1.4732,-0.0889 z"
+           style="font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;font-family:'Uni Sans';-inkscape-font-specification:'Uni Sans Heavy';fill:#7289da;fill-opacity:1"
+           id="path860" />
+      </g>
     </g>
   </g>
   <style
