@@ -16,8 +16,7 @@ class UserEventViewSet(ModelViewSet):
     Can be filtered with query parameters.
 
     #### Query parameters
-    - **organizer's id**
-    - **subscriber's id**
+    - **organizer** `int`: event organizer id
 
     #### Response format
     >>> [
@@ -115,4 +114,4 @@ class UserEventViewSet(ModelViewSet):
     serializer_class = UserEventSerializer
     filter_backends = (DjangoFilterBackend, SearchFilter)
     lookup_field = "name"
-    filter_fields = ("organizer", "subscriptions")
+    filter_fields = ("organizer",)
