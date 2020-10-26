@@ -33,7 +33,10 @@ class Metricity:
 
     def total_messages(self, user_id: str) -> int:
         """Query total number of messages for a user."""
-        self.cursor.execute("SELECT COUNT(*) FROM messages WHERE author_id = '%s'", [user_id])
+        self.cursor.execute(
+            "SELECT COUNT(*) FROM messages WHERE author_id = '%s' AND NOT is_deleted",
+            [user_id]
+        )
         values = self.cursor.fetchone()
 
         if not values:
