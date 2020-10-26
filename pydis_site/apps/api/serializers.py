@@ -1,4 +1,5 @@
 """Converters from Django models to data interchange formats and back."""
+from django.core.exceptions import ValidationError as DjangoValidationError
 from django.db.models.query import QuerySet
 from django.db.utils import IntegrityError
 from rest_framework.exceptions import NotFound
@@ -24,6 +25,7 @@ from .models import (
     OffensiveMessage,
     Reminder,
     Role,
+    ScheduledEvent,
     User,
     UserEvent
 )
@@ -368,4 +370,32 @@ class UserEventSerializer(ModelSerializer):
         """Metadata defined for the Django REST Framework."""
 
         model = UserEvent
-        fields = ("id", "name", "organizer", "subscriptions")
+        fields = ("name", "organizer", "description", "message_id", "subscriptions")
+
+
+class ScheduledEventSerializer(ModelSerializer):
+    """A class providing (de-)serialization of `UserEvent` instances."""
+
+    user_event = UserEventSerializer(read_only=True)
+    user_event_name = PrimaryKeyRelatedField(
+        queryset=UserEvent.objects.all(), source="user_event", write_only=True
+    )
+
+    class Meta:
+        """Metadata defined for the Django REST Framework."""
+
+        model = ScheduledEvent
+        fields = ("id", "user_event_name", "user_event", "start_time", "end_time")
+
+    def validate(self, attrs: dict) -> None:
+        """
+        Catch model validation errors and send 400 response.
+
+        Note: only works for POST requests.
+        """
+        scheduled_event = ScheduledEvent(**attrs)
+        try:
+            scheduled_event.clean()
+        except DjangoValidationError as e:
+            raise ValidationError(e.message_dict)
+        return attrs
