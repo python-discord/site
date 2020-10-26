@@ -19,6 +19,7 @@ from .models import (
     OffTopicChannelName,
     OffensiveMessage,
     Role,
+    ScheduledEvent,
     User,
     UserEvent
 )
@@ -449,5 +450,18 @@ class UserEventAdmin(admin.ModelAdmin):
 
     subscriptions_count.short_description = "Subscriptions"
 
-    list_display = ("id", "name", "organizer_username", "subscriptions_count")
+    list_display = ("name", "organizer_username", "subscriptions_count")
     list_filter = ("name", UserEventOrganizerFilter)
+
+
+@admin.register(ScheduledEvent)
+class ScheduledEventAdmin(admin.ModelAdmin):
+    """Admin formatting for ScheduledEvent model."""
+
+    def user_event_name(self, scheduled_event: ScheduledEvent) -> str:
+        """Return organizer's username."""
+        return scheduled_event.user_event.name
+
+    user_event_name.short_description = "User Event"
+
+    list_display = ("user_event_name", "start_time", "end_time")
