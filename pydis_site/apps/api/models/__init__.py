@@ -12,6 +12,7 @@ from .bot import (
     OffTopicChannelName,
     Reminder,
     Role,
+    ScheduledEvent,
     User,
     UserEvent
 )
