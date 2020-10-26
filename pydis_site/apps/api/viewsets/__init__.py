@@ -10,6 +10,7 @@ from .bot import (
     OffTopicChannelNameViewSet,
     ReminderViewSet,
     RoleViewSet,
+    ScheduledEventViewSet,
     UserViewSet,
     UserEventViewSet
 )

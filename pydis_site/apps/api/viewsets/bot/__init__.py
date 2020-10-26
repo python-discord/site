@@ -9,5 +9,6 @@ from .off_topic_channel_name import OffTopicChannelNameViewSet
 from .offensive_message import OffensiveMessageViewSet
 from .reminder import ReminderViewSet
 from .role import RoleViewSet
+from .scheduled_event import ScheduledEventViewSet
 from .user import UserViewSet
 from .user_event import UserEventViewSet
