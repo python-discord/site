@@ -55,8 +55,8 @@ class Metricity:
              FROM (
                SELECT
                  to_timestamp(
-                    floor((extract('epoch' from created_at) / {BLOCK_INTERVAL} ))
-                    * {BLOCK_INTERVAL}
+                    floor((extract('epoch' from created_at) / %d ))
+                    * %d
                  )
                  AT TIME ZONE 'UTC' AS interval
                FROM messages
@@ -66,7 +66,7 @@ class Metricity:
                GROUP BY interval
             ) block_query;
             """,
-            [user_id]
+            [BLOCK_INTERVAL, BLOCK_INTERVAL, user_id]
         )
         values = self.cursor.fetchone()
 
