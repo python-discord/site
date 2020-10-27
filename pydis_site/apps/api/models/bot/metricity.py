@@ -57,7 +57,11 @@ class Metricity:
                  to_timestamp(floor((extract('epoch' from created_at) / 600 )) * 600)
                  AT TIME ZONE 'UTC' AS interval
                FROM messages
-               WHERE author_id='%s' AND NOT is_deleted GROUP BY interval) block_query;
+               WHERE
+                 author_id='%s'
+                 AND NOT is_deleted
+               GROUP BY interval
+            ) block_query;
             """,
             [user_id]
         )
