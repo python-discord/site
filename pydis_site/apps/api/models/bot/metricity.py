@@ -49,7 +49,7 @@ class Metricity:
     def total_message_blocks(self, user_id: str) -> int:
         """Query number of 10 minute blocks the user has been active during."""
         self.cursor.execute(
-            f"""
+            """
             SELECT
               COUNT(*)
              FROM (
