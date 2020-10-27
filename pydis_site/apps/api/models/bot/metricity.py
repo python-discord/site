@@ -54,11 +54,7 @@ class Metricity:
               COUNT(*)
              FROM (
                SELECT
-                 to_timestamp(
-                    floor((extract('epoch' from created_at) / %d ))
-                    * %d
-                 )
-                 AT TIME ZONE 'UTC' AS interval
+                 (floor((extract('epoch' from created_at) / %d )) * %d) AS interval
                FROM messages
                WHERE
                  author_id='%s'
