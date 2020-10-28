@@ -1,27 +1,27 @@
 from pathlib import Path
+from typing import List
 
 from django.conf import settings
-from django.core.handlers.wsgi import WSGIRequest
-from django.http import Http404, HttpResponse
-from django.template import Context, Template
-from django.views import View
+from django.http import Http404
+from django.views.generic import TemplateView
 
 PAGES_PATH = Path(settings.BASE_DIR, "pydis_site", "apps", "events", "pages")
 
 
-class PageView(View):
+class PageView(TemplateView):
     """Handles event pages showing."""
 
-    def get(self, request: WSGIRequest, path: str) -> HttpResponse:
-        """Render event page rendering based on path."""
-        page_path = PAGES_PATH.joinpath(path)
+    def get_template_names(self) -> List[str]:
+        """Get specific template names"""
+        page_path = PAGES_PATH / self.kwargs['path']
         if page_path.exists() and page_path.is_dir():
             page_path = page_path.joinpath("_index.html")
+            self.kwargs['path'] = f"{self.kwargs['path']}/_index.html"
         else:
-            page_path = PAGES_PATH.joinpath(f"{path}.html")
+            page_path = PAGES_PATH.joinpath(f"{self.kwargs['path']}.html")
+            self.kwargs['path'] = f"{self.kwargs['path']}.html"
 
         if not page_path.exists():
             raise Http404
 
-        template = Template(page_path.read_text())
-        return HttpResponse(template.render(Context()))
+        return [self.kwargs['path']]

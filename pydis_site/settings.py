@@ -120,7 +120,10 @@ ROOT_URLCONF = 'pydis_site.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'pydis_site', 'templates')],
+        'DIRS': [
+            os.path.join(BASE_DIR, 'pydis_site', 'templates'),
+            os.path.join(BASE_DIR, 'pydis_site', 'apps', 'events', 'pages'),
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'builtins': [
