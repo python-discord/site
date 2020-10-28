@@ -391,6 +391,10 @@ class ScheduledEventSerializer(ModelSerializer):
         """
         Catch model validation errors and send 400 response.
 
+        This is being done because the DRF uses model_instance.save() method
+        and the clean() method is not called in the save()
+        hence, manually calling clean() and checking for validationErrors.
+
         Note: only works for POST requests.
         """
         scheduled_event = ScheduledEvent(**attrs)

@@ -23,7 +23,12 @@ class ScheduledEvent(models.Model):
     )
 
     def clean(self) -> None:
-        """Check for event time overlap and if an organizer has already scheduled an event."""
+        """
+        Check for event time overlap and if an organizer has already scheduled an event.
+
+        Not overriding the save() method as the save() method is not called when creating
+        model instances via the admin interface.
+        """
         # Check if organizer has already scheduled an event
         scheduled_events_by_organizer = ScheduledEvent.objects.filter(
             user_event__organizer=self.user_event.organizer
