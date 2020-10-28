@@ -33,5 +33,5 @@ urlpatterns = [
     path('logout', LogoutView.as_view(), name="logout"),
 
     path('admin/', admin.site.urls),
-    path('resources/', include('pydis_site.apps.resources.urls', namespace="resources")),
+    path('resources/', include('pydis_site.apps.resources.urls')),
 ]
