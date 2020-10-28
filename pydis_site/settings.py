@@ -83,6 +83,7 @@ INSTALLED_APPS = [
     'pydis_site.apps.api',
     'pydis_site.apps.home',
     'pydis_site.apps.staff',
+    'pydis_site.apps.resources',
     'pydis_site.apps.events',
 
     'django.contrib.admin',
