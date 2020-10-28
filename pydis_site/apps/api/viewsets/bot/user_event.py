@@ -69,7 +69,7 @@ class UserEventViewSet(ModelViewSet):
     - 201: returned on success
     - 400: if the organizer's id or any subscription user ids is invalid
 
-    ### PUT /bot/users/<event_name:str>
+    ### PUT /bot/user-events/<event_name:str>
     Update a user event with the given `event name`.
     All fields except the subscriptions in the request body are required.
 
@@ -85,7 +85,7 @@ class UserEventViewSet(ModelViewSet):
     - 400: if the request body was invalid, see response body for details
     - 404: if the user event with the given `event name` could not be found
 
-    ### PATCH /bot/users/<event_name:str>
+    ### PATCH /bot/user-events/<event_name:str>
     Update a user event with the given `event name`.
     All fields in the request body are optional.
 
@@ -101,7 +101,7 @@ class UserEventViewSet(ModelViewSet):
     - 400: if the request body was invalid, see response body for details
     - 404: if the user event with the given `event name` could not be found
 
-    ### DELETE /bot/users/<event_name:str>
+    ### DELETE /bot/user-events/<event_name:str>
     Deletes a user event with the given `event name`.
 
     #### Status codes
