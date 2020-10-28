@@ -126,3 +126,8 @@ class HomeView(View):
         """Collect repo data and render the homepage view."""
         repo_data = self._get_repo_data()
         return render(request, "home/index.html", {"repo_data": repo_data})
+
+
+def timeline(request: WSGIRequest) -> HttpResponse:
+    """Render timeline view."""
+    return render(request, 'home/timeline.html')
