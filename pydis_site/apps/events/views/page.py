@@ -14,10 +14,6 @@ class PageView(View):
 
     def get(self, request: WSGIRequest, path: str) -> HttpResponse:
         """Render event page rendering based on path."""
-        # We need to get rid from trailing slash when path have this
-        if path.endswith("/"):
-            path = path[:-1]
-
         page_path = PAGES_PATH.joinpath(path)
         if page_path.exists() and page_path.is_dir():
             page_path = page_path.joinpath("_index.html")
