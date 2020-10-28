@@ -11,8 +11,8 @@ class UserEvent(ModelReprMixin, models.Model):
     name = models.CharField(
         max_length=64,
         verbose_name="Event Name",
-        help_text="Name of the user event.",
-        primary_key=True
+        primary_key=True,
+        help_text="Name of the user event."
     )
     organizer = models.ForeignKey(
         User,
@@ -21,20 +21,21 @@ class UserEvent(ModelReprMixin, models.Model):
     )
     description = models.TextField()
     message_id = models.BigIntegerField(
-        help_text=(
-            "The message ID of the message "
-            "sent in user events channel."
-        ),
         unique=True,
         validators=(
             MinValueValidator(
                 limit_value=0,
                 message="message IDs cannot be negative."
             ),
+        ),
+        help_text=(
+            "The message ID of the message "
+            "sent in user events channel."
         )
     )
     subscriptions = models.ManyToManyField(
         User,
         blank=True,
-        related_name="subscriptions"
+        related_name="subscriptions",
+        help_text="List of discord user id's how those who have subscribed to this event."
     )

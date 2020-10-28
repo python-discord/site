@@ -14,12 +14,15 @@ class ScheduledEvent(models.Model):
     user_event = models.OneToOneField(
         UserEvent,
         on_delete=models.CASCADE,
+        help_text="The user event which is scheduled."
     )
     start_time = models.DateTimeField(
         unique=True,
+        help_text="The start time of the scheduled user event."
     )
     end_time = models.DateTimeField(
-        unique=True
+        unique=True,
+        help_text="The end time of the scheduled user event."
     )
 
     def clean(self) -> None:
