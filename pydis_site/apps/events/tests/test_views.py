@@ -12,7 +12,7 @@ PAGES_PATH = Path(settings.BASE_DIR, "pydis_site", "apps", "events", "tests", "t
 class IndexTests(TestCase):
     def test_events_index_response_200(self):
         """Should return response code 200 when visiting index of events."""
-        url = reverse("events:events")
+        url = reverse("events:index")
         resp = self.client.get(url)
         self.assertEqual(resp.status_code, 200)
 
