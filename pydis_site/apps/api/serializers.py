@@ -387,13 +387,29 @@ class ScheduledEventSerializer(ModelSerializer):
         model = ScheduledEvent
         fields = ("id", "user_event_name", "user_event", "start_time", "end_time")
 
-    def validate(self, attrs: dict) -> None:
+    def validate(self, attrs: dict) -> dict:
         """
         Catch model validation errors and send 400 response.
 
-        This is being done because the DRF uses model_instance.save() method
-        and the clean() method is not called in the save()
-        hence, manually calling clean() and checking for validationErrors.
+        This is being done because the DRF uses model_instance.save()
+        method and the clean() method is not called in save()
+        hence, manually calling clean() and checking for validation errors.
+
+        reference of the above:
+        https://docs.djangoproject.com/en/3.1/ref/models/instances/#django.db.models.Model.full_clean
+        https://docs.djangoproject.com/en/3.1/ref/models/instances/#django.db.models.Model.clean
+        Note:
+        `
+        Note that full_clean() will not be called automatically when you call your model’s
+        save() method. You’ll need to call it manually when you want to run
+        one-step model validation for your own manually created models.
+        `
+
+        `
+        Note, however, that like Model.full_clean(), a model’s clean()
+        method is not invoked when you call your model’s save() method.
+        `
+         - from django docs (follow the above links).
 
         Note: only works for POST requests.
         """
