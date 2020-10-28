@@ -3,8 +3,8 @@
 {% block title %}Summer Code Jam 2020{% endblock %}
 
 {% block breadcrumb %}
-    <li><a href="/events">Events</a></li>
-    <li><a href="/events/code-jams">Code Jams</a></li>
+    <li><a href="{% url "events:index" %}">Events</a></li>
+    <li><a href="{% url "events:page" path="code-jams" %}">Code Jams</a></li>
     <li class="is-active"><a href="#">Summer Code Jam 2020</a></li>
 {% endblock %}
 

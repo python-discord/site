@@ -3,9 +3,9 @@
 {% block title %}Rules{% endblock %}
 
 {% block breadcrumb %}
-    <li><a href="/events">Events</a></li>
-    <li><a href="/events/code-jams">Code Jams</a></li>
-    <li><a href="/events/code-jams/7">Summer Code Jam 2020</a></li>
+    <li><a href="{% url "events:index" %}">Events</a></li>
+    <li><a href="{% url "events:page" path="code-jams" %}">Code Jams</a></li>
+    <li><a href="{% url "events:page" path="code-jams/7" %}">Summer Code Jam 2020</a></li>
     <li class="is-active"><a href="#">Rules</a></li>
 {% endblock %}
 
