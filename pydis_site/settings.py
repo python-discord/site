@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 import os
 import secrets
 import sys
+from pathlib import Path
 
 import environ
 import sentry_sdk
@@ -117,13 +118,13 @@ MIDDLEWARE = [
 ]
 ROOT_URLCONF = 'pydis_site.urls'
 
+# Path for events pages
+PAGES_PATH = Path(BASE_DIR, "pydis_site", "templates", "events", "pages")
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [
-            os.path.join(BASE_DIR, 'pydis_site', 'templates'),
-            os.path.join(BASE_DIR, 'pydis_site', 'apps', 'events', 'pages'),
-        ],
+        'DIRS': [os.path.join(BASE_DIR, 'pydis_site', 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'builtins': [
