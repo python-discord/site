@@ -22,10 +22,7 @@ from pydis_site.constants import GIT_SHA
 
 env = environ.Env(
     DEBUG=(bool, False),
-    SITE_SENTRY_DSN=(str, ""),
-    SITE_REPOSITORY_OWNER=(str, "python-discord"),
-    SITE_REPOSITORY_NAME=(str, "site"),
-    SITE_REPOSITORY_BRANCH=(str, "master")
+    SITE_SENTRY_DSN=(str, "")
 )
 
 sentry_sdk.init(
@@ -281,6 +278,6 @@ BULMA_SETTINGS = {
 }
 
 # Information about site repository
-SITE_REPOSITORY_OWNER = env("SITE_REPOSITORY_OWNER")
-SITE_REPOSITORY_NAME = env("SITE_REPOSITORY_NAME")
-SITE_REPOSITORY_BRANCH = env("SITE_REPOSITORY_BRANCH")
+SITE_REPOSITORY_OWNER = "python-discord"
+SITE_REPOSITORY_NAME = "site"
+SITE_REPOSITORY_BRANCH = "master"
