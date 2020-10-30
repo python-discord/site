@@ -16,7 +16,7 @@
         <div class="container">
             <nav class="breadcrumb is-pulled-left" aria-label="breadcrumbs">
                 <ul>
-                    <li><a href="/articles">Articles</a></li>
+                    <li><a href="{% url "content:articles" %}">Articles</a></li>
                     <li class="is-active"><a href="#">{{ category_info.name }}</a></li>
                 </ul>
             </nav>
