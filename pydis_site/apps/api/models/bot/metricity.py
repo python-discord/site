@@ -47,7 +47,11 @@ class Metricity:
         return values[0]
 
     def total_message_blocks(self, user_id: str) -> int:
-        """Query number of 10 minute blocks the user has been active during."""
+        """
+        Query number of 10 minute blocks during which the user has been active.
+
+        This metric prevents users from spamming to achieve the message total threshold.
+        """
         self.cursor.execute(
             """
             SELECT
