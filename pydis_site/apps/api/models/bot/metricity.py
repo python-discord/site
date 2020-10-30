@@ -55,15 +55,15 @@ class Metricity:
         self.cursor.execute(
             """
             SELECT
-              COUNT(*)
-             FROM (
-               SELECT
-                 (floor((extract('epoch' from created_at) / %d )) * %d) AS interval
-               FROM messages
-               WHERE
-                 author_id='%s'
-                 AND NOT is_deleted
-               GROUP BY interval
+                COUNT(*)
+            FROM (
+                SELECT
+                    (floor((extract('epoch' from created_at) / %d )) * %d) AS interval
+                FROM messages
+                WHERE
+                    author_id='%s'
+                    AND NOT is_deleted
+                GROUP BY interval
             ) block_query;
             """,
             [BLOCK_INTERVAL, BLOCK_INTERVAL, user_id]
