@@ -21,7 +21,7 @@
                 <ul>
                     <li><a href="{% url "content:articles" %}">Articles</a></li>
                     {% if category_data.raw_name is not None %}
-                        <li><a href="/articles/category/{{ category_data.raw_name }}">{{ category_data.name }}</a></li>
+                        <li><a href="{% url "content:category" category=category_data.raw_name %}">{{ category_data.name }}</a></li>
                     {% endif %}
                     <li class="is-active"><a href="#">{{ article.metadata.title }}</a></li>
                 </ul>
