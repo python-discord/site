@@ -1,0 +1,29 @@
+.box, .tile.is-parent {
+    transition: 0.1s ease-out;
+}
+.box {
+    min-height: 15vh;
+}
+.tile.is-parent:hover .box {
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+}
+.tile.is-parent:hover {
+    padding: 0.65rem 0.85rem 0.85rem 0.65rem;
+    filter: saturate(1.1) brightness(1.1);
+}
+
+#readingBlock {
+    background-image: linear-gradient(141deg, #911eb4 0%, #b631de 71%, #cf4bf7 100%);
+}
+
+#interactiveBlock {
+    background-image: linear-gradient(141deg, #d05600 0%, #da722a 71%, #e68846 100%);
+}
+
+#communitiesBlock {
+    background-image: linear-gradient(141deg, #3b756f 0%, #3a847c 71%, #41948b 100%);
+}
+
+#podcastsBlock {
+    background-image: linear-gradient(141deg, #232382 0%, #30309c 71%, #4343ad 100%);
+}
