@@ -16,15 +16,18 @@ INSERT INTO users VALUES (
 CREATE TABLE messages (
     id varchar,
     author_id varchar references users(id),
-    primary key(id)
+    primary key(id),
+    is_deleted boolean
 );
 
 INSERT INTO messages VALUES(
     0,
-    0
+    0,
+    false
 );
 
 INSERT INTO messages VALUES(
     1,
-    0
+    0,
+    false
 );
