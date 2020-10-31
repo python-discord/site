@@ -58,7 +58,7 @@ class Metricity:
                 COUNT(*)
             FROM (
                 SELECT
-                    (floor((extract('epoch' from created_at) / %d )) * %d) AS interval
+                    (floor((extract('epoch' from created_at) / %s )) * %s) AS interval
                 FROM messages
                 WHERE
                     author_id='%s'
