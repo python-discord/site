@@ -16,18 +16,21 @@ INSERT INTO users VALUES (
 CREATE TABLE messages (
     id varchar,
     author_id varchar references users(id),
-    primary key(id),
-    is_deleted boolean
+    is_deleted boolean,
+    created_at timestamp,
+    primary key(id)
 );
 
 INSERT INTO messages VALUES(
     0,
     0,
-    false
+    false,
+    now()
 );
 
 INSERT INTO messages VALUES(
     1,
     0,
-    false
+    false,
+    now() + INTERVAL '10 minutes'
 );
