@@ -2,6 +2,11 @@ from django.db import connections
 
 BLOCK_INTERVAL = 10 * 60  # 10 minute blocks
 
+EXCLUDE_CHANNELS = [
+    "267659945086812160",  # Bot commands
+    "607247579608121354"  # SeasonalBot commands
+]
+
 
 class NotFound(Exception):
     """Raised when an entity cannot be found."""
@@ -36,8 +41,16 @@ class Metricity:
     def total_messages(self, user_id: str) -> int:
         """Query total number of messages for a user."""
         self.cursor.execute(
-            "SELECT COUNT(*) FROM messages WHERE author_id = '%s' AND NOT is_deleted",
-            [user_id]
+            """
+            SELECT
+              COUNT(*)
+            FROM messages
+            WHERE
+              author_id = '%s'
+              AND NOT is_deleted
+              AND NOT %s::varchar[] @> ARRAY[channel_id]
+            """,
+            [user_id, EXCLUDE_CHANNELS]
         )
         values = self.cursor.fetchone()
 
@@ -63,10 +76,11 @@ class Metricity:
                 WHERE
                     author_id='%s'
                     AND NOT is_deleted
+                    AND NOT %s::varchar[] @> ARRAY[channel_id]
                 GROUP BY interval
             ) block_query;
             """,
-            [BLOCK_INTERVAL, BLOCK_INTERVAL, user_id]
+            [BLOCK_INTERVAL, BLOCK_INTERVAL, user_id, EXCLUDE_CHANNELS]
         )
         values = self.cursor.fetchone()
 
