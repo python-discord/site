@@ -29,7 +29,7 @@ class ScheduledEvent(models.Model):
         """
         Check for event time overlap and if an organizer has already scheduled an event.
 
-        Note: overriding the save() method as the save() method is not called when creating
+        Note: not overriding the save() method as the save() method is not called when creating
         model instances via the admin interface.
         """
         # Check if organizer has already scheduled an event
