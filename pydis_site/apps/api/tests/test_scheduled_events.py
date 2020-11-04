@@ -102,3 +102,27 @@ class CreationTests(APISubdomainTestCase):
 
         response = self.client.post(url, data=data)
         self.assertEqual(response.status_code, 400)
+
+    def test_returns_400_for_short_event_duration(self):
+        url = reverse("bot:scheduledevent-list", host="api")
+        start = datetime.now() + timedelta(days=3)
+        data = {
+            "user_event_name": self.user_event_3.name,
+            "start_time": start.isoformat(),
+            "end_time": (start + timedelta(minutes=10)).isoformat()
+        }
+
+        response = self.client.post(url, data=data)
+        self.assertEqual(response.status_code, 400)
+
+    def test_returns_400_for_extended_event_duration(self):
+        url = reverse("bot:scheduledevent-list", host="api")
+        start = datetime.now() + timedelta(days=3)
+        data = {
+            "user_event_name": self.user_event_3.name,
+            "start_time": start.isoformat(),
+            "end_time": (start + timedelta(hours=6)).isoformat()
+        }
+
+        response = self.client.post(url, data=data)
+        self.assertEqual(response.status_code, 400)
