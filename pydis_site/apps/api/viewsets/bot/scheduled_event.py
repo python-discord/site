@@ -1,12 +1,19 @@
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import mixins
 from rest_framework.filters import SearchFilter
-from rest_framework.viewsets import ModelViewSet
+from rest_framework.viewsets import GenericViewSet
 
 from pydis_site.apps.api.models.bot.scheduled_event import ScheduledEvent
 from pydis_site.apps.api.serializers import ScheduledEventSerializer
 
 
-class ScheduledEventViewSet(ModelViewSet):
+class ScheduledEventViewSet(
+    mixins.CreateModelMixin,
+    mixins.RetrieveModelMixin,
+    mixins.DestroyModelMixin,
+    mixins.ListModelMixin,
+    GenericViewSet
+):
     """
     View providing CRUD operations on Scheduled User Events.
 
@@ -80,38 +87,6 @@ class ScheduledEventViewSet(ModelViewSet):
     #### Status codes
     - 201: returned on success
     - 400: if the user event name is invalid
-
-    ### PUT /bot/scheduled-events/<scheduled_event_id:int>
-    Update a scheduled user event with the given `scheduled_event_id`.
-    All fields in the request body are required.
-
-    #### Request body
-    >>> {
-    ...     'user_event_name': str,
-    ...     'start_time': str,
-    ...     'end_time': str
-    ... }
-
-    #### Status codes
-    - 200: returned on success
-    - 400: if the request body was invalid, see response body for details
-    - 404: if the scheduled user event with the given `scheduled_event_id` does not exist
-
-    ### PATCH /bot/scheduled-events/<scheduled_event_id:int>
-    Update a user event with the given `event name`.
-    All fields in the request body are optional.
-
-    #### Request body
-    >>> {
-    ...     'user_event_name': str,
-    ...     'start_time': str,
-    ...     'end_time': str
-    ... }
-
-    #### Status codes
-    - 200: returned on success
-    - 400: if the request body was invalid, see response body for details
-    - 404: if the scheduled user event with the given `scheduled_event_id` does not exist
 
     ### DELETE /bot/scheduled-events/<scheduled_event_id:int>
     Deletes the scheduled user event with the given `scheduled_event_id`.
