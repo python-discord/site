@@ -409,7 +409,8 @@ class UserMetricityTests(APISubdomainTestCase):
         # Given
         verified_at = "foo"
         total_messages = 1
-        self.mock_metricity_user(verified_at, total_messages)
+        total_blocks = 1
+        self.mock_metricity_user(verified_at, total_messages, total_blocks)
 
         # When
         url = reverse('bot:user-metricity-data', args=[0], host='api')
@@ -421,6 +422,7 @@ class UserMetricityTests(APISubdomainTestCase):
             "verified_at": verified_at,
             "total_messages": total_messages,
             "voice_banned": False,
+            "activity_blocks": total_blocks
         })
 
     def test_no_metricity_user(self):
@@ -440,7 +442,7 @@ class UserMetricityTests(APISubdomainTestCase):
             {'exception': ObjectDoesNotExist, 'voice_banned': False},
         ]
 
-        self.mock_metricity_user("foo", 1)
+        self.mock_metricity_user("foo", 1, 1)
 
         for case in cases:
             with self.subTest(exception=case['exception'], voice_banned=case['voice_banned']):
@@ -453,13 +455,14 @@ class UserMetricityTests(APISubdomainTestCase):
                     self.assertEqual(response.status_code, 200)
                     self.assertEqual(response.json()["voice_banned"], case["voice_banned"])
 
-    def mock_metricity_user(self, verified_at, total_messages):
+    def mock_metricity_user(self, verified_at, total_messages, total_blocks):
         patcher = patch("pydis_site.apps.api.viewsets.bot.user.Metricity")
         self.metricity = patcher.start()
         self.addCleanup(patcher.stop)
         self.metricity = self.metricity.return_value.__enter__.return_value
         self.metricity.user.return_value = dict(verified_at=verified_at)
         self.metricity.total_messages.return_value = total_messages
+        self.metricity.total_message_blocks.return_value = total_blocks
 
     def mock_no_metricity_user(self):
         patcher = patch("pydis_site.apps.api.viewsets.bot.user.Metricity")
@@ -468,3 +471,4 @@ class UserMetricityTests(APISubdomainTestCase):
         self.metricity = self.metricity.return_value.__enter__.return_value
         self.metricity.user.side_effect = NotFound()
         self.metricity.total_messages.side_effect = NotFound()
+        self.metricity.total_message_blocks.side_effect = NotFound()
