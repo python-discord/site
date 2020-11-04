@@ -46,6 +46,16 @@ class ScheduledEvent(models.Model):
                 }
             )
 
+        # Check for event duration
+        # Event should be at least 30min or at most 5 hours
+        duration = (self.end_time - self.start_time).total_seconds()
+        if duration < 30*60 or duration > 5*60*60:
+            raise ValidationError(
+                {
+                    "end_time": ["Event should be atleast 30min or atmost 5 hours."]
+                }
+            )
+
         # Check for time overlap
         new_dt_range = DATETIME_RANGE(self.start_time, self.end_time)
 
