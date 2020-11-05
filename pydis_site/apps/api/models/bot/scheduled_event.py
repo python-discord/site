@@ -52,7 +52,7 @@ class ScheduledEvent(models.Model):
         if duration < 30*60 or duration > 5*60*60:
             raise ValidationError(
                 {
-                    "end_time": ["Event should be atleast 30min or atmost 5 hours."]
+                    "end_time": ["Event should be at least 30min or at most 5 hours."]
                 }
             )
 
