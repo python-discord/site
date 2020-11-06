@@ -21,15 +21,10 @@ class UserEventViewSet(ModelViewSet):
     #### Response format
     >>> [
     ...     {
-    ...         'id': 1,
     ...         'name': "Among Us",
     ...         'organizer': 409107086526644234,
-    ...         'subscriptions': [
-    ...             409107086526644233,
-    ...             409107086526644232,
-    ...             409107086526644231,
-    ...         ],
-    ...     }
+    ...         'description': "Some description.",
+    ...         'message_id: 774294034544852992
     ... ]
 
     #### Status codes
@@ -39,15 +34,12 @@ class UserEventViewSet(ModelViewSet):
     Gets a single user event by name.
 
     #### Response format
+
     >>> {
-    ...     'id': 1,
     ...     'name': "Among Us",
     ...     'organizer': 409107086526644234,
-    ...     'subscriptions': [
-    ...         409107086526644233,
-    ...         409107086526644232,
-    ...         409107086526644231,
-    ...     ],
+    ...     'description': "Some description.",
+    ...     'message_id: 774294034544852992
     ... }
 
     #### Status codes
@@ -62,7 +54,8 @@ class UserEventViewSet(ModelViewSet):
     >>> {
     ...     'name': str,
     ...     'organizer': int,
-    ...     'subscriptions': List[int],
+    ...     'description': str,
+    ...     'message_id: int
     ... }
 
     #### Status codes
@@ -71,13 +64,14 @@ class UserEventViewSet(ModelViewSet):
 
     ### PUT /bot/user-events/<event_name:str>
     Update a user event with the given `event name`.
-    All fields except the subscriptions in the request body are required.
+    All fields are required.
 
     #### Request body
     >>> {
     ...     'name': str,
     ...     'organizer': int,
-    ...     'subscriptions': List[int],
+    ...     'description': str,
+    ...     'message_id: int
     ... }
 
     #### Status codes
@@ -93,7 +87,8 @@ class UserEventViewSet(ModelViewSet):
     >>> {
     ...     'name': str,
     ...     'organizer': int,
-    ...     'subscriptions': List[int],
+    ...     'description': str,
+    ...     'message_id: int
     ... }
 
     #### Status codes
