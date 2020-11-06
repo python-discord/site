@@ -370,7 +370,7 @@ class UserEventSerializer(ModelSerializer):
         """Metadata defined for the Django REST Framework."""
 
         model = UserEvent
-        fields = ("name", "organizer", "description", "message_id", "subscriptions")
+        fields = ("name", "organizer", "description", "message_id")
 
 
 class ScheduledEventSerializer(ModelSerializer):

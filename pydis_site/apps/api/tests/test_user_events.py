@@ -27,7 +27,6 @@ class CreationTests(APISubdomainTestCase):
             "organizer": self.user1.id,
             "description": "A test event",
             "message_id": 2,
-            "subscriptions": []
         }
         response = self.client.post(url, data=data)
         self.assertEqual(response.status_code, 201)
@@ -40,7 +39,6 @@ class CreationTests(APISubdomainTestCase):
             "organizer": self.user1.id,
             "description": "A test event",
             "message_id": 3,
-            "subscriptions": []
         }
         response = self.client.post(url, data=data)
         self.assertEqual(response.status_code, 400)
@@ -52,7 +50,6 @@ class CreationTests(APISubdomainTestCase):
             "organizer": 23243654,
             "description": "A test event",
             "message_id": 5,
-            "subscriptions": [324234, 234324]
         }
         response = self.client.post(url, data=data)
         self.assertEqual(response.status_code, 400)
@@ -110,24 +107,16 @@ class UpdateTests(APISubdomainTestCase):
     def test_returns_200_for_patching_user_event(self):
         url = reverse("bot:userevent-detail", host="api", args=(self.user_event.name,))
         data = {
-            "subscriptions": [self.user2.id]
+            "description": "This is the new description."
         }
         response = self.client.patch(url, data=data)
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.json()["subscriptions"], data["subscriptions"])
+        self.assertEqual(response.json()["description"], data["description"])
 
     def test_returns_400_for_invalid_organizer_id(self):
         url = reverse("bot:userevent-detail", host="api", args=(self.user_event.name,))
         data = {
             "organizer": 23243654,
-        }
-        response = self.client.patch(url, data=data)
-        self.assertEqual(response.status_code, 400)
-
-    def test_returns_400_for_invalid_subs_id(self):
-        url = reverse("bot:userevent-detail", host="api", args=(self.user_event.name,))
-        data = {
-            "subscriptions": [324234, 234324]
         }
         response = self.client.patch(url, data=data)
         self.assertEqual(response.status_code, 400)
@@ -154,7 +143,6 @@ class FilterTests(APISubdomainTestCase):
             description="A test event",
             message_id=101
         )
-        cls.user_event.subscriptions.add(cls.user2)
 
     def test_organizer_filter(self):
         url = reverse("bot:userevent-list", host="api")
@@ -164,13 +152,3 @@ class FilterTests(APISubdomainTestCase):
         response = self.client.get(url, params=params)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json()[0]["organizer"], params["organizer"])
-
-    def test_subscriptions_filter(self):
-        url = reverse("bot:userevent-list", host="api")
-        params = {
-            "subscriptions": 2
-        }
-        response = self.client.get(url, params=params)
-        self.assertEqual(response.status_code, 200)
-        res_json = response.json()
-        self.assertIn(params["subscriptions"], res_json[0]["subscriptions"])

@@ -444,13 +444,7 @@ class UserEventAdmin(admin.ModelAdmin):
 
     organizer_username.short_description = "Organizer"
 
-    def subscriptions_count(self, user_event: UserEvent) -> int:
-        """Return number of subscriptions."""
-        return user_event.subscriptions.count()
-
-    subscriptions_count.short_description = "Subscriptions"
-
-    list_display = ("name", "organizer_username", "subscriptions_count")
+    list_display = ("name", "organizer_username")
     list_filter = ("name", UserEventOrganizerFilter)
 
 

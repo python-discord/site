@@ -33,9 +33,3 @@ class UserEvent(ModelReprMixin, models.Model):
             "sent in user events channel."
         )
     )
-    subscriptions = models.ManyToManyField(
-        User,
-        blank=True,
-        related_name="subscriptions",
-        help_text="List of discord user id's how those who have subscribed to this event."
-    )
