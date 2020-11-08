@@ -378,7 +378,8 @@ class ScheduledEventSerializer(ModelSerializer):
 
     user_event = UserEventSerializer(read_only=True)
     user_event_name = PrimaryKeyRelatedField(
-        queryset=UserEvent.objects.all(), source="user_event", write_only=True
+        queryset=UserEvent.objects.select_related("organizer"),
+        source="user_event", write_only=True
     )
 
     class Meta:

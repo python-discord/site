@@ -423,7 +423,7 @@ class UserEventOrganizerFilter(admin.SimpleListFilter):
 
     def lookups(self, request: HttpRequest, model: UserAdmin) -> Iterable[Tuple[str, str]]:
         """Selectable values for viewer to filter by."""
-        user_events = UserEvent.objects.all()
+        user_events = UserEvent.objects.select_related("organizer")
         organizers = {event.organizer for event in user_events}
         return ((organizer.id, organizer.username) for organizer in organizers)
 

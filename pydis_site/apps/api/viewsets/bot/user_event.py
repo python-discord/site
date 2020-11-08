@@ -105,7 +105,7 @@ class UserEventViewSet(ModelViewSet):
 
     """
 
-    queryset = UserEvent.objects.all()
+    queryset = UserEvent.objects.select_related("organizer")
     serializer_class = UserEventSerializer
     filter_backends = (DjangoFilterBackend, SearchFilter)
     lookup_field = "name__iexact"
