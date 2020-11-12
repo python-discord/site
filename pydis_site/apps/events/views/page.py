@@ -22,4 +22,4 @@ class PageView(TemplateView):
         if not page_path.exists():
             raise Http404
 
-        return [f"events/{settings.PAGES_PATH.name}/path}"]
+        return [f"events/{settings.PAGES_PATH.name}/{path}"]
