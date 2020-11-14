@@ -16,7 +16,7 @@ pydis_site/apps/staff/tests
 CHANGELOG.md
 CONTRIBUTING.md
 docker-compose.yml
-Dockerfile.local
+Dockerfile
 docs
 htmlcov
 LICENSE
