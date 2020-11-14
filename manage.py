@@ -7,6 +7,7 @@ import time
 from typing import List
 
 import django
+import gunicorn.app.wsgiapp
 from django.contrib.auth import get_user_model
 from django.core.management import call_command, execute_from_command_line
 
@@ -155,8 +156,18 @@ class SiteManager:
             call_command("runserver", "0.0.0.0:8000")
             return
 
-        # Run gunicorn for production server
-        os.system("gunicorn --preload -b 0.0.0.0:8000 pydis_site.wsgi:application --threads 8 -w 4")
+        # Patch the arguments for gunicorn
+        sys.argv = [
+            "gunicorn",
+            "--preload",
+            "-b", "0.0.0.0:8000",
+            "pydis_site.wsgi:application",
+            "--threads", "8",
+            "-w", "4"
+        ]
+
+        # Run gunicorn for the production server.
+        gunicorn.app.wsgiapp.run()
 
 
 def main() -> None:
