@@ -15,7 +15,7 @@ jobs:
         displayName: 'Set Python Version'
         name: PythonVersion
         inputs:
-          versionSpec: '3.7.x'
+          versionSpec: '3.9.x'
           addToPath: true
 
       - task: DockerCompose@0
