@@ -1,2 +1,4 @@
 description: Notable podcasts about the Python ecosystem
 name: Podcasts
+default_icon: regular/microphone-alt
+default_icon_color: black

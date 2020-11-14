@@ -1,0 +1,15 @@
+description: A book that gives 59 best practices for writing excellent Python. Great
+  for intermediates.
+name: Effective Python
+payment: paid
+position: 3
+urls:
+- icon: regular/link
+  url: https://effectivepython.com/
+  color: teal
+- icon: branding/amazon
+  url: https://www.amazon.com/Effective-Python-Specific-Software-Development/dp/0134034287
+  color: amazon-orange
+- icon: branding/github
+  url: https://github.com/bslatkin/effectivepython
+  color: black
