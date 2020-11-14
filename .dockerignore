@@ -15,9 +15,6 @@ pydis_site/apps/home/tests
 pydis_site/apps/staff/tests
 CHANGELOG.md
 CONTRIBUTING.md
-docker
-!docker/uwsgi.ini
-!docker/wheels
 docker-compose.yml
 Dockerfile.local
 docs
