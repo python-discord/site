@@ -1,6 +1,6 @@
 # Python Discord: Site
 [![Discord](https://img.shields.io/static/v1?label=Python%20Discord&logo=discord&message=%3E100k%20members&color=%237289DA&logoColor=white)](https://discord.gg/2B963hn)
-![Lint & Test](https://github.com/python-discord/site/workflows/Lint%20&%20Test/badge.svg?branch=master)
+![Lint, Test & Deploy](https://github.com/python-discord/site/workflows/Lint,%20Test%20&%20Deploy/badge.svg?branch=master)
 [![Coverage Status](https://coveralls.io/repos/github/python-discord/site/badge.svg?branch=master)](https://coveralls.io/github/python-discord/site?branch=master)
 [![License](https://img.shields.io/github/license/python-discord/site)](LICENSE)
 [![Status](https://img.shields.io/website?url=https%3A%2F%2Fpythondiscord.com)][1]
