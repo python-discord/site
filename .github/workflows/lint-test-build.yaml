@@ -105,7 +105,7 @@ jobs:
           coverage run manage.py test --no-input
           coverage report -m
         env:
-          CI: GHA
+          CI: True
           DATABASE_URL: postgres://pysite:pysite@localhost:7777/pysite
           METRICITY_DB_URL: postgres://pysite:pysite@localhost:7777/metricity
 
