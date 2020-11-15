@@ -45,7 +45,7 @@ jobs:
         id: python
         uses: actions/setup-python@v2
         with:
-          python-version: '3.9'
+          python-version: '3.8'
 
       # This step caches our Python dependencies. To make sure we
       # only restore a cache when the dependencies, the python version,

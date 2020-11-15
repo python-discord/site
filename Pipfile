@@ -38,7 +38,7 @@ pre-commit = "~=2.1"
 coveralls = "~=2.1"
 
 [requires]
-python_version = "3.9"
+python_version = "3.8"
 
 [scripts]
 start = "python manage.py run --debug"
