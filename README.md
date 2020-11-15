@@ -1,8 +1,7 @@
 # Python Discord: Site
 [![Discord](https://img.shields.io/static/v1?label=Python%20Discord&logo=discord&message=%3E100k%20members&color=%237289DA&logoColor=white)](https://discord.gg/2B963hn)
-[![Build Status](https://dev.azure.com/python-discord/Python%20Discord/_apis/build/status/Site?branchName=master)](https://dev.azure.com/python-discord/Python%20Discord/_build/latest?definitionId=2&branchName=master)
-[![Tests](https://img.shields.io/azure-devops/tests/python-discord/Python%20Discord/2?compact_message)](https://dev.azure.com/python-discord/Python%20Discord/_apis/build/status/Site?branchName=master)
-[![Coverage](https://img.shields.io/azure-devops/coverage/python-discord/Python%20Discord/2/master)](https://dev.azure.com/python-discord/Python%20Discord/_apis/build/status/Site?branchName=master)
+![Lint & Test](https://github.com/python-discord/site/workflows/Lint%20&%20Test/badge.svg?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/python-discord/site/badge.svg?branch=master)](https://coveralls.io/github/python-discord/site?branch=master)
 [![License](https://img.shields.io/github/license/python-discord/site)](LICENSE)
 [![Status](https://img.shields.io/website?url=https%3A%2F%2Fpythondiscord.com)][1]
 
