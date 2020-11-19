@@ -8,9 +8,9 @@ on:
     types:
       - completed
 
+jobs:
   build-and-deploy:
     name: Build and Deploy to Kubernetes
-    needs: lint-test
     if: github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
 
