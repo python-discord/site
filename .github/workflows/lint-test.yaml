@@ -40,6 +40,11 @@ jobs:
         with:
           python-version: '3.8'
 
+      # Start the database early to give it a chance to get ready before
+      # we start running tests.
+      - name: Run database using docker-compose
+        run: docker-compose run -d -p 7777:5432 --name pydis_web postgres
+
       # This step caches our Python dependencies. To make sure we
       # only restore a cache when the dependencies, the python version,
       # the runner operating system, and the dependency location haven't
@@ -91,9 +96,6 @@ jobs:
         run: "flake8 \
         --format='::error file=%(path)s,line=%(row)d,col=%(col)d::\
         [flake8] %(code)s: %(text)s'"
-
-      - name: Run database using docker-compose
-        run: docker-compose run -d -p 7777:5432 --name pydis_web postgres
 
       - name: Migrations and run tests with coverage.py
         run: |
