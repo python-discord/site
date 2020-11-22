@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 import os
 import secrets
 import sys
+from pathlib import Path
 
 import environ
 import sentry_sdk
@@ -281,3 +282,5 @@ BULMA_SETTINGS = {
 SITE_REPOSITORY_OWNER = "python-discord"
 SITE_REPOSITORY_NAME = "site"
 SITE_REPOSITORY_BRANCH = "master"
+
+ARTICLES_PATH = Path(BASE_DIR, "pydis_site", "apps", "content", "resources", "content")
