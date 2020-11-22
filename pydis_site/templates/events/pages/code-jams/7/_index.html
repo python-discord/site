@@ -1,0 +1,102 @@
+{% extends "events/base.html" %}
+
+{% block title %}Summer Code Jam 2020{% endblock %}
+
+{% block breadcrumb %}
+    <li><a href="{% url "events:index" %}">Events</a></li>
+    <li><a href="{% url "events:page" path="code-jams" %}">Code Jams</a></li>
+    <li class="is-active"><a href="#">Summer Code Jam 2020</a></li>
+{% endblock %}
+
+{% block event_content %}
+    <p>
+        Ladies and gentlemen, it’s that time of year again! The 7<sub>th</sub> Python Discord Code Jam is imminent.
+        This code jam will be held from <strong>Friday, July 31<sup>st</sup> to Sunday, August 9<sup>th</sup></strong>
+        where you will complete in teams of five for the elusive title of Code Jam Champion and win some of the many prizes listed.
+    </p>
+    <p>
+        Web development is one of the most popular areas for Python software and development.
+        For this code jam, you will be utilizing the <strong>Django</strong> framework to create a web application.
+        The Django Software Foundation has even decided to sponsor this event,
+        allowing us to add more prizes to our prize pool.
+    </p>
+    <p>
+        Are you unsure of what a code jam is? If so, check out our <a href="/events/code-jams">general code jam page</a>.
+    </p>
+
+    <article class="message is-warning">
+        <div class="message-header">
+            <p>Signups are closed</p>
+        </div>
+
+        <div class="message-body">
+            <p>
+                The sign-up period for the Summer Code Jam 2020 is over,
+                which means that you can no longer sign up for the Code Jam.
+                You can still take a look at
+                <a href="https://github.com/python-discord/summer-code-jam-2020-qualifier">the qualifier</a>
+                to get an idea of the task we asked the participants to complete in order to qualify for the jam.
+                If you want to compete in the next Code Jam,
+                subscribe to the announcements posted in our community by using the
+                <code>!subscribe</code> command in the <code>#bot-commands</code> channel of our server.
+            </p>
+        </div>
+    </article>
+
+    <h3>New to Django?</h3>
+    <p>
+        Don't worry! This code jam will be the perfect opportunity for you to get to know one of the most popular web frameworks for Python.
+        Whether it be a REST API or full fledged website, Django can do it!
+    </p>
+    <p>
+        During the event, feel free to ask Django-specific questions in the code jam channels
+        or <code>#web-development</code>. As always, our helpers will be there to help you with all the
+        other Python-related questions that you have via our <a href="/pages/resources/guides/help-channels">help channel system</a>. <!-- Change help channels page link after content app is ready. -->
+    </p>
+    <p>
+        If you want to get familiar with Django before the event starts, be sure to check out <a href="https://docs.djangoproject.com/en/3.0/intro/">the tutorial in the official
+        Django documentation</a>. Alternatively, you could have a look at Corey Schafer's <a href="https://www.youtube.com/playlist?list=PL-osiE80TeTtoQCKZ03TU5fNfx2UY6U4p">Django Tutorials playlist</a> on YouTube.
+    </p>
+
+    <h3>Prizes</h3>
+    <p>This year's prize pool includes:</p>
+    <ul>
+        <li>5 JetBrains 1-year any product licenses</li>
+        <li>5 Django hoodies</li>
+        <li>Python Discord t-shirts</li>
+    </ul>
+    <p>
+        We will award as many Python Discord t-shirts as we can afford!
+        We want to thank all of our Patrons over at our
+        <a href="https://www.patreon.com/python_discord">Patreon account</a> for making this possible.
+        We literally couldn't do this without you!
+    </p>
+    <h3>Qualifier & Signups</h3>
+    <p>
+        It is no longer possible to sign up for the Summer Code Jam 2020.
+        If you would like to attempt the qualifier assignment as a personal challenge, you can find it on
+        <a href="https://github.com/python-discord/summer-code-jam-2020-qualifier">GitHub</a>.
+        The repository also includes a test suite and a solution.
+    </p>
+    <p>
+        If you would like to participate in one of our future events and don't want to risk missing it,
+        subscribe to our announcements by using the <code>!subscribe</code> command in the <code>#bot-commands</code> channel on our Discord server.
+    </p>
+    <h3>Theme</h3>
+    <p>
+        Similarly to our previous code jams, the theme was chosen by our community!
+        By the end of our two-step voting process,
+        <strong>Early Internet</strong> came out on top and is the official theme for this code jam.
+    </p>
+{% endblock %}
+
+{% block sidebar %}
+    {% include "events/sidebar/code-jams/7.html" %}
+    <div class="box">
+        <p class="menu-label">Relevant Links</p>
+        <ul class="menu-list">
+            <!-- Add other items when they become available -->
+            <li><a class="has-text-link" href="{% url "events:page" path="code-jams/7/rules" %}">Rules</a></li>
+        </ul>
+    </div>
+{% endblock %}
