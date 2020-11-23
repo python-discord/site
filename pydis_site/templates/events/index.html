@@ -14,4 +14,110 @@
         <p>If you want to read more about Code Jams, visit our <a href="{% url "events:page" path="code-jams" %}">Code Jam info page</a> or watch this video showcasing the best projects created during the <strong>Winter Code Jam 2020: Ancient Technology</strong>:</p>
         <iframe width="560" height="315" src="https://www.youtube.com/embed/8fbZsGrqBzo" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
     </div>
+
+    <div class="box">
+        <h2 class="title is-4">Game Jam</h2>
+        <div class="columns is-3" style="--columnGap: 0.75rem;">
+            <div class="column">
+                <p>
+                    The Game Jam is similar to our Code Jams, but smaller in scope. Instead of having to complete a qualifier
+                    and being teamed up with random strangers, members of our community can just sign-up individually or pair up
+                    with whoever they like.
+                </p>
+                <p>
+                    The participants will have ten days to create a game using the technology we've selected, and drawing
+                    inspiration from a provided theme. After the event, a panel of judges will play all the games and select a
+                    winner. The top 5 will featured in a special video on our <a href="https://www.youtube.com/channel/UCQsrA4xo6jvdgsJZhKaBL6w">YouTube channel</a>.
+                </p>
+                <p>
+                    The <a class="has-text-link" href="{% url "events:page" path="game-jams/2020" %}">first edition of the Game Jam</a> ran from
+                    <strong>April 17, 2020 to April 26, 2020</strong>.
+                </p>
+            </div>
+            <div class="column is-3">
+                <img src="https://user-images.githubusercontent.com/33516116/77593036-5fb09780-6eeb-11ea-9feb-336b2e5e23de.png" style="border-radius: 10px;" alt="">
+            </div>
+        </div>
+    </div>
+
+    <div class="box">
+        <h2 class="title is-4">Hacktoberfest</h2>
+        <div class="columns is-3" style="--columnGap: 0.75rem;">
+            <div class="column">
+                <p>
+                    This event revolves around the annual <a href="https://hacktoberfest.digitalocean.com/">Hacktoberfest
+                    event</a> organized by Digital Ocean. In addition to promoting Hacktoberfest in our community and supporting
+                    those who choose to take their first steps into the world of open source, we will also ease our members into
+                    contributing to open source by starting a low-entry, beginner-friendly open source project where we will
+                    guide our members through the open source process in a safe environment.
+                </p>
+                <p>
+                    The exact form this event will take has not been decided yet, but we'll make sure to keep you updated in
+                    our community announcements!
+                </p>
+            </div>
+            <div class="column is-3">
+                <img src="https://raw.githubusercontent.com/python-discord/branding/master/seasonal/halloween/hacktoberfest/2020/animated_server_icon.gif" style="border-radius: 10px;" alt="">
+            </div>
+        </div>
+    </div>
+
+    <div class="box">
+        <h2 class="title is-4">Advent of Code</h2>
+        <div class="columns is-3" style="--columnGap: 0.75rem;">
+            <div class="column">
+                <p>
+                    Each year, many of our members take part of an online coding competition called
+                    <a href="https://adventofcode.com/">Advent of Code</a> that takes place in December. Advent of Code is an
+                    Advent calendar of small programming puzzles for a variety of skill sets and skill levels that can be solved
+                    in any programming language you like, including Python.
+                </p>
+                <p>
+                    During the event, we will open a special discussion channel in which our members can discuss the puzzles
+                    and compare their solutions. We will also open a private leaderboard and may even reward the best scoring
+                    members on that board with prizes!
+                </p>
+                <p>
+                    However, this event isn't purely competitive. You can also join in just to see how far you'll get, to
+                    challenge yourself, as a way of learning Python, or just for the fun of it. In 2019, almost 200 members
+                    signed up for our private leaderboard, but many more took on the challenge without focusing on the
+                    competitive aspect.
+                </p>
+            </div>
+            <div class="column is-3">
+                <img src="https://raw.githubusercontent.com/python-discord/branding/master/seasonal/christmas/2019/festive_256.gif" style="border-radius: 10px;" alt="">
+            </div>
+        </div>
+    </div>
+
+    <div class="box">
+        <h2 class="title is-4">PyWeek</h2>
+        <div class="columns is-3" style="--columnGap: 0.75rem;">
+            <div class="column">
+                <p>
+                    For the past 15 years, <a href="https://pyweek.org">PyWeek</a> has been running a bi-annual game jam for the
+                    Python language. As of 2020, we are excited to say we are officially partnered with PyWeek to co-run these
+                    events.
+                </p>
+                <p>
+                    During each PyWeek event, we open a special discussion channel in which our members can discuss their
+                    submissions, meet other participants, and talk to PyWeek staff. The PyWeek organizer,
+                    Daniel Pope (<a href="https://twitter.com/lordmauve">@lordmauve</a>) will be present during the entire event to answer
+                    questions and post announcements and information in our community.
+                </p>
+                <p>
+                    Unlike our other events, the <strong>community</strong> will select the winner from all the submissions
+                    during PyWeek. We may release YouTube content showcasing the best submissions after the events are finished.
+                </p>
+            </div>
+            <div class="column is-3">
+                <img src="https://pyweek.readthedocs.io/en/latest/_static/pyweek.svg" style="border-radius: 10px;" alt="">
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block sidebar %}
+    {% include "events/sidebar/upcoming-event.html" %}
+    {% include "events/sidebar/events-list.html" %}
 {% endblock %}
