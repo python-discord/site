@@ -1,0 +1,45 @@
+name: Deploy
+
+on:
+  workflow_run:
+    workflows: ["Build"]
+    branches:
+      - master
+    types:
+      - completed
+
+jobs:
+  deploy:
+    if: github.event.workflow_run.conclusion == 'success'
+    name: Deploy to Kubernetes Cluster
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Create SHA Container Tag
+        id: sha_tag
+        run: |
+          tag=$(cut -c 1-7 <<< $GITHUB_SHA)
+          echo "::set-output name=tag::$tag"
+
+      # Check out the private Kubernetes repository for the
+      # deployment.yaml file using a GitHub Personal Access
+      # Token to get access.
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          repository: python-discord/kubernetes
+          token: ${{ secrets.REPO_TOKEN }}
+
+      - name: Authenticate with Kubernetes
+        uses: azure/k8s-set-context@v1
+        with:
+          method: kubeconfig
+          kubeconfig: ${{ secrets.KUBECONFIG }}
+
+      - name: Deploy to Kubernetes
+        uses: Azure/k8s-deploy@v1
+        with:
+          manifests: |
+              site/deployment.yaml
+          images: 'ghcr.io/python-discord/site:${{ steps.sha_tag.outputs.tag }}'
+          kubectl-version: 'latest'
