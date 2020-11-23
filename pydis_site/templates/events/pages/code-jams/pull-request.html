@@ -1,0 +1,235 @@
+{% extends "events/base.html" %}
+
+{% block breadcrumb %}
+    <li><a href="{% url "events:index" %}">Events</a></li>
+    <li><a href="{% url "events:page" path="code-jams" %}">Code Jams</a></li>
+    <li class="is-active"><a href="#">Opening a Pull Request</a></li>
+{% endblock %}
+
+{% block title %}Opening a Pull Request{% endblock %}
+
+{% block event_content %}
+    <p>
+        When you start out with a jam we ask your team leader to fork the code jam brief repository to their account for your to work on your code.
+    </p>
+    <p>
+        In this guide we're going to go over:
+    </p>
+    <ul>
+        <li>
+            <a href="#forking-the-repository">Forking the repository</a>
+        </li>
+        <li>
+            <a href="#opening-a-pull-request">Opening a pull request back to the code jam brief on python-discord</a>
+        </li>
+        <li>
+            <a href="#adding-collaborators">Adding collaborators</a>
+        </li>
+        <li>
+            <a href="#adding-a-github-webhook">Adding a GitHub webhook to your teams Discord channel</a>
+        </li>
+    </ul>
+
+    <h2 class="title is-4" id="forking-the-repository"><a href="#forking-the-repository">Forking the repository</a></h2>
+    <p>
+        When you browse to the code jam brief repository you will be presented with the project root.
+    </p>
+    <p>
+        You want to fork the repository to your account using the button shown in the image below:
+    </p>
+    <p>
+        <img alt="fork button" src="https://raw.githubusercontent.com/wiki/python-discord/code-jam-5/images/fork-button.png">
+    </p>
+    <p>
+        If you see a dialog like this one, just select your user.
+    </p>
+    <p>
+        <img alt="where to fork" src="https://raw.githubusercontent.com/wiki/python-discord/code-jam-5/images/where-to-fork.png">
+    </p>
+    <p>
+        Once you've done this you'll be redirected to a page like this:
+    </p>
+    <p>
+        <img alt="example fork" src="https://raw.githubusercontent.com/wiki/python-discord/code-jam-5/images/my-fork.png">
+    </p>
+    <p>
+        And that's it! You've forked the repo!
+    </p>
+
+    <h2 class="title is-4" id="opening-a-pull-request"><a href="#opening-a-pull-request">Opening a Pull Request</a></h2>
+    <p>
+        Before we can open a Pull Request you need to have something to actually compare against the brief repo.
+    </p>
+    <p>
+        In the actual jam you should fill in the Project information section of the README.md, but for now I'm just going to add a line to the README.
+    </p>
+    <p>
+        <img alt="image" src="https://raw.githubusercontent.com/wiki/python-discord/code-jam-5/images/commit.png">
+    </p>
+    <p>
+        Once you've made your commit, navigate back to the project root where you will see this button above your commit bar:
+    </p>
+    <p>
+        <img alt="image" src="https://raw.githubusercontent.com/wiki/python-discord/code-jam-5/images/pull-request-button.png">
+    </p>
+    <p>
+        You should click on this pull request button. When you do you will see something like this, just click the Create pull request button:
+    </p>
+    <p>
+        <img alt="image" src="https://raw.githubusercontent.com/wiki/python-discord/code-jam-5/images/compare-changes.png">
+    </p>
+    <p>
+        Next up you'll see a form like this:
+    </p>
+    <p>
+        <img alt="image" src="https://raw.githubusercontent.com/wiki/python-discord/code-jam-5/images/pull-request-form.png">
+    </p>
+    <p>
+        You should fill it in like so:
+    </p>
+    <li>
+        <strong>Title</strong> should be your team's name
+    </li>
+    <li>
+        <strong>Description</strong> does not have to be filled in
+    </li>
+    <li>
+        Make sure to <strong>select the "allow edits from maintainers" option</strong>
+    </li>
+    <li>
+        Make sure to open a pull request and not a draft pull request
+    </li>
+    <p>
+        That's it! You've opened your pull request and should see something like this:
+    </p>
+    <p>
+        <img alt="image" src="https://raw.githubusercontent.com/wiki/python-discord/code-jam-5/images/pull-request.png">
+    </p>
+
+    <h2 class="title is-4" id="adding-collaborators"><a href="#adding-collaborators">Adding collaborators</a></h2>
+    <p>
+        Obviously your fork is no good if your team members cannot make edits to it.
+        To allow your team mates to edit you need to add them to the project as collaborators.
+    </p>
+    <p>
+        We're going to start off by heading to our fork of the repository (this is the one with your username in it, not python-discord) and head to the settings page.
+    </p>
+    <p>
+        <img alt="image" src="https://raw.githubusercontent.com/wiki/python-discord/code-jam-5/images/settings-page.png">
+    </p>
+    <p>
+        Click on collaborators. GitHub will ask you to enter your password now for security. Enter it and proceed.
+    </p>
+    <p>
+        You should see a page like this:
+    </p>
+    <p>
+        <img alt="image" src="https://raw.githubusercontent.com/wiki/python-discord/code-jam-5/images/collabs-page.png">
+    </p>
+    <p>
+        Add your team members using this form and use the copy invite button to copy an invite link they can then use.
+        You should send this to them in your team channel on Discord.
+    </p>
+    <p>
+        <img alt="image" src="https://raw.githubusercontent.com/wiki/python-discord/code-jam-5/images/invites.png">
+    </p>
+    <p>
+        <img alt="image" src="https://raw.githubusercontent.com/wiki/python-discord/code-jam-5/images/invited-discord.png">
+    </p>
+    <p>
+        Once your team mates have joined you'll see this:
+    </p>
+    <p>
+        <img alt="image" src="https://raw.githubusercontent.com/wiki/python-discord/code-jam-5/images/accepted.png">
+    </p>
+    <p>
+        That's all! Your teammates have access to the repository now!
+    </p>
+
+    <h2 class="title is-4" id="adding-a-github-webhook"><a href="#adding-a-github-webhook">Add a GitHub webhook to Discord</a></h2>
+    <p>
+        It may be useful to keep up on your GitHub repository updates right from your Discord channel.
+        For that reason, we've assigned all team leaders webhook creation permissions inside your team channel.
+    </p>
+    <h3 class="title is-5">Webhook creation</h3>
+    <p>
+        To make use of this we're going to start out by making a webhook inside the channel.
+    </p>
+    <p>
+        To do this go to your team channel and click on the gear that appears when you mouse-over it.
+    </p>
+    <p>
+        <img alt="image" src="https://raw.githubusercontent.com/wiki/python-discord/code-jam-5/images/channel-gear.png">
+    </p>
+    <p>
+        Navigate to the Webhooks section of the settings page and click <code>Create Webhook</code>.
+    </p>
+    <p>
+        <img alt="image" src="https://raw.githubusercontent.com/wiki/python-discord/code-jam-5/images/webhook-creation-page.png">
+    </p>
+    <p>
+        You'll see something like this:
+    </p>
+    <p>
+        <img alt="image" src="https://raw.githubusercontent.com/wiki/python-discord/code-jam-5/images/webhook-modal.png">
+    </p>
+    <p>
+        You can edit the name to 'GitHub' or anything, but GitHub will do this anyway.
+    </p>
+    <p>
+        Copy the link to the clipboard, you will get something like this:
+    </p>
+    <p>
+        <code>https://canary.discordapp.com/api/webhooks/548221675087462410/h7lkQ7cX5-95J8CLMNCGXTEBrWOmXYFWv7N4MqsFtV-D8F0W8Rf3rWj4dPAEFGspm7EZ</code>
+    </p>
+    <p>
+        By default this is not configured to respond to GitHub payloads so you will need to add a <code>/github</code> to the end of the URL.
+    </p>
+    <p>
+        Your new URL should look like:
+    </p>
+    <p>
+        <code>https://canary.discordapp.com/api/webhooks/548221675087462410/h7lkQ7cX5-95J8CLMNCGXTEBrWOmXYFWv7N4MqsFtV-D8F0W8Rf3rWj4dPAEFGspm7EZ/github</code>
+    </p>
+    <h3 class="title is-5">Adding to GitHub</h3>
+    <p>
+        Next up we will head over to our GitHub project settings (on our fork) and go to the webhooks section:
+    </p>
+    <p>
+        <img alt="image" src="https://raw.githubusercontent.com/wiki/python-discord/code-jam-5/images/webhooks-settings.png">
+    </p>
+    <p>
+        Click on the Add Webhook button and paste in your URL to the <code>Payload URL</code> section.
+    </p>
+    <p>
+        Set the <code>Content Type</code> to <code>application/json</code> otherwise Discord cannot interpret your request.
+    </p>
+    <p>
+        You can select either just the push or everything depending on how much information you want.
+    </p>
+    <p>
+        Make sure <code>Active</code> is ticked and click <code>Add webhook</code>.
+    </p>
+    <p>
+        And that's it! You've added a Discord webhook to your GitHub repository!
+    </p>
+    <p>
+        <img alt="image" src="https://raw.githubusercontent.com/wiki/python-discord/code-jam-5/images/added.png">
+    </p>
+    <p>
+        As you can see here, my teammate has commited a change to our fork:
+    </p>
+    <p>
+        <img alt="image" src="https://raw.githubusercontent.com/wiki/python-discord/code-jam-5/images/aperture-commit.png">
+    </p>
+    <p>
+        In our Discord channel, you can see the following:
+    </p>
+    <p>
+        <img alt="image" src="https://raw.githubusercontent.com/wiki/python-discord/code-jam-5/images/webhook-channel.png">
+    </p>
+{% endblock %}
+
+{% block sidebar %}
+    {% include "events/sidebar/code-jams/useful-information.html" %}
+{% endblock %}
