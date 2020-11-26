@@ -1,5 +1,5 @@
-# Request Joe and Dennis for any PR
-* @jb3 @Den4200
+# Request Dennis for any PR
+* @Den4200
 
 # Infractions API
 pydis_site/apps/api/models/bot/infraction.py    @MarkKoz
@@ -9,3 +9,6 @@ pydis_site/apps/api/viewsets/bot/infraction.py  @MarkKoz
 .github/workflows/**                            @MarkKoz
 Dockerfile                                      @MarkKoz
 docker-compose.yml                              @MarkKoz
+
+# Metricity
+pydis_site/apps/api/models/bot/metricity.py @jb3
