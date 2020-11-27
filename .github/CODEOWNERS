@@ -1,1 +1,14 @@
-* @python-discord/core-developers
+# Request Dennis for any PR
+* @Den4200
+
+# Infractions API
+pydis_site/apps/api/models/bot/infraction.py    @MarkKoz
+pydis_site/apps/api/viewsets/bot/infraction.py  @MarkKoz
+
+# CI & Docker
+.github/workflows/**                            @MarkKoz
+Dockerfile                                      @MarkKoz
+docker-compose.yml                              @MarkKoz
+
+# Metricity
+pydis_site/apps/api/models/bot/metricity.py @jb3
