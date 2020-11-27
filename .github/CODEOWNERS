@@ -5,10 +5,17 @@
 pydis_site/apps/api/models/bot/infraction.py    @MarkKoz
 pydis_site/apps/api/viewsets/bot/infraction.py  @MarkKoz
 
+# Django ORM
+**/migrations/**                                @Akarys42
+**/models/**                                    @Akarys42
+
 # CI & Docker
-.github/workflows/**                            @MarkKoz
-Dockerfile                                      @MarkKoz
-docker-compose.yml                              @MarkKoz
+.github/workflows/**                            @MarkKoz @Akarys42
+Dockerfile                                      @MarkKoz @Akarys42
+docker-compose.yml                              @MarkKoz @Akarys42
+
+# Tools
+Pipfile*                                        @Akarys42
 
 # Metricity
-pydis_site/apps/api/models/bot/metricity.py @jb3
+pydis_site/apps/api/models/bot/metricity.py     @jb3
