@@ -1,5 +1,4 @@
 import os
-from pathlib import Path
 from typing import Dict, List, Optional, Union
 
 import requests
@@ -13,38 +12,37 @@ COMMITS_URL = "https://api.github.com/repos/{owner}/{name}/commits?path={path}&s
 BASE_ARTICLES_LOCATION = "pydis_site/apps/content/resources/content/"
 
 
-def _get_base_path() -> Path:
-    """Have extra function for base path getting for testability."""
-    return Path(settings.BASE_DIR, "pydis_site", "apps", "content", "resources", "content")
-
-
-def get_category(category: str) -> Dict[str, str]:
+def get_category(path: List[str]) -> Dict[str, str]:
     """Load category information by name from _info.yml."""
-    path = _get_base_path().joinpath(category)
+    path = settings.ARTICLES_PATH.joinpath(*path)
     if not path.exists() or not path.is_dir():
         raise Http404("Category not found.")
 
     return yaml.safe_load(path.joinpath("_info.yml").read_text())
 
 
-def get_categories() -> Dict[str, Dict]:
+def get_categories(path: Optional[List[str]] = None) -> Dict[str, Dict]:
     """Get all categories information."""
-    base_path = _get_base_path()
     categories = {}
+    if path is None:
+        categories_path = settings.ARTICLES_PATH
+        path = []
+    else:
+        categories_path = settings.ARTICLES_PATH.joinpath(*path)
 
-    for name in base_path.iterdir():
+    for name in categories_path.iterdir():
         if name.is_dir():
-            categories[name.name] = get_category(name.name)
+            categories[name.name] = get_category([*path, name.name])
 
     return categories
 
 
-def get_articles(category: Optional[str] = None) -> Dict[str, Dict]:
+def get_articles(path: Optional[List[str]] = None) -> Dict[str, Dict]:
     """Get all root or category articles."""
-    if category is None:
-        base_dir = _get_base_path()
+    if path is None:
+        base_dir = settings.ARTICLES_PATH
     else:
-        base_dir = _get_base_path().joinpath(category)
+        base_dir = settings.ARTICLES_PATH.joinpath(*path)
 
     articles = {}
 
@@ -56,17 +54,12 @@ def get_articles(category: Optional[str] = None) -> Dict[str, Dict]:
     return articles
 
 
-def get_article(article: str, category: Optional[str]) -> Dict[str, Union[str, Dict]]:
+def get_article(path: List[str]) -> Dict[str, Union[str, Dict]]:
     """Get one specific article. When category is specified, get it from there."""
-    if category is None:
-        base_path = _get_base_path()
-    else:
-        base_path = _get_base_path().joinpath(category)
+    article_path = settings.ARTICLES_PATH.joinpath(*path[:-1])
 
-        if not base_path.exists() or not base_path.is_dir():
-            raise Http404("Category not found.")
-
-    article_path = base_path.joinpath(f"{article}.md")
+    # We need to include extension MD
+    article_path = article_path.joinpath(f"{path[-1]}.md")
     if not article_path.exists() or not article_path.is_file():
         raise Http404("Article not found.")
 
@@ -87,8 +80,7 @@ def get_article(article: str, category: Optional[str]) -> Dict[str, Union[str, D
 
 
 def get_github_information(
-        article: str,
-        category: Optional[str] = None
+        path: List[str]
 ) -> Dict[str, Union[List[str], str]]:
     """Get article last modified date and contributors from GitHub."""
     result = requests.get(
@@ -96,11 +88,14 @@ def get_github_information(
             owner=settings.SITE_REPOSITORY_OWNER,
             name=settings.SITE_REPOSITORY_NAME,
             branch=settings.SITE_REPOSITORY_BRANCH,
-            path=f"{BASE_ARTICLES_LOCATION}{f'{category}/' if category else ''}{article}.md"
+            path=(
+                f"{BASE_ARTICLES_LOCATION}{'/'.join(path[:-1])}"
+                f"{'/' if len(path) > 1 else ''}{path[-1]}.md"
+            )
         )
     )
 
-    if result.status_code == 200:
+    if result.status_code == 200 and len(result.json()):
         data = result.json()
         return {
             "last_modified": parser.isoparse(
