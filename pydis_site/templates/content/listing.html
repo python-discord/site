@@ -1,0 +1,62 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}{{ category_info.name|default:"Articles" }}{% endblock %}
+{% block head %}
+    <meta property="og:title" content="Python Discord - {{ category_info.name|default:"Articles" }}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:description" content="{{ category_info.description }}" />
+    <link rel="stylesheet" href="{% static "css/content/articles.css" %}">
+{% endblock %}
+
+{% block content %}
+    {% include "base/navbar.html" %}
+
+    <section class="breadcrumb-section section">
+        <div class="container">
+            <nav class="breadcrumb is-pulled-left" aria-label="breadcrumbs">
+                <ul>
+                    {% if in_category %}
+                        <li><a href="{% url "content:articles" %}">Articles</a></li>
+                    {% endif %}
+                    {% for item in breadcrumb_items %}
+                        <li><a href="{% url "content:article_category" location=item.path %}">{{ item.name }}</a></li>
+                    {% endfor %}
+                    <li class="is-active"><a href="#">{{ category_info.name|default:"Articles" }}</a></li>
+                </ul>
+            </nav>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="content">
+                <h1>{{ category_info.name|default:"Articles" }}</h1>
+                {% for category, data in categories.items %}
+                    <div class="box" style="max-width: 800px;">
+                        <span class="icon is-size-4 is-medium">
+                            <i class="fas fa-folder is-size-3 is-black has-icon-padding" aria-hidden="true"></i>
+                        </span>
+
+
+                        <a href="{% url "content:article_category" location=path|add:category %}">
+                            <span class="is-size-4 has-text-weight-bold">{{ data.name }}</span>
+                        </a>
+                        <p class="is-italic">{{ data.description }}</p>
+                    </div>
+                {% endfor %}
+                {% for article, data in content.items %}
+                    <div class="box" style="max-width: 800px;">
+                        <span class="icon is-size-4 is-medium">
+                            <i class="{{ data.icon_class|default:"fab" }} {{ data.icon|default:"fa-python" }} is-size-3 is-black has-icon-padding" aria-hidden="true"></i>
+                        </span>
+                        <a href="{% url "content:article_category" location=path|add:article %}">
+                                <span class="is-size-4 has-text-weight-bold">{{ data.title }}</span>
+                        </a>
+                        <p class="is-italic">{{ data.short_description }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+{% endblock %}
