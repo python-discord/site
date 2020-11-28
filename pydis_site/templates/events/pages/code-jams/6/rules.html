@@ -1,0 +1,81 @@
+{% extends "events/base.html" %}
+
+{% block title %}Rules{% endblock %}
+
+{% block breadcrumb %}
+    <li><a href="{% url "events:index" %}">Events</a></li>
+    <li><a href="{% url "events:page" path="code-jams" %}">Code Jams</a></li>
+    <li><a href="{% url "events:page" path="code-jams/6" %}">Winter Code Jam 2020: Ancient Technology</a></li>
+    <li class="is-active"><a href="#">Rules</a></li>
+{% endblock %}
+
+{% block event_content %}
+    <ol>
+        <li>
+            <p>
+                The majority of your project must be Python.
+                We will use the GitHub language details for this,
+                so just <strong>make sure your repo contains at least 51% Python</strong>, and you'll be okay.
+            </p>
+        </li>
+        <li>
+            <p>
+                Your solution must use the Kivy framework.
+                It is not permitted to work around this by e.g. using Kivy as a wrapper for another framework.
+            </p>
+        </li>
+        <li>
+            <p>
+                Your solution should be platform agnostic.
+                For example, if you use filepaths in your submission,
+                use <code>pathlib</code> to create platform agnostic Path objects instead of hardcoding the paths.
+            </p>
+        </li>
+        <li>
+            <p>
+                Your project must be feasible to run and simple to set up <strong>on a desktop computer</strong>
+                - which means you should almost certainly use some sort of dependency manager,
+                like <code>pipenv</code>, <code>poetry</code>, or a strictly pinned <code>requirements.txt</code>.
+            </p>
+        </li>
+        <li>
+            <p>
+                You must get contributions from every member of your team,
+                if you have an issue with someone on your team please contact a member of the administration team.
+                These contributions do not necessarily have to be code,
+                for example it's absolutely fine for someone to contribute management, documentation, graphics or audio.
+                <strong>
+                    Team members that do not contribute will be removed from the Code Jam,
+                    and will not receive their share of any prizes the team may win.
+                    They may also be barred from entering future events.
+                </strong>.
+            </p>
+        </li>
+        <li>
+            <p>You must use GitHub as source control.</p>
+        </li>
+        <li>
+            <p>
+                All code must be written and committed within the time constrictions of the jam
+                <ul><li>Late commits may be reverted, so make sure you leave enough time to bug test your program</li></ul>
+            </p>
+        </li>
+    </ol>
+
+    <!-- TODO: After code of conduct and rules page is migrated, change these URLs. -->
+    <blockquote>
+        Please note that our regular <a href="/pages/rules/">community rules</a> and <a href="/pages/code-of-conduct/">code of conduct</a>
+        also apply during the event and that we reserve the right to make changes to these rules at any time.
+    </blockquote>
+{% endblock %}
+
+{% block sidebar %}
+    {% include "events/sidebar/code-jams/6.html" %}
+    <div class="box">
+        <p class="menu-label">Relevant Links</p>
+        <ul class="menu-list">
+            <li><a class="has-text-link" href="{% url "events:page" path="code-jams/6" %}">Winter Code Jam 2020</a></li>
+            <li><a class="has-text-link" href="https://github.com/python-discord/code-jam-6-qualifier">Code Jam Qualifier</a></li>
+        </ul>
+    </div>
+{% endblock %}
