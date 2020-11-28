@@ -1,0 +1,72 @@
+{% extends "events/base.html" %}
+
+{% block title %}Code Jam 2: Mythological API{% endblock %}
+
+{% block breadcrumb %}
+    <li><a href="{% url "events:index" %}">Events</a></li>
+    <li><a href="{% url "events:page" path="code-jams" %}">Code Jams</a></li>
+    <li class="is-active"><a href="#">Code Jam 2: Mythological API</a></li>
+{% endblock %}
+
+{% block event_content %}
+    <p>
+        The theme for this code jam will be <strong>mythology</strong>.
+        That means you're going to be creating a <strong>RESTful API in Flask with a mythology theme</strong>.
+    </p>
+    <p>
+        For example, you might create the The Mimír API,
+        an API used to look up information about norse gods and godesses.
+    </p>
+
+    <pre><code class="lang-json">{
+    "name": "Kvasir",
+    "parents": "Born from the saliva of the Æsir and the Vanir",
+    "type": "A god of wisdom and knowledge"
+}</code></pre>
+
+    <p>
+        The API must respond with json data, but this is not limited to text.
+        It could respond with bytedata, with a URL to an image, a video or some audio,
+        or with any other form of data you deem interesting.
+    </p>
+    <p>
+        The API should accept at least a GET or a POST request with JSON data.
+        You are allowed to use any third party libraries you want.
+    </p>
+    <p>
+        Remember, creativity counts. Try to have fun with it.
+        We're not necessarily looking for dead serious solutions only,
+        and it's okay if your solution is only tangentially related to the theme,
+        so long as there's a relationship of some sort.
+    </p>
+
+    <h3 id="results"><a href="#results">Results</a></h3>
+    <p>The winner of the second code jam is <strong>Defiant Sails</strong>, with Momo, WrongEnd, and SharpBit! Congratulations!</p>
+
+    <p>
+        They've written a phenomenal API with OAuth authentication, a multiplayer RPG,
+        and a feature to procedurally generate a random mythologically themed story.
+        This story can be played as a video,
+        where they use Text-To-Speech to read the story out loud while epic music plays in the background.
+        The music is different for each play, and the audio is visualized in a video.
+    </p>
+    <p>
+        The team will receive the grand prize of 12-month PyCharm Pro licenses,
+        and will also receive the honorary Code Jam Champions role.
+    </p>
+    <hr>
+    <p>
+        In second place with another really excellent submission, we have the team <strong>Rude Interests</strong>,
+        consisting of Lord Bisk, Runew0lf and Nix. They've got procedurally generated rune images,
+        procedural mythologies with gods with procedural relationships, descriptions, genders, and names.
+        A super fun idea which nearly ended up taking the first place.
+    </p>
+    <hr>
+    <p>
+        In third place, we have <strong>Overconfident Ideas</strong>, with Martmists, Casterly and eivl.
+        They did relationship trees with a number of different visualization options,
+        a fantastic myth lookup feature to find a great deal of details about a mythological figure,
+        a mythology trivia feature, and a markov chain string generator.
+        It also had a very comprehensive framework and it was clear that a great deal of work had gone into it.
+    </p>
+{% endblock %}
