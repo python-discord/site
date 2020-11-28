@@ -86,6 +86,7 @@ INSTALLED_APPS = [
     'pydis_site.apps.staff',
     'pydis_site.apps.resources',
     'pydis_site.apps.content',
+    'pydis_site.apps.events',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -117,6 +118,9 @@ MIDDLEWARE = [
     'django_hosts.middleware.HostsResponseMiddleware',
 ]
 ROOT_URLCONF = 'pydis_site.urls'
+
+# Path for events pages
+PAGES_PATH = Path(BASE_DIR, "pydis_site", "templates", "events", "pages")
 
 TEMPLATES = [
     {
