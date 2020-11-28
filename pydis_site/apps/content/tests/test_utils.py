@@ -1,11 +1,10 @@
 from datetime import datetime
 from pathlib import Path
-from unittest.mock import patch, MagicMock
+from unittest.mock import MagicMock, patch
 
-from dateutil.parser import isoparse
 from django.conf import settings
 from django.http import Http404
-from django.test import TestCase
+from django.test import TestCase, override_settings
 from markdown2 import markdown
 
 from pydis_site.apps.content import utils
@@ -13,52 +12,63 @@ from pydis_site.apps.content import utils
 BASE_PATH = Path(settings.BASE_DIR, "pydis_site", "apps", "content", "tests", "test_content")
 
 
-class TestGetBasePath(TestCase):
-    def test_get_base_path(self):
-        """Test does function return content base path."""
-        self.assertEqual(
-            utils._get_base_path(),
-            Path(settings.BASE_DIR, "pydis_site", "apps", "content", "resources", "content")
-        )
-
-
 class TestGetCategory(TestCase):
+    @override_settings(ARTICLES_PATH=BASE_PATH)
     def test_get_category_successfully(self):
         """Check does this get right data from category data file."""
-        with patch("pydis_site.apps.content.utils._get_base_path", return_value=BASE_PATH):
-            result = utils.get_category("category")
+        result = utils.get_category(["category"])
 
         self.assertEqual(result, {"name": "My Category", "description": "My Description"})
 
+    @override_settings(ARTICLES_PATH=BASE_PATH)
     def test_get_category_not_exists(self):
         """Check does this raise 404 error when category don't exists."""
-        with patch("pydis_site.apps.content.utils._get_base_path", return_value=BASE_PATH):
-            with self.assertRaises(Http404):
-                utils.get_category("invalid")
+        with self.assertRaises(Http404):
+            utils.get_category(["invalid"])
 
+    @override_settings(ARTICLES_PATH=BASE_PATH)
     def test_get_category_not_directory(self):
         """Check does this raise 404 error when category isn't directory."""
-        with patch("pydis_site.apps.content.utils._get_base_path", return_value=BASE_PATH):
-            with self.assertRaises(Http404):
-                utils.get_category("test.md")
+        with self.assertRaises(Http404):
+            utils.get_category(["test.md"])
 
 
 class TestGetCategories(TestCase):
-    def test_get_categories(self):
+    @override_settings(ARTICLES_PATH=BASE_PATH)
+    @patch("pydis_site.apps.content.utils.get_category")
+    def test_get_categories(self, get_category_mock):
         """Check does this return test content categories."""
-        with patch("pydis_site.apps.content.utils._get_base_path", return_value=BASE_PATH):
-            result = utils.get_categories()
+        get_category_mock.return_value = {"name": "My Category", "description": "My Description"}
+
+        result = utils.get_categories()
+        get_category_mock.assert_called_once_with(["category"])
 
         self.assertEqual(
             result, {"category": {"name": "My Category", "description": "My Description"}}
         )
 
+    @override_settings(ARTICLES_PATH=BASE_PATH)
+    def test_get_categories_root_path(self):
+        """Check does this doesn't call joinpath when getting root categories."""
+        result = utils.get_categories()
+        self.assertEqual(
+            result, {"category": {"name": "My Category", "description": "My Description"}}
+        )
+
+    @override_settings(ARTICLES_PATH=BASE_PATH)
+    def test_get_categories_in_category(self):
+        """Check does this call joinpath when getting subcategories."""
+        result = utils.get_categories(["category"])
+        self.assertEqual(
+            result, {"subcategory": {"name": "My Category 1", "description": "My Description 1"}}
+        )
+
 
 class TestGetArticles(TestCase):
+    @override_settings(ARTICLES_PATH=BASE_PATH)
     def test_get_all_root_articles(self):
         """Check does this return all root level testing content."""
-        with patch("pydis_site.apps.content.utils._get_base_path", return_value=BASE_PATH):
-            result = utils.get_articles()
+        result = utils.get_articles()
 
         for case in ["test", "test2"]:
             with self.subTest(guide=case):
@@ -67,10 +77,10 @@ class TestGetArticles(TestCase):
                 self.assertIn(case, result)
                 self.assertEqual(md.metadata, result[case])
 
+    @override_settings(ARTICLES_PATH=BASE_PATH)
     def test_get_all_category_articles(self):
         """Check does this return all category testing content."""
-        with patch("pydis_site.apps.content.utils._get_base_path", return_value=BASE_PATH):
-            result = utils.get_articles("category")
+        result = utils.get_articles(["category"])
 
         md = markdown(BASE_PATH.joinpath("category", "test3.md").read_text(), extras=["metadata"])
 
@@ -79,10 +89,10 @@ class TestGetArticles(TestCase):
 
 
 class TestGetArticle(TestCase):
+    @override_settings(ARTICLES_PATH=BASE_PATH)
     def test_get_root_article_success(self):
         """Check does this return article HTML and metadata when root article exist."""
-        with patch("pydis_site.apps.content.utils._get_base_path", return_value=BASE_PATH):
-            result = utils.get_article("test", None)
+        result = utils.get_article(["test"])
 
         md = markdown(
             BASE_PATH.joinpath("test.md").read_text(),
@@ -99,16 +109,16 @@ class TestGetArticle(TestCase):
 
         self.assertEqual(result, {"article": str(md), "metadata": md.metadata})
 
+    @override_settings(ARTICLES_PATH=BASE_PATH)
     def test_get_root_article_dont_exist(self):
         """Check does this raise Http404 when root article don't exist."""
-        with patch("pydis_site.apps.content.utils._get_base_path", return_value=BASE_PATH):
-            with self.assertRaises(Http404):
-                utils.get_article("invalid", None)
+        with self.assertRaises(Http404):
+            utils.get_article(["invalid"])
 
+    @override_settings(ARTICLES_PATH=BASE_PATH)
     def test_get_category_article_success(self):
         """Check does this return article HTML and metadata when category guide exist."""
-        with patch("pydis_site.apps.content.utils._get_base_path", return_value=BASE_PATH):
-            result = utils.get_article("test3", "category")
+        result = utils.get_article(["category", "test3"])
 
         md = markdown(
             BASE_PATH.joinpath("category", "test3.md").read_text(),
@@ -125,17 +135,17 @@ class TestGetArticle(TestCase):
 
         self.assertEqual(result, {"article": str(md), "metadata": md.metadata})
 
+    @override_settings(ARTICLES_PATH=BASE_PATH)
     def test_get_category_article_dont_exist(self):
         """Check does this raise Http404 when category article don't exist."""
-        with patch("pydis_site.apps.content.utils._get_base_path", return_value=BASE_PATH):
-            with self.assertRaises(Http404):
-                utils.get_article("invalid", "category")
+        with self.assertRaises(Http404):
+            utils.get_article(["category", "invalid"])
 
+    @patch("pydis_site.settings.ARTICLES_PATH", new=BASE_PATH)
     def test_get_category_article_category_dont_exist(self):
         """Check does this raise Http404 when category don't exist."""
-        with patch("pydis_site.apps.content.utils._get_base_path", return_value=BASE_PATH):
-            with self.assertRaises(Http404):
-                utils.get_article("some-guide", "invalid")
+        with self.assertRaises(Http404):
+            utils.get_article(["invalid", "some-guide"])
 
 
 class GetGitHubInformationTests(TestCase):
@@ -143,7 +153,7 @@ class GetGitHubInformationTests(TestCase):
     @patch("pydis_site.apps.content.utils.COMMITS_URL", "foobar")
     def test_call_get_github_information_requests_get(self, requests_get_mock):
         """Check does this call requests.get function with proper URL."""
-        utils.get_github_information("foo", None)
+        utils.get_github_information(["foo"])
         requests_get_mock.assert_called_once_with("foobar")
 
     @patch("pydis_site.apps.content.utils.requests.get")
@@ -161,7 +171,7 @@ class GetGitHubInformationTests(TestCase):
                 "html_url": "abc1234"
             }
         }]
-        result = utils.get_github_information("foo", None)
+        result = utils.get_github_information(["foo"])
         self.assertEqual(result, {
             "last_modified": datetime(2020, 10, 1).strftime("%dth %B %Y"),
             "contributors": {"foobar": "abc1234"}
@@ -171,7 +181,7 @@ class GetGitHubInformationTests(TestCase):
     def test_github_other_status_code_response(self, requests_get_mock):
         """Check does this return provided modified date and contributors."""
         requests_get_mock.return_value = MagicMock(status_code=404)
-        result = utils.get_github_information("foo", None)
+        result = utils.get_github_information(["foo"])
         self.assertEqual(result, {
             "last_modified": "N/A",
             "contributors": {}
