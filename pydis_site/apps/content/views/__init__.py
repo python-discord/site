@@ -1,5 +1,4 @@
-from .article import ArticleView
+from .article_category import ArticleOrCategoryView
 from .articles import ArticlesView
-from .category import CategoryView
 
-__all__ = ["ArticleView", "ArticlesView", "CategoryView"]
+__all__ = ["ArticleOrCategoryView", "ArticlesView"]
