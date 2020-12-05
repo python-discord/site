@@ -165,8 +165,8 @@ class SiteManager:
             "--threads", "8",
             "-w", "4",
             "--max-requests-jitter", "1000",
-            "--statsd_host", "graphite.default.svc.cluster.local:8125",
-            "--statsd_prefix", "site",
+            "--statsd-host", "graphite.default.svc.cluster.local:8125",
+            "--statsd-prefix", "site",
         ]
 
         # Run gunicorn for the production server.
