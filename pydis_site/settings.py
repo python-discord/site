@@ -28,7 +28,7 @@ if typing.TYPE_CHECKING:
 
 env = environ.Env(
     DEBUG=(bool, False),
-    SITE_SENTRY_DSN=(str, "")
+    SITE_DSN=(str, "")
 )
 
 sentry_sdk.init(
