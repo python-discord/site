@@ -32,7 +32,7 @@ env = environ.Env(
 )
 
 sentry_sdk.init(
-    dsn=env('SITE_SENTRY_DSN'),
+    dsn=env('SITE_DSN'),
     integrations=[DjangoIntegration()],
     send_default_pii=True,
     release=f"pydis-site@{GIT_SHA}"
