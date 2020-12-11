@@ -1,5 +1,5 @@
 # Python Discord: Site
-[![Discord](https://img.shields.io/static/v1?label=Python%20Discord&logo=discord&message=%3E100k%20members&color=%237289DA&logoColor=white)](https://discord.gg/2B963hn)
+[![Discord](https://img.shields.io/static/v1?label=Python%20Discord&logo=discord&message=%3E115k%20members&color=%237289DA&logoColor=white)](https://discord.gg/2B963hn)
 [![Lint & Test][1]][2]
 [![Build & Deploy][3]][4]
 [![Coverage Status][5]][6]
