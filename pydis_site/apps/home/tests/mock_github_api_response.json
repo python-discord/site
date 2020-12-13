@@ -36,6 +36,13 @@
   },
   {
     "full_name": "python-discord/sir-lancebot",
+    "description": 42,
+    "stargazers_count": "bad types",
+    "language": ["not", "the", "right", "type"],
+    "forks_count": "31"
+  },
+  {
+    "full_name": "python-discord/sir-lancebot",
     "description": "test",
     "stargazers_count": 97,
     "language": "Python",

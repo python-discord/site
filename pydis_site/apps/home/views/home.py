@@ -76,7 +76,7 @@ class HomeView(View):
         # If we don't, we have to create some!
         if not cached_data:
 
-            # Try to get new data from the API. If it fails, return an empty list.
+            # Try to get new data from the API. If it fails, we'll return an empty list.
             # In this case, we simply don't display our projects on the site.
             api_repositories = self._get_api_data()
 
