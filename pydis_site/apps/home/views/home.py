@@ -82,23 +82,13 @@ class HomeView(View):
 
             # Create all the repodata records in the database.
             for api_data in api_repositories.values():
-                try:
-                    repo_data = RepositoryMetadata(
-                        repo_name=api_data["full_name"],
-                        description=api_data["description"],
-                        forks=api_data["forks_count"],
-                        stargazers=api_data["stargazers_count"],
-                        language=api_data["language"],
-                    )
-                # This error indicates there's something not quite right about the api_data types.
-                # In that case, just skip this repo.
-                except TypeError:
-                    log.error(
-                        "Encountered a TypeError while processing RepositoryMetadata "
-                        "from the GitHub API.",
-                        extra=api_data
-                    )
-                    continue
+                repo_data = RepositoryMetadata(
+                    repo_name=api_data["full_name"],
+                    description=api_data["description"],
+                    forks=api_data["forks_count"],
+                    stargazers=api_data["stargazers_count"],
+                    language=api_data["language"],
+                )
 
                 repo_data.save()
                 database_repositories.append(repo_data)
