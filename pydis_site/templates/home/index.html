@@ -130,57 +130,59 @@
   </section>
 
   <!-- Projects -->
-  <section id="projects" class="section">
-    <div class="container">
-      <h1 class="is-size-1">Projects</h1>
+  {%  if repo_data %}
+    <section id="projects" class="section">
+      <div class="container">
+        <h1 class="is-size-1">Projects</h1>
 
-      <div class="columns is-multiline is-tablet">
+        <div class="columns is-multiline is-tablet">
 
-        {# Generate project data from HomeView.repos #}
-        {% for repo in repo_data %}
-          <div class="column is-one-third-desktop is-half-tablet">
+          {# Generate project data from HomeView.repos #}
+          {% for repo in repo_data %}
+            <div class="column is-one-third-desktop is-half-tablet">
 
-            <a href="https://github.com/{{ repo.repo_name }}">
-              <article class="card">
+              <a href="https://github.com/{{ repo.repo_name }}">
+                <article class="card">
 
-                <header class="card-header">
-                  <span class="card-header-icon">
-                    <span class="icon"><i class="fab fa-github"></i></span>
-                  </span>
-                  <div class="card-header-title">
-                    {{ repo.repo_name|cut:"python-discord/" }}
-                  </div>
-                </header>
+                  <header class="card-header">
+                    <span class="card-header-icon">
+                      <span class="icon"><i class="fab fa-github"></i></span>
+                    </span>
+                    <div class="card-header-title">
+                      {{ repo.repo_name|cut:"python-discord/" }}
+                    </div>
+                  </header>
 
-                <p class="card-content">
-                  {{ repo.description }}
-                </p>
+                  <p class="card-content">
+                    {{ repo.description }}
+                  </p>
 
-                <footer class="card-footer">
-                  <div class="card-footer-item">
-                    <i class="repo-language-dot {{ repo.language | lower }}"></i>
-                    {{ repo.language }}
-                  </div>
-                  <div class="card-footer-item">
-                    <i class="fas fa-star"></i>
-                    {{ repo.stargazers }}
-                  </div>
-                  <div class="card-footer-item">
-                    <i class="fas fa-code-branch"></i>
-                    {{ repo.forks }}
-                  </div>
-                </footer>
+                  <footer class="card-footer">
+                    <div class="card-footer-item">
+                      <i class="repo-language-dot {{ repo.language | lower }}"></i>
+                      {{ repo.language }}
+                    </div>
+                    <div class="card-footer-item">
+                      <i class="fas fa-star"></i>
+                      {{ repo.stargazers }}
+                    </div>
+                    <div class="card-footer-item">
+                      <i class="fas fa-code-branch"></i>
+                      {{ repo.forks }}
+                    </div>
+                  </footer>
 
-              </article>
-            </a>
+                </article>
+              </a>
 
-          </div>
-        {% endfor %}
+            </div>
+          {% endfor %}
+
+        </div>
 
       </div>
-
-    </div>
-  </section>
+    </section>
+  {% endif %}
 
   <!-- Sponsors -->
   <section id="sponsors" class="hero is-light">
