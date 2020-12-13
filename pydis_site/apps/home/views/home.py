@@ -1,4 +1,5 @@
 import datetime
+import logging
 from typing import Dict, List
 
 import requests
@@ -9,6 +10,8 @@ from django.utils import timezone
 from django.views import View
 
 from pydis_site.apps.home.models import RepositoryMetadata
+
+log = logging.getLogger(__name__)
 
 
 class HomeView(View):
@@ -67,22 +70,25 @@ class HomeView(View):
 
                 # Update or create all RepoData objects in self.repos
                 for repo_name, api_data in api_repositories.items():
-                    try:
-                        repo_data = RepositoryMetadata.objects.get(repo_name=repo_name)
-                        repo_data.description = api_data["description"]
-                        repo_data.language = api_data["language"]
-                        repo_data.forks = api_data["forks_count"]
-                        repo_data.stargazers = api_data["stargazers_count"]
-                    except RepositoryMetadata.DoesNotExist:
-                        repo_data = RepositoryMetadata(
-                            repo_name=api_data["full_name"],
-                            description=api_data["description"],
-                            forks=api_data["forks_count"],
-                            stargazers=api_data["stargazers_count"],
-                            language=api_data["language"],
-                        )
-                    repo_data.save()
-                    database_repositories.append(repo_data)
+                    if api_data:
+                        try:
+                            repo_data = RepositoryMetadata.objects.get(repo_name=repo_name)
+                            repo_data.description = api_data["description"]
+                            repo_data.language = api_data["language"]
+                            repo_data.forks = api_data["forks_count"]
+                            repo_data.stargazers = api_data["stargazers_count"]
+                        except RepositoryMetadata.DoesNotExist:
+                            repo_data = RepositoryMetadata(
+                                repo_name=api_data["full_name"],
+                                description=api_data["description"],
+                                forks=api_data["forks_count"],
+                                stargazers=api_data["stargazers_count"],
+                                language=api_data["language"],
+                            )
+                        repo_data.save()
+                        database_repositories.append(repo_data)
+                    else:
+                        log.error(f"No API data is available for {repo_name}!")
                 return database_repositories
 
             # Otherwise, if the data is fresher than 2 minutes old, we should just return it.
