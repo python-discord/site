@@ -163,7 +163,11 @@ class SiteManager:
             "-b", "0.0.0.0:8000",
             "pydis_site.wsgi:application",
             "--threads", "8",
-            "-w", "4"
+            "-w", "4",
+            "--max-requests", "1000",
+            "--max-requests-jitter", "50",
+            "--statsd-host", "graphite.default.svc.cluster.local:8125",
+            "--statsd-prefix", "site",
         ]
 
         # Run gunicorn for the production server.

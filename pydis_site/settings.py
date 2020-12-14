@@ -28,11 +28,11 @@ if typing.TYPE_CHECKING:
 
 env = environ.Env(
     DEBUG=(bool, False),
-    SITE_SENTRY_DSN=(str, "")
+    SITE_DSN=(str, "")
 )
 
 sentry_sdk.init(
-    dsn=env('SITE_SENTRY_DSN'),
+    dsn=env('SITE_DSN'),
     integrations=[DjangoIntegration()],
     send_default_pii=True,
     release=f"pydis-site@{GIT_SHA}"

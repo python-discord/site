@@ -1,18 +1,15 @@
-# Request Dennis for any PR
-* @Den4200
-
 # Infractions API
 pydis_site/apps/api/models/bot/infraction.py    @MarkKoz
 pydis_site/apps/api/viewsets/bot/infraction.py  @MarkKoz
 
 # Django ORM
 **/migrations/**                                @Akarys42
-**/models/**                                    @Akarys42
+**/models/**                                    @Akarys42 @Den4200
 
 # CI & Docker
-.github/workflows/**                            @MarkKoz @Akarys42 @SebastiaanZ
-Dockerfile                                      @MarkKoz @Akarys42
-docker-compose.yml                              @MarkKoz @Akarys42
+.github/workflows/**                            @MarkKoz @Akarys42 @SebastiaanZ @Den4200
+Dockerfile                                      @MarkKoz @Akarys42 @Den4200
+docker-compose.yml                              @MarkKoz @Akarys42 @Den4200
 
 # Tools
 Pipfile*                                        @Akarys42
