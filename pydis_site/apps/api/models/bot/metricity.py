@@ -28,7 +28,8 @@ class Metricity:
 
     def user(self, user_id: str) -> dict:
         """Query a user's data."""
-        columns = ["verified_at"]
+        # TODO: Swap this back to some sort of verified at date
+        columns = ["joined_at"]
         query = f"SELECT {','.join(columns)} FROM users WHERE id = '%s'"
         self.cursor.execute(query, [user_id])
         values = self.cursor.fetchone()
