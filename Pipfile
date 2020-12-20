@@ -19,7 +19,6 @@ pyyaml = "~=5.1"
 gunicorn = "~=20.0.4"
 django-allauth = "~=0.41"
 sentry-sdk = "~=0.19"
-gitpython = "~=3.1.7"
 
 [dev-packages]
 coverage = "~=5.0"
