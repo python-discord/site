@@ -123,10 +123,4 @@ class TestRepositoryMetadataHelpers(TestCase):
         mock_get.return_value.json.return_value = ['garbage']
 
         metadata = self.home_view._get_repo_data()
-        self.assertEquals(len(metadata), len(self.home_view.repos))
-        for item in metadata:
-            with self.subTest(item=item):
-                self.assertEqual(item.description, "Not available.")
-                self.assertEqual(item.forks, 999)
-                self.assertEqual(item.stargazers, 999)
-                self.assertEqual(item.language, "Python")
+        self.assertEquals(len(metadata), 0)

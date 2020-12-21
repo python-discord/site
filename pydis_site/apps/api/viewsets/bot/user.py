@@ -109,7 +109,7 @@ class UserViewSet(ModelViewSet):
 
     #### Response format
     >>> {
-    ...    "verified_at": "2020-10-06T21:54:23.540766",
+    ...    "joined_at": "2020-10-06T21:54:23.540766",
     ...    "total_messages": 2,
     ...    "voice_banned": False,
     ...    "activity_blocks": 1

@@ -1,5 +1,3 @@
-import git
+import os
 
-# Git SHA
-repo = git.Repo(search_parent_directories=True)
-GIT_SHA = repo.head.object.hexsha
+GIT_SHA = os.environ.get("GIT_SHA", "development")
