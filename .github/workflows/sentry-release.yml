@@ -20,4 +20,4 @@ jobs:
         with:
           tagName: ${{ github.sha }}
           environment: production
-          releaseNamePrefix: pydis-site@
+          releaseNamePrefix: site@
