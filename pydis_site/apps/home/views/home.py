@@ -16,7 +16,7 @@ log = logging.getLogger(__name__)
 class HomeView(View):
     """The main landing page for the website."""
 
-    github_api = "https://api.github.com/users/python-discord/repos"
+    github_api = "https://api.github.com/users/python-discord/repos?per_page=100"
     repository_cache_ttl = 3600
 
     # Which of our GitHub repos should be displayed on the front page, and in which order?

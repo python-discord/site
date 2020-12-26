@@ -35,7 +35,7 @@ sentry_sdk.init(
     dsn=env('SITE_DSN'),
     integrations=[DjangoIntegration()],
     send_default_pii=True,
-    release=f"pydis-site@{GIT_SHA}"
+    release=f"site@{GIT_SHA}"
 )
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)

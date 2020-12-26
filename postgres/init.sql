@@ -4,7 +4,7 @@ CREATE DATABASE metricity;
 
 CREATE TABLE users (
     id varchar,
-    verified_at timestamp,
+    joined_at timestamp,
     primary key(id)
 );
 

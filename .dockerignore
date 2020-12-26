@@ -1,6 +1,7 @@
 .cache
 .coverage
 .coveragerc
+.git
 .github
 .gitignore
 .gitlab

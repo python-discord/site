@@ -407,10 +407,10 @@ class UserMetricityTests(APISubdomainTestCase):
 
     def test_get_metricity_data(self):
         # Given
-        verified_at = "foo"
+        joined_at = "foo"
         total_messages = 1
         total_blocks = 1
-        self.mock_metricity_user(verified_at, total_messages, total_blocks)
+        self.mock_metricity_user(joined_at, total_messages, total_blocks)
 
         # When
         url = reverse('bot:user-metricity-data', args=[0], host='api')
@@ -419,7 +419,7 @@ class UserMetricityTests(APISubdomainTestCase):
         # Then
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json(), {
-            "verified_at": verified_at,
+            "joined_at": joined_at,
             "total_messages": total_messages,
             "voice_banned": False,
             "activity_blocks": total_blocks
@@ -455,12 +455,12 @@ class UserMetricityTests(APISubdomainTestCase):
                     self.assertEqual(response.status_code, 200)
                     self.assertEqual(response.json()["voice_banned"], case["voice_banned"])
 
-    def mock_metricity_user(self, verified_at, total_messages, total_blocks):
+    def mock_metricity_user(self, joined_at, total_messages, total_blocks):
         patcher = patch("pydis_site.apps.api.viewsets.bot.user.Metricity")
         self.metricity = patcher.start()
         self.addCleanup(patcher.stop)
         self.metricity = self.metricity.return_value.__enter__.return_value
-        self.metricity.user.return_value = dict(verified_at=verified_at)
+        self.metricity.user.return_value = dict(joined_at=joined_at)
         self.metricity.total_messages.return_value = total_messages
         self.metricity.total_message_blocks.return_value = total_blocks
 
