@@ -31,9 +31,7 @@ class HomeView(View):
 
     def __init__(self):
         """Clean up stale RepositoryMetadata."""
-        for cached_repo in RepositoryMetadata.objects.all():
-            if cached_repo.repo_name not in self.repos:
-                cached_repo.delete()
+        RepositoryMetadata.objects.exclude(repo_name__in=self.repos).delete()
 
     def _get_api_data(self) -> Dict[str, Dict[str, str]]:
         """
