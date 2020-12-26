@@ -29,6 +29,10 @@ class HomeView(View):
         "python-discord/django-simple-bulma",
     ]
 
+    def __init__(self):
+        """Clean up stale RepositoryMetadata."""
+        RepositoryMetadata.objects.exclude(repo_name__in=self.repos).delete()
+
     def _get_api_data(self) -> Dict[str, Dict[str, str]]:
         """
         Call the GitHub API and get information about our repos.
