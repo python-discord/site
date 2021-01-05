@@ -47,21 +47,7 @@ DEBUG = env('DEBUG')
 
 # SECURITY WARNING: keep the secret key used in production secret!
 if DEBUG:
-    ALLOWED_HOSTS = env.list(
-        'ALLOWED_HOSTS',
-        default=[
-            'pythondiscord.local',
-            'api.pythondiscord.local',
-            'admin.pythondiscord.local',
-            'staff.pythondiscord.local',
-            '0.0.0.0',  # noqa: S104
-            'localhost',
-            'web',
-            'api.web',
-            'admin.web',
-            'staff.web'
-        ]
-    )
+    ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['*'])
     SECRET_KEY = "yellow polkadot bikini"  # noqa: S105
 
 elif 'CI' in os.environ:
