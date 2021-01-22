@@ -1,10 +1,9 @@
 # Python Discord: Site
-[![Discord](https://img.shields.io/static/v1?label=Python%20Discord&logo=discord&message=%3E115k%20members&color=%237289DA&logoColor=white)](https://discord.gg/2B963hn)
+[![Discord][10]][11]
 [![Lint & Test][1]][2]
 [![Build & Deploy][3]][4]
 [![Coverage Status][5]][6]
-[![License](https://img.shields.io/github/license/python-discord/site)](LICENSE)
-[![Status](https://img.shields.io/website?url=https%3A%2F%2Fpythondiscord.com)][7]
+[![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
 This is all of the code that is responsible for maintaining [our website][7] and all of its subdomains.
 
@@ -22,3 +21,5 @@ If you're looking to contribute or play around with the code, take a look at [th
 [7]: https://pythondiscord.com
 [8]: https://pythondiscord.com/pages/contributing/site/
 [9]: https://github.com/python-discord/site/issues
+[10]: https://raw.githubusercontent.com/python-discord/branding/master/logos/badge/badge_github.svg
+[11]: https://discord.gg/python
