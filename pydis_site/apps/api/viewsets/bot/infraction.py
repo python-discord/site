@@ -3,21 +3,15 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.decorators import action
 from rest_framework.exceptions import ValidationError
 from rest_framework.filters import OrderingFilter, SearchFilter
+from rest_framework.mixins import (CreateModelMixin, DestroyModelMixin,
+                                   ListModelMixin, RetrieveModelMixin)
 from rest_framework.pagination import LimitOffsetPagination
-from rest_framework.mixins import (
-    CreateModelMixin,
-    DestroyModelMixin,
-    ListModelMixin,
-    RetrieveModelMixin
-)
 from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
 
 from pydis_site.apps.api.models.bot.infraction import Infraction
-from pydis_site.apps.api.serializers import (
-    ExpandedInfractionSerializer,
-    InfractionSerializer
-)
+from pydis_site.apps.api.serializers import (ExpandedInfractionSerializer,
+                                             InfractionSerializer)
 
 
 class InfractionViewSet(
