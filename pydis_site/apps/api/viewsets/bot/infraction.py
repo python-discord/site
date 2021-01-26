@@ -3,6 +3,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.decorators import action
 from rest_framework.exceptions import ValidationError
 from rest_framework.filters import OrderingFilter, SearchFilter
+from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.mixins import (
     CreateModelMixin,
     DestroyModelMixin,
@@ -133,6 +134,7 @@ class InfractionViewSet(
 
     serializer_class = InfractionSerializer
     queryset = Infraction.objects.all()
+    pagination_class = LimitOffsetPagination
     filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
     filter_fields = ('user__id', 'actor__id', 'active', 'hidden', 'type')
     search_fields = ('$reason',)
