@@ -231,7 +231,6 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.DjangoModelPermissions',
     ),
     'TEST_REQUEST_DEFAULT_FORMAT': 'json'
-
 }
 
 # Logging
