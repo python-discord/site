@@ -62,11 +62,7 @@ else:
             'admin.pythondiscord.com',
             'api.pythondiscord.com',
             'staff.pythondiscord.com',
-            'pydis.com',
-            'api.pydis.com',
-            'admin.pydis.com',
-            'staff.pydis.com',
-            'api.site',
+            'pydis-api.default.svc.cluster.local',
         ]
     )
     SECRET_KEY = env('SECRET_KEY')
