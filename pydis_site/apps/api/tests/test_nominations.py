@@ -37,7 +37,7 @@ class CreationTests(APISubdomainTestCase):
         self.assertEqual(nomination.reason, data['reason'])
         self.assertEqual(nomination.active, True)
 
-    def test_returns_400_on_second_active_nomination(self):
+    def test_returns_201_on_second_active_nomination(self):
         url = reverse('bot:nomination-list', host='api')
         data = {
             'actor': self.user.id,
@@ -49,10 +49,7 @@ class CreationTests(APISubdomainTestCase):
         self.assertEqual(response1.status_code, 201)
 
         response2 = self.client.post(url, data=data)
-        self.assertEqual(response2.status_code, 400)
-        self.assertEqual(response2.json(), {
-            'active': ['There can only be one active nomination.']
-        })
+        self.assertEqual(response2.status_code, 201)
 
     def test_returns_400_for_missing_user(self):
         url = reverse('bot:nomination-list', host='api')

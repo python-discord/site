@@ -75,8 +75,7 @@ class NominationViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
     Create a new, active nomination returns the created nominations.
     The `user`, `reason` and `actor` fields are required and the `user`
     and `actor` need to know by the site. Providing other valid fields
-    is not allowed and invalid fields are ignored. A `user` is only
-    allowed one active nomination at a time.
+    is not allowed and invalid fields are ignored.
 
     #### Request body
     >>> {
@@ -91,7 +90,6 @@ class NominationViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
     #### Status codes
     - 201: returned on success
     - 400: returned on failure for one of the following reasons:
-        - A user already has an active nomination;
         - The `user` or `actor` are unknown to the site;
         - The request contained a field that cannot be set at creation.
 
@@ -161,10 +159,6 @@ class NominationViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
         for field in request.data:
             if field in self.frozen_on_create:
                 raise ValidationError({field: ['This field cannot be set at creation.']})
-
-        user_id = request.data.get("user")
-        if Nomination.objects.filter(active=True, user__id=user_id).exists():
-            raise ValidationError({'active': ['There can only be one active nomination.']})
 
         serializer = self.get_serializer(
             data=ChainMap(
