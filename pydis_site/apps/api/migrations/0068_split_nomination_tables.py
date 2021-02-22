@@ -21,6 +21,19 @@ def migrate_nominations(apps: Apps, schema_editor: BaseDatabaseSchemaEditor) -> 
         nomination_entry.save()
 
 
+def unmigrate_nominations(apps: Apps, schema_editor: BaseDatabaseSchemaEditor) -> None:
+    Nomination = apps.get_model("api", "Nomination")
+    NominationEntry = apps.get_model("api", "NominationEntry")
+
+    for entry in NominationEntry.objects.all():
+        nomination = Nomination.objects.get(pk=entry.nomination.id)
+        nomination.actor = entry.actor
+        nomination.reason = entry.reason
+        nomination.inserted_at = entry.inserted_at
+
+        nomination.save()
+
+
 class Migration(migrations.Migration):
 
     dependencies = [
@@ -43,7 +56,7 @@ class Migration(migrations.Migration):
             ],
             bases=(pydis_site.apps.api.models.mixins.ModelReprMixin, models.Model),
         ),
-        migrations.RunPython(migrate_nominations),
+        migrations.RunPython(migrate_nominations, unmigrate_nominations),
         migrations.RemoveField(
             model_name='nomination',
             name='actor',
