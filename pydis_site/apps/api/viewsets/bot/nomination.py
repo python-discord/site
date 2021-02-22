@@ -15,7 +15,8 @@ from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
 
 from pydis_site.apps.api.models.bot import Nomination
-from pydis_site.apps.api.serializers import NominationSerializer
+from pydis_site.apps.api.models.bot.nomination import NominationEntry
+from pydis_site.apps.api.serializers import NominationEntrySerializer, NominationSerializer
 
 
 class NominationViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, GenericViewSet):
@@ -29,7 +30,6 @@ class NominationViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
 
     #### Query parameters
     - **active** `bool`: whether the nomination is still active
-    - **actor__id** `int`: snowflake of the user who nominated the user
     - **user__id** `int`: snowflake of the user who received the nomination
     - **ordering** `str`: comma-separated sequence of fields to order the returned results
 
@@ -40,12 +40,18 @@ class NominationViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
     ...     {
     ...         'id': 1,
     ...         'active': false,
-    ...         'actor': 336843820513755157,
-    ...         'reason': 'They know how to explain difficult concepts',
     ...         'user': 336843820513755157,
     ...         'inserted_at': '2019-04-25T14:02:37.775587Z',
     ...         'end_reason': 'They were helpered after a staff-vote',
-    ...         'ended_at': '2019-04-26T15:12:22.123587Z'
+    ...         'ended_at': '2019-04-26T15:12:22.123587Z',
+    ...         'entries': [
+    ...             {
+    ...                'actor': 336843820513755157,
+    ...                'reason': 'They know how to explain difficult concepts',
+    ...                'inserted_at': '2019-04-25T14:02:37.775587Z'
+    ...             }
+    ...         ],
+    ...         'reviewed': true
     ...     }
     ... ]
 
@@ -59,12 +65,18 @@ class NominationViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
     >>> {
     ...     'id': 1,
     ...     'active': true,
-    ...     'actor': 336843820513755157,
-    ...     'reason': 'They know how to explain difficult concepts',
     ...     'user': 336843820513755157,
     ...     'inserted_at': '2019-04-25T14:02:37.775587Z',
     ...     'end_reason': 'They were helpered after a staff-vote',
-    ...     'ended_at': '2019-04-26T15:12:22.123587Z'
+    ...     'ended_at': '2019-04-26T15:12:22.123587Z',
+    ...     'entries': [
+    ...         {
+    ...             'actor': 336843820513755157,
+    ...             'reason': 'They know how to explain difficult concepts',
+    ...             'inserted_at': '2019-04-25T14:02:37.775587Z'
+    ...         }
+    ...     ],
+    ...     'reviewed': false
     ... }
 
     ### Status codes
@@ -75,8 +87,9 @@ class NominationViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
     Create a new, active nomination returns the created nominations.
     The `user`, `reason` and `actor` fields are required and the `user`
     and `actor` need to know by the site. Providing other valid fields
-    is not allowed and invalid fields are ignored. A `user` is only
-    allowed one active nomination at a time.
+    is not allowed and invalid fields are ignored. If `user` already have
+    active nomination, new nomination entry will be created assigned to
+    active nomination.
 
     #### Request body
     >>> {
@@ -91,7 +104,6 @@ class NominationViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
     #### Status codes
     - 201: returned on success
     - 400: returned on failure for one of the following reasons:
-        - A user already has an active nomination;
         - The `user` or `actor` are unknown to the site;
         - The request contained a field that cannot be set at creation.
 
@@ -148,9 +160,43 @@ class NominationViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
     serializer_class = NominationSerializer
     queryset = Nomination.objects.all()
     filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
-    filter_fields = ('user__id', 'actor__id', 'active')
-    frozen_fields = ('id', 'actor', 'inserted_at', 'user', 'ended_at')
+    filter_fields = ('user__id', 'active')
+    frozen_fields = ('id', 'inserted_at', 'user', 'ended_at')
     frozen_on_create = ('ended_at', 'end_reason', 'active', 'inserted_at')
+
+    def list(self, request: HttpRequest, *args, **kwargs) -> Response:
+        """
+        DRF method for listing Nominations.
+
+        Called by the Django Rest Framework in response to the corresponding HTTP request.
+        """
+        queryset = self.filter_queryset(self.get_queryset())
+        data = NominationSerializer(queryset, many=True).data
+
+        for i, nomination in enumerate(data):
+            entries = NominationEntrySerializer(
+                NominationEntry.objects.filter(nomination_id=nomination["id"]),
+                many=True
+            ).data
+            data[i]["entries"] = entries
+
+        return Response(data)
+
+    def retrieve(self, request: HttpRequest, *args, **kwargs) -> Response:
+        """
+        DRF method for retrieving a Nomination.
+
+        Called by the Django Rest Framework in response to the corresponding HTTP request.
+        """
+        nomination = self.get_object()
+
+        data = NominationSerializer(nomination).data
+        data["entries"] = NominationEntrySerializer(
+            NominationEntry.objects.filter(nomination_id=nomination.id),
+            many=True
+        ).data
+
+        return Response(data)
 
     def create(self, request: HttpRequest, *args, **kwargs) -> Response:
         """
@@ -163,19 +209,46 @@ class NominationViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
                 raise ValidationError({field: ['This field cannot be set at creation.']})
 
         user_id = request.data.get("user")
-        if Nomination.objects.filter(active=True, user__id=user_id).exists():
-            raise ValidationError({'active': ['There can only be one active nomination.']})
+        nomination_filter = Nomination.objects.filter(active=True, user__id=user_id)
 
-        serializer = self.get_serializer(
-            data=ChainMap(
-                request.data,
-                {"active": True}
+        if not nomination_filter.exists():
+            serializer = NominationSerializer(
+                data=ChainMap(
+                    request.data,
+                    {"active": True}
+                )
             )
+            serializer.is_valid(raise_exception=True)
+            nomination = Nomination.objects.create(**serializer.validated_data)
+
+            # Serializer truncate unnecessary data away
+            entry_serializer = NominationEntrySerializer(
+                data=ChainMap(request.data, {"nomination": nomination.id})
+            )
+            entry_serializer.is_valid(raise_exception=True)
+
+            entry = NominationEntry.objects.create(**entry_serializer.validated_data)
+
+            data = NominationSerializer(nomination).data
+            data["entries"] = NominationEntrySerializer([entry], many=True).data
+
+            headers = self.get_success_headers(data)
+            return Response(data, status=status.HTTP_201_CREATED, headers=headers)
+
+        entry_serializer = NominationEntrySerializer(
+            data=ChainMap(request.data, {"nomination": nomination_filter[0].id})
         )
-        serializer.is_valid(raise_exception=True)
-        self.perform_create(serializer)
-        headers = self.get_success_headers(serializer.data)
-        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+        entry_serializer.is_valid(raise_exception=True)
+        NominationEntry.objects.create(**entry_serializer.validated_data)
+
+        data = NominationSerializer(nomination_filter[0]).data
+        data["entries"] = NominationEntrySerializer(
+            NominationEntry.objects.filter(nomination_id=nomination_filter[0].id),
+            many=True
+        ).data
+
+        headers = self.get_success_headers(data)
+        return Response(data, status=status.HTTP_201_CREATED, headers=headers)
 
     def partial_update(self, request: HttpRequest, *args, **kwargs) -> Response:
         """
