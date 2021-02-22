@@ -259,7 +259,7 @@ class NominationViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
                 actor__id=entry_serializer.validated_data["actor"].id
         ).exists():
             raise ValidationError(
-                {'actor': 'This actor have already created nomination entry for this nomination.'}
+                {'actor': ['This actor have already created nomination entry for this nomination.']}
             )
 
         NominationEntry.objects.create(**entry_serializer.validated_data)
@@ -301,12 +301,12 @@ class NominationViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
             # 2. We're setting nomination reviewed
             if not instance.active:
                 raise ValidationError(
-                    {'reviewed': 'This field cannot be set if nomination is inactive.'}
+                    {'reviewed': ['This field cannot be set if nomination is inactive.']}
                 )
 
             if 'active' in data:
                 raise ValidationError(
-                    {'active': 'This field cannot be set same time than ending nomination.'}
+                    {'active': ['This field cannot be set same time than ending nomination.']}
                 )
 
         elif instance.active and not data['active']:
@@ -332,7 +332,7 @@ class NominationViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
         if 'reason' in request.data:
             if 'actor' not in request.data:
                 raise ValidationError(
-                    {'actor': 'This field is required when editing reason.'}
+                    {'actor': ['This field is required when editing reason.']}
                 )
 
             entry_filter = NominationEntry.objects.filter(
@@ -342,7 +342,7 @@ class NominationViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
 
             if not entry_filter.exists():
                 raise ValidationError(
-                    {'actor': "Actor don't exist or have not nominated user."}
+                    {'actor': ["Actor don't exist or have not nominated user."]}
                 )
 
             entry = entry_filter[0]
