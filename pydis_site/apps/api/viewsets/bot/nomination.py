@@ -252,6 +252,16 @@ class NominationViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
             data=ChainMap(request.data, {"nomination": nomination_filter[0].id})
         )
         entry_serializer.is_valid(raise_exception=True)
+
+        # Don't allow user creating many nomination entries for one nomination
+        if NominationEntry.objects.filter(
+                nomination_id=nomination_filter[0].id,
+                actor__id=entry_serializer.validated_data["actor"].id
+        ).exists():
+            raise ValidationError(
+                {'actor': 'This actor have already created nomination entry for this nomination.'}
+            )
+
         NominationEntry.objects.create(**entry_serializer.validated_data)
 
         data = NominationSerializer(nomination_filter[0]).data
