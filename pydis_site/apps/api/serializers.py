@@ -26,6 +26,7 @@ from .models import (
     Role,
     User
 )
+from .models.bot.nomination import NominationEntry
 
 
 class BotSettingSerializer(ModelSerializer):
@@ -338,6 +339,21 @@ class UserSerializer(ModelSerializer):
             raise ValidationError({"id": ["User with ID already present."]})
 
 
+class NominationEntrySerializer(ModelSerializer):
+    """A class providing (de-)serialization of `NominationEntry` instances."""
+
+    nomination = PrimaryKeyRelatedField(
+        queryset=Nomination.objects.all(),
+        write_only=True
+    )
+
+    class Meta:
+        """Metadata defined for the Django REST framework."""
+
+        model = NominationEntry
+        fields = ('nomination', 'actor', 'reason', 'inserted_at')
+
+
 class NominationSerializer(ModelSerializer):
     """A class providing (de-)serialization of `Nomination` instances."""
 
@@ -346,8 +362,8 @@ class NominationSerializer(ModelSerializer):
 
         model = Nomination
         fields = (
-            'id', 'active', 'actor', 'reason', 'user',
-            'inserted_at', 'end_reason', 'ended_at')
+            'id', 'active', 'user', 'inserted_at', 'end_reason', 'ended_at'
+        )
 
 
 class OffensiveMessageSerializer(ModelSerializer):
