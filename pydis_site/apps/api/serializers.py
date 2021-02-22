@@ -20,13 +20,13 @@ from .models import (
     Infraction,
     MessageDeletionContext,
     Nomination,
+    NominationEntry,
     OffTopicChannelName,
     OffensiveMessage,
     Reminder,
     Role,
     User
 )
-from .models.bot.nomination import NominationEntry
 
 
 class BotSettingSerializer(ModelSerializer):
