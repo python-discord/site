@@ -362,7 +362,7 @@ class NominationSerializer(ModelSerializer):
 
         model = Nomination
         fields = (
-            'id', 'active', 'user', 'inserted_at', 'end_reason', 'ended_at'
+            'id', 'active', 'user', 'inserted_at', 'end_reason', 'ended_at', 'reviewed'
         )
 
 
