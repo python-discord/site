@@ -69,6 +69,14 @@ main.site-content {
     background-color: transparent;
 }
 
+#linode-logo {
+    padding-left: 15px;
+    background: url(https://www.linode.com/wp-content/uploads/2021/01/Linode-Logo-Black.svg) no-repeat center;
+    filter: invert(1) grayscale(1);
+    background-size: 60px;
+    color: #00000000;
+}
+
 #django-logo {
     padding-bottom: 2px;
     background: url(https://static.djangoproject.com/img/logos/django-logo-negative.png) no-repeat center;
