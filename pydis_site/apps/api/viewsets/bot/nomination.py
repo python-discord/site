@@ -176,40 +176,6 @@ class NominationViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
     frozen_fields = ('id', 'inserted_at', 'user', 'ended_at')
     frozen_on_create = ('ended_at', 'end_reason', 'active', 'inserted_at', 'reviewed')
 
-    def list(self, request: HttpRequest, *args, **kwargs) -> Response:
-        """
-        DRF method for listing Nominations.
-
-        Called by the Django Rest Framework in response to the corresponding HTTP request.
-        """
-        queryset = self.filter_queryset(self.get_queryset())
-        data = NominationSerializer(queryset, many=True).data
-
-        for i, nomination in enumerate(data):
-            entries = NominationEntrySerializer(
-                NominationEntry.objects.filter(nomination_id=nomination["id"]),
-                many=True
-            ).data
-            data[i]["entries"] = entries
-
-        return Response(data)
-
-    def retrieve(self, request: HttpRequest, *args, **kwargs) -> Response:
-        """
-        DRF method for retrieving a Nomination.
-
-        Called by the Django Rest Framework in response to the corresponding HTTP request.
-        """
-        nomination = self.get_object()
-
-        data = NominationSerializer(nomination).data
-        data["entries"] = NominationEntrySerializer(
-            NominationEntry.objects.filter(nomination_id=nomination.id),
-            many=True
-        ).data
-
-        return Response(data)
-
     def create(self, request: HttpRequest, *args, **kwargs) -> Response:
         """
         DRF method for creating a Nomination.
@@ -238,11 +204,9 @@ class NominationViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
                 data=ChainMap(request.data, {"nomination": nomination.id})
             )
             entry_serializer.is_valid(raise_exception=True)
-
-            entry = NominationEntry.objects.create(**entry_serializer.validated_data)
+            NominationEntry.objects.create(**entry_serializer.validated_data)
 
             data = NominationSerializer(nomination).data
-            data["entries"] = NominationEntrySerializer([entry], many=True).data
 
             headers = self.get_success_headers(data)
             return Response(data, status=status.HTTP_201_CREATED, headers=headers)
@@ -264,10 +228,6 @@ class NominationViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
         NominationEntry.objects.create(**entry_serializer.validated_data)
 
         data = NominationSerializer(nomination_filter[0]).data
-        data["entries"] = NominationEntrySerializer(
-            NominationEntry.objects.filter(nomination_id=nomination_filter[0].id),
-            many=True
-        ).data
 
         headers = self.get_success_headers(data)
         return Response(data, status=status.HTTP_201_CREATED, headers=headers)
@@ -349,11 +309,6 @@ class NominationViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
             entry.reason = request.data['reason']
             entry.save()
 
-        nomination = serializer.save()
-        return_data = NominationSerializer(nomination).data
-        return_data["entries"] = NominationEntrySerializer(
-            NominationEntry.objects.filter(nomination_id=nomination.id),
-            many=True
-        ).data
+        serializer.save()
 
-        return Response(return_data)
+        return Response(serializer.data)
