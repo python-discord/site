@@ -64,7 +64,7 @@ class NominationEntry(ModelReprMixin, models.Model):
     )
     reason = models.TextField(
         help_text="Why the actor nominated this user.",
-        null=True,
+        default="",
         blank=True
     )
     inserted_at = models.DateTimeField(

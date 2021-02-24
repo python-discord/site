@@ -45,7 +45,7 @@ class Migration(migrations.Migration):
             name='NominationEntry',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('reason', models.TextField(blank=True, help_text='Why the actor nominated this user.', null=True)),
+                ('reason', models.TextField(blank=True, help_text='Why the actor nominated this user.', default="")),
                 ('inserted_at',
                  models.DateTimeField(auto_now_add=True, help_text='The creation date of this nomination entry.')),
                 ('actor', models.ForeignKey(help_text='The staff member that nominated this user.',
