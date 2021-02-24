@@ -53,7 +53,8 @@ class NominationEntry(ModelReprMixin, models.Model):
     nomination = models.ForeignKey(
         Nomination,
         on_delete=models.CASCADE,
-        help_text="Nomination to what this entry belongs."
+        help_text="Nomination to what this entry belongs.",
+        related_name="entries"
     )
     actor = models.ForeignKey(
         User,
