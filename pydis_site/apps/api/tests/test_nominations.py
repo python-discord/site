@@ -484,32 +484,6 @@ class NominationTests(APISubdomainTestCase):
 
         self.assertEqual(len(infractions), 2)
 
-    def test_return_nomination_entries_get_single_nomination(self):
-        url = reverse('bot:nomination-detail', args=(self.active_nomination.id,), host='api')
-        response = self.client.get(url)
-        self.assertEqual(response.status_code, 200)
-        data = response.json()
-
-        self.assertEqual(len(data['entries']), 1)
-        self.assertEqual(data['entries'][0], {
-            "actor": self.user.id,
-            "reason": "He's pretty funky",
-            "inserted_at": self.active_nomination_entry.inserted_at.isoformat().replace(
-                "+00:00", "Z"
-            )
-        })
-
-    def test_return_nomination_entries_get_all_nominations(self):
-        url = reverse('api:nomination-list', host='api')
-        response = self.client.get(url)
-        self.assertEqual(response.status_code, 200)
-
-        data = response.json()
-
-        self.assertEqual(len(data), 2)
-        self.assertEqual(len(data[0]["entries"]), 1)
-        self.assertEqual(len(data[1]["entries"]), 1)
-
     def test_patch_nomination_set_reviewed_of_active_nomination(self):
         url = reverse('api:nomination-detail', args=(self.active_nomination.id,), host='api')
         data = {'reviewed': True}
