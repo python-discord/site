@@ -342,6 +342,9 @@ class UserSerializer(ModelSerializer):
 class NominationEntrySerializer(ModelSerializer):
     """A class providing (de-)serialization of `NominationEntry` instances."""
 
+    # We need to define it here, because we don't want that nomination ID
+    # return inside nomination response entry, because ID is already available
+    # as top-level field. Queryset is required if field is not read only.
     nomination = PrimaryKeyRelatedField(
         queryset=Nomination.objects.all(),
         write_only=True
