@@ -357,12 +357,14 @@ class NominationEntrySerializer(ModelSerializer):
 class NominationSerializer(ModelSerializer):
     """A class providing (de-)serialization of `Nomination` instances."""
 
+    entries = NominationEntrySerializer(many=True, read_only=True)
+
     class Meta:
         """Metadata defined for the Django REST Framework."""
 
         model = Nomination
         fields = (
-            'id', 'active', 'user', 'inserted_at', 'end_reason', 'ended_at', 'reviewed'
+            'id', 'active', 'user', 'inserted_at', 'end_reason', 'ended_at', 'reviewed', 'entries'
         )
 
 
