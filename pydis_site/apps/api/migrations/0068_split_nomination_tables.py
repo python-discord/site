@@ -52,9 +52,11 @@ class Migration(migrations.Migration):
                                             on_delete=django.db.models.deletion.CASCADE, related_name='nomination_set',
                                             to='api.User')),
                 ('nomination', models.ForeignKey(help_text='Nomination to what this entry belongs.',
-                                                 on_delete=django.db.models.deletion.CASCADE, to='api.Nomination')),
+                                                 on_delete=django.db.models.deletion.CASCADE, to='api.Nomination',
+                                                 related_name='entries')),
             ],
             bases=(pydis_site.apps.api.models.mixins.ModelReprMixin, models.Model),
+            options={'ordering': ('-inserted_at',), 'verbose_name_plural': 'nomination entries'}
         ),
         migrations.RunPython(migrate_nominations, unmigrate_nominations),
         migrations.RemoveField(
