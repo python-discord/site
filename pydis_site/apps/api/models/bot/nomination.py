@@ -76,3 +76,7 @@ class NominationEntry(ModelReprMixin, models.Model):
         """Meta options for NominationEntry model."""
 
         verbose_name_plural = "nomination entries"
+
+        # Set default ordering here to latest first
+        # so we don't need to define it everywhere
+        ordering = ("-inserted_at",)
