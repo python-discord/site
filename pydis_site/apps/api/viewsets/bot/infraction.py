@@ -9,7 +9,6 @@ from rest_framework.mixins import (
     ListModelMixin,
     RetrieveModelMixin
 )
-from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
 
@@ -18,6 +17,7 @@ from pydis_site.apps.api.serializers import (
     ExpandedInfractionSerializer,
     InfractionSerializer
 )
+from pydis_site.apps.api.viewsets.bot.pagination import LimitSetPagination
 
 
 class InfractionViewSet(
@@ -39,6 +39,8 @@ class InfractionViewSet(
     - **active** `bool`: whether the infraction is still active
     - **actor__id** `int`: snowflake of the user which applied the infraction
     - **hidden** `bool`: whether the infraction is a shadow infraction
+    - **limit** `int`: default limit is 100
+    - **offset** `int`: default is 0
     - **search** `str`: regular expression applied to the infraction's reason
     - **type** `str`: the type of the infraction
     - **user__id** `int`: snowflake of the user to which the infraction was applied
@@ -47,6 +49,7 @@ class InfractionViewSet(
     Invalid query parameters are ignored.
 
     #### Response format
+    - Response are paginated but only the actual data is returned
     >>> [
     ...     {
     ...         'id': 5,
@@ -134,27 +137,11 @@ class InfractionViewSet(
 
     serializer_class = InfractionSerializer
     queryset = Infraction.objects.all()
-    pagination_class = LimitOffsetPagination
+    pagination_class = LimitSetPagination
     filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
     filter_fields = ('user__id', 'actor__id', 'active', 'hidden', 'type')
     search_fields = ('$reason',)
     frozen_fields = ('id', 'inserted_at', 'type', 'user', 'actor', 'hidden')
-    LimitOffsetPagination.default_limit = 100
-
-    def list(self, request: HttpRequest, *args, **kwargs) -> Response:
-        """
-        DRF method for listing Infraction entries.
-
-        Called by the Django Rest Framework in response to the corresponding HTTP request.
-        """
-        queryset = self.filter_queryset(self.get_queryset())
-        page = self.paginate_queryset(queryset)
-        if page:
-            serializer = self.get_serializer(page, many=True)
-            result = self.get_paginated_response(serializer.data)
-            return Response(result.data.get('results'))
-        serializer = InfractionSerializer(queryset, many=True)
-        return Response(serializer.data)
 
     def partial_update(self, request: HttpRequest, *_args, **_kwargs) -> Response:
         """Method that handles the nuts and bolts of updating an Infraction."""
