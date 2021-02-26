@@ -13,11 +13,11 @@ from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
 
 from pydis_site.apps.api.models.bot.infraction import Infraction
+from pydis_site.apps.api.pagination import LimitOffsetPaginationExtended
 from pydis_site.apps.api.serializers import (
     ExpandedInfractionSerializer,
     InfractionSerializer
 )
-from pydis_site.apps.api.viewsets.bot.pagination import LimitSetPagination
 
 
 class InfractionViewSet(
@@ -39,8 +39,8 @@ class InfractionViewSet(
     - **active** `bool`: whether the infraction is still active
     - **actor__id** `int`: snowflake of the user which applied the infraction
     - **hidden** `bool`: whether the infraction is a shadow infraction
-    - **limit** `int`: default limit is 100
-    - **offset** `int`: default is 0
+    - **limit** `int`: number of results return per page. default limit is 100
+    - **offset** `int`: the initial index from which to return the results, default is 0
     - **search** `str`: regular expression applied to the infraction's reason
     - **type** `str`: the type of the infraction
     - **user__id** `int`: snowflake of the user to which the infraction was applied
@@ -49,7 +49,8 @@ class InfractionViewSet(
     Invalid query parameters are ignored.
 
     #### Response format
-    - Response are paginated but only the actual data is returned
+    - Response are paginated but the result is returned without any pagination metadata.
+      Below is the returned format.
     >>> [
     ...     {
     ...         'id': 5,
@@ -137,7 +138,7 @@ class InfractionViewSet(
 
     serializer_class = InfractionSerializer
     queryset = Infraction.objects.all()
-    pagination_class = LimitSetPagination
+    pagination_class = LimitOffsetPaginationExtended
     filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
     filter_fields = ('user__id', 'actor__id', 'active', 'hidden', 'type')
     search_fields = ('$reason',)
