@@ -3,14 +3,10 @@ FROM python:3.8-slim-buster
 # Allow service to handle stops gracefully
 STOPSIGNAL SIGQUIT
 
-# Set Git SHA build argument
-ARG git_sha="development"
-
 # Set pip to have cleaner logs and no saved cache
 ENV PIP_NO_CACHE_DIR=false \
     PIPENV_HIDE_EMOJIS=1 \
-    PIPENV_NOSPIN=1 \
-    GIT_SHA=$git_sha
+    PIPENV_NOSPIN=1
 
 # Install git
 RUN apt-get -y update \
@@ -30,6 +26,11 @@ COPY . .
 
 # Install project dependencies
 RUN pipenv install --system --deploy
+
+
+# Set Git SHA environment variable
+ARG git_sha="development"
+ENV GIT_SHA=$git_sha
 
 # Run web server through custom manager
 ENTRYPOINT ["python", "manage.py"]
