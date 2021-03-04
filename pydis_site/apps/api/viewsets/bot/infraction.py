@@ -5,6 +5,7 @@ from rest_framework.exceptions import ValidationError
 from rest_framework.filters import OrderingFilter, SearchFilter
 from rest_framework.mixins import (
     CreateModelMixin,
+    DestroyModelMixin,
     ListModelMixin,
     RetrieveModelMixin
 )
@@ -18,7 +19,13 @@ from pydis_site.apps.api.serializers import (
 )
 
 
-class InfractionViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, GenericViewSet):
+class InfractionViewSet(
+    CreateModelMixin,
+    RetrieveModelMixin,
+    ListModelMixin,
+    GenericViewSet,
+    DestroyModelMixin
+):
     """
     View providing CRUD operations on infractions for Discord users.
 
@@ -107,6 +114,13 @@ class InfractionViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
     - 200: returned on success
     - 400: if a field in the request body is invalid or disallowed
     - 404: if an infraction with the given `id` could not be found
+
+    ### DELETE /bot/infractions/<id:int>
+    Delete the infraction with the given `id`.
+
+    #### Status codes
+    - 204: returned on success
+    - 404: if a infraction with the given `id` does not exist
 
     ### Expanded routes
     All routes support expansion of `user` and `actor` in responses. To use an expanded route,

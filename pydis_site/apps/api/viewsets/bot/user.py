@@ -109,8 +109,10 @@ class UserViewSet(ModelViewSet):
 
     #### Response format
     >>> {
-    ...    "verified_at": "2020-10-06T21:54:23.540766",
-    ...    "total_messages": 2
+    ...    "joined_at": "2020-10-06T21:54:23.540766",
+    ...    "total_messages": 2,
+    ...    "voice_banned": False,
+    ...    "activity_blocks": 1
     ...}
 
     #### Status codes
@@ -255,6 +257,7 @@ class UserViewSet(ModelViewSet):
                 data = metricity.user(user.id)
                 data["total_messages"] = metricity.total_messages(user.id)
                 data["voice_banned"] = voice_banned
+                data["activity_blocks"] = metricity.total_message_blocks(user.id)
                 return Response(data, status=status.HTTP_200_OK)
             except NotFound:
                 return Response(dict(detail="User not found in metricity"),

@@ -20,7 +20,7 @@
   <div class="navbar-menu is-paddingless" id="navbar_menu">
     <div class="navbar-end">
 
-      {# Discord invite - only visible in the hamburger on mobile sizes. #}
+      {# Burger-menu Discord #}
       <a class="navbar-item is-hidden-desktop" href="https://discord.gg/python">
         <span class="icon is-size-4 is-medium"><i class="fab fa-discord"></i></span>
         <span>&nbsp;Discord</span>
@@ -57,7 +57,7 @@
       </a>
 
       {# More #}
-      <div class="navbar-item has-dropdown is-hoverable has-left-margin-1">
+      <div class="navbar-item has-dropdown is-hoverable">
         <a class="navbar-link is-hidden-touch">
           More
         </a>
@@ -125,12 +125,14 @@
 
         </div>
       </div>
+
+      {# Desktop Nav Discord  #}
+      <div id="discord-btn" class="buttons is-hidden-touch">
+        <a href="https://discord.gg/python" class="button is-large is-primary">Discord</a>
+      </div>
+
     </div>
 
-    {# Join us on Discord! #}
-    <a class="navbar-item is-fullsize has-no-highlight has-left-margin-1" href="https://discord.gg/python">
-      <img class="is-hidden-touch" src="{% static "images/navbar/navbar_discordjoin.svg" %}" alt="Join us on Discord!"/>
-    </a>
   </div>
 </nav>
 

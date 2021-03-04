@@ -28,14 +28,14 @@ if typing.TYPE_CHECKING:
 
 env = environ.Env(
     DEBUG=(bool, False),
-    SITE_SENTRY_DSN=(str, "")
+    SITE_DSN=(str, "")
 )
 
 sentry_sdk.init(
-    dsn=env('SITE_SENTRY_DSN'),
+    dsn=env('SITE_DSN'),
     integrations=[DjangoIntegration()],
     send_default_pii=True,
-    release=f"pydis-site@{GIT_SHA}"
+    release=f"site@{GIT_SHA}"
 )
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -47,21 +47,7 @@ DEBUG = env('DEBUG')
 
 # SECURITY WARNING: keep the secret key used in production secret!
 if DEBUG:
-    ALLOWED_HOSTS = env.list(
-        'ALLOWED_HOSTS',
-        default=[
-            'pythondiscord.local',
-            'api.pythondiscord.local',
-            'admin.pythondiscord.local',
-            'staff.pythondiscord.local',
-            '0.0.0.0',  # noqa: S104
-            'localhost',
-            'web',
-            'api.web',
-            'admin.web',
-            'staff.web'
-        ]
-    )
+    ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['*'])
     SECRET_KEY = "yellow polkadot bikini"  # noqa: S105
 
 elif 'CI' in os.environ:
@@ -76,10 +62,7 @@ else:
             'admin.pythondiscord.com',
             'api.pythondiscord.com',
             'staff.pythondiscord.com',
-            'pydis.com',
-            'api.pydis.com',
-            'admin.pydis.com',
-            'staff.pydis.com',
+            'pydis-api.default.svc.cluster.local',
         ]
     )
     SECRET_KEY = env('SECRET_KEY')
@@ -392,6 +375,7 @@ AUTHENTICATION_BACKENDS = (
 ACCOUNT_ADAPTER = "pydis_site.utils.account.AccountAdapter"
 ACCOUNT_EMAIL_REQUIRED = False       # Undocumented allauth setting; don't require emails
 ACCOUNT_EMAIL_VERIFICATION = "none"  # No verification required; we don't use emails for anything
+ACCOUNT_DEFAULT_HTTP_PROTOCOL = "https"
 
 # We use this validator because Allauth won't let us actually supply a list with no validators
 # in it, and we can't just give it a lambda - that'd be too easy, I suppose.

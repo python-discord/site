@@ -1,4 +1,4 @@
-FROM python:3.7-slim
+FROM python:3.8-slim-buster
 
 # Allow service to handle stops gracefully
 STOPSIGNAL SIGQUIT
@@ -26,6 +26,11 @@ COPY . .
 
 # Install project dependencies
 RUN pipenv install --system --deploy
+
+
+# Set Git SHA environment variable
+ARG git_sha="development"
+ENV GIT_SHA=$git_sha
 
 # Run web server through custom manager
 ENTRYPOINT ["python", "manage.py"]
