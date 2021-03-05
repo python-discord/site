@@ -302,7 +302,7 @@ class NominationViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
 
             if not entry_filter.exists():
                 raise ValidationError(
-                    {'actor': ["Actor don't exist or have not nominated user."]}
+                    {'actor': ['Actor don't exist or have not nominated user.']}
                 )
 
             entry = entry_filter[0]
