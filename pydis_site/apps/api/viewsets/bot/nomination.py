@@ -86,8 +86,8 @@ class NominationViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
     Create a new, active nomination returns the created nominations.
     The `user`, `reason` and `actor` fields are required and the `user`
     and `actor` need to know by the site. Providing other valid fields
-    is not allowed and invalid fields are ignored. If `user` already have
-    active nomination, new nomination entry will be created assigned to
+    is not allowed and invalid fields are ignored. If `user` already has an
+    active nomination, a new nomination entry will be created and assigned as the
     active nomination.
 
     #### Request body
@@ -119,7 +119,7 @@ class NominationViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
     below), the request bodies vary depending on the operation. For all operations it holds
     that providing other valid fields is not allowed and invalid fields are ignored.
 
-    ### 1. Updating the `reason` of `active` nomination. Actor field is required.
+    ### 1. Updating the `reason` of `active` nomination. The `actor` field is required.
 
     #### Request body
     >>> {
@@ -199,7 +199,7 @@ class NominationViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
             serializer.is_valid(raise_exception=True)
             nomination = Nomination.objects.create(**serializer.validated_data)
 
-            # Serializer truncate unnecessary data away
+            # The serializer will truncate and get rid of excessive data
             entry_serializer = NominationEntrySerializer(
                 data=ChainMap(request.data, {"nomination": nomination.id})
             )
@@ -283,7 +283,7 @@ class NominationViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
 
         # This is actually covered, but for some reason coverage don't think so.
         elif 'reviewed' in request.data:  # pragma: no cover
-            # 4. We're setting nomination reviewed
+            # 4. We are altering the reviewed state of the nomination.
             if not instance.active:
                 raise ValidationError(
                     {'reviewed': ['This field cannot be set if nomination is inactive.']}
