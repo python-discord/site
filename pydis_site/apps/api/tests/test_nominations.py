@@ -78,7 +78,7 @@ class CreationTests(APISubdomainTestCase):
         response2 = self.client.post(url, data=data)
         self.assertEqual(response2.status_code, 400)
         self.assertEqual(response2.json(), {
-            'actor': ['This actor have already created nomination entry for this nomination.']
+            'actor': ['This actor has already endorsed this nomination.']
         })
 
     def test_returns_400_for_missing_user(self):
@@ -498,7 +498,7 @@ class NominationTests(APISubdomainTestCase):
         response = self.client.patch(url, data=data)
         self.assertEqual(response.status_code, 400)
         self.assertEqual(response.json(), {
-            'reviewed': ['This field cannot be set if nomination is inactive.']
+            'reviewed': ['This field cannot be set if the nomination is inactive.']
         })
 
     def test_patch_nomination_set_reviewed_and_end(self):
@@ -508,7 +508,7 @@ class NominationTests(APISubdomainTestCase):
         response = self.client.patch(url, data=data)
         self.assertEqual(response.status_code, 400)
         self.assertEqual(response.json(), {
-            'reviewed': ['This field cannot be set same time than ending nomination.']
+            'reviewed': ['This field cannot be set while you are ending a nomination.']
         })
 
     def test_modifying_reason_without_actor(self):
@@ -518,7 +518,7 @@ class NominationTests(APISubdomainTestCase):
         response = self.client.patch(url, data=data)
         self.assertEqual(response.status_code, 400)
         self.assertEqual(response.json(), {
-            'actor': ['This field is required when editing reason.']
+            'actor': ['This field is required when editing the reason.']
         })
 
     def test_modifying_reason_with_unknown_actor(self):

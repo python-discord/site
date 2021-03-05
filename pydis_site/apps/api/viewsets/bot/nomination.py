@@ -222,7 +222,7 @@ class NominationViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
                 actor__id=entry_serializer.validated_data["actor"].id
         ).exists():
             raise ValidationError(
-                {'actor': ['This actor have already created nomination entry for this nomination.']}
+                {'actor': ['This actor has already endorsed this nomination.']}
             )
 
         NominationEntry.objects.create(**entry_serializer.validated_data)
@@ -270,7 +270,7 @@ class NominationViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
 
             if 'reviewed' in request.data:
                 raise ValidationError(
-                    {'reviewed': ['This field cannot be set same time than ending nomination.']}
+                    {'reviewed': ['This field cannot be set while you are ending a nomination.']}
                 )
 
             instance.ended_at = timezone.now()
@@ -286,13 +286,13 @@ class NominationViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
             # 4. We are altering the reviewed state of the nomination.
             if not instance.active:
                 raise ValidationError(
-                    {'reviewed': ['This field cannot be set if nomination is inactive.']}
+                    {'reviewed': ['This field cannot be set if the nomination is inactive.']}
                 )
 
         if 'reason' in request.data:
             if 'actor' not in request.data:
                 raise ValidationError(
-                    {'actor': ['This field is required when editing reason.']}
+                    {'actor': ['This field is required when editing the reason.']}
                 )
 
             entry_filter = NominationEntry.objects.filter(
