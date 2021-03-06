@@ -1,3 +1,5 @@
+from typing import List, Tuple
+
 from django.db import connections
 
 BLOCK_INTERVAL = 10 * 60  # 10 minute blocks
@@ -90,7 +92,7 @@ class Metricity:
 
         return values[0]
 
-    def top_channel_activity(self, user_id: str) -> int:
+    def top_channel_activity(self, user_id: str) -> List[Tuple[str, int]]:
         """
         Query the top three channels in which the user is most active.
 
