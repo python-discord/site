@@ -87,7 +87,7 @@ class NominationViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
     The `user`, `reason` and `actor` fields are required and the `user`
     and `actor` need to know by the site. Providing other valid fields
     is not allowed and invalid fields are ignored. If `user` already has an
-    active nomination, a new nomination entry will be created and assigned as the
+    active nomination, a new nomination entry will be created and assigned to the
     active nomination.
 
     #### Request body
