@@ -431,10 +431,13 @@ class UserMetricityTests(APISubdomainTestCase):
 
         # When
         url = reverse('bot:user-metricity-data', args=[0], host='api')
-        response = self.client.get(url)
+        response1 = self.client.get(url)
+        url = reverse('bot:user-metricity-review-data', args=[0], host='api')
+        response2 = self.client.get(url)
 
         # Then
-        self.assertEqual(response.status_code, 404)
+        self.assertEqual(response1.status_code, 404)
+        self.assertEqual(response2.status_code, 404)
 
     def test_metricity_voice_banned(self):
         cases = [
