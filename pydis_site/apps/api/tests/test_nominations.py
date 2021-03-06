@@ -528,5 +528,5 @@ class NominationTests(APISubdomainTestCase):
         response = self.client.patch(url, data=data)
         self.assertEqual(response.status_code, 400)
         self.assertEqual(response.json(), {
-            'actor': ["Actor don't exist or have not nominated user."]
+            'actor': ["The actor doesn't exist or has not nominated the user."]
         })
