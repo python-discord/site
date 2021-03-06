@@ -33,7 +33,7 @@ class Nomination(ModelReprMixin, models.Model):
     )
     reviewed = models.BooleanField(
         default=False,
-        help_text="Whether voting message have been made."
+        help_text="Whether a review was made."
     )
 
     def __str__(self):
@@ -48,12 +48,12 @@ class Nomination(ModelReprMixin, models.Model):
 
 
 class NominationEntry(ModelReprMixin, models.Model):
-    """A nomination entry created by single staff."""
+    """A nomination entry created by a single staff member."""
 
     nomination = models.ForeignKey(
         Nomination,
         on_delete=models.CASCADE,
-        help_text="Nomination to what this entry belongs.",
+        help_text="The nomination this entry belongs to.",
         related_name="entries"
     )
     actor = models.ForeignKey(

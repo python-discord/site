@@ -51,7 +51,7 @@ class Migration(migrations.Migration):
                 ('actor', models.ForeignKey(help_text='The staff member that nominated this user.',
                                             on_delete=django.db.models.deletion.CASCADE, related_name='nomination_set',
                                             to='api.User')),
-                ('nomination', models.ForeignKey(help_text='Nomination to what this entry belongs.',
+                ('nomination', models.ForeignKey(help_text='The nomination this entry belongs to.',
                                                  on_delete=django.db.models.deletion.CASCADE, to='api.Nomination',
                                                  related_name='entries')),
             ],
@@ -70,6 +70,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='nomination',
             name='reviewed',
-            field=models.BooleanField(default=False, help_text='Whether voting message have been made.'),
+            field=models.BooleanField(default=False, help_text='Whether a review was made.'),
         ),
     ]
