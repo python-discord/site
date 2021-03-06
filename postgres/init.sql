@@ -13,12 +13,28 @@ INSERT INTO users VALUES (
     current_timestamp
 );
 
+CREATE TABLE channels (
+    id varchar,
+    name varchar,
+    primary key(id)
+);
+
+INSERT INTO channels VALUES(
+    '267659945086812160',
+    'python-general'
+);
+
+INSERT INTO channels VALUES(
+    '1234',
+    'zebra'
+);
+
 CREATE TABLE messages (
     id varchar,
     author_id varchar references users(id),
     is_deleted boolean,
     created_at timestamp,
-    channel_id varchar,
+    channel_id varchar references channels(id),
     primary key(id)
 );
 

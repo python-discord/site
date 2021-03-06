@@ -262,3 +262,18 @@ class UserViewSet(ModelViewSet):
             except NotFound:
                 return Response(dict(detail="User not found in metricity"),
                                 status=status.HTTP_404_NOT_FOUND)
+
+    @action(detail=True)
+    def metricity_review_data(self, request: Request, pk: str = None) -> Response:
+        """Request handler for metricity_review_data endpoint."""
+        user = self.get_object()
+
+        with Metricity() as metricity:
+            try:
+                data = metricity.user(user.id)
+                data["total_messages"] = metricity.total_messages(user.id)
+                data["top_channel_activity"] = metricity.top_channel_activity(user.id)
+                return Response(data, status=status.HTTP_200_OK)
+            except NotFound:
+                return Response(dict(detail="User not found in metricity"),
+                                status=status.HTTP_404_NOT_FOUND)

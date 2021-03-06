@@ -89,3 +89,42 @@ class Metricity:
             raise NotFound()
 
         return values[0]
+
+    def top_channel_activity(self, user_id: str) -> int:
+        """
+        Query the top three channels in which the user is most active.
+
+        Help channels are grouped under "the help channels",
+        and off-topic channels are grouped under "off-topic".
+        """
+        self.cursor.execute(
+            """
+            SELECT
+                CASE
+                    WHEN channels.name ILIKE 'help-%%' THEN 'the help channels'
+                    WHEN channels.name ILIKE 'ot%%' THEN 'off-topic'
+                    ELSE channels.name
+                END,
+                COUNT(1)
+            FROM
+                messages
+                LEFT JOIN channels ON channels.id = messages.channel_id
+            WHERE
+                author_id = '%s'
+            GROUP BY
+                1
+            ORDER BY
+                2 DESC
+            LIMIT
+                3;
+            """,
+            [user_id]
+        )
+
+        values = self.cursor.fetchall()
+        print(values)
+
+        if not values:
+            raise NotFound()
+
+        return values
