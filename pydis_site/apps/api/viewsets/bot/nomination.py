@@ -216,7 +216,7 @@ class NominationViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
         )
         entry_serializer.is_valid(raise_exception=True)
 
-        # Don't allow user creating many nomination entries for one nomination
+        # Don't allow a user to create many nomination entries in a single nomination
         if NominationEntry.objects.filter(
                 nomination_id=nomination_filter[0].id,
                 actor__id=entry_serializer.validated_data["actor"].id
