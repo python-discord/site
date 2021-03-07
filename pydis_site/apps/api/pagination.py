@@ -27,6 +27,7 @@ class LimitOffsetPaginationExtended(LimitOffsetPagination):
                         "hidden": false
                     }]
             }
+
     ## Required response
             [{
                 "id": 6,
