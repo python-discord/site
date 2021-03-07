@@ -39,8 +39,8 @@ class InfractionViewSet(
     - **active** `bool`: whether the infraction is still active
     - **actor__id** `int`: snowflake of the user which applied the infraction
     - **hidden** `bool`: whether the infraction is a shadow infraction
-    - **limit** `int`: number of results return per page. default limit is 100
-    - **offset** `int`: the initial index from which to return the results, default is 0
+    - **limit** `int`: number of results return per page (default 100)
+    - **offset** `int`: the initial index from which to return the results (default 0)
     - **search** `str`: regular expression applied to the infraction's reason
     - **type** `str`: the type of the infraction
     - **user__id** `int`: snowflake of the user to which the infraction was applied
