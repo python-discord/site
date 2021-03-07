@@ -45,5 +45,5 @@ class LimitOffsetPaginationExtended(LimitOffsetPagination):
     default_limit = 100
 
     def get_paginated_response(self, data: typing.Any) -> Response:
-        """Override to skip metadata i.e. `count`, `next` and `previous`."""
+        """Override to skip metadata i.e. `count`, `next`, and `previous`."""
         return Response(data)
