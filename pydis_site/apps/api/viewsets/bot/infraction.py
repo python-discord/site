@@ -49,8 +49,7 @@ class InfractionViewSet(
     Invalid query parameters are ignored.
 
     #### Response format
-    - Response are paginated but the result is returned without any pagination metadata.
-      Below is the returned format.
+    Response is paginated but the result is returned without any pagination metadata.
     >>> [
     ...     {
     ...         'id': 5,
