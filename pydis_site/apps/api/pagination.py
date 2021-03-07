@@ -39,7 +39,6 @@ class LimitOffsetPaginationExtended(LimitOffsetPagination):
                 "reason": null,
                 "hidden": false
             }]
-
     """
 
     default_limit = 100
