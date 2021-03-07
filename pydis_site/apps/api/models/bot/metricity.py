@@ -124,7 +124,6 @@ class Metricity:
         )
 
         values = self.cursor.fetchall()
-        print(values)
 
         if not values:
             raise NotFound()
