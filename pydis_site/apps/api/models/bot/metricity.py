@@ -112,7 +112,7 @@ class Metricity:
                 messages
                 LEFT JOIN channels ON channels.id = messages.channel_id
             WHERE
-                author_id = '%s'
+                author_id = '%s' AND NOT messages.is_deleted
             GROUP BY
                 1
             ORDER BY
