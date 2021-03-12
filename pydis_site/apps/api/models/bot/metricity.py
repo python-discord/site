@@ -105,6 +105,7 @@ class Metricity:
                 CASE
                     WHEN channels.name ILIKE 'help-%%' THEN 'the help channels'
                     WHEN channels.name ILIKE 'ot%%' THEN 'off-topic'
+                    WHEN channels.name ILIKE '%%voice%%' THEN 'voice chats'
                     ELSE channels.name
                 END,
                 COUNT(1)
