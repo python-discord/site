@@ -119,6 +119,22 @@ class UserViewSet(ModelViewSet):
     - 200: returned on success
     - 404: if a user with the given `snowflake` could not be found
 
+    ### GET /bot/users/<snowflake:int>/metricity_review_data
+    Gets metricity data for a single user's review by ID.
+
+    #### Response format
+    >>> {
+    ...     'joined_at': '2020-08-26T08:09:43.507000',
+    ...     'top_channel_activity': [['off-topic', 15],
+    ...                              ['talent-pool', 4],
+    ...                              ['defcon', 2]],
+    ...     'total_messages': 22
+    ... }
+
+    #### Status codes
+    - 200: returned on success
+    - 404: if a user with the given `snowflake` could not be found
+
     ### POST /bot/users
     Adds a single or multiple new users.
     The roles attached to the user(s) must be roles known by the site.
