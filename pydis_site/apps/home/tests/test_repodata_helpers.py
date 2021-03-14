@@ -123,10 +123,38 @@ class TestRepositoryMetadataHelpers(TestCase):
         mock_get.return_value.json.return_value = ['garbage']
 
         metadata = self.home_view._get_repo_data()
-        self.assertEquals(len(metadata), len(self.home_view.repos))
-        for item in metadata:
-            with self.subTest(item=item):
-                self.assertEqual(item.description, "Not available.")
-                self.assertEqual(item.forks, 999)
-                self.assertEqual(item.stargazers, 999)
-                self.assertEqual(item.language, "Python")
+        self.assertEquals(len(metadata), 0)
+
+    def test_cleans_up_stale_metadata(self):
+        """Tests that we clean up stale metadata when we start the HomeView."""
+        repo_data = RepositoryMetadata(
+            repo_name="python-discord/INVALID",
+            description="testrepo",
+            forks=42,
+            stargazers=42,
+            language="English",
+            last_updated=timezone.now() - timedelta(seconds=HomeView.repository_cache_ttl + 1),
+        )
+        repo_data.save()
+        self.home_view.__init__()
+        cached_repos = RepositoryMetadata.objects.all()
+        cached_names = [repo.repo_name for repo in cached_repos]
+
+        self.assertNotIn("python-discord/INVALID", cached_names)
+
+    def test_dont_clean_up_unstale_metadata(self):
+        """Tests that we don't clean up good metadata when we start the HomeView."""
+        repo_data = RepositoryMetadata(
+            repo_name="python-discord/site",
+            description="testrepo",
+            forks=42,
+            stargazers=42,
+            language="English",
+            last_updated=timezone.now() - timedelta(seconds=HomeView.repository_cache_ttl + 1),
+        )
+        repo_data.save()
+        self.home_view.__init__()
+        cached_repos = RepositoryMetadata.objects.all()
+        cached_names = [repo.repo_name for repo in cached_repos]
+
+        self.assertIn("python-discord/site", cached_names)

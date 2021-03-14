@@ -135,12 +135,14 @@ class RulesView(APIView):
             ),
             (
                 "Do not provide or request help on projects that may break laws, "
-                "breach terms of services, be considered malicious/inappropriate "
-                "or be for graded coursework/exams."
+                "breach terms of services, be considered malicious or inappropriate. "
+                "Do not help with ongoing exams. Do not provide or request solutions "
+                "for graded assignments, although general guidance is okay."
             ),
             (
                 "No spamming or unapproved advertising, including requests for paid work. "
-                "Open-source projects can be showcased in #show-your-projects."
+                "Open-source projects can be shared with others in #python-general and "
+                "code reviews can be asked for in a help channel."
             ),
             (
                 "Keep discussions relevant to channel topics and guidelines."

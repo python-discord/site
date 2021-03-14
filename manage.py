@@ -7,9 +7,9 @@ import time
 from typing import List
 
 import django
+import gunicorn.app.wsgiapp
 from django.contrib.auth import get_user_model
 from django.core.management import call_command, execute_from_command_line
-
 
 DEFAULT_ENVS = {
     "DJANGO_SETTINGS_MODULE": "pydis_site.settings",
@@ -112,6 +112,19 @@ class SiteManager:
             print("Database could not be found, exiting.")
             sys.exit(1)
 
+    @staticmethod
+    def set_dev_site_name() -> None:
+        """Set the development site domain in admin from default example."""
+        # import Site model now after django setup
+        from django.contrib.sites.models import Site
+        query = Site.objects.filter(id=1)
+        site = query.get()
+        if site.domain == "example.com":
+            query.update(
+                domain="pythondiscord.local:8000",
+                name="pythondiscord.local:8000"
+            )
+
     def prepare_server(self) -> None:
         """Perform preparation tasks before running the server."""
         django.setup()
@@ -125,6 +138,7 @@ class SiteManager:
         call_command("collectstatic", interactive=False, clear=True, verbosity=self.verbosity)
 
         if self.debug:
+            self.set_dev_site_name()
             self.create_superuser()
 
     def run_server(self) -> None:
@@ -142,10 +156,22 @@ class SiteManager:
             call_command("runserver", "0.0.0.0:8000")
             return
 
-        import pyuwsgi
+        # Patch the arguments for gunicorn
+        sys.argv = [
+            "gunicorn",
+            "--preload",
+            "-b", "0.0.0.0:8000",
+            "pydis_site.wsgi:application",
+            "--threads", "8",
+            "-w", "2",
+            "--max-requests", "1000",
+            "--max-requests-jitter", "50",
+            "--statsd-host", "graphite.default.svc.cluster.local:8125",
+            "--statsd-prefix", "site",
+        ]
 
-        # Run uwsgi for production server
-        pyuwsgi.run(["--ini", "docker/uwsgi.ini"])
+        # Run gunicorn for the production server.
+        gunicorn.app.wsgiapp.run()
 
 
 def main() -> None:

@@ -6,10 +6,9 @@ from .documentation_link import DocumentationLink
 from .infraction import Infraction
 from .message import Message
 from .message_deletion_context import MessageDeletionContext
-from .nomination import Nomination
+from .nomination import Nomination, NominationEntry
 from .off_topic_channel_name import OffTopicChannelName
 from .offensive_message import OffensiveMessage
 from .reminder import Reminder
 from .role import Role
-from .tag import Tag
 from .user import User

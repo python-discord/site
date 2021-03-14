@@ -33,3 +33,8 @@ class DocumentationLink(ModelReprMixin, models.Model):
     def __str__(self):
         """Returns the package and URL for the current documentation link, for display purposes."""
         return f"{self.package} - {self.base_url}"
+
+    class Meta:
+        """Defines the meta options for the documentation link model."""
+
+        ordering = ['package']

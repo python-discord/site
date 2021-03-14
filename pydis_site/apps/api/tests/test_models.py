@@ -10,11 +10,11 @@ from pydis_site.apps.api.models import (
     Message,
     MessageDeletionContext,
     Nomination,
+    NominationEntry,
     OffTopicChannelName,
     OffensiveMessage,
     Reminder,
     Role,
-    Tag,
     User
 )
 from pydis_site.apps.api.models.mixins import ModelReprMixin
@@ -38,17 +38,11 @@ class StringDunderMethodTests(SimpleTestCase):
     def setUp(self):
         self.nomination = Nomination(
             id=123,
-            actor=User(
-                id=9876,
-                name='Mr. Hemlock',
-                discriminator=6666,
-            ),
             user=User(
                 id=9876,
                 name="Hemlock's Cat",
                 discriminator=7777,
             ),
-            reason="He purrrrs like the best!",
         )
 
         self.objects = (
@@ -104,10 +98,6 @@ class StringDunderMethodTests(SimpleTestCase):
                 ),
                 creation=dt.utcnow()
             ),
-            Tag(
-                title='bob',
-                embed={'content': "the builder"}
-            ),
             User(
                 id=5,
                 name='bob',
@@ -140,6 +130,15 @@ class StringDunderMethodTests(SimpleTestCase):
                 ),
                 content="oh no",
                 expiration=dt(5018, 11, 20, 15, 52, tzinfo=timezone.utc)
+            ),
+            NominationEntry(
+                nomination_id=self.nomination.id,
+                actor=User(
+                    id=9876,
+                    name='Mr. Hemlock',
+                    discriminator=6666,
+                ),
+                reason="He purrrrs like the best!",
             )
         )
 

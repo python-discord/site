@@ -3,7 +3,7 @@ from datetime import datetime as dt, timedelta, timezone
 from django_hosts.resolvers import reverse
 
 from .base import APISubdomainTestCase
-from ..models import Nomination, User
+from ..models import Nomination, NominationEntry, User
 
 
 class CreationTests(APISubdomainTestCase):
@@ -13,6 +13,11 @@ class CreationTests(APISubdomainTestCase):
             id=1234,
             name='joe dart',
             discriminator=1111,
+        )
+        cls.user2 = User.objects.create(
+            id=9876,
+            name='Who?',
+            discriminator=1234
         )
 
     def test_accepts_valid_data(self):
@@ -27,17 +32,39 @@ class CreationTests(APISubdomainTestCase):
         self.assertEqual(response.status_code, 201)
 
         nomination = Nomination.objects.get(id=response.json()['id'])
+        nomination_entry = NominationEntry.objects.get(
+            nomination_id=nomination.id,
+            actor_id=self.user.id
+        )
         self.assertAlmostEqual(
             nomination.inserted_at,
             dt.now(timezone.utc),
             delta=timedelta(seconds=2)
         )
         self.assertEqual(nomination.user.id, data['user'])
-        self.assertEqual(nomination.actor.id, data['actor'])
-        self.assertEqual(nomination.reason, data['reason'])
+        self.assertEqual(nomination_entry.reason, data['reason'])
         self.assertEqual(nomination.active, True)
 
-    def test_returns_400_on_second_active_nomination(self):
+    def test_returns_200_on_second_active_nomination_by_different_user(self):
+        url = reverse('bot:nomination-list', host='api')
+        first_data = {
+            'actor': self.user.id,
+            'reason': 'Joe Dart on Fender Bass',
+            'user': self.user.id,
+        }
+        second_data = {
+            'actor': self.user2.id,
+            'reason': 'Great user',
+            'user': self.user.id
+        }
+
+        response1 = self.client.post(url, data=first_data)
+        self.assertEqual(response1.status_code, 201)
+
+        response2 = self.client.post(url, data=second_data)
+        self.assertEqual(response2.status_code, 201)
+
+    def test_returns_400_on_second_active_nomination_by_existing_nominator(self):
         url = reverse('bot:nomination-list', host='api')
         data = {
             'actor': self.user.id,
@@ -51,7 +78,7 @@ class CreationTests(APISubdomainTestCase):
         response2 = self.client.post(url, data=data)
         self.assertEqual(response2.status_code, 400)
         self.assertEqual(response2.json(), {
-            'active': ['There can only be one active nomination.']
+            'actor': ['This actor has already endorsed this nomination.']
         })
 
     def test_returns_400_for_missing_user(self):
@@ -80,7 +107,7 @@ class CreationTests(APISubdomainTestCase):
             'actor': ['This field is required.']
         })
 
-    def test_returns_400_for_missing_reason(self):
+    def test_returns_201_for_missing_reason(self):
         url = reverse('bot:nomination-list', host='api')
         data = {
             'user': self.user.id,
@@ -88,10 +115,7 @@ class CreationTests(APISubdomainTestCase):
         }
 
         response = self.client.post(url, data=data)
-        self.assertEqual(response.status_code, 400)
-        self.assertEqual(response.json(), {
-            'reason': ['This field is required.']
-        })
+        self.assertEqual(response.status_code, 201)
 
     def test_returns_400_for_bad_user(self):
         url = reverse('bot:nomination-list', host='api')
@@ -192,30 +216,40 @@ class NominationTests(APISubdomainTestCase):
         )
 
         cls.active_nomination = Nomination.objects.create(
-            user=cls.user,
+            user=cls.user
+        )
+        cls.active_nomination_entry = NominationEntry.objects.create(
+            nomination=cls.active_nomination,
             actor=cls.user,
             reason="He's pretty funky"
         )
         cls.inactive_nomination = Nomination.objects.create(
             user=cls.user,
-            actor=cls.user,
-            reason="He's pretty funky",
             active=False,
             end_reason="His neck couldn't hold the funk",
             ended_at="5018-11-20T15:52:00+00:00"
         )
+        cls.inactive_nomination_entry = NominationEntry.objects.create(
+            nomination=cls.inactive_nomination,
+            actor=cls.user,
+            reason="He's pretty funky"
+        )
 
-    def test_returns_200_update_reason_on_active(self):
+    def test_returns_200_update_reason_on_active_with_actor(self):
         url = reverse('bot:nomination-detail', args=(self.active_nomination.id,), host='api')
         data = {
-            'reason': "He's one funky duck"
+            'reason': "He's one funky duck",
+            'actor': self.user.id
         }
 
         response = self.client.patch(url, data=data)
         self.assertEqual(response.status_code, 200)
 
-        nomination = Nomination.objects.get(id=response.json()['id'])
-        self.assertEqual(nomination.reason, data['reason'])
+        nomination_entry = NominationEntry.objects.get(
+            nomination_id=response.json()['id'],
+            actor_id=self.user.id
+        )
+        self.assertEqual(nomination_entry.reason, data['reason'])
 
     def test_returns_400_on_frozen_field_update(self):
         url = reverse('bot:nomination-detail', args=(self.active_nomination.id,), host='api')
@@ -244,14 +278,18 @@ class NominationTests(APISubdomainTestCase):
     def test_returns_200_update_reason_on_inactive(self):
         url = reverse('bot:nomination-detail', args=(self.inactive_nomination.id,), host='api')
         data = {
-            'reason': "He's one funky duck"
+            'reason': "He's one funky duck",
+            'actor': self.user.id
         }
 
         response = self.client.patch(url, data=data)
         self.assertEqual(response.status_code, 200)
 
-        nomination = Nomination.objects.get(id=response.json()['id'])
-        self.assertEqual(nomination.reason, data['reason'])
+        nomination_entry = NominationEntry.objects.get(
+            nomination_id=response.json()['id'],
+            actor_id=self.user.id
+        )
+        self.assertEqual(nomination_entry.reason, data['reason'])
 
     def test_returns_200_update_end_reason_on_inactive(self):
         url = reverse('bot:nomination-detail', args=(self.inactive_nomination.id,), host='api')
@@ -445,3 +483,50 @@ class NominationTests(APISubdomainTestCase):
         infractions = response.json()
 
         self.assertEqual(len(infractions), 2)
+
+    def test_patch_nomination_set_reviewed_of_active_nomination(self):
+        url = reverse('api:nomination-detail', args=(self.active_nomination.id,), host='api')
+        data = {'reviewed': True}
+
+        response = self.client.patch(url, data=data)
+        self.assertEqual(response.status_code, 200)
+
+    def test_patch_nomination_set_reviewed_of_inactive_nomination(self):
+        url = reverse('api:nomination-detail', args=(self.inactive_nomination.id,), host='api')
+        data = {'reviewed': True}
+
+        response = self.client.patch(url, data=data)
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.json(), {
+            'reviewed': ['This field cannot be set if the nomination is inactive.']
+        })
+
+    def test_patch_nomination_set_reviewed_and_end(self):
+        url = reverse('api:nomination-detail', args=(self.active_nomination.id,), host='api')
+        data = {'reviewed': True, 'active': False, 'end_reason': "What?"}
+
+        response = self.client.patch(url, data=data)
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.json(), {
+            'reviewed': ['This field cannot be set while you are ending a nomination.']
+        })
+
+    def test_modifying_reason_without_actor(self):
+        url = reverse('api:nomination-detail', args=(self.active_nomination.id,), host='api')
+        data = {'reason': 'That is my reason!'}
+
+        response = self.client.patch(url, data=data)
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.json(), {
+            'actor': ['This field is required when editing the reason.']
+        })
+
+    def test_modifying_reason_with_unknown_actor(self):
+        url = reverse('api:nomination-detail', args=(self.active_nomination.id,), host='api')
+        data = {'reason': 'That is my reason!', 'actor': 90909090909090}
+
+        response = self.client.patch(url, data=data)
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.json(), {
+            'actor': ["The actor doesn't exist or has not nominated the user."]
+        })
