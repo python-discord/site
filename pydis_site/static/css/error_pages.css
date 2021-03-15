@@ -4,7 +4,7 @@ html {
 
 body {
     background-color: #7289DA;
-    background-image: url("https://raw.githubusercontent.com/python-discord/branding/master/logos/banner_pattern/banner_pattern.svg");
+    background-image: url("https://raw.githubusercontent.com/python-discord/branding/main/logos/banner_pattern/banner_pattern.svg");
     background-size: 128px;
     font-family: "Hind", "Helvetica", "Arial", sans-serif;
     display: flex;

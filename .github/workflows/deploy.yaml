@@ -4,7 +4,7 @@ on:
   workflow_run:
     workflows: ["Build"]
     branches:
-      - master
+      - main
     types:
       - completed
 
@@ -13,6 +13,7 @@ jobs:
     if: github.event.workflow_run.conclusion == 'success'
     name: Deploy to Kubernetes Cluster
     runs-on: ubuntu-latest
+    environment: production
 
     steps:
       - name: Create SHA Container Tag
