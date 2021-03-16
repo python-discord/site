@@ -1,3 +1,5 @@
+from typing import List, Tuple
+
 from django.db import connections
 
 BLOCK_INTERVAL = 10 * 60  # 10 minute blocks
@@ -89,3 +91,42 @@ class Metricity:
             raise NotFound()
 
         return values[0]
+
+    def top_channel_activity(self, user_id: str) -> List[Tuple[str, int]]:
+        """
+        Query the top three channels in which the user is most active.
+
+        Help channels are grouped under "the help channels",
+        and off-topic channels are grouped under "off-topic".
+        """
+        self.cursor.execute(
+            """
+            SELECT
+                CASE
+                    WHEN channels.name ILIKE 'help-%%' THEN 'the help channels'
+                    WHEN channels.name ILIKE 'ot%%' THEN 'off-topic'
+                    WHEN channels.name ILIKE '%%voice%%' THEN 'voice chats'
+                    ELSE channels.name
+                END,
+                COUNT(1)
+            FROM
+                messages
+                LEFT JOIN channels ON channels.id = messages.channel_id
+            WHERE
+                author_id = '%s' AND NOT messages.is_deleted
+            GROUP BY
+                1
+            ORDER BY
+                2 DESC
+            LIMIT
+                3;
+            """,
+            [user_id]
+        )
+
+        values = self.cursor.fetchall()
+
+        if not values:
+            raise NotFound()
+
+        return values
