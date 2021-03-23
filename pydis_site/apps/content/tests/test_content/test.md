@@ -1,6 +1,6 @@
 ---
 title: Test
-short_description: Testing
+description: Testing
 relevant_links:
     Asking Good Questions: https://pythondiscord.com/pages/resources/guides/asking-good-questions/
     Help Channel Guide: https://pythondiscord.com/pages/resources/guides/help-channels/
