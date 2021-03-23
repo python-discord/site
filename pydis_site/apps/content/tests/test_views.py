@@ -30,8 +30,7 @@ class TestArticleOrCategoryView(TestCase):
     @override_settings(ARTICLES_PATH=BASE_PATH)
     @patch("pydis_site.apps.content.views.article_category.utils.get_article")
     @patch("pydis_site.apps.content.views.article_category.utils.get_category")
-    @patch("pydis_site.apps.content.views.article_category.utils.get_github_information")
-    def test_article_return_code_200(self, gh_info_mock, get_category_mock, get_article_mock):
+    def test_article_return_code_200(self, get_category_mock, get_article_mock):
         get_article_mock.return_value = {"guide": "test", "metadata": {}}
 
         url = reverse("content:article_category", args=["test2"])
@@ -39,7 +38,6 @@ class TestArticleOrCategoryView(TestCase):
         self.assertEqual(response.status_code, 200)
         get_category_mock.assert_not_called()
         get_article_mock.assert_called_once()
-        gh_info_mock.assert_called_once()
 
     @patch("pydis_site.apps.content.views.article_category.utils.get_article")
     @patch("pydis_site.apps.content.views.article_category.utils.get_category")
@@ -99,11 +97,9 @@ class TestArticleOrCategoryView(TestCase):
 
     @patch("pydis_site.apps.content.views.article_category.utils.get_article")
     @patch("pydis_site.apps.content.views.article_category.utils.get_category")
-    @patch("pydis_site.apps.content.views.article_category.utils.get_github_information")
     @override_settings(ARTICLES_PATH=BASE_PATH)
     def test_valid_category_article_code_200(
             self,
-            gh_info_mock,
             get_category_mock,
             get_article_mock
     ):
@@ -115,15 +111,12 @@ class TestArticleOrCategoryView(TestCase):
         self.assertEqual(response.status_code, 200)
         get_article_mock.assert_called_once()
         self.assertEqual(get_category_mock.call_count, 2)
-        gh_info_mock.assert_called_once()
 
     @patch("pydis_site.apps.content.views.article_category.utils.get_article")
     @patch("pydis_site.apps.content.views.article_category.utils.get_category")
-    @patch("pydis_site.apps.content.views.article_category.utils.get_github_information")
     @override_settings(ARTICLES_PATH=BASE_PATH)
     def test_invalid_category_article_code_404(
             self,
-            gh_info_mock,
             get_category_mock,
             get_article_mock
     ):
@@ -135,7 +128,6 @@ class TestArticleOrCategoryView(TestCase):
         self.assertEqual(response.status_code, 404)
         get_article_mock.assert_not_called()
         get_category_mock.assert_not_called()
-        gh_info_mock.assert_not_called()
 
     @override_settings(ARTICLES_PATH=BASE_PATH)
     def test_article_category_template_names(self):

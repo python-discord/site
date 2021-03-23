@@ -1,15 +1,10 @@
 import os
 from typing import Dict, List, Optional, Union
 
-import requests
 import yaml
-from dateutil import parser
 from django.conf import settings
 from django.http import Http404
 from markdown2 import markdown
-
-COMMITS_URL = "https://api.github.com/repos/{owner}/{name}/commits?path={path}&sha={branch}"
-BASE_ARTICLES_LOCATION = "pydis_site/apps/content/resources/content/"
 
 
 def get_category(path: List[str]) -> Dict[str, str]:
@@ -77,36 +72,3 @@ def get_article(path: List[str]) -> Dict[str, Union[str, Dict]]:
     )
 
     return {"article": str(html), "metadata": html.metadata}
-
-
-def get_github_information(
-        path: List[str]
-) -> Dict[str, Union[List[str], str]]:
-    """Get article last modified date and contributors from GitHub."""
-    result = requests.get(
-        COMMITS_URL.format(
-            owner=settings.SITE_REPOSITORY_OWNER,
-            name=settings.SITE_REPOSITORY_NAME,
-            branch=settings.SITE_REPOSITORY_BRANCH,
-            path=(
-                f"{BASE_ARTICLES_LOCATION}{'/'.join(path[:-1])}"
-                f"{'/' if len(path) > 1 else ''}{path[-1]}.md"
-            )
-        )
-    )
-
-    if result.status_code == 200 and len(result.json()):
-        data = result.json()
-        return {
-            "last_modified": parser.isoparse(
-                data[0]["commit"]["committer"]["date"]
-            ).strftime("%dth %B %Y"),
-            "contributors": {
-                c["commit"]["committer"]["name"]: c["committer"]["html_url"] for c in data
-            }
-        }
-    else:
-        return {
-            "last_modified": "N/A",
-            "contributors": {}
-        }

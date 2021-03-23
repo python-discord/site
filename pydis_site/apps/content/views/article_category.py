@@ -54,7 +54,6 @@ class ArticleOrCategoryView(TemplateView):
                     article_result["metadata"].get("relevant_link_values", "").split(",")
                 ) if link != "" and value != ""
             }
-            context["github_data"] = utils.get_github_information(location)
         else:
             raise Http404
 
