@@ -48,12 +48,7 @@ class ArticleOrCategoryView(TemplateView):
                 context["category_data"] = {"name": None, "raw_name": None}
 
             context["article"] = article_result
-            context["relevant_links"] = {
-                link: value for link, value in zip(
-                    article_result["metadata"].get("relevant_links", "").split(","),
-                    article_result["metadata"].get("relevant_link_values", "").split(",")
-                ) if link != "" and value != ""
-            }
+            context["relevant_links"] = article_result["metadata"].get("relevant_links", {})
         else:
             raise Http404
 

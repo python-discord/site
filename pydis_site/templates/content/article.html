@@ -43,7 +43,7 @@
                         <div class="box">
                             <p class="menu-label">Relevant links</p>
                             <ul class="menu-list">
-                                {% for link, value in relevant_links.items %}
+                                {% for value, link in relevant_links.items %}
                                     <li><a class="has-text-link" href="{{link}}">{{ value }}</a></li>
                                 {% endfor %}
                             </ul>
