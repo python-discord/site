@@ -5,7 +5,7 @@ from django.http import Http404
 from django.views.generic import TemplateView
 
 
-class PageView(TemplateView):
+class PagesView(TemplateView):
     """Handles event pages showing."""
 
     def get_template_names(self) -> List[str]:

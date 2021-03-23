@@ -1,4 +1,4 @@
 from .index import IndexView
-from .page import PageView
+from .page import PagesView
 
-__all__ = ["IndexView", "PageView"]
+__all__ = ["IndexView", "PagesView"]

@@ -287,4 +287,4 @@ SITE_REPOSITORY_OWNER = "python-discord"
 SITE_REPOSITORY_NAME = "site"
 SITE_REPOSITORY_BRANCH = "master"
 
-ARTICLES_PATH = Path(BASE_DIR, "pydis_site", "apps", "content", "resources", "content")
+PAGES_PATH = Path(BASE_DIR, "pydis_site", "apps", "content", "resources", "content")

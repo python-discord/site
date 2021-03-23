@@ -1,12 +1,12 @@
 {% extends 'base/base.html' %}
 {% load static %}
 
-{% block title %}{{ article.metadata.title }}{% endblock %}
+{% block title %}{{ page.metadata.title }}{% endblock %}
 {% block head %}
-  <meta property="og:title" content="Python Discord - {{ article.metadata.title }}" />
+  <meta property="og:title" content="Python Discord - {{ page.metadata.title }}" />
   <meta property="og:type" content="website" />
-  <meta property="og:description" content="{{ article.metadata.short_description }}" />
-  <link rel="stylesheet" href="{% static "css/content/articles.css" %}">
+  <meta property="og:description" content="{{ page.metadata.short_description }}" />
+  <link rel="stylesheet" href="{% static "css/content/page.css" %}">
   <link rel="stylesheet"
     href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/styles/atom-one-dark-reasonable.min.css">
   <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/highlight.min.js"></script>
@@ -20,11 +20,11 @@
         <div class="container">
             <nav class="breadcrumb is-pulled-left" aria-label="breadcrumbs">
                 <ul>
-                    <li><a href="{% url "content:articles" %}">Articles</a></li>
+                    <li><a href="{% url "content:pages" %}">Pages</a></li>
                     {% for item in breadcrumb_items %}
-                        <li><a href="{% url "content:article_category" location=item.path %}">{{ item.name }}</a></li>
+                        <li><a href="{% url "content:page_category" location=item.path %}">{{ item.name }}</a></li>
                     {% endfor %}
-                    <li class="is-active"><a href="#">{{ article.metadata.title }}</a></li>
+                    <li class="is-active"><a href="#">{{ page.metadata.title }}</a></li>
                 </ul>
             </nav>
         </div>
@@ -33,10 +33,10 @@
     <section class="section">
         <div class="content">
             <div class="container">
-                <h1 class="title">{{ article.metadata.title }}</h1>
+                <h1 class="title">{{ page.metadata.title }}</h1>
                 <div class="columns is-variable is-8">
                     <div class="column is-two-thirds">
-                        {{ article.article|safe }}
+                        {{ page.page|safe }}
                     </div>
                     <div class="column">
                         {% if relevant_links|length > 0 %}

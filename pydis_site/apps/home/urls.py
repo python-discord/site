@@ -8,6 +8,6 @@ urlpatterns = [
     path('', HomeView.as_view(), name='home'),
     path('admin/', admin.site.urls),
     path('resources/', include('pydis_site.apps.resources.urls')),
-    path('articles/', include('pydis_site.apps.content.urls')),
+    path('pages/', include('pydis_site.apps.content.urls')),
     path('events/', include('pydis_site.apps.events.urls', namespace='events')),
 ]

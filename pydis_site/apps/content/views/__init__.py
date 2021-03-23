@@ -1,4 +1,4 @@
-from .article_category import ArticleOrCategoryView
-from .articles import ArticlesView
+from .page_category import PageOrCategoryView
+from .pages import PagesView
 
-__all__ = ["ArticleOrCategoryView", "ArticlesView"]
+__all__ = ["PageOrCategoryView", "PagesView"]

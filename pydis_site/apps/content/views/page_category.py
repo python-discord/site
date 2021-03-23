@@ -7,18 +7,18 @@ from django.views.generic import TemplateView
 from pydis_site.apps.content import utils
 
 
-class ArticleOrCategoryView(TemplateView):
-    """Handles article and category pages."""
+class PageOrCategoryView(TemplateView):
+    """Handles pages and page categories."""
 
     def get_template_names(self) -> t.List[str]:
-        """Checks does this use article template or listing template."""
+        """Checks does this use page template or listing template."""
         location = self.kwargs["location"].split("/")
-        full_location = settings.ARTICLES_PATH.joinpath(*location)
+        full_location = settings.PAGES_PATH.joinpath(*location)
 
         if full_location.is_dir():
             template_name = "content/listing.html"
         elif full_location.with_suffix(".md").is_file():
-            template_name = "content/article.html"
+            template_name = "content/page.html"
         else:
             raise Http404
 
@@ -29,17 +29,17 @@ class ArticleOrCategoryView(TemplateView):
         context = super().get_context_data(**kwargs)
 
         location: list = self.kwargs["location"].split("/")
-        full_location = settings.ARTICLES_PATH.joinpath(*location)
+        full_location = settings.PAGES_PATH.joinpath(*location)
 
         if full_location.is_dir():
             context["category_info"] = utils.get_category(location)
-            context["content"] = utils.get_articles(location)
+            context["content"] = utils.get_pages(location)
             context["categories"] = utils.get_categories(location)
             # Add trailing slash here to simplify template
             context["path"] = "/".join(location) + "/"
             context["in_category"] = True
         elif full_location.with_suffix(".md").is_file():
-            article_result = utils.get_article(location)
+            page_result = utils.get_page(location)
 
             if len(location) > 1:
                 context["category_data"] = utils.get_category(location[:-1])
@@ -47,8 +47,8 @@ class ArticleOrCategoryView(TemplateView):
             else:
                 context["category_data"] = {"name": None, "raw_name": None}
 
-            context["article"] = article_result
-            context["relevant_links"] = article_result["metadata"].get("relevant_links", {})
+            context["page"] = page_result
+            context["relevant_links"] = page_result["metadata"].get("relevant_links", {})
         else:
             raise Http404
 

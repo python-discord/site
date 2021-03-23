@@ -9,7 +9,7 @@ from markdown2 import markdown
 
 def get_category(path: List[str]) -> Dict[str, str]:
     """Load category information by name from _info.yml."""
-    path = settings.ARTICLES_PATH.joinpath(*path)
+    path = settings.PAGES_PATH.joinpath(*path)
     if not path.exists() or not path.is_dir():
         raise Http404("Category not found.")
 
@@ -20,10 +20,10 @@ def get_categories(path: Optional[List[str]] = None) -> Dict[str, Dict]:
     """Get all categories information."""
     categories = {}
     if path is None:
-        categories_path = settings.ARTICLES_PATH
+        categories_path = settings.PAGES_PATH
         path = []
     else:
-        categories_path = settings.ARTICLES_PATH.joinpath(*path)
+        categories_path = settings.PAGES_PATH.joinpath(*path)
 
     for name in categories_path.iterdir():
         if name.is_dir():
@@ -32,34 +32,34 @@ def get_categories(path: Optional[List[str]] = None) -> Dict[str, Dict]:
     return categories
 
 
-def get_articles(path: Optional[List[str]] = None) -> Dict[str, Dict]:
-    """Get all root or category articles."""
+def get_pages(path: Optional[List[str]] = None) -> Dict[str, Dict]:
+    """Get all root or category pages."""
     if path is None:
-        base_dir = settings.ARTICLES_PATH
+        base_dir = settings.PAGES_PATH
     else:
-        base_dir = settings.ARTICLES_PATH.joinpath(*path)
+        base_dir = settings.PAGES_PATH.joinpath(*path)
 
-    articles = {}
+    pages = {}
 
     for item in base_dir.iterdir():
         if item.is_file() and item.name.endswith(".md"):
             md = markdown(item.read_text(), extras=["metadata"])
-            articles[os.path.splitext(item.name)[0]] = md.metadata
+            pages[os.path.splitext(item.name)[0]] = md.metadata
 
-    return articles
+    return pages
 
 
-def get_article(path: List[str]) -> Dict[str, Union[str, Dict]]:
-    """Get one specific article. When category is specified, get it from there."""
-    article_path = settings.ARTICLES_PATH.joinpath(*path[:-1])
+def get_page(path: List[str]) -> Dict[str, Union[str, Dict]]:
+    """Get one specific page. When category is specified, get it from there."""
+    page_path = settings.PAGES_PATH.joinpath(*path[:-1])
 
     # We need to include extension MD
-    article_path = article_path.joinpath(f"{path[-1]}.md")
-    if not article_path.exists() or not article_path.is_file():
-        raise Http404("Article not found.")
+    page_path = page_path.joinpath(f"{path[-1]}.md")
+    if not page_path.exists() or not page_path.is_file():
+        raise Http404("Page not found.")
 
     html = markdown(
-        article_path.read_text(),
+        page_path.read_text(),
         extras=[
             "metadata",
             "fenced-code-blocks",
@@ -71,4 +71,4 @@ def get_article(path: List[str]) -> Dict[str, Union[str, Dict]]:
         ]
     )
 
-    return {"article": str(html), "metadata": html.metadata}
+    return {"page": str(html), "metadata": html.metadata}

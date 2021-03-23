@@ -4,6 +4,6 @@ from . import views
 
 app_name = "content"
 urlpatterns = [
-    path("", views.ArticlesView.as_view(), name='articles'),
-    path("<path:location>/", views.ArticleOrCategoryView.as_view(), name='article_category'),
+    path("", views.PagesView.as_view(), name='pages'),
+    path("<path:location>/", views.PageOrCategoryView.as_view(), name='page_category'),
 ]
