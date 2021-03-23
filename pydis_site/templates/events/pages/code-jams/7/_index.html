@@ -1,92 +1,75 @@
-{% extends "events/base.html" %}
+{% extends "events/base_sidebar.html" %}
 
-{% block title %}Summer Code Jam 2020{% endblock %}
+{% block title %}Summer Code Jam 2020: Early Internet{% endblock %}
 
 {% block breadcrumb %}
     <li><a href="{% url "events:index" %}">Events</a></li>
     <li><a href="{% url "events:page" path="code-jams" %}">Code Jams</a></li>
-    <li class="is-active"><a href="#">Summer Code Jam 2020</a></li>
+    <li class="is-active"><a href="#">Summer Code Jam 2020: Early Internet</a></li>
 {% endblock %}
 
 {% block event_content %}
     <p>
-        Ladies and gentlemen, it’s that time of year again! The 7<sub>th</sub> Python Discord Code Jam is imminent.
-        This code jam will be held from <strong>Friday, July 31<sup>st</sup> to Sunday, August 9<sup>th</sup></strong>
-        where you will complete in teams of five for the elusive title of Code Jam Champion and win some of the many prizes listed.
-    </p>
-    <p>
-        Web development is one of the most popular areas for Python software and development.
-        For this code jam, you will be utilizing the <strong>Django</strong> framework to create a web application.
-        The Django Software Foundation has even decided to sponsor this event,
-        allowing us to add more prizes to our prize pool.
-    </p>
-    <p>
-        Are you unsure of what a code jam is? If so, check out our <a href="/events/code-jams">general code jam page</a>.
+        For Python Discord's 7<sup>th</sup> biannual code jam, contestants utilized the <strong>Django</strong> framework
+        to create a web application. The theme for this event was <strong>Early Internet</strong>, lasting from
+        July 31<sup>st</sup> to August 9<sup>th</sup>. This was our largest event ever, with over 50 teams competing
+        for prizes from our prize pool along with the illustrious role of <code>Code Jam Champions</code> on our server.
     </p>
 
-    <article class="message is-warning">
-        <div class="message-header">
-            <p>Signups are closed</p>
-        </div>
-
-        <div class="message-body">
-            <p>
-                The sign-up period for the Summer Code Jam 2020 is over,
-                which means that you can no longer sign up for the Code Jam.
-                You can still take a look at
-                <a href="https://github.com/python-discord/summer-code-jam-2020-qualifier">the qualifier</a>
-                to get an idea of the task we asked the participants to complete in order to qualify for the jam.
-                If you want to compete in the next Code Jam,
-                subscribe to the announcements posted in our community by using the
-                <code>!subscribe</code> command in the <code>#bot-commands</code> channel of our server.
-            </p>
-        </div>
-    </article>
-
-    <h3>New to Django?</h3>
+    <h3 id="task-description"><a href="#task-description">Task Description</a></h3>
     <p>
-        Don't worry! This code jam will be the perfect opportunity for you to get to know one of the most popular web frameworks for Python.
-        Whether it be a REST API or full fledged website, Django can do it!
+        The original task description, as found in the <a href="https://github.com/python-discord/summer-code-jam-2020">repository</a>, was as follows:
     </p>
+    <blockquote>
+        <strong>The theme for this code jam is Early Internet.</strong>
+        <p>
+            What you do with this theme or how you interpret it is up to you, but it will be your task to come up with something fun using this theme.
+        </p>
+
+        <strong>The chosen technology for this game jam is <a href="https://www.djangoproject.com/">Django</a>.</strong>
+        <p>
+            Django is a high-level Python Web framework that encourages rapid development and clean, pragmatic design. It comes "batteries included" with a slew of incredibly polished features, including database migrations, an excellent CRM, access control, security features to prevent you from making expensive mistakes, and
+            <a href="https://docs.djangoproject.com/en/3.0/">probably the best documentation on the internet</a>.
+        </p>
+    </blockquote>
+
+    <h3 id="judging-stream"><a href="#judging-stream">Judging Stream</a></h3>
     <p>
-        During the event, feel free to ask Django-specific questions in the code jam channels
-        or <code>#web-development</code>. As always, our helpers will be there to help you with all the
-        other Python-related questions that you have via our <a href="/pages/resources/guides/help-channels">help channel system</a>. <!-- Change help channels page link after content app is ready. -->
-    </p>
-    <p>
-        If you want to get familiar with Django before the event starts, be sure to check out <a href="https://docs.djangoproject.com/en/3.0/intro/">the tutorial in the official
-        Django documentation</a>. Alternatively, you could have a look at Corey Schafer's <a href="https://www.youtube.com/playlist?list=PL-osiE80TeTtoQCKZ03TU5fNfx2UY6U4p">Django Tutorials playlist</a> on YouTube.
+        If you want to watch the original code jam judging stream, you can find it on YouTube - all of the submissions are showcased in the stream. The winning project is showcased at the <a href="https://youtu.be/OFtm8f2iu6c?t=6443">01:47:23</a> timestamp.
     </p>
 
-    <h3>Prizes</h3>
-    <p>This year's prize pool includes:</p>
-    <ul>
-        <li>5 JetBrains 1-year any product licenses</li>
-        <li>5 Django hoodies</li>
-        <li>Python Discord t-shirts</li>
-    </ul>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/OFtm8f2iu6c" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+    <h3 id="results"><a href="#results">Results</a></h3>
     <p>
-        We will award as many Python Discord t-shirts as we can afford!
-        We want to thank all of our Patrons over at our
-        <a href="https://www.patreon.com/python_discord">Patreon account</a> for making this possible.
-        We literally couldn't do this without you!
-    </p>
-    <h3>Qualifier & Signups</h3>
-    <p>
-        It is no longer possible to sign up for the Summer Code Jam 2020.
-        If you would like to attempt the qualifier assignment as a personal challenge, you can find it on
-        <a href="https://github.com/python-discord/summer-code-jam-2020-qualifier">GitHub</a>.
-        The repository also includes a test suite and a solution.
+        The <strong>winning team</strong> for this code jam was the <strong>Juicy Jaguars</strong>, consisting of charlotte, joshuqa, and dang.
+        They created an incredible Windows 95 web application, named Web95. It included a plethora of features, such as movable windows,
+        a start menu, a recreation of Internet Explorer, different themes & wallpapers, and a couple of fun easter eggs. The killer feature of this project was Internet Explorer. It processed the fonts, images, and colors of each webpage visited to make the experience feel as if
+        it were from the 90s! This was an incredibly novel idea, which was executed beautifully.
     </p>
     <p>
-        If you would like to participate in one of our future events and don't want to risk missing it,
-        subscribe to our announcements by using the <code>!subscribe</code> command in the <code>#bot-commands</code> channel on our Discord server.
+        Check out their submission in our <a href="https://github.com/python-discord/summer-code-jam-2020/tree/master/juicy-jaguars">repository</a>
+        and watch us review it on the <a href="https://youtu.be/OFtm8f2iu6c?t=6443">livestream</a>!
     </p>
-    <h3>Theme</h3>
+
+    <h3 id="runner-up-1"><a href="#runner-up-1">Runner up 1: Annoyed Alligators</a></h3>
     <p>
-        Similarly to our previous code jams, the theme was chosen by our community!
-        By the end of our two-step voting process,
-        <strong>Early Internet</strong> came out on top and is the official theme for this code jam.
+        The <strong>Annoyed Alligators</strong> (i..kun, gkrou, SurvivingOnNaps, corner, and pykam) created a social media platform which is controllable by
+        a command line interface, named SoCommandLine Media (SoCL). Users can signup to create posts and view what others have posted already, all via the
+        command line. It evens supports direct messaging other users and getting the latest news articles for you to read!
+    </p>
+    <p>
+        Have a look at their submission in our <a href="https://github.com/python-discord/summer-code-jam-2020/tree/master/annoyed-alligators">repository</a>
+        and view it on the <a href="https://youtu.be/OFtm8f2iu6c?t=2200">livestream</a>!
+    </p>
+
+    <h3 id="runner-up-2"><a href="#runner-up-2">Runner up 2: Mysterious Mice</a></h3>
+    <p>
+        The <strong>Mysterious Mice</strong> (rryyaann, onatoko, n0remac, and venturafranklin) created a social media site for NASA's rovers, named SpaceBook. It included profiles and photos of each rover, showed what the weather was like on Mars, and even had a text-based adventure game in a terminal! The beautiful, retro UI along with the animated space background made it a pleasure to use.
+    </p>
+    <p>
+        Feel free to check out their submission in our <a href="https://github.com/python-discord/summer-code-jam-2020/tree/master/mysterious-mice">repository</a>
+        and watch us use it on the <a href="https://youtu.be/OFtm8f2iu6c?t=7624">livestream</a>!
     </p>
 {% endblock %}
 

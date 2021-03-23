@@ -1,38 +1,7 @@
-{% extends "base/base.html" %}
-{% load static %}
+{% extends "events/_base.html" %}
 
-{% block head %}
-    <link rel="stylesheet" href="{% static "css/events/base.css" %}">
-{% endblock %}
-
-{% block content %}
-    {% include "base/navbar.html" %}
-
-    <section class="breadcrumb-section section">
-        <div class="container">
-            <nav class="breadcrumb is-pulled-left" aria-label="breadcrumbs">
-                <ul>
-                    {% block breadcrumb %}{% endblock %}
-                </ul>
-            </nav>
-        </div>
-    </section>
-
-    <section class="section">
-        <div class="container">
-            <div class="content">
-                <h1>{% block title %}{% endblock %}</h1>
-                <div>
-                    <div class="columns is-variable is-8">
-                        <div class="column is-two-thirds">
-                            {% block event_content %}{% endblock %}
-                        </div>
-                        <div class="column">
-                            {% block sidebar %}{% endblock %}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+{% block event_base_content %}
+<div>
+    {% block event_content %}{% endblock %}
+</div>
 {% endblock %}

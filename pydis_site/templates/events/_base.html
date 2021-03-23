@@ -1,0 +1,33 @@
+{% extends "base/base.html" %}
+{% load static %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static "css/events/base.css" %}">
+    <link rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.4.0/styles/atom-one-dark-reasonable.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.4.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+{% endblock %}
+
+{% block content %}
+    {% include "base/navbar.html" %}
+
+    <section class="breadcrumb-section section">
+        <div class="container">
+            <nav class="breadcrumb is-pulled-left" aria-label="breadcrumbs">
+                <ul>
+                    {% block breadcrumb %}{% endblock %}
+                </ul>
+            </nav>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="content">
+                <h1>{% block title %}{% endblock %}</h1>
+                <div>{% block event_base_content %}{% endblock %}</div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

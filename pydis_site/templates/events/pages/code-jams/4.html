@@ -1,0 +1,93 @@
+{% extends "events/base.html" %}
+
+{% block title %}Code Jam 4: This Apps Hates You{% endblock %}
+
+{% block breadcrumb %}
+    <li><a href="{% url "events:index" %}">Events</a></li>
+    <li><a href="{% url "events:page" path="code-jams" %}">Code Jams</a></li>
+    <li class="is-active"><a href="#">Code Jam 4: This Apps Hates You</a></li>
+{% endblock %}
+
+{% block event_content %}
+    <p>
+        The theme for code jam 4 was creating a <strong>GUI application</strong> with the theme <strong>this app hates you</strong>.
+        19 randomly assembled teams worked on this task for three days from the 22nd of February, 00:00 UTC.
+    </p>
+
+    <h2 id="task-description" class="title is-4"><a href="#task-description">Task Description</a></h2>
+    <p>
+        The original task description,
+        as found in the <a href="https://github.com/python-discord/code-jam-4">repository</a> was as follows:
+    </p>
+    <blockquote>
+        <p>
+            The theme for this code jam will be <strong>This app hates you!</strong>.
+            You will be creating an application using a GUI library of your choice in Python.
+            The application must serve a real purpose, but must also fit the theme.
+        </p>
+        <p>
+            Here are a couple of examples of what we mean by an application that "serves a real purpose but also fits the theme":
+        </p>
+        <ul>
+            <li><p>A calculator app that calculates the right answers, but represents the answer in a way that's completely impractical.</p></li>
+            <li>
+                <p>
+                    An image resizer where you have to specify which part of the image to resize,
+                    specify how much force to apply to the resize operation in newtons,
+                    and then manually resize the image by turning a crank.
+                </p>
+            </li>
+            <li>
+                <p>
+                    An alarm clock app that plays a very loud sound effect every 5 minutes reminding you that your alarm will ring in 6 hours.
+                    The closer it gets to the 6 hour mark, the lower the volume of the sound effect.
+                    When the time is up, the sound effect is virtually inaudible.
+                </p>
+            </li>
+        </ul>
+    </blockquote>
+
+    <h2 id="judging-stream" class="title is-4"><a href="#judging-stream">Judging stream</a></h2>
+    <p>
+        If you want to watch the original code jam judging stream,
+        you can find it on YouTube - all of the submissions are showcased in the stream.
+        The winning project is showcased at around the 40 minute mark.
+    </p>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/TlU6GPGbSuY?start=805" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+    <h2 id="results" class="title is-4"><a href="#results">Results</a></h2>
+    <p>
+        The <strong>winning team</strong> for this code jam was the team <strong>Cool Crocodiles</strong>,
+        consisting of Runew0lf, gl4cial, and syntaxaire.
+        They created a text editor called CrocPad++ featuring an infuriating troubleshooter that would pop up every five or so characters,
+        sound effects when you type, the ability to insert symbols by turning a dial,
+        a theme "for blind users", and many more features.
+    </p>
+
+    <h2 id="runner-up-1" class="title is-4"><a href="#runner-up-1">Runner up 1: Team Enthusiastic Electricians</a></h2>
+    <p>
+        The <strong>first runner up</strong> for this code jam was the team <strong>Enthusiastic Electricians</strong>,
+        who made a paint tool called <i>ArtiQule</i> where the pencil point would break,
+        colors would blend together on your palette, and the paint brush would drip onto the canvas.
+    </p>
+
+    <h2 id="runner-up-2" class="title is-4"><a href="#runner-up-2">Runner up 2: Team Slithering Snacks</a></h2>
+    <p>
+        The <strong>second runner up</strong> for this code jam was the team <strong>Slithering Snacks</strong>.
+        They ade a media player where you had to fill out a CAPTCHA every time you wanted to load a file,
+        register an account, and confirm your password to log in by typing it with all the characters <i>in alphabetic order</i>.
+    </p>
+
+    <h2 id="honorable-mentions" class="title is-4"><a href="#honorable-mentions">Honorable mentions</a></h2>
+    <p>While they didn't make it on top of the ladder, the following submissions have stood out exceptionally:</p>
+    <ul>
+        <li><p>Team <strong>Blue Buckets</strong> won best code quality with their <i>Tinder for Cats</i>.</p></li>
+        <li>
+            <p>
+                Team <strong>Overjoyed <a href="https://wiki.teamfortress.com/wiki/Otolaryngologist%27s_Mirror">Otolaryngologists</a></strong>
+                won best looking UI with their sleek <i>Minesweeper</i> game where you had to press each tile up to 100 times to break it and only got one flag.
+            </p>
+        </li>
+        <li><p>Team <strong>High Houses</strong> won best idea with an <i>on-screen keyboard</i> where you only got some of the keys and additional keys had to be unlocked by gaining XP, leveling up, and getting loot boxes.</p></li>
+    </ul>
+{% endblock %}
