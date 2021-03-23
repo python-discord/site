@@ -208,7 +208,11 @@ h1 {
     padding-bottom: 3rem;
 }
 
+#sponsors .columns {
+    justify-content: center;
+}
+
 #sponsors img {
     height: 5rem;
-    margin-right: 2rem;
+    margin: auto 1rem;
 }
