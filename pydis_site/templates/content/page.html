@@ -33,23 +33,26 @@
         <div class="content">
             <div class="container">
                 <h1 class="title">{{ page.metadata.title }}</h1>
-                <div class="columns is-variable is-8">
-                    <div class="column is-two-thirds">
-                        {{ page.page|safe }}
-                    </div>
-                    <div class="column">
-                        {% if relevant_links|length > 0 %}
-                        <div class="box">
-                            <p class="menu-label">Relevant links</p>
-                            <ul class="menu-list">
-                                {% for value, link in relevant_links.items %}
-                                    <li><a class="has-text-link" href="{{link}}">{{ value }}</a></li>
-                                {% endfor %}
-                            </ul>
+
+                {% if relevant_links|length > 0 %}
+                    <div class="columns is-variable is-8">
+                        <div class="column is-two-thirds">
+                            {{ page.page|safe }}
                         </div>
-                        {% endif %}
+                        <div class="column">
+                            <div class="box">
+                                <p class="menu-label">Relevant links</p>
+                                <ul class="menu-list">
+                                    {% for value, link in relevant_links.items %}
+                                        <li><a class="has-text-link" href="{{link}}">{{ value }}</a></li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
                     </div>
-                </div>
+                {% else %}
+                    <div>{{ page.page|safe }}</div>
+                {% endif %}
             </div>
         </div>
     </section>
