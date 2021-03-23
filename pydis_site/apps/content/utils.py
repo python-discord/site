@@ -47,6 +47,7 @@ def get_page(path: Path) -> Dict[str, Union[str, Dict]]:
         extras=[
             "metadata",
             "fenced-code-blocks",
+            "highlightjs-lang",
             "header-ids",
             "strike",
             "target-blank-links",
