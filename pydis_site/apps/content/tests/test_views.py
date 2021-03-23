@@ -11,33 +11,17 @@ from pydis_site.apps.content.views import PageOrCategoryView
 BASE_PATH = Path(settings.BASE_DIR, "pydis_site", "apps", "content", "tests", "test_content")
 
 
-class TestPagesIndexView(TestCase):
-    @patch("pydis_site.apps.content.views.pages.get_pages")
-    @patch("pydis_site.apps.content.views.pages.get_categories")
-    def test_pages_index_return_200(self, get_categories_mock, get_page_mock):
-        """Check that content index return HTTP code 200."""
-        get_categories_mock.return_value = {}
-        get_page_mock.return_value = {}
-
-        url = reverse('content:pages')
-        response = self.client.get(url)
-        self.assertEqual(response.status_code, 200)
-        get_page_mock.assert_called_once()
-        get_categories_mock.assert_called_once()
-
-
 class TestPageOrCategoryView(TestCase):
     @override_settings(PAGES_PATH=BASE_PATH)
     @patch("pydis_site.apps.content.views.page_category.utils.get_page")
     @patch("pydis_site.apps.content.views.page_category.utils.get_category")
-    @patch("pydis_site.apps.content.views.page_category.utils.get_github_information")
     def test_page_return_code_200(self, get_category_mock, get_page_mock):
         get_page_mock.return_value = {"guide": "test", "metadata": {}}
 
         url = reverse("content:page_category", args=["test2"])
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
-        get_category_mock.assert_not_called()
+        get_category_mock.assert_called_once()
         get_page_mock.assert_called_once()
 
     @patch("pydis_site.apps.content.views.page_category.utils.get_page")
@@ -72,7 +56,7 @@ class TestPageOrCategoryView(TestCase):
 
         self.assertEqual(response.status_code, 200)
         get_pages_mock.assert_called_once()
-        get_category_mock.assert_called_once()
+        self.assertEqual(get_category_mock.call_count, 2)
         get_categories_mock.assert_called_once()
 
     @patch("pydis_site.apps.content.views.page_category.utils.get_category")
@@ -145,7 +129,9 @@ class TestPageOrCategoryView(TestCase):
                 request = factory.get(f"/pages/{case['location']}")
                 instance = PageOrCategoryView()
                 instance.request = request
-                instance.kwargs = {"location": case["location"]}
+                location = Path(case["location"])
+                instance.location = location
+                instance.full_location = BASE_PATH / location
 
                 if "raises" in case:
                     with self.assertRaises(case["raises"]):

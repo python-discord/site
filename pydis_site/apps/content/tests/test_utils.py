@@ -1,6 +1,5 @@
-from datetime import datetime
 from pathlib import Path
-from unittest.mock import MagicMock, patch
+from unittest.mock import patch
 
 from django.conf import settings
 from django.http import Http404
@@ -16,7 +15,8 @@ class TestGetCategory(TestCase):
     @override_settings(PAGES_PATH=BASE_PATH)
     def test_get_category_successfully(self):
         """Check does this get right data from category data file."""
-        result = utils.get_category(["category"])
+        path = BASE_PATH.joinpath("category")
+        result = utils.get_category(path)
 
         self.assertEqual(result, {"name": "My Category", "description": "My Description"})
 
@@ -24,13 +24,15 @@ class TestGetCategory(TestCase):
     def test_get_category_not_exists(self):
         """Check does this raise 404 error when category don't exists."""
         with self.assertRaises(Http404):
-            utils.get_category(["invalid"])
+            path = BASE_PATH.joinpath("invalid")
+            utils.get_category(path)
 
     @override_settings(PAGES_PATH=BASE_PATH)
     def test_get_category_not_directory(self):
         """Check does this raise 404 error when category isn't directory."""
         with self.assertRaises(Http404):
-            utils.get_category(["test.md"])
+            path = BASE_PATH.joinpath("test.md")
+            utils.get_category(path)
 
 
 class TestGetCategories(TestCase):
@@ -40,25 +42,18 @@ class TestGetCategories(TestCase):
         """Check does this return test content categories."""
         get_category_mock.return_value = {"name": "My Category", "description": "My Description"}
 
-        result = utils.get_categories()
-        get_category_mock.assert_called_once_with(["category"])
+        path = BASE_PATH.joinpath("category")
+        result = utils.get_categories(path)
 
         self.assertEqual(
-            result, {"category": {"name": "My Category", "description": "My Description"}}
-        )
-
-    @override_settings(PAGES_PATH=BASE_PATH)
-    def test_get_categories_root_path(self):
-        """Check does this doesn't call joinpath when getting root categories."""
-        result = utils.get_categories()
-        self.assertEqual(
-            result, {"category": {"name": "My Category", "description": "My Description"}}
+            result, {"subcategory": {"name": "My Category", "description": "My Description"}}
         )
 
     @override_settings(PAGES_PATH=BASE_PATH)
     def test_get_categories_in_category(self):
         """Check does this call joinpath when getting subcategories."""
-        result = utils.get_categories(["category"])
+        path = BASE_PATH.joinpath("category")
+        result = utils.get_categories(path)
         self.assertEqual(
             result, {"subcategory": {"name": "My Category 1", "description": "My Description 1"}}
         )
@@ -68,7 +63,8 @@ class TestGetPages(TestCase):
     @override_settings(PAGES_PATH=BASE_PATH)
     def test_get_all_root_pages(self):
         """Check does this return all root level testing content."""
-        result = utils.get_pages()
+        path = BASE_PATH
+        result = utils.get_pages(path)
 
         for case in ["test", "test2"]:
             with self.subTest(guide=case):
@@ -80,7 +76,8 @@ class TestGetPages(TestCase):
     @override_settings(PAGES_PATH=BASE_PATH)
     def test_get_all_category_pages(self):
         """Check does this return all category testing content."""
-        result = utils.get_pages(["category"])
+        path = BASE_PATH.joinpath("category")
+        result = utils.get_pages(path)
 
         md = markdown(BASE_PATH.joinpath("category", "test3.md").read_text(), extras=["metadata"])
 
@@ -92,7 +89,8 @@ class TestGetPage(TestCase):
     @override_settings(PAGES_PATH=BASE_PATH)
     def test_get_root_page_success(self):
         """Check does this return page HTML and metadata when root page exist."""
-        result = utils.get_page(["test"])
+        path = BASE_PATH.joinpath("test.md")
+        result = utils.get_page(path)
 
         md = markdown(
             BASE_PATH.joinpath("test.md").read_text(),
@@ -113,12 +111,14 @@ class TestGetPage(TestCase):
     def test_get_root_page_dont_exist(self):
         """Check does this raise Http404 when root page don't exist."""
         with self.assertRaises(Http404):
-            utils.get_page(["invalid"])
+            path = BASE_PATH.joinpath("invalid")
+            utils.get_page(path)
 
     @override_settings(PAGES_PATH=BASE_PATH)
     def test_get_category_page_success(self):
         """Check does this return page HTML and metadata when category guide exist."""
-        result = utils.get_page(["category", "test3"])
+        path = BASE_PATH.joinpath("category", "test3.md")
+        result = utils.get_page(path)
 
         md = markdown(
             BASE_PATH.joinpath("category", "test3.md").read_text(),
@@ -139,10 +139,12 @@ class TestGetPage(TestCase):
     def test_get_category_page_dont_exist(self):
         """Check does this raise Http404 when category page don't exist."""
         with self.assertRaises(Http404):
-            utils.get_page(["category", "invalid"])
+            path = BASE_PATH.joinpath("category", "invalid")
+            utils.get_page(path)
 
     @patch("pydis_site.settings.PAGES_PATH", new=BASE_PATH)
     def test_get_category_page_category_dont_exist(self):
         """Check does this raise Http404 when category don't exist."""
         with self.assertRaises(Http404):
-            utils.get_page(["invalid", "some-guide"])
+            path = BASE_PATH.joinpath("invalid", "some-guide")
+            utils.get_page(path)
