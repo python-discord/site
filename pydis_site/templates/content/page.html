@@ -20,7 +20,6 @@
         <div class="container">
             <nav class="breadcrumb is-pulled-left" aria-label="breadcrumbs">
                 <ul>
-                    <li><a href="{% url "content:pages" %}">Pages</a></li>
                     {% for item in breadcrumb_items %}
                         <li><a href="{% url "content:page_category" location=item.path %}">{{ item.name }}</a></li>
                     {% endfor %}

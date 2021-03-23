@@ -16,13 +16,10 @@
         <div class="container">
             <nav class="breadcrumb is-pulled-left" aria-label="breadcrumbs">
                 <ul>
-                    {% if in_category %}
-                        <li><a href="{% url "content:pages" %}">Pages</a></li>
-                    {% endif %}
                     {% for item in breadcrumb_items %}
                         <li><a href="{% url "content:page_category" location=item.path %}">{{ item.name }}</a></li>
                     {% endfor %}
-                    <li class="is-active"><a href="#">{{ category_info.name|default:"Pages" }}</a></li>
+                    <li class="is-active"><a href="#">{{ category_info.name }}</a></li>
                 </ul>
             </nav>
         </div>

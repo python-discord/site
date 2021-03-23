@@ -1,4 +1,5 @@
 import typing as t
+from pathlib import Path
 
 from django.conf import settings
 from django.http import Http404
@@ -10,14 +11,18 @@ from pydis_site.apps.content import utils
 class PageOrCategoryView(TemplateView):
     """Handles pages and page categories."""
 
+    def dispatch(self, request: t.Any, *args, **kwargs) -> t.Any:
+        """Conform URL path location to the filesystem path."""
+        self.location = Path(self.kwargs.get("location", ""))
+        self.full_location = settings.PAGES_PATH / self.location
+
+        return super().dispatch(request, *args, **kwargs)
+
     def get_template_names(self) -> t.List[str]:
         """Checks does this use page template or listing template."""
-        location = self.kwargs["location"].split("/")
-        full_location = settings.PAGES_PATH.joinpath(*location)
-
-        if full_location.is_dir():
+        if self.full_location.is_dir():
             template_name = "content/listing.html"
-        elif full_location.with_suffix(".md").is_file():
+        elif self.full_location.with_suffix(".md").is_file():
             template_name = "content/page.html"
         else:
             raise Http404
@@ -28,42 +33,24 @@ class PageOrCategoryView(TemplateView):
         """Assign proper context variables based on what resource user requests."""
         context = super().get_context_data(**kwargs)
 
-        location: list = self.kwargs["location"].split("/")
-        full_location = settings.PAGES_PATH.joinpath(*location)
-
-        if full_location.is_dir():
-            context["category_info"] = utils.get_category(location)
-            context["content"] = utils.get_pages(location)
-            context["categories"] = utils.get_categories(location)
-            # Add trailing slash here to simplify template
-            context["path"] = "/".join(location) + "/"
-            context["in_category"] = True
-        elif full_location.with_suffix(".md").is_file():
-            page_result = utils.get_page(location)
-
-            if len(location) > 1:
-                context["category_data"] = utils.get_category(location[:-1])
-                context["category_data"]["raw_name"] = location[:-1][-1]
-            else:
-                context["category_data"] = {"name": None, "raw_name": None}
-
+        if self.full_location.is_dir():
+            context["categories"] = utils.get_categories(self.full_location)
+            context["category_info"] = utils.get_category(self.full_location)
+            context["content"] = utils.get_pages(self.full_location)
+            context["path"] = f"{self.location}/"  # Add trailing slash here to simplify template
+        elif self.full_location.with_suffix(".md").is_file():
+            page_result = utils.get_page(self.full_location.with_suffix(".md"))
             context["page"] = page_result
             context["relevant_links"] = page_result["metadata"].get("relevant_links", {})
         else:
             raise Http404
 
-        location.pop()
-        breadcrumb_items = []
-        while len(location):
-            breadcrumb_items.insert(
-                0,
-                {
-                    "name": utils.get_category(location)["name"],
-                    "path": "/".join(location)
-                }
-            )
-            location.pop()
-
-        context["breadcrumb_items"] = breadcrumb_items
+        breadcrumb_items = [
+            {
+                "name": utils.get_category(settings.PAGES_PATH / location)["name"],
+                "path": str(location)
+            } for location in self.location.parents
+        ]
+        context["breadcrumb_items"] = reversed(breadcrumb_items)
 
         return context
