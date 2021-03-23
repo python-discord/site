@@ -206,9 +206,17 @@ h1 {
 #sponsors .hero-body {
     padding-top: 2rem;
     padding-bottom: 3rem;
+
+    text-align: center;
+}
+
+#sponsors .columns {
+    justify-content: center;
+    margin: auto;
+    max-width: 80%;
 }
 
 #sponsors img {
     height: 5rem;
-    margin-right: 2rem;
+    margin: auto 1rem;
 }
