@@ -19,7 +19,7 @@ class PageOrCategoryView(TemplateView):
         return super().dispatch(request, *args, **kwargs)
 
     def get_template_names(self) -> t.List[str]:
-        """Checks does this use page template or listing template."""
+        """Checks if the view uses the page template or listing template."""
         if self.full_location.is_dir():
             template_name = "content/listing.html"
         elif self.full_location.with_suffix(".md").is_file():

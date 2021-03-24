@@ -15,7 +15,7 @@ def get_category(path: Path) -> Dict[str, str]:
 
 
 def get_categories(path: Path) -> Dict[str, Dict]:
-    """Get all categories information."""
+    """Get information for all categories."""
     categories = {}
 
     for name in path.iterdir():
@@ -38,7 +38,7 @@ def get_pages(path: Path) -> Dict[str, Dict]:
 
 
 def get_page(path: Path) -> Dict[str, Union[str, Dict]]:
-    """Get one specific page. When category is specified, get it from there."""
+    """Get one specific page."""
     if not path.exists() or not path.is_file():
         raise Http404("Page not found.")
 

@@ -8,7 +8,7 @@ relevant_links:
     Using Git: https://pythondiscord.com/pages/contributing/working-with-git/
 ---
 
-Pages, which include guides, articles and other static content are stored in markdown files in the `site` repository on Github.
+Pages, which include guides, articles, and other static content, are stored in markdown files in the `site` repository on Github.
 If you are interested in writing or modifying pages seen here on the site, follow the steps below.
 
 For further assistance and help with contributing pages, send a message to the `#dev-contrib` channel in the Discord server!
@@ -36,7 +36,7 @@ All the markdown files in this folder will then be under this category.
 ## Writing the Page
 Files representing pages are in `.md` (Markdown) format, with all-lowercase filenames and spaces replaced with `-` characters.
 
-Each page must include required metadata, and optionally additional metadata to modify appearance of the page.
+Each page must include required metadata, and optionally additional metadata to modify the appearance of the page.
 The metadata is written in YAML-like key-value pairs, and should be enclosed in triple dashes `---` *at the top of the markdown file*.
 
 **Example:**
@@ -51,14 +51,14 @@ relevant_links:
     Using Git: https://pythondiscord.com/pages/contributing/working-with-git/
 ---
 
-Pages, which include guides, articles and other static content...
+Pages, which include guides, articles, and other static content,...
 ```
 
 You can learn more about Markdown metadata [here](https://github.com/trentm/python-markdown2/wiki/metadata).
 
 ### Required Fields
 - **title:** Easily-readable title for your article.
-- **description:** Short, 1-2 line description that describes the page.
+- **description:** Short, 1-2 line description of the page's content.
 
 ### Optional Fields
 - **icon_class:** Favicon class for the category entry for the page. Default: `fab`
@@ -67,7 +67,7 @@ You can learn more about Markdown metadata [here](https://github.com/trentm/pyth
 
 ## Extended Markdown
 
-Apart from standard markdown, certain additions are available:
+Apart from standard Markdown, certain additions are available:
 
 ### Tables
 
