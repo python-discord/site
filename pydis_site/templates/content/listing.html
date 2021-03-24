@@ -13,7 +13,7 @@
             <p class="is-italic">{{ data.description }}</p>
         </div>
     {% endfor %}
-    {% for page, data in content.items %}
+    {% for page, data in pages.items %}
         <div class="box" style="max-width: 800px;">
             <span class="icon is-size-4 is-medium">
                 <i class="{{ data.icon_class|default:"fab" }} {{ data.icon|default:"fa-python" }} is-size-3 is-black has-icon-padding" aria-hidden="true"></i>

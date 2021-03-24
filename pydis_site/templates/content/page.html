@@ -12,7 +12,7 @@
     {% if relevant_links|length > 0 %}
         <div class="columns is-variable is-8">
             <div class="column is-two-thirds">
-                {{ page.page|safe }}
+                {{ page.content|safe }}
             </div>
             <div class="column">
                 <div class="box">
@@ -26,6 +26,6 @@
             </div>
         </div>
     {% else %}
-        <div>{{ page.page|safe }}</div>
+        <div>{{ page.content|safe }}</div>
     {% endif %}
 {% endblock %}

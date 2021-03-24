@@ -39,7 +39,7 @@ class PageOrCategoryView(TemplateView):
             context["category_info"] = category
             context["page_title"] = category["name"]
             context["page_description"] = category["description"]
-            context["content"] = utils.get_pages(self.full_location)
+            context["pages"] = utils.get_category_pages(self.full_location)
             context["path"] = f"{self.location}/"  # Add trailing slash here to simplify template
         elif self.full_location.with_suffix(".md").is_file():
             page_result = utils.get_page(self.full_location.with_suffix(".md"))

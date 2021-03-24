@@ -25,8 +25,8 @@ def get_categories(path: Path) -> Dict[str, Dict]:
     return categories
 
 
-def get_pages(path: Path) -> Dict[str, Dict]:
-    """Get all root or category page names and their metadata."""
+def get_category_pages(path: Path) -> Dict[str, Dict]:
+    """Get all page names and their metadata at a category path."""
     pages = {}
 
     for item in path.iterdir():
@@ -56,4 +56,4 @@ def get_page(path: Path) -> Dict[str, Union[str, Dict]]:
         ]
     )
 
-    return {"page": str(html), "metadata": html.metadata}
+    return {"content": str(html), "metadata": html.metadata}
