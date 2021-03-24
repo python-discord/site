@@ -50,12 +50,11 @@ class PageOrCategoryView(TemplateView):
         else:
             raise Http404
 
-        breadcrumb_items = [
+        context["breadcrumb_items"] = [
             {
                 "name": utils.get_category(settings.PAGES_PATH / location)["name"],
                 "path": str(location)
-            } for location in self.location.parents
+            } for location in reversed(self.location.parents)
         ]
-        context["breadcrumb_items"] = reversed(breadcrumb_items)
 
         return context
