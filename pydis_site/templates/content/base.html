@@ -1,0 +1,36 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}{{ page_title }}{% endblock %}
+{% block head %}
+<meta property="og:title" content="Python Discord - {{ page_title }}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:description" content="{{ page_description }}" />
+    <link rel="stylesheet" href="{% static "css/content/page.css" %}">
+{% endblock %}
+
+{% block content %}
+    {% include "base/navbar.html" %}
+
+    <section class="breadcrumb-section section">
+        <div class="container">
+            <nav class="breadcrumb is-pulled-left" aria-label="breadcrumbs">
+                <ul>
+                    {% for item in breadcrumb_items %}
+                        <li><a href="{% url "content:page_category" location=item.path %}">{{ item.name }}</a></li>
+                    {% endfor %}
+                    <li class="is-active"><a href="#">{{ page_title }}</a></li>
+                </ul>
+            </nav>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="content">
+                <h1 class="title">{{ page_title }}</h1>
+                {% block page_content %}{% endblock %}
+            </div>
+        </div>
+    </section>
+{% endblock %}

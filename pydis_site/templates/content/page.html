@@ -1,60 +1,31 @@
-{% extends 'base/base.html' %}
-{% load static %}
+{% extends 'content/base.html' %}
 
-{% block title %}{{ page.metadata.title }}{% endblock %}
 {% block head %}
-  <meta property="og:title" content="Python Discord - {{ page.metadata.title }}" />
-  <meta property="og:type" content="website" />
-  <meta property="og:description" content="{{ page.metadata.description }}" />
-  <link rel="stylesheet" href="{% static "css/content/page.css" %}">
-  <link rel="stylesheet"
-    href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/styles/atom-one-dark-reasonable.min.css">
-  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/highlight.min.js"></script>
-  <script>hljs.initHighlightingOnLoad();</script>
+    {{ block.super }}
+    <link rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/styles/atom-one-dark-reasonable.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
 {% endblock %}
 
-{% block content %}
-    {% include "base/navbar.html" %}
-
-    <section class="breadcrumb-section section">
-        <div class="container">
-            <nav class="breadcrumb is-pulled-left" aria-label="breadcrumbs">
-                <ul>
-                    {% for item in breadcrumb_items %}
-                        <li><a href="{% url "content:page_category" location=item.path %}">{{ item.name }}</a></li>
-                    {% endfor %}
-                    <li class="is-active"><a href="#">{{ page.metadata.title }}</a></li>
-                </ul>
-            </nav>
-        </div>
-    </section>
-
-    <section class="section">
-        <div class="content">
-            <div class="container">
-                <h1 class="title">{{ page.metadata.title }}</h1>
-
-                {% if relevant_links|length > 0 %}
-                    <div class="columns is-variable is-8">
-                        <div class="column is-two-thirds">
-                            {{ page.page|safe }}
-                        </div>
-                        <div class="column">
-                            <div class="box">
-                                <p class="menu-label">Relevant links</p>
-                                <ul class="menu-list">
-                                    {% for value, link in relevant_links.items %}
-                                        <li><a class="has-text-link" href="{{link}}">{{ value }}</a></li>
-                                    {% endfor %}
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                {% else %}
-                    <div>{{ page.page|safe }}</div>
-                {% endif %}
+{% block page_content %}
+    {% if relevant_links|length > 0 %}
+        <div class="columns is-variable is-8">
+            <div class="column is-two-thirds">
+                {{ page.page|safe }}
+            </div>
+            <div class="column">
+                <div class="box">
+                    <p class="menu-label">Relevant links</p>
+                    <ul class="menu-list">
+                        {% for value, link in relevant_links.items %}
+                            <li><a class="has-text-link" href="{{link}}">{{ value }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
             </div>
         </div>
-    </section>
-
+    {% else %}
+        <div>{{ page.page|safe }}</div>
+    {% endif %}
 {% endblock %}
