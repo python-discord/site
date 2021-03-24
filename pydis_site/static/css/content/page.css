@@ -6,11 +6,26 @@ i.has-icon-padding {
     padding: 0 10px 25px 0;
 }
 
-pre {
-    /*
-     * Style it the same as the <code> tag, since highlight.js does not style
-     * backgrounds of <pre> tags but bulma does, resulting in a weird off-white
-     * border.
-     */
-    background-color: #282c34;
+/*
+ * Move padding padding from <pre> tag to hljs <code> tags so the padding
+ * space is colored the same as the background of hljs <code> blocks.
+ */
+.content pre {
+    padding: 0;
+}
+
+code.hljs {
+    padding: 1.75em 2em;
+}
+
+/*
+ * Show header permalink on hover.
+ */
+.headerlink {
+    display: none;
+    padding-left: 0.5em;
+}
+
+:is(h1, h2, h3, h4, h5, h6):hover > .headerlink {
+    display: inline;
 }

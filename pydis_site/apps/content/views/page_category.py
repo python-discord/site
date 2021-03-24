@@ -35,18 +35,19 @@ class PageOrCategoryView(TemplateView):
 
         if self.full_location.is_dir():
             context["categories"] = utils.get_categories(self.full_location)
+            context["pages"] = utils.get_category_pages(self.full_location)
+
             category = utils.get_category(self.full_location)
-            context["category_info"] = category
             context["page_title"] = category["name"]
             context["page_description"] = category["description"]
-            context["pages"] = utils.get_category_pages(self.full_location)
+
             context["path"] = f"{self.location}/"  # Add trailing slash here to simplify template
         elif self.full_location.with_suffix(".md").is_file():
-            page_result = utils.get_page(self.full_location.with_suffix(".md"))
-            context["page"] = page_result
-            context["page_title"] = page_result["metadata"]["title"]
-            context["page_description"] = page_result["metadata"]["description"]
-            context["relevant_links"] = page_result["metadata"].get("relevant_links", {})
+            page, metadata = utils.get_page(self.full_location.with_suffix(".md"))
+            context["page"] = page
+            context["page_title"] = metadata["title"]
+            context["page_description"] = metadata["description"]
+            context["relevant_links"] = metadata.get("relevant_links", {})
         else:
             raise Http404
 

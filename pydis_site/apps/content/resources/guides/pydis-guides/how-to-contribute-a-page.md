@@ -69,18 +69,75 @@ You can learn more about Markdown metadata [here](https://github.com/trentm/pyth
 
 Apart from standard Markdown, certain additions are available:
 
+### Abbreviations
+HTML `<abbr>` tags can be used in markdown using this format:
+
+**Markdown:**
+```nohighlight
+This website is HTML generated from YAML and Markdown.
+
+*[HTML]: Hyper Text Markup Language
+*[YAML]: YAML Ain't Markup Language
+```
+
+**Output:**
+
+This website is <abbr title="Hyper Text Markup Language">HTML</abbr>
+generated from <abbr title="YAML Ain't Markup Language">YAML</abbr> and Markdown.
+
+---
+
+### Footnotes
+**Markdown:**
+```nohighlight
+This footnote[^1] links to the bottom[^custom_label] of the page[^3].
+
+[^1]: Footnote labels start with a caret `^`.
+[^3]: The footnote link is numbered based on the order of the labels.
+[^custom label]: Footnote labels can contain any text within square brackets.
+```
+
+**Output:**
+
+This footnote[^1] links to the bottom[^custom label] of the page[^3].
+
+[^1]: Footnote labels start with a caret `^`.
+[^3]: The footnote link is numbered based on the order of the labels.
+[^custom label]: Footnote labels can contain any text within square brackets.
+
+---
+
 ### Tables
+
+**Markdown:**
+```nohighlight
+| This is header | This is another header |
+| -------------- | ---------------------- |
+| An item        | Another item           |
+```
+
+**Output:**
 
 | This is header | This is another header |
 | -------------- | ---------------------- |
 | An item        | Another item           |
-| Big item       | Small item             |
 
+---
 
 ### Codeblock Syntax Highlighting
 Syntax highlighting is provided by `highlight.js`.
 To activate syntax highlighting, put the language directly after the starting backticks.
 
+**Markdown:**
+````nohighlight
+```python
+import os
+
+path = os.path.join("foo", "bar")
+```
+````
+
+**Output:**
 ```python
 import os
 

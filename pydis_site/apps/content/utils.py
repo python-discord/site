@@ -1,9 +1,11 @@
 from pathlib import Path
-from typing import Dict, Union
+from typing import Dict, Tuple
 
+import frontmatter
+import markdown
 import yaml
 from django.http import Http404
-from markdown2 import markdown
+from markdown.extensions.toc import TocExtension
 
 
 def get_category(path: Path) -> Dict[str, str]:
@@ -31,29 +33,25 @@ def get_category_pages(path: Path) -> Dict[str, Dict]:
 
     for item in path.glob("*.md"):
         if item.is_file():
-            md = markdown(item.read_text(), extras=["metadata"])
-            pages[item.stem] = md.metadata
+            pages[item.stem] = frontmatter.load(item)
 
     return pages
 
 
-def get_page(path: Path) -> Dict[str, Union[str, Dict]]:
+def get_page(path: Path) -> Tuple[str, Dict]:
     """Get one specific page."""
     if not path.is_file():
         raise Http404("Page not found.")
 
-    html = markdown(
-        path.read_text(encoding="utf-8"),
-        extras=[
-            "metadata",
-            "fenced-code-blocks",
-            "highlightjs-lang",
-            "header-ids",
-            "strike",
-            "target-blank-links",
-            "tables",
-            "task_list"
+    metadata, content = frontmatter.parse(path.read_text(encoding="utf-8"))
+    html = markdown.markdown(
+        content,
+        extensions=[
+            "extra",
+            # Empty string for marker to disable text searching for [TOC]
+            # By using a metadata key instead, we save time on long markdown documents
+            TocExtension(title="Table of Contents:", permalink=True, marker="")
         ]
     )
 
-    return {"content": str(html), "metadata": html.metadata}
+    return str(html), metadata
