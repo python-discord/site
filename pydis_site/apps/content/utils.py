@@ -33,7 +33,7 @@ def get_category_pages(path: Path) -> Dict[str, Dict]:
 
     for item in path.glob("*.md"):
         if item.is_file():
-            pages[item.stem] = frontmatter.load(item)
+            pages[item.stem] = frontmatter.load(item).metadata
 
     return pages
 

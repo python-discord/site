@@ -36,6 +36,7 @@ mccabe = "~=0.6.1"
 pep8-naming = "~=0.9"
 pre-commit = "~=2.1"
 unittest-xml-reporting = "~=3.0"
+pyfakefs = "~=4.4.0"
 
 [requires]
 python_version = "3.7"

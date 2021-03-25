@@ -13,7 +13,7 @@ class PageOrCategoryView(TemplateView):
 
     def dispatch(self, request: t.Any, *args, **kwargs) -> t.Any:
         """Conform URL path location to the filesystem path."""
-        self.location = Path(self.kwargs.get("location", ""))
+        self.location = Path(kwargs.get("location", ""))
         self.full_location = settings.PAGES_PATH / self.location
 
         return super().dispatch(request, *args, **kwargs)

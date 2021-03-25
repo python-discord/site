@@ -1,140 +1,145 @@
 from pathlib import Path
-from unittest.mock import patch
+from unittest import TestCase
 
-from django.conf import settings
 from django.http import Http404
-from django.test import RequestFactory, TestCase, override_settings
-from django_hosts.resolvers import reverse
+from django.test import RequestFactory, SimpleTestCase, override_settings
+from pyfakefs import fake_filesystem_unittest
 
+from pydis_site.apps.content.tests.helpers import (
+    MockPagesTestCase, PARSED_CATEGORY_INFO, PARSED_HTML, PARSED_METADATA
+)
 from pydis_site.apps.content.views import PageOrCategoryView
 
-BASE_PATH = Path(settings.BASE_DIR, "pydis_site", "apps", "content", "tests", "test_content")
+
+# Set the module constant within Patcher to use the fake filesystem
+# https://jmcgeheeiv.github.io/pyfakefs/master/usage.html#modules-to-reload
+with fake_filesystem_unittest.Patcher() as _:
+    BASE_PATH = Path(".")
 
 
-class TestPageOrCategoryView(TestCase):
-    @override_settings(PAGES_PATH=BASE_PATH)
-    @patch("pydis_site.apps.content.views.page_category.utils.get_page")
-    @patch("pydis_site.apps.content.views.page_category.utils.get_category")
-    def test_page_return_code_200(self, get_category_mock, get_page_mock):
-        get_page_mock.return_value = {"guide": "test", "metadata": {}}
+@override_settings(PAGES_PATH=BASE_PATH)
+class PageOrCategoryViewTests(MockPagesTestCase, SimpleTestCase, TestCase):
+    """Tests for the PageOrCategoryView class."""
 
-        url = reverse("content:page_category", args=["test2"])
-        response = self.client.get(url)
-        self.assertEqual(response.status_code, 200)
-        get_category_mock.assert_called_once()
-        get_page_mock.assert_called_once()
+    def setUp(self):
+        """Set test helpers, then set up fake filesystem."""
+        self.factory = RequestFactory()
+        self.view = PageOrCategoryView.as_view()
+        self.ViewClass = PageOrCategoryView()
+        super().setUp()
 
-    @patch("pydis_site.apps.content.views.page_category.utils.get_page")
-    @patch("pydis_site.apps.content.views.page_category.utils.get_category")
-    @override_settings(PAGES_PATH=BASE_PATH)
-    def test_page_return_404(self, get_category_mock, get_page_mock):
-        """Check that return code is 404 when invalid page provided."""
-        get_page_mock.side_effect = Http404("Page not found.")
-
-        url = reverse("content:page_category", args=["invalid-guide"])
-        response = self.client.get(url)
-        self.assertEqual(response.status_code, 404)
-        get_page_mock.assert_not_called()
-        get_category_mock.assert_not_called()
-
-    @patch("pydis_site.apps.content.views.page_category.utils.get_category")
-    @patch("pydis_site.apps.content.views.page_category.utils.get_pages")
-    @patch("pydis_site.apps.content.views.page_category.utils.get_categories")
-    @override_settings(PAGES_PATH=BASE_PATH)
-    def test_valid_category_code_200(
-            self,
-            get_categories_mock,
-            get_pages_mock,
-            get_category_mock
-    ):
-        """Check that return code is 200 when visiting valid category."""
-        get_category_mock.return_value = {"name": "test", "description": "test"}
-        get_pages_mock.return_value = {}
-
-        url = reverse("content:page_category", args=["category"])
-        response = self.client.get(url)
-
-        self.assertEqual(response.status_code, 200)
-        get_pages_mock.assert_called_once()
-        self.assertEqual(get_category_mock.call_count, 2)
-        get_categories_mock.assert_called_once()
-
-    @patch("pydis_site.apps.content.views.page_category.utils.get_category")
-    @patch("pydis_site.apps.content.views.page_category.utils.get_pages")
-    @patch("pydis_site.apps.content.views.page_category.utils.get_categories")
-    @override_settings(PAGES_PATH=BASE_PATH)
-    def test_invalid_category_code_404(
-            self,
-            get_categories_mock,
-            get_pages_mock,
-            get_category_mock
-    ):
-        """Check that return code is 404 when trying to visit invalid category."""
-        get_category_mock.side_effect = Http404("Category not found.")
-
-        url = reverse("content:page_category", args=["invalid-category"])
-        response = self.client.get(url)
-
-        self.assertEqual(response.status_code, 404)
-        get_category_mock.assert_not_called()
-        get_pages_mock.assert_not_called()
-        get_categories_mock.assert_not_called()
-
-    @patch("pydis_site.apps.content.views.page_category.utils.get_page")
-    @patch("pydis_site.apps.content.views.page_category.utils.get_category")
-    @override_settings(PAGES_PATH=BASE_PATH)
-    def test_valid_category_page_code_200(
-            self,
-            get_category_mock,
-            get_page_mock
-    ):
-        """Check that return code is 200 when visiting valid category page."""
-        get_page_mock.return_value = {"guide": "test", "metadata": {}}
-
-        url = reverse("content:page_category", args=["category/test3"])
-        response = self.client.get(url)
-        self.assertEqual(response.status_code, 200)
-        get_page_mock.assert_called_once()
-        self.assertEqual(get_category_mock.call_count, 2)
-
-    @patch("pydis_site.apps.content.views.page_category.utils.get_page")
-    @patch("pydis_site.apps.content.views.page_category.utils.get_category")
-    @override_settings(PAGES_PATH=BASE_PATH)
-    def test_invalid_category_page_code_404(
-            self,
-            get_category_mock,
-            get_page_mock
-    ):
-        """Check that return code is 200 when trying to visit invalid category page."""
-        get_page_mock.side_effect = Http404("Page not found.")
-
-        url = reverse("content:page_category", args=["category/invalid"])
-        response = self.client.get(url)
-        self.assertEqual(response.status_code, 404)
-        get_page_mock.assert_not_called()
-        get_category_mock.assert_not_called()
-
-    @override_settings(PAGES_PATH=BASE_PATH)
-    def test_page_category_template_names(self):
-        """Check that this return category, page template or raise Http404."""
-        factory = RequestFactory()
+    # Integration tests
+    def test_valid_page_or_category_returns_200(self):
         cases = [
-            {"location": "category", "output": ["content/listing.html"]},
-            {"location": "test", "output": ["content/page.html"]},
-            {"location": "invalid", "output": None, "raises": Http404}
+            ("Page at root", "root"),
+            ("Category page", "category"),
+            ("Page in category", "category/with_metadata"),
+            ("Subcategory page", "category/subcategory"),
+            ("Page in subcategory", "category/subcategory/with_metadata"),
+        ]
+        for msg, path in cases:
+            with self.subTest(msg=msg, path=path):
+                request = self.factory.get(f"/{path}")
+                response = self.view(request, location=path)
+                self.assertEqual(response.status_code, 200)
+
+    def test_nonexistent_page_returns_404(self):
+        with self.assertRaises(Http404):
+            request = self.factory.get("/invalid")
+            self.view(request, location="invalid")
+
+    # Unit tests
+    def test_get_template_names_returns_correct_templates(self):
+        category_template = "content/listing.html"
+        page_template = "content/page.html"
+        cases = [
+            ("root", page_template),
+            ("root_without_metadata", page_template),
+            ("category/with_metadata", page_template),
+            ("category/subcategory/with_metadata", page_template),
+            ("category", category_template),
+            ("category/subcategory", category_template),
         ]
 
-        for case in cases:
-            with self.subTest(location=case["location"], output=case["output"]):
-                request = factory.get(f"/pages/{case['location']}")
-                instance = PageOrCategoryView()
-                instance.request = request
-                location = Path(case["location"])
-                instance.location = location
-                instance.full_location = BASE_PATH / location
+        for path, expected_template in cases:
+            with self.subTest(path=path, expected_template=expected_template):
+                self.ViewClass.full_location = Path(path)
+                self.assertEqual(self.ViewClass.get_template_names(), [expected_template])
 
-                if "raises" in case:
-                    with self.assertRaises(case["raises"]):
-                        instance.get_template_names()
-                else:
-                    self.assertEqual(case["output"], instance.get_template_names())
+    def test_get_template_names_with_nonexistent_paths_returns_404(self):
+        for path in ("invalid", "another_invalid", "nonexistent"):
+            with self.subTest(path=path):
+                self.ViewClass.full_location = Path(path)
+                with self.assertRaises(Http404):
+                    self.ViewClass.get_template_names()
+
+    def test_get_context_data_with_valid_page(self):
+        """The method should return required fields in the template context."""
+        request = self.factory.get("/root")
+        self.ViewClass.setup(request)
+        self.ViewClass.dispatch(request, location="root")
+
+        cases = [
+            ("Context includes HTML page content", "page", PARSED_HTML),
+            ("Context includes page title", "page_title", PARSED_METADATA["title"]),
+            (
+                "Context includes page description",
+                "page_description",
+                PARSED_METADATA["description"]
+            ),
+            (
+                "Context includes relevant link names and URLs",
+                "relevant_links",
+                PARSED_METADATA["relevant_links"]
+            ),
+        ]
+        context = self.ViewClass.get_context_data()
+        for msg, key, expected_value in cases:
+            with self.subTest(msg=msg):
+                self.assertEqual(context[key], expected_value)
+
+    def test_get_context_data_with_valid_category(self):
+        """The method should return required fields in the template context."""
+        request = self.factory.get("/category")
+        self.ViewClass.setup(request)
+        self.ViewClass.dispatch(request, location="category")
+
+        cases = [
+            (
+                "Context includes subcategory names and their information",
+                "categories",
+                {"subcategory": PARSED_CATEGORY_INFO}
+            ),
+            (
+                "Context includes page names and their metadata",
+                "pages",
+                {"with_metadata": PARSED_METADATA}
+            ),
+            (
+                "Context includes page description",
+                "page_description",
+                PARSED_CATEGORY_INFO["description"]
+            ),
+            ("Context includes page title", "page_title", PARSED_CATEGORY_INFO["name"]),
+        ]
+
+        context = self.ViewClass.get_context_data()
+        for msg, key, expected_value in cases:
+            with self.subTest(msg=msg):
+                self.assertEqual(context[key], expected_value)
+
+    def test_get_context_data_breadcrumbs(self):
+        """The method should return correct breadcrumbs."""
+        request = self.factory.get("/category/subcategory/with_metadata")
+        self.ViewClass.setup(request)
+        self.ViewClass.dispatch(request, location="category/subcategory/with_metadata")
+
+        context = self.ViewClass.get_context_data()
+        self.assertEquals(
+            context["breadcrumb_items"],
+            [
+                {"name": PARSED_CATEGORY_INFO["name"], "path": "."},
+                {"name": PARSED_CATEGORY_INFO["name"], "path": "category"},
+                {"name": PARSED_CATEGORY_INFO["name"], "path": "category/subcategory"},
+            ]
+        )
