@@ -85,6 +85,7 @@ INSTALLED_APPS = [
     'pydis_site.apps.home',
     'pydis_site.apps.staff',
     'pydis_site.apps.resources',
+    'pydis_site.apps.content',
     'pydis_site.apps.events',
 
     'django.contrib.admin',
@@ -280,3 +281,10 @@ BULMA_SETTINGS = {
         "footer-padding": "1rem 1.5rem 1rem",
     }
 }
+
+# Information about site repository
+SITE_REPOSITORY_OWNER = "python-discord"
+SITE_REPOSITORY_NAME = "site"
+SITE_REPOSITORY_BRANCH = "master"
+
+PAGES_PATH = Path(BASE_DIR, "pydis_site", "apps", "content", "resources")
