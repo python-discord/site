@@ -1,0 +1,5 @@
+description: Accessibility tools that helps people to write Python code
+name: Accessibility Tools
+default_icon: branding/python
+default_icon_color: black
+position: 2
