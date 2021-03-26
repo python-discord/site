@@ -60,7 +60,7 @@ class DetailLookupDocumentationLinkAPITests(APISubdomainTestCase):
     def setUpTestData(cls):
         cls.doc_link = DocumentationLink.objects.create(
             package='testpackage',
-            base_url='https://example.com',
+            base_url='https://example.com/',
             inventory_url='https://example.com'
         )
 
@@ -126,7 +126,7 @@ class DocumentationLinkCreationTests(APISubdomainTestCase):
 
         self.body = {
             'package': 'example',
-            'base_url': 'https://example.com',
+            'base_url': 'https://example.com/',
             'inventory_url': 'https://docs.example.com'
         }
 
