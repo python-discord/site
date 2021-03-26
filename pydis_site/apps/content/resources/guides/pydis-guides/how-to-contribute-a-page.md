@@ -37,7 +37,7 @@ All the markdown files in this folder will then be under this category.
 Files representing pages are in `.md` (Markdown) format, with all-lowercase filenames and spaces replaced with `-` characters.
 
 Each page must include required metadata, and optionally additional metadata to modify the appearance of the page.
-The metadata is written in YAML-like key-value pairs, and should be enclosed in triple dashes `---` *at the top of the markdown file*.
+The metadata is written in YAML, and should be enclosed in triple dashes `---` *at the top of the markdown file*.
 
 **Example:**
 ```yaml
@@ -53,8 +53,6 @@ relevant_links:
 
 Pages, which include guides, articles, and other static content,...
 ```
-
-You can learn more about Markdown metadata [here](https://github.com/trentm/python-markdown2/wiki/metadata).
 
 ### Required Fields
 - **title:** Easily-readable title for your article.
