@@ -1,8 +1,7 @@
 ---
 title: How to Contribute a Page
 description: Learn how to write and publish a page to this website.
-icon_class: fas
-icon: fa-info
+icon: fas fa-info
 relevant_links:
     Contributing to Site: https://pythondiscord.com/pages/contributing/site/
     Using Git: https://pythondiscord.com/pages/contributing/working-with-git/
@@ -27,8 +26,9 @@ For example, the file `pydis_site/apps/content/resources/hello-world.md` will re
 Nested folders represent page categories on the website. Each folder under the root folder must include a `_info.yml` file with the following:
 
 ```yml
-name: Category name
+title: Category name
 description: Category description
+icon: fas fa-folder # Optional
 ```
 
 All the markdown files in this folder will then be under this category.
@@ -44,8 +44,7 @@ The metadata is written in YAML, and should be enclosed in triple dashes `---` *
 ---
 title: How to Contribute a Page
 description: Learn how to write and publish a page to this website.
-icon_class: fas
-icon: fa-info
+icon: fas fa-info
 relevant_links:
     Contributing to Site: https://pythondiscord.com/pages/contributing/site/
     Using Git: https://pythondiscord.com/pages/contributing/working-with-git/
@@ -59,8 +58,7 @@ Pages, which include guides, articles, and other static content,...
 - **description:** Short, 1-2 line description of the page's content.
 
 ### Optional Fields
-- **icon_class:** Favicon class for the category entry for the page. Default: `fab`
-- **icon:** Favicon for the category entry for the page. Default: `fa-python` <i class="fab fa-python is-black" aria-hidden="true"></i>
+- **icon:** Icon for the category entry for the page. Default: `fab fa-python` <i class="fab fa-python is-black" aria-hidden="true"></i>
 - **relevant_links:** A YAML dictionary containing `text:link` pairs. See the example above.
 
 ## Extended Markdown

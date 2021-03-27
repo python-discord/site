@@ -4,11 +4,11 @@
     {% for category, data in categories.items %}
         <div class="box" style="max-width: 800px;">
             <span class="icon is-size-4 is-medium">
-                <i class="fas fa-folder is-size-3 is-black has-icon-padding" aria-hidden="true"></i>
+                <i class="{{ data.icon|default:"fas fa-folder" }} is-size-3 is-black has-icon-padding" aria-hidden="true"></i>
             </span>
 
             <a href="{% url "content:page_category" location=path|add:category %}">
-                <span class="is-size-4 has-text-weight-bold">{{ data.name }}</span>
+                <span class="is-size-4 has-text-weight-bold">{{ data.title }}</span>
             </a>
             <p class="is-italic">{{ data.description }}</p>
         </div>
@@ -16,7 +16,7 @@
     {% for page, data in pages.items %}
         <div class="box" style="max-width: 800px;">
             <span class="icon is-size-4 is-medium">
-                <i class="{{ data.icon_class|default:"fab" }} {{ data.icon|default:"fa-python" }} is-size-3 is-black has-icon-padding" aria-hidden="true"></i>
+                <i class="{{ data.icon|default:"fab fa-python" }} is-size-3 is-black has-icon-padding" aria-hidden="true"></i>
             </span>
             <a href="{% url "content:page_category" location=path|add:page %}">
                 <span class="is-size-4 has-text-weight-bold">{{ data.title }}</span>

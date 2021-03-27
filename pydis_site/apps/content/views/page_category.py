@@ -38,8 +38,9 @@ class PageOrCategoryView(TemplateView):
             context["pages"] = utils.get_category_pages(self.full_location)
 
             category = utils.get_category(self.full_location)
-            context["page_title"] = category["name"]
+            context["page_title"] = category["title"]
             context["page_description"] = category["description"]
+            context["icon"] = category.get("icon")
 
             context["path"] = f"{self.location}/"  # Add trailing slash here to simplify template
         elif self.full_location.with_suffix(".md").is_file():
@@ -53,7 +54,7 @@ class PageOrCategoryView(TemplateView):
 
         context["breadcrumb_items"] = [
             {
-                "name": utils.get_category(settings.PAGES_PATH / location)["name"],
+                "name": utils.get_category(settings.PAGES_PATH / location)["title"],
                 "path": str(location)
             } for location in reversed(self.location.parents)
         ]
