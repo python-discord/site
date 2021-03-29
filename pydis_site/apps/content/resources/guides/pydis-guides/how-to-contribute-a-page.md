@@ -21,8 +21,10 @@ As website changes require staff approval, discussing the page content beforehan
 
 ## Creating the Page
 All pages are located in the `site` repo, at the path `pydis_site/apps/content/resources/`. This is the root folder, which corresponds to the URL `www.pythondiscord.com/pages/`.
+
 For example, the file `pydis_site/apps/content/resources/hello-world.md` will result in a page available at `www.pythondiscord.com/pages/hello-world`.
 
+#### Page Categories
 Nested folders represent page categories on the website. Each folder under the root folder must include a `_info.yml` file with the following:
 
 ```yml
@@ -32,6 +34,24 @@ icon: fas fa-folder # Optional
 ```
 
 All the markdown files in this folder will then be under this category.
+
+#### Having the Category also be a Page
+In order to make categories a page, place a page inside the category folder **with the same name as the category folder**.
+
+```plaintext
+guides
+├── contributing
+│   ├── _info.yml
+│   ├── contributing.md
+│   └── bot.md
+└── _info.yml
+```
+
+In the above example, `www.pythondiscord.com/guides/` will list `Contributing` as a category entry with information from `contributing/_info.yml`.
+
+However, `www.pythondiscord.com/guides/contributing` will render `contributing.md` rather than show the category contents, so *it is the article's responsibility to link to any subpages under the article*.
+
+Therefore, `www.pythondiscord.com/guides/contributing/bot` will then render `bot.md`, with backlinks to `contributing.md`.
 
 ## Writing the Page
 Files representing pages are in `.md` (Markdown) format, with all-lowercase filenames and spaces replaced with `-` characters.
