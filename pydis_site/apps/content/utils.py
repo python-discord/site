@@ -44,14 +44,20 @@ def get_page(path: Path) -> Tuple[str, Dict]:
         raise Http404("Page not found.")
 
     metadata, content = frontmatter.parse(path.read_text(encoding="utf-8"))
-    html = markdown.markdown(
-        content,
+    toc_depth = metadata.get("toc", 1)
+
+    md = markdown.Markdown(
         extensions=[
             "extra",
             # Empty string for marker to disable text searching for [TOC]
             # By using a metadata key instead, we save time on long markdown documents
-            TocExtension(title="Table of Contents:", permalink=True, marker="")
+            TocExtension(permalink=True, marker="", toc_depth=toc_depth)
         ]
     )
+    html = md.convert(content)
+
+    # Don't set the TOC if the metadata does not specify one
+    if "toc" in metadata:
+        metadata["toc"] = md.toc
 
     return str(html), metadata

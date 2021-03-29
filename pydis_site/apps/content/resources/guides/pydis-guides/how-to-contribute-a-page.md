@@ -5,6 +5,7 @@ icon: fas fa-info
 relevant_links:
     Contributing to Site: https://pythondiscord.com/pages/contributing/site/
     Using Git: https://pythondiscord.com/pages/contributing/working-with-git/
+toc: 4
 ---
 
 Pages, which include guides, articles, and other static content, are stored in markdown files in the `site` repository on Github.
@@ -80,6 +81,7 @@ Pages, which include guides, articles, and other static content,...
 ### Optional Fields
 - **icon:** Icon for the category entry for the page. Default: `fab fa-python` <i class="fab fa-python is-black" aria-hidden="true"></i>
 - **relevant_links:** A YAML dictionary containing `text:link` pairs. See the example above.
+- **toc:** A number representing the smallest heading tag to show in the table of contents.
 
 ## Extended Markdown
 

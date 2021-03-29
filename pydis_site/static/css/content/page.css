@@ -49,3 +49,22 @@ img + em {
     /* Style */
     font-size: .875em;
 }
+
+/*
+ * Remove extra padding on the left of TOC items
+ */
+ul.menu-list.toc {
+    margin-left: 0;
+}
+
+/*
+ * Remove bullets set by the markdown extension, since bulma adds vertical
+ * lines to represent nesting
+ */
+.toc li {
+    list-style-type: none;
+}
+/* ..but we still want bullets on the top <ul> items */
+.toc > ul > li {
+    list-style-type: disc;
+}

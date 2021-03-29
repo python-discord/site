@@ -67,6 +67,7 @@ class PageOrCategoryView(TemplateView):
             "page_title": metadata["title"],
             "page_description": metadata["description"],
             "relevant_links": metadata.get("relevant_links", {}),
+            "toc": metadata.get("toc")
         }
 
     @staticmethod
