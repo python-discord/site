@@ -90,6 +90,11 @@ class PageOrCategoryViewTests(MockPagesTestCase, SimpleTestCase, TestCase):
                 with self.assertRaises(Http404):
                     self.ViewClass.get_template_names()
 
+    def test_get_template_names_returns_page_template_for_category_with_page(self):
+        """Make sure the proper page is returned for category locations with pages."""
+        patch_dispatch_attributes(self.ViewClass, "tmp")
+        self.assertEqual(self.ViewClass.get_template_names(), ["content/page.html"])
+
     def test_get_context_data_with_valid_page(self):
         """The method should return required fields in the template context."""
         request = self.factory.get("/root")
@@ -143,6 +148,23 @@ class PageOrCategoryViewTests(MockPagesTestCase, SimpleTestCase, TestCase):
         context = self.ViewClass.get_context_data()
         for msg, key, expected_value in cases:
             with self.subTest(msg=msg):
+                self.assertEqual(context[key], expected_value)
+
+    def test_get_context_data_for_category_with_page(self):
+        """Make sure the proper page is returned for category locations with pages."""
+        request = self.factory.get("/category")
+        self.ViewClass.setup(request)
+        self.ViewClass.dispatch(request, location="tmp")
+
+        context = self.ViewClass.get_context_data()
+        expected_page_context = {
+            "page": PARSED_HTML,
+            "page_title": PARSED_METADATA["title"],
+            "page_description": PARSED_METADATA["description"],
+            "relevant_links": PARSED_METADATA["relevant_links"]
+        }
+        for key, expected_value in expected_page_context.items():
+            with self.subTest():
                 self.assertEqual(context[key], expected_value)
 
     def test_get_context_data_breadcrumbs(self):
