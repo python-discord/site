@@ -159,3 +159,29 @@ import os
 
 path = os.path.join("foo", "bar")
 ```
+
+---
+
+### HTML Attributes
+To add HTML attributes to certain lines/paragraphs, [see this page](https://python-markdown.github.io/extensions/attr_list/#the-list) for the format and where to put it.
+
+This can be useful for setting the image size when adding an image using markdown (see the [Image Captions](#image-captions) section for an example), or for adding bulma styles to certain elements (like the warning notification [here](/pages/guides/pydis-guides/contributing/sir-lancebot#setup-instructions)).  
+**This should be used sparingly, as it reduces readability and simplicity of the article.**
+
+---
+
+### Image Captions
+To add an image caption, place a sentence with italics *right below* the image link
+
+**Markdown:**
+```nohighlight
+![Summer Code Jam 2020](/static/images/events/summer_code_jam_2020.png){: width="400" }
+*Summmer Code Jam 2020 banner with event information.*
+```
+
+**Output:**
+
+![Summer Code Jam 2020](/static/images/events/summer_code_jam_2020.png){: width="400"}
+*Summer Code Jam 2020 banner with event information.*
+
+> Note: To display a regular italicized line below an image, leave an empty line between the two.
