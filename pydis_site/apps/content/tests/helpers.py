@@ -16,7 +16,7 @@ MARKDOWN_WITHOUT_METADATA = """#This is a header."""
 
 # Valid YAML in a _info.yml file
 CATEGORY_INFO = """
-name: Category Name
+title: Category Name
 description: Description
 """
 
@@ -36,7 +36,7 @@ PARSED_METADATA = {
 }
 
 # The YAML data parsed from the above _info.yml file
-PARSED_CATEGORY_INFO = {"name": "Category Name", "description": "Description"}
+PARSED_CATEGORY_INFO = {"title": "Category Name", "description": "Description"}
 
 
 class MockPagesTestCase(TestCase):

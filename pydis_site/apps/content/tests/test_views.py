@@ -17,6 +17,23 @@ with fake_filesystem_unittest.Patcher() as _:
     BASE_PATH = Path(".")
 
 
+def patch_dispatch_attributes(view: PageOrCategoryView, location: str) -> None:
+    """
+    Set the attributes set in the `dispatch` method manually.
+
+    This is necessary because it is never automatically called during tests.
+    """
+    view.location = Path(location)
+
+    # URL location on the filesystem
+    view.full_location = view.location
+
+    # Possible places to find page content information
+    view.category_page_path = view.full_location.joinpath(view.location.stem).with_suffix(".md")
+    view.category_path = view.full_location
+    view.page_path = view.full_location.with_suffix(".md")
+
+
 @override_settings(PAGES_PATH=BASE_PATH)
 class PageOrCategoryViewTests(MockPagesTestCase, SimpleTestCase, TestCase):
     """Tests for the PageOrCategoryView class."""
@@ -63,13 +80,13 @@ class PageOrCategoryViewTests(MockPagesTestCase, SimpleTestCase, TestCase):
 
         for path, expected_template in cases:
             with self.subTest(path=path, expected_template=expected_template):
-                self.ViewClass.full_location = Path(path)
+                patch_dispatch_attributes(self.ViewClass, path)
                 self.assertEqual(self.ViewClass.get_template_names(), [expected_template])
 
     def test_get_template_names_with_nonexistent_paths_returns_404(self):
         for path in ("invalid", "another_invalid", "nonexistent"):
             with self.subTest(path=path):
-                self.ViewClass.full_location = Path(path)
+                patch_dispatch_attributes(self.ViewClass, path)
                 with self.assertRaises(Http404):
                     self.ViewClass.get_template_names()
 
@@ -120,7 +137,7 @@ class PageOrCategoryViewTests(MockPagesTestCase, SimpleTestCase, TestCase):
                 "page_description",
                 PARSED_CATEGORY_INFO["description"]
             ),
-            ("Context includes page title", "page_title", PARSED_CATEGORY_INFO["name"]),
+            ("Context includes page title", "page_title", PARSED_CATEGORY_INFO["title"]),
         ]
 
         context = self.ViewClass.get_context_data()
@@ -138,8 +155,8 @@ class PageOrCategoryViewTests(MockPagesTestCase, SimpleTestCase, TestCase):
         self.assertEquals(
             context["breadcrumb_items"],
             [
-                {"name": PARSED_CATEGORY_INFO["name"], "path": "."},
-                {"name": PARSED_CATEGORY_INFO["name"], "path": "category"},
-                {"name": PARSED_CATEGORY_INFO["name"], "path": "category/subcategory"},
+                {"name": PARSED_CATEGORY_INFO["title"], "path": "."},
+                {"name": PARSED_CATEGORY_INFO["title"], "path": "category"},
+                {"name": PARSED_CATEGORY_INFO["title"], "path": "category/subcategory"},
             ]
         )

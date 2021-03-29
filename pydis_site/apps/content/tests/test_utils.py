@@ -14,7 +14,7 @@ class GetCategoryTests(MockPagesTestCase):
     def test_get_valid_category(self):
         result = utils.get_category(Path("category"))
 
-        self.assertEqual(result, {"name": "Category Name", "description": "Description"})
+        self.assertEqual(result, {"title": "Category Name", "description": "Description"})
 
     def test_get_nonexistent_category(self):
         with self.assertRaises(Http404):
