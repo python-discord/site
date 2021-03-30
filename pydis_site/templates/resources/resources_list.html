@@ -27,11 +27,11 @@
                 <h1>{{ category_info.name }}</h1>
                 <p>{{ category_info.description|safe }}</p>
                 <div>
-                    {% for resource in resources %}
+                    {% for resource in resources|dictsort:"position" %}
                         {% include "resources/resource_box.html" %}
                     {% endfor %}
 
-                    {% for subcategory in subcategories %}
+                    {% for subcategory in subcategories|dictsort:"category_info.position" %}
                         <h2 id="{{ subcategory.category_info.raw_name }}">
                             <a href="{% url "resources:resources" type=category_info.raw_name %}#{{ subcategory.category_info.raw_name }}">
                                 {{ subcategory.category_info.name }}
@@ -39,7 +39,7 @@
                         </h2>
                         <p>{{ subcategory.category_info.description|safe }}</p>
 
-                        {% for resource in subcategory.resources %}
+                        {% for resource in subcategory.resources|dictsort:"position" %}
                             {% with category_info=subcategory.category_info %}
                                 {% include "resources/resource_box.html" %}
                             {% endwith %}
