@@ -275,5 +275,4 @@ BULMA_SETTINGS = {
         "footer-padding": "1rem 1.5rem 1rem",
         "tooltip-max-width": "30rem",
     },
-    "extensions": ["bulma-tooltip"],
 }
