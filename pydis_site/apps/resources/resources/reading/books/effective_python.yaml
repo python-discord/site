@@ -1,7 +1,6 @@
 description: A book that gives 59 best practices for writing excellent Python. Great
   for intermediates.
 name: Effective Python
-payment: paid
 position: 3
 urls:
 - icon: regular/link

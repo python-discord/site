@@ -1,7 +1,6 @@
 description: A book full of very smart problem-solving recipes for various Python topics,
   including moving from Python 2 to Python 3.
 name: Python Cookbook
-payment: paid
 position: 8
 urls:
 - icon: regular/link

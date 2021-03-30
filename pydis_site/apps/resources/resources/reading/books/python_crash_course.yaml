@@ -7,8 +7,6 @@ description: This fast-paced, thorough introduction to programming with Python w
   a Space Invaders–inspired arcade game, a set of data visualizations with Python’s handy libraries,
   and a simple web app you can deploy online.
 name: Python Crash Course
-payment: optional
-payment_description: Free online version, paid book version available.
 position: 12
 urls:
   - icon: regular/link

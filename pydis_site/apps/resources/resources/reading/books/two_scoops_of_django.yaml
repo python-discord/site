@@ -1,7 +1,6 @@
 description: Tips, tricks, and best practices for your Django project.
   A highly recommended resource for Django web developers.
 name: Two Scoops of Django
-payment: paid
 position: 9
 urls:
 - icon: regular/link

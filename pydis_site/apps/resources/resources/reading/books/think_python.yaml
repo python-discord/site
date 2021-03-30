@@ -4,8 +4,6 @@ description: Think Python is an introduction to Python programming for beginners
   Larger pieces, like recursion and object-oriented programming are divided into a sequence of smaller steps
   and introduced over the course of several chapters.
 name: Think Python
-payment: optional
-payment_description: Python 2 version is available in web, Python 3 version is paid.
 position: 10
 urls:
   - icon: regular/link

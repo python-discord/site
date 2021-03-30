@@ -1,8 +1,6 @@
 description: A best practice handbook for both novice and expert Python developers to the installation,
   configuration, and usage of Python on a daily basis.
 name: The Hitchhiker's Guide to Python
-payment: optional
-payment_description: Free version is available online, but you can buy book of it from Amazon.
 position: 0
 urls:
 - icon: regular/link

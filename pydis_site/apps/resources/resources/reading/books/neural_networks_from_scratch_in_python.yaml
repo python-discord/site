@@ -3,7 +3,6 @@ description: "Neural Networks From Scratch" is a book intended to teach you how 
   This is so you can go out and do new/novel things with deep learning as well as to become more successful with even more basic models.
   This book is to accompany the usual free tutorial videos and sample code from youtube.com/sentdex.
 name: Neural Networks from Scratch in Python
-payment: paid
 position: 11
 urls:
   - icon: regular/link

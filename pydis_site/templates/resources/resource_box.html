@@ -9,16 +9,6 @@
         {% include "resources/resource_box_header.html" %}
     {% endif %}
 
-    {# Payment information section #}
-    {% if 'payment' in resource %}
-        <span class="fa-stack fa-1x payment-{{ resource.payment }}{% if 'payment_description' in resource and resource.payment_description != None %} has-tooltip-arrow has-tooltip-multiline" data-tooltip="{{ resource.payment_description }}"{% endif %}">
-            <i class="far fa-sack-dollar fa-stack-{% if resource.payment == "free" %}1{% else %}2{% endif %}x"></i>
-            {% if resource.payment == "free" %}
-                <i class="far fa-ban fa-stack-2x"></i>
-            {% endif %}
-        </span>
-    {% endif %}
-
     <p class="is-italic">{{ resource.description|safe }}</p>
 
     {# Icons #}
