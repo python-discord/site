@@ -1,0 +1,81 @@
+{% extends "events/base.html" %}
+
+{% block title %}Code Jam 3: Games!{% endblock %}
+
+{% block breadcrumb %}
+    <li><a href="{% url "events:index" %}">Events</a></li>
+    <li><a href="{% url "events:page" path="code-jams" %}">Code Jams</a></li>
+    <li class="is-active"><a href="#">Code Jam 3: Games!</a></li>
+{% endblock %}
+
+{% block event_content %}
+    <p>
+        The theme for code jam 3 was creating a <strong>game</strong> with the theme <strong>the world ends in 10 minutes</strong>.
+        The teams of three could live out their creativity here - any form of game was fine,
+        as long as they fit the theme. The jam started at <strong>Monday, the 22nd October 2018, 12:00 PM UTC</strong>.
+    </p>
+
+    <h2 id="task-description" class="title is-4"><a href="#task-description">Task Description</a></h2>
+    <p>The <a href="https://github.com/python-discord/code-jam-3">original task description</a> was as follows:</p>
+    <blockquote>
+        <p>
+            This task is a little more freeform than the other code jams we've had so far -
+            we're happy to accept games in any form, as long as they fit that theme.
+            You may use PyGame, Kivy, Curses/Unicurses, Pyxel, web frameworks like Flask,
+            or anything else your team desires.
+            Please provide instructions on how to set up and run your game within the README where necessary.
+            Remember that teamwork is paramount - You will need to work together.
+            For this jam, we've assigned a leader for each team based on their responses to the application form.
+            Remember to listen to your leader, and communicate with the rest of your team!
+        </p>
+    </blockquote>
+
+    <h2 id="results" class="title is-4"><a href="#results">Results</a></h2>
+    <p>
+        The <strong>winning team</strong> for this jam was Certain Horses, consisting of Wattle, Scragly, and Mark.
+        They made a 2D platformer where the player had to collect lemons in order to earn points.
+        Below the player was an ocean of lemon juice that caused instant death if you touched it.
+    </p>
+    <p>
+        Every time you collected a lemon, the lemon juice water level would raise up,
+        so you had to be tactical about which lemons you could collect
+        without dying and which of the branching paths you'd have to select to avoid the sea of lemon juice rushing up to meet you.
+    </p>
+    <p>
+        You can play the game by yourself here:
+        <a href="https://github.com/MarkKoz/code-jam-3">https://github.com/MarkKoz/code-jam-3</a>
+    </p>
+
+    <h2 id="runner-up-1" class="title is-4"><a href="#runner-up-1">Runner up 1: Successful Toads</a></h2>
+    <p>
+        The <strong>first runner up</strong> for this jam was team Successful Toads,
+        whose code can be found at <a href="https://gitlab.com/biskette/code-jam-3/">https://gitlab.com/biskette/code-jam-3/</a>.
+        They wrote a flask app game which was about deciding who to let into the last nuclear bunker on the planet.
+        Like Tinder, but for nuclear holocaust gatekeepers.
+        The game had procedurally generated graphics which were absolutely hilarious,
+        and you would swipe right or left to decide whether or not to let someone into your bunker.
+        Each person had certain traits which could either save or destroy your bunker.
+    </p>
+    <p>
+        In order to win, you had to balance stuff like medical expertise with combat experience
+        and make sure that your bunker would survive into the post-apocalypse.
+    </p>
+
+    <h2 id="runner-up-2" class="title is-4"><a href="#runner-up-2">Runner up 2: Misty Hats</a></h2>
+    <p>
+        The second runner up for this jam was team Misty Hats,
+        with code available at <a href="https://gitlab.com/JannesJ/code-jam-3">https://gitlab.com/JannesJ/code-jam-3</a>.
+        They made an excellent shoot-em-up in the style of Gradius,
+        with a long intro cinematic, lots of original graphics assets,
+        and a whole bunch of different power-ups. Other features included:
+    </p>
+    <ul>
+        <li><p>Fighter enemy: A tiny spaceship that will follow you and try to take you down.</p></li>
+        <li><p>Pythonic mines: Space mines shaped like Python logos that damage you if you touch them.</p></li>
+        <li><p>Defensive Structures: Semi-Stationary defensive structures that will shoot you on sight</p></li>
+        <li><p>8 different power-ups: Extra damage, armor, hp, shield, double shot.. and more!</p></li>
+        <li><p>Timers: A ten minute timer and small timers for temporary power ups.</p></li>
+        <li><p>Different size/color blaster projectiles</p></li>
+        <li><p>Wave system</p></li>
+    </ul>
+{% endblock %}

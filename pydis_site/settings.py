@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 import os
 import secrets
 import sys
+from pathlib import Path
 
 import environ
 import sentry_sdk
@@ -84,6 +85,8 @@ INSTALLED_APPS = [
     'pydis_site.apps.home',
     'pydis_site.apps.staff',
     'pydis_site.apps.resources',
+    'pydis_site.apps.content',
+    'pydis_site.apps.events',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -115,6 +118,9 @@ MIDDLEWARE = [
     'django_hosts.middleware.HostsResponseMiddleware',
 ]
 ROOT_URLCONF = 'pydis_site.urls'
+
+# Path for events pages
+PAGES_PATH = Path(BASE_DIR, "pydis_site", "templates", "events", "pages")
 
 TEMPLATES = [
     {
@@ -276,3 +282,10 @@ BULMA_SETTINGS = {
         "tooltip-max-width": "30rem",
     },
 }
+
+# Information about site repository
+SITE_REPOSITORY_OWNER = "python-discord"
+SITE_REPOSITORY_NAME = "site"
+SITE_REPOSITORY_BRANCH = "master"
+
+PAGES_PATH = Path(BASE_DIR, "pydis_site", "apps", "content", "resources")
