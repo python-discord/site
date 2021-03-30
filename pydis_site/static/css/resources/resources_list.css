@@ -53,23 +53,3 @@ i.resource-icon.is-black {
 i.has-icon-padding {
     padding: 0 10px 25px 0;
 }
-
-.payment-free, .payment-optional {
-    color: dimgray;
-}
-
-.payment-free:hover, .payment-optional:hover {
-    color: gray;
-}
-
-.payment-paid {
-    color: darkgoldenrod;
-}
-
-.payment-paid:hover {
-    color: goldenrod;
-}
-
-.tooltip:hover:before {
-  display: block;
-}
