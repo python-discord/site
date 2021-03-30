@@ -20,8 +20,7 @@ class ResourcesListView(TemplateView):
 
         resource_path = RESOURCES_PATH / self.kwargs["type"]
         if (
-                not resource_path.exists()
-                or not resource_path.is_dir()
+                not resource_path.is_dir()
                 or not resource_path.joinpath("_category_info.yaml").exists()
         ):
             raise Http404
