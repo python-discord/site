@@ -33,7 +33,7 @@
 
                     {% for subcategory in subcategories|dictsort:"category_info.position" %}
                         <h2 id="{{ subcategory.category_info.raw_name }}">
-                            <a href="{% url "resources:resources" type=category_info.raw_name %}#{{ subcategory.category_info.raw_name }}">
+                            <a href="{% url "resources:resources" category=category_info.raw_name %}#{{ subcategory.category_info.raw_name }}">
                                 {{ subcategory.category_info.name }}
                             </a>
                         </h2>

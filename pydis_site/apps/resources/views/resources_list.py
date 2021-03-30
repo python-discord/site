@@ -20,7 +20,7 @@ class ResourcesListView(TemplateView):
         """Add resources and subcategories data into context."""
         context = super().get_context_data(**kwargs)
 
-        resource_path = RESOURCES_PATH / self.kwargs["type"]
+        resource_path = RESOURCES_PATH / self.kwargs["category"]
         if (
                 not resource_path.is_dir()
                 or not resource_path.joinpath("_category_info.yaml").exists()
