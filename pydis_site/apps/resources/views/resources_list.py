@@ -9,7 +9,7 @@ from django.views.generic import TemplateView
 RESOURCES_PATH = Path(settings.BASE_DIR, "pydis_site", "apps", "resources", "resources")
 
 
-class ResourcesList(TemplateView):
+class ResourcesListView(TemplateView):
     """Shows specific resources list."""
 
     template_name = "resources/resources_list.html"
