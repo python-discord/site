@@ -82,6 +82,7 @@ Pages, which include guides, articles, and other static content,...
 - **icon:** Icon for the category entry for the page. Default: `fab fa-python` <i class="fab fa-python is-black" aria-hidden="true"></i>
 - **relevant_links:** A YAML dictionary containing `text:link` pairs. See the example above.
 - **toc:** A number representing the smallest heading tag to show in the table of contents.
+    See: [Table of Contents](#table-of-contents)
 
 ## Extended Markdown
 
@@ -187,3 +188,29 @@ To add an image caption, place a sentence with italics *right below* the image l
 *Summer Code Jam 2020 banner with event information.*
 
 > Note: To display a regular italicized line below an image, leave an empty line between the two.
+
+---
+
+### Table of Contents
+In order to show the table of contents on a page, simply define the `toc` key in the page metadata.
+
+The value of the `toc` key corresponds to the smallest heading to list in the table of contents.
+For example, with markdown content like this:
+
+```markdown
+# Header 1
+words
+### Header 3
+more words
+# Another Header 1
+## Header 2
+even more words
+```
+
+and `toc: 2` in the page metadata, only `Header 1`, `Another Header 1` and `Header 2` will be listed in the table of contents.
+
+To use a custom label in the table of contents for a heading, set the `data-toc-label` attribute in the heading line. See [HTML Attributes](#html-attributes) for more information.
+
+```markdown
+# Header 1 {: data-toc-label="Header One" }
+```
