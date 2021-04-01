@@ -47,6 +47,13 @@ class PageOrCategoryView(TemplateView):
         else:
             raise Http404
 
+        # Add subarticle information for dropdown menu if the page is also a category
+        if self.page_path.is_file() and self.category_path.is_dir():
+            context["subarticles"] = [
+                path.stem for path in self.category_path.iterdir()
+                if path.suffix != ".yml"
+            ]
+
         context["breadcrumb_items"] = [
             {
                 "name": utils.get_category(settings.PAGES_PATH / location)["title"],
