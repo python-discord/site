@@ -2,14 +2,22 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", () => {
-        const dropdown = document.querySelector(".dropdown");
+        const dropdown = document.querySelector("#dropdown");
+        // Show dropdown menu when clicked
         dropdown.addEventListener("click", () => {
             dropdown.classList.toggle("is-active");
-        })
+        });
+
+        // Hide dropdown menu when anyhere on the page is clicked
+        document.addEventListener("click", (e) => {
+            if (!dropdown.contains(e.target) && dropdown.classList.contains("is-active")) {
+                dropdown.classList.remove("is-active");
+            }
+        }, false);
     });
 </script>
 
-<div class="dropdown is-pulled-right is-right">
+<div class="dropdown is-pulled-right is-right" id="dropdown">
     <div class="dropdown-trigger">
         <a aria-haspopup="true" aria-controls="subarticle-menu">
             <span>Sub-Articles</span>
