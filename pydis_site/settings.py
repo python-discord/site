@@ -279,7 +279,8 @@ BULMA_SETTINGS = {
         "dimensions": "16 24 32 48 64 96 128 256 512",  # Possible image dimensions
         "navbar-height": "4.75rem",
         "footer-padding": "1rem 1.5rem 1rem",
-    }
+        "tooltip-max-width": "30rem",
+    },
 }
 
 # Information about site repository

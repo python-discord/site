@@ -1,0 +1,24 @@
+{% load as_icon %}
+
+{# Icon section #}
+{% if 'icon_image' in resource %}
+    <img src="{{ resource.icon_image }}" alt="" style="height: {{ resource.icon_size|default:30 }}px;">
+{% elif 'title_icon' in resource %}
+    <span class="icon is-size-4 is-medium">
+        <i class="{{ resource.title_icon|as_icon }} is-size-3 resource-icon has-icon-padding is-{{ resource.title_icon_color }}"></i>
+    </span>
+{% elif 'default_icon' in category_info %}
+    <span class="icon is-size-4 is-medium">
+        <i class="{{ category_info.default_icon|as_icon }} is-size-3 resource-icon has-icon-padding is-{{ category_info.default_icon_color }}"></i>
+    </span>
+{% endif %}
+
+{# Title section #}
+<span class="is-size-4 has-text-weight-bold">
+    {% if 'title_image' in resource %}
+        <img src="{{ resource.title_image }}" alt="" style="height: 50px; {{ resource.title_image_style }}">
+    {% endif %}
+    {% if 'name' in resource %}
+        {{ resource.name }}
+    {% endif %}
+</span>
