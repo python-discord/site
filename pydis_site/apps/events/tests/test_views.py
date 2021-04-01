@@ -17,7 +17,7 @@ class IndexTests(TestCase):
 
 
 class PageTests(TestCase):
-    @override_settings(PAGES_PATH=PAGES_PATH)
+    @override_settings(EVENTS_PAGES_PATH=PAGES_PATH)
     def test_valid_event_page_reponse_200(self):
         """Should return response code 200 when visiting valid event page."""
         pages = (
@@ -29,7 +29,7 @@ class PageTests(TestCase):
                 resp = self.client.get(page)
                 self.assertEqual(resp.status_code, 200)
 
-    @override_settings(PAGES_PATH=PAGES_PATH)
+    @override_settings(EVENTS_PAGES_PATH=PAGES_PATH)
     def test_invalid_event_page_404(self):
         """Should return response code 404 when visiting invalid event page."""
         pages = (

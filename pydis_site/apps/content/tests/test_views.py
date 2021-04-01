@@ -33,7 +33,7 @@ def patch_dispatch_attributes(view: PageOrCategoryView, location: str) -> None:
     view.page_path = view.full_location.with_suffix(".md")
 
 
-@override_settings(PAGES_PATH=BASE_PATH)
+@override_settings(CONTENT_PAGES_PATH=BASE_PATH)
 class PageOrCategoryViewTests(MockPagesTestCase, SimpleTestCase, TestCase):
     """Tests for the PageOrCategoryView class."""
 

@@ -16,7 +16,7 @@ class PageOrCategoryView(TemplateView):
         self.location = Path(kwargs.get("location", ""))
 
         # URL location on the filesystem
-        self.full_location = settings.PAGES_PATH / self.location
+        self.full_location = settings.CONTENT_PAGES_PATH / self.location
 
         # Possible places to find page content information
         self.category_path = self.full_location
@@ -56,7 +56,7 @@ class PageOrCategoryView(TemplateView):
 
         context["breadcrumb_items"] = [
             {
-                "name": utils.get_category(settings.PAGES_PATH / location)["title"],
+                "name": utils.get_category(settings.CONTENT_PAGES_PATH / location)["title"],
                 "path": str(location)
             } for location in reversed(self.location.parents)
         ]

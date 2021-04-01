@@ -119,9 +119,6 @@ MIDDLEWARE = [
 ]
 ROOT_URLCONF = 'pydis_site.urls'
 
-# Path for events pages
-PAGES_PATH = Path(BASE_DIR, "pydis_site", "templates", "events", "pages")
-
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -287,4 +284,8 @@ SITE_REPOSITORY_OWNER = "python-discord"
 SITE_REPOSITORY_NAME = "site"
 SITE_REPOSITORY_BRANCH = "master"
 
-PAGES_PATH = Path(BASE_DIR, "pydis_site", "apps", "content", "resources")
+# Path for events pages
+EVENTS_PAGES_PATH = Path(BASE_DIR, "pydis_site", "templates", "events", "pages")
+
+# Path for content pages
+CONTENT_PAGES_PATH = Path(BASE_DIR, "pydis_site", "apps", "content", "resources")
