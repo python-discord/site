@@ -50,7 +50,8 @@ guides
 
 In the above example, `www.pythondiscord.com/guides/` will list `Contributing` as a category entry with information from `contributing/_info.yml`.
 
-However, `www.pythondiscord.com/guides/contributing` will render `contributing.md` rather than show the category contents, so *it is the article's responsibility to link to any subpages under the article*.
+However, `www.pythondiscord.com/guides/contributing` will render `contributing.md` rather than show the category contents.
+A dropdown menu will be automatically generated in the top right corner of the page listing the children of the category page.
 
 Therefore, `www.pythondiscord.com/guides/contributing/bot` will then render `bot.md`, with backlinks to `contributing.md`.
 
