@@ -32,7 +32,8 @@ def get_category_pages(path: Path) -> Dict[str, Dict]:
     pages = {}
 
     for item in path.glob("*.md"):
-        if item.is_file():
+        # Only list page if there is no category with the same name
+        if item.is_file() and not item.with_suffix("").is_dir():
             pages[item.stem] = frontmatter.load(item).metadata
 
     return pages

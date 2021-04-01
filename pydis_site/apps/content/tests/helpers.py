@@ -50,9 +50,9 @@ class MockPagesTestCase(TestCase):
     ├── root.md
     ├── root_without_metadata.md
     ├── not_a_page.md
+    ├── tmp.md
     ├── tmp
     |   ├── _info.yml
-    |   ├── tmp.md
     |   └── category
     |       ├── _info.yml
     |       └── subcategory_without_info
@@ -86,6 +86,6 @@ class MockPagesTestCase(TestCase):
         # for testing purposes.
         # See: https://jmcgeheeiv.github.io/pyfakefs/release/usage.html#os-temporary-directories
         self.fs.create_file("tmp/_info.yml", contents=CATEGORY_INFO)
-        self.fs.create_file("tmp/tmp.md", contents=MARKDOWN_WITH_METADATA)
+        self.fs.create_file("tmp.md", contents=MARKDOWN_WITH_METADATA)
         self.fs.create_file("tmp/category/_info.yml", contents=MARKDOWN_WITH_METADATA)
         self.fs.create_dir("tmp/category/subcategory_without_info")

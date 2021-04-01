@@ -29,7 +29,6 @@ def patch_dispatch_attributes(view: PageOrCategoryView, location: str) -> None:
     view.full_location = view.location
 
     # Possible places to find page content information
-    view.category_page_path = view.full_location.joinpath(view.location.stem).with_suffix(".md")
     view.category_path = view.full_location
     view.page_path = view.full_location.with_suffix(".md")
 

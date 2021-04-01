@@ -19,7 +19,6 @@ class PageOrCategoryView(TemplateView):
         self.full_location = settings.PAGES_PATH / self.location
 
         # Possible places to find page content information
-        self.category_page_path = self.full_location.joinpath(self.location.stem).with_suffix(".md")
         self.category_path = self.full_location
         self.page_path = self.full_location.with_suffix(".md")
 
@@ -27,7 +26,7 @@ class PageOrCategoryView(TemplateView):
 
     def get_template_names(self) -> t.List[str]:
         """Checks if the view uses the page template or listing template."""
-        if self.category_page_path.is_file() or self.page_path.is_file():
+        if self.page_path.is_file():
             template_name = "content/page.html"
         elif self.category_path.is_dir():
             template_name = "content/listing.html"
@@ -40,13 +39,11 @@ class PageOrCategoryView(TemplateView):
         """Assign proper context variables based on what resource user requests."""
         context = super().get_context_data(**kwargs)
 
-        if self.category_page_path.is_file():
-            context.update(self._get_page_context(self.category_page_path))
+        if self.page_path.is_file():
+            context.update(self._get_page_context(self.page_path))
         elif self.category_path.is_dir():
             context.update(self._get_category_context(self.category_path))
             context["path"] = f"{self.location}/"  # Add trailing slash to simplify template
-        elif self.page_path.is_file():
-            context.update(self._get_page_context(self.page_path))
         else:
             raise Http404
 
@@ -71,7 +68,7 @@ class PageOrCategoryView(TemplateView):
         }
 
     @staticmethod
-    def _get_category_context(path) -> t.Dict[str, t.Any]:
+    def _get_category_context(path: Path) -> t.Dict[str, t.Any]:
         category = utils.get_category(path)
         return {
             "categories": utils.get_categories(path),

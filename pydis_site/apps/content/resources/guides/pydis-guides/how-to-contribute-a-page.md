@@ -36,14 +36,14 @@ icon: fas fa-folder # Optional
 
 All the markdown files in this folder will then be under this category.
 
-#### Having the Category also be a Page
-In order to make categories a page, place a page inside the category folder **with the same name as the category folder**.
+#### Having the Category Also Be a Page
+In order to make categories a page, just create a page **with the same name as the category folder** in the category's parent directory.
 
 ```plaintext
 guides
+├── contributing.md
 ├── contributing
 │   ├── _info.yml
-│   ├── contributing.md
 │   └── bot.md
 └── _info.yml
 ```
