@@ -1,5 +1,3 @@
-{% load str_methods %}
-
 <script>
     document.addEventListener("DOMContentLoaded", () => {
         const dropdown = document.querySelector("#dropdown");
@@ -28,8 +26,8 @@
     </div>
     <div class="dropdown-menu" id="subarticle-menu" role="menu">
         <div class="dropdown-content">
-            {% for page in subarticles|dictsort:0 %}
-                <a href="{{page}}" class="dropdown-item">{{ page.title|replace_hyphens:" " }}</a>
+            {% for page in subarticles|dictsort:"name" %}
+                <a href="{{ page.path }}" class="dropdown-item">{{ page.name }}</a>
             {% endfor %}
         </div>
     </div>

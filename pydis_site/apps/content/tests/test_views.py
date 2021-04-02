@@ -161,7 +161,7 @@ class PageOrCategoryViewTests(MockPagesTestCase, SimpleTestCase, TestCase):
             "page_title": PARSED_METADATA["title"],
             "page_description": PARSED_METADATA["description"],
             "relevant_links": PARSED_METADATA["relevant_links"],
-            "subarticles": ["category"]
+            "subarticles": [{"path": "category", "name": "Category Name"}]
         }
         for key, expected_value in expected_page_context.items():
             with self.subTest():

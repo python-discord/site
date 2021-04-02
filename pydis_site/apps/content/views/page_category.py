@@ -1,6 +1,7 @@
 import typing as t
 from pathlib import Path
 
+import frontmatter
 from django.conf import settings
 from django.http import Http404
 from django.views.generic import TemplateView
@@ -49,10 +50,16 @@ class PageOrCategoryView(TemplateView):
 
         # Add subarticle information for dropdown menu if the page is also a category
         if self.page_path.is_file() and self.category_path.is_dir():
-            context["subarticles"] = [
-                path.stem for path in self.category_path.iterdir()
-                if path.suffix != ".yml"
-            ]
+            context["subarticles"] = []
+            for entry in self.category_path.iterdir():
+                entry_info = {"path": entry.stem}
+                if entry.suffix == ".md":
+                    entry_info["name"] = frontmatter.load(entry).metadata["title"]
+                elif entry.is_dir():
+                    entry_info["name"] = utils.get_category(entry)["title"]
+                else:
+                    continue
+                context["subarticles"].append(entry_info)
 
         context["breadcrumb_items"] = [
             {
