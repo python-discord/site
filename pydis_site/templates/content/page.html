@@ -9,20 +9,30 @@
 {% endblock %}
 
 {% block page_content %}
-    {% if relevant_links|length > 0 %}
+    {% if relevant_links or toc %}
         <div class="columns is-variable is-8">
             <div class="column is-two-thirds">
                 {{ page|safe }}
             </div>
             <div class="column">
-                <div class="box">
-                    <p class="menu-label">Relevant links</p>
-                    <ul class="menu-list">
-                        {% for value, link in relevant_links.items %}
-                            <li><a class="has-text-link" href="{{link}}">{{ value }}</a></li>
-                        {% endfor %}
-                    </ul>
-                </div>
+                {% if toc %}
+                    <div class="box">
+                        <p class="menu-label">Table of Contents</p>
+                        <ul class="menu-list toc">
+                            {{ toc|safe }}
+                        </ul>
+                    </div>
+                {% endif %}
+                {% if relevant_links %}
+                    <div class="box">
+                        <p class="menu-label">Relevant links</p>
+                        <ul class="menu-list">
+                            {% for value, link in relevant_links.items %}
+                                <li><a class="has-text-link" href="{{link}}">{{ value }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
             </div>
         </div>
     {% else %}

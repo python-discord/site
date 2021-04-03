@@ -14,6 +14,7 @@
 
     <section class="breadcrumb-section section">
         <div class="container">
+            {# Article breadcrumb #}
             <nav class="breadcrumb is-pulled-left" aria-label="breadcrumbs">
                 <ul>
                     {% for item in breadcrumb_items %}
@@ -22,6 +23,10 @@
                     <li class="is-active"><a href="#">{{ page_title }}</a></li>
                 </ul>
             </nav>
+            {# Sub-Article dropdown for category pages #}
+            {% if subarticles %}
+                {% include "content/dropdown.html" %}
+            {% endif %}
         </div>
     </section>
 

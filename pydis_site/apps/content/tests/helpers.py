@@ -8,6 +8,7 @@ description: TestDescription
 relevant_links:
     Python Discord: https://pythondiscord.com
     Discord: https://discord.com
+toc: 0
 ---
 # This is a header.
 """
@@ -16,7 +17,7 @@ MARKDOWN_WITHOUT_METADATA = """#This is a header."""
 
 # Valid YAML in a _info.yml file
 CATEGORY_INFO = """
-name: Category Name
+title: Category Name
 description: Description
 """
 
@@ -32,11 +33,12 @@ PARSED_METADATA = {
     "relevant_links": {
         "Python Discord": "https://pythondiscord.com",
         "Discord": "https://discord.com"
-    }
+    },
+    "toc": 0
 }
 
 # The YAML data parsed from the above _info.yml file
-PARSED_CATEGORY_INFO = {"name": "Category Name", "description": "Description"}
+PARSED_CATEGORY_INFO = {"title": "Category Name", "description": "Description"}
 
 
 class MockPagesTestCase(TestCase):
@@ -48,9 +50,12 @@ class MockPagesTestCase(TestCase):
     ├── root.md
     ├── root_without_metadata.md
     ├── not_a_page.md
+    ├── tmp.md
     ├── tmp
     |   ├── _info.yml
-    |   └── category_without_info
+    |   └── category
+    |       ├── _info.yml
+    |       └── subcategory_without_info
     └── category
         ├── _info.yml
         ├── with_metadata.md
@@ -81,4 +86,6 @@ class MockPagesTestCase(TestCase):
         # for testing purposes.
         # See: https://jmcgeheeiv.github.io/pyfakefs/release/usage.html#os-temporary-directories
         self.fs.create_file("tmp/_info.yml", contents=CATEGORY_INFO)
-        self.fs.create_dir("tmp/category_without_info")
+        self.fs.create_file("tmp.md", contents=MARKDOWN_WITH_METADATA)
+        self.fs.create_file("tmp/category/_info.yml", contents=CATEGORY_INFO)
+        self.fs.create_dir("tmp/category/subcategory_without_info")

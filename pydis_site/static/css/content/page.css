@@ -29,3 +29,42 @@ code.hljs {
 :is(h1, h2, h3, h4, h5, h6):hover > .headerlink {
     display: inline;
 }
+
+/*
+ * Display <em> tags immediately following <img> tags like figure subcaptions.
+ * Note: There must not be a newline between the image and the italicized line
+ * for this to work. Otherwise, it's regular markdown.
+ *
+ * Image caption:
+ *
+ * ![Title](Source)
+ * *This is my caption.*
+ *
+ */
+img + em {
+    /* Place the caption on it's own line */
+    display: block;
+    white-space: pre;
+
+    /* Style */
+    font-size: .875em;
+}
+
+/*
+ * Remove extra padding on the left of TOC items
+ */
+ul.menu-list.toc {
+    margin-left: 0;
+}
+
+/*
+ * Remove bullets set by the markdown extension, since bulma adds vertical
+ * lines to represent nesting
+ */
+.toc li {
+    list-style-type: none;
+}
+/* ..but we still want bullets on the top <ul> items */
+.toc > ul > li {
+    list-style-type: disc;
+}

@@ -14,7 +14,7 @@ class GetCategoryTests(MockPagesTestCase):
     def test_get_valid_category(self):
         result = utils.get_category(Path("category"))
 
-        self.assertEqual(result, {"name": "Category Name", "description": "Description"})
+        self.assertEqual(result, {"title": "Category Name", "description": "Description"})
 
     def test_get_nonexistent_category(self):
         with self.assertRaises(Http404):
@@ -28,7 +28,7 @@ class GetCategoryTests(MockPagesTestCase):
     def test_get_category_without_info_yml(self):
         # Categories should provide an _info.yml file
         with self.assertRaises(FileNotFoundError):
-            utils.get_category(Path("tmp/category_without_info"))
+            utils.get_category(Path("tmp/category/subcategory_without_info"))
 
 
 class GetCategoriesTests(MockPagesTestCase):
@@ -73,10 +73,12 @@ class GetPageTests(MockPagesTestCase):
     """Tests for the get_page function."""
 
     def test_get_page(self):
+        # TOC is a special case because the markdown converter outputs the TOC as HTML
+        updated_metadata = {**PARSED_METADATA, "toc": '<div class="toc">\n<ul></ul>\n</div>\n'}
         cases = [
-            ("Root page with metadata", "root.md", PARSED_HTML, PARSED_METADATA),
+            ("Root page with metadata", "root.md", PARSED_HTML, updated_metadata),
             ("Root page without metadata", "root_without_metadata.md", PARSED_HTML, {}),
-            ("Page with metadata", "category/with_metadata.md", PARSED_HTML, PARSED_METADATA),
+            ("Page with metadata", "category/with_metadata.md", PARSED_HTML, updated_metadata),
             ("Page without metadata", "category/subcategory/without_metadata.md", PARSED_HTML, {}),
         ]
 
