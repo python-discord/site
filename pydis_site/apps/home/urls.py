@@ -6,6 +6,7 @@ from .views import HomeView
 app_name = 'home'
 urlpatterns = [
     path('', HomeView.as_view(), name='home'),
+    path('', include('pydis_site.apps.redirect.urls')),
     path('admin/', admin.site.urls),
     path('resources/', include('pydis_site.apps.resources.urls')),
     path('pages/', include('pydis_site.apps.content.urls')),
