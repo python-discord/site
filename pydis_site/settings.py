@@ -299,4 +299,7 @@ REDIRECTIONS = {
     "pages/resources/<str:category>/": (
         "resources:resources", "resources_resources_redirect", ("reading",)
     ),
+    "pages/events/": (
+        "events:index", "events_index_redirect", ()
+    )
 }
