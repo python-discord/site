@@ -53,7 +53,7 @@ class PageOrCategoryView(TemplateView):
             context["subarticles"] = []
             for entry in self.category_path.iterdir():
                 entry_info = {"path": entry.stem}
-                if entry.suffix == ".md":
+                if entry.suffix == ".md" and not entry.with_suffix("").is_dir():
                     entry_info["name"] = frontmatter.load(entry).metadata["title"]
                 elif entry.is_dir():
                     entry_info["name"] = utils.get_category(entry)["title"]
