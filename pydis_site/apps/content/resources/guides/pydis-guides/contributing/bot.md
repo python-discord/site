@@ -49,7 +49,6 @@ For any staff member, since you have write permissions already to the original r
 # Test server and bot account
 You will need your own test server and bot account on Discord to test your changes to the bot.
 
-<!-- TODO: Fix ALL Links -->
 * [**Create a test server**](../setting-test-server-and-bot-account#setting-up-a-test-server)
 * [**Create a bot account**](../setting-test-server-and-bot-account#setting-up-a-bot-account)
 * Invite it to the server you just created.
