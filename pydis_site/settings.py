@@ -293,13 +293,12 @@ EVENTS_PAGES_PATH = Path(BASE_DIR, "pydis_site", "templates", "events", "pages")
 CONTENT_PAGES_PATH = Path(BASE_DIR, "pydis_site", "apps", "content", "resources")
 
 # Define redirections here so these can be used for URLs and tests.
-# Format: "original-path/": ("route:name", "redirection_route_name", ("testing", "args"))
+# Format: "original-path/": (
+#             "route:name", "redirection_route_name", ("destination", "args")
+#         )
 REDIRECTIONS = {
     "pages/resources/": ("resources:index", "resources_index_redirect", ()),
-    "pages/resources/<str:category>/": (
-        "resources:resources", "resources_resources_redirect", ("reading",)
-    ),
-    "pages/events/": (
-        "events:index", "events_index_redirect", ()
-    )
+    "pages/resources/<str:category>/": ("resources:resources", "resources_resources_redirect", ()),
+    "pages/events/": ("events:index", "events_index_redirect", ()),
+    "pages/code-jams/": ("events:page", "events_code_jams_index_redirect", ("code-jams",)),
 }
