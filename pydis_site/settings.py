@@ -304,4 +304,25 @@ REDIRECTIONS = {
     # Events
     "pages/events/": ("events:index", "events_index_redirect", ()),
     "pages/code-jams/": ("events:page", "events_code_jams_index_redirect", ("code-jams",)),
+    "pages/code-jams/code-jam-1-snakes-bot/": (
+        "events:page", "events_code_jams_one_redirect", ("code-jams/1",)
+    ),
+    "pages/code-jams/code-jam-2/": (
+        "events:page", "events_code_jams_two_redirect", ("code-jams/2",)
+    ),
+    "pages/code-jams/code-jam-3/": (
+        "events:page", "events_code_jams_three_redirect", ("code-jams/3",)
+    ),
+    "pages/code-jams/code-jam-4/": (
+        "events:page", "events_code_jams_four_redirect", ("code-jams/4",)
+    ),
+    "pages/code-jams/code-jam-5/": (
+        "events:page", "events_code_jams_five_redirect", ("code-jams/5",)
+    ),
+    "pages/code-jams/code-jam-6/": (
+        "events:page", "events_code_jams_five_redirect", ("code-jams/6",)
+    ),
+    "pages/code-jams/code-jam-7/": (
+        "events:page", "events_code_jams_five_redirect", ("code-jams/7",)
+    ),
 }
