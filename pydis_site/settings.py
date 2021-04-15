@@ -297,8 +297,11 @@ CONTENT_PAGES_PATH = Path(BASE_DIR, "pydis_site", "apps", "content", "resources"
 #             "route:name", "redirection_route_name", ("destination", "args")
 #         )
 REDIRECTIONS = {
+    # Resources
     "pages/resources/": ("resources:index", "resources_index_redirect", ()),
     "pages/resources/<str:category>/": ("resources:resources", "resources_resources_redirect", ()),
+
+    # Events
     "pages/events/": ("events:index", "events_index_redirect", ()),
     "pages/code-jams/": ("events:page", "events_code_jams_index_redirect", ("code-jams",)),
 }
