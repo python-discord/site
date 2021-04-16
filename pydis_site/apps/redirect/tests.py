@@ -1,3 +1,4 @@
+import yaml
 from django.conf import settings
 from django.test import TestCase
 from django.urls import reverse
@@ -16,12 +17,12 @@ class RedirectTests(TestCase):
         1. Redirects only once.
         2. Redirects to right URL.
         """
-        for original_path, (redirect_route, name, static_args) in settings.REDIRECTIONS.items():
+        for name, data in yaml.safe_load(settings.REDIRECTIONS_PATH.read_text()).items():
             with self.subTest(
-                    original_path=original_path,
-                    redirect_route=redirect_route,
+                    original_path=data["original_path"],
+                    redirect_route=data["redirect_route"],
                     name=name,
-                    static_args=static_args,
+                    redirect_arguments=tuple(data.get("redirect_arguments", ())),
                     args=TESTING_ARGUMENTS.get(name, ())
             ):
                 resp = self.client.get(
@@ -36,8 +37,8 @@ class RedirectTests(TestCase):
                 self.assertRedirects(
                     resp,
                     reverse(
-                        f"home:{redirect_route}",
-                        args=TESTING_ARGUMENTS.get(name, ()) + static_args
+                        f"home:{data['redirect_route']}",
+                        args=TESTING_ARGUMENTS.get(name, ()) + tuple(data.get("redirect_arguments", ()))
                     ),
                     status_code=301
                 )

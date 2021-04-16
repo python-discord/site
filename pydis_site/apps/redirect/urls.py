@@ -1,3 +1,4 @@
+import yaml
 from django.conf import settings
 from django.urls import path
 
@@ -6,12 +7,12 @@ from pydis_site.apps.redirect.views import CustomRedirectView
 app_name = "redirect"
 urlpatterns = [
     path(
-        original,
+        data["original_path"],
         CustomRedirectView.as_view(
-            pattern_name=redirect_route,
-            static_args=params
+            pattern_name=data["redirect_route"],
+            static_args=tuple(data.get("redirect_arguments", ()))
         ),
         name=name
     )
-    for original, (redirect_route, name, params) in settings.REDIRECTIONS.items()
+    for name, data in yaml.safe_load(settings.REDIRECTIONS_PATH.read_text()).items()
 ]

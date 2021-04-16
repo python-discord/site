@@ -1,0 +1,53 @@
+# Resources
+resources_index_redirect:
+  original_path: pages/resources/
+  redirect_route: "resources:index"
+
+resources_resources_redirect:
+  original_path: pages/resources/<str:category>/
+  redirect_route: "resources:resources"
+
+# Events
+events_index_redirect:
+  original_path: pages/events/
+  redirect_route: "events:index"
+
+events_code_jams_index_redirect:
+  original_path: pages/code-jams/
+  redirect_route: "events:page"
+  redirect_arguments: ["code-jams"]
+
+events_code_jams_one_redirect:
+  original_path: pages/code-jams/code-jam-1-snakes-bot/
+  redirect_route: "events:page"
+  redirect_arguments: ["code-jams/1"]
+
+events_code_jams_two_redirect:
+  original_path: pages/code-jams/code-jam-2/
+  redirect_route: "events:page"
+  redirect_arguments: ["code-jams/2"]
+
+events_code_jams_three_redirect:
+  original_path: pages/code-jams/code-jam-3/
+  redirect_route: "events:page"
+  redirect_arguments: ["code-jams/3"]
+
+events_code_jams_four_redirect:
+  original_path: pages/code-jams/code-jam-4/
+  redirect_route: "events:page"
+  redirect_arguments: ["code-jams/4"]
+
+events_code_jams_five_redirect:
+  original_path: pages/code-jams/code-jam-5/
+  redirect_route: "events:page"
+  redirect_arguments: ["code-jams/5"]
+
+events_code_jams_six_redirect:
+  original_path: pages/code-jams/code-jam-6/
+  redirect_route: "events:page"
+  redirect_arguments: ["code-jams/6"]
+
+events_code_jams_seven_redirect:
+  original_path: pages/code-jams/code-jam-7/
+  redirect_route: "events:page"
+  redirect_arguments: ["code-jams/7"]
