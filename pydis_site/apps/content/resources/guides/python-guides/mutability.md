@@ -1,6 +1,6 @@
 ---
 title: Mutability and Immutability in Python
-description: "Mutable and immutable data types: What they are and how they work."
+description: "Mutable and immutable data types: what they are and how they work."
 ---
 
 Consider this example:

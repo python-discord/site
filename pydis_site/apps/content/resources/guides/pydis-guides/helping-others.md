@@ -1,6 +1,6 @@
 ---
 title: Helping Others
-description: The staff take on how to help others in our community.
+description: The staff's take on how to help others in our community.
 icon: fab fa-discord
 relevant_links:
     Asking Good Questions: ../asking-good-questions

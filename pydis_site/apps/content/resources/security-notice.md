@@ -1,7 +1,7 @@
 ---
 title: Security Notice
 description: How vulnerabilities in our projects should be reported.
-icon: fas fa-lock
+icon: fas fa-shield-alt
 ---
 
 This is the security notice for all Python Discord repositories.
