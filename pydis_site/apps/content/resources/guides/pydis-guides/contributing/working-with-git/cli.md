@@ -1,23 +1,13 @@
 ---
 title: Working with the Git CLI
 description: Basic workflow when using the git CLI.
+toc: 2
 ---
 
 This is the basic workflow when working with Git with CLI. For the PyCharm version of the guide, [**click here**](../pycharm).
 The following will use the [Sir-Lancebot](https://github.com/python-discord/sir-lancebot/) repository as an example, but the steps are the same for all other repositories.
 
 > **Note:** This is a guide only meant to get you started with git. For in-depth resources, check the [**Working with Git**](..) page.
-
-#### Only done once per project
-* [Adding the Upstream Remote](#adding-the-upstream-remote)
-
-#### Commonly done
-* [Creating a New Branch](#creating-a-new-branch)
-* [Staging Changes](#staging-changes)
-* [Discarding Changes](#discarding-changes)
-* [Committing Changes](#committing-changes)
-* [Pushing Commits](#pushing-changes)
-* [Pulling Changes](#pulling-changes)
 
 ---
 

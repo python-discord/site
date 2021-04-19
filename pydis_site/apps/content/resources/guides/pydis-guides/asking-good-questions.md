@@ -2,6 +2,7 @@
 title: Asking Good Questions
 description: A guide for how to ask good questions in our community.
 icon: fab fa-discord
+toc: 3
 ---
 
 This document is intended to provide you with the information you need to get help as quickly and effectively as possible.

@@ -6,6 +6,7 @@ relevant_links:
     Asking Good Questions: ../asking-good-questions
     Help Channel Guide: ../help-channel-guide
     Code of Conduct: /pages/code-of-conduct/
+toc: 2
 ---
 
 Python Discord has a lot of people asking questions, be it in the help channels, topical channels, or any other part of the server.

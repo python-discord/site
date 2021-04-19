@@ -1,6 +1,7 @@
 ---
 title: Function Parameters and Arguments in Python
 description: An in-depth look at function parameters and arguments, and how to use them.
+toc: 1
 ---
 
 A Python function is utilised in two steps:

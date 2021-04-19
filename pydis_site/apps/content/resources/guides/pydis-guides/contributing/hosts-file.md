@@ -2,6 +2,7 @@
 title: Preparing Your Hosts file
 description: How to setup your hosts file for project usage.
 icon: fas fa-cog
+toc: 3
 ---
 
 # What's a hosts file?

@@ -2,6 +2,7 @@
 title: Working with Docker & Docker Compose
 description: Guide to running our projects with Docker and Docker CE.
 icon: fab fa-docker
+toc: 2
 ---
 
 Both our [Site](../site/) and [Bot](../bot/) projects use Docker and Docker-Compose during development in order to provide an easy to setup and consistent development environment.

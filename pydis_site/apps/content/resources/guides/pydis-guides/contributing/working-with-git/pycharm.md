@@ -1,23 +1,13 @@
 ---
 title: Working with Git in PyCharm
 description: Basic workflow when using git in PyCharm.
+toc: 2
 ---
 
 This is the basic workflow when working with Git with PyCharm. For the CLI version of the guide, [**click here**](../cli).
 The following will use the [Sir-Lancebot](https://github.com/python-discord/sir-lancebot/) repository as an example, but the steps are the same for all other repositories.
 
 > **Note:** This is a guide only meant to get you started with git. For in-depth resources, check the [**Working with Git**](wiki:/contributing/working-with-git/) page.
-
-#### Only done once per project
-* [Adding the Upstream Remote](adding-the-upstream-remote)
-
-#### Done for each feature
-* [Creating a New Branch](creating-a-new-branch)
-* [Committing Changes](committing-changes)
-* [Pushing Changes](pushing-changes)
-
-#### Done whenever needed
-* [Pulling Changes](pulling-changes)
 
 ---
 

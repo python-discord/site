@@ -2,6 +2,7 @@
 title: "Code Reviews: A Primer"
 description: An introduction and guide to the world of code reviews!
 icon: fab fa-github
+toc: 3
 ---
 
 ## The What, the Why, and the How

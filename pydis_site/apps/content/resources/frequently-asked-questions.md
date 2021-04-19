@@ -2,6 +2,7 @@
 title: Frequently Asked Questions
 description: The Python Discord FAQ.
 icon: fab fa-discord
+toc: 4
 ---
 
 Welcome to Python Discord! Sometimes in our channels we get similar questions asked every so often.
