@@ -76,7 +76,7 @@ The following variables are needed for running Sir Lancebot:
 | `CHANNEL_DEVLOG` | ID of the `#dev-log` channel |
 | `CHANNEL_COMMUNITY_BOT_COMMANDS` | ID of the `#sir-lancebot-commands` channel |
 
-[**Full environment variable reference for this project.**](./sir-lancebot-env-var-reference)
+[**Full environment variable reference for this project.**](./env-var-reference)
 
 ---
 
@@ -114,6 +114,6 @@ Now that you have everything setup, it is finally time to make changes to the bo
 
 Notably, version control of our projects is done using Git and Github. It can be intimidating at first, so feel free to ask for any help in the server.
 
-[**Click here to see the basic Git workflow when contributing to one of our projects.**](./working-with-git/)
+[**Click here to see the basic Git workflow when contributing to one of our projects.**](../working-with-git/)
 
 Have fun!
