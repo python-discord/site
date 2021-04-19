@@ -18,13 +18,13 @@ Often, an Issue ticket already exists within the scope of what you might be cons
 
 If you don't see one existing, then:
 
-Click the `Issues` tab in a repository:<br>
+1. Click the `Issues` tab in a repository:<br>
 ![Repository Issues Tab](/static/images/content/contributing/github_issues_tab.png)
 
-Click `New Issue`<br>
+2. Click `New Issue`:<br>
 ![New Issues Button](/static/images/content/contributing/github_new_issue.png)
 
-Enter the title and description for your issue, then click `Submit new issue`<br>
+3. Enter the title and description for your issue, then click `Submit new issue`:<br>
 ![Sample Issue](/static/images/content/contributing/github_sample_issue.png){: width="600" }
 
 ## What should I put as a title?

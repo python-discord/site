@@ -68,3 +68,12 @@ ul.menu-list.toc {
 .toc > ul > li {
     list-style-type: disc;
 }
+
+/*
+ * Increase space between images and any text above the image in a list.
+ * This is used instead of a newline between the image and the text in markdown
+ * so the image remains left-aligned with the list item.
+ */
+li img {
+    margin-top: 0.5em;
+}
