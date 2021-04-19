@@ -76,11 +76,11 @@ Windows has not been configured to share drives with Docker.
 **Solution**<br>
 > NOTE: Solution requires Windows user credentials for an account that has administrative privileges.
 
-1. Right-click the Docker icon in the Windows system tray, and choose "Settings" from the context menu.
-![Docker Settings](/static/images/content/contributing/docker_settings.webp)
+1. Right-click the Docker icon in the Windows system tray, and choose "Settings" from the context menu.<br>
+![Docker Settings](/static/images/content/contributing/docker_settings.png)
 
-2. Click the "Shared Drives" label at the left, and check the box next to the drive letter where your project is stored.
-![Docker Shared Drives](/static/images/content/contributing/docker_shared_drives.webp)
+2. Click the "Shared Drives" label at the left, and check the box next to the drive letter where your project is stored.<br>
+![Docker Shared Drives](/static/images/content/contributing/docker_shared_drives.png)
 
 3. Click "Apply" and enter appropriate Windows credentials (likely just your own account, if you have administrative privileges).
 

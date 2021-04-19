@@ -27,9 +27,9 @@ The following will use the [Sir-Lancebot](https://github.com/python-discord/sir-
 > Generally, a *remote* designates a repository that is on GitHub or another external location rather than on your computer. The `origin` remote will refer to your fork on GitHub. The `upstream` remote will refer to the main repository on GitHub.
 
 1. In the menu bar, navigate to `Git` -> `Remotes...`.<br>
-![PyCharm Remotes](/static/images/content/contributing/pycharm_remotes.webp)
+![PyCharm Remotes](/static/images/content/contributing/pycharm_remotes.png)
 2. In the popup menu, click the `+` icon, set `upstream` as the name, set the URL as the URL for the main repository on GitHub.<br>
-![PyCharm Upstream Project](/static/images/content/contributing/pycharm_upstream.webp)
+![PyCharm Upstream Project](/static/images/content/contributing/pycharm_upstream.png)
 3. Click `OK`.
 
 ---
@@ -42,14 +42,14 @@ The following will use the [Sir-Lancebot](https://github.com/python-discord/sir-
 > Before making new branches, be sure to checkout the `main` branch and ensure it's up to date.
 
 1. In the bottom right corner, click on `main` and then click `New Branch`.<br>
-![PyCharm New Branch](/static/images/content/contributing/pycharm_branch.webp)
+![PyCharm New Branch](/static/images/content/contributing/pycharm_branch.png)
 
 ---
 
 ## Committing Changes
 After making changes to the project files, you can commit by clicking the commit button that's part of the Git actions available in the top right corner of your workspace:
 
-![PyCharm Commit Button](/static/images/content/contributing/pycharm_commit_button.webp)
+![PyCharm Commit Button](/static/images/content/contributing/pycharm_commit_button.png)
 
 The flow of making a commit is as follows:
 
@@ -57,7 +57,7 @@ The flow of making a commit is as follows:
 2. Write a brief description of what your commit is. This is your *commit message*.
 3. See the actual changes your commit will be making, and optionally tick/untick specific changes to only commit the changes you want.
 4. Click `Commit`.<br>
-![PyCharm Commit](/static/images/content/contributing/pycharm_commit.webp)
+![PyCharm Commit](/static/images/content/contributing/pycharm_commit.png)
 
 ---
 
@@ -65,7 +65,7 @@ The flow of making a commit is as follows:
 When you are ready to have your commits be available in your remote fork, navigate to `Git` -> `Push...`.
 Select the commits you want to push, make sure the remote branch is your intended branch to push to, and click `Push`.
 
-![PyCharm Push](/static/images/content/contributing/pycharm_push.webp)
+![PyCharm Push](/static/images/content/contributing/pycharm_push.png)
 
 ---
 
@@ -74,4 +74,4 @@ Select the commits you want to push, make sure the remote branch is your intende
 
 To do that, navigate to `Git` -> `Pull...`. From there, select the *remote* and the branches to pull from, then click `Pull`.
 
-![PyCharm Pull](/static/images/content/contributing/pycharm_pull.webp)
+![PyCharm Pull](/static/images/content/contributing/pycharm_pull.png)

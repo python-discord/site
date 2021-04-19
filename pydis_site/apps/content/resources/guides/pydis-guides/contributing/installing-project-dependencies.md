@@ -18,11 +18,11 @@ You should have already cloned your fork as described in [**Cloning a Repository
 1. Load up your project in PyCharm.
 2. Go to the Project Settings by clicking `File`, then `Settings...`. Alternatively, use the shortcut key `Ctrl+Alt+S`.
 3. Navigate to `Project Interpreter`, then click the gear icon and click `Add`.
-![PyCharm Interpreter Settings](/static/images/wiki/contributing/pycharm_interpreter.webp)
+![PyCharm Interpreter Settings](/static/images/wiki/contributing/pycharm_interpreter.png)
 4. In the popup window, click `Pipenv Environment`, make sure `Install packages from Pipfile` is checked, then click `OK`.
-![PyCharm Pipenv Environment](/static/images/wiki/contributing/pycharm_pipenv.webp)
+![PyCharm Pipenv Environment](/static/images/wiki/contributing/pycharm_pipenv.png)
 5. PyCharm will automatically install the packages required into a virtual environment.
-![PyCharm Project Interpreter](/static/images/wiki/contributing/pycharm_pipenv_success.webp)
+![PyCharm Project Interpreter](/static/images/wiki/contributing/pycharm_pipenv_success.png)
 
 ---
 

@@ -30,10 +30,11 @@ It just returns a new one.
 Let's examine what's going on here.
 At first, the variable `s` refers to some object, the string `'hello'`.
 
-![s refers to the string "hello"](/static/images/content/mutability/s_refers_hello.webp)
+![s refers to the string "hello"](/static/images/content/mutability/s_refers_hello.png)
 
 When you call `s.upper()`, a new string, which contains the characters `'HELLO'`, gets created.
-![s.upper creates "HELLO"](/static/images/content/mutability/s_upper_creates_HELLO.webp)
+
+![s.upper creates "HELLO"](/static/images/content/mutability/s_upper_creates_HELLO.png)
 
 This happens even if you just call `s.upper()` without any assignment, on its own line:
 ```python
@@ -42,11 +43,13 @@ This happens even if you just call `s.upper()` without any assignment, on its ow
 In this case, a new object will be created and discarded right away.
 
 Then the assignment part comes in: the name `s` gets disconnected from `'hello'`, and gets connected to `'HELLO'`.
-![s gets assigned to "HELLO"](/static/images/content/mutability/s_gets_assigned_to_HELLO.webp)
+
+![s gets assigned to "HELLO"](/static/images/content/mutability/s_gets_assigned_to_HELLO.png)
 
 Now we can say that `'HELLO'` is stored in the `s` variable.
 
 Then, because no variables refer to the _object_ `'hello'`, it gets eaten by the garbage collector.
-!["hello" Gets Eaten](/static/images/content/mutability/hello_gets_eaten.webp)
+
+!["hello" Gets Eaten](/static/images/content/mutability/hello_gets_eaten.png)
 
 It means that the memory reserved for that object will be freed. If that didn't happen, the 'garbage' would accumulate over time and fill up all the RAM.

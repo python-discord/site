@@ -148,7 +148,7 @@ The following are a collated list of the most referenced community examples.
 #### Embeds
 * [Embed Live Designer and Visualiser](https://leovoel.github.io/embed-visualizer/) - *Credit to leovoel*
 * [Embed Element Reference](https://cdn.discordapp.com/attachments/84319995256905728/252292324967710721/embed.png)<br>
-![Embed Element Reference](/static/images/content/discordpy_embed.webp){: width="200" }
+![Embed Element Reference](/static/images/content/discordpy_embed.png){: width="200" }
 
 ##### Using Local Images in Embeds
 ```py
