@@ -119,6 +119,22 @@ class UserViewSet(ModelViewSet):
     - 200: returned on success
     - 404: if a user with the given `snowflake` could not be found
 
+    ### GET /bot/users/<snowflake:int>/metricity_review_data
+    Gets metricity data for a single user's review by ID.
+
+    #### Response format
+    >>> {
+    ...     'joined_at': '2020-08-26T08:09:43.507000',
+    ...     'top_channel_activity': [['off-topic', 15],
+    ...                              ['talent-pool', 4],
+    ...                              ['defcon', 2]],
+    ...     'total_messages': 22
+    ... }
+
+    #### Status codes
+    - 200: returned on success
+    - 404: if a user with the given `snowflake` could not be found
+
     ### POST /bot/users
     Adds a single or multiple new users.
     The roles attached to the user(s) must be roles known by the site.
@@ -258,6 +274,21 @@ class UserViewSet(ModelViewSet):
                 data["total_messages"] = metricity.total_messages(user.id)
                 data["voice_banned"] = voice_banned
                 data["activity_blocks"] = metricity.total_message_blocks(user.id)
+                return Response(data, status=status.HTTP_200_OK)
+            except NotFound:
+                return Response(dict(detail="User not found in metricity"),
+                                status=status.HTTP_404_NOT_FOUND)
+
+    @action(detail=True)
+    def metricity_review_data(self, request: Request, pk: str = None) -> Response:
+        """Request handler for metricity_review_data endpoint."""
+        user = self.get_object()
+
+        with Metricity() as metricity:
+            try:
+                data = metricity.user(user.id)
+                data["total_messages"] = metricity.total_messages(user.id)
+                data["top_channel_activity"] = metricity.top_channel_activity(user.id)
                 return Response(data, status=status.HTTP_200_OK)
             except NotFound:
                 return Response(dict(detail="User not found in metricity"),
