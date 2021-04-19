@@ -64,7 +64,7 @@ If your bot fails to start with a `PrivilegedIntentsRequired` exception, this in
 
 ### Server Setup
 
-Setup categories, channels, emojis, roles, and webhooks in your server. To see what needs to be added, please refer to the following sections in the `config-default.yml` file: 
+Setup categories, channels, emojis, roles, and webhooks in your server. To see what needs to be added, please refer to the following sections in the `config-default.yml` file:
 
 * `style.emojis`
 * `guild.categories`
@@ -73,7 +73,7 @@ Setup categories, channels, emojis, roles, and webhooks in your server. To see w
 * `guild.webhooks`
 
 We understand this is tedious and are working on a better solution for setting up test servers.
-In the meantime, [here](https://discord.new/zmHtscpYN9E3) is a template for you to use.  
+In the meantime, [here](https://discord.new/zmHtscpYN9E3) is a template for you to use.<br>
 
 ---
 # Configure the bot
@@ -105,7 +105,7 @@ The following is a list of all available environment variables used by the bot:
 | `BOT_API_KEY` | When running bot without Docker | Used to authenticate with the site's API. When using Docker to run the bot, this is automatically set. By default, the site will always have the API key shown in the example below. |
 | `REDDIT_CLIENT_ID` | reddit cog | OAuth2 client ID for authenticating with the [reddit API](https://github.com/reddit-archive/reddit/wiki/OAuth2). |
 | `REDDIT_SECRET` | reddit cog | OAuth2 secret for authenticating with the reddit API. *Leave empty if you're not using the reddit API.* |
-| `BOT_SENTRY_DSN` | When connecting the bot to sentry | The DSN of the sentry monitor. | 
+| `BOT_SENTRY_DSN` | When connecting the bot to sentry | The DSN of the sentry monitor. |
 | `REDIS_PASSWORD` | When not using FakeRedis | The password to connect to the redis database. *Leave empty if you're not using REDIS.* |
 
 ---
@@ -133,7 +133,7 @@ The bot can run with or without Docker.
 When using Docker, the site, which is a prerequisite, can be automatically set up too.
 If you don't use Docker, you have to first follow [the site guide](../site/) to set it up yourself.
 The bot and site can be started using independent methods.
-For example, the site could run with Docker and the bot could run directly on your system (AKA the _host_) or vice versa. 
+For example, the site could run with Docker and the bot could run directly on your system (AKA the _host_) or vice versa.
 
 ## Run with Docker
 

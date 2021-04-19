@@ -15,7 +15,7 @@ toc: 2
 Interest in creating a Discord bot is a common introduction to the world of programming in our community.
 
 Using it as your first project in programming while trying to learn is a double-edged sword.
-A large number of concepts need to be understood before becoming proficient at creating a bot, making the journey of learning and completing the project more arduous than more simple projects designed specifically for beginners. 
+A large number of concepts need to be understood before becoming proficient at creating a bot, making the journey of learning and completing the project more arduous than more simple projects designed specifically for beginners.
 However in return, you get the opportunity to expose yourself to many more aspects of Python than you normally would and so it can be an amazingly rewarding experience when you finally reach your goal.
 
 Another excellent aspect of building bots is that it has a huge scope as to what you can do with it, almost only limited by your own imagination.
@@ -64,7 +64,7 @@ Be sure to update the token you're using for your bot script to this new one, as
 
 Discord Permissions are typically represented by a Permissions Integer which represents all the Permissions that have been allowed.
 
-You can find a reference to all the available Discord Permissions, their bitwise values and their descriptions here:  
+You can find a reference to all the available Discord Permissions, their bitwise values and their descriptions here:<br>
 [https://discordapp.com/developers/docs/topics/permissions#permissions-bitwise-permission-flags](https://discordapp.com/developers/docs/topics/permissions#permissions-bitwise-permission-flags)
 
 If you want to create your own Permissions Integer, you can generate it in the `Bot` settings page of your Application, located at the bottom of the page.
@@ -78,7 +78,7 @@ Bot's cannot use a server invite link. Instead, they have to be invited by a mem
 The Bot Invite URL is formatted like:
 `https://discordapp.com/oauth2/authorize?client_id={CLIENT_ID}&scope=bot&permissions={PERMISSIONS_INTEGER}`
 
-You can create the Invite URL for your bot by replacing:  
+You can create the Invite URL for your bot by replacing:
 
 * `{CLIENT_ID}` with your [Client ID](#client-id)
 * `{PERMISSIONS_INTEGER}` with the [Permissions Integer](#permissions-integer)
@@ -97,7 +97,7 @@ Below are the essential resources to read over to get familiar with the basic fu
 ## Using the Commands Extension (`commands.Bot`) { data-toc-label="Using the Commands Extension" }
 
 The Commands Extension has a explanatory documentation walking you through not only what it is and it's basic usage, but also more advanced concepts.
-Be sure to read the prose documentation in full at:  
+Be sure to read the prose documentation in full at:<br>
 [https://discordpy.readthedocs.io/en/latest/ext/commands/commands.html](https://discordpy.readthedocs.io/en/latest/ext/commands/commands.html)
 
 It fully covers:
@@ -135,8 +135,8 @@ The most commonly referenced examples are:
 
 ### Community Examples and Resources
 
-The `discord.py` developer community over time have shared examples and references with each other.  
-The following are a collated list of the most referenced community examples. 
+The `discord.py` developer community over time have shared examples and references with each other.<br>
+The following are a collated list of the most referenced community examples.
 
 #### Extensions / Cogs
 * [Extension/Cog Example](https://gist.github.com/EvieePy/d78c061a4798ae81be9825468fe146be) - *Credit to EvieePy*
@@ -147,7 +147,7 @@ The following are a collated list of the most referenced community examples.
 
 #### Embeds
 * [Embed Live Designer and Visualiser](https://leovoel.github.io/embed-visualizer/) - *Credit to leovoel*
-* [Embed Element Reference](https://cdn.discordapp.com/attachments/84319995256905728/252292324967710721/embed.png)  
+* [Embed Element Reference](https://cdn.discordapp.com/attachments/84319995256905728/252292324967710721/embed.png)<br>
 ![Embed Element Reference](/static/images/content/discordpy_embed.webp){: width="200" }
 
 ##### Using Local Images in Embeds
@@ -189,7 +189,7 @@ await messagable.send(file=f, embed=embed)
 - [PIL Image Processing Example Cog](https://gist.github.com/Gorialis/e89482310d74a90a946b44cf34009e88) - *Credit to Gorialis*
 
 ### Systemd Service
-**botname.service**  
+**botname.service**<br>
 ```ini
 [Unit]
 Description=My Bot Name
@@ -206,25 +206,25 @@ Restart=on-failure
 WantedBy=network-online.target
 ```
 
-**Directory**  
+**Directory**<br>
 `/usr/local/lib/systemd/system`
 
-**Service Commands**  
-Refresh systemd after unit file changes:  
+**Service Commands**<br>
+Refresh systemd after unit file changes:<br>
 `systemctl daemon-reload`
 
-Set service to start on boot:  
+Set service to start on boot:<br>
 `systemctl enable botname`
 
-Start service now:  
+Start service now:<br>
 `systemctl start botname`
 
-Stop service:  
-`systemctl stop botname`  
+Stop service:<br>
+`systemctl stop botname`
 
-**Viewing Logs**  
-All logs:  
+**Viewing Logs**<br>
+All logs:<br>
 `journalctl -u botname`
 
-Recent logs and continue printing new logs live:  
+Recent logs and continue printing new logs live:<br>
 `journalctl -fu mybot`

@@ -13,7 +13,7 @@ The function definition uses parameters, whereas the function call uses argument
 ```python
 def foo(this_is_a_parameter):
     print(this_is_a_parameter)
-    
+
 foo(this_is_an_argument)
 ```
 
@@ -25,7 +25,7 @@ A function call may contain a mixture of positional and keyword arguments, andâ€
 ```python
 def foo(a, b, c):
     print(a, b, c)
-    
+
 >>> foo(1, 2, 3)
 1 2 3
 ```
@@ -85,7 +85,7 @@ SyntaxError: positional argument follows keyword argument
 
 # Default Parameter Values
 
-Although the syntax is similar, these are not to be confused with keyword arguments.  
+Although the syntax is similar, these are not to be confused with keyword arguments.<br>
 Default parameter values appear within the function definition and allow us to conveniently set a default value. This means that if any argument is omitted, its default value will be used as the argument.
 
 ```python
@@ -134,7 +134,7 @@ def foo(a=0, b=0, /, c=0, d=0):
     print(a, b, c, d)
 ```
 
-The parameters defined before the bare `/` are now considered to be positional-only and keyword mapping will no longer work on them.  
+The parameters defined before the bare `/` are now considered to be positional-only and keyword mapping will no longer work on them.<br>
 In the above function definition `a` and `b` are now positional-only parameters.
 
 These function calls will still work:
@@ -220,7 +220,7 @@ The parameters defined after the bare `*` are now considered to be keyword-only.
 ```python
 def foo(a=0, b=0, /, c=0, *, d=0):
     print(a, b, c, d)
-    
+
 >>> foo()
 0 0 0 0
 
@@ -240,8 +240,8 @@ Although `c` can be either a positional or keyword argument, if we attempt to pa
 >>> foo(1, 2, 3, 4)
 TypeError: foo() takes from 0 to 3 positional arguments but 4 were given
 ```
- 
-At least one named parameter must be provided after a bare `*` parameter. 
+
+At least one named parameter must be provided after a bare `*` parameter.
 Writing a function definition similar to what is shown below would not make sense, as without the context of a named parameter the bare `*` can simply be omitted.
 
 ```python
@@ -249,12 +249,12 @@ def foo(a=0, *, **kwargs):
                 ^
 SyntaxError: named arguments must follow bare *
 ```
- 
+
 ### Q: Why is this useful?
 
 The main benefit of using keyword-only parameters is when they are used together with positional-only parameters to remove ambiguity.
 
-However, it may sometimes also be desirable to use keyword-only arguments on their own.  
+However, it may sometimes also be desirable to use keyword-only arguments on their own.<br>
 If we were to expose a function as part of an API, we may want the parameter names to carry explicit meaning.
 
 Without using keyword names when invoking the function it can be unclear as to what the  provided arguments are for.
@@ -263,7 +263,7 @@ Additionally, a user could also choose to interchange positional arguments with 
 ```python
 def update(identity=None, name=None, description=None):
     # handle the parameters
-    
+
 >>> update("value 1", "value 2", "value 3")
 
 >>> update(1234, "value 1", description="value 2")
@@ -274,7 +274,7 @@ Enforcing the keyword names is clearer, as it carries context without needing to
 ```python
 def update(*, identity=None, name=None, description=None):
     # handle the parameters
-    
+
 >>> update(identity=1234, name="value 1", description="value 2")
 ```
 

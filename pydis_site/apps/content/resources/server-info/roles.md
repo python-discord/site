@@ -24,7 +24,7 @@ There are multiple requirements listed there for getting the role.
 # Server Support Roles
 
 ### <span class="fas fa-circle" style="color:#55cc6c"></span> Contributors
-**Description:** A role given by staff to people who make substantial contributions to any of the server's [open source repositories](https://github.com/python-discord/) (Sir Lancebot, Python, the site, the branding repo, etc..).  
+**Description:** A role given by staff to people who make substantial contributions to any of the server's [open source repositories](https://github.com/python-discord/) (Sir Lancebot, Python, the site, the branding repo, etc..).<br>
 This includes writing pull requests for open issues, and also for reviewing open pull requests (**we really need reviewers!**)
 
 **How to get it:** Contribute to the projects!

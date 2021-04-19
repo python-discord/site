@@ -60,7 +60,7 @@ Having some kind of consistent activity helps moderators bond with the rest of t
 First of all, it's important to appreciate that everything staff members do in this community is voluntary and the expectations listed above are not meant to change that.
 **This means it's absolutely fine for all staff members to take breaks or vacations from their activities in the community when they need to.**
 We will never hold it against someone if they are temporarily away from their responsibilities.
- 
+
 At the same time, it's only natural for a community like ours that there's some amount of staff turnover as personal interests and circumstances change.
 Going forward, we will periodically review the activity of individual staff members and open a dialogue with staff members who are currently not meeting the expectations to see what can be done.
 It might happen that we come to conclusion that it's better for a staff member to step down from their current position.

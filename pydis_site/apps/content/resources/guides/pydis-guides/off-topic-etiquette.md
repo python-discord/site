@@ -16,7 +16,7 @@ To facilitate the best experience for everyone, here are some guidelines on conv
     * There are better places to share memes; if you have a meme you think is worth sharing, try to find a relevant subreddit, like [/r/ProgrammerHumor](https://www.reddit.com/r/ProgrammerHumor/).
 3. Don't snap at people
     * We are a large, diverse community. Different native languages, experiences, and ages mean miscommunications happen. Always try to assume the best in other community members.
-  
+
 ## Three things you should do
 1. Ask away
     * If you have a question that isn't about Python, just ask it in an inactive off-topic channel.
@@ -28,5 +28,5 @@ To facilitate the best experience for everyone, here are some guidelines on conv
     Text isn't necessarily the easiest way for everyone to communicate, so it makes life easier if we're all on the same page.
 3. Join in!
     * The off-topic channels have lots of fun or interesting conversations; if someone is talking about something you're interested in, don't be scared to hop into the conversation.
-  
+
 While you can discuss other topics than Python in the off-topic channels, the [ordinary rules](/pages/rules/) still apply.

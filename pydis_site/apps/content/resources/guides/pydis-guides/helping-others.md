@@ -63,7 +63,7 @@ At other times, it might not be as obvious, and it might be a good idea to kindl
 The path is often more important than the answer.
 Your goal should primarily be to allow the helpee to apply, at least to a degree, the concepts you introduce in your answer.
 Otherwise, they might keep struggling with the same problem over and over again.
-That means that simply showing your answer might close the help channel for the moment, but won't be very helpful in the long-term. 
+That means that simply showing your answer might close the help channel for the moment, but won't be very helpful in the long-term.
 
 A common approach is to walk the helpee through to an answer:
 
@@ -74,9 +74,9 @@ A common approach is to walk the helpee through to an answer:
 
 > #### Example 3:
 >
-> **user**: "Hey, how can I create a sudoku solver?"  
-> *helper1 proceeds to paste 40 lines of sudoku solving code*  
-> **helper2**: "Are you familiar with lists / recursion / backtracking?"  
+> **user**: "Hey, how can I create a sudoku solver?"<br>
+> *helper1 proceeds to paste 40 lines of sudoku solving code*<br>
+> **helper2**: "Are you familiar with lists / recursion / backtracking?"<br>
 > *helper2 proceeds to give the information the user lacks*
 >
 > With the first replier, there's a much smaller chance of the helpee understanding how the problem was solved, and gaining new tools for future projects.
@@ -100,13 +100,13 @@ Presenting a solution that is considered a bad practice might be useful in certa
 
 > #### Example 4:
 >
-> **user**: "How can I print all elements in a list?"  
-> **helper1**: "You can do it like so:"  
+> **user**: "How can I print all elements in a list?"<br>
+> **helper1**: "You can do it like so:"<br>
 >
 >     for element in your_list:
 >         print(element)
 >
-> **helper2**: "You can also do it like this:"  
+> **helper2**: "You can also do it like this:"<br>
 >
 >     for i in range(len(your_list)):
 >         print(your_list[i])

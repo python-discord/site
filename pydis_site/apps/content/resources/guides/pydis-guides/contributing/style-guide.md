@@ -7,7 +7,7 @@ icon: fab fa-python
 > A style guide is about consistency.
 > Consistency with this style guide is important.
 > Consistency within a project is more important.
-> Consistency within one module or function is the most important.  
+> Consistency within one module or function is the most important.
 
 > However, know when to be inconsistent -- sometimes style guide recommendations just aren't applicable.
 > When in doubt, use your best judgment. Look at other examples and decide what looks best. And don't hesitate to ask!
@@ -155,7 +155,7 @@ Docstrings that require multiple lines instead keep both sets of triple quotes o
 def exponent(base, exponent=2):
     """
     Calculate the base raised to the exponents power.
-    
+
     Default is 2 due to a squared base being the most common usage at this time.
     """
     return a ** b
@@ -183,12 +183,12 @@ Imperative mood and present tense usage is preferenced when writing docstrings.
 
 Imperative mood is a certain grammatical form of writing that expresses a clear command to do something.
 
-**Use:** "Build an information embed."  
+**Use:** "Build an information embed."<br>
 **Don't use:** "Returns an embed containing information."
 
 Present tense defines that the work being done is now, in the present, rather than in the past or future.
 
-**Use:** "Build an information embed."  
+**Use:** "Build an information embed."<br>
 **Don't use:** "Built an information embed." or "Will build an information embed."
 
 # Type Annotations

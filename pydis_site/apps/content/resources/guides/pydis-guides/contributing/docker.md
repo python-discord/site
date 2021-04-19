@@ -46,10 +46,10 @@ $ sudo systemctl enable docker
 ```shell
 ERROR: Couldn't connect to Docker daemon at http+docker://localhost - is it running?
 ```
-**Problem**  
+**Problem**<br>
 Your Docker service is either not started, or you haven't yet installed Docker.
 
-**Solution**  
+**Solution**<br>
 [Start the service](#run-the-service) or ensure it's installed.
 If it's not, [install it](#docker-installation).
 
@@ -58,10 +58,10 @@ If it's not, [install it](#docker-installation).
 WARNING: Error loading config file: /home/user/.docker/config.json -
 stat /home/user/.docker/config.json: permission denied
 ```
-**Problem**  
+**Problem**<br>
 You initially ran Docker using `sudo` before adding your user to the `docker` group, resulting in your `~/.docker/` directory being created with incorrect permissions.
 
-**Solution**  
+**Solution**<br>
 Remove the existing `~/.docker/` directory. It will be automatically re-created with the correct permissions.
 
 ### Drive has not been shared (Windows users)
@@ -70,10 +70,10 @@ When attempting to run the `docker-compose up` command on a Windows machine, you
 ```text
 ERROR: for bot_bot_1 Cannot create container for service bot: b'Drive has not been shared'
 ```
-**Problem**  
+**Problem**<br>
 Windows has not been configured to share drives with Docker.
 
-**Solution**  
+**Solution**<br>
 > NOTE: Solution requires Windows user credentials for an account that has administrative privileges.
 
 1. Right-click the Docker icon in the Windows system tray, and choose "Settings" from the context menu.

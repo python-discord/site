@@ -95,7 +95,7 @@ If you don't understand anything or need clarification, feel free to ask any sta
 
 ### Useful Resources
 
-[Style Guide](./style-guide/) - Information regarding the code styles you should follow when working on our projects.  
+[Style Guide](./style-guide/) - Information regarding the code styles you should follow when working on our projects.<br>
 [Review Guide](../code-reviews-primer/) - A guide to get you started on doing code reviews.
 
 ## Contributors Community
