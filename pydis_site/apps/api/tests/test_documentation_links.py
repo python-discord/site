@@ -60,7 +60,7 @@ class DetailLookupDocumentationLinkAPITests(APISubdomainTestCase):
     def setUpTestData(cls):
         cls.doc_link = DocumentationLink.objects.create(
             package='testpackage',
-            base_url='https://example.com',
+            base_url='https://example.com/',
             inventory_url='https://example.com'
         )
 
@@ -108,6 +108,17 @@ class DetailLookupDocumentationLinkAPITests(APISubdomainTestCase):
 
         self.assertEqual(response.status_code, 400)
 
+    def test_create_invalid_package_name_returns_400(self):
+        test_cases = ("InvalidPackage", "invalid package", "i\u0150valid")
+        for case in test_cases:
+            with self.subTest(package_name=case):
+                body = self.doc_json.copy()
+                body['package'] = case
+                url = reverse('bot:documentationlink-list', host='api')
+                response = self.client.post(url, data=body)
+
+                self.assertEqual(response.status_code, 400)
+
 
 class DocumentationLinkCreationTests(APISubdomainTestCase):
     def setUp(self):
@@ -115,7 +126,7 @@ class DocumentationLinkCreationTests(APISubdomainTestCase):
 
         self.body = {
             'package': 'example',
-            'base_url': 'https://example.com',
+            'base_url': 'https://example.com/',
             'inventory_url': 'https://docs.example.com'
         }
 
