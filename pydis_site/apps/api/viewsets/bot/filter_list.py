@@ -3,7 +3,7 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
-from pydis_site.apps.api.models.bot.filter_list import FilterList
+from pydis_site.apps.api.models.bot.filters import FilterList
 from pydis_site.apps.api.serializers import FilterListSerializer
 
 
