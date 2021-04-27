@@ -33,7 +33,7 @@ def forward(apps: Apps, schema_editor: BaseDatabaseSchemaEditor) -> None:
             disallowed_channels=[],
             disallowed_categories=[],
             allowed_channels=[],
-            allowed_category=[],
+            allowed_categories=[],
             default=True
         )
         default_range.save()
@@ -85,7 +85,7 @@ class Migration(migrations.Migration):
                 ('disallowed_channels', django.contrib.postgres.fields.ArrayField(base_field=models.IntegerField(), size=None)),
                 ('disallowed_categories', django.contrib.postgres.fields.ArrayField(base_field=models.IntegerField(), size=None)),
                 ('allowed_channels', django.contrib.postgres.fields.ArrayField(base_field=models.IntegerField(), size=None)),
-                ('allowed_category', django.contrib.postgres.fields.ArrayField(base_field=models.IntegerField(), size=None)),
+                ('allowed_categories', django.contrib.postgres.fields.ArrayField(base_field=models.IntegerField(), size=None)),
                 ('default', models.BooleanField()),
             ],
         ),

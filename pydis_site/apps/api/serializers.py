@@ -180,7 +180,7 @@ class FilterChannelRangeSerializer(ModelSerializer):
             'disallowed_channels',
             'disallowed_categories',
             'allowed_channels',
-            'allowed_category',
+            'allowed_categories',
             'default'
         )
 

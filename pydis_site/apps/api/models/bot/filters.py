@@ -142,7 +142,7 @@ class ChannelRange(models.Model):
     disallowed_channels = ArrayField(models.IntegerField())
     disallowed_categories = ArrayField(models.IntegerField())
     allowed_channels = ArrayField(models.IntegerField())
-    allowed_category = ArrayField(models.IntegerField())
+    allowed_categories = ArrayField(models.IntegerField())
     default = models.BooleanField()
 
 

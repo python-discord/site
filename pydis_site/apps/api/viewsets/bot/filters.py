@@ -350,7 +350,7 @@ class FilterChannelRangeViewSet(ModelViewSet):
     ...         "disallowed_channels": [],
     ...         "disallowed_categories": [],
     ...         "allowed_channels": [],
-    ...         "allowed_category": [],
+    ...         "allowed_categories": [],
     ...         "default": True
     ...     },
     ...     ...
@@ -369,7 +369,7 @@ class FilterChannelRangeViewSet(ModelViewSet):
     ...     "disallowed_channels": [],
     ...     "disallowed_categories": [],
     ...     "allowed_channels": [],
-    ...     "allowed_category": [],
+    ...     "allowed_categories": [],
     ...     "default": True
     ... }
 
@@ -385,7 +385,7 @@ class FilterChannelRangeViewSet(ModelViewSet):
     ...     "disallowed_channels": [],
     ...     "disallowed_categories": [],
     ...     "allowed_channels": [],
-    ...     "allowed_category": [],
+    ...     "allowed_categories": [],
     ...     "default": True
     ... }
 
@@ -402,7 +402,7 @@ class FilterChannelRangeViewSet(ModelViewSet):
     ...     "disallowed_channels": [],
     ...     "disallowed_categories": [],
     ...     "allowed_channels": [],
-    ...     "allowed_category": [],
+    ...     "allowed_categories": [],
     ...     "default": True
     ... }
 

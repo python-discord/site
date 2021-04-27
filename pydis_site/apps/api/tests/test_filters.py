@@ -62,7 +62,7 @@ def get_test_sequences() -> Dict[str, TestSequence]:
                         disallowed_channels=[],
                         disallowed_categories=[],
                         allowed_channels=[],
-                        allowed_category=[],
+                        allowed_categories=[],
                         default=False
                     )
                 )
@@ -89,7 +89,7 @@ def get_test_sequences() -> Dict[str, TestSequence]:
                     disallowed_channels=[],
                     disallowed_categories=[],
                     allowed_channels=[],
-                    allowed_category=[],
+                    allowed_categories=[],
                     default=False
                 )
             }
@@ -111,7 +111,7 @@ def get_test_sequences() -> Dict[str, TestSequence]:
                 "disallowed_channels": [1234],
                 "disallowed_categories": [5678],
                 "allowed_channels": [9101],
-                "allowed_category": [1121],
+                "allowed_categories": [1121],
                 "default": True
             }
         ),
