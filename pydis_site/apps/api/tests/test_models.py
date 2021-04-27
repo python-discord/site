@@ -7,6 +7,9 @@ from django.utils import timezone
 from pydis_site.apps.api.models import (
     DeletedMessage,
     DocumentationLink,
+    Filter,
+    FilterList,
+    FilterSettings,
     Infraction,
     Message,
     MessageDeletionContext,
@@ -105,6 +108,17 @@ class StringDunderMethodTests(SimpleTestCase):
             ),
             DocumentationLink(
                 'test', 'http://example.com', 'http://example.com'
+            ),
+            FilterList(
+                name="forbidden_duckies",
+                list_type=0,
+                default_settings=FilterSettings()
+            ),
+            Filter(
+                content="ducky_nsfw",
+                description="This ducky is totally inappropriate!",
+                additional_field=None,
+                override=None
             ),
             OffensiveMessage(
                 id=602951077675139072,

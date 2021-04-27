@@ -49,7 +49,7 @@ class FilterList(models.Model):
         help_text="Whenever this list is an allowlist or denylist"
     )
 
-    filters = models.ManyToManyField("Filter", help_text="The content of this list.")
+    filters = models.ManyToManyField("Filter", help_text="The content of this list.", default=[])
     default_settings = models.ForeignKey(
         "FilterSettings",
         models.CASCADE,

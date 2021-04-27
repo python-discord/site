@@ -143,7 +143,7 @@ class Migration(migrations.Migration):
                 ('name', models.CharField(help_text='The unique name of this list.', max_length=50)),
                 ('list_type', models.IntegerField(choices=[], help_text='Whenever this list is an allowlist or denylist')),
                 ('default_settings', models.ForeignKey(help_text='Default parameters of this list.', on_delete=django.db.models.deletion.CASCADE, to='api.FilterSettings')),
-                ('filters', models.ManyToManyField(help_text='The content of this list.', to='api.Filter')),
+                ('filters', models.ManyToManyField(help_text='The content of this list.', to='api.Filter', default=[])),
             ],
         ),
         migrations.AddField(
