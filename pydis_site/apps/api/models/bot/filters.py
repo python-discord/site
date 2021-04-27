@@ -183,5 +183,5 @@ class FilterOverride(models.Model):
     delete_messages = models.BooleanField(null=True)
     bypass_roles = ArrayField(models.IntegerField(), null=True)
     enabled = models.BooleanField(null=True)
-    default_action = models.ForeignKey("FilterAction", models.CASCADE, null=True)
-    default_range = models.ForeignKey("ChannelRange", models.CASCADE, null=True)
+    filter_action = models.ForeignKey("FilterAction", models.CASCADE, null=True)
+    filter_range = models.ForeignKey("ChannelRange", models.CASCADE, null=True)

@@ -2,11 +2,16 @@ from django.urls import include, path
 from rest_framework.routers import DefaultRouter
 
 from .views import HealthcheckView, RulesView
-from .viewsets import (
+from .viewsets import (  # noqa: I101 - Preserving the filter order
     BotSettingViewSet,
     DeletedMessageViewSet,
     DocumentationLinkViewSet,
     FilterListViewSet,
+    FilterSettingsViewSet,
+    FilterActionViewSet,
+    FilterChannelRangeViewSet,
+    FilterViewSet,
+    FilterOverrideViewSet,
     InfractionViewSet,
     NominationViewSet,
     OffTopicChannelNameViewSet,
@@ -19,8 +24,28 @@ from .viewsets import (
 # https://www.django-rest-framework.org/api-guide/routers/#defaultrouter
 bot_router = DefaultRouter(trailing_slash=False)
 bot_router.register(
-    'filter-lists',
+    'filter/filter_lists',
     FilterListViewSet
+)
+bot_router.register(
+    'filter/filter_settings',
+    FilterSettingsViewSet
+)
+bot_router.register(
+    'filter/filter_action',
+    FilterActionViewSet
+)
+bot_router.register(
+    'filter/channel_range',
+    FilterChannelRangeViewSet
+)
+bot_router.register(
+    'filter/filter_override',
+    FilterOverrideViewSet
+)
+bot_router.register(
+    'filter/filters',
+    FilterViewSet
 )
 bot_router.register(
     'bot-settings',

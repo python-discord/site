@@ -12,12 +12,17 @@ from rest_framework.serializers import (
 from rest_framework.settings import api_settings
 from rest_framework.validators import UniqueTogetherValidator
 
-from .models import (
+from .models import (  # noqa: I101 - Preserving the filter order
     BotSetting,
     DeletedMessage,
     DocumentationLink,
-    FilterList,
     Infraction,
+    FilterList,
+    FilterSettings,
+    FilterAction,
+    ChannelRange,
+    Filter,
+    FilterOverride,
     MessageDeletionContext,
     Nomination,
     NominationEntry,
@@ -119,22 +124,95 @@ class FilterListSerializer(ModelSerializer):
         """Metadata defined for the Django REST Framework."""
 
         model = FilterList
-        fields = ('id', 'created_at', 'updated_at', 'type', 'allowed', 'content', 'comment')
+        fields = ('id', 'name', 'list_type', 'filters', 'default_settings')
 
-        # This validator ensures only one filterlist with the
-        # same content can exist. This means that we cannot have both an allow
-        # and a deny for the same item, and we cannot have duplicates of the
-        # same item.
+        # Ensure that we can only have one filter list with the same name and field
         validators = [
             UniqueTogetherValidator(
                 queryset=FilterList.objects.all(),
-                fields=['content', 'type'],
+                fields=('name', 'list_type'),
                 message=(
-                    "A filterlist for this item already exists. "
-                    "Please note that you cannot add the same item to both allow and deny."
+                    "A filterlist with the same name and type already exist."
                 )
             ),
         ]
+
+
+class FilterSettingsSerializer(ModelSerializer):
+    """A class providing (de-)serialization of `FilterSettings` instances."""
+
+    class Meta:
+        """Metadata defined for the Django REST Framework."""
+
+        model = FilterSettings
+        fields = (
+            'id',
+            'ping_type',
+            'filter_dm',
+            'dm_ping_type',
+            'delete_messages',
+            'bypass_roles',
+            'enabled',
+            'default_action',
+            'default_range'
+        )
+
+
+class FilterActionSerializer(ModelSerializer):
+    """A class providing (de-)serialization of `FilterAction` instances."""
+
+    class Meta:
+        """Metadata defined for the Django REST Framework."""
+
+        model = FilterAction
+        fields = ('id', 'user_dm', 'infraction_type', 'infraction_reason', 'infraction_duration')
+
+
+class FilterChannelRangeSerializer(ModelSerializer):
+    """A class providing (de-)serialization of `ChannelRange` instances."""
+
+    class Meta:
+        """Metadata defined for the Django REST Framework."""
+
+        model = ChannelRange
+        fields = (
+            'id',
+            'disallowed_channels',
+            'disallowed_categories',
+            'allowed_channels',
+            'allowed_category',
+            'default'
+        )
+
+
+class FilterSerializer(ModelSerializer):
+    """A class providing (de-)serialization of `Filter` instances."""
+
+    class Meta:
+        """Metadata defined for the Django REST Framework."""
+
+        model = Filter
+        fields = ('id', 'content', 'description', 'additional_field', 'override')
+
+
+class FilterOverrideSerializer(ModelSerializer):
+    """A class providing (de-)serialization of `FilterOverride` instances."""
+
+    class Meta:
+        """Metadata defined for the Django REST Framework."""
+
+        model = FilterOverride
+        fields = (
+            'id',
+            'ping_type',
+            'filter_dm',
+            'dm_ping_type',
+            'delete_messages',
+            'bypass_roles',
+            'enabled',
+            'filter_action',
+            'filter_range'
+        )
 
 
 class InfractionSerializer(ModelSerializer):

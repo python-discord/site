@@ -132,8 +132,8 @@ class Migration(migrations.Migration):
                 ('delete_messages', models.BooleanField(null=True)),
                 ('bypass_roles', django.contrib.postgres.fields.ArrayField(base_field=models.IntegerField(), null=True, size=None)),
                 ('enabled', models.BooleanField(null=True)),
-                ('default_action', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to='api.FilterAction')),
-                ('default_range', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to='api.ChannelRange')),
+                ('filter_action', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to='api.FilterAction')),
+                ('filter_range', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to='api.ChannelRange')),
             ],
         ),
         migrations.CreateModel(
