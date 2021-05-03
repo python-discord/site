@@ -47,10 +47,20 @@ events_code_jams_six_redirect:
   redirect_route: "events:page"
   redirect_arguments: ["code-jams/6"]
 
+events_code_jams_six_rules_redirect:
+  original_path: pages/code-jams/code-jam-6/rules/
+  redirect_route: "events:page"
+  redirect_arguments: ["code-jams/6/rules"]
+
 events_code_jams_seven_redirect:
   original_path: pages/code-jams/code-jam-7/
   redirect_route: "events:page"
   redirect_arguments: ["code-jams/7"]
+
+events_code_jams_seven_rules_redirect:
+  original_path: pages/code-jams/code-jam-7/rules/
+  redirect_route: "events:page"
+  redirect_arguments: ["code-jams/7/rules"]
 
 events_code_jams_how_to_use_git_redirect:
   original_path: pages/code-jams/using-git/
