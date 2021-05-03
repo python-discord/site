@@ -54,6 +54,7 @@ events_code_jams_seven_redirect:
 
 # Guides
 # Prefix redirects
+# Prefix redirects must be last in each group.
 guides_pydis_guides_contributing_prefix_redirect:
   original_path: pages/contributing/<path:path>/  # path:path will be joined together with static arguments.
   redirect_route: "content:page_category"
