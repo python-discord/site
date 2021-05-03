@@ -3,7 +3,10 @@ from django.conf import settings
 from django.test import TestCase
 from django.urls import reverse
 
-TESTING_ARGUMENTS = {"resources_resources_redirect": ("reading",)}
+TESTING_ARGUMENTS = {
+    "resources_resources_redirect": ("reading",),
+    "guides_pydis_guides_contributing_prefix_redirect": ("sir-lancebot/env-var-reference",),
+}
 
 
 class RedirectTests(TestCase):
@@ -33,12 +36,21 @@ class RedirectTests(TestCase):
                     follow=True
                 )
 
+                if data.get("prefix_redirect", False):
+                    expected_args = (
+                        "".join(
+                            tuple(data.get("redirect_arguments", ())) + TESTING_ARGUMENTS.get(name, ())
+                        ),
+                    )
+                else:
+                    expected_args = TESTING_ARGUMENTS.get(name, ()) + tuple(data.get("redirect_arguments", ()))
+
                 self.assertEqual(1, len(resp.redirect_chain))
                 self.assertRedirects(
                     resp,
                     reverse(
                         f"home:{data['redirect_route']}",
-                        args=TESTING_ARGUMENTS.get(name, ()) + tuple(data.get("redirect_arguments", ()))
+                        args=expected_args
                     ),
                     status_code=301
                 )

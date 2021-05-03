@@ -51,3 +51,11 @@ events_code_jams_seven_redirect:
   original_path: pages/code-jams/code-jam-7/
   redirect_route: "events:page"
   redirect_arguments: ["code-jams/7"]
+
+# Guides
+# Prefix redirects
+guides_pydis_guides_contributing_prefix_redirect:
+  original_path: pages/contributing/<path:path>/  # path:path will be joined together with static arguments.
+  redirect_route: "content:page_category"
+  redirect_arguments: ["guides/pydis-guides/contributing/"]  # It is important to put / at end in prefix redirect!
+  prefix_redirect: true
