@@ -77,6 +77,31 @@ events_code_jams_pull_request_redirect:
   redirect_route: "events:page"
   redirect_arguments: ["code-jams/pull-request"]
 
+events_game_jams_twenty_twenty_index_redirect:
+  original_path: pages/events/game-jam-2020/
+  redirect_route: "events:page"
+  redirect_arguments: ["game-jams/2020"]
+
+events_game_jams_twenty_twenty_judging_redirect:
+  original_path: pages/events/game-jam-2020/judging/
+  redirect_route: "events:page"
+  redirect_arguments: ["game-jams/2020/judging"]
+
+events_game_jams_twenty_twenty_project_setup_redirect:
+  original_path: pages/events/game-jam-2020/project-setup/
+  redirect_route: "events:page"
+  redirect_arguments: ["game-jams/2020/project-setup"]
+
+events_game_jams_twenty_twenty_rules_redirect:
+  original_path: pages/events/game-jam-2020/rules/
+  redirect_route: "events:page"
+  redirect_arguments: ["game-jams/2020/rules"]
+
+events_game_jams_twenty_twenty_technical_requirements_redirect:
+  original_path: pages/events/game-jam-2020/technical-requirements
+  redirect_route: "events:page"
+  redirect_arguments: ["game-jams/2020/technical-requirements"]
+
 # Guides
 # Prefix redirects
 # Prefix redirects must be last in each group.
