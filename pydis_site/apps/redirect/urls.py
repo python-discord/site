@@ -10,7 +10,8 @@ urlpatterns = [
         data["original_path"],
         CustomRedirectView.as_view(
             pattern_name=data["redirect_route"],
-            static_args=tuple(data.get("redirect_arguments", ()))
+            static_args=tuple(data.get("redirect_arguments", ())),
+            prefix_redirect=data.get("prefix_redirect", False)
         ),
         name=name
     )

@@ -8,6 +8,7 @@ class CustomRedirectView(RedirectView):
 
     permanent = True
     static_args = ()
+    prefix_redirect = False
 
     @classmethod
     def as_view(cls, **initkwargs):
@@ -16,5 +17,8 @@ class CustomRedirectView(RedirectView):
 
     def get_redirect_url(self, *args, **kwargs) -> t.Optional[str]:
         """Extends default behaviour to use static args."""
-        args = args + self.static_args
-        return super().get_redirect_url(*args, **kwargs)
+        args = self.static_args + args + tuple(kwargs.values())
+        if self.prefix_redirect:
+            args = ("".join(args),)
+
+        return super().get_redirect_url(*args)
