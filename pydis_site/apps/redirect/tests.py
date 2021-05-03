@@ -19,6 +19,7 @@ class RedirectTests(TestCase):
         Makes sure that every redirect:
         1. Redirects only once.
         2. Redirects to right URL.
+        3. Resulting page status code is 200.
         """
         for name, data in yaml.safe_load(settings.REDIRECTIONS_PATH.read_text()).items():
             with self.subTest(
@@ -54,3 +55,4 @@ class RedirectTests(TestCase):
                     ),
                     status_code=301
                 )
+                self.assertEqual(resp.status_code, 200)
