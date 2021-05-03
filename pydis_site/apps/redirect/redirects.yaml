@@ -52,6 +52,21 @@ events_code_jams_seven_redirect:
   redirect_route: "events:page"
   redirect_arguments: ["code-jams/7"]
 
+events_code_jams_how_to_use_git_redirect:
+  original_path: pages/code-jams/using-git/
+  redirect_route: "events:page"
+  redirect_arguments: ["code-jams/using-git"]
+
+events_code_jams_judging_redirect:
+  original_path: pages/code-jams/judging/
+  redirect_route: "events:page"
+  redirect_arguments: ["code-jams/judging"]
+
+events_code_jams_pull_request_redirect:
+  original_path: pages/code-jams/pull-request/
+  redirect_route: "events:page"
+  redirect_arguments: ["code-jams/pull-request"]
+
 # Guides
 # Prefix redirects
 # Prefix redirects must be last in each group.
