@@ -1,3 +1,11 @@
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+#  The redirects here are for dewikification backwards compatibility
+#  and SHOULD NOT be used for adding new redirects for convenience.
+#
+#  Convenience redirects should be added using our cloudflare worker
+#  at https://github.com/python-discord/workers/tree/main/short-urls
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 # Root pages
 roles_redirect:
     original_path: pages/roles/
