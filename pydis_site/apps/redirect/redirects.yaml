@@ -1,3 +1,67 @@
+# Root pages
+roles_redirect:
+    original_path: pages/roles/
+    redirect_route: "content:page_category"
+    redirect_arguments: ["server-info/roles"]
+
+roles_expectations_redirect:
+    original_path: pages/roles/staff-role-expectations/
+    redirect_route: "content:page_category"
+    redirect_arguments: ["server-info/staff-role-expectations"]
+
+contributing_redirect:
+    original_path: pages/contributing/
+    redirect_route: "content:page_category"
+    redirect_arguments: ["guides/pydis-guides/contributing"]
+
+# Guides
+guides_redirect:
+    original_path: pages/resources/guides/
+    redirect_route: "content:page_category"
+    redirect_arguments: ["guides"]
+
+# - Python guides
+discord_py_redirect:
+    original_path: pages/resources/guides/discordpy/
+    redirect_route: "content:page_category"
+    redirect_arguments: ["guides/python-guides/discordpy"]
+
+mutability_redirect:
+    original_path: pages/resources/guides/core-concepts/mutability/
+    redirect_route: "content:page_category"
+    redirect_arguments: ["guides/python-guides/mutability"]
+
+function_params_redirect:
+    original_path: pages/resources/guides/core-concepts/parameters-and-arguments/
+    redirect_route: "content:page_category"
+    redirect_arguments: ["guides/python-guides/parameters-and-arguments"]
+
+# - Pydis guides
+help_channel_redirect:
+    original_path: pages/resources/guides/help-channels/
+    redirect_route: "content:page_category"
+    redirect_arguments: ["guides/pydis-guides/help-channel-guide"]
+
+good_questions_redirect:
+    original_path: pages/resources/guides/asking-good-questions/
+    redirect_route: "content:page_category"
+    redirect_arguments: ["guides/pydis-guides/asking-good-questions"]
+
+helping_others_redirect:
+    original_path: pages/resources/guides/helping-others/
+    redirect_route: "content:page_category"
+    redirect_arguments: ["guides/pydis-guides/helping-others"]
+
+code_review_redirect:
+    original_path: pages/resources/guides/code-reviews-primer/
+    redirect_route: "content:page_category"
+    redirect_arguments: ["guides/pydis-guides/code-reviews-primer"]
+
+off-topic_redirect:
+    original_path: pages/resources/guides/off-topic-etiquette/
+    redirect_route: "content:page_category"
+    redirect_arguments: ["guides/pydis-guides/off-topic-etiquette"]
+
 # Resources
 resources_index_redirect:
   original_path: pages/resources/
@@ -102,7 +166,17 @@ events_game_jams_twenty_twenty_technical_requirements_redirect:
   redirect_route: "events:page"
   redirect_arguments: ["game-jams/2020/technical-requirements"]
 
-# Guides
+# This are overrides for the contributing prefix redirect
+security_notice_redirect:
+    original_path: pages/contributing/security-notice/
+    redirect_route: "content:page_category"
+    redirect_arguments: ["security-notice"]
+
+sir-lancebot_env_var_redirect:
+    original_path: pages/contributing/sir-lancebot/sir-lancebot-env-var-reference/
+    redirect_route: "content:page_category"
+    redirect_arguments: ["guides/pydis-guides/contributing/sir-lancebot/env-var-reference"]
+
 # Prefix redirects
 # Prefix redirects must be last in each group.
 guides_pydis_guides_contributing_prefix_redirect:
