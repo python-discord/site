@@ -6,7 +6,9 @@ from django.views.generic import RedirectView
 class CustomRedirectView(RedirectView):
     """Extended RedirectView for manual route args."""
 
-    permanent = True
+    # We want temporary redirects for the time being, after this is running on prod and
+    # stable we can enable permanent redirects.
+    permanent = False
     static_args = ()
     prefix_redirect = False
 
