@@ -87,6 +87,7 @@ INSTALLED_APPS = [
     'pydis_site.apps.resources',
     'pydis_site.apps.content',
     'pydis_site.apps.events',
+    'pydis_site.apps.redirect',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -290,3 +291,5 @@ EVENTS_PAGES_PATH = Path(BASE_DIR, "pydis_site", "templates", "events", "pages")
 
 # Path for content pages
 CONTENT_PAGES_PATH = Path(BASE_DIR, "pydis_site", "apps", "content", "resources")
+
+REDIRECTIONS_PATH = Path(BASE_DIR, "pydis_site", "apps", "redirect", "redirects.yaml")

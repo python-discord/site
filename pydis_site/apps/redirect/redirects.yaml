@@ -1,0 +1,194 @@
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+#  The redirects here are for dewikification backwards compatibility
+#  and SHOULD NOT be used for adding new redirects for convenience.
+#
+#  Convenience redirects should be added using our cloudflare worker
+#  at https://github.com/python-discord/workers/tree/main/short-urls
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+# Root pages
+roles_redirect:
+    original_path: pages/roles/
+    redirect_route: "content:page_category"
+    redirect_arguments: ["server-info/roles"]
+
+roles_expectations_redirect:
+    original_path: pages/roles/staff-role-expectations/
+    redirect_route: "content:page_category"
+    redirect_arguments: ["server-info/staff-role-expectations"]
+
+contributing_redirect:
+    original_path: pages/contributing/
+    redirect_route: "content:page_category"
+    redirect_arguments: ["guides/pydis-guides/contributing"]
+
+# Guides
+guides_redirect:
+    original_path: pages/resources/guides/
+    redirect_route: "content:page_category"
+    redirect_arguments: ["guides"]
+
+# - Python guides
+discord_py_redirect:
+    original_path: pages/resources/guides/discordpy/
+    redirect_route: "content:page_category"
+    redirect_arguments: ["guides/python-guides/discordpy"]
+
+mutability_redirect:
+    original_path: pages/resources/guides/core-concepts/mutability/
+    redirect_route: "content:page_category"
+    redirect_arguments: ["guides/python-guides/mutability"]
+
+function_params_redirect:
+    original_path: pages/resources/guides/core-concepts/parameters-and-arguments/
+    redirect_route: "content:page_category"
+    redirect_arguments: ["guides/python-guides/parameters-and-arguments"]
+
+# - Pydis guides
+help_channel_redirect:
+    original_path: pages/resources/guides/help-channels/
+    redirect_route: "content:page_category"
+    redirect_arguments: ["guides/pydis-guides/help-channel-guide"]
+
+good_questions_redirect:
+    original_path: pages/resources/guides/asking-good-questions/
+    redirect_route: "content:page_category"
+    redirect_arguments: ["guides/pydis-guides/asking-good-questions"]
+
+helping_others_redirect:
+    original_path: pages/resources/guides/helping-others/
+    redirect_route: "content:page_category"
+    redirect_arguments: ["guides/pydis-guides/helping-others"]
+
+code_review_redirect:
+    original_path: pages/resources/guides/code-reviews-primer/
+    redirect_route: "content:page_category"
+    redirect_arguments: ["guides/pydis-guides/code-reviews-primer"]
+
+off-topic_redirect:
+    original_path: pages/resources/guides/off-topic-etiquette/
+    redirect_route: "content:page_category"
+    redirect_arguments: ["guides/pydis-guides/off-topic-etiquette"]
+
+# Resources
+resources_index_redirect:
+  original_path: pages/resources/
+  redirect_route: "resources:index"
+
+resources_resources_redirect:
+  original_path: pages/resources/<str:category>/
+  redirect_route: "resources:resources"
+
+# Events
+events_index_redirect:
+  original_path: pages/events/
+  redirect_route: "events:index"
+
+events_code_jams_index_redirect:
+  original_path: pages/code-jams/
+  redirect_route: "events:page"
+  redirect_arguments: ["code-jams"]
+
+events_code_jams_one_redirect:
+  original_path: pages/code-jams/code-jam-1-snakes-bot/
+  redirect_route: "events:page"
+  redirect_arguments: ["code-jams/1"]
+
+events_code_jams_two_redirect:
+  original_path: pages/code-jams/code-jam-2/
+  redirect_route: "events:page"
+  redirect_arguments: ["code-jams/2"]
+
+events_code_jams_three_redirect:
+  original_path: pages/code-jams/code-jam-3/
+  redirect_route: "events:page"
+  redirect_arguments: ["code-jams/3"]
+
+events_code_jams_four_redirect:
+  original_path: pages/code-jams/code-jam-4/
+  redirect_route: "events:page"
+  redirect_arguments: ["code-jams/4"]
+
+events_code_jams_five_redirect:
+  original_path: pages/code-jams/code-jam-5/
+  redirect_route: "events:page"
+  redirect_arguments: ["code-jams/5"]
+
+events_code_jams_six_redirect:
+  original_path: pages/code-jams/code-jam-6/
+  redirect_route: "events:page"
+  redirect_arguments: ["code-jams/6"]
+
+events_code_jams_six_rules_redirect:
+  original_path: pages/code-jams/code-jam-6/rules/
+  redirect_route: "events:page"
+  redirect_arguments: ["code-jams/6/rules"]
+
+events_code_jams_seven_redirect:
+  original_path: pages/code-jams/code-jam-7/
+  redirect_route: "events:page"
+  redirect_arguments: ["code-jams/7"]
+
+events_code_jams_seven_rules_redirect:
+  original_path: pages/code-jams/code-jam-7/rules/
+  redirect_route: "events:page"
+  redirect_arguments: ["code-jams/7/rules"]
+
+events_code_jams_how_to_use_git_redirect:
+  original_path: pages/code-jams/using-git/
+  redirect_route: "events:page"
+  redirect_arguments: ["code-jams/using-git"]
+
+events_code_jams_judging_redirect:
+  original_path: pages/code-jams/judging/
+  redirect_route: "events:page"
+  redirect_arguments: ["code-jams/judging"]
+
+events_code_jams_pull_request_redirect:
+  original_path: pages/code-jams/pull-request/
+  redirect_route: "events:page"
+  redirect_arguments: ["code-jams/pull-request"]
+
+events_game_jams_twenty_twenty_index_redirect:
+  original_path: pages/events/game-jam-2020/
+  redirect_route: "events:page"
+  redirect_arguments: ["game-jams/2020"]
+
+events_game_jams_twenty_twenty_judging_redirect:
+  original_path: pages/events/game-jam-2020/judging/
+  redirect_route: "events:page"
+  redirect_arguments: ["game-jams/2020/judging"]
+
+events_game_jams_twenty_twenty_project_setup_redirect:
+  original_path: pages/events/game-jam-2020/project-setup/
+  redirect_route: "events:page"
+  redirect_arguments: ["game-jams/2020/project-setup"]
+
+events_game_jams_twenty_twenty_rules_redirect:
+  original_path: pages/events/game-jam-2020/rules/
+  redirect_route: "events:page"
+  redirect_arguments: ["game-jams/2020/rules"]
+
+events_game_jams_twenty_twenty_technical_requirements_redirect:
+  original_path: pages/events/game-jam-2020/technical-requirements
+  redirect_route: "events:page"
+  redirect_arguments: ["game-jams/2020/technical-requirements"]
+
+# This are overrides for the contributing prefix redirect
+security_notice_redirect:
+    original_path: pages/contributing/security-notice/
+    redirect_route: "content:page_category"
+    redirect_arguments: ["security-notice"]
+
+sir-lancebot_env_var_redirect:
+    original_path: pages/contributing/sir-lancebot/sir-lancebot-env-var-reference/
+    redirect_route: "content:page_category"
+    redirect_arguments: ["guides/pydis-guides/contributing/sir-lancebot/env-var-reference"]
+
+# Prefix redirects
+# Prefix redirects must be last in each group.
+guides_pydis_guides_contributing_prefix_redirect:
+  original_path: pages/contributing/<path:path>/  # path:path will be joined together with static arguments.
+  redirect_route: "content:page_category"
+  redirect_arguments: ["guides/pydis-guides/contributing/"]  # It is important to put / at end in prefix redirect!
+  prefix_redirect: true

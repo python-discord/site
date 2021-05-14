@@ -61,35 +61,35 @@
           More
         </a>
         <div class="navbar-dropdown">
-          <a class="navbar-item" href="#">
+          <a class="navbar-item" href="{% url "resources:index" %}">
             Resources
           </a>
-          <a class="navbar-item" href="#">
+          <a class="navbar-item" href="{% url "resources:resources" category="tools" %}">
             Tools
           </a>
-          <a class="navbar-item" href="#">
+          <a class="navbar-item" href="{% url "content:page_category" location="guides/pydis-guides/contributing"%}">
             Contributing
           </a>
-          <a class="navbar-item" href="#">
+          <a class="navbar-item" href="{% url "content:page_category" location="frequently-asked-questions" %}">
             FAQ
           </a>
-          <a class="navbar-item" href="#">
+          <a class="navbar-item" href="{% url "content:page_category" location="rules" %}">
             Rules
           </a>
-          <a class="navbar-item" href="#">
+          <a class="navbar-item" href="{% url "content:page_category" location="code-of-conduct" %}">
             Code of Conduct
           </a>
-          <a class="navbar-item" href="#">
+          <a class="navbar-item" href="{% url "content:page_category" location="privacy" %}">
             Privacy
           </a>
           <hr class="navbar-divider">
           <div class="navbar-item">
             <strong>Events</strong>
           </div>
-          <a class="navbar-item" href="#">
+          <a class="navbar-item" href="{% url "events:page" path="code-jams/7" %}">
             Most Recent: Code Jam 7
           </a>
-          <a class="navbar-item" href="#">
+          <a class="navbar-item" href="{% url "events:index" %}">
             All events
           </a>
         </div>
