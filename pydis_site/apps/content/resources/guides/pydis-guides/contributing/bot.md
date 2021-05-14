@@ -110,7 +110,7 @@ The following is a list of all available environment variables used by the bot:
 
 ---
 
-If you are running on the host, while not required, we advise you set `USE_FAKEREDIS` to `true` in the config file during development to avoid the need of setting up a Redis server.
+If you are running on the host, while not required, we advise you set `use_fakeredis` to `true` in the config file during development to avoid the need of setting up a Redis server.
 It does mean you may lose persistent data on restart but this is non-critical.
 Otherwise, you should set up a Redis instance and fill in the necessary config.
 {: .notification .is-warning }
