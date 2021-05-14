@@ -1,4 +1,3 @@
-{% load socialaccount %}
 {% load static %}
 
 <nav class="navbar is-primary" role="navigation" aria-label="main navigation">
@@ -62,67 +61,40 @@
           More
         </a>
         <div class="navbar-dropdown">
-          <a class="navbar-item" href="{% url 'wiki:get' path="resources/" %}">
+          <a class="navbar-item" href="{% url "resources:index" %}">
             Resources
           </a>
-          <a class="navbar-item" href="{% url 'wiki:get' path="resources/tools/" %}">
+          <a class="navbar-item" href="{% url "resources:resources" category="tools" %}">
             Tools
           </a>
-          <a class="navbar-item" href="{% url 'wiki:get' path="contributing/" %}">
+          <a class="navbar-item" href="{% url "content:page_category" location="guides/pydis-guides/contributing"%}">
             Contributing
+          </a>
+          <a class="navbar-item" href="{% url "content:page_category" location="frequently-asked-questions" %}">
+            FAQ
           </a>
           <a class="navbar-item" href="{% url 'timeline' %}">
             Timeline
           </a>
-          <a class="navbar-item" href="{% url 'wiki:get' path="frequently-asked-questions/" %}">
-            FAQ
-          </a>
-          <a class="navbar-item" href="{% url 'wiki:get' path="rules/" %}">
+          <a class="navbar-item" href="{% url "content:page_category" location="rules" %}">
             Rules
           </a>
-          <a class="navbar-item" href="{% url 'wiki:get' path="code-of-conduct/" %}">
+          <a class="navbar-item" href="{% url "content:page_category" location="code-of-conduct" %}">
             Code of Conduct
           </a>
-          <a class="navbar-item" href="{% url 'wiki:get' path="privacy/" %}">
+          <a class="navbar-item" href="{% url "content:page_category" location="privacy" %}">
             Privacy
           </a>
           <hr class="navbar-divider">
           <div class="navbar-item">
             <strong>Events</strong>
           </div>
-          <a class="navbar-item" href="{% url 'wiki:get' path="code-jams/code-jam-7/" %}">
+          <a class="navbar-item" href="{% url "events:page" path="code-jams/7" %}">
             Most Recent: Code Jam 7
           </a>
-          <a class="navbar-item" href="{% url 'wiki:get' path="events/" %}">
+          <a class="navbar-item" href="{% url "events:index" %}">
             All events
           </a>
-          <hr class="navbar-divider">
-
-          {% if not user.is_authenticated %}
-            {% get_providers as socialaccount_providers %}
-
-            {% for provider in socialaccount_providers %}
-              {% if provider.id == "discord" %}
-                  <a class="navbar-item"
-                     href="{% provider_login_url provider.id process="login" scope=scope auth_params=auth_params %}"
-                  >Login with {{ provider.name }}</a>
-              {% endif %}
-            {% endfor %}
-          {% else %}
-            <form method="post" action="{% url 'logout' %}">
-              {% csrf_token %}
-
-              <div class="field navbar-item is-paddingless is-fullwidth is-grouped">
-                <button type="submit" class="button is-white is-inline is-fullwidth has-text-left is-size-navbar-menu has-text-grey-dark">Logout</button>
-                <a title="Settings" class="button is-white is-inline has-text-right is-size-navbar-menu has-text-grey-dark modal-button" data-target="account-modal">
-                  <span class="is-icon">
-                    <i class="fas fa-cog"></i>
-                  </span>
-                </a>
-              </div>
-            </form>
-          {% endif %}
-
         </div>
       </div>
 
@@ -135,24 +107,3 @@
 
   </div>
 </nav>
-
-{% if user.is_authenticated %}
-  <script defer type="text/javascript">
-    // Script which loads and sets up the account settings modal.
-    // This script must be placed in a template, or rewritten to take the fetch
-    // URL as a function argument, in order to be used.
-
-    "use strict";
-
-    // Create and prepend a new div for this modal
-    let element = document.createElement("div");
-    document.body.prepend(element);
-
-    fetch("{% url "account_settings" %}")   // Fetch the URL
-      .then((response) => response.text())  // Read in the data stream as text
-      .then((text) => {
-        element.outerHTML = text;  // Replace the div's HTML with the loaded modal HTML
-        setupModal(document.getElementById("account-modal"));  // Set up the modal
-      });
-  </script>
-{% endif %}

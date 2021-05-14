@@ -1,0 +1,41 @@
+{% extends "events/base_sidebar.html" %}
+
+{% block title %}Technical Requirements{% endblock %}
+
+{% block breadcrumb %}
+    <li><a href="{% url "events:index" %}">Events</a></li>
+    <li><a href="{% url "events:page" path="game-jams" %}">Game Jams</a></li>
+    <li><a href="{% url "events:page" path="game-jams/2020" %}">Game Jam 2020: Three of a Kind</a></li>
+    <li class="is-active"><a href="#">Technical Requirements</a></li>
+{% endblock %}
+
+{% block event_content %}
+    <img src="https://user-images.githubusercontent.com/33516116/77762078-e02ce080-7030-11ea-947a-9c6733d4f33d.png">
+
+    <br></br>
+
+    <p>The technological theme of this game jam is <a href="https://arcade.academy/">Arcade</a>. As per <a href="https://pythondiscord.com/events/game-jams/2020/rules/">rule 3</a>, please ensure that you use Arcade as your project's main framework. Your project can use other dependencies, as long as they do not violate rule 3. If you're unsure about a potential dependency, consult us in the discussion channel.</p>
+
+    <h2>Dependency management</h2>
+
+    <p>Participating teams are asked to provide a <em>click-and-play</em> option to launch their project. There should be no complicated process to install dependencies, or otherwise prepare the environment, before the project can be started. This will allow us to spend more time evaluating the actual game. Ideally, projects will make use of <a href="https://github.com/pypa/pipenv">Pipenv</a> to both install dependencies and launch the game, but it is also acceptable to solve this with other dependency managers, or even with a <code>requirements.txt</code> file and a great readme. <strong>Ideally, it should only take a judge 2-3 commands to get your game ready to run, and these should be clearly documented in your readme.</strong></p>
+
+    <p>Working with Pipenv is not difficult, and existing Python Discord projects can be used for reference. For example, <a href="https://github.com/python-discord/seasonalbot/">Seasonalbot's</a> <code>Pipfile</code> and <code>Pipfile.lock</code> list all necessary dependencies and provide a run script. As a result, a virtual environment with all necessary dependencies can be conveniently created with <code>pipenv install</code>, and the project can be launched with <code>pipenv run start</code>.</p>
+
+    <p>In simple terms, emulating this workflow would be the ideal way to handle dependency management for this game jam.</p>
+
+    <p>If you're unfamiliar with Pipenv, we recommend Corey Schafer's excellent video as a learning resource.</p>
+
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/zDYL22QNiWk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+    </br>
+    </br>
+
+    <h2>Target platform</h2>
+
+    <p>All submissions will be evaluated on Windows 10. This does not necessarily mean that all development must take place on Windows, but all submissions should be functional and well tested on the target platform. This is also something to keep in mind in the initial stages of development - make sure you don't accidentally build your project around a dependency that isn't available on Windows.</p>
+{% endblock %}
+
+{% block sidebar %}
+    {% include "events/sidebar/game-jams/2020.html" %}
+{% endblock %}
