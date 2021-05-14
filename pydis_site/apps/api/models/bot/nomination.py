@@ -5,22 +5,11 @@ from pydis_site.apps.api.models.mixins import ModelReprMixin
 
 
 class Nomination(ModelReprMixin, models.Model):
-    """A helper nomination created by staff."""
+    """A general helper nomination information created by staff."""
 
     active = models.BooleanField(
         default=True,
         help_text="Whether this nomination is still relevant."
-    )
-    actor = models.ForeignKey(
-        User,
-        on_delete=models.CASCADE,
-        help_text="The staff member that nominated this user.",
-        related_name='nomination_set'
-    )
-    reason = models.TextField(
-        help_text="Why this user was nominated.",
-        null=True,
-        blank=True
     )
     user = models.ForeignKey(
         User,
@@ -42,6 +31,10 @@ class Nomination(ModelReprMixin, models.Model):
         help_text="When the nomination was ended.",
         null=True
     )
+    reviewed = models.BooleanField(
+        default=False,
+        help_text="Whether a review was made."
+    )
 
     def __str__(self):
         """Representation that makes the target and state of the nomination immediately evident."""
@@ -51,4 +44,39 @@ class Nomination(ModelReprMixin, models.Model):
     class Meta:
         """Set the ordering of nominations to most recent first."""
 
+        ordering = ("-inserted_at",)
+
+
+class NominationEntry(ModelReprMixin, models.Model):
+    """A nomination entry created by a single staff member."""
+
+    nomination = models.ForeignKey(
+        Nomination,
+        on_delete=models.CASCADE,
+        help_text="The nomination this entry belongs to.",
+        related_name="entries"
+    )
+    actor = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        help_text="The staff member that nominated this user.",
+        related_name='nomination_set'
+    )
+    reason = models.TextField(
+        help_text="Why the actor nominated this user.",
+        default="",
+        blank=True
+    )
+    inserted_at = models.DateTimeField(
+        auto_now_add=True,
+        help_text="The creation date of this nomination entry."
+    )
+
+    class Meta:
+        """Meta options for NominationEntry model."""
+
+        verbose_name_plural = "nomination entries"
+
+        # Set default ordering here to latest first
+        # so we don't need to define it everywhere
         ordering = ("-inserted_at",)

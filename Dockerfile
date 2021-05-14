@@ -1,4 +1,4 @@
-FROM python:3.7-slim
+FROM python:3.8-slim-buster
 
 # Allow service to handle stops gracefully
 STOPSIGNAL SIGQUIT
@@ -8,24 +8,24 @@ ENV PIP_NO_CACHE_DIR=false \
     PIPENV_HIDE_EMOJIS=1 \
     PIPENV_NOSPIN=1
 
-# Install git
-RUN apt-get -y update \
-    && apt-get install -y \
-        git \
-    && rm -rf /var/lib/apt/lists/*
-
-# Create non-root user.
-RUN useradd --system --shell /bin/false --uid 1500 pysite
-
 # Install pipenv
 RUN pip install -U pipenv
 
 # Copy the project files into working directory
 WORKDIR /app
-COPY . .
+
+# Copy dependency files
+COPY Pipfile Pipfile.lock ./
 
 # Install project dependencies
 RUN pipenv install --system --deploy
+
+# Copy project code
+COPY . .
+
+# Set Git SHA environment variable
+ARG git_sha="development"
+ENV GIT_SHA=$git_sha
 
 # Run web server through custom manager
 ENTRYPOINT ["python", "manage.py"]

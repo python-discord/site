@@ -512,6 +512,36 @@ class CreationTests(APISubdomainTestCase):
             )
 
 
+class InfractionDeletionTests(APISubdomainTestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.user = User.objects.create(
+            id=9876,
+            name='Unknown user',
+            discriminator=9876,
+        )
+
+        cls.warning = Infraction.objects.create(
+            user_id=cls.user.id,
+            actor_id=cls.user.id,
+            type='warning',
+            active=False
+        )
+
+    def test_delete_unknown_infraction_returns_404(self):
+        url = reverse('bot:infraction-detail', args=('something',), host='api')
+        response = self.client.delete(url)
+
+        self.assertEqual(response.status_code, 404)
+
+    def test_delete_known_infraction_returns_204(self):
+        url = reverse('bot:infraction-detail', args=(self.warning.id,), host='api')
+        response = self.client.delete(url)
+
+        self.assertEqual(response.status_code, 204)
+        self.assertRaises(Infraction.DoesNotExist, Infraction.objects.get, id=self.warning.id)
+
+
 class ExpandedTests(APISubdomainTestCase):
     @classmethod
     def setUpTestData(cls):

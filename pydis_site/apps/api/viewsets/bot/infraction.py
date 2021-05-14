@@ -5,6 +5,7 @@ from rest_framework.exceptions import ValidationError
 from rest_framework.filters import OrderingFilter, SearchFilter
 from rest_framework.mixins import (
     CreateModelMixin,
+    DestroyModelMixin,
     ListModelMixin,
     RetrieveModelMixin
 )
@@ -12,13 +13,20 @@ from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
 
 from pydis_site.apps.api.models.bot.infraction import Infraction
+from pydis_site.apps.api.pagination import LimitOffsetPaginationExtended
 from pydis_site.apps.api.serializers import (
     ExpandedInfractionSerializer,
     InfractionSerializer
 )
 
 
-class InfractionViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, GenericViewSet):
+class InfractionViewSet(
+    CreateModelMixin,
+    RetrieveModelMixin,
+    ListModelMixin,
+    GenericViewSet,
+    DestroyModelMixin
+):
     """
     View providing CRUD operations on infractions for Discord users.
 
@@ -31,6 +39,8 @@ class InfractionViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
     - **active** `bool`: whether the infraction is still active
     - **actor__id** `int`: snowflake of the user which applied the infraction
     - **hidden** `bool`: whether the infraction is a shadow infraction
+    - **limit** `int`: number of results return per page (default 100)
+    - **offset** `int`: the initial index from which to return the results (default 0)
     - **search** `str`: regular expression applied to the infraction's reason
     - **type** `str`: the type of the infraction
     - **user__id** `int`: snowflake of the user to which the infraction was applied
@@ -39,6 +49,7 @@ class InfractionViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
     Invalid query parameters are ignored.
 
     #### Response format
+    Response is paginated but the result is returned without any pagination metadata.
     >>> [
     ...     {
     ...         'id': 5,
@@ -108,6 +119,13 @@ class InfractionViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
     - 400: if a field in the request body is invalid or disallowed
     - 404: if an infraction with the given `id` could not be found
 
+    ### DELETE /bot/infractions/<id:int>
+    Delete the infraction with the given `id`.
+
+    #### Status codes
+    - 204: returned on success
+    - 404: if a infraction with the given `id` does not exist
+
     ### Expanded routes
     All routes support expansion of `user` and `actor` in responses. To use an expanded route,
     append `/expanded` to the end of the route e.g. `GET /bot/infractions/expanded`.
@@ -119,6 +137,7 @@ class InfractionViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
 
     serializer_class = InfractionSerializer
     queryset = Infraction.objects.all()
+    pagination_class = LimitOffsetPaginationExtended
     filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
     filter_fields = ('user__id', 'actor__id', 'active', 'hidden', 'type')
     search_fields = ('$reason',)

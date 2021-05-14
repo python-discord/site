@@ -14,7 +14,6 @@ from .models import (
     DeletedMessage,
     DocumentationLink,
     Infraction,
-    LogEntry,
     MessageDeletionContext,
     Nomination,
     OffTopicChannelName,
@@ -22,6 +21,7 @@ from .models import (
     Role,
     User
 )
+from .models.bot.nomination import NominationEntry
 
 admin.site.site_header = "Python Discord | Administration"
 admin.site.site_title = "Python Discord"
@@ -117,33 +117,6 @@ class InfractionAdmin(admin.ModelAdmin):
 
     def has_add_permission(self, *args) -> bool:
         """Prevent adding from django admin."""
-        return False
-
-
-@admin.register(LogEntry)
-class LogEntryAdmin(admin.ModelAdmin):
-    """Allows viewing logs in the Django Admin without allowing edits."""
-
-    actions = None
-    list_display = ('timestamp', 'level', 'message')
-    fieldsets = (
-        ('Overview', {'fields': ('timestamp', 'application', 'logger_name')}),
-        ('Metadata', {'fields': ('level', 'module', 'line')}),
-        ('Contents', {'fields': ('message',)})
-    )
-    list_filter = ('level', 'timestamp')
-    search_fields = ('message',)
-
-    def has_add_permission(self, request: HttpRequest) -> bool:
-        """Deny manual LogEntry creation."""
-        return False
-
-    def has_change_permission(self, *args) -> bool:
-        """Prevent editing from django admin."""
-        return False
-
-    def has_delete_permission(self, request: HttpRequest, obj: Optional[LogEntry] = None) -> bool:
-        """Deny LogEntry deletion."""
         return False
 
 
@@ -246,7 +219,70 @@ class NominationActorFilter(admin.SimpleListFilter):
 
     def lookups(self, request: HttpRequest, model: NominationAdmin) -> Iterable[Tuple[int, str]]:
         """Selectable values for viewer to filter by."""
-        actor_ids = Nomination.objects.order_by().values_list("actor").distinct()
+        actor_ids = NominationEntry.objects.order_by().values_list("actor").distinct()
+        actors = User.objects.filter(id__in=actor_ids)
+        return ((a.id, a.username) for a in actors)
+
+    def queryset(self, request: HttpRequest, queryset: QuerySet) -> Optional[QuerySet]:
+        """Query to filter the list of Users against."""
+        if not self.value():
+            return
+        nomination_ids = NominationEntry.objects.filter(
+            actor__id=self.value()
+        ).values_list("nomination_id").distinct()
+        return queryset.filter(id__in=nomination_ids)
+
+
+@admin.register(Nomination)
+class NominationAdmin(admin.ModelAdmin):
+    """Admin formatting for the Nomination model."""
+
+    search_fields = (
+        "user__name",
+        "user__id",
+        "end_reason"
+    )
+
+    list_filter = ("active", NominationActorFilter)
+
+    list_display = (
+        "user",
+        "active",
+        "reviewed"
+    )
+
+    fields = (
+        "user",
+        "active",
+        "inserted_at",
+        "ended_at",
+        "end_reason",
+        "reviewed"
+    )
+
+    # only allow end reason field to be edited.
+    readonly_fields = (
+        "user",
+        "active",
+        "inserted_at",
+        "ended_at",
+        "reviewed"
+    )
+
+    def has_add_permission(self, *args) -> bool:
+        """Prevent adding from django admin."""
+        return False
+
+
+class NominationEntryActorFilter(admin.SimpleListFilter):
+    """Actor Filter for NominationEntry Admin list page."""
+
+    title = "Actor"
+    parameter_name = "actor"
+
+    def lookups(self, request: HttpRequest, model: NominationAdmin) -> Iterable[Tuple[int, str]]:
+        """Selectable values for viewer to filter by."""
+        actor_ids = NominationEntry.objects.order_by().values_list("actor").distinct()
         actors = User.objects.filter(id__in=actor_ids)
         return ((a.id, a.username) for a in actors)
 
@@ -257,49 +293,39 @@ class NominationActorFilter(admin.SimpleListFilter):
         return queryset.filter(actor__id=self.value())
 
 
-@admin.register(Nomination)
-class NominationAdmin(admin.ModelAdmin):
-    """Admin formatting for the Nomination model."""
+@admin.register(NominationEntry)
+class NominationEntryAdmin(admin.ModelAdmin):
+    """Admin formatting for the NominationEntry model."""
 
     search_fields = (
-        "user__name",
-        "user__id",
         "actor__name",
         "actor__id",
         "reason",
-        "end_reason"
     )
 
-    list_filter = ("active", NominationActorFilter)
+    list_filter = (NominationEntryActorFilter,)
 
     list_display = (
-        "user",
-        "active",
-        "reason",
+        "nomination",
         "actor",
     )
 
     fields = (
-        "user",
-        "active",
+        "nomination",
         "actor",
         "reason",
         "inserted_at",
-        "ended_at",
-        "end_reason"
     )
 
-    # only allow reason fields to be edited.
+    # only allow reason field to be edited
     readonly_fields = (
-        "user",
-        "active",
+        "nomination",
         "actor",
         "inserted_at",
-        "ended_at"
     )
 
-    def has_add_permission(self, *args) -> bool:
-        """Prevent adding from django admin."""
+    def has_add_permission(self, request: HttpRequest) -> bool:
+        """Disable adding new nomination entry from admin."""
         return False
 
 

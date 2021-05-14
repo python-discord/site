@@ -8,10 +8,10 @@ from .bot import (
     Message,
     MessageDeletionContext,
     Nomination,
+    NominationEntry,
     OffensiveMessage,
     OffTopicChannelName,
     Reminder,
     Role,
     User
 )
-from .log_entry import LogEntry

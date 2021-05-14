@@ -40,11 +40,14 @@ class RedirectTests(TestCase):
                 if data.get("prefix_redirect", False):
                     expected_args = (
                         "".join(
-                            tuple(data.get("redirect_arguments", ())) + TESTING_ARGUMENTS.get(name, ())
+                            tuple(data.get("redirect_arguments", ()))
+                            + TESTING_ARGUMENTS.get(name, ())
                         ),
                     )
                 else:
-                    expected_args = TESTING_ARGUMENTS.get(name, ()) + tuple(data.get("redirect_arguments", ()))
+                    expected_args = (
+                        TESTING_ARGUMENTS.get(name, ()) + tuple(data.get("redirect_arguments", ()))
+                    )
 
                 self.assertEqual(1, len(resp.redirect_chain))
                 self.assertRedirects(

@@ -1,6 +1,7 @@
 .cache
 .coverage
 .coveragerc
+.git
 .github
 .gitignore
 .gitlab
@@ -15,11 +16,8 @@ pydis_site/apps/home/tests
 pydis_site/apps/staff/tests
 CHANGELOG.md
 CONTRIBUTING.md
-docker
-!docker/uwsgi.ini
-!docker/wheels
 docker-compose.yml
-Dockerfile.local
+Dockerfile
 docs
 htmlcov
 LICENSE

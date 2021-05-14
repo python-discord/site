@@ -10,7 +10,6 @@ import django
 from django.contrib.auth import get_user_model
 from django.core.management import call_command, execute_from_command_line
 
-
 DEFAULT_ENVS = {
     "DJANGO_SETTINGS_MODULE": "pydis_site.settings",
     "SUPER_USERNAME": "admin",
@@ -156,10 +155,25 @@ class SiteManager:
             call_command("runserver", "0.0.0.0:8000")
             return
 
-        import pyuwsgi
+        # Import gunicorn only if we aren't in debug mode.
+        import gunicorn.app.wsgiapp
 
-        # Run uwsgi for production server
-        pyuwsgi.run(["--ini", "docker/uwsgi.ini"])
+        # Patch the arguments for gunicorn
+        sys.argv = [
+            "gunicorn",
+            "--preload",
+            "-b", "0.0.0.0:8000",
+            "pydis_site.wsgi:application",
+            "--threads", "8",
+            "-w", "2",
+            "--max-requests", "1000",
+            "--max-requests-jitter", "50",
+            "--statsd-host", "graphite.default.svc.cluster.local:8125",
+            "--statsd-prefix", "site",
+        ]
+
+        # Run gunicorn for the production server.
+        gunicorn.app.wsgiapp.run()
 
 
 def main() -> None:

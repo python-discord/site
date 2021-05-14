@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   enable-background="new 0 0 438 438"
+   version="1.1"
+   viewBox="0 0 346.16486 345.72064"
+   xml:space="preserve"
+   id="svg6016"
+   sodipodi:docname="logo_solo.svg"
+   inkscape:version="0.91 r13725"
+   inkscape:export-filename="/home/scragly/Github/PyDisBranding/logos/logo_solo/logo_full_512.png"
+   inkscape:export-xdpi="112.21918"
+   inkscape:export-ydpi="112.21918"
+   width="346.16486"
+   height="345.72064"><defs
+     id="defs6020" /><sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1859"
+     inkscape:window-height="1056"
+     id="namedview6018"
+     showgrid="false"
+     inkscape:zoom="2.1552511"
+     inkscape:cx="150.03331"
+     inkscape:cy="193.10048"
+     inkscape:window-x="61"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg6016"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0" /><metadata
+     id="metadata6004"><rdf:RDF><cc:Work
+         rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" /><dc:title></dc:title></cc:Work></rdf:RDF></metadata><style
+     type="text/css"
+     id="style6006">
+	.st0{fill:#7289DA;}
+	.st1{fill:#5B6DAE;}
+	.st2{fill:#CAD6FF;}
+	.st3{fill:#FFFFFF;}
+</style><path
+     d="m 228.38807,14.3068 -11.506,3.3086 c -12.223,-1.8051 -24.757,-2.5971 -36.895,-2.5078 -13.5,0.1 -26.498,1.1992 -37.898,3.1992 -3.6998,0.6516 -7.0474,1.386 -10.107,2.1992 l -35.893004,0 0,18.801 4.500004,0 0,7.6992 2.7832,0 c -0.63936,3.7142 -0.88476,7.7997 -0.88476,12.301 l 0,4 -15.398004,0 -2.2012,11 17.600004,15.014 0,0.0859 79.201,0 0,10 -108.900004,0 c -23,0 -43.2,13.8 -49.5,40 -7.3,30 -7.6,48.801 0,80.201 0.49734,2.0782 1.0605,4.0985 1.6836,6.0625 l -1.1836,10.438 13.346,11.549 c 7.032,7.5103 16.371,11.951 28.254,11.951 l 27.201,0 0,-36 c 0,-26 22.600004,-49 49.500004,-49 l 79.199,0 c 22,0 39.6,-18.102 39.6,-40.102 l 0,-75.199 c 0,-12.9 -6.5819,-23.831 -16.516,-31.273 z m 76.801,77.6 -14.301,7.4004 -20.1,0 0,35.1 c 0,27.2 -23.1,50 -49.5,50 l -79.1,0 c -21.7,0 -39.6,18.5 -39.6,40.1 l 0,75.102 c 0,21.4 18.7,34 39.6,40.1 25.1,7.3 49.1,8.7 79.1,0 19.9,-5.7 39.6,-17.3 39.6,-40.1 l 0,-30.102 -0.11914,0 -11.721,-10 51.439,0 c 23,0 31.602,-16 39.602,-40 8.3,-24.7 7.9,-48.499 0,-80.199 -3.6226,-14.491 -9.3525,-26.71 -18.947,-33.699 z m -123.4,167.6 57.5,0 0,10 -57.5,0 z"
+     id="path6010"
+     inkscape:label="shadow"
+     style="fill:#5b6dae;fill-opacity:1"
+     inkscape:connector-curvature="0" /><path
+     class="st2"
+     d="m 162.28807,0.00679951 c -13.5,0.1 -26.5,1.19999999 -37.9,3.19999999 C 90.888066,9.1067995 84.788066,21.4068 84.788066,44.2068 l 0,30.1 79.200004,0 0,10 -108.900004,0 c -23,0 -43.2,13.8 -49.4999998,40 -7.3,30 -7.6,48.8 0,80.2 5.5999998,23.4 19.0999998,40 42.0999998,40 l 27.2,0 0,-36 c 0,-26 22.6,-49 49.500004,-49 l 79.1,0 c 22,0 39.6,-18.1 39.6,-40.1 l 0,-75.2 c 0,-21.4 -18.1,-37.4000005 -39.6,-41.0000005 -13.5,-2.29999999 -27.6,-3.29999999 -41.2,-3.19999999 z m -42.8,24.20000049 c 8.2,0 14.9,6.8 14.9,15.1 0,8.3 -6.7,15 -14.9,15 -8.2,0 -14.9,-6.7 -14.9,-15 0,-8.4 6.7,-15.1 14.9,-15.1 z"
+     id="path6012"
+     inkscape:label="upper_snake"
+     inkscape:connector-curvature="0"
+     style="fill:#cad6ff" /><path
+     class="st3"
+     d="m 253.08807,84.3068 0,35 c 0,27.2 -23.1,50 -49.5,50 l -79.1,0 c -21.7,0 -39.600004,18.5 -39.600004,40.1 l 0,75.1 c 0,21.4 18.700004,34 39.600004,40.1 25.1,7.3 49.1,8.7 79.1,0 19.9,-5.7 39.6,-17.3 39.6,-40.1 l 0,-30.1 -79.1,0 0,-10 118.7,0 c 23,0 31.6,-16 39.6,-40 8.3,-24.7 7.9,-48.5 0,-80.2 -5.7,-22.8 -16.6,-40 -39.6,-40 l -29.7,0 z m -44.5,190.2 c 8.2,0 14.9,6.7 14.9,15 0,8.3 -6.7,15.1 -14.9,15.1 -8.2,0 -14.9,-6.8 -14.9,-15.1 0,-8.3 6.7,-15 14.9,-15 z"
+     id="path6014"
+     inkscape:label="lower_snake"
+     inkscape:connector-curvature="0"
+     style="fill:#ffffff" /></svg>
