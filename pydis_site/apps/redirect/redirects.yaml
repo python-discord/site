@@ -70,6 +70,12 @@ off-topic_redirect:
     redirect_route: "content:page_category"
     redirect_arguments: ["guides/pydis-guides/off-topic-etiquette"]
 
+good_questions_redirect_alt:
+    # In a few places we were linking to a version outside of the guides app.
+    original_path: pages/asking-good-questions/
+    redirect_route: "content:page_category"
+    redirect_arguments: ["guides/pydis-guides/asking-good-questions"]
+
 # Resources
 resources_index_redirect:
   original_path: pages/resources/
