@@ -261,6 +261,7 @@ BULMA_SETTINGS = {
         "tooltip-max-width": "30rem",
     },
     "extensions": [
+        "bulma-dropdown",
         "bulma-navbar-burger",
     ],
 }
