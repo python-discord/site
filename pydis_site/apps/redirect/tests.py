@@ -56,6 +56,6 @@ class RedirectTests(TestCase):
                         f"home:{data['redirect_route']}",
                         args=expected_args
                     ),
-                    status_code=302
+                    status_code=301
                 )
                 self.assertEqual(resp.status_code, 200)
