@@ -1,5 +1,6 @@
 html {
     overflow: auto;
+    scroll-behavior: smooth;
 }
 
 body.site {
@@ -150,4 +151,11 @@ button.is-size-navbar-menu, a.is-size-navbar-menu {
     width: 100%;
     height: 100%;
     position: absolute;
+}
+
+/* Tone down animations to avoid motion triggers */
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
 }
