@@ -6,7 +6,7 @@ icon: fab fa-discord
 We have a small but strict set of rules on our server. Please read over them and take them on board. If you don't understand a rule or need to report an incident, please send a direct message to <code>@ModMail</code>!
 
 > 1. Follow the [Python Discord Code of Conduct](/pages/code-of-conduct/).
-> 2. Follow the [Discord Community Guidelines](https://discordapp.com/guidelines) and [Terms of Service](https://discordapp.com/terms). 
+> 2. Follow the [Discord Community Guidelines](https://discordapp.com/guidelines) and [Terms of Service](https://discordapp.com/terms).
 > 3. Respect staff members and listen to their instructions.
 > 4. Use English to the best of your ability. Be polite if someone speaks English imperfectly.
 > 5. Do not provide or request help on projects that may break laws, breach terms of services, or are malicious or inappropriate.
