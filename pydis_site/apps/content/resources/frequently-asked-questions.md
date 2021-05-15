@@ -55,10 +55,9 @@ There isn't a way to invite `@Python` to other servers.
 If you are interested in `@Python` though, you can host your own instance of it.
 The entire project is open source and can be found on [our github](https://github.com/python-discord/bot).
 
-#### **Q: What is the Zoot bot?**
+#### **Q: Who is the Dave bot?**
 
-Zoot is an instance of [Metricity](https://github.com/python-discord/metricity).
-It collects advanced metrics about the usage of the server.
+Dave, in addition to [learning to code](https://www.youtube.com/watch?v=ZH26PuX3re0), is running an instance of [Metricity](https://github.com/python-discord/metricity), which collects advanced metrics about the usage of the server.
 Message content is not stored or collected.
 You can view what data we collect in our [data privacy policy](/pages/privacy/).
 
