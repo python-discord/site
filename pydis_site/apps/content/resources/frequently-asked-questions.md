@@ -13,7 +13,7 @@ This FAQ is aimed at answering questions about the Python Discord community. If 
 
 #### **Q: How do I get the helper role / become moderator / join staff?**
 
-There are no applications to be come a Helper, Moderator, Admin, or other staff role.
+There are no applications to become a Helper, Moderator, Admin, or other staff role.
 To become a Helper, which is our base staff role, people are nominated by a staff member and are later put up to a vote by Moderators, Admins, and Owners.
 If the candidate received enough votes unanimously, then we offer them the Helper role.
 This whole process takes place in channels only viewable to staff members.
@@ -55,10 +55,9 @@ There isn't a way to invite `@Python` to other servers.
 If you are interested in `@Python` though, you can host your own instance of it.
 The entire project is open source and can be found on [our github](https://github.com/python-discord/bot).
 
-#### **Q: What is the Zoot bot?**
+#### **Q: Who is the Dave bot?**
 
-Zoot is an instance of [Metricity](https://github.com/python-discord/metricity).
-It collects advanced metrics about the usage of the server.
+Dave, in addition to [learning to code](https://www.youtube.com/watch?v=ZH26PuX3re0), is running an instance of [Metricity](https://github.com/python-discord/metricity), which collects advanced metrics about the usage of the server.
 Message content is not stored or collected.
 You can view what data we collect in our [data privacy policy](/pages/privacy/).
 
