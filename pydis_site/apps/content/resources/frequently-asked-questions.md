@@ -13,7 +13,7 @@ This FAQ is aimed at answering questions about the Python Discord community. If 
 
 #### **Q: How do I get the helper role / become moderator / join staff?**
 
-There are no applications to be come a Helper, Moderator, Admin, or other staff role.
+There are no applications to become a Helper, Moderator, Admin, or other staff role.
 To become a Helper, which is our base staff role, people are nominated by a staff member and are later put up to a vote by Moderators, Admins, and Owners.
 If the candidate received enough votes unanimously, then we offer them the Helper role.
 This whole process takes place in channels only viewable to staff members.
