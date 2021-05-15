@@ -103,14 +103,13 @@ The following is a list of all available environment variables used by the bot:
 | -------- | -------- | -------- |
 | `BOT_TOKEN` | Always | Your Discord bot account's token (see [Test server and bot account](#test-server-and-bot-account)). |
 | `BOT_API_KEY` | When running bot without Docker | Used to authenticate with the site's API. When using Docker to run the bot, this is automatically set. By default, the site will always have the API key shown in the example below. |
-| `REDDIT_CLIENT_ID` | reddit cog | OAuth2 client ID for authenticating with the [reddit API](https://github.com/reddit-archive/reddit/wiki/OAuth2). |
-| `REDDIT_SECRET` | reddit cog | OAuth2 secret for authenticating with the reddit API. *Leave empty if you're not using the reddit API.* |
 | `BOT_SENTRY_DSN` | When connecting the bot to sentry | The DSN of the sentry monitor. |
+| `BOT_TRACE_LOGGERS ` | When you wish to see specific or all trace logs | Comma separated list that specifies which loggers emit trace logs through the listed names. If the ! prefix is used, all of the loggers except the listed ones are set to the trace level. If * is used, the root logger is set to the trace level. |
 | `REDIS_PASSWORD` | When not using FakeRedis | The password to connect to the redis database. *Leave empty if you're not using REDIS.* |
 
 ---
 
-If you are running on the host, while not required, we advise you set `USE_FAKEREDIS` to `true` in the config file during development to avoid the need of setting up a Redis server.
+If you are running on the host, while not required, we advise you set `use_fakeredis` to `true` in your `config.yml` file during development to avoid the need of setting up a Redis server.
 It does mean you may lose persistent data on restart but this is non-critical.
 Otherwise, you should set up a Redis instance and fill in the necessary config.
 {: .notification .is-warning }
