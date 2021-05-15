@@ -25,20 +25,22 @@ During PR review, it's not unusual for style adjustments to be requested.
 
 [This page](../../style-guide/) will reference the differences between our projects and what is recommended by [PEP 8.](https://www.python.org/dev/peps/pep-0008/)
 
-## Linting and Precommit
+## Linting and Pre-commit
 
-On most of our projects, we use `flake8` and `precommit` to ensure that the code style is consistent across the code base.
+On most of our projects, we use `flake8` and `pre-commit` to ensure that the code style is consistent across the code base.
 
 Running `flake8` will warn you about any potential style errors in your contribution.
 You must always check it **before pushing**.
 Your commit will be rejected by the build server if it fails to lint.
 
-`precommit` is a powerful tool that helps you automatically lint before you commit.
+**Some style rules are not enforced by flake8. Make sure to read the [style guide](../../style-guide/).**
+
+`pre-commit` is a powerful tool that helps you automatically lint before you commit.
 If the linter complains, the commit is aborted so that you can fix the linting errors before committing again.
 That way, you never commit the problematic code in the first place!
 
 Please refer to the project-specific documentation to see how to setup and run those tools.
-In most cases, it is either `pipenv run [lint | precommit]` or `poetry run [lint | precommit]`.
+In most cases, you can install pre-commut using `pipenv run precommit` or `poetry run task precommit`, and lint using `pipenv run lint` or `poetry run task lint`.
 
 ## Type Hinting
 
