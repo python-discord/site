@@ -22,6 +22,12 @@ contributing_redirect:
     redirect_route: "content:page_category"
     redirect_arguments: ["guides/pydis-guides/contributing"]
 
+# Code of Conduct Policy
+code_of_conduct_policy:
+    original_path: pages/code-of-conduct/policies/
+    redirect_route: "content:page_category"
+    redirect_arguments: ["code-of-conduct"]
+
 # Guides
 guides_redirect:
     original_path: pages/resources/guides/
