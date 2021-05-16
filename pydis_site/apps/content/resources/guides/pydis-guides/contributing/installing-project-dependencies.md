@@ -28,12 +28,18 @@ You should have already cloned your fork as described in [**Cloning a Repository
 ---
 
 ## Installing dependencies with the command line
-1. Make sure you are in the project directory.
-2. Install project and development dependencies:
+1. Make sure you are in the root project directory. This directory will always have a file titled `README.md`.
+2. Install project and development dependencies. Remember to also set up pre-commit hooks to ensure your pushed commits will never fail linting.
+---
+
+- Site:
 ```shell
 $ pipenv sync --dev
-```
-* Remember to also set up pre-commit hooks to ensure your pushed commits will never fail linting:
-```shell
 $ pipenv run precommit
+```
+
+- Other projects:
+```shell
+$ poetry install
+$ poetry run task precommit
 ```

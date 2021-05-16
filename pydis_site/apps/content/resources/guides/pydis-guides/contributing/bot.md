@@ -6,9 +6,9 @@ toc: 1
 ---
 
 # Requirements
-* [Python 3.8](https://www.python.org/downloads/)
-* [Pipenv](https://github.com/pypa/pipenv#installation)
-    * `pip install pipenv`
+* [Python 3.9](https://www.python.org/downloads/)
+* [Poetry](https://github.com/python-poetry/poetry#installation)
+    * `pip install poetry`
 * [Git](https://git-scm.com/downloads)
     * [Windows](https://git-scm.com/download/win)
     * [MacOS](https://git-scm.com/download/mac) or `brew install git`
@@ -181,7 +181,7 @@ Running on the host is particularly useful if you wish to debug the bot.
 The site has to have been started somehow beforehand.
 
 ```shell
-pipenv run start
+poetry run task start
 ```
 
 ---
