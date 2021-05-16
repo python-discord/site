@@ -26,7 +26,7 @@ contributing_redirect:
 code_of_conduct_policy:
     original_path: pages/code-of-conduct/policies/
     redirect_route: "content:page_category"
-    redirect_arguments: ["pages/code-of-conduct"]
+    redirect_arguments: ["code-of-conduct"]
 
 # Guides
 guides_redirect:
