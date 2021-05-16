@@ -1,0 +1,80 @@
+{% extends "events/base.html" %}
+
+{% block title %}Code Jam 5: Climate Change{% endblock %}
+
+{% block breadcrumb %}
+    <li><a href="{% url "events:index" %}">Events</a></li>
+    <li><a href="{% url "events:page" path="code-jams" %}">Code Jams</a></li>
+    <li class="is-active"><a href="#"></a>Code Jam 5: Climate Change</li>
+{% endblock %}
+
+{% block event_content %}
+    <p>
+        The theme for code jam 5 was <strong>climate change</strong>.
+        Similar to <a href="https://pythondiscord.com/pages/code-jams/code-jam-3/">code jam 3</a>,
+        teams could live out their creativity here, as long as it fits the theme.
+        The code jam started on July 20, 2019 at 12 PM UTC,
+        and with more than 117 sign-ups and 27 teams competing,
+        this was our biggest code jam ever (so far)!
+    </p>
+
+    <h2 id="task-description" class="title is-4"><a href="#task-description">Task Description</a></h2>
+    <p>The original task description, as found in <a href="https://github.com/python-discord/code-jam-5">the repository</a>, was as follows:</p>
+    <blockquote>
+        <p>
+            Your theme for this code jam is <strong>climate change</strong>.
+        </p>
+        <p>
+            Because this is a free-for-all, you are free to make anything you want,
+            as long as it fits this theme.
+            We'd love if you created something that might help raise awareness,
+            but first and foremost, we want you to create something <i>fun</i>.
+        </p>
+    </blockquote>
+
+    <h2 id="judging-stream" class="title is-4"><a href="#judging-stream">Judging stream</a></h2>
+    <p>
+        If you want to watch the original code jam judging stream,
+        you can find it on YouTube - all of the submissions are showcased in the stream.
+        The winning project is showcased at around the 30 minute mark.
+    </p>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/drBKNU73Ss4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+    <h2 id="results" class="title is-4"><a href="#results">Results</a></h2>
+    <p>
+        While it was a difficult decision, the winners were Team <strong>Combined Crusader</strong>,
+        consisting of Makusu, Mahabama, and missingfragment.
+        They made a really addicting <i>Climate Clicker game</i> that surprised us for being extremely responsive,
+        having beautiful, original art assets, and, most of all, being really fun to play.
+        The code quality of this project was good and they used Pythonic techniques like the LRU cache to make the game behave extremely snappy.
+    </p>
+    <p>
+        You can check out their entry in the
+        <a href="https://github.com/python-discord/code-jam-5/tree/master/combined_crusaders">repository</a>
+        and watch us doing so in the <a href="https://www.youtube.com/watch?v=drBKNU73Ss4&t=1815s">livestream</a>.
+    </p>
+
+    <h2 id="runner-up-1" class="title is-4"><a href="#runner-up-1">Runner up 1: Various Vipers</a></h2>
+    <p>
+        Team <strong>Various Vipers</strong> produced a game consisting of various mini-games that had an excellent graphical user interface.
+        The fact that the project had accompanying game design documents showed how well-organized this project was.
+        Combined with good code quality, this thematic project deserves the second place in this code jam.
+    </p>
+    <p>
+        Feel free to check out their submission in the code jam <a href="https://github.com/python-discord/code-jam-5/tree/master/various_vipers">repository</a>
+        and watch us inspecting it in the <a href="https://www.youtube.com/watch?time_continue=1&v=drBKNU73Ss4&feature=emb_logo">livestream</a>.
+    </p>
+
+    <h2 id="runner-up-2" class="title is-4"><a href="#runner-up-2">Runner up 2: Gentle Gnomes</a></h2>
+    <p>
+        The <strong>Gentle Gnomes</strong> ended up in the third spot.
+        Their web app allowed the user to search for a location and would then show climate-related statistics,
+        plots as well as projections for the future for the specified location.
+        The code quality of this project was outstanding and the web app was extremely useful and interesting.
+    </p>
+    <p>
+        Again, you can view their submission on the
+        <a href="https://github.com/python-discord/code-jam-5/tree/master/gentle_gnomes">repository</a>
+        or view it live on the <a href="https://www.youtube.com/watch?v=drBKNU73Ss4&t=7800s">livestream</a>.
+    </p>
+{% endblock %}

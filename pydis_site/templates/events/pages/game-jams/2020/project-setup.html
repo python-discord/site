@@ -1,0 +1,57 @@
+{% extends "events/base_sidebar.html" %}
+
+{% block title %}Project Setup{% endblock %}
+
+{% block breadcrumb %}
+    <li><a href="{% url "events:index" %}">Events</a></li>
+    <li><a href="{% url "events:page" path="game-jams" %}">Game Jams</a></li>
+    <li><a href="{% url "events:page" path="game-jams/2020" %}">Game Jam 2020: Three of a Kind</a></li>
+    <li class="is-active"><a href="#">Project Setup</a></li>
+{% endblock %}
+
+{% block event_content %}
+    <img src="https://user-images.githubusercontent.com/33516116/77762078-e02ce080-7030-11ea-947a-9c6733d4f33d.png">
+    <br></br>
+    <p>
+        The first step is to fork our repository: <a href="https://github.com/python-discord/game-jam-2020/">python-discord/game-jam-2020</a>. You can learn how to do this in our
+        <a href="https://pythondiscord.com/pages/guides/pydis-guides/contributing/forking-repository/">contributing guidelines</a>.
+    </p>
+
+    <p>
+        Alternatively, GitHub has a <a href="https://help.github.com/en/github/getting-started-with-github/fork-a-repo">detailed suite of tutorials explaining forking</a> as well as other technical terms that you may come across. If you get
+        stuck at any point, you are always welcome to ask for help at Python Discord.
+    </p>
+
+    <p>Once the fork is created, each team will make a directory for their project. The directory should be named after the team. For example, team <strong>Precise Rabbits</strong> will set up a directory as follows:</p>
+
+    <pre><code>game-jam-2020/
+    └── precise-rabbits/
+        └── game/
+            ├── __init__.py
+            ├── __main__.py
+            └── rabbits.py
+        ├── config.json
+        ├── Pipfile
+        ├── Pipfile.lock
+        └── README.md</code></pre>
+
+    <p><strong>Do not make any changes to other teams' project directories.</strong></p>
+
+    <p>
+        Each team will then develop their game within their fork. You are encouraged to use git to its full potential - feature branches will help you keep your commit history clean, and prevent annoying conflicts. Feel free to refer to
+        <a href="https://pythondiscord.com/pages/guides/pydis-guides/contributing/working-with-git/">our guidelines on the topic</a>, or any other resources that you may find useful. Version control is an important aspect of software development, and code jams are
+        a great opportunity to improve skills in the area.
+    </p>
+
+    <p>
+        Once the project is finished, a pull request will be opened against the upstream repository. All of your projects will be merged to the upstream repository, which means that you will be credited as a contributor to an open source
+        project. The final version <strong>must be committed by the jam's deadline</strong>. Any changes beyond this point will not be considered in the judging process.
+    </p>
+
+    <p>Please ensure that your final version is well tested, and satisfies our <a href="https://pythondiscord.com/events/game-jams/2020/technical-requirements/">technical requirements</a>.</p>
+
+{% endblock %}
+
+{% block sidebar %}
+    {% include "events/sidebar/game-jams/2020.html" %}
+{% endblock %}

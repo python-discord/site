@@ -1,0 +1,14 @@
+description: A veritable tome of intermediate and advanced Python information. A must-read
+  for any Python professional. By far the most recommended book for intermediates.
+name: Fluent Python
+position: 7
+urls:
+- icon: regular/link
+  url: https://www.oreilly.com/library/view/fluent-python/9781491946237/
+  color: teal
+- icon: branding/amazon
+  url: https://www.amazon.com/Fluent-Python-Concise-Effective-Programming/dp/1491946008
+  color: amazon-orange
+- icon: branding/github
+  url: https://github.com/fluentpython
+  color: black

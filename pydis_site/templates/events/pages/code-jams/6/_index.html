@@ -1,0 +1,93 @@
+{% extends "events/base_sidebar.html" %}
+
+{% block title %}Winter Code Jam 2020: Ancient Technology{% endblock %}
+
+{% block breadcrumb %}
+    <li><a href="{% url "events:index" %}">Events</a></li>
+    <li><a href="{% url "events:page" path="code-jams" %}">Code Jams</a></li>
+    <li class="is-active"><a href="#"></a>Winter Code Jam 2020: Ancient Technology</li>
+{% endblock %}
+
+{% block event_content %}
+    <p>
+        The theme for the Winter Code Jam 2020, the sixth Python Discord Code Jam,
+        was utilizing the <strong>Kivy Framework</strong> to create <strong>Ancient Technology</strong>.
+        The jam lasted for 9 days from January 17, 2020 to January 26, 2020 with 16 teams competing against each other.
+    </p>
+
+    <h2 id="task-description" class="title is-4"><a href="#task-description">Task Description</a></h2>
+    <p>
+        The original task description, as found in the <a href="https://github.com/python-discord/code-jam-6">repository</a>, was as follows:
+    </p>
+    <blockquote>
+        <p>By popular choice, the theme for this code jam is <strong>Ancient Technology</strong>.</p>
+        <p>
+            What you do with this theme or how you interpret it is up to you,
+            but it will be your task to come up with something fun using this theme.
+        </p>
+    </blockquote>
+
+    <h2 id="judging-stream" class="title is-4"><a href="#judging-stream">Judging Stream</a></h2>
+    <p>
+        If you want to watch the original code jam judging stream,
+        you can find it on YouTube - all of the submissions are showcased in the stream.
+        The winning project is showcased at the <a href="https://youtu.be/I97L_Y3rhvc?t=13710">03:48:30</a> timestamp.
+    </p>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/I97L_Y3rhvc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+    <h2 id="results" class="title is-4"><a href="#results">Results</a></h2>
+        <p>
+            The <strong>winning team</strong> for this code jam was team <strong>Tactless Tricksters</strong>,
+            consisting of GoBig87, Kan, sposker, DomicidalManiac, and Inventor.
+            They created an incredible morse code chatting app, with a plethora of different features.
+            Morse code training, morse code audio encoding/decoding, audio input sensitivity calibration,
+            and a morse code messaging system are all features of this project.
+            The beautiful and intuitive UI paired with all these features was what won them this jam.
+            With the given amount of time during this jam, this was quite the impressive project.
+        </p>
+    <p>
+        You can check out their entry in the
+        <a href="https://github.com/python-discord/code-jam-6/tree/master/tactless-tricksters">repository</a>
+        and watch us doing so in the <a href="https://youtu.be/I97L_Y3rhvc?t=13710">livestream</a>.
+        The top 3 winning teams' projects are also displayed on the <a href="https://kivy.org#gallery">Kivy Gallery</a>.
+    </p>
+
+    <h2 id="runner-up-1" class="title is-4"><a href="#runner-up-1">Runner up 1: Circumstancial Champions</a></h2>
+    <p>
+        The <strong>Circumstantial Champions</strong> (salt-die, david987, & Music)
+        created a game in which players go back in time to smash and carve out rocks,
+        just like cavemen. The combination of their execellent graphical interface, animations,
+        and satisfying sounds made this one of the most polished projects in the jam.
+    </p>
+    <p>
+        Check out their submission in the code jam
+        <a href="https://github.com/python-discord/code-jam-6/tree/master/circumstantial-companions">repository</a>
+        and view it live on the <a href="https://youtu.be/I97L_Y3rhvc?t=2854">livestream</a>.
+    </p>
+
+    <h2 id="runner-up-2" class="title is-4"><a href="#runner-up-2">Runner up 2: Inquisitive Investigators</a></h2>
+    <p>
+        Team <strong>Inquisitive Investigators</strong> (f1re & Monika) ended up in third place with their retro TUI file explorer.
+        The simple, easy-to-use file explorer along with their built-in terminal, text editor,
+        and photo viewer made this a very feature packed project.
+    </p>
+    <p>
+        Feel free to view their submission on the
+        <a href="https://github.com/python-discord/code-jam-6/tree/master/inquisitive-investigators">repository</a>
+        and watch us review it on the <a href="https://youtu.be/I97L_Y3rhvc?t=6545">livestream</a>.
+    </p>
+
+    <img src="https://raw.githubusercontent.com/python-discord/code-jam-6/master/ancient%20tech.png?token=AAQAKVPQ55SEFWYYLYO5YV26ETLTC" alt="Code Jam Banner" style="max-width:100%;">
+{% endblock %}
+
+{% block sidebar %}
+    {% include "events/sidebar/code-jams/6.html" %}
+    <div class="box">
+        <p class="menu-label">Relevant Links</p>
+        <ul class="menu-list">
+            <li><a class="has-text-link" href="{% url "events:page" path="code-jams/6/rules" %}">Rules</a></li>
+            <li><a class="has-text-link" href="https://github.com/python-discord/code-jam-6-qualifier">Qualifier</a></li>
+            <li><a class="has-text-link" href="{% url "events:page" path="code-jams" %}">About Code Jams</a></li>
+        </ul>
+    </div>
+{% endblock %}

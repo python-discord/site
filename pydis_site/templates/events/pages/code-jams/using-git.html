@@ -1,0 +1,61 @@
+{% extends "events/base_sidebar.html" %}
+
+{% block breadcrumb %}
+    <li><a href="{% url "events:index" %}">Events</a></li>
+    <li><a href="{% url "events:page" path="code-jams" %}">Code Jams</a></li>
+    <li class="is-active"><a href="#">How to use git</a></li>
+{% endblock %}
+
+{% block title %}How to use git{% endblock %}
+
+{% block event_content %}
+    <p>
+        We require all participants to use Git for source control.
+        This means that you will need to learn a bit of Git to participate in the code jam,
+        if you're not already familiar with it. Git is incredibly useful,
+        and an essential skill to master if you ever want to write code out there in the real world.
+        If you don't yet have Git installed...
+    </p>
+
+    <ul>
+        <li>
+            <strong>Windows</strong>: Install git using <a href="https://gitforwindows.org/">Git for Windows</a> - you can leave all of the options at their defaults, if you wish
+        </li>
+        <li>
+            <strong>Mac</strong>: Install git using <a href="https://brew.sh/">Homebrew</a>
+        </li>
+        <li>
+            <strong>Linux</strong>: Install git using your Linux distro's package manager
+        </li>
+    </ul>
+
+    <p>
+        In order to make the learning process easier, we've included some Git learning resources below...
+    </p>
+    <ul>
+        <li>
+            Roger Dudler has <a href="https://rogerdudler.github.io/git-guide/">an excellent crash</a> course that will show you the most important commands. This can be used as a cheat sheet once you're starting to actually use Git.
+        </li>
+        <li>
+            If you'd like a wordier introduction, Prithaj Nath (who participated in our first code jam) wrote a more in-depth guide called <a href="https://medium.com/@prithajnath/getting-started-with-git-7aae82dd3599">Let's Git Started!</a> for <a href="https://medium.com">medium.com</a> that might be worth a read.
+        </li>
+        <li>
+            The ever-excellent Corey Schafer has a 30-minute YouTube tutorial called <a href="https://www.youtube.com/watch?v=HVsySz-h9r4">Git Tutorial for Beginners</a> which should teach you everything you need to know to participate in our jams.
+        </li>
+    </ul>
+
+    <p>
+        Optionally, certain IDEs and editors will be able to handle Git for you,
+        and tools like GitKraken are also permitted.
+        Make sure you familiarize yourself with the client of your choice before the code jam starts
+        so you don't need to spend time learning this while the clock is running.
+    </p>
+    <p>
+        For more information on GUI clients you can use,
+        <a href="https://about.gitlab.com/applications/#gui-git-clients">please see this page</a>.
+    </p>
+{% endblock %}
+
+{% block sidebar %}
+    {% include "events/sidebar/code-jams/useful-information.html" %}
+{% endblock %}

@@ -1,0 +1,12 @@
+description: Dan Bader's treasure trove of quizzes, tutorials and interactive content for learning Python.
+  An absolute goldmine.
+title_image: https://i.imgur.com/WDqhZ36.png
+title_url: https://realpython.com/
+position: 3
+urls:
+  - icon: regular/link
+    url: https://realpython.com/
+    color: teal
+  - icon: branding/youtube
+    url: https://www.youtube.com/channel/UCI0vQvr9aFn27yR6Ej6n5UA
+    color: youtube-red

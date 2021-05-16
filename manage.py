@@ -7,7 +7,6 @@ import time
 from typing import List
 
 import django
-import gunicorn.app.wsgiapp
 from django.contrib.auth import get_user_model
 from django.core.management import call_command, execute_from_command_line
 
@@ -155,6 +154,9 @@ class SiteManager:
         if self.debug:
             call_command("runserver", "0.0.0.0:8000")
             return
+
+        # Import gunicorn only if we aren't in debug mode.
+        import gunicorn.app.wsgiapp
 
         # Patch the arguments for gunicorn
         sys.argv = [

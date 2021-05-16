@@ -1,0 +1,31 @@
+{% extends "events/base_sidebar.html" %}
+
+{% block title %}Game Jam Rules{% endblock %}
+
+{% block breadcrumb %}
+    <li><a href="{% url "events:index" %}">Events</a></li>
+    <li><a href="{% url "events:page" path="game-jams" %}">Game Jams</a></li>
+    <li><a href="{% url "events:page" path="game-jams/2020" %}">Game Jam 2020: Three of a Kind</a></li>
+    <li class="is-active"><a href="#">Game Jam Rules</a></li>
+{% endblock %}
+
+{% block event_content %}
+    <img src="https://user-images.githubusercontent.com/33516116/77762078-e02ce080-7030-11ea-947a-9c6733d4f33d.png">
+    <ol>
+            <li>You may enter individually or with up to two friends.</li>
+            <li>All members of your team must be members of our Discord community.</li>
+            <li>Your project must use the <a href="https://arcade.academy/">Python Arcade Library</a>. It is not permitted to work around this by, e.g., using the Python Arcade Libary as a wrapper for another framework.</li>
+            <li>The majority of your project must be written in Python.</li>
+            <li>Your project must be feasible to run and simple to set up on a <strong>desktop computer</strong>.</li>
+            <li>You are allowed to use existing assets, like images and sound effects, as long as the licenses of those assets permit it. Typically, this means that the assets are licensed under an OSI-approved or Creative Commons license, or is in the public domain.</li>
+            <li>All projects should start from scratch and all code must be written within the time constrictions of the jam.</li>
+            <li>You retain all copyrights to entries you submit. By submitting your entry, you grant a transferrable, irrevocable license to redistribute, copy and run your entry without modification, and to distribute screenshots and other forms of gameplay captures of the entry, provided no fee is charged.</li>
+    </ol>
+    <blockquote>
+        Please note that our regular <a href="/pages/rules/">community rules</a> and <a href="/pages/code-of-conduct/">code of conduct</a> also apply during the event and that we reserve the right to make changes to these rules at any time.
+    </blockquote>
+{% endblock %}
+
+{% block sidebar %}
+    {% include "events/sidebar/game-jams/2020.html" %}
+{% endblock %}
