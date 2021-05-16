@@ -40,7 +40,7 @@ If the linter complains, the commit is aborted so that you can fix the linting e
 That way, you never commit the problematic code in the first place!
 
 Please refer to the project-specific documentation to see how to setup and run those tools.
-In most cases, you can install pre-commut using `pipenv run precommit` or `poetry run task precommit`, and lint using `pipenv run lint` or `poetry run task lint`.
+In most cases, you can install pre-commit using `pipenv run precommit` or `poetry run task precommit`, and lint using `pipenv run lint` or `poetry run task lint`.
 
 ## Type Hinting
 
