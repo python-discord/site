@@ -9,8 +9,8 @@ toc: 1
 
 ---
 # Requirements
-- [Python 3.8](https://www.python.org/downloads/)
-- [Pipenv](https://github.com/pypa/pipenv/blob/master/docs/install.rst#-installing-pipenv)
+- [Python 3.9](https://www.python.org/downloads/)
+- [Poetry](https://github.com/python-poetry/poetry#installation)
 - [Git](https://git-scm.com/downloads)
     - [Windows Installer](https://git-scm.com/download/win)
     - [MacOS Installer](https://git-scm.com/download/mac) or `brew install git`
@@ -101,10 +101,10 @@ If you get any Docker related errors, reference the [Possible Issues](./docker/p
 {: .notification .is-warning }
 
 ## Run on the host
-After installing project dependencies use the pipenv command `pipenv run start` in the project root.
+After installing project dependencies use the poetry command `poetry run task start` in the project root.
 
 ```shell
-$ pipenv run start
+$ poetry run task start
 ```
 
 ---

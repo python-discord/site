@@ -5,13 +5,15 @@ icon: fab fa-discord
 ---
 We have a small but strict set of rules on our server. Please read over them and take them on board. If you don't understand a rule or need to report an incident, please send a direct message to <code>@ModMail</code>!
 
-> 1. Follow the [Discord Community Guidelines](https://discordapp.com/guidelines) and [Terms Of Service](https://discordapp.com/terms).
-> 2. Follow the [Python Discord Code of Conduct](/pages/code-of-conduct/).
-> 3. Listen to and respect staff members and their instructions.
-> 4. This is an English-speaking server, so please speak English to the best of your ability.
-> 5. Do not provide or request help on projects that may break laws, breach terms of services, be considered malicious or inappropriate. Do not help with ongoing exams. Do not provide or request solutions for graded assignments, although general guidance is okay.
-> 6. No spamming or unapproved advertising, including requests for paid work. Open-source projects can be shared with others in #python-general and code reviews can be asked for in a help channel.
-> 7. Keep discussions relevant to channel topics and guidelines.
+> 1. Follow the [Python Discord Code of Conduct](/pages/code-of-conduct/).
+> 2. Follow the [Discord Community Guidelines](https://discordapp.com/guidelines) and [Terms of Service](https://discordapp.com/terms).
+> 3. Respect staff members and listen to their instructions.
+> 4. Use English to the best of your ability. Be polite if someone speaks English imperfectly.
+> 5. Do not provide or request help on projects that may break laws, breach terms of services, or are malicious or inappropriate.
+> 6.  Do not post unapproved advertising.
+> 7.  Keep discussions relevant to the channel topic. Each channel's description tells you the topic.
+> 8. Do not help with ongoing exams. When helping with homework, help people learn how to do the assignment without doing it for them.
+> 9. Do not offer or ask for paid work of any kind.
 
 # Nickname Policy
 

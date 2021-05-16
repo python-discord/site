@@ -15,6 +15,7 @@ The following variables are needed for running Sir Lancebot:
 | `CHANNEL_ANNOUNCEMENTS` | ID of the #announcements channel |
 | `CHANNEL_DEVLOG` | ID of the #dev-log channel |
 | `CHANNEL_COMMUNITY_BOT_COMMANDS` | ID of the #sir-lancebot-commands channel |
+| `CHANNEL_REDDIT` | ID of the #reddit channel |
 
 ---
 ## Debug Variables
@@ -49,9 +50,10 @@ If you will be working with an external service, you might have to set one of th
 | `YOUTUBE_API_KEY` | An OAuth Key or Token are required for API access. [Docs](https://developers.google.com/youtube/v3/docs#calling-the-api) |
 | `TMDB_API_KEY` | Required for API access. [Docs](https://developers.themoviedb.org/3/getting-started/introduction) |
 | `NASA_API_KEY` | Required for API access. [Docs](https://api.nasa.gov/) |
-| `IGDB_API_KEY` | Required for API access. A Twitch account is needed. [Docs](https://api-docs.igdb.com/#about) |
 | `WOLFRAM_API_KEY` | |
 | `UNSPLASH_KEY` | Required for API access. Use the `access_token` given by Unsplash. [Docs](https://unsplash.com/documentation) |
+| `IGDB_CLIENT_ID` | OAuth2 client ID for authenticating with the [IGDB API](https://api-docs.igdb.com/) |
+| `IGDB_CLIENT_SECRET` | OAuth2 secret for authenticating with the IGDB API. *Leave empty if you're not using the IGDB API.* |
 
 ---
 ## Seasonal Cogs
@@ -65,7 +67,9 @@ These variables might come in handy while working on certain cogs:
 | Advent of Code | `AOC_IGNORED_DAYS` | Comma seperated list of days to ignore while calulating score. |
 | Advent of Code | `AOC_YEAR` | Debug variable to change the year used for AoC. |
 | Advent of Code | `AOC_CHANNEL_ID` | The ID of the #advent-of-code channel |
+| Advent of Code | `AOC_COMMANDS_CHANNEL_ID` | The ID of the #advent-of-code-commands channel |
 | Advent of Code | `AOC_FALLBACK_SESSION` | |
+| Advent of Code | `AOC_SESSION_COOKIE` | |
 | Valentines | `LOVEFEST_ROLE_ID` | |
 | Wolfram | `WOLFRAM_USER_LIMIT_DAY` | |
 | Wolfram | `WOLFRAM_GUILD_LIMIT_DAY` | |
