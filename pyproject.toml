@@ -1,9 +1,12 @@
-[[source]]
-name = "pypi"
-url = "https://pypi.org/simple"
-verify_ssl = true
+[tool.poetry]
+name = "site"
+version = "1.0.0"
+description = "The project responsible for maintaining our website and all of its subdomains."
+authors = ["Python Discord <info@pythondiscord.com>"]
+license = "MIT"
 
-[packages]
+[tool.poetry.dependencies]
+python = "3.9.*"
 django = "~=3.0.4"
 django-environ = "~=0.4.5"
 django-filter = "~=2.1.0"
@@ -19,7 +22,7 @@ sentry-sdk = "~=0.19"
 markdown = "~=3.3.4"
 python-frontmatter = "~=1.0"
 
-[dev-packages]
+[tool.poetry.dev-dependencies]
 coverage = "~=5.0"
 flake8 = "~=3.7"
 flake8-annotations = "~=2.0"
@@ -35,11 +38,14 @@ pep8-naming = "~=0.9"
 pre-commit = "~=2.1"
 pyfakefs = "~=4.4.0"
 coveralls = "~=2.1"
+taskipy = "~=1.7.0"
+python-dotenv = "~=0.17.1"
 
-[requires]
-python_version = "3.8"
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
 
-[scripts]
+[tool.taskipy.tasks]
 start = "python manage.py run --debug"
 makemigrations = "python manage.py makemigrations"
 django_shell = "python manage.py shell"
