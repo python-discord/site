@@ -15,7 +15,8 @@ Dockerfile                                      @MarkKoz @Akarys42 @Den4200
 docker-compose.yml                              @MarkKoz @Akarys42 @Den4200
 
 # Tools
-Pipfile*                                        @Akarys42
+poetry.lock                                     @Akarys42
+pyproject.toml                                  @Akarys42
 
 # Metricity
 pydis_site/apps/api/models/bot/metricity.py     @jb3

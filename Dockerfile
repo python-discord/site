@@ -1,31 +1,28 @@
-FROM python:3.8-slim-buster
+FROM python:3.9.5-slim-buster
 
 # Allow service to handle stops gracefully
 STOPSIGNAL SIGQUIT
 
 # Set pip to have cleaner logs and no saved cache
 ENV PIP_NO_CACHE_DIR=false \
-    PIPENV_HIDE_EMOJIS=1 \
-    PIPENV_NOSPIN=1
+    POETRY_VIRTUALENVS_CREATE=false
 
-# Install pipenv
-RUN pip install -U pipenv
+# Install poetry
+RUN pip install -U poetry
 
 # Copy the project files into working directory
 WORKDIR /app
 
-# Copy dependency files
-COPY Pipfile Pipfile.lock ./
-
 # Install project dependencies
-RUN pipenv install --system --deploy
-
-# Copy project code
-COPY . .
+COPY pyproject.toml poetry.lock ./
+RUN poetry install --no-dev
 
 # Set Git SHA environment variable
 ARG git_sha="development"
 ENV GIT_SHA=$git_sha
+
+# Copy the source code in last to optimize rebuilding the image
+COPY . .
 
 # Run web server through custom manager
 ENTRYPOINT ["python", "manage.py"]
