@@ -263,6 +263,7 @@ BULMA_SETTINGS = {
     "extensions": [
         "bulma-dropdown",
         "bulma-navbar-burger",
+        "bulma-modal",
     ],
 }
 
