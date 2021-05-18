@@ -87,6 +87,8 @@ The only file types that we allow on this server are those that Discord supports
 This is because it's easier and safer for people on the server since they do not need to download a file to view it.
 It's also to ease the burden on our moderators, otherwise they would have to download and check the files posted to the server.
 
+Even though Discord does support previewing of files like `.txt` and `.py`, that support is only available on Desktop, not mobile. Additionally, we prefer people to use hastebin as it encourages them to only copy over the relevant code snippets instead of their whole code; this makes helping much easier for all involved.
+
 If you want to share code please use our hosted hastebin, [paste.pythondiscord.com](http://paste.pythondiscord.com).
 
 
