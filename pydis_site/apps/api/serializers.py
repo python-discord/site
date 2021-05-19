@@ -207,18 +207,7 @@ class OffTopicChannelNameSerializer(ModelSerializer):
         """Metadata defined for the Django REST Framework."""
 
         model = OffTopicChannelName
-        fields = ('name',)
-
-    def to_representation(self, obj: OffTopicChannelName) -> str:
-        """
-        Return the representation of this `OffTopicChannelName`.
-
-        This only returns the name of the off topic channel name. As the model
-        only has a single attribute, it is unnecessary to create a nested dictionary.
-        Additionally, this allows off topic channel name routes to simply return an
-        array of names instead of objects, saving on bandwidth.
-        """
-        return obj.name
+        fields = ('name', 'active')
 
 
 class ReminderSerializer(ModelSerializer):
