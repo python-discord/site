@@ -3,16 +3,15 @@ from django.db.models.query import QuerySet
 from django.http.request import HttpRequest
 from django.shortcuts import get_object_or_404
 from rest_framework.exceptions import ParseError
-from rest_framework.mixins import DestroyModelMixin
 from rest_framework.response import Response
 from rest_framework.status import HTTP_201_CREATED
-from rest_framework.viewsets import ViewSet
+from rest_framework.viewsets import ModelViewSet
 
 from pydis_site.apps.api.models.bot.off_topic_channel_name import OffTopicChannelName
 from pydis_site.apps.api.serializers import OffTopicChannelNameSerializer
 
 
-class OffTopicChannelNameViewSet(DestroyModelMixin, ViewSet):
+class OffTopicChannelNameViewSet(ModelViewSet):
     """
     View of off-topic channel names used by the bot to rotate our off-topic names on a daily basis.
 
@@ -73,7 +72,7 @@ class OffTopicChannelNameViewSet(DestroyModelMixin, ViewSet):
         """Returns a queryset that covers the entire OffTopicChannelName table."""
         return OffTopicChannelName.objects.all()
 
-    def create(self, request: HttpRequest) -> Response:
+    def create(self, request: HttpRequest, *args, **kwargs) -> Response:
         """
         DRF method for creating a new OffTopicChannelName.
 
@@ -91,7 +90,7 @@ class OffTopicChannelNameViewSet(DestroyModelMixin, ViewSet):
                 'name': ["This query parameter is required."]
             })
 
-    def list(self, request: HttpRequest) -> Response:
+    def list(self, request: HttpRequest, *args, **kwargs) -> Response:
         """
         DRF method for listing OffTopicChannelName entries.
 
@@ -133,6 +132,4 @@ class OffTopicChannelNameViewSet(DestroyModelMixin, ViewSet):
             serialized = self.serializer_class(queryset, many=True)
             return Response(serialized.data)
 
-        queryset = self.get_queryset()
-        serialized = self.serializer_class(queryset, many=True)
-        return Response(serialized.data)
+        return super().list(self, request)
