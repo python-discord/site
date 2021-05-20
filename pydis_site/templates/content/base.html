@@ -1,5 +1,6 @@
 {% extends 'base/base.html' %}
 {% load static %}
+{% load page_github %}
 
 {% block title %}{{ page_title }}{% endblock %}
 {% block head %}
@@ -38,9 +39,9 @@
                     {# TODO: Bikeshed the button design #}
                     <button class="button is-flex is-pulled-right is-primary is-light">
                         {# TODO: Make it load the Github page instead of reloading the page #}
-                        <a href="{{ request.build_absolute_uri }}">
-                           <i class="fab fa-github mr-2"></i>
-                            <b> Edit on GitHub</b>
+                        <a href="{{ request.build_absolute_uri|page_github }}">
+                            <i class="fab fa-github mr-2"></i>
+                            <b> Edit on Github</b>
                         </a>
                     </button>
                 </div>
