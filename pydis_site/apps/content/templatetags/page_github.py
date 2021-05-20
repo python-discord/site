@@ -1,11 +1,16 @@
-from django import template
 import requests
+from django import template
 
 register = template.Library()
 
 
 @register.filter()
-def page_github(current_uri: str):
+def page_github(current_uri: str) -> str:
+    """
+    Return the corresponding GitHub page for the current site page.
+
+    Return a directory if the page is a directory on GitHub otherwise return the Markdown file
+    """
     github_uri = current_uri.replace(
         "http://pythondiscord.local:8000/pages/",
         "https://github.com/python-discord/site/tree/main/pydis_site/apps/content/resources/"
