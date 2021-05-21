@@ -1,3 +1,4 @@
+import datetime
 from datetime import datetime as dt, timedelta, timezone
 from unittest.mock import patch
 from urllib.parse import quote
@@ -16,7 +17,7 @@ class UnauthenticatedTests(APISubdomainTestCase):
         self.client.force_authenticate(user=None)
 
     def test_detail_lookup_returns_401(self):
-        url = reverse('bot:infraction-detail', args=(5,), host='api')
+        url = reverse('bot:infraction-detail', args=(6,), host='api')
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, 401)
@@ -34,7 +35,7 @@ class UnauthenticatedTests(APISubdomainTestCase):
         self.assertEqual(response.status_code, 401)
 
     def test_partial_update_returns_401(self):
-        url = reverse('bot:infraction-detail', args=(5,), host='api')
+        url = reverse('bot:infraction-detail', args=(6,), host='api')
         response = self.client.patch(url, data={'reason': 'Have a nice day.'})
 
         self.assertEqual(response.status_code, 401)
@@ -44,7 +45,7 @@ class InfractionTests(APISubdomainTestCase):
     @classmethod
     def setUpTestData(cls):
         cls.user = User.objects.create(
-            id=5,
+            id=6,
             name='james',
             discriminator=1,
         )
@@ -64,6 +65,22 @@ class InfractionTests(APISubdomainTestCase):
             reason='James is an ass, and we won\'t be working with him again.',
             active=False
         )
+        cls.mute_permanent = Infraction.objects.create(
+            user_id=cls.user.id,
+            actor_id=cls.user.id,
+            type='mute',
+            reason='He has a filthy mouth and I am his soap.',
+            active=True,
+            expires_at=None
+        )
+        cls.superstar_expires_soon = Infraction.objects.create(
+            user_id=cls.user.id,
+            actor_id=cls.user.id,
+            type='superstar',
+            reason='This one doesn\'t matter anymore.',
+            active=True,
+            expires_at=datetime.datetime.utcnow() + datetime.timedelta(hours=5)
+        )
 
     def test_list_all(self):
         """Tests the list-view, which should be ordered by inserted_at (newest first)."""
@@ -73,9 +90,11 @@ class InfractionTests(APISubdomainTestCase):
         self.assertEqual(response.status_code, 200)
         infractions = response.json()
 
-        self.assertEqual(len(infractions), 2)
-        self.assertEqual(infractions[0]['id'], self.ban_inactive.id)
-        self.assertEqual(infractions[1]['id'], self.ban_hidden.id)
+        self.assertEqual(len(infractions), 4)
+        self.assertEqual(infractions[0]['id'], self.superstar_expires_soon.id)
+        self.assertEqual(infractions[1]['id'], self.mute_permanent.id)
+        self.assertEqual(infractions[2]['id'], self.ban_inactive.id)
+        self.assertEqual(infractions[3]['id'], self.ban_hidden.id)
 
     def test_filter_search(self):
         url = reverse('bot:infraction-list', host='api')
@@ -97,6 +116,51 @@ class InfractionTests(APISubdomainTestCase):
 
         self.assertEqual(len(infractions), 1)
         self.assertEqual(infractions[0]['id'], self.ban_hidden.id)
+
+    def test_filter_permanent_false(self):
+        url = reverse('bot:infraction-list', host='api')
+        response = self.client.get(f'{url}?type=mute&permanent=false')
+
+        self.assertEqual(response.status_code, 200)
+        infractions = response.json()
+
+        self.assertEqual(len(infractions), 0)
+
+    def test_filter_permanent_true(self):
+        url = reverse('bot:infraction-list', host='api')
+        response = self.client.get(f'{url}?type=mute&permanent=true')
+
+        self.assertEqual(response.status_code, 200)
+        infractions = response.json()
+
+        self.assertEqual(infractions[0]['id'], self.mute_permanent.id)
+
+    def test_filter_after(self):
+        url = reverse('bot:infraction-list', host='api')
+        target_time = datetime.datetime.utcnow() + datetime.timedelta(hours=5)
+        response = self.client.get(f'{url}?type=superstar&expires_after={target_time.isoformat()}')
+
+        self.assertEqual(response.status_code, 200)
+        infractions = response.json()
+        self.assertEqual(len(infractions), 0)
+
+    def test_filter_before(self):
+        url = reverse('bot:infraction-list', host='api')
+        target_time = datetime.datetime.utcnow() + datetime.timedelta(hours=5)
+        response = self.client.get(f'{url}?type=superstar&expires_before={target_time.isoformat()}')
+
+        self.assertEqual(response.status_code, 200)
+        infractions = response.json()
+        self.assertEqual(len(infractions), 1)
+        self.assertEqual(infractions[0]['id'], self.superstar_expires_soon.id)
+
+    def test_filter_manytypes(self):
+        url = reverse('bot:infraction-list', host='api')
+        response = self.client.get(f'{url}?types=mute,ban')
+
+        self.assertEqual(response.status_code, 200)
+        infractions = response.json()
+        self.assertEqual(len(infractions), 3)
 
     def test_returns_empty_for_no_match(self):
         url = reverse('bot:infraction-list', host='api')
