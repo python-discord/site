@@ -163,6 +163,20 @@ class InfractionTests(APISubdomainTestCase):
         self.assertEqual(len(infractions), 1)
         self.assertEqual(infractions[0]['id'], self.superstar_expires_soon.id)
 
+    def test_filter_after_invalid(self):
+        url = reverse('bot:infraction-list', host='api')
+        response = self.client.get(f'{url}?expires_after=gibberish')
+
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(list(response.json())[0], "expires_after")
+
+    def test_filter_before_invalid(self):
+        url = reverse('bot:infraction-list', host='api')
+        response = self.client.get(f'{url}?expires_before=000000000')
+
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(list(response.json())[0], "expires_before")
+
     def test_filter_manytypes(self):
         url = reverse('bot:infraction-list', host='api')
         response = self.client.get(f'{url}?types=mute,ban')
