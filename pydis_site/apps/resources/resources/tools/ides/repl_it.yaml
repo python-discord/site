@@ -3,3 +3,8 @@ description: A free, collaborative, in-browser IDE to code in 50+ languages —
 name: repl.it
 title_url: https://repl.it/
 position: 3
+tags:
+  topics:
+    - collaboration
+  payment_tiers:
+    - free

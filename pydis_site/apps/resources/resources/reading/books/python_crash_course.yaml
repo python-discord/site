@@ -12,9 +12,17 @@ urls:
   - icon: regular/link
     url: https://nostarch.com/pythoncrashcourse2e
     color: teal
-  - icon: branding/amazon
-    url: https://www.amazon.com/Python-Crash-Course-Project-Based-Introduction/dp/1593276036
-    color: amazon-orange
+  - icon: branding/goodreads
+    url: https://www.goodreads.com/book/show/23241059-python-crash-course
+    color: goodreads-cream
   - icon: branding/github
     url: https://ehmatthes.github.io/pcc/
     color: black
+tags:
+  topics:
+    - python
+    - game development
+  payment_tiers:
+    - paid
+  complexity:
+    - beginner

@@ -7,6 +7,15 @@ urls:
 - icon: regular/link
   url: https://realpython.com/products/python-tricks-book/
   color: teal
-- icon: branding/amazon
-  url: https://www.amazon.com/Python-Tricks-Buffet-Awesome-Features/dp/1775093301
-  color: amazon-orange
+- icon: branding/goodreads
+  url: https://www.goodreads.com/book/show/36990732-python-tricks
+  color: goodreads-cream
+tags:
+  topics:
+    - python
+    - best practices
+    - soft skills
+  payment_tiers:
+    - paid
+  complexity:
+    - intermediate

@@ -7,3 +7,12 @@ urls:
   - icon: regular/link
     url: https://www.inferentialthinking.com/chapters/intro
     color: teal
+tags:
+  topics:
+    - data science
+    - python
+  payment_tiers:
+    - free
+  complexity:
+    - beginner
+    - intermediate

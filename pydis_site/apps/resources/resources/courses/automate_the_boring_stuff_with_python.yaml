@@ -3,3 +3,11 @@ description: The interactive course version of Al Sweigart's excellent book for 
 name: Automate the Boring Stuff with Python
 title_url: https://www.udemy.com/automate/?couponCode=FOR_LIKE_10_BUCKS
 position: 3
+tags:
+  topics:
+    - python
+    - automation
+  payment_tiers:
+    - paid
+  complexity:
+    - beginner

@@ -3,3 +3,10 @@ description: A Python 3 cheat sheet with useful information and tips, as well as
 name: Python Cheat Sheet
 title_url: https://perso.limsi.fr/pointal/_media/python:cours:mementopython3-english.pdf
 position: 6
+tags:
+  topics:
+    - python
+  payment_tiers:
+    - free
+  complexity:
+    - beginner

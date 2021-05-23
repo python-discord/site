@@ -16,3 +16,10 @@ urls:
   - icon: branding/discord
     url: https://aka.ms/python-discord
     color: blurple
+tags:
+  topics:
+    - python
+  payment_tiers:
+    - free
+  complexity:
+    - beginner

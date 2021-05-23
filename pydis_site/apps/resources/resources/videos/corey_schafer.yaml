@@ -17,3 +17,14 @@ urls:
   - icon: regular/link
     url: https://coreyms.com/
     color: teal
+tags:
+  topics:
+    - python
+    - best practices
+    - web development
+    - version control
+  payment_tiers:
+    - free
+  complexity:
+    - beginner
+    - intermediate

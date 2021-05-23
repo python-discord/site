@@ -3,3 +3,12 @@ description: Brian Okken's weekly podcast on testing. Usually deals with Python,
 name: Test & Code
 title_url: https://testandcode.com/
 position: 3
+tags:
+  topics:
+    - testing
+    - devops
+  payment_tiers:
+    - free
+  complexity:
+    - beginner
+    - intermediate

@@ -5,3 +5,8 @@ description: Google Collab is a high-powered custom version of Jupyter Notebook 
 name: Google Collab
 title_url: https://colab.research.google.com/notebooks/intro.ipynb
 position: 4
+tags:
+  topics:
+    - collaboration
+  payment_tiers:
+    - free

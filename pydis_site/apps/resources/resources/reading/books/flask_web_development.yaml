@@ -6,9 +6,17 @@ urls:
 - icon: regular/link
   url: http://shop.oreilly.com/product/0636920031116.do
   color: teal
-- icon: branding/amazon
-  url: https://www.amazon.com/Flask-Web-Development-Developing-Applications/dp/1449372627
-  color: amazon-orange
+- icon: branding/goodreads
+  url: https://www.goodreads.com/book/show/18774655-flask-web-development
+  color: goodreads-cream
 - icon: branding/github
   url: https://github.com/miguelgrinberg/flasky
   color: black
+tags:
+  topics:
+    - web development
+  payment_tiers:
+    - paid
+  complexity:
+    - beginner
+    - intermediate

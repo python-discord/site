@@ -9,9 +9,16 @@ urls:
   - icon: regular/link
     url: https://greenteapress.com/wp/think-python-2e/
     color: teal
-  - icon: branding/amazon
-    url: https://www.amazon.com/gp/product/1491939362
-    color: amazon-orange
+  - icon: branding/goodreads
+    url: https://www.goodreads.com/book/show/14514306-think-python
+    color: goodreads-cream
   - icon: branding/github
     url: https://github.com/AllenDowney/ThinkPython2
     color: black
+tags:
+  topics:
+    - python
+  payment_tiers:
+    - paid
+  complexity:
+    - beginner

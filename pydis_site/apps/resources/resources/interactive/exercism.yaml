@@ -11,3 +11,11 @@ urls:
 - icon: branding/github
   url: https://github.com/exercism/python
   color: black
+tags:
+  topics:
+    - python
+  payment_tiers:
+    - free
+  complexity:
+    - beginner
+    - intermediate

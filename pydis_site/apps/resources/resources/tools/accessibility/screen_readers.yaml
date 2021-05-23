@@ -5,3 +5,7 @@ description: Screen readers are software programs that allow blind
 name: Screen Readers - American Foundation for the Blind
 title_url: https://www.afb.org/blindness-and-low-vision/using-technology/assistive-technology-products/screen-readers
 position: 1
+tags:
+  payment_tiers:
+    - free
+    - paid

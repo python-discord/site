@@ -9,6 +9,15 @@ urls:
 - icon: regular/book
   url: https://automatetheboringstuff.com/
   color: black
-- icon: branding/amazon
-  url: https://www.amazon.com/Automate-Boring-Stuff-Python-Programming/dp/1593275994/
-  color: amazon-orange
+- icon: branding/goodreads
+  url: https://www.goodreads.com/book/show/22514127-automate-the-boring-stuff-with-python
+  color: goodreads-cream
+tags:
+  topics:
+    - python
+    - automation
+  payment_tiers:
+    - free
+    - paid
+  complexity:
+    - beginner

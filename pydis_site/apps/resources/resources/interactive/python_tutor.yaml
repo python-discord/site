@@ -2,3 +2,11 @@ description: Write Python code in your web browser, and see it visualized step b
 name: Python Tutor
 title_url: https://www.pythontutor.com/
 position: 2
+tags:
+  topics:
+    - python
+  payment_tiers:
+    - free
+  complexity:
+    - beginner
+    - intermediate

@@ -5,3 +5,11 @@ description: A weekly Python podcast hosted by Christopher Bailey with interview
 name: The Real Python Podcast
 title_url: https://realpython.com/podcasts/rpp/
 position: 4
+tags:
+  topics:
+    - python
+  payment_tiers:
+    - free
+  complexity:
+    - beginner
+    - intermediate

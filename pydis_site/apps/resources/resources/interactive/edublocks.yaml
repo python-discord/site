@@ -8,3 +8,10 @@ description: EduBlocks provides a simple drag and drop interface to help beginne
 name: EduBlocks
 title_url: https://edublocks.org/
 position: 5
+tags:
+  topics:
+    - python
+  payment_tiers:
+    - free
+  complexity:
+    - beginner

@@ -8,3 +8,10 @@ description: 'Learn to write more idiomatic Python code with deliberate practice
 name: Python Morsels
 title_url: https://www.pythonmorsels.com/
 position: 3
+tags:
+  topics:
+    - python
+  payment_tiers:
+    - subscription
+  complexity:
+    - intermediate

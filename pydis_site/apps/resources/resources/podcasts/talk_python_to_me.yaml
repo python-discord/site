@@ -3,3 +3,11 @@ description: The essential weekly Python podcast. Michael Kennedy and a prominen
 name: Talk Python To Me
 title_url: https://talkpython.fm/
 position: 0
+tags:
+  topics:
+    - python
+  payment_tiers:
+    - free
+  complexity:
+    - beginner
+    - intermediate

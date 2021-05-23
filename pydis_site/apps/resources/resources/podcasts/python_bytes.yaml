@@ -3,3 +3,11 @@ description: A byte-sized podcast where Michael Kennedy and Brian Okken work thr
 name: Python Bytes
 title_url: https://pythonbytes.fm/
 position: 1
+tags:
+  topics:
+    - python
+  payment_tiers:
+    - free
+  complexity:
+    - beginner
+    - intermediate

@@ -6,3 +6,10 @@ description: Learn Python with a wide range of high quality, project-based lesso
 name: JetBrains Academy
 title_url: https://www.jetbrains.com/academy/
 position: 6
+tags:
+  topics:
+    - python
+  payment_tiers:
+    - subscription
+  complexity:
+    - beginner

@@ -3,12 +3,19 @@ description: Tips, tricks, and best practices for your Django project.
 name: Two Scoops of Django
 position: 9
 urls:
-- icon: regular/link
-  url: https://twoscoopspress.com/products/two-scoops-of-django-1-11
+- icon: regular/book
+  url: https://www.feldroy.com/collections/everything/products/two-scoops-of-django-3-x
   color: teal
-- icon: branding/amazon
-  url: https://www.amazon.com/Two-Scoops-Django-Best-Practices/dp/0981467342
-  color: amazon-orange
+- icon: branding/goodreads
+  url: https://www.goodreads.com/book/show/55822151-two-scoops-of-django-3-x
+  color: goodreads-cream
 - icon: branding/github
   url: https://github.com/twoscoops/two-scoops-of-django-2.0-code-examples
   color: black
+tags:
+  topics:
+    - web development
+  payment_tiers:
+    - paid
+  complexity:
+    - intermediate

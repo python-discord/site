@@ -2,3 +2,11 @@ description: Miguel Grinberg's fully featured mega-tutorial for learning how to 
 name: The Flask Mega-Tutorial
 title_url: https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world
 position: 5
+tags:
+  topics:
+    - web development
+  payment_tiers:
+    - free
+  complexity:
+    - beginner
+    - intermediate

@@ -11,3 +11,13 @@ urls:
   - icon: branding/youtube
     url: https://www.youtube.com/channel/UCU8d7rcShA7MGuDyYH1aWGg
     color: youtube-red
+tags:
+  topics:
+    - python
+    - user interface
+    - web development
+  payment_tiers:
+    - free
+  complexity:
+    - beginner
+    - intermediate

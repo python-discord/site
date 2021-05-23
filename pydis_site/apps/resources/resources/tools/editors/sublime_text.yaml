@@ -3,3 +3,6 @@ description: A powerful Python-backed editor with great community support and a 
 name: Sublime Text
 title_url: https://www.sublimetext.com/
 position: 2
+tags:
+  payment_tiers:
+    - free

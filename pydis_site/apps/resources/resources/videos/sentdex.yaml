@@ -20,3 +20,14 @@ urls:
   - icon: regular/link
     url: https://pythonprogramming.net/
     color: teal
+tags:
+  topics:
+    - python
+    - machine learning
+    - user interface
+    - data science
+  payment_tiers:
+    - free
+  complexity:
+    - beginner
+    - intermediate

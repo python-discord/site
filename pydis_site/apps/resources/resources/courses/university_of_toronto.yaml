@@ -9,3 +9,11 @@ urls:
   - icon: regular/graduation-cap
     url: https://www.coursera.org/learn/program-code
     color: youtube-red
+tags:
+  topics:
+    - python
+  payment_tiers:
+    - free
+  complexity:
+    - beginner
+    - intermediate

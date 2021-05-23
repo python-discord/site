@@ -6,10 +6,17 @@ urls:
 - icon: regular/link
   url: https://effectivepython.com/
   color: teal
-- icon: branding/amazon
-  url: https://www.amazon.com/Effective-Python-Specific-Software-Development/dp/0134853989
-  color: amazon-orange
-  title: Amazon
+- icon: branding/goodreads
+  url: https://www.goodreads.com/book/show/48566725-effective-python
+  color: goodreads-cream
 - icon: branding/github
   url: https://github.com/bslatkin/effectivepython
   color: black
+tags:
+  topics:
+    - python
+    - best practices
+  payment_tiers:
+    - paid
+  complexity:
+    - intermediate

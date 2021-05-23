@@ -7,3 +7,10 @@ description: Created and taught by <a href="https://dabeaz.com/">David Beazley</
 name: Practical Python Programming
 title_url: https://dabeaz-course.github.io/practical-python/
 position: 4
+tags:
+  topics:
+    - python
+  payment_tiers:
+    - free
+  complexity:
+    - beginner

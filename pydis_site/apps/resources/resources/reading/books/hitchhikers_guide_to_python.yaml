@@ -6,6 +6,15 @@ urls:
 - icon: regular/link
   url: https://python-guide.org/
   color: teal
-- icon: branding/amazon
-  url: https://www.amazon.com/Hitchhikers-Guide-Python-Practices-Development/dp/1491933178/
-  color: amazon-orange
+- icon: branding/goodreads
+  url: https://www.goodreads.com/book/show/28321007-the-hitchhiker-s-guide-to-python
+  color: goodreads-cream
+tags:
+  topics:
+    - python
+    - soft skills
+  payment_tiers:
+    - paid
+  complexity:
+    - beginner
+    - intermediate

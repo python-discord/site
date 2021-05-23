@@ -10,3 +10,13 @@ urls:
   - icon: branding/youtube
     url: https://www.youtube.com/channel/UCak6beUTLlVmf0E4AmnQkmw
     color: youtube-red
+tags:
+  topics:
+    - python
+    - testing
+    - web development
+  payment_tiers:
+    - free
+  complexity:
+    - beginner
+    - intermediate

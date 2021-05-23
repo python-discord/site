@@ -3,3 +3,8 @@ description: A Python IDE specifially aimed at learning programming. Has a lot o
 name: Thonny
 title_url: https://thonny.org/
 position: 2
+tags:
+  payment_tiers:
+    - free
+  complexity:
+    - beginner

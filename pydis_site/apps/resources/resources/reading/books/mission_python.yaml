@@ -8,6 +8,14 @@ urls:
 - icon: regular/link
   url: https://www.sean.co.uk/books/mission-python/index.shtm
   color: teal
-- icon: branding/amazon
-  url: https://www.amazon.com/Mission-Python-Code-Space-Adventure/dp/1593278578
-  color: amazon-orange
+- icon: branding/goodreads
+  url: https://www.goodreads.com/book/show/35545850-mission-python
+  color: goodreads-cream
+tags:
+  topics:
+    - python
+    - game development
+  payment_tiers:
+    - paid
+  complexity:
+    - beginner

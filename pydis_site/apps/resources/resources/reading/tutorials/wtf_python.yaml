@@ -6,3 +6,12 @@ description: Python, being a beautifully designed high-level and interpreter-bas
 name: WTF Python
 title_url: https://github.com/satwikkansal/wtfpython
 position: 7
+tags:
+  topics:
+    - python
+    - best practices
+    - esoteric
+  payment_tiers:
+    - free
+  complexity:
+    - intermediate

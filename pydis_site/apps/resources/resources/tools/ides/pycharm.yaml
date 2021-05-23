@@ -3,3 +3,7 @@ description: The very best Python IDE, with a wealth of advanced features and co
 name: PyCharm
 title_url: https://www.jetbrains.com/pycharm/
 position: 0
+tags:
+  payment_tiers:
+    - free
+    - paid

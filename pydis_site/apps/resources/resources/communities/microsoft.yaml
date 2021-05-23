@@ -10,3 +10,11 @@ urls:
   - icon: regular/link
     url: https://www.microsoft.com/en-us/boards/pycon2020.aspx
     color: teal
+tags:
+  topics:
+    - python
+  payment_tiers:
+    - free
+  complexity:
+    - beginner
+    - intermediate

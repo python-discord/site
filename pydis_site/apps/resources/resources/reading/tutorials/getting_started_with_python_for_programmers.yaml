@@ -3,3 +3,10 @@ description: A list of beginner resources for programmers coming from other lang
 name: Getting Started with Python for Programmers
 title_url: https://wiki.python.org/moin/BeginnersGuide/Programmers
 position: 0
+tags:
+  topics:
+    - python
+  payment_tiers:
+    - free
+  complexity:
+    - intermediate

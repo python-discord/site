@@ -5,3 +5,13 @@ description: An editor aimed at beginners for the purpose of learning how to cod
 name: Mu-Editor
 title_url: https://codewith.mu/
 position: 3
+tags:
+  topics:
+    - microcontrollers
+    - arduino
+    - adafruit
+    - circuitpython
+  payment_tiers:
+    - free
+  complexity:
+    - beginner

@@ -6,9 +6,16 @@ urls:
 - icon: regular/link
   url: http://shop.oreilly.com/product/0636920027072.do
   color: teal
-- icon: branding/amazon
-  url: https://www.amazon.com/Python-Cookbook-Third-David-Beazley/dp/1449340377
-  color: amazon-orange
+- icon: branding/goodreads
+  url: https://www.goodreads.com/book/show/17152735-python-cookbook
+  color: goodreads-cream
 - icon: branding/github
   url: https://github.com/dabeaz/python-cookbook
   color: black
+tags:
+  topics:
+    - python
+  payment_tiers:
+    - paid
+  complexity:
+    - intermediate

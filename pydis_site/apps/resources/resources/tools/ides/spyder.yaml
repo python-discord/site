@@ -3,3 +3,8 @@ description: The Scientific Python Development Environment.
 name: Spyder
 title_url: https://www.spyder-ide.org/
 position: 1
+tags:
+  topics:
+    - data science
+  payment_tiers:
+    - free

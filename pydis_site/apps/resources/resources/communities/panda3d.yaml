@@ -10,3 +10,12 @@ urls:
   - icon: regular/link
     url: https://www.panda3d.org/
     color: teal
+tags:
+  topics:
+    - user interface
+    - game development
+  payment_tiers:
+    - free
+  complexity:
+    - beginner
+    - intermediate

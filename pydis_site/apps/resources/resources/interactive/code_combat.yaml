@@ -9,3 +9,12 @@ urls:
 - icon: branding/github
   url: https://github.com/codecombat/codecombat
   color: black
+tags:
+  topics:
+    - python
+  payment_tiers:
+    - free
+    - subscription
+  complexity:
+    - beginner
+    - intermediate

@@ -7,9 +7,20 @@ title_image: https://www.mouser.com/images/suppliers/logos/adafruit.png
 title_url: https://discord.gg/adafruit
 position: 4
 urls:
-- icon: branding/discord
-  url: https://discord.gg/adafruit
-  color: blurple
-- icon: regular/link
-  url: https://adafruit.com/
-  color: teal
+  - icon: branding/discord
+    url: https://discord.gg/adafruit
+    color: blurple
+  - icon: regular/link
+    url: https://adafruit.com/
+    color: teal
+tags:
+  topics:
+    - microcontrollers
+    - arduino
+    - circuitpython
+    - adafruit
+  payment_tiers:
+    - free
+  complexity:
+    - beginner
+    - intermediate

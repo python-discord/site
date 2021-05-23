@@ -4,3 +4,6 @@ description: Talon is a tool being built that aims to bring programming,
 name: Talon Voice
 title_url: https://talonvoice.com/
 position: 0
+tags:
+  payment_tiers:
+    - free

@@ -3,3 +3,11 @@ description: The podcast about Python and the people who make it great. Weekly l
 name: Podcast.__init__
 title_url: https://www.podcastinit.com/
 position: 2
+tags:
+  topics:
+    - python
+  payment_tiers:
+    - free
+  complexity:
+    - beginner
+    - intermediate

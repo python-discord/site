@@ -8,3 +8,14 @@ urls:
   - icon: regular/link
     url: https://nnfs.io/
     color: teal
+  - icon: branding/goodreads
+    url: https://www.goodreads.com/book/show/55927899-neural-networks-from-scratch-in-python
+    color: goodreads-cream
+tags:
+  topics:
+    - neural networks
+    - machine learning
+  payment_tiers:
+    - paid
+  complexity:
+    - intermediate

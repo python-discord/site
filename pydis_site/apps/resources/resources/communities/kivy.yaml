@@ -16,3 +16,12 @@ urls:
   - icon: branding/github
     url: https://github.com/kivy
     color: black
+tags:
+  topics:
+    - user interface
+    - game development
+  payment_tiers:
+    - free
+  complexity:
+    - beginner
+    - intermediate

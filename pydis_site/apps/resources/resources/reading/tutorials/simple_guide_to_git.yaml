@@ -4,3 +4,10 @@ title_url: http://rogerdudler.github.io/git-guide/
 title_icon: branding/github
 title_icon_color: black
 position: 4
+tags:
+  topics:
+    - version control
+  payment_tiers:
+    - free
+  complexity:
+    - beginner

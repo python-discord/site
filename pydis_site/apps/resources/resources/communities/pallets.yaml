@@ -11,3 +11,11 @@ urls:
   - icon: regular/link
     url: https://www.palletsprojects.com/
     color: teal
+tags:
+  topics:
+    - web development
+  payment_tiers:
+    - free
+  complexity:
+    - beginner
+    - intermediate

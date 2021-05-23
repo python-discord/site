@@ -7,3 +7,11 @@ title_icon_color: black
 title_url: https://github.com/mhxion/awesome-programming-discord
 name: awesome-programming-discord
 position: 10
+tags:
+  topics:
+    - programming
+  payment_tiers:
+    - free
+  complexity:
+    - beginner
+    - intermediate
