@@ -5,7 +5,7 @@ name: Inferential Thinking
 position: 13
 urls:
   - icon: regular/link
-    url: https://www.inferentialthinking.com/chapters/intro
+    url: https://inferentialthinking.com/chapters/intro
     color: teal
 tags:
   topics:
