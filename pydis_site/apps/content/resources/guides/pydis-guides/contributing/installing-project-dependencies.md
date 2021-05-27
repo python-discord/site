@@ -21,7 +21,7 @@ You should have already cloned your fork as described in [**Cloning a Repository
 4. Navigate to `Project Interpreter`, then click the gear icon and click `Add`.<br/>
 ![PyCharm Interpreter Settings](/static/images/content/contributing/pycharm_interpreter.png)<br/>
 5. Click `Poetry Environment`, then click `OK`.<br/>
-![PyCharm Pipenv Environment](/static/images/content/contributing/pycharm_poetry.png)<br/>
+![PyCharm Poetry Environment](/static/images/content/contributing/pycharm_poetry.png)<br/>
 6. PyCharm will automatically install the packages required into a virtual environment.<br/>
 ![PyCharm Project Interpreter](/static/images/content/contributing/pycharm_poetry_success.png)
 
