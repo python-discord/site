@@ -195,7 +195,7 @@ class InfractionViewSet(
                 raise ValidationError({'expires_before': ['failed to convert to datetime']})
 
         if 'expires_at__lte' in additional_filters and 'expires_at__gte' in additional_filters:
-            if additional_filters['expires_at__gte'] < additional_filters['expires_at__lte']:
+            if additional_filters['expires_at__gte'] > additional_filters['expires_at__lte']:
                 raise ValidationError({
                     'expires_before': ['cannot be after expires_after'],
                     'expires_after': ['cannot be before expires_before'],

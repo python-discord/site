@@ -177,13 +177,26 @@ class InfractionTests(APISubdomainTestCase):
         self.assertEqual(response.status_code, 400)
         self.assertEqual(list(response.json())[0], "expires_before")
 
-    def test_after_before_before_invalid(self):
+    def test_after_before_before(self):
+        url = reverse('bot:infraction-list', host='api')
+        target_time = datetime.datetime.utcnow() + datetime.timedelta(hours=4)
+        target_time_late = datetime.datetime.utcnow() + datetime.timedelta(hours=6)
+        response = self.client.get(
+            f'{url}?expires_before={target_time_late.isoformat()}'
+            f'&expires_after={target_time.isoformat()}'
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.json()), 1)
+        self.assertEqual(response.json()[0]["id"], self.superstar_expires_soon.id)
+
+    def test_after_after_before_invalid(self):
         url = reverse('bot:infraction-list', host='api')
         target_time = datetime.datetime.utcnow() + datetime.timedelta(hours=5)
         target_time_late = datetime.datetime.utcnow() + datetime.timedelta(hours=9)
         response = self.client.get(
-            f'{url}?expires_before={target_time_late.isoformat()}'
-            f'&expires_after={target_time.isoformat()}'
+            f'{url}?expires_before={target_time.isoformat()}'
+            f'&expires_after={target_time_late.isoformat()}'
         )
 
         self.assertEqual(response.status_code, 400)
