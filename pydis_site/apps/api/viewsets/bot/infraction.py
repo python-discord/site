@@ -56,6 +56,7 @@ class InfractionViewSet(
     Invalid query parameters are ignored.
     Only one of `type` and `types` may be provided. If both `expires_before` and `expires_after`
     are provided, `expires_after` must come after `expires_before`.
+    If `permanent` is provided and true, `expires_before` and `expires_after` must not be provided.
 
     #### Response format
     Response is paginated but the result is returned without any pagination metadata.
@@ -200,6 +201,23 @@ class InfractionViewSet(
                     'expires_before': ['cannot be after expires_after'],
                     'expires_after': ['cannot be before expires_before'],
                 })
+
+        if (
+            ('expires_at__lte' in additional_filters or 'expires_at__gte' in additional_filters)
+            and 'expires_at__isnull' in additional_filters
+            and additional_filters['expires_at__isnull']
+        ):
+            raise ValidationError({
+                'permanent': [
+                    'cannot filter for permanent infractions at the'
+                    ' same time as expires_at or expires_before',
+                ]
+            })
+
+        if filter_expires_before:
+            # Filter out permanent infractions specifically if we want ones that will expire
+            # before a given date
+            additional_filters['expires_at__isnull'] = False
 
         filter_types = self.request.query_params.get('types')
         if filter_types:

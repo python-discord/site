@@ -204,6 +204,35 @@ class InfractionTests(APISubdomainTestCase):
         self.assertIn("expires_before", errors)
         self.assertIn("expires_after", errors)
 
+    def test_permanent_after_invalid(self):
+        url = reverse('bot:infraction-list', host='api')
+        target_time = datetime.datetime.utcnow() + datetime.timedelta(hours=5)
+        response = self.client.get(f'{url}?permanent=true&expires_after={target_time.isoformat()}')
+
+        self.assertEqual(response.status_code, 400)
+        errors = list(response.json())
+        self.assertEqual("permanent", errors[0])
+
+    def test_permanent_before_invalid(self):
+        url = reverse('bot:infraction-list', host='api')
+        target_time = datetime.datetime.utcnow() + datetime.timedelta(hours=5)
+        response = self.client.get(f'{url}?permanent=true&expires_before={target_time.isoformat()}')
+
+        self.assertEqual(response.status_code, 400)
+        errors = list(response.json())
+        self.assertEqual("permanent", errors[0])
+
+    def test_nonpermanent_before(self):
+        url = reverse('bot:infraction-list', host='api')
+        target_time = datetime.datetime.utcnow() + datetime.timedelta(hours=6)
+        response = self.client.get(
+            f'{url}?permanent=false&expires_before={target_time.isoformat()}'
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.json()), 1)
+        self.assertEqual(response.json()[0]["id"], self.superstar_expires_soon.id)
+
     def test_filter_manytypes(self):
         url = reverse('bot:infraction-list', host='api')
         response = self.client.get(f'{url}?types=mute,ban')
