@@ -177,6 +177,20 @@ class InfractionTests(APISubdomainTestCase):
         self.assertEqual(response.status_code, 400)
         self.assertEqual(list(response.json())[0], "expires_before")
 
+    def test_after_before_before_invalid(self):
+        url = reverse('bot:infraction-list', host='api')
+        target_time = datetime.datetime.utcnow() + datetime.timedelta(hours=5)
+        target_time_late = datetime.datetime.utcnow() + datetime.timedelta(hours=9)
+        response = self.client.get(
+            f'{url}?expires_before={target_time_late.isoformat()}'
+            f'&expires_after={target_time.isoformat()}'
+        )
+
+        self.assertEqual(response.status_code, 400)
+        errors = list(response.json())
+        self.assertIn("expires_before", errors)
+        self.assertIn("expires_after", errors)
+
     def test_filter_manytypes(self):
         url = reverse('bot:infraction-list', host='api')
         response = self.client.get(f'{url}?types=mute,ban')
@@ -184,6 +198,14 @@ class InfractionTests(APISubdomainTestCase):
         self.assertEqual(response.status_code, 200)
         infractions = response.json()
         self.assertEqual(len(infractions), 3)
+
+    def test_types_type_invalid(self):
+        url = reverse('bot:infraction-list', host='api')
+        response = self.client.get(f'{url}?types=mute,ban&type=superstar')
+
+        self.assertEqual(response.status_code, 400)
+        errors = list(response.json())
+        self.assertEqual("types", errors[0])
 
     def test_sort_expiresby(self):
         url = reverse('bot:infraction-list', host='api')

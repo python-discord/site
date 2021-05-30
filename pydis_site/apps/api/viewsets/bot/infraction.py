@@ -54,6 +54,8 @@ class InfractionViewSet(
     - **expires_before** `isodatetime`: the latest expires_at time to return infractions for
 
     Invalid query parameters are ignored.
+    Only one of `type` and `types` may be provided. If both `expires_before` and `expires_after`
+    are provided, `expires_after` must come after `expires_before`.
 
     #### Response format
     Response is paginated but the result is returned without any pagination metadata.
@@ -192,8 +194,19 @@ class InfractionViewSet(
             except ValueError:
                 raise ValidationError({'expires_before': ['failed to convert to datetime']})
 
+        if 'expires_at__lte' in additional_filters and 'expires_at__gte' in additional_filters:
+            if additional_filters['expires_at__gte'] < additional_filters['expires_at__lte']:
+                raise ValidationError({
+                    'expires_before': ['cannot be after expires_after'],
+                    'expires_after': ['cannot be before expires_before'],
+                })
+
         filter_types = self.request.query_params.get('types')
         if filter_types:
+            if self.request.query_params.get('type'):
+                raise ValidationError({
+                    'types': ['you must provide only one of "type" or "types"'],
+                })
             additional_filters['type__in'] = [i.strip() for i in filter_types.split(",")]
 
         return self.queryset.filter(**additional_filters)
