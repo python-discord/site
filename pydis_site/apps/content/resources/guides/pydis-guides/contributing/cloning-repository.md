@@ -13,19 +13,22 @@ The following will use the [Sir-Lancebot](https://github.com/python-discord/sir-
 
 ---
 
-## Cloning with PyCharm
-1. Load up PyCharm and click `Get from VCS`.<br>
-![Create Project in PyCharm](/static/images/content/contributing/pycharm_create_project.png)
-2. Enter the URL of your forked repository.
-3. Change the directory if you desire and click `Clone`.<br>
-![Clone Git Project in Pycharm](/static/images/content/contributing/pycharm_checkout.png)
-
----
-
 ## Cloning with the command line
+
 1. Clone your forked repository using `git clone` followed by your fork's Git URL. Then, change your working directory to the repository.
+
 ```shell
 $ git clone https://github.com/<your username>/sir-lancebot
 ...
 $ cd sir-lancebot
 ```
+
+---
+
+## Cloning with PyCharm
+
+1. Load up PyCharm and click `Get from VCS`.<br>
+   ![Create Project in PyCharm](/static/images/content/contributing/pycharm_create_project.png)
+2. Enter the URL of your forked repository.
+3. Change the directory if you desire and click `Clone`.<br>
+   ![Clone Git Project in Pycharm](/static/images/content/contributing/pycharm_checkout.png)
