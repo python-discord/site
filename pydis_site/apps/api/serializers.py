@@ -1,4 +1,6 @@
 """Converters from Django models to data interchange formats and back."""
+from typing import List
+
 from django.db.models.query import QuerySet
 from django.db.utils import IntegrityError
 from rest_framework.exceptions import NotFound
@@ -200,14 +202,29 @@ class ExpandedInfractionSerializer(InfractionSerializer):
         return ret
 
 
+class OffTopicChannelNameListSerializer(ListSerializer):
+    def update(self, instance, validated_data):
+        pass
+
+    def to_representation(self, objects: List[OffTopicChannelName]) -> List[str]:
+        """
+        Return the representation of this `OffTopicChannelName`.
+        This only returns the name of the off topic channel name. As the model
+        only has a single attribute, it is unnecessary to create a nested dictionary.
+        Additionally, this allows off topic channel name routes to simply return an
+        array of names instead of objects, saving on bandwidth.
+        """
+        return [obj.name for obj in objects]
+
+
 class OffTopicChannelNameSerializer(ModelSerializer):
     """A class providing (de-)serialization of `OffTopicChannelName` instances."""
 
     class Meta:
         """Metadata defined for the Django REST Framework."""
-
+        list_serializer_class = OffTopicChannelNameListSerializer
         model = OffTopicChannelName
-        fields = ('name', 'active')
+        fields = ('name', 'used', 'active')
 
 
 class ReminderSerializer(ModelSerializer):
