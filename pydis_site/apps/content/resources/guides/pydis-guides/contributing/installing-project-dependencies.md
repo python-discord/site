@@ -6,8 +6,8 @@ icon: fab fa-python
 
 > **Note:** The process varies depending on your choice of code editor / IDE, so refer to one of the following guides:
 
-- [Installing dependencies with PyCharm](#installing-dependencies-with-pycharm)
 - [Installing dependencies with the command line](#installing-dependencies-with-the-command-line)
+- [Installing dependencies with PyCharm](#installing-dependencies-with-pycharm)
 
 The following will use the [Sir-Lancebot](https://github.com/python-discord/sir-lancebot/) repository as an example, but the steps are the same for all other repositories.
 You should have already cloned your fork as described in [**Cloning a Repository**](../cloning-repository).

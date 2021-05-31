@@ -6,8 +6,8 @@ icon: fab fa-github
 
 > **Note:** The process varies depending on your choice of code editor / IDE, so refer to one of the following guides:
 
-- [Cloning with PyCharm](#cloning-with-pycharm)
 - [Cloning with the command line](#cloning-with-the-command-line)
+- [Cloning with PyCharm](#cloning-with-pycharm)
 
 The following will use the [Sir-Lancebot](https://github.com/python-discord/sir-lancebot/) repository as an example, but the steps are the same for all other repositories. You should have already retrieved your fork's Git URL as described in [**Creating a Fork**](../forking-repository).
 
