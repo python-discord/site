@@ -7,9 +7,9 @@ toc: 1
 
 # Requirements
 
-- [Python 3.8](https://www.python.org/downloads/)
-- [Pipenv](https://github.com/pypa/pipenv#installation)
-    - `pip install pipenv`
+- [Python 3.9](https://www.python.org/downloads/)
+- [Poetry](https://python-poetry.org/docs/#installation)
+    - `pip install poetry`
 - [Git](https://git-scm.com/downloads)
     - [Windows](https://git-scm.com/download/win)
     - [MacOS](https://git-scm.com/download/mac) or `brew install git`
@@ -122,10 +122,10 @@ If you're not using Docker, then use [pg_ctl](https://www.postgresql.org/docs/cu
 
 ### Webserver
 
-Starting the webserver is done simply through pipenv:
+Starting the webserver is done simply through poetry:
 
 ```shell
-pipenv run start
+poetry run task start
 ```
 
 ---
