@@ -1,3 +1,5 @@
+import tempfile
+
 from pyfakefs.fake_filesystem_unittest import TestCase
 
 # Valid markdown content with YAML metadata
@@ -85,7 +87,22 @@ class MockPagesTestCase(TestCase):
         # There is always a `tmp` directory in the filesystem, so make it a category
         # for testing purposes.
         # See: https://jmcgeheeiv.github.io/pyfakefs/release/usage.html#os-temporary-directories
-        self.fs.create_file("tmp/_info.yml", contents=CATEGORY_INFO)
-        self.fs.create_file("tmp.md", contents=MARKDOWN_WITH_METADATA)
-        self.fs.create_file("tmp/category/_info.yml", contents=CATEGORY_INFO)
-        self.fs.create_dir("tmp/category/subcategory_without_info")
+        self.populate_tempdir('tmp')
+
+        # Some systems do not use `/tmp` as their temporary directory, such as macOS,
+        # which means that we will have an additional folder in the root directory
+        # to deal with. To prevent this from causing any errors during tests, we
+        # also populate the platform-specific temp directory. It is populated in
+        # addition to `/tmp`, as some files are tested in `/tmp`.
+        _, tmpname, *_rest = tempfile.gettempdir().split('/')
+        if tmpname != 'tmp':
+            self.populate_tempdir(tmpname)
+
+        self.os_tmpname = tmpname
+
+    def populate_tempdir(self, name: str) -> None:
+        """Populate contents of the OS temp directory."""
+        self.fs.create_file(f"{name}/_info.yml", contents=CATEGORY_INFO)
+        self.fs.create_file(f"{name}.md", contents=MARKDOWN_WITH_METADATA)
+        self.fs.create_file(f"{name}/category/_info.yml", contents=CATEGORY_INFO)
+        self.fs.create_dir(f"{name}/category/subcategory_without_info")

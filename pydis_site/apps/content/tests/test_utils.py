@@ -38,7 +38,14 @@ class GetCategoriesTests(MockPagesTestCase):
         result = utils.get_categories(Path("."))
 
         info = PARSED_CATEGORY_INFO
-        self.assertEqual(result, {"category": info, "tmp": info, "not_a_page.md": info})
+        categories = {
+            "category": info,
+            "tmp": info,
+            # "tmp" on Linux, "var" on macOS.
+            self.os_tmpname: info,
+            "not_a_page.md": info,
+        }
+        self.assertEqual(result, categories)
 
     def test_get_categories_with_subcategories(self):
         result = utils.get_categories(Path("category"))
