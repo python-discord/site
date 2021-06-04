@@ -1,9 +1,11 @@
+import json
+
 from django.db.models import Case, Value, When
 from django.db.models.query import QuerySet
-from django.http.request import HttpRequest
 from django.shortcuts import get_object_or_404
 from rest_framework.exceptions import ParseError
 from rest_framework.response import Response
+from rest_framework.request import Request
 from rest_framework.status import HTTP_201_CREATED
 from rest_framework.viewsets import ModelViewSet
 
@@ -68,11 +70,11 @@ class OffTopicChannelNameViewSet(ModelViewSet):
         name = self.kwargs[self.lookup_field]
         return get_object_or_404(queryset, name=name)
 
-    def get_queryset(self) -> QuerySet:
+    def get_queryset(self, active=True) -> QuerySet:
         """Returns a queryset that covers the entire OffTopicChannelName table."""
-        return OffTopicChannelName.objects.all()
+        return OffTopicChannelName.objects.filter(active=True)
 
-    def create(self, request: HttpRequest, *args, **kwargs) -> Response:
+    def create(self, request: Request, *args, **kwargs) -> Response:
         """
         DRF method for creating a new OffTopicChannelName.
 
@@ -90,7 +92,7 @@ class OffTopicChannelNameViewSet(ModelViewSet):
                 'name': ["This query parameter is required."]
             })
 
-    def list(self, request: HttpRequest, *args, **kwargs) -> Response:
+    def list(self, request: Request, *args, **kwargs) -> Response:
         """
         DRF method for listing OffTopicChannelName entries.
 
@@ -132,4 +134,6 @@ class OffTopicChannelNameViewSet(ModelViewSet):
             serialized = self.serializer_class(queryset, many=True)
             return Response(serialized.data)
 
-        return super().list(self, request)
+        queryset = self.get_queryset(active=bool(request.query_params.get("active", True)))
+        serialized = self.serializer_class(queryset, many=True)
+        return Response(serialized.data)
