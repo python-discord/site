@@ -95,7 +95,7 @@ class MockPagesTestCase(TestCase):
         # also populate the platform-specific temp directory. It is populated in
         # addition to `/tmp`, as some files are tested in `/tmp`.
         _, tmpname, *_rest = tempfile.gettempdir().split('/')
-        if tmpname != 'tmp':
+        if tmpname != 'tmp':  # pragma: no cover - platform-specific
             self.populate_tempdir(tmpname)
 
         self.os_tmpname = tmpname
