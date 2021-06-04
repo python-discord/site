@@ -1,6 +1,13 @@
-import tempfile
+from pathlib import Path
 
-from pyfakefs.fake_filesystem_unittest import TestCase
+from pyfakefs import fake_filesystem_unittest
+
+
+# Set the module constant within Patcher to use the fake filesystem
+# https://jmcgeheeiv.github.io/pyfakefs/master/usage.html#modules-to-reload
+with fake_filesystem_unittest.Patcher() as _:
+    BASE_PATH = Path("res")
+
 
 # Valid markdown content with YAML metadata
 MARKDOWN_WITH_METADATA = """
@@ -43,11 +50,11 @@ PARSED_METADATA = {
 PARSED_CATEGORY_INFO = {"title": "Category Name", "description": "Description"}
 
 
-class MockPagesTestCase(TestCase):
+class MockPagesTestCase(fake_filesystem_unittest.TestCase):
     """
     TestCase with a fake filesystem for testing.
 
-    Structure:
+    Structure (relative to BASE_PATH):
     ├── _info.yml
     ├── root.md
     ├── root_without_metadata.md
@@ -70,39 +77,27 @@ class MockPagesTestCase(TestCase):
         """Create the fake filesystem."""
         self.setUpPyfakefs()
 
-        self.fs.create_file("_info.yml", contents=CATEGORY_INFO)
-        self.fs.create_file("root.md", contents=MARKDOWN_WITH_METADATA)
-        self.fs.create_file("root_without_metadata.md", contents=MARKDOWN_WITHOUT_METADATA)
-        self.fs.create_file("not_a_page.md/_info.yml", contents=CATEGORY_INFO)
-        self.fs.create_file("category/_info.yml", contents=CATEGORY_INFO)
-        self.fs.create_file("category/with_metadata.md", contents=MARKDOWN_WITH_METADATA)
-        self.fs.create_file("category/subcategory/_info.yml", contents=CATEGORY_INFO)
+        self.fs.create_file(f"{BASE_PATH}/_info.yml", contents=CATEGORY_INFO)
+        self.fs.create_file(f"{BASE_PATH}/root.md", contents=MARKDOWN_WITH_METADATA)
         self.fs.create_file(
-            "category/subcategory/with_metadata.md", contents=MARKDOWN_WITH_METADATA
+            f"{BASE_PATH}/root_without_metadata.md", contents=MARKDOWN_WITHOUT_METADATA
+        )
+        self.fs.create_file(f"{BASE_PATH}/not_a_page.md/_info.yml", contents=CATEGORY_INFO)
+        self.fs.create_file(f"{BASE_PATH}/category/_info.yml", contents=CATEGORY_INFO)
+        self.fs.create_file(
+            f"{BASE_PATH}/category/with_metadata.md", contents=MARKDOWN_WITH_METADATA
+        )
+        self.fs.create_file(f"{BASE_PATH}/category/subcategory/_info.yml", contents=CATEGORY_INFO)
+        self.fs.create_file(
+            f"{BASE_PATH}/category/subcategory/with_metadata.md", contents=MARKDOWN_WITH_METADATA
         )
         self.fs.create_file(
-            "category/subcategory/without_metadata.md", contents=MARKDOWN_WITHOUT_METADATA
+            f"{BASE_PATH}/category/subcategory/without_metadata.md",
+            contents=MARKDOWN_WITHOUT_METADATA
         )
 
-        # There is always a `tmp` directory in the filesystem, so make it a category
-        # for testing purposes.
-        # See: https://jmcgeheeiv.github.io/pyfakefs/release/usage.html#os-temporary-directories
-        self.populate_tempdir('tmp')
-
-        # Some systems do not use `/tmp` as their temporary directory, such as macOS,
-        # which means that we will have an additional folder in the root directory
-        # to deal with. To prevent this from causing any errors during tests, we
-        # also populate the platform-specific temp directory. It is populated in
-        # addition to `/tmp`, as some files are tested in `/tmp`.
-        _, tmpname, *_rest = tempfile.gettempdir().split('/')
-        if tmpname != 'tmp':  # pragma: no cover - platform-specific
-            self.populate_tempdir(tmpname)
-
-        self.os_tmpname = tmpname
-
-    def populate_tempdir(self, name: str) -> None:
-        """Populate contents of the OS temp directory."""
-        self.fs.create_file(f"{name}/_info.yml", contents=CATEGORY_INFO)
-        self.fs.create_file(f"{name}.md", contents=MARKDOWN_WITH_METADATA)
-        self.fs.create_file(f"{name}/category/_info.yml", contents=CATEGORY_INFO)
-        self.fs.create_dir(f"{name}/category/subcategory_without_info")
+        temp = f"{BASE_PATH}/tmp"  # noqa: S108
+        self.fs.create_file(f"{temp}/_info.yml", contents=CATEGORY_INFO)
+        self.fs.create_file(f"{temp}.md", contents=MARKDOWN_WITH_METADATA)
+        self.fs.create_file(f"{temp}/category/_info.yml", contents=CATEGORY_INFO)
+        self.fs.create_dir(f"{temp}/category/subcategory_without_info")

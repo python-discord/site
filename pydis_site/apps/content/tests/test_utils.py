@@ -4,7 +4,7 @@ from django.http import Http404
 
 from pydis_site.apps.content import utils
 from pydis_site.apps.content.tests.helpers import (
-    MockPagesTestCase, PARSED_CATEGORY_INFO, PARSED_HTML, PARSED_METADATA
+    BASE_PATH, MockPagesTestCase, PARSED_CATEGORY_INFO, PARSED_HTML, PARSED_METADATA
 )
 
 
@@ -12,48 +12,46 @@ class GetCategoryTests(MockPagesTestCase):
     """Tests for the get_category function."""
 
     def test_get_valid_category(self):
-        result = utils.get_category(Path("category"))
+        result = utils.get_category(Path(BASE_PATH, "category"))
 
         self.assertEqual(result, {"title": "Category Name", "description": "Description"})
 
     def test_get_nonexistent_category(self):
         with self.assertRaises(Http404):
-            utils.get_category(Path("invalid"))
+            utils.get_category(Path(BASE_PATH, "invalid"))
 
     def test_get_category_with_path_to_file(self):
         # Valid categories are directories, not files
         with self.assertRaises(Http404):
-            utils.get_category(Path("root.md"))
+            utils.get_category(Path(BASE_PATH, "root.md"))
 
     def test_get_category_without_info_yml(self):
         # Categories should provide an _info.yml file
         with self.assertRaises(FileNotFoundError):
-            utils.get_category(Path("tmp/category/subcategory_without_info"))
+            utils.get_category(Path(BASE_PATH, "tmp/category/subcategory_without_info"))
 
 
 class GetCategoriesTests(MockPagesTestCase):
     """Tests for the get_categories function."""
 
     def test_get_root_categories(self):
-        result = utils.get_categories(Path("."))
+        result = utils.get_categories(BASE_PATH)
 
         info = PARSED_CATEGORY_INFO
         categories = {
             "category": info,
             "tmp": info,
-            # "tmp" on Linux, "var" on macOS.
-            self.os_tmpname: info,
             "not_a_page.md": info,
         }
         self.assertEqual(result, categories)
 
     def test_get_categories_with_subcategories(self):
-        result = utils.get_categories(Path("category"))
+        result = utils.get_categories(Path(BASE_PATH, "category"))
 
         self.assertEqual(result, {"subcategory": PARSED_CATEGORY_INFO})
 
     def test_get_categories_without_subcategories(self):
-        result = utils.get_categories(Path("category/subcategory"))
+        result = utils.get_categories(Path(BASE_PATH, "category/subcategory"))
 
         self.assertEqual(result, {})
 
@@ -63,14 +61,14 @@ class GetCategoryPagesTests(MockPagesTestCase):
 
     def test_get_pages_in_root_category_successfully(self):
         """The method should successfully retrieve page metadata."""
-        root_category_pages = utils.get_category_pages(Path("."))
+        root_category_pages = utils.get_category_pages(BASE_PATH)
         self.assertEqual(
             root_category_pages, {"root": PARSED_METADATA, "root_without_metadata": {}}
         )
 
     def test_get_pages_in_subcategories_successfully(self):
         """The method should successfully retrieve page metadata."""
-        category_pages = utils.get_category_pages(Path("category"))
+        category_pages = utils.get_category_pages(Path(BASE_PATH, "category"))
 
         # Page metadata is properly retrieved
         self.assertEqual(category_pages, {"with_metadata": PARSED_METADATA})
@@ -91,10 +89,10 @@ class GetPageTests(MockPagesTestCase):
 
         for msg, page_path, expected_html, expected_metadata in cases:
             with self.subTest(msg=msg):
-                html, metadata = utils.get_page(Path(page_path))
+                html, metadata = utils.get_page(Path(BASE_PATH, page_path))
                 self.assertEqual(html, expected_html)
                 self.assertEqual(metadata, expected_metadata)
 
     def test_get_nonexistent_page_returns_404(self):
         with self.assertRaises(Http404):
-            utils.get_page(Path("invalid"))
+            utils.get_page(Path(BASE_PATH, "invalid"))
