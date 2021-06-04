@@ -664,7 +664,10 @@ class CreationTests(APISubdomainTestCase):
         )
 
     def test_integrity_error_if_missing_active_field(self):
-        pattern = 'null value in column "active" violates not-null constraint'
+        pattern = (
+            'null value in column "active" (of relation "api_infraction" )?'
+            'violates not-null constraint'
+        )
         with self.assertRaisesRegex(IntegrityError, pattern):
             Infraction.objects.create(
                 user=self.user,
