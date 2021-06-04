@@ -6,6 +6,9 @@ The website is configured through the following environment variables:
   in the form `postgresql://user:password@host/database`, such as
   `postgresql://joethedestroyer:ihavemnesia33@localhost/pysite_dev`
 
+- **`METRICITY_DB_URL`**: A string specifying the PostgreSQL metric database to
+  connect to, in the same form as `$DATABASE_URL`.
+
 - **`DEBUG`**: Controls Django's internal debugging setup. Enable this when
   you're developing locally. Optional, defaults to `False`.
 
