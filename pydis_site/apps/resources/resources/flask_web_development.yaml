@@ -1,0 +1,23 @@
+description: A comprehensive Flask walkthrough that has you building a complete social
+  blogging application from scratch.
+name: Flask Web Development
+urls:
+- icon: regular/link
+  url: http://shop.oreilly.com/product/0636920031116.do
+  color: teal
+- icon: branding/goodreads
+  url: https://www.goodreads.com/book/show/18774655-flask-web-development
+  color: goodreads-cream
+- icon: branding/github
+  url: https://github.com/miguelgrinberg/flasky
+  color: black
+tags:
+  topics:
+    - web development
+  payment_tiers:
+    - paid
+  complexity:
+    - beginner
+    - intermediate
+  type:
+    - book

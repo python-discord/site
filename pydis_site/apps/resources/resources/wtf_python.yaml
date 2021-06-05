@@ -1,0 +1,18 @@
+description: Python, being a beautifully designed high-level and interpreter-based programming language,
+  provides us with many features for the programmer's comfort.
+  But sometimes, the outcomes of a Python snippet may not seem obvious at first sight.
+  Here's a fun project attempting to explain what exactly is happening under the hood for some counter-intuitive snippets
+  and lesser-known features in Python.
+name: WTF Python
+title_url: https://github.com/satwikkansal/wtfpython
+position: 7
+tags:
+  topics:
+    - software design
+    - other
+  payment_tiers:
+    - free
+  complexity:
+    - intermediate
+  type:
+    - tutorial

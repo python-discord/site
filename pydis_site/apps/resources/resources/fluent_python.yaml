@@ -1,0 +1,23 @@
+description: A veritable tome of intermediate and advanced Python information. A must-read
+  for any Python professional. By far the most recommended book for intermediates.
+name: Fluent Python
+urls:
+- icon: regular/link
+  url: https://www.oreilly.com/library/view/fluent-python/9781491946237/
+  color: teal
+- icon: branding/goodreads
+  url: https://www.goodreads.com/book/show/22800567-fluent-python
+  color: goodreads-cream
+- icon: branding/github
+  url: https://github.com/fluentpython
+  color: black
+tags:
+  topics:
+    - general
+    - software design
+  payment_tiers:
+    - paid
+  complexity:
+    - intermediate
+  type:
+    - book

@@ -1,0 +1,22 @@
+description: Microsoft Python is a Discord server for discussing all things relating to using Python with Microsoft products,
+  they have channels for Azure, VS Code, IoT, Data Science and much more!
+title_image: https://1000logos.net/wp-content/uploads/2017/04/Microsoft-Logo.png
+title_url: https://discord.gg/b8YJQPx
+urls:
+  - icon: branding/discord
+    url: https://discord.gg/b8YJQPx
+    color: blurple
+  - icon: regular/link
+    url: https://www.microsoft.com/en-us/boards/pycon2020.aspx
+    color: teal
+tags:
+  topics:
+    - general
+    - tooling
+  payment_tiers:
+    - free
+  complexity:
+    - beginner
+    - intermediate
+  type:
+    - community

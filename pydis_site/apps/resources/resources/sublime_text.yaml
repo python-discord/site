@@ -1,0 +1,14 @@
+description: A powerful Python-backed editor with great community support and a wealth
+  of extensions.
+name: Sublime Text
+title_url: https://www.sublimetext.com/
+tags:
+  topics:
+    - general
+  payment_tiers:
+    - free
+  complexity:
+    - beginner
+    - intermediate
+  type:
+    - tool

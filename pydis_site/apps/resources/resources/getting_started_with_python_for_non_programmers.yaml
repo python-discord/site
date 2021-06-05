@@ -1,0 +1,13 @@
+description: A list of beginner resources for programmers with no prior developer experience,
+  from Python's official guide.
+name: Getting Started with Python for Non-Programmers
+title_url: https://wiki.python.org/moin/BeginnersGuide/NonProgrammers
+tags:
+  topics:
+    - general
+  payment_tiers:
+    - free
+  complexity:
+    - beginner
+  type:
+    - tutorial

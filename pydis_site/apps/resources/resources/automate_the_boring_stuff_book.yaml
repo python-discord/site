@@ -1,0 +1,23 @@
+description: One of the best books out there for Python beginners. This book will
+  teach you the basics of Python, while also teaching invaluable automation tools
+  and techniques for solving common problems. You'll learn how to go about scraping
+  the web, manipulating files and automating keyboard and mouse input. Ideal for an
+  office worker who wants to make himself more useful.
+name: Automate the Boring Stuff with Python
+urls:
+- icon: regular/book
+  url: https://automatetheboringstuff.com/
+  color: black
+- icon: branding/goodreads
+  url: https://www.goodreads.com/book/show/22514127-automate-the-boring-stuff-with-python
+  color: goodreads-cream
+tags:
+  topics:
+    - general
+  payment_tiers:
+    - free
+    - paid
+  complexity:
+    - beginner
+  type:
+    - book

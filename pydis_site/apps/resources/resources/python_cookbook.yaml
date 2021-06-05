@@ -1,0 +1,23 @@
+description: A book full of very smart problem-solving recipes for various Python topics,
+  including moving from Python 2 to Python 3.
+name: Python Cookbook
+urls:
+- icon: regular/link
+  url: http://shop.oreilly.com/product/0636920027072.do
+  color: teal
+- icon: branding/goodreads
+  url: https://www.goodreads.com/book/show/17152735-python-cookbook
+  color: goodreads-cream
+- icon: branding/github
+  url: https://github.com/dabeaz/python-cookbook
+  color: black
+tags:
+  topics:
+    - general
+    - software design
+  payment_tiers:
+    - paid
+  complexity:
+    - intermediate
+  type:
+    - book

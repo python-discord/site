@@ -1,0 +1,18 @@
+description: Learn Python with a wide range of high quality, project-based lessons.
+  Keep track of your progress as you cover all the basic concepts a Python programmer needs to know,
+  as well as touching on more advanced areas such as web development with Django,
+  natural language processing with NLTK, and data science with NumPy, pandas, and scikit-learn!
+  It requires a paid subscription, but a free trial is available.
+name: JetBrains Academy
+title_url: https://www.jetbrains.com/academy/
+tags:
+  topics:
+    - general
+    - web development
+    - data science
+  payment_tiers:
+    - subscription
+  complexity:
+    - beginner
+  type:
+    - interactive

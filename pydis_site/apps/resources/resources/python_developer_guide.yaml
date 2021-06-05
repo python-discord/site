@@ -1,0 +1,13 @@
+description: This guide is a comprehensive resource for contributing to Python – for both new and experienced contributors.
+  It is maintained by the same community that maintains Python.
+name: Python Developer's Guide
+title_url: https://devguide.python.org/
+tags:
+  topics:
+    - general
+  payment_tiers:
+    - free
+  complexity:
+    - intermediate
+  type:
+    - tutorial

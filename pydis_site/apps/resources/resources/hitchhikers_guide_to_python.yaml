@@ -1,0 +1,20 @@
+description: A best practice handbook for both novice and expert Python developers to the installation,
+  configuration, and usage of Python on a daily basis.
+name: The Hitchhiker's Guide to Python
+urls:
+- icon: regular/link
+  url: https://python-guide.org/
+  color: teal
+- icon: branding/goodreads
+  url: https://www.goodreads.com/book/show/28321007-the-hitchhiker-s-guide-to-python
+  color: goodreads-cream
+tags:
+  topics:
+    - general
+  payment_tiers:
+    - paid
+  complexity:
+    - beginner
+    - intermediate
+  type:
+    - book

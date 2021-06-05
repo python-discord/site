@@ -1,0 +1,26 @@
+description: A trove of tutorials & guides for developers from Microsoft's Developer hub.
+  Follow the links below for a series of high-quality Python tutorials for beginners.
+  <ul>
+    <li><a href="https://www.youtube.com/playlist?list=PLlrxD0HtieHhS8VzuMCfQD4uJ9yne1mE6">Python for Beginners</a></li>
+    <li><a href="https://www.youtube.com/playlist?list=PLlrxD0HtieHiXd-nEby-TMCoUNwhbLUnj">More Python for Beginners</a></li>
+    <li><a href="https://www.youtube.com/playlist?list=PLlrxD0HtieHhHnCUVtR8UHS7eLl33zfJ-">Even More Python for Beginners - Data Tools</a></li>
+  </ul>
+  Microsoft's Python Development Team also runs a Discord Server for discussions of Python in the Microsoft ecosystem,
+  including Visual Studio Code and Azure.
+title_image: http://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE2qVsJ?ver=3f74
+urls:
+  - icon: branding/youtube
+    url: https://www.youtube.com/channel/UCsMica-v34Irf9KVTh6xx-g
+    color: youtube-red
+  - icon: branding/discord
+    url: https://aka.ms/python-discord
+    color: blurple
+tags:
+  topics:
+    - python
+  payment_tiers:
+    - free
+  complexity:
+    - beginner
+  type:
+    - video

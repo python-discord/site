@@ -1,0 +1,14 @@
+description: The very best Python IDE, with a wealth of advanced features and convenience
+  functions.
+name: PyCharm
+title_url: https://www.jetbrains.com/pycharm/
+tags:
+  topics:
+    - general
+  payment_tiers:
+    - free
+    - paid
+  complexity:
+    - intermediate
+  type:
+    - tool

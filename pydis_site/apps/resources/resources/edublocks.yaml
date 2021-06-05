@@ -1,0 +1,18 @@
+description: EduBlocks provides a simple drag and drop interface to help beginners get to grips
+  with the key concepts of Python. There is built-in support for modules such as random,
+  turtle, processing and pygal to play around with,
+  and it even allows you to export the Python code you have written in the graphical editor.
+  EduBlocks also has integration with BBC micro:bit,
+  Raspberry Pi and CircuitPython allowing you to write code for these devices graphically
+  and export the code to run on actual devices.
+name: EduBlocks
+title_url: https://edublocks.org/
+tags:
+  topics:
+    - general
+  payment_tiers:
+    - free
+  complexity:
+    - beginner
+  type:
+    - interactive

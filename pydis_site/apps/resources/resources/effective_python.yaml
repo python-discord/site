@@ -1,0 +1,23 @@
+description: A book that gives 90 best practices for writing excellent Python. Great
+  for intermediates.
+name: Effective Python
+urls:
+- icon: regular/link
+  url: https://effectivepython.com/
+  color: teal
+- icon: branding/goodreads
+  url: https://www.goodreads.com/book/show/48566725-effective-python
+  color: goodreads-cream
+- icon: branding/github
+  url: https://github.com/bslatkin/effectivepython
+  color: black
+tags:
+  topics:
+    - general
+    - software design
+  payment_tiers:
+    - paid
+  complexity:
+    - intermediate
+  type:
+    - book

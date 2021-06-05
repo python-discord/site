@@ -1,8 +1,0 @@
-description: A free Electron-based editor, a "hackable text editor for the 21st century",  maintained
-  by the GitHub team.
-name: Atom
-title_url: https://atom.io/
-position: 0
-tags:
-  payment_tiers:
-    - free
