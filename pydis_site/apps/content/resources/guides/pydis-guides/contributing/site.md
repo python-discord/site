@@ -62,6 +62,7 @@ Run the following queries to create the user and database:
 ```sql
 CREATE USER pysite WITH SUPERUSER PASSWORD 'pysite';
 CREATE DATABASE pysite WITH OWNER pysite;
+CREATE DATABASE metricity WITH OWNER pysite;
 ```
 
 Finally, enter `/q` to exit psql.
