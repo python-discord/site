@@ -79,6 +79,9 @@ SECRET_KEY=suitable-for-development-only
 STATIC_ROOT=staticfiles
 ```
 
+The [Configuration in Detail](#configuration-in-detail) section contains
+detailed information about these settings.
+
 #### Notes regarding `DATABASE_URL`
 
 - If the database is hosted locally i.e. on the same machine as the webserver, then use `localhost` for the host. Windows and macOS users may need to use the [Docker host IP](../hosts-file/#windows) instead.
@@ -173,5 +176,6 @@ The website is configured through the following environment variables:
 - **`SECRET_KEY`**: The secret key used in various parts of Django. Keep this
   secret as the name suggests! This is managed for you in debug setups.
 
-- **`STATIC_ROOT`**: The root in which `python manage.py collectstatic` collects
-  static files. Optional, defaults to `/var/www/pythondiscord.com`.
+- **`STATIC_ROOT`**: The root in which `python manage.py collectstatic`
+  collects static files. Optional, defaults to `/app/staticfiles` for the
+  standard Docker deployment.
