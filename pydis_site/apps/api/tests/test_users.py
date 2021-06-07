@@ -1,44 +1,44 @@
 from unittest.mock import patch
 
 from django.core.exceptions import ObjectDoesNotExist
-from django_hosts.resolvers import reverse
+from django.urls import reverse
 
-from .base import APISubdomainTestCase
+from .base import AuthenticatedAPITestCase
 from ..models import Role, User
 from ..models.bot.metricity import NotFound
 
 
-class UnauthedUserAPITests(APISubdomainTestCase):
+class UnauthedUserAPITests(AuthenticatedAPITestCase):
     def setUp(self):
         super().setUp()
         self.client.force_authenticate(user=None)
 
     def test_detail_lookup_returns_401(self):
-        url = reverse('bot:user-detail', args=('whatever',), host='api')
+        url = reverse('api:bot:user-detail', args=('whatever',))
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, 401)
 
     def test_list_returns_401(self):
-        url = reverse('bot:user-list', host='api')
+        url = reverse('api:bot:user-list')
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, 401)
 
     def test_create_returns_401(self):
-        url = reverse('bot:user-list', host='api')
+        url = reverse('api:bot:user-list')
         response = self.client.post(url, data={'hi': 'there'})
 
         self.assertEqual(response.status_code, 401)
 
     def test_delete_returns_401(self):
-        url = reverse('bot:user-detail', args=('whatever',), host='api')
+        url = reverse('api:bot:user-detail', args=('whatever',))
         response = self.client.delete(url)
 
         self.assertEqual(response.status_code, 401)
 
 
-class CreationTests(APISubdomainTestCase):
+class CreationTests(AuthenticatedAPITestCase):
     @classmethod
     def setUpTestData(cls):
         cls.role = Role.objects.create(
@@ -57,7 +57,7 @@ class CreationTests(APISubdomainTestCase):
         )
 
     def test_accepts_valid_data(self):
-        url = reverse('bot:user-list', host='api')
+        url = reverse('api:bot:user-list')
         data = {
             'id': 42,
             'name': "Test",
@@ -78,7 +78,7 @@ class CreationTests(APISubdomainTestCase):
         self.assertEqual(user.in_guild, data['in_guild'])
 
     def test_supports_multi_creation(self):
-        url = reverse('bot:user-list', host='api')
+        url = reverse('api:bot:user-list')
         data = [
             {
                 'id': 5,
@@ -103,7 +103,7 @@ class CreationTests(APISubdomainTestCase):
         self.assertEqual(response.json(), [])
 
     def test_returns_400_for_unknown_role_id(self):
-        url = reverse('bot:user-list', host='api')
+        url = reverse('api:bot:user-list')
         data = {
             'id': 5,
             'name': "test man",
@@ -117,7 +117,7 @@ class CreationTests(APISubdomainTestCase):
         self.assertEqual(response.status_code, 400)
 
     def test_returns_400_for_bad_data(self):
-        url = reverse('bot:user-list', host='api')
+        url = reverse('api:bot:user-list')
         data = {
             'id': True,
             'discriminator': "totally!"
@@ -128,7 +128,7 @@ class CreationTests(APISubdomainTestCase):
 
     def test_returns_400_for_user_recreation(self):
         """Return 201 if User is already present in database as it skips User creation."""
-        url = reverse('bot:user-list', host='api')
+        url = reverse('api:bot:user-list')
         data = [{
             'id': 11,
             'name': 'You saw nothing.',
@@ -140,7 +140,7 @@ class CreationTests(APISubdomainTestCase):
 
     def test_returns_400_for_duplicate_request_users(self):
         """Return 400 if 2 Users with same ID is passed in the request data."""
-        url = reverse('bot:user-list', host='api')
+        url = reverse('api:bot:user-list')
         data = [
             {
                 'id': 11,
@@ -160,7 +160,7 @@ class CreationTests(APISubdomainTestCase):
 
     def test_returns_400_for_existing_user(self):
         """Returns 400 if user is already present in DB."""
-        url = reverse('bot:user-list', host='api')
+        url = reverse('api:bot:user-list')
         data = {
             'id': 11,
             'name': 'You saw nothing part 3.',
@@ -171,7 +171,7 @@ class CreationTests(APISubdomainTestCase):
         self.assertEqual(response.status_code, 400)
 
 
-class MultiPatchTests(APISubdomainTestCase):
+class MultiPatchTests(AuthenticatedAPITestCase):
     @classmethod
     def setUpTestData(cls):
         cls.role_developer = Role.objects.create(
@@ -195,7 +195,7 @@ class MultiPatchTests(APISubdomainTestCase):
         )
 
     def test_multiple_users_patch(self):
-        url = reverse("bot:user-bulk-patch", host="api")
+        url = reverse("api:bot:user-bulk-patch")
         data = [
             {
                 "id": 1,
@@ -218,7 +218,7 @@ class MultiPatchTests(APISubdomainTestCase):
         self.assertEqual(user_2.name, data[1]["name"])
 
     def test_returns_400_for_missing_user_id(self):
-        url = reverse("bot:user-bulk-patch", host="api")
+        url = reverse("api:bot:user-bulk-patch")
         data = [
             {
                 "name": "I am ghost user!",
@@ -234,7 +234,7 @@ class MultiPatchTests(APISubdomainTestCase):
         self.assertEqual(response.status_code, 400)
 
     def test_returns_404_for_not_found_user(self):
-        url = reverse("bot:user-bulk-patch", host="api")
+        url = reverse("api:bot:user-bulk-patch")
         data = [
             {
                 "id": 1,
@@ -252,7 +252,7 @@ class MultiPatchTests(APISubdomainTestCase):
         self.assertEqual(response.status_code, 404)
 
     def test_returns_400_for_bad_data(self):
-        url = reverse("bot:user-bulk-patch", host="api")
+        url = reverse("api:bot:user-bulk-patch")
         data = [
             {
                 "id": 1,
@@ -268,7 +268,7 @@ class MultiPatchTests(APISubdomainTestCase):
         self.assertEqual(response.status_code, 400)
 
     def test_returns_400_for_insufficient_data(self):
-        url = reverse("bot:user-bulk-patch", host="api")
+        url = reverse("api:bot:user-bulk-patch")
         data = [
             {
                 "id": 1,
@@ -282,7 +282,7 @@ class MultiPatchTests(APISubdomainTestCase):
 
     def test_returns_400_for_duplicate_request_users(self):
         """Return 400 if 2 Users with same ID is passed in the request data."""
-        url = reverse("bot:user-bulk-patch", host="api")
+        url = reverse("api:bot:user-bulk-patch")
         data = [
             {
                 'id': 1,
@@ -297,7 +297,7 @@ class MultiPatchTests(APISubdomainTestCase):
         self.assertEqual(response.status_code, 400)
 
 
-class UserModelTests(APISubdomainTestCase):
+class UserModelTests(AuthenticatedAPITestCase):
     @classmethod
     def setUpTestData(cls):
         cls.role_top = Role.objects.create(
@@ -353,7 +353,7 @@ class UserModelTests(APISubdomainTestCase):
         self.assertEqual(self.user_with_roles.username, "Test User with two roles#0001")
 
 
-class UserPaginatorTests(APISubdomainTestCase):
+class UserPaginatorTests(AuthenticatedAPITestCase):
     @classmethod
     def setUpTestData(cls):
         users = []
@@ -367,7 +367,7 @@ class UserPaginatorTests(APISubdomainTestCase):
         cls.users = User.objects.bulk_create(users)
 
     def test_returns_single_page_response(self):
-        url = reverse("bot:user-list", host="api")
+        url = reverse("api:bot:user-list")
         response = self.client.get(url).json()
         self.assertIsNone(response["next_page_no"])
         self.assertIsNone(response["previous_page_no"])
@@ -379,7 +379,7 @@ class UserPaginatorTests(APISubdomainTestCase):
             discriminator=1111,
             in_guild=True
         )
-        url = reverse("bot:user-list", host="api")
+        url = reverse("api:bot:user-list")
         response = self.client.get(url).json()
         self.assertEqual(2, response["next_page_no"])
 
@@ -390,12 +390,12 @@ class UserPaginatorTests(APISubdomainTestCase):
             discriminator=1111,
             in_guild=True
         )
-        url = reverse("bot:user-list", host="api")
+        url = reverse("api:bot:user-list")
         response = self.client.get(url, {"page": 2}).json()
         self.assertEqual(1, response["previous_page_no"])
 
 
-class UserMetricityTests(APISubdomainTestCase):
+class UserMetricityTests(AuthenticatedAPITestCase):
     @classmethod
     def setUpTestData(cls):
         User.objects.create(
@@ -413,7 +413,7 @@ class UserMetricityTests(APISubdomainTestCase):
         self.mock_metricity_user(joined_at, total_messages, total_blocks, [])
 
         # When
-        url = reverse('bot:user-metricity-data', args=[0], host='api')
+        url = reverse('api:bot:user-metricity-data', args=[0])
         response = self.client.get(url)
 
         # Then
@@ -430,7 +430,7 @@ class UserMetricityTests(APISubdomainTestCase):
         self.mock_no_metricity_user()
 
         # When
-        url = reverse('bot:user-metricity-data', args=[0], host='api')
+        url = reverse('api:bot:user-metricity-data', args=[0])
         response = self.client.get(url)
 
         # Then
@@ -441,7 +441,7 @@ class UserMetricityTests(APISubdomainTestCase):
         self.mock_no_metricity_user()
 
         # When
-        url = reverse('bot:user-metricity-review-data', args=[0], host='api')
+        url = reverse('api:bot:user-metricity-review-data', args=[0])
         response = self.client.get(url)
 
         # Then
@@ -460,7 +460,7 @@ class UserMetricityTests(APISubdomainTestCase):
                 with patch("pydis_site.apps.api.viewsets.bot.user.Infraction.objects.get") as p:
                     p.side_effect = case['exception']
 
-                    url = reverse('bot:user-metricity-data', args=[0], host='api')
+                    url = reverse('api:bot:user-metricity-data', args=[0])
                     response = self.client.get(url)
 
                     self.assertEqual(response.status_code, 200)
@@ -475,7 +475,7 @@ class UserMetricityTests(APISubdomainTestCase):
         self.mock_metricity_user(joined_at, total_messages, total_blocks, channel_activity)
 
         # When
-        url = reverse('bot:user-metricity-review-data', args=[0], host='api')
+        url = reverse('api:bot:user-metricity-review-data', args=[0])
         response = self.client.get(url)
 
         # Then

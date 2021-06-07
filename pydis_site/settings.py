@@ -52,13 +52,7 @@ elif 'CI' in os.environ:
 else:
     ALLOWED_HOSTS = env.list(
         'ALLOWED_HOSTS',
-        default=[
-            'pythondiscord.com',
-            'admin.pythondiscord.com',
-            'api.pythondiscord.com',
-            'staff.pythondiscord.com',
-            'pydis-api.default.svc.cluster.local',
-        ]
+        default=['pythondiscord.com'],
     )
     SECRET_KEY = env('SECRET_KEY')
 
@@ -80,7 +74,6 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.staticfiles',
 
-    'django_hosts',
     'django_filters',
     'django_simple_bulma',
     'rest_framework',
@@ -88,8 +81,6 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'django_hosts.middleware.HostsRequestMiddleware',
-
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -98,8 +89,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-
-    'django_hosts.middleware.HostsResponseMiddleware',
 ]
 ROOT_URLCONF = 'pydis_site.urls'
 
@@ -109,10 +98,6 @@ TEMPLATES = [
         'DIRS': [os.path.join(BASE_DIR, 'pydis_site', 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
-            'builtins': [
-                'django_hosts.templatetags.hosts_override',
-            ],
-
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
@@ -173,11 +158,6 @@ STATICFILES_FINDERS = [
 
     'django_simple_bulma.finders.SimpleBulmaFinder',
 ]
-
-# django-hosts
-# https://django-hosts.readthedocs.io/en/latest/
-ROOT_HOSTCONF = 'pydis_site.hosts'
-DEFAULT_HOST = 'home'
 
 if DEBUG:
     PARENT_HOST = env('PARENT_HOST', default='pythondiscord.local:8000')

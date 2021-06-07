@@ -150,14 +150,6 @@ python-versions = ">=3.4"
 Django = ">=1.11"
 
 [[package]]
-name = "django-hosts"
-version = "4.0"
-description = "Dynamic and static host resolving for Django. Maps hostnames to URLconfs."
-category = "main"
-optional = false
-python-versions = ">=3.5"
-
-[[package]]
 name = "django-simple-bulma"
 version = "2.2.0"
 description = "Django application to add the Bulma CSS framework and its extensions"
@@ -706,7 +698,7 @@ brotli = ["brotli"]
 [metadata]
 lock-version = "1.1"
 python-versions = "3.9.*"
-content-hash = "741444c18250124e2d998506b0643fb26240d7481389a13648b02fa1794435e3"
+content-hash = "b5750a4a7ad3e6d1f51c3053164889e0e58b004bf7f92b908cd3d6316e7e9945"
 
 [metadata.files]
 appdirs = [
@@ -814,10 +806,6 @@ django-environ = [
 django-filter = [
     {file = "django-filter-2.1.0.tar.gz", hash = "sha256:3dafb7d2810790498895c22a1f31b2375795910680ac9c1432821cbedb1e176d"},
     {file = "django_filter-2.1.0-py3-none-any.whl", hash = "sha256:a3014de317bef0cd43075a0f08dfa1d319a7ccc5733c3901fb860da70b0dda68"},
-]
-django-hosts = [
-    {file = "django-hosts-4.0.tar.gz", hash = "sha256:59a870d453f113c889a7888bae5408888870350e83e362740f382dad569c2281"},
-    {file = "django_hosts-4.0-py2.py3-none-any.whl", hash = "sha256:136ac225f34e7f2c007294441a38663ec2bba9637d870ad001def81bca87e390"},
 ]
 django-simple-bulma = [
     {file = "django-simple-bulma-2.2.0.tar.gz", hash = "sha256:dfc34839e050d5e4749498806ed7ee8c77794021efa54ab224a2de925c644fea"},

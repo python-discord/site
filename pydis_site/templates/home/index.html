@@ -17,7 +17,7 @@
     <div class="message-body">
       Thanks to all our members for helping us create this friendly and helpful community!
       <br><br>
-      As a nice treat, we've created a <a href="{% url 'timeline' %}">Timeline page</a> for people
+      As a nice treat, we've created a <a href="{% url 'home:timeline' %}">Timeline page</a> for people
       to discover the events that made our community what it is today. Be sure to check it out!
     </div>
   </section>
@@ -108,7 +108,7 @@
             </p>
 
             <div class="buttons are-large is-centered">
-              <a href="{% url 'timeline' %}" class="button is-primary">
+              <a href="{% url 'home:timeline' %}" class="button is-primary">
                 <span>Check it out!</span>
                 <span class="icon">
                   <i class="fas fa-arrow-right"></i>
