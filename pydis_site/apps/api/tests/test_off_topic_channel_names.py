@@ -69,7 +69,7 @@ class ListTests(APISubdomainTestCase):
             name='lemons-lemonade-stand', used=False, active=True
         )
         cls.test_name_2 = OffTopicChannelName.objects.create(
-            name='bbq-with-bisk', used=True, active=True
+            name='bbq-with-bisk', used=False, active=True
         )
         cls.test_name_3 = OffTopicChannelName.objects.create(
             name="frozen-with-iceman", used=True, active=False
@@ -81,7 +81,7 @@ class ListTests(APISubdomainTestCase):
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(
+        self.assertListEqual(
             response.json(),
             [
                 self.test_name.name,
@@ -90,22 +90,24 @@ class ListTests(APISubdomainTestCase):
             ]
         )
 
-    def test_returns_single_item_with_random_items_param_set_to_1(self):
+    def test_returns_two_items_with_random_items_param_set_to_2(self):
         """Return not-used name instead used."""
-        url = reverse('bot:offtopicchannelname-list', host='api')
-        response = self.client.get(f'{url}?random_items=1')
-
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(response.json()), 1)
-        self.assertEqual(response.json(), [self.test_name.name])
-
-    def test_running_out_of_names_with_random_parameter(self):
-        """Reset names `used` parameter to `False` when running out of names."""
         url = reverse('bot:offtopicchannelname-list', host='api')
         response = self.client.get(f'{url}?random_items=2')
 
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.json(), [self.test_name.name, self.test_name_3.name])
+        self.assertEqual(len(response.json()), 2)
+        self.assertEqual(response.json(), [self.test_name.name, self.test_name_2.name])
+
+    def test_running_out_of_names_with_random_parameter(self):
+        """Reset names `used` parameter to `False` when running out of names."""
+        url = reverse('bot:offtopicchannelname-list', host='api')
+        response = self.client.get(f'{url}?random_items=3')
+
+        self.assertEqual(response.status_code, 200)
+        self.assertListEqual(
+            response.json(), [self.test_name.name, self.test_name_2.name, self.test_name_3.name]
+        )
 
     def test_returns_inactive_ot_names(self):
         """Return inactive off topic names."""
