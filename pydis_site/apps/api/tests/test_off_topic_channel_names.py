@@ -65,8 +65,15 @@ class EmptyDatabaseTests(APISubdomainTestCase):
 class ListTests(APISubdomainTestCase):
     @classmethod
     def setUpTestData(cls):
-        cls.test_name = OffTopicChannelName.objects.create(name='lemons-lemonade-stand', used=False)
-        cls.test_name_2 = OffTopicChannelName.objects.create(name='bbq-with-bisk', used=True)
+        cls.test_name = OffTopicChannelName.objects.create(
+            name='lemons-lemonade-stand', used=False, active=True
+        )
+        cls.test_name_2 = OffTopicChannelName.objects.create(
+            name='bbq-with-bisk', used=True, active=True
+        )
+        cls.test_name_3 = OffTopicChannelName.objects.create(
+            name="frozen-with-iceman", used=True, active=False
+        )
 
     def test_returns_name_in_list(self):
         """Return all off-topic channel names."""
@@ -78,7 +85,8 @@ class ListTests(APISubdomainTestCase):
             response.json(),
             [
                 self.test_name.name,
-                self.test_name_2.name
+                self.test_name_2.name,
+                self.test_name_3.name
             ]
         )
 
@@ -97,7 +105,29 @@ class ListTests(APISubdomainTestCase):
         response = self.client.get(f'{url}?random_items=2')
 
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.json(), [self.test_name.name, self.test_name_2.name])
+        self.assertEqual(response.json(), [self.test_name.name, self.test_name_3.name])
+
+    def test_returns_inactive_ot_names(self):
+        """Return inactive off topic names."""
+        url = reverse('bot:offtopicchannelname-list', host="api")
+        response = self.client.get(f"{url}?active=false")
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(
+            response.json(),
+            [self.test_name_3.name]
+        )
+
+    def test_returns_active_ot_names(self):
+        """Return active off topic names."""
+        url = reverse('bot:offtopicchannelname-list', host="api")
+        response = self.client.get(f"{url}?active=true")
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(
+            response.json(),
+            [self.test_name.name, self.test_name_2.name]
+        )
 
 
 class CreationTests(APISubdomainTestCase):
