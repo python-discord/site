@@ -9,6 +9,7 @@ from django.utils import timezone
 from django.views import View
 
 from pydis_site.apps.home.models import RepositoryMetadata
+from pydis_site.constants import GITHUB_TOKEN
 
 log = logging.getLogger(__name__)
 
@@ -18,6 +19,7 @@ class HomeView(View):
 
     github_api = "https://api.github.com/users/python-discord/repos?per_page=100"
     repository_cache_ttl = 3600
+    headers = {"Authorization": f"token {GITHUB_TOKEN}"}
 
     # Which of our GitHub repos should be displayed on the front page, and in which order?
     repos = [
@@ -42,7 +44,7 @@ class HomeView(View):
         repo_dict = {}
 
         # Fetch the data from the GitHub API
-        api_data: List[dict] = requests.get(self.github_api).json()
+        api_data: List[dict] = requests.get(self.github_api, headers=self.headers).json()
 
         # Process the API data into our dict
         for repo in api_data:

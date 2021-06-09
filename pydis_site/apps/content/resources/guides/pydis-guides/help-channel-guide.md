@@ -32,7 +32,7 @@ If you're not sure where to post, feel free to ask us which channel is relevant 
 
 Our general help channels move at a fast pace, and attract a far more diverse spectrum of helpers.
 This is a great choice for a generic Python question, and a good choice if you need an answer as soon as possible.
-It's particularly important to [ask good questions](..guides/asking-good-questions) when asking in these channels, or you risk not getting an answer and having your help channel be claimed by someone else.
+It's particularly important to [ask good questions](../asking-good-questions) when asking in these channels, or you risk not getting an answer and having your help channel be claimed by someone else.
 
 ## How To Claim a Channel
 
