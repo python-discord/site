@@ -203,12 +203,12 @@ class ExpandedInfractionSerializer(InfractionSerializer):
 
 
 class OffTopicChannelNameListSerializer(ListSerializer):
-    def update(self, instance, validated_data):
-        pass
+    """Custom ListSerializer to override to_representation() when list views are triggered."""
 
     def to_representation(self, objects: List[OffTopicChannelName]) -> List[str]:
         """
         Return the representation of this `OffTopicChannelName`.
+
         This only returns the name of the off topic channel name. As the model
         only has a single attribute, it is unnecessary to create a nested dictionary.
         Additionally, this allows off topic channel name routes to simply return an
@@ -222,6 +222,7 @@ class OffTopicChannelNameSerializer(ModelSerializer):
 
     class Meta:
         """Metadata defined for the Django REST Framework."""
+
         list_serializer_class = OffTopicChannelNameListSerializer
         model = OffTopicChannelName
         fields = ('name', 'used', 'active')
