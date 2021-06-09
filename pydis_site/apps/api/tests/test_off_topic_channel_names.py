@@ -81,13 +81,13 @@ class ListTests(APISubdomainTestCase):
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, 200)
-        self.assertListEqual(
-            response.json(),
-            [
+        self.assertEqual(
+            set(response.json()),
+            {
                 self.test_name.name,
                 self.test_name_2.name,
                 self.test_name_3.name
-            ]
+            }
         )
 
     def test_returns_two_items_with_random_items_param_set_to_2(self):
@@ -97,7 +97,7 @@ class ListTests(APISubdomainTestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(response.json()), 2)
-        self.assertEqual(response.json(), [self.test_name.name, self.test_name_2.name])
+        self.assertEqual(set(response.json()), {self.test_name.name, self.test_name_2.name})
 
     def test_running_out_of_names_with_random_parameter(self):
         """Reset names `used` parameter to `False` when running out of names."""
@@ -105,8 +105,9 @@ class ListTests(APISubdomainTestCase):
         response = self.client.get(f'{url}?random_items=3')
 
         self.assertEqual(response.status_code, 200)
-        self.assertListEqual(
-            response.json(), [self.test_name.name, self.test_name_2.name, self.test_name_3.name]
+        self.assertEqual(
+            set(response.json()),
+            {self.test_name.name, self.test_name_2.name, self.test_name_3.name}
         )
 
     def test_returns_inactive_ot_names(self):
@@ -127,8 +128,8 @@ class ListTests(APISubdomainTestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(
-            response.json(),
-            [self.test_name.name, self.test_name_2.name]
+            set(response.json()),
+            {self.test_name.name, self.test_name_2.name}
         )
 
 
