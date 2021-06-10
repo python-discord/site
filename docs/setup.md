@@ -82,8 +82,8 @@ Make sure you add the following to your hosts file:
 ```
 When trying to access the site, you'll be using the domains above instead of the usual `localhost:8000`.
 
-Finally, you will need to set the environment variable `DEBUG=1`. When using `pipenv`, you can
-set put this into an `.env` file to have it exported automatically. It's also recommended to
+Finally, you will need to set the environment variable `DEBUG=1`. If you have `python-dotenv` installed, you can put this into a
+ `.env` file to have it exported automatically. It's also recommended to
 export `LOG_LEVEL=INFO` when using `DEBUG=1` if you don't want super verbose logs.
 
 To run the server, run `python manage.py runserver`. If it gives you an error saying

@@ -3,18 +3,11 @@ from unittest import TestCase
 
 from django.http import Http404
 from django.test import RequestFactory, SimpleTestCase, override_settings
-from pyfakefs import fake_filesystem_unittest
 
 from pydis_site.apps.content.tests.helpers import (
-    MockPagesTestCase, PARSED_CATEGORY_INFO, PARSED_HTML, PARSED_METADATA
+    BASE_PATH, MockPagesTestCase, PARSED_CATEGORY_INFO, PARSED_HTML, PARSED_METADATA
 )
 from pydis_site.apps.content.views import PageOrCategoryView
-
-
-# Set the module constant within Patcher to use the fake filesystem
-# https://jmcgeheeiv.github.io/pyfakefs/master/usage.html#modules-to-reload
-with fake_filesystem_unittest.Patcher() as _:
-    BASE_PATH = Path(".")
 
 
 def patch_dispatch_attributes(view: PageOrCategoryView, location: str) -> None:
@@ -23,7 +16,7 @@ def patch_dispatch_attributes(view: PageOrCategoryView, location: str) -> None:
 
     This is necessary because it is never automatically called during tests.
     """
-    view.location = Path(location)
+    view.location = Path(BASE_PATH, location)
 
     # URL location on the filesystem
     view.full_location = view.location
