@@ -1,0 +1,17 @@
+{% load static %}
+<div class="panel">
+    <p class="panel-heading">Important Links</p>
+        <a class="panel-block has-text-link" href="{% url "events:page" path="code-jams/8/rules" %}">Rules</a>
+        <a class="panel-block has-text-link" href="{% url "events:page" path="code-jams/8/frameworks" %}">Approved Frameworks</a>
+    </ul>
+</div>
+<div class="box">
+    <img src="{% static "images/events/summer_code_jam_2021.png" %}" alt="Summer Code Jam 2021">
+    <h4 class="menu-label">Our Sponsors</h4>
+    <a href="https://www.djangoproject.com/" target="_blank">
+        <img src="https://static.djangoproject.com/img/logos/django-logo-positive.png" alt="Django">
+    </a>
+    <a href="https://jetbrains.com" target="_blank">
+        <img src="{% static "images/sponsors/jetbrains.png" %}" alt="JetBrains">
+    </a>
+</div>
