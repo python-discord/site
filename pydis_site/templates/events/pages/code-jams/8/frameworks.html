@@ -8,7 +8,7 @@
     <li><a href="{% url "events:index" %}">Events</a></li>
     <li><a href="{% url "events:page" path="code-jams" %}">Code Jams</a></li>
     <li><a href="{% url "events:page" path="code-jams/8" %}">Summer Code Jam 2021</a></li>
-    <li class="is-active"><a href="#">Allowed Frameworks</a></li>
+    <li class="is-active"><a href="#">Approved Frameworks</a></li>
 {% endblock %}
 
 {% block event_content %}
@@ -19,6 +19,7 @@
     <div class="columns">
         <div class="column">
             <ul>
+                <li><a href="http://urwid.org/" target="_blank">Documentation Link</a></li>
                 <li><strong>Supports:</strong> Linux, Mac, other unix-like OS</li>
                 <li>Somewhat in-depth tutorial</li>
                 <li>Uses widgets in a fairly straight forward design</li>
@@ -33,6 +34,7 @@
     <div class="columns">
         <div class="column">
             <ul>
+                <li><a href="https://docs.python.org/3/howto/curses.html" target="_blank">Documentation Link</a></li>
                 <li><strong>Supports:</strong> Linux and other unix-like OS</li>
                 <li>Part of the standard library</li>
                 <li>Extensive how-to guide</li>
@@ -47,6 +49,7 @@
     <div class="columns">
         <div class="column">
             <ul>
+                <li><a href="https://blessed.readthedocs.io/en/latest/intro.html" target="_blank">Documentation Link</a></li>
                 <li><strong>Supports:</strong> Linux, Mac, and Windows</li>
                 <li>Sits on top of curses to add more pythonic bindings</li>
                 <li>Doesn't provide any widgets or layouts</li>
@@ -60,6 +63,7 @@
     <div class="columns">
         <div class="column">
             <ul>
+                <li><a href="https://rich.readthedocs.io/en/stable/introduction.html" target="_blank">Documentation Link</a></li>
                 <li><strong>Supports:</strong> Linux, Mac, and Windows</li>
                 <li>Documentation is good and overall is very OOP focused</li>
                 <li>Robust with many features and example snippets</li>
@@ -73,6 +77,7 @@
     <div class="columns">
         <div class="column">
             <ul>
+                <li><a href="https://asciimatics.readthedocs.io/en/stable/intro.html" target="_blank">Documentation Link</a></li>
                 <li><strong>Supports:</strong> Linux, Mac, and Windows</li>
                 <li>Documentation is well structured and straightforward to navigate</li>
             </ul>
