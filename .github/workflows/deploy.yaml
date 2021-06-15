@@ -44,7 +44,7 @@ jobs:
               site/deployment.yaml
           images: 'ghcr.io/python-discord/site:${{ steps.sha_tag.outputs.tag }}'
           kubectl-version: 'latest'
-          
+
       - name: Purge Cloudflare Edge Cache
         uses: jakejarvis/cloudflare-purge-action@master
         env:
