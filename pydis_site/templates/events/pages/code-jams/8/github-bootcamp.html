@@ -1,0 +1,40 @@
+{% extends "events/base_sidebar.html" %}
+
+{% load static %}
+
+{% block title %}Summer Code Jam 2021{% endblock %}
+
+{% block breadcrumb %}
+    <li><a href="{% url "events:index" %}">Events</a></li>
+    <li><a href="{% url "events:page" path="code-jams" %}">Code Jams</a></li>
+    <li><a href="{% url "events:page" path="code-jams/8" %}">Summer Code Jam 2021</a></li>
+    <li class="is-active"><a href="#">GitHub Bootcamp</a></li>
+{% endblock %}
+
+{% block event_content %}
+    <p>
+        This year we'll be running a GitHub Bootcamp on Saturday, June 26th.
+        This bootcamp is intended to be an interactive workshop session where we help participants
+        get setup with git and using it in a team environment.
+    </p>
+    <h3>Session 1: Setting up Git</h3>
+    <p>
+        This session will run for an hour and be focused on installing and setting up git for the first time.
+        We'll have helpers available to help you set up git and get it integreated with your editor of choice.
+        Whether it's PyCharm, VSCode, or vim, we can help you get rolling with version control.
+    </p>
+    <h3>Session 2: Using git and github in a team environment</h3>
+    <p>
+        This session will run for an hour. It will be focused on using git and HitHub in a team environment.
+        You'll be put in a group of people with a repo to work on.
+    </p>
+
+
+
+{% endblock %}
+
+{% block sidebar %}
+
+    {% include "events/sidebar/code-jams/8.html" %}
+
+{% endblock %}
