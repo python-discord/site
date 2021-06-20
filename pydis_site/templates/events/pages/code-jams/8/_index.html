@@ -1,5 +1,7 @@
 {% extends "events/base_sidebar.html" %}
 
+{% load static %}
+
 {% block title %}Summer Code Jam 2021{% endblock %}
 
 {% block breadcrumb %}
@@ -56,6 +58,69 @@
         Don't forget to join us on Discord at <a href="https://discord.gg/python">discord.gg/python</a>!
         <div class="has-text-centered"><a class="button is-link" href="https://forms.pythondiscord.com/form/code-jam-2021-summer-signups" target="_blank">Sign up for the Code Jam</a></div>
     </p>
+    <h3 id="prizes"><a href="#prizes">Prizes</a></h3>
+    <p>
+        Our Code Jam Sponsors have provided prizes for the winners of the code jam.
+        Also, a big thank you to our Patreon patrons for supporting this server and allowing us
+        to provide our prizes as well.
+    </p>
+    <!-- This is going to be the sponsor section -->
+    <div class="card mb-4">
+        <div class="card-content">
+            <div class="media">
+                <div class="media-left" style="max-width:150px">
+                    <img src="{% static "images/events/DO_Logo_Vertical_Blue.png" %}" alt="Digital Ocean">
+                </div>
+                <div class="media-content">
+                    <p class="subtitle has-link"><a href="https://www.digitalocean.com/">DigitalOcean</a></p>
+                    <p class="is-italic">
+                        Scalable compute platform with add-on storage, security, and monitoring capabilities.
+                        We make it simple to launch in the cloud and scale up as you grow—whether you’re running one virtual machine or ten thousand.
+                    </p>
+                    <p><strong>Prizes</strong><br>
+                    $250 in DigitalOcean credits to a winning team.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-content">
+            <div class="media">
+                <div class="media-left" style="max-width:150px">
+                    <img src="{% static "images/sponsors/jetbrains.png" %}" alt="JetBrains">
+                </div>
+                <div class="media-content">
+                    <p class="subtitle has-link"><a href="https://www.jetbrains.com/">JetBrains</a></p>
+                    <p class="is-italic">
+                        Whatever platform or language you work with, JetBrains has a development tool for you.
+                        We help developers work faster by automating common, repetitive tasks to enable them to stay focused on code design and the big picture.
+                        We provide tools to explore and familiarize with code bases faster. Our products make it easy for you to take care of quality during all stages of development and spend less time on maintenance tasks.
+                    </p>
+                    <p><strong>Prizes</strong><br>
+                    1-year JetBrain licenses to a winning team.</p>
+                </div>
+             </div>
+        </div>
+    </div>
+    <div class="card mb">
+        <div class="card-content">
+            <div class="media">
+                <div class="media-left" style="max-width:150px">
+                    <img src="{% static "images/events/Tabnine.png" %}" alt="Tabnine">
+                </div>
+                <div class="media-content">
+                    <p class="subtitle has-link"><a href="https://www.tabnine.com/now?utm_source=discord&utm_medium=Ins&utm_campaign=PythonDis">Tabnine</a></p>
+                    <p class="is-italic">Tabnine is an AI-powered code completion tool used by millions of devs around the world every day
+                        - Tabnine supports dozens of programming languages, in all of your favorite IDEs, saving you tons of time - so that you can type less and code more.
+                    Tabnine comes as a plugin and has a free-forever basic plan, so you can get started with it right away!
+                    </p>
+                    <p><strong>Prizes</strong><br>
+                    1-year Pro Licenses to Tabnine to a winning team.</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
 {% endblock %}
 
