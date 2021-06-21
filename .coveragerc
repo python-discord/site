@@ -8,6 +8,7 @@ source =
     pydis_site/apps/staff
 omit =
     */migrations/*
+    */tests/*
     */admin.py
     */apps.py
     */urls.py
