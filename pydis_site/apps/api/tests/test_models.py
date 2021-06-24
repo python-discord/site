@@ -56,7 +56,7 @@ class NitroMessageLengthTest(TestCase):
 
         try:
             message.clean_fields()
-        except Exception as e:
+        except Exception as e:  # pragma: no cover
             self.fail(f"Creation of message of length 3950 failed with: {e}")
 
     def test_create_failure(self):
