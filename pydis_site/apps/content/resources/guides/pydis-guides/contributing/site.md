@@ -79,6 +79,9 @@ SECRET_KEY=suitable-for-development-only
 STATIC_ROOT=staticfiles
 ```
 
+The [Configuration in Detail](#configuration-in-detail) section contains
+detailed information about these settings.
+
 #### Notes regarding `DATABASE_URL`
 
 - If the database is hosted locally i.e. on the same machine as the webserver, then use `localhost` for the host. Windows and macOS users may need to use the [Docker host IP](../hosts-file/#windows) instead.
@@ -143,3 +146,36 @@ Unless you are editing the Dockerfile or docker-compose.yml, you shouldn't need 
 Django provides an interface for administration with which you can view and edit the models among other things.
 
 It can be found at [http://admin.pythondiscord.local:8000](http://admin.pythondiscord.local:8000). The default credentials are `admin` for the username and `admin` for the password.
+
+---
+
+# Configuration in detail
+
+The website is configured through the following environment variables:
+
+## Essential
+- **`DATABASE_URL`**: A string specifying the PostgreSQL database to connect to,
+  in the form `postgresql://user:password@host/database`, such as
+  `postgresql://joethedestroyer:ihavemnesia33@localhost/pysite_dev`
+
+- **`METRICITY_DB_URL`**: A string specifying the PostgreSQL metric database to
+ connect to, in the same form as `$DATABASE_URL`.
+
+- **`DEBUG`**: Controls Django's internal debugging setup. Enable this when
+  you're developing locally. Optional, defaults to `False`.
+
+- **`LOG_LEVEL`**: Any valid Python `logging` module log level - one of `DEBUG`,
+  `INFO`, `WARN`, `ERROR` or `CRITICAL`. When using debug mode, this defaults to
+  `INFO`. When testing, defaults to `ERROR`. Otherwise, defaults to `WARN`.
+
+## Deployment
+- **`ALLOWED_HOSTS`**: A comma-separated lists of alternative hosts to allow to
+  host the website on, when `DEBUG` is not set. Optional, defaults to the
+  `pythondiscord.com` family of domains.
+
+- **`SECRET_KEY`**: The secret key used in various parts of Django. Keep this
+  secret as the name suggests! This is managed for you in debug setups.
+
+- **`STATIC_ROOT`**: The root in which `python manage.py collectstatic`
+  collects static files. Optional, defaults to `/app/staticfiles` for the
+  standard Docker deployment.
