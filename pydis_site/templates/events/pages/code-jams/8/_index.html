@@ -1,0 +1,131 @@
+{% extends "events/base_sidebar.html" %}
+
+{% load static %}
+
+{% block title %}Summer Code Jam 2021{% endblock %}
+
+{% block breadcrumb %}
+    <li><a href="{% url "events:index" %}">Events</a></li>
+    <li><a href="{% url "events:page" path="code-jams" %}">Code Jams</a></li>
+    <li class="is-active"><a href="#">Summer Code Jam 2021</a></li>
+{% endblock %}
+
+{% block event_content %}
+    <p>Twice a year we host a code jam for members of our server to participate in. The code jam is an event where we place you
+        in a team with 5 other random server members. You then have 7 days to code some sort of application or program in Python.
+        Your program must use the specified technology/framework and incorporate the theme chosen by the server.
+    </p>
+    <p>
+        After the 7 days is complete, your team has 2 days to finish documentation and create a video presentation showcasing
+        and walking through the program that your team has created. More details and specifics of this will be released within the next 2 weeks.
+    </p>
+
+    <h3 id="important-dates"><a href="#important-dates">Important Dates</a></h3>
+    <ul>
+        <li>Tuesday, June 15 - Form to submit theme suggestions opens</li>
+        <li>Monday, June 21 - <a href="https://github.com/python-discord/cj8-qualifier">The Qualifier</a> is released</li>
+        <li>Friday, June 25 - Voting for the theme opens</li>
+        <li>Saturday, June 26 @ 4PM UTC- <a class="has-text-link" href="{% url "events:page" path="code-jams/8/github-bootcamp" %}">GitHub Bootcamp</a></li>
+        <li>Wednesday, June 30 - The Qualifier closes</li>
+        <li>Friday, July 9 - Code Jam begins</li>
+        <li>Friday, July 16 - Coding portion of the jam ends</li>
+        <li>Sunday, July 18 - Code Jam submissions are closed</li>
+    </ul>
+
+    <h3 id="technology"><a href="#technology">Technology</a></h3>
+    <p>
+        The chosen technology/tech stack for this year is <strong>Text User Interfaces</strong> (TUIs).
+        Each team must create a program with one of <a href="{% url "events:page" path="code-jams/8/frameworks" %}">the approved frameworks</a> that creates a user interface that is text based.
+        For more information of TUIs and what's involved with such an interface, check out <a href="https://en.wikipedia.org/wiki/Text-based_user_interface">this wikipedia article</a>.
+    </p>
+    <h3 if="qualifier"><a href="#qualifier">The Qualifier</a></h3>
+    <p>
+        The qualifier is a coding challenge that you are required to complete before registering for the code jam.
+        This is meant as a basic assessment of your skills to ensure you have enough python knowledge to effectively contribute in a team environment.
+    </p>
+    <p class="has-text-centered"><a class="button is-link" href="https://github.com/python-discord/cj8-qualifier" target="_blank">View the Qualifier</a></p
+    <p>
+        Please note the requirements for the qualifier.
+        <ul>
+            <li>The qualifier must be completed using Python 3.9</li>
+            <li>No external modules are allowed, only those available through the standard library.</li>
+            <li>The Qualifier must be submitted through the Code Jam sign-up form.</li>
+        </ul>
+    </p>
+    <h3 id="how-to-join"><a href="#how-to-join">How to Join</a></h3>
+    <p>
+        To enter into the code jam you must complete <a href="#qualifier">The Qualifier</a> and submit the sign-up form.
+        Don't forget to join us on Discord at <a href="https://discord.gg/python">discord.gg/python</a>!
+        <div class="has-text-centered"><a class="button is-link" href="https://form.jotform.com/211714357615050" target="_blank">Sign up for the Code Jam</a></div>
+    </p>
+    <h3 id="prizes"><a href="#prizes">Prizes</a></h3>
+    <p>
+        Our Code Jam Sponsors have provided prizes for the winners of the code jam.
+        Also, a big thank you to our Patreon patrons for supporting this server and allowing us
+        to provide our prizes as well.
+    </p>
+    <!-- This is going to be the sponsor section -->
+    <div class="card mb-4">
+        <div class="card-content">
+            <div class="media">
+                <div class="media-left" style="max-width:150px">
+                    <img src="{% static "images/events/DO_Logo_Vertical_Blue.png" %}" alt="Digital Ocean">
+                </div>
+                <div class="media-content">
+                    <p class="subtitle has-link"><a href="https://www.digitalocean.com/">DigitalOcean</a></p>
+                    <p class="is-italic">
+                        Scalable compute platform with add-on storage, security, and monitoring capabilities.
+                        We make it simple to launch in the cloud and scale up as you grow—whether you’re running one virtual machine or ten thousand.
+                    </p>
+                    <p><strong>Prizes</strong><br>
+                    $250 in DigitalOcean credits to the members of a winning team.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-content">
+            <div class="media">
+                <div class="media-left" style="max-width:150px">
+                    <img src="{% static "images/sponsors/jetbrains.png" %}" alt="JetBrains">
+                </div>
+                <div class="media-content">
+                    <p class="subtitle has-link"><a href="https://www.jetbrains.com/">JetBrains</a></p>
+                    <p class="is-italic">
+                        Whatever platform or language you work with, JetBrains has a development tool for you.
+                        We help developers work faster by automating common, repetitive tasks to enable them to stay focused on code design and the big picture.
+                        We provide tools to explore and familiarize with code bases faster. Our products make it easy for you to take care of quality during all stages of development and spend less time on maintenance tasks.
+                    </p>
+                    <p><strong>Prizes</strong><br>
+                    1-year JetBrain licenses to the members of a winning team.</p>
+                </div>
+             </div>
+        </div>
+    </div>
+    <div class="card mb">
+        <div class="card-content">
+            <div class="media">
+                <div class="media-left" style="max-width:150px">
+                    <img src="{% static "images/events/Tabnine.png" %}" alt="Tabnine">
+                </div>
+                <div class="media-content">
+                    <p class="subtitle has-link"><a href="https://www.tabnine.com/now?utm_source=discord&utm_medium=Ins&utm_campaign=PythonDis">Tabnine</a></p>
+                    <p class="is-italic">Tabnine is an AI-powered code completion tool used by millions of devs around the world every day
+                        - Tabnine supports dozens of programming languages, in all of your favorite IDEs, saving you tons of time - so that you can type less and code more.
+                    Tabnine comes as a plugin and has a free-forever basic plan, so you can get started with it right away!
+                    </p>
+                    <p><strong>Prizes</strong><br>
+                    1-year Pro Licenses to Tabnine to the members of a winning team.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block sidebar %}
+
+    {% include "events/sidebar/code-jams/8.html" %}
+
+{% endblock %}

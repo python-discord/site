@@ -48,7 +48,6 @@ li {
     display: flex;
     flex-direction: column;
     max-width: 512px;
-    background-color: white;
     border-radius: 20px;
     overflow: hidden;
     box-shadow: 5px 7px 40px rgba(0, 0, 0, 0.432);
@@ -64,4 +63,5 @@ li {
 
 .content-box {
     padding: 25px;
+    background: #fff;
 }

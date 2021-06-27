@@ -1,0 +1,45 @@
+{% extends "events/base_sidebar.html" %}
+
+{% load static %}
+
+{% block title %}Summer Code Jam 2021{% endblock %}
+
+{% block breadcrumb %}
+    <li><a href="{% url "events:index" %}">Events</a></li>
+    <li><a href="{% url "events:page" path="code-jams" %}">Code Jams</a></li>
+    <li><a href="{% url "events:page" path="code-jams/8" %}">Summer Code Jam 2021</a></li>
+    <li class="is-active"><a href="#">GitHub Bootcamp</a></li>
+{% endblock %}
+
+{% block event_content %}
+    <p>
+        <strong>This year we'll be running a GitHub Bootcamp on Saturday, June 26th at 4PM UTC.</strong>
+        This bootcamp is intended to be an interactive workshop session where we help participants
+        get setup with git and using it in a team environment. If you are new to git or would like to brush up on it,
+        then this is the perfect event for you.
+    </p>
+    <p>
+        The instructional parts of this bootcamp will be recorded. We'll also be providing a cheatsheet / reference guide to all attendees that will
+        be made available here for download.
+    </p>
+    <h3>Session 1: Setting up Git</h3>
+    <p>
+        This first session will run for an hour starting at 4PM UTC. It will be focused on installing and setting up git for the first time.
+        We'll have helpers available to help you set up git and integrated with your editor of choice.
+        Whether it's PyCharm, VSCode, or vim, we can help you get rolling with version control.
+    </p>
+    <h3>Session 2: Using git and github in a team environment</h3>
+    <p>
+        This session will run for an hour starting at 5PM UTC. It will be focused on using git and GitHub in a team environment.
+        You'll be put in a group with other attendees and use the common git commands for working in a repo.
+        You'll learn how to set-up a GitHub repository with other contributors, how to make branches, make commits, pull down changes, and then make pull requests.
+        We'll also be going over different strategies for creating branches and best practices for commits and pull requests.
+    </p>
+
+{% endblock %}
+
+{% block sidebar %}
+
+    {% include "events/sidebar/code-jams/8.html" %}
+
+{% endblock %}

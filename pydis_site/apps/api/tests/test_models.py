@@ -1,6 +1,7 @@
 from datetime import datetime as dt
 
-from django.test import SimpleTestCase
+from django.core.exceptions import ValidationError
+from django.test import SimpleTestCase, TestCase
 from django.utils import timezone
 
 from pydis_site.apps.api.models import (
@@ -32,6 +33,43 @@ class ReprMixinTests(SimpleTestCase):
     def test_shows_attributes(self):
         expected = "<SimpleClass(the_cake='is a lie')>"
         self.assertEqual(repr(self.klass), expected)
+
+
+class NitroMessageLengthTest(TestCase):
+    def setUp(self):
+        self.user = User.objects.create(id=50, name='bill', discriminator=5)
+        self.context = MessageDeletionContext.objects.create(
+            id=50,
+            actor=self.user,
+            creation=dt.utcnow()
+        )
+
+    def test_create(self):
+        message = DeletedMessage(
+            id=46,
+            author=self.user,
+            channel_id=666,
+            content="w"*4000,
+            deletion_context=self.context,
+            embeds=[]
+        )
+
+        try:
+            message.clean_fields()
+        except Exception as e:  # pragma: no cover
+            self.fail(f"Creation of message of length 3950 failed with: {e}")
+
+    def test_create_failure(self):
+        message = DeletedMessage(
+            id=47,
+            author=self.user,
+            channel_id=666,
+            content="w"*4001,
+            deletion_context=self.context,
+            embeds=[]
+        )
+
+        self.assertRaisesRegex(ValidationError, "content':", message.clean_fields)
 
 
 class StringDunderMethodTests(SimpleTestCase):
