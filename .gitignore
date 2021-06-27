@@ -116,6 +116,9 @@ rethinkdb_data/
 # Node modules
 node_modules/
 
+# User configuration
+docker-compose.override.yml
+
 pip-wheel-metadata/
 staticfiles/
 
