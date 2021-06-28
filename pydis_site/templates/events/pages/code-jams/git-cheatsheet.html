@@ -1,0 +1,135 @@
+{% extends "events/base.html" %}
+
+{% load static %}
+
+{% block breadcrumb %}
+    <li><a href="{% url "events:index" %}">Events</a></li>
+    <li><a href="{% url "events:page" path="code-jams" %}">Code Jams</a></li>
+    <li class="is-active"><a href="#">Git & GitHub Cheatsheet</a></li>
+{% endblock %}
+
+{% block event_content %}
+    <div class="content is-family-sans-serif">
+        <div class="container">
+            <div class="hero is-link">
+                <div class="hero-body">
+                    <h1 class="title has-text-centered">Python Discord Git Reference Sheet</h1>
+                    <p class="subtitle has-text-centered">A reference and cheatsheet to help you make the most out of git during the code jam.</p>
+                </div>
+            </div>
+            <div class="columns is-vcentered">
+                <div class="column px-5 py-5 is-one-third">
+                    <h3>Installing Git & Other Useful Tools</h3>
+                    <p>
+                        <ul>
+                            <li><a href="https://git-scm.com/downloads">Git</a> - Git itself! A must-have download.</li>
+                            <li><a href="https://desktop.github.com/">GitHub Desktop</a> - A desktop application to work with GitHub repositories.</li>
+                            <li><a class="is-link" href="https://www.gitkraken.com/">GitKraken</a> - Work with Git ... without the command line</li>
+                            <li><a href="https://www.jetbrains.com/help/pycharm/version-control-integration.html">PyCharm and Git Guide</a></li>
+                            <li><a href="https://code.visualstudio.com/docs/editor/versioncontrol#_git-support">VSCode and Git Guide</a></li>
+                        </ul>
+                    </p>
+                </div>
+                <div class="column px-5 py-5 is-two-thirds">
+                    <img src="{% static "images/events/github_diagram_2.png" %}">
+                </div>
+            </div>
+            <div class="column">
+                <div class="column px-5 py-5">
+                    <img src="{% static "images/events/github_diagram_2.png" %}">
+                </div>
+            </div>
+            <div class="columns is-vcentered">
+                <div class="column px-5 py-5">
+                    <h3>Common Git actions</h3>
+                    <h4>I want to get a working copy of a repository...</h4>
+                        <p><code>git clone &lt;repository URL&gt;</code> - You can get the URL from the repo's page
+                        on GitHub.</p>
+                    <h4>I want to change which branch I'm working on...</h4>
+                        <p><code>git checkout &lt;other branch name&gt;</code></p>
+                    <h4>I want to make a branch...</h4>
+                        <ul>
+                            <li>Just create it: <code>git branch &lt;new branch name&gt;</code></li>
+                            <li>Create and switch to it: <code>git checkout -b &lt;new branch name&gt;</code></li>
+                        </ul>
+                    <h4>I want to indicate which files/changes I want to commit...</h4>
+                        <ul>
+                            <li><code>git add &lt;filename&gt;</code> to add a specific file.</li>
+                            <li><code>git add &lt;folder name&gt;</code> to add everything inside a folder.</li>
+                            <li><code>git add .</code> to add everything under the current folder.</li>
+                        </ul>
+                    <h4>I want to commit my code...</h4>
+                        <ul>
+                            <li><code>git commit</code> will open a text editor for you to write the commit message
+                            inside (recommended).</li>
+                            <li><code>git commit -m "Title" -m "Description"</code> to write the commit message in
+                            the command-line.</li>
+                            <li><code>git commit -a</code> to commit all changes without running <code>git add</code>
+                            first (be careful!).</li>
+                        </ul>
+                    <h4>I want to pull down the latest changes...</h4>
+                        <p><code>git pull</code> if you are on the branch that was changed.</p>
+                    <h4>I want to push the changes I made...</h4>
+                        <p><code>git push</code> (assuming you're on the right branch).</p>
+                    <h4>I want to merge my branch with a different branch...</h4>
+                        <ol type="1">
+                            <li>Make sure you're on the branch you want to merge *into*.</li>
+                            <li><code>git merge &lt;name of branch you want to merge *from*&gt;</code></li>
+                        </ol>
+                        <p>For example, if you pulled new changes to the <code>main</code> branch, you can merge
+                        them into your <code>feature/add-title</code> branch with <code>git merge main</code>.</p>
+                        <p>If you have merge conflicts (you changed something that was changed in the other branch as well),
+                         edit the conflicting parts to get a working version of the merge, and then commit.</p>
+                </div>
+            </div>
+            <div class="columns">
+                <div class="column px-5 py-5">
+                    <h3>Best Practices</h3>
+                    <p><strong>Making a commit & commit message</strong>
+                        <ul>
+                            <li>Keep commits atomic -- meaning only commit the absolute necessary to get functional code.</li>
+                            <li>Keep the commit title to 50 characters or fewer.</li>
+                            <li>Always include a description that explains in greater detail <i>what</i> the change is and <i>why</i> the change was made.</li>
+                        </ul>
+                    </p>
+                    <p>
+                        <strong>Working Fast</strong>
+                        <br>
+                        During a short sprint of work, like a code jam, your team will often be working concurrently and quickly.
+                        Be sure to <code>git pull &lt;repository&gt;</code> frequently so your branches and work stay up to date.
+                        Having to deal with conflicting merges is something you want to avoid where possible.
+                    </p>
+                </div>
+                <div class="column px-5 py-5">
+                    <h3>Other Notes & Considerations</h3>
+                    <p>
+                        <strong><code>git fetch &lt;repository&gt;</code> vs <code>git pull &lt;repository&gt;</code></strong>
+                        <br>
+                        While it may seem like these two do the same thing on the surface, there is one very important distinction.
+                        Fetching only tells your local repository if there are any changes which happened on the remote repository.
+                        Pulling actually brings the changes into your local repository.
+                    </p>
+                    <p>
+                        <strong>Switching branches with uncommitted code a.k.a. Stash</strong>
+                        <br>
+                        <p>Try not to checkout to another branch while you have uncommitted changes, unless you want to transfer those changes.
+                        If you <em>weren't</em> planning on transferring the changes, this can cause unexpected results. If the uncommitted changes
+                         create a conflict, git won't let you switch branches at all.</p>
+                        <p>If you don't want to commit the changes yet, but still want to keep them for later, you can hide them away with
+                        <code>git stash</code>, and then you can switch branches safely. To bring them back, use <code>git stash pop</code>.</p>
+                    </p>
+                </div>
+            </div>
+            <div class="columns">
+                <div class="column px-5 py-5">
+                    <h3>Useful Resources to Definitely Read</h3>
+                    <p>
+                        <a href="http://justinhileman.info/article/git-pretty/full/" class="is-link"><strong>Oh no, I've made a git mess</strong></a>
+                        <br>
+                        <a href="https://medium.com/geekculture/git-and-github-for-dummies-35cfcbb28084" class="is-link"><strong>Git and GitHub for Dummies</strong></a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
