@@ -17,6 +17,11 @@ DEFAULT_ENVS = {
     "DEFAULT_BOT_API_KEY": "badbot13m0n8f570f942013fc818f234916ca531",
 }
 
+try:
+    import dotenv
+    dotenv.load_dotenv()
+except ModuleNotFoundError:
+    pass
 
 for key, value in DEFAULT_ENVS.items():
     os.environ.setdefault(key, value)

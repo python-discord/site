@@ -1,0 +1,116 @@
+{% extends "events/base_sidebar.html" %}
+
+{% load static %}
+
+{% block title %}Summer Code Jam 2021{% endblock %}
+
+{% block breadcrumb %}
+    <li><a href="{% url "events:index" %}">Events</a></li>
+    <li><a href="{% url "events:page" path="code-jams" %}">Code Jams</a></li>
+    <li><a href="{% url "events:page" path="code-jams/8" %}">Summer Code Jam 2021</a></li>
+    <li class="is-active"><a href="#">Approved Frameworks</a></li>
+{% endblock %}
+
+{% block event_content %}
+    <p>Below is the list of approved frameworks that you can use for the code jam. Please take note of what frameworks are available for which platform.
+        Please work with your team to choose a library that everyone can develop on, whether it's cross platform or something you can use WSL or a Virtual Machine for.
+    </p>
+    <h3 id="urwid"><a href="#urwid">Urwid</a></h3>
+    <div class="columns">
+        <div class="column">
+            <ul>
+                <li><a href="http://urwid.org/" target="_blank">Documentation Link</a></li>
+                <li><strong>Supports:</strong> Linux, Mac, other unix-like OS</li>
+                <li>Somewhat in-depth tutorial</li>
+                <li>Uses widgets in a fairly straight forward design</li>
+                <li>Docs include tutorials of both functional and class-based examples</li>
+            </ul>
+        </div>
+        <div class="column">
+            <img src="{% static "images/events/summer_code_jam_2021/cj8_urwid.png" %}" alt="urwid">
+        </div>
+    </div>
+    <h3 id="curses"><a href="#curses">Curses</a></h3>
+    <div class="columns">
+        <div class="column">
+            <ul>
+                <li><a href="https://docs.python.org/3/howto/curses.html" target="_blank">Documentation Link</a></li>
+                <li><strong>Supports:</strong> Linux and other unix-like OS</li>
+                <li>Part of the standard library</li>
+                <li>Extensive how-to guide</li>
+                <li>Very basic, more effort to get working/looking good</li>
+                <li>To supplement curses the following libraries are approved, although no guarantees are made for stability.</li>
+                <ul>
+                    <li><a href="https://pypi.org/project/UniCurses/" target="_blank">Unicurses</a> - a wrapper for Python 3.x that provides a unified set of Curses functions of all platforms.</li>
+                    <li><a href="https://github.com/salt-die/nurses" target="_blank">Nurses</a> - a combination of curses and numpy, made by our very own salt-die</li>
+                </ul>
+
+            </ul>
+        </div>
+        <div class="column">
+            <img src="{% static "images/events/summer_code_jam_2021/cj8_curses.png" %}" alt="curses">
+        </div>
+    </div>
+    <h3 id="blessed"><a href="#blessed">Blessed</a></h3>
+    <div class="columns">
+        <div class="column">
+            <ul>
+                <li><a href="https://blessed.readthedocs.io/en/latest/intro.html" target="_blank">Documentation Link</a></li>
+                <li><strong>Supports:</strong> Linux, Mac, and Windows</li>
+                <li>Sits on top of curses to add more pythonic bindings</li>
+                <li>Doesn't provide any widgets or layouts</li>
+            </ul>
+        </div>
+        <div class="column">
+            <img src="{% static "images/events/summer_code_jam_2021/cj8_blessed.gif" %}" alt="blessed">
+        </div>
+    </div>
+    <h3 id="rich"><a href="#rich">Rich</a></h3>
+    <div class="columns">
+        <div class="column">
+            <ul>
+                <li><a href="https://rich.readthedocs.io/en/stable/introduction.html" target="_blank">Documentation Link</a></li>
+                <li><strong>Supports:</strong> Linux, Mac, and Windows</li>
+                <li>Documentation is good and overall is very OOP focused</li>
+                <li>Robust with many features and example snippets</li>
+            </ul>
+        </div>
+        <div class="column">
+            <img src="{% static "images/events/summer_code_jam_2021/cj8_rich.gif" %}" alt="rich">
+        </div>
+    </div>
+    <h3 id="asciimatics"><a href="#asciimatics">Asciimatics</a></h3>
+    <div class="columns">
+        <div class="column">
+            <ul>
+                <li><a href="https://asciimatics.readthedocs.io/en/stable/intro.html" target="_blank">Documentation Link</a></li>
+                <li><strong>Supports:</strong> Linux, Mac, and Windows</li>
+                <li>Documentation is well structured and straightforward to navigate</li>
+            </ul>
+        </div>
+        <div class="column">
+            <img src="{% static "images/events/summer_code_jam_2021/cj8_asciimatics.png" %}" alt="asciimatics">
+        </div>
+    </div>
+    <h3 id="prompt-toolkit"><a href="#prompt-toolkit">Python Prompt Toolkit</a></h3>
+    <div class="columns">
+        <div class="column">
+            <ul>
+                <li><a href="https://python-prompt-toolkit.readthedocs.io/en/stable/" target="_blank">Documentation Link</a></li>
+                <li><strong>Supports:</strong> Linux, Mac, and Windows</li>
+                <li>Pure python library</li>
+            </ul>
+        </div>
+        <div class="column">
+            <img src="{% static "images/events/summer_code_jam_2021/cj8_prompttoolkit.png" %}" alt="python prompt toolkit">
+        </div>
+    </div>
+
+
+{% endblock %}
+
+{% block sidebar %}
+
+    {% include "events/sidebar/code-jams/8.html" %}
+
+{% endblock %}
