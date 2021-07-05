@@ -1,0 +1,24 @@
+description: Data Science from Scratch is a good introduction to data science for the complete beginner, and covers
+  some of the fundamentals of Python programming as well as the basic math, probability and statistics needed to get
+  started. While either edition of this book is useful for those with prior Python experience, complete beginners
+  should use the second edition, which contains more up-to-date code examples and better practices.
+name: Data Science from Scratch
+urls:
+  - icon: regular/link
+    url: https://www.oreilly.com/library/view/data-science-from/9781492041122/
+    color: teal
+  - icon: branding/goodreads
+    url: https://www.goodreads.com/en/book/show/52059715-data-science-from-scratch
+    color: goodreads-cream
+  - icon: branding/github
+    url: https://github.com/joelgrus/data-science-from-scratch
+    color: black
+tags:
+  topics:
+    - data science
+  payment_tiers:
+    - paid
+  complexity:
+    - beginner
+  type:
+    - book
