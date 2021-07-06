@@ -1,5 +1,5 @@
 description: An online tool for testing regular expressions that helps you understand what the regular expression can
-  match. Remember to set the "flavor" to Python 2.7 (it works for recent versions of Python).
+  match. Remember to set the "flavor" to Python.
 name: regex101
 title_url: https://regex101.com/
 tags:
