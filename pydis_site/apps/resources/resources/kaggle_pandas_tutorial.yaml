@@ -1,0 +1,13 @@
+description: An interactive tutorial for learning Pandas, the most popular library for manipulating tabular data
+  in Python's data science ecosystem. This tutorial assumes some familiarity with writing code in notebooks.
+name: Kaggle Pandas Tutorial
+title_url: https://www.kaggle.com/learn/pandas
+tags:
+  topics:
+    - data science
+  payment_tiers:
+    - free
+  complexity:
+    - intermediate
+  type:
+    - tutorial
