@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from django.core.validators import MaxValueValidator, MinValueValidator
+from django.core.validators import MinValueValidator
 from django.db import models
 
 from pydis_site.apps.api.models.mixins import ModelReprMixin
@@ -38,16 +38,12 @@ class Role(ModelReprMixin, models.Model):
         ),
         help_text="The integer value of the colour of this role from Discord."
     )
-    permissions = models.IntegerField(
+    permissions = models.BigIntegerField(
         validators=(
             MinValueValidator(
                 limit_value=0,
                 message="Role permissions cannot be negative."
             ),
-            MaxValueValidator(
-                limit_value=2 << 32,
-                message="Role permission bitset exceeds value of having all permissions"
-            )
         ),
         help_text="The integer value of the permission bitset of this role from Discord."
     )
