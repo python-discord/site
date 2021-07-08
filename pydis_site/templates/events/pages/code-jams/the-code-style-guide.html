@@ -16,52 +16,44 @@
         especially if a developer didn't write an original code.
         Which one of the following do you prefer to read and work with?
     </p>
-    <pre>
-        <code class="language-python">
-            MyPath = '/file.txt'
-            from pathlib import *
-            import os.path,sys
-            def check(p):
-                """Uses os.path.exist         """
-                return os.path.exists(p)
+    <pre><code class="language-python">MyPath = '/file.txt'
+from pathlib import *
+import os.path,sys
+def check(p):
+  """Uses os.path.exist         """
+  return os.path.exists(p)
 
-            def getF(
-              p):
-            """Not sure what this do, this just worked.
-            """
-              return Path(p
-              )
-            result=[check(MyPath),getF(MyPath)]
-        </code>
-    </pre>
+def getF(
+  p):
+  """Not sure what this do, this just worked.
+  """
+  return Path(p
+  )
+result=[check(MyPath),getF(MyPath)]</code></pre>
     <p>or</p>
-    <pre>
-        <code class="language-python">
-            import os.path
-            from pathlib import Path
+    <pre><code class="language-python">import os.path
+from pathlib import Path
 
-            FILE_PATH = '/file.txt'
+FILE_PATH = '/file.txt'
 
 
-            def check_file_exists(path: str) -> bool:
-                """Checks does file exists in path. Uses os.path.exists."""
-                return os.path.exists(path)
+def check_file_exists(path: str) -> bool:
+    """Checks does file exists in path. Uses os.path.exists."""
+    return os.path.exists(path)
 
 
-            def get_path_object(path: str) -> Path:
-                """
-                Returns Path object of the path provided in arguments.
+def get_path_object(path: str) -> Path:
+    """
+    Returns Path object of the path provided in arguments.
 
-                This is here for backward compatibility, will be removed in the future.
-                """
-                return Path(path)
+    This is here for backward compatibility, will be removed in the future.
+    """
+    return Path(path)
 
-            result = [
-                check_file_exists(FILE_PATH),
-                get_path_object(FILE_PATH),
-            ]
-        </code>
-    </pre>
+result = [
+    check_file_exists(FILE_PATH),
+    get_path_object(FILE_PATH),
+]</code></pre>
 
     <p>
         The second is definitely easier to read and understand.
@@ -94,32 +86,20 @@
 
     <h3>Naming</h3>
     <p>Module, file, function, and variable names (except type variables) should be lowercase and use underscores.</p>
-    <pre>
-        <code class="language-python">
-            # File: my_module.py/mymodule.py
+    <pre><code class="language-python"># File: my_module.py/mymodule.py
 
-            def my_function():
-                my_variable = "value"
-        </code>
-    </pre>
+def my_function():
+    my_variable = "value"</code></pre>
     <p>Class and type variable names should use the camel case style.</p>
-    <pre>
-        <code class="language-python">
-            from typing import List
+    <pre><code class="language-python">from typing import List
 
 
-            class MyClass:
-                pass
+class MyClass:
+    pass
 
-            ListOfMyClass = List[MyClass]
-        </code>
-    </pre>
+ListOfMyClass = List[MyClass]</code></pre>
     <p>Constant names should be all uppercase, and words should be separated with underscores.</p>
-    <pre>
-        <code class="language-python">
-            MY_CONSTANT = 1
-        </code>
-    </pre>
+    <pre><code class="language-python">MY_CONSTANT = 1</code></pre>
     <p>
         You should avoid single-character names, as these might be confusing.
         But if you still do, you should avoid characters that may look like zero or one in some fonts:
@@ -131,74 +111,54 @@
         If you have a chain of mathematic operations that you split into multiple lines,
         you should put the operator at the beginning of the line and not to the end of the line.
     </p>
-    <pre>
-        <code class="language-python">
-            # No
-            result = (
-                1 +
-                2 *
-                3
-            )
+    <pre><code class="language-python"># No
+result = (
+    1 +
+    2 *
+    3
+)
 
-            # Yes
-            result = (
-                1
-                + 2
-                * 3
-            )
-        </code>
-    </pre>
+# Yes
+result = (
+    1
+    + 2
+    * 3
+)</code></pre>
     <p>If you compare against <code>None</code>, you should use <code>is</code> and <code>is not</code>, but not compare equality.</p>
-    <pre>
-        <code class="language-python">
-            # No
-            if variable == None:
-                print("Variable is None")
+    <pre><code class="language-python"># No
+if variable == None:
+    print("Variable is None")
 
-            # Yes
-            if variable is None:
-                print("Variable is None")
-        </code>
-    </pre>
+# Yes
+if variable is None:
+    print("Variable is None")</code></pre>
     <p>
         You should prefer using <code>&lt;item one&gt; is not &lt;item two&gt;</code> over <code>not &lt;item one&gt; is &lt;item two&gt;</code>.
         Using second makes it harder to understand the expression.
     </p>
-    <pre>
-        <code class="language-python">
-            # No
-            if not variable is None:
-                print("Variable is not None")
+    <pre><code class="language-python"># No
+if not variable is None:
+    print("Variable is not None")
 
-            # Yes - it is much easier to read and understand this than previous
-            if variable is not None:
-                print("Variable is not None")
-        </code>
-    </pre>
+# Yes - it is much easier to read and understand this than previous
+if variable is not None:
+    print("Variable is not None")</code></pre>
 
     <h3>Imports</h3>
     <p>Imports should be at top of the file, the only things that should be before them are module comments and docstrings.</p>
     <p>You shouldn't import multiple modules in one line, but give each module import its own line instead.</p>
-    <pre>
-        <code class="language-python">
-            # No
-            import pathlib, os
+    <pre><code class="language-python"># No
+import pathlib, os
 
-            # Yes
-            import os
-            import pathlib
-        </code>
-    </pre>
+# Yes
+import os
+import pathlib</code></pre>
     <p>Wildcard imports should be avoided in most cases. They make unclear where what comes from.</p>
-    <pre>
-        <code class="language-python">
-            # No
-            from pathlib import *
+    <pre><code class="language-python"># No
+from pathlib import *
 
-            # Yes
-            from pathlib import Path
-        </code>
-    </pre>
+# Yes
+from pathlib import Path</code></pre>
     <p>You should use <b><a href="https://pycqa.github.io/isort/">isort</a></b> imports order specification, what means:</p>
     <ul>
         <li>
@@ -231,35 +191,27 @@
             <b>Block comments:</b> Probably most common comment type. Should be indented to the same level as the code they describe.
             Each line in the block comment has to start with <code>#</code> what should be followed by a single space,
             except for text indention inside the comment. To separate paragraphs, use one line containing only <code>#</code>.
-            <pre>
-                <code class="language-python">
-                    if variable is None or variable == 1:
-                        # If variable is None, something went wrong previously.
-                        #
-                        # Here starts a new important paragraph.
-                </code>
-            </pre>
+            <pre><code class="language-python">if variable is None or variable == 1:
+    # If variable is None, something went wrong previously.
+    #
+    # Here starts a new important paragraph.</code></pre>
         </li>
         <li>
             <b>Inline comments:</b> You should prefer block comments over inline comments and use inline comments only where it is really necessary.
             Never use inline comments to explain obvious things like what a line does. If you want to use an inline comment on a variable, think first,
             maybe you can use a better variable name instead. After code and before the start of inline comments should be at least two spaces.
             Just like block comments, inline comments also have to start with <code>#</code> followed by a single space.
-            <pre>
-                <code class="language-python">
-                    # Do not use inline comments to explain things
-                    # that the reader can understand even without the inline comment.
-                    my_variable = "Value!"  # Assign value to my_variable
+            <pre><code class="language-python"># Do not use inline comments to explain things
+# that the reader can understand even without the inline comment.
+my_variable = "Value!"  # Assign value to my_variable
 
-                    # Here better variable name can be used like shown in the second line.
-                    x = "Walmart"  # Shop name
-                    shop_name = "Walmart"
+# Here better variable name can be used like shown in the second line.
+x = "Walmart"  # Shop name
+shop_name = "Walmart"
 
-                    # Sometimes, if something is not obvious, then inline comments are useful.
-                    # Example is from PEP 8.
-                    x = x + 1  # Compensate for border
-                </code>
-            </pre>
+# Sometimes, if something is not obvious, then inline comments are useful.
+# Example is from PEP 8.
+x = x + 1  # Compensate for border</code></pre>
         </li>
         <li>
             <b>Docstrings:</b> Last, but not least important comment type is docstring, which is a short version of documentation string.
@@ -268,21 +220,17 @@
             One-line docstrings have to start and end in the same line, while multiline docstrings start and end in different lines.
             Multiline docstring has two parts: summary line and a longer description, which are separated by one empty line.
             The multiline sentence start and end quotes should be at different lines than the content.
-            <pre>
-                <code class="language-python">
-                    # This is a one-line docstring.
-                    """This is one line module docstring."""
+            <pre><code class="language-python"># This is a one-line docstring.
+"""This is one line module docstring."""
 
 
-                    # This is a multiline docstring.
-                    def my_function():
-                        """
-                        This is the summary line.
+# This is a multiline docstring.
+def my_function():
+    """
+    This is the summary line.
 
-                        This is the description.
-                        """
-                </code>
-            </pre>
+    This is the description.
+    """</code></pre>
         </li>
     </ul>
 
