@@ -197,10 +197,15 @@ from pathlib import Path</code></pre>
     # Here starts a new important paragraph.</code></pre>
         </li>
         <li>
-            <b>Inline comments:</b> You should prefer block comments over inline comments and use inline comments only where it is really necessary.
-            Never use inline comments to explain obvious things like what a line does. If you want to use an inline comment on a variable, think first,
-            maybe you can use a better variable name instead. After code and before the start of inline comments should be at least two spaces.
-            Just like block comments, inline comments also have to start with <code>#</code> followed by a single space.
+            <p>
+                <b>Inline comments:</b> You should prefer block comments over inline comments and use inline comments only where it is really necessary.
+                Never use inline comments to explain obvious things like what a line does.
+            </p>
+            <p>If you want to use an inline comment on a variable, think first, maybe you can use a better variable name instead.</p>
+            <p>
+                After code and before the start of inline comments should be at least two spaces.
+                Just like block comments, inline comments also have to start with <code>#</code> followed by a single space.
+            </p>
             <pre><code class="language-python"># Do not use inline comments to explain things
 # that the reader can understand even without the inline comment.
 my_variable = "Value!"  # Assign value to my_variable
@@ -214,12 +219,17 @@ shop_name = "Walmart"
 x = x + 1  # Compensate for border</code></pre>
         </li>
         <li>
-            <b>Docstrings:</b> Last, but not least important comment type is docstring, which is a short version of documentation string.
-            Docstring rules haven't been defined by PEP 8, but by <a href="https://www.python.org/dev/peps/pep-0257">PEP 257</a> instead.
-            Docstrings should start and end with three quotes ("""). There are two types of docstrings: one-line docstrings and multiline docstrings.
-            One-line docstrings have to start and end in the same line, while multiline docstrings start and end in different lines.
-            Multiline docstring has two parts: summary line and a longer description, which are separated by one empty line.
-            The multiline sentence start and end quotes should be at different lines than the content.
+            <p>
+                <b>Docstrings:</b> Last, but not least important comment type is docstring, which is a short version of documentation string.
+                Docstring rules haven't been defined by PEP 8, but by <a href="https://www.python.org/dev/peps/pep-0257">PEP 257</a> instead.
+                Docstrings should start and end with three quotes (""").
+            </p>
+            <p>There are two types of docstrings: one-line docstrings and multiline docstrings.</p>
+            <p>
+                One-line docstrings have to start and end in the same line, while multiline docstrings start and end in different lines.
+                Multiline docstring has two parts: summary line and a longer description, which are separated by one empty line.
+                The multiline docstring start and end quotes should be at different lines than the content.
+            </p>
             <pre><code class="language-python"># This is a one-line docstring.
 """This is one line module docstring."""
 
