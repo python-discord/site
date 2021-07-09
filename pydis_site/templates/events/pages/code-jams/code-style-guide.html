@@ -188,17 +188,21 @@ from pathlib import Path</code></pre>
     <p>There are three types of comments:</p>
     <ul>
         <li>
-            <b>Block comments:</b> Probably most common comment type. Should be indented to the same level as the code they describe.
-            Each line in the block comment has to start with <code>#</code> what should be followed by a single space,
-            except for text indention inside the comment. To separate paragraphs, use one line containing only <code>#</code>.
+            <h4>Block comments</h4>
+            <p>
+                Probably most common comment type. Should be indented to the same level as the code they describe.
+                Each line in the block comment has to start with <code>#</code> what should be followed by a single space,
+                except for text indention inside the comment. To separate paragraphs, use one line containing only <code>#</code>.
+            </p>
             <pre><code class="language-python">if variable is None or variable == 1:
     # If variable is None, something went wrong previously.
     #
     # Here starts a new important paragraph.</code></pre>
         </li>
         <li>
+            <h4>Inline comments</h4>
             <p>
-                <b>Inline comments:</b> You should prefer block comments over inline comments and use inline comments only where it is really necessary.
+                You should prefer block comments over inline comments and use inline comments only where it is really necessary.
                 Never use inline comments to explain obvious things like what a line does.
             </p>
             <p>If you want to use an inline comment on a variable, think first, maybe you can use a better variable name instead.</p>
@@ -219,8 +223,9 @@ shop_name = "Walmart"
 x = x + 1  # Compensate for border</code></pre>
         </li>
         <li>
+            <h4>Docstrings</h4>
             <p>
-                <b>Docstrings:</b> Last, but not least important comment type is docstring, which is a short version of documentation string.
+                Last, but not least important comment type is docstring, which is a short version of documentation string.
                 Docstring rules haven't been defined by PEP 8, but by <a href="https://www.python.org/dev/peps/pep-0257">PEP 257</a> instead.
                 Docstrings should start and end with three quotes (""").
             </p>
