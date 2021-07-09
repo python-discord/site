@@ -13,7 +13,7 @@
         For end-users, the most important parts of the software are functionality and UI/UX.
         But for developers, there is one more important aspect - code style.
         While ugly code can do everything that it has to do, developing it further may be a difficult task,
-        especially if a developer didn't write an original code.
+        especially if the developer didn't write the original code.
         Which one of the following do you prefer to read and work with?
     </p>
     <pre><code class="language-python">MyPath = '/file.txt'
@@ -57,14 +57,15 @@ result = [
 
     <p>
         The second is definitely easier to read and understand.
-        These scripts are small and if you read even first, you can understand what this code does pretty fast,
+        These scripts are small and even with the first code snippet you can understand what the code does pretty quickly,
         but what if the project has thousands and thousands of files in a really complex folder structure?
-        Do you want then code what looks like the first example?
-        You can save hours sometimes if you write beautiful code that follows style rules.
+        Do you want to work with code that looks like the first example?
+        You can save hours sometimes if you write beautiful code that follows the style guidelines.
     </p>
     <p>
-        The most important document of Python code style is <b><a href="https://www.python.org/dev/peps/pep-0008/">PEP 8</a></b>.
-        This gives the majority of all Python code style rules. This article will cover the most important rules of PEP 8.
+        The most important code style document for Python is <b><a href="https://www.python.org/dev/peps/pep-0008/">PEP 8</a></b>.
+        This Python Enhancement Proposal lays out the majority of all Python code style guidelines.
+        This article will cover the most important aspects of PEP 8.
     </p>
 
     <h2>Linters</h2>
@@ -75,12 +76,12 @@ result = [
         Flake8 points out to you rules what you did break in your code so you can fix them.
     </p>
 
-    <h2>Rules</h2>
+    <h2>Guidelines</h2>
     <h3>Basics</h3>
     <p>For indentation, you should use 4 spaces. Using tabs is not suggested, but if you do, you can't mix spaces and tabs.</p>
     <p>
         PEP 8 defines a maximum line length of 79 characters, however,
-        we are not so strict - we let teams choose a maximum line length between 79 and 119 characters.
+        we are not so strict - teams are welcome to choose a maximum line length between 79 and 119 characters.
     </p>
     <p>2 blank lines should be left before functions and classes. Single blank lines are used to split sections and make logical breaks.</p>
 
@@ -109,7 +110,7 @@ ListOfMyClass = List[MyClass]</code></pre>
     <h3>Operators</h3>
     <p>
         If you have a chain of mathematic operations that you split into multiple lines,
-        you should put the operator at the beginning of the line and not to the end of the line.
+        you should put the operator at the beginning of the line and not the end of the line.
     </p>
     <pre><code class="language-python"># No
 result = (
@@ -124,7 +125,7 @@ result = (
     + 2
     * 3
 )</code></pre>
-    <p>If you compare against <code>None</code>, you should use <code>is</code> and <code>is not</code>, but not compare equality.</p>
+    <p>If you ever check if something is equivalent to <code>None</code>, you should use <code>is</code> and <code>is not</code> instead of the <code>==</code> operator.</p>
     <pre><code class="language-python"># No
 if variable == None:
     print("Variable is None")
@@ -134,7 +135,7 @@ if variable is None:
     print("Variable is None")</code></pre>
     <p>
         You should prefer using <code>&lt;item one&gt; is not &lt;item two&gt;</code> over <code>not &lt;item one&gt; is &lt;item two&gt;</code>.
-        Using second makes it harder to understand the expression.
+        Using the latter makes it harder to understand what the expression is trying to do.
     </p>
     <pre><code class="language-python"># No
 if not variable is None:
@@ -153,13 +154,13 @@ import pathlib, os
 # Yes
 import os
 import pathlib</code></pre>
-    <p>Wildcard imports should be avoided in most cases. They make unclear where what comes from.</p>
+    <p>Wildcard imports should be avoided in most cases. It clutters the namespace and makes it less clear where functions or classes are coming from.</p>
     <pre><code class="language-python"># No
 from pathlib import *
 
 # Yes
 from pathlib import Path</code></pre>
-    <p>You should use <b><a href="https://pycqa.github.io/isort/">isort</a></b> imports order specification, what means:</p>
+    <p>You should use <b><a href="https://pycqa.github.io/isort/">isort</a></b> imports order specification, which means:</p>
     <ul>
         <li>
             <b>Group by type:</b> order of import types should be: <code>__future__</code> imports, standard library imports,
@@ -181,8 +182,12 @@ from pathlib import Path</code></pre>
     <h3>Comments</h3>
     <p>
         Comments are really important because they help everyone understand what code does.
-        But as important as having comments is keeping them up-to-date.
-        Out-to-date, wrong comments confuse readers.
+        In general, comments should explain <i>why</i> you are doing something if it's not obvious.
+        You should aim to write code that makes it obvious what it is doing and you can use the comments to explain why and provide some context.
+    </p>
+    <p>
+        Keep in mind that just as important as having comments, is making sure they stay up to date.
+        Out-of-date and incorrect comments confuse readers of your code (including future you).
     </p>
     <p>Comments content should start with a capital letter and be a full sentence(s).</p>
     <p>There are three types of comments: block comments, inline comments, and docstrings.</p>
@@ -191,8 +196,8 @@ from pathlib import Path</code></pre>
             <h4>Block comments</h4>
             <p>
                 Probably most common comment type. Should be indented to the same level as the code they describe.
-                Each line in the block comment has to start with <code>#</code> what should be followed by a single space,
-                except for text indention inside the comment. To separate paragraphs, use one line containing only <code>#</code>.
+                Each line in the block comment has to start with <code>#</code> and should be followed by a single space.
+                To separate paragraphs, use one line containing only <code>#</code>.
             </p>
             <pre><code class="language-python">if variable is None or variable == 1:
     # If variable is None, something went wrong previously.
@@ -227,13 +232,13 @@ x = x + 1  # Compensate for border</code></pre>
             <p>
                 Last, but not least important comment type is docstring, which is a short version of documentation string.
                 Docstring rules haven't been defined by PEP 8, but by <a href="https://www.python.org/dev/peps/pep-0257">PEP 257</a> instead.
-                Docstrings should start and end with three quotes (""").
             </p>
+            <p>Docstrings should start and end with three quotes (""").</p>
             <p>There are two types of docstrings: one-line docstrings and multiline docstrings.</p>
             <p>
                 One-line docstrings have to start and end in the same line, while multiline docstrings start and end in different lines.
                 Multiline docstring has two parts: summary line and a longer description, which are separated by one empty line.
-                The multiline docstring start and end quotes should be at different lines than the content.
+                The multiline docstring start and end quotes should be on different lines than the content.
             </p>
             <pre><code class="language-python"># This is a one-line docstring.
 """This is one line module docstring."""
