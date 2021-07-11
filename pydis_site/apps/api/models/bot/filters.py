@@ -46,7 +46,7 @@ class FilterList(models.Model):
     name = models.CharField(max_length=50, help_text="The unique name of this list.")
     list_type = models.IntegerField(
         choices=FilterListType.choices,
-        help_text="Whenever this list is an allowlist or denylist"
+        help_text="Whether this list is an allowlist or denylist"
     )
 
     filters = models.ManyToManyField("Filter", help_text="The content of this list.", default=[])
@@ -75,31 +75,31 @@ class FilterSettings(models.Model):
         validators=(validate_ping_field,),
         help_text="Who to ping when this filter triggers."
     )
-    filter_dm = models.BooleanField(help_text="Whenever DMs should be filtered.")
+    filter_dm = models.BooleanField(help_text="Whether DMs should be filtered.")
     dm_ping_type = ArrayField(
         models.CharField(max_length=20),
         validators=(validate_ping_field,),
         help_text="Who to ping when this filter triggers on a DM."
     )
     delete_messages = models.BooleanField(
-        help_text="Whenever this filter should delete messages triggering it."
+        help_text="Whether this filter should delete messages triggering it."
     )
     bypass_roles = ArrayField(
         models.BigIntegerField(),
         help_text="Roles and users who can bypass this filter."
     )
     enabled = models.BooleanField(
-        help_text="Whenever ths filter is currently enabled."
+        help_text="Whether this filter is currently enabled."
     )
     default_action = models.ForeignKey(
         "FilterAction",
         models.CASCADE,
-        help_text="The default action to perform."
+        help_text="What action to perform on the triggering user."
     )
     default_range = models.ForeignKey(
         "ChannelRange",
         models.CASCADE,
-        help_text="Where does this filter apply."
+        help_text="The channels and categories in which this filter applies."
     )
 
 
