@@ -165,7 +165,7 @@ class FilterActionSerializer(ModelSerializer):
         """Metadata defined for the Django REST Framework."""
 
         model = FilterAction
-        fields = ('id', 'user_dm', 'infraction_type', 'infraction_reason', 'infraction_duration')
+        fields = ('id', 'dm_content', 'infraction_type', 'infraction_reason', 'infraction_duration')
 
 
 class FilterChannelRangeSerializer(ModelSerializer):

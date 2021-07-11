@@ -53,7 +53,7 @@ def get_test_sequences() -> Dict[str, TestSequence]:
                     bypass_roles=[],
                     enabled=False,
                     default_action=FilterAction(
-                        user_dm=None,
+                        dm_content=None,
                         infraction_type=None,
                         infraction_reason="",
                         infraction_duration=None
@@ -80,7 +80,7 @@ def get_test_sequences() -> Dict[str, TestSequence]:
                 "bypass_roles": [123456],
                 "enabled": True,
                 "default_action": FilterAction(
-                    user_dm=None,
+                    dm_content=None,
                     infraction_type=None,
                     infraction_reason="",
                     infraction_duration=None
@@ -98,7 +98,7 @@ def get_test_sequences() -> Dict[str, TestSequence]:
             FilterAction,
             "filteraction",
             {
-                "user_dm": "This is a DM message.",
+                "dm_content": "This is a DM message.",
                 "infraction_type": "Mute",
                 "infraction_reason": "Too long beard",
                 "infraction_duration": "1 02:03:00"

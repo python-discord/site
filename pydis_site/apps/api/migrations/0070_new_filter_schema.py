@@ -23,7 +23,7 @@ def forward(apps: Apps, schema_editor: BaseDatabaseSchemaEditor) -> None:
         objects = filter_list_old.objects.filter(type=name)
 
         default_action = filter_action.objects.create(
-            user_dm=None,
+            dm_content=None,
             infraction_type=None,
             infraction_reason="",
             infraction_duration=None
@@ -102,7 +102,7 @@ class Migration(migrations.Migration):
             name='FilterAction',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('user_dm', models.CharField(help_text='The DM to send to a user triggering this filter.', max_length=1000, null=True)),
+                ('dm_content', models.CharField(help_text='The DM to send to a user triggering this filter.', max_length=1000, null=True)),
                 ('infraction_type', models.CharField(choices=[('Note', 'Note'), ('Warn', 'Warn'), ('Mute', 'Mute'), ('Kick', 'Kick'), ('Ban', 'Ban')], help_text='The infraction to apply to this user.', max_length=4, null=True)),
                 ('infraction_reason', models.CharField(help_text='The reason to give for the infraction.', max_length=1000)),
                 ('infraction_duration', models.DurationField(help_text='The duration of the infraction. Null if permanent.', null=True)),

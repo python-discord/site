@@ -106,7 +106,7 @@ class FilterSettings(models.Model):
 class FilterAction(models.Model):
     """The action to take when a filter is triggered."""
 
-    user_dm = models.CharField(
+    dm_content = models.CharField(
         max_length=1000,
         null=True,
         help_text="The DM to send to a user triggering this filter."

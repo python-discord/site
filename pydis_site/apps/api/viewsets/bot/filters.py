@@ -264,7 +264,7 @@ class FilterActionViewSet(ModelViewSet):
     >>> [
     ...     {
     ...         "id": 1,
-    ...         "user_dm": "message",
+    ...         "dm_content": "message",
     ...         "infraction_type": "Warn",
     ...         "infraction_reason": "",
     ...         "infraction_duration": "01 12:34:56.123456"
@@ -282,7 +282,7 @@ class FilterActionViewSet(ModelViewSet):
     #### Response format
     >>> {
     ...     "id": 1,
-    ...     "user_dm": "message",
+    ...     "dm_content": "message",
     ...     "infraction_type": "Warn",
     ...     "infraction_reason": "",
     ...     "infraction_duration": "01 12:34:56.123456"
@@ -297,7 +297,7 @@ class FilterActionViewSet(ModelViewSet):
 
     #### Request body
     >>> {
-    ...     "user_dm": "message",
+    ...     "dm_content": "message",
     ...     "infraction_type": "Warn",
     ...     "infraction_reason": "",
     ...     "infraction_duration": "01 12:34:56.123456"
@@ -313,7 +313,7 @@ class FilterActionViewSet(ModelViewSet):
     #### Response format
     >>> {
     ...     "id": 1,
-    ...     "user_dm": "message",
+    ...     "dm_content": "message",
     ...     "infraction_type": "Warn",
     ...     "infraction_reason": "",
     ...     "infraction_duration": "01 12:34:56.123456"
