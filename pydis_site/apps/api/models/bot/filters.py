@@ -9,8 +9,8 @@ from django.db.models import UniqueConstraint
 class FilterListType(models.IntegerChoices):
     """Choice between allow or deny for a list type."""
 
-    ALLOW: 1
-    DENY: 0
+    ALLOW = 1
+    DENY = 0
 
 
 class InfractionType(models.TextChoices):
@@ -64,7 +64,7 @@ class FilterList(models.Model):
         )
 
     def __str__(self) -> str:
-        return f"Filter {'allow' if self.list_type == 1 else 'deny'}list {self.name!r}"
+        return f"Filter {FilterListType(self.list_type).label}list {self.name!r}"
 
 
 class FilterSettings(models.Model):
