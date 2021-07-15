@@ -84,10 +84,13 @@ class HomeView(View):
     def _get_repo_data(self) -> List[RepositoryMetadata]:
         """Build a list of RepositoryMetadata objects that we can use to populate the front page."""
         # First off, load the timestamp of the least recently updated entry.
-        oldest_entry = RepositoryMetadata.objects.order_by("last_updated").first()
+        last_update = (
+            RepositoryMetadata.objects.values_list("last_updated", flat=True)
+            .order_by("last_updated").first()
+        )
 
         # If we did not retrieve any results here, we should import them!
-        if oldest_entry is None:
+        if last_update is None:
 
             # Try to get new data from the API. If it fails, we'll return an empty list.
             # In this case, we simply don't display our projects on the site.
@@ -106,7 +109,7 @@ class HomeView(View):
             )
 
         # If the data is stale, we should refresh it.
-        if (timezone.now() - oldest_entry.last_updated).seconds > self.repository_cache_ttl:
+        if (timezone.now() - last_update).seconds > self.repository_cache_ttl:
             # Try to get new data from the API. If it fails, return the cached data.
             api_repositories = self._get_api_data()
 
