@@ -207,7 +207,7 @@ class OffTopicChannelNameListSerializer(ListSerializer):
 
     def to_representation(self, objects: List[OffTopicChannelName]) -> List[str]:
         """
-        Return the representation of this `OffTopicChannelName`.
+        Return a list representing a list of `OffTopicChannelName`.
 
         This only returns the name of the off topic channel name. As the model
         only has a single attribute, it is unnecessary to create a nested dictionary.
