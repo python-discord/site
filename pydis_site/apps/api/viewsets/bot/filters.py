@@ -20,7 +20,7 @@ from pydis_site.apps.api.serializers import (  # noqa: I101 - Preserving the fil
 
 class FilterListViewSet(ModelViewSet):
     """
-    View providing CRUD operations on lists of items allowed or denied by our bot.
+    View providing GET/DELETE on lists of items allowed or denied by our bot.
 
     ## Routes
     ### GET /bot/filter/filter_lists
@@ -33,8 +33,14 @@ class FilterListViewSet(ModelViewSet):
     ...         "name": "guild_invite",
     ...         "list_type": 1,
     ...         "filters": [
-    ...             1,
-    ...             2,
+    ...             {
+    ...                 "id": 1,
+    ...                 "content": "267624335836053506",
+    ...                 "description": "Python Discord",
+    ...                 "additional_field": None,
+    ...                 "override": 1,
+    ...                 "filter_list": 1
+    ...             },
     ...             ...
     ...         ],
     ...         "default_settings": 1
@@ -55,8 +61,14 @@ class FilterListViewSet(ModelViewSet):
     ...     "name": "guild_invite",
     ...     "list_type": 1,
     ...     "filters": [
-    ...         1,
-    ...         2,
+    ...         {
+    ...             "id": 1,
+    ...             "content": "267624335836053506",
+    ...             "description": "Python Discord",
+    ...             "additional_field": None,
+    ...             "override": 1,
+    ...             "filter_list": 1
+    ...         },
     ...         ...
     ...     ],
     ...     "default_settings": 1
@@ -65,45 +77,6 @@ class FilterListViewSet(ModelViewSet):
     #### Status codes
     - 200: returned on success
     - 404: returned if the id was not found.
-
-    ### POST /bot/filter/filter_lists
-    Adds a single FilterList item to the database.
-
-    #### Request body
-    >>> {
-    ...     "name": "guild_invite",
-    ...     "list_type": 1,
-    ...     "filters": [
-    ...         1,
-    ...         2,
-    ...         ...
-    ...     ],
-    ...     "default_settings": 1
-    ... }
-
-    #### Status codes
-    - 201: returned on success
-    - 400: if one of the given fields is invalid
-
-    ### PATCH /bot/filter/filter_lists/<id:int>
-    Updates a specific FilterList item from the database.
-
-    #### Response format
-    >>> {
-    ...     "id": 1,
-    ...     "name": "guild_invite",
-    ...     "list_type": 1,
-    ...     "filters": [
-    ...         1,
-    ...         2,
-    ...         ...
-    ...     ],
-    ...     "default_settings": 1
-    ... }
-
-    #### Status codes
-    - 200: returned on success
-    - 400: if one of the given fields is invalid
 
     ### DELETE /bot/filter/filter_lists/<id:int>
     Deletes the FilterList item with the given `id`.
@@ -437,7 +410,8 @@ class FilterViewSet(ModelViewSet):
     ...         "content": "267624335836053506",
     ...         "description": "Python Discord",
     ...         "additional_field": None,
-    ...         "override": 1
+    ...         "override": 1,
+    ...         "filter_list": 1
     ...     },
     ...     ...
     ... ]

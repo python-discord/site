@@ -48,8 +48,6 @@ class FilterList(models.Model):
         choices=FilterListType.choices,
         help_text="Whether this list is an allowlist or denylist"
     )
-
-    filters = models.ManyToManyField("Filter", help_text="The content of this list.", default=[])
     default_settings = models.ForeignKey(
         "FilterSettings",
         models.CASCADE,
@@ -152,6 +150,10 @@ class Filter(models.Model):
     content = models.CharField(max_length=100, help_text="The definition of this filter.")
     description = models.CharField(max_length=200, help_text="Why this filter has been added.")
     additional_field = models.BooleanField(null=True, help_text="Implementation specific field.")
+    filter_list = models.ForeignKey(
+        FilterList, models.CASCADE, related_name="filters",
+        help_text="The filter list containing this filter."
+    )
     override = models.ForeignKey(
         "FilterOverride",
         models.SET_NULL,

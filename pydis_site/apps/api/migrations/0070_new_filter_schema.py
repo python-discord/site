@@ -54,17 +54,14 @@ def forward(apps: Apps, schema_editor: BaseDatabaseSchemaEditor) -> None:
             list_type=1 if type_ == "ALLOW" else 0
         )
 
-        new_objects = []
         for object_ in objects:
             new_object = filter_.objects.create(
                 content=object_.content,
+                filter_list = list_,
                 description=object_.comment or "<no description provided>",
                 additional_field=None, override=None
             )
             new_object.save()
-            new_objects.append(new_object)
-
-        list_.filters.add(*new_objects)
 
 
 class Migration(migrations.Migration):
@@ -143,13 +140,17 @@ class Migration(migrations.Migration):
                 ('name', models.CharField(help_text='The unique name of this list.', max_length=50)),
                 ('list_type', models.IntegerField(choices=[], help_text='Whenever this list is an allowlist or denylist')),
                 ('default_settings', models.ForeignKey(help_text='Default parameters of this list.', on_delete=django.db.models.deletion.CASCADE, to='api.FilterSettings')),
-                ('filters', models.ManyToManyField(help_text='The content of this list.', to='api.Filter', default=[])),
             ],
         ),
         migrations.AddField(
             model_name='filter',
             name='override',
             field=models.ForeignKey(help_text='Override the default settings.', null=True, on_delete=django.db.models.deletion.SET_NULL, to='api.FilterOverride'),
+        ),
+        migrations.AddField(
+            model_name='filter',
+            name='filter_list',
+            field=models.ForeignKey(help_text='The filter list containing this filter.', on_delete=django.db.models.deletion.CASCADE, related_name='filters', to='api.FilterList'),
         ),
         migrations.AddConstraint(
             model_name='filterlist',

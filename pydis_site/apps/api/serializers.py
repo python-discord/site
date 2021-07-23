@@ -117,8 +117,20 @@ class DocumentationLinkSerializer(ModelSerializer):
         fields = ('package', 'base_url', 'inventory_url')
 
 
+class FilterSerializer(ModelSerializer):
+    """A class providing (de-)serialization of `Filter` instances."""
+
+    class Meta:
+        """Metadata defined for the Django REST Framework."""
+
+        model = Filter
+        fields = ('id', 'content', 'description', 'additional_field', 'filter_list', 'override')
+
+
 class FilterListSerializer(ModelSerializer):
     """A class providing (de-)serialization of `FilterList` instances."""
+
+    filters = FilterSerializer(many=True, read_only=True)
 
     class Meta:
         """Metadata defined for the Django REST Framework."""
@@ -183,16 +195,6 @@ class FilterChannelRangeSerializer(ModelSerializer):
             'allowed_categories',
             'default'
         )
-
-
-class FilterSerializer(ModelSerializer):
-    """A class providing (de-)serialization of `Filter` instances."""
-
-    class Meta:
-        """Metadata defined for the Django REST Framework."""
-
-        model = Filter
-        fields = ('id', 'content', 'description', 'additional_field', 'override')
 
 
 class FilterOverrideSerializer(ModelSerializer):

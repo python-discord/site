@@ -32,7 +32,7 @@ FK_FIELDS: Dict[Type[Model], Tuple[str]] = {
     FilterSettings: ("default_action", "default_range"),
     FilterAction: (),
     ChannelRange: (),
-    Filter: (),
+    Filter: ("filter_list",),
     FilterOverride: ("filter_action", "filter_range")
 }
 
@@ -122,7 +122,32 @@ def get_test_sequences() -> Dict[str, TestSequence]:
                 "content": "bad word",
                 "description": "This is a really bad word.",
                 "additional_field": None,
-                "override": None
+                "override": None,
+                "filter_list": FilterList(
+                    name="testname",
+                    list_type=0,
+                    default_settings=FilterSettings(
+                        ping_type=[],
+                        filter_dm=False,
+                        dm_ping_type=[],
+                        delete_messages=False,
+                        bypass_roles=[],
+                        enabled=False,
+                        default_action=FilterAction(
+                            dm_content=None,
+                            infraction_type=None,
+                            infraction_reason="",
+                            infraction_duration=None
+                        ),
+                        default_range=ChannelRange(
+                            disallowed_channels=[],
+                            disallowed_categories=[],
+                            allowed_channels=[],
+                            allowed_categories=[],
+                            default=False
+                        )
+                    )
+                )
             }
         ),
         "filter_override": TestSequence(
