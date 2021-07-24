@@ -23,55 +23,66 @@
                       <div class="column has-text-centered">
                           Topic
 
-                          <div class="field">
-                              <label class="checkbox">
-                                <input name="checkboxOption" type="checkbox" value="topic1">
-                                  <span class="has-text-grey is-size-7">Topic1</span>
+                          {% for topic in topics %}
+                            <div class="field">
+                              <label class="checkbox ml-0">
+                                <input name="checkboxOption" type="checkbox" value="{{ topic }}">
+                                  <span class="has-text-grey is-size-7">{{ topic }}</span>
                               </label>
-                          </div>
-
-                          <div class="field">
-                              <label class="checkbox">
-                                <input name="checkboxOption" type="checkbox" value="topic2">
-                                  <span class="has-text-grey is-size-7">Topic1</span>
-                              </label>
-                          </div>
-
+                            </div>
+                          {% endfor %}
                       </div>
 
                         <div class="column has-text-centered">
                             Type
+
+                            {% for tag_type in tag_types %}
                             <div class="field">
-                              <label class="checkbox">
-                                <input type="checkbox">
-                                    <span class="has-text-grey is-size-7">Remember me</span>
+                              <label class="checkbox ml-0">
+                                <input name="checkboxOption" type="checkbox" value="{{ tag_type }}">
+                                  <span class="has-text-grey is-size-7">{{ tag_type }}</span>
                               </label>
-                          </div>
+                            </div>
+                          {% endfor %}
                         </div>
 
                         <div class="column has-text-centered">
                             Payment
+
+                            {% for payment_tier in payment_tiers %}
                             <div class="field">
-                              <label class="checkbox">
-                                <input type="checkbox">
-                                    <span class="has-text-grey is-size-7">Remember me</span>
+                              <label class="checkbox ml-0">
+                                <input name="checkboxOption" type="checkbox" value="{{ payment_tier }}">
+                                  <span class="has-text-grey is-size-7">{{ payment_tier }}</span>
                               </label>
-                          </div>
+                            </div>
+                          {% endfor %}
                         </div>
 
                         <div class="column has-text-centered">
                             Level
+
+                            {% for complexity in complexities %}
                             <div class="field">
-                              <label class="checkbox">
-                                <input type="checkbox">
-                                    <span class="has-text-grey is-size-7">Remember me</span>
+                              <label class="checkbox ml-0">
+                                <input name="checkboxOption" type="checkbox" value="{{ complexity }}">
+                                  <span class="has-text-grey is-size-7">{{ complexity }}</span>
                               </label>
-                          </div>
+                            </div>
+                          {% endfor %}
                         </div>
                   </div>
 
-                  <div class="control pl-3 pb-3">
-                    <button onclick="buildQueryParams()" class="button is-link is-small">Search</button>
+                  <div class="ml-3 pb-3">
+
+                      <span class="control">
+                        <button onclick="buildQueryParams()" class="button is-link is-small">Search</button>
+                      </span>
+
+                      <span class="is-one-fifth control">
+                        <button onclick="clearQueryParams()" class="button is-danger is-small">Clear Search</button>
+                      </span>
+
                   </div>
 
               </div>
@@ -79,9 +90,18 @@
       </div>
   </section>
 <script>
+    const initialParams = new URLSearchParams(window.location.search).get("checkboxOptions");
+    const checkBoxes = document.querySelectorAll("input[name='checkboxOption']");
+    console.log(initialParams);
+
+    checkBoxes.forEach((x) => {
+        if(initialParams.includes(x.value)){
+            x.checked = true;
+        }
+    });
+
     function buildQueryParams(){
         let params = new URLSearchParams(window.location.search);
-        const checkBoxes = document.querySelectorAll("input[name='checkboxOption']");
         let allOptions = "";
         checkBoxes.forEach((x) => {
             if(x.checked){
@@ -91,7 +111,10 @@
         params.set("checkboxOptions", allOptions);
 
         window.location.search = params;
-        window.location.reload();
+    }
+
+    function clearQueryParams(){
+        checkBoxes.forEach((x) => {x.checked = false});
     }
 </script>
 {% endblock %}
