@@ -11,15 +11,9 @@
 
   <!-- Mobile-only Notice -->
   <section id="mobile-notice" class="message is-primary is-hidden-tablet">
-    <div class="message-header">
-      <p>100K Member Milestone!</p>
-    </div>
-    <div class="message-body">
-      Thanks to all our members for helping us create this friendly and helpful community!
-      <br><br>
-      As a nice treat, we've created a <a href="{% url 'timeline' %}">Timeline page</a> for people
-      to discover the events that made our community what it is today. Be sure to check it out!
-    </div>
+    <a href="/events/code-jams/8/">
+        <img src="{% static "images/events/summer_code_jam_2021/front_page_banners/currently_live.png" %}" alt="Summer Code Jam 2021">
+    </a>
   </section>
 
   <!-- Wave Hero -->
@@ -29,7 +23,7 @@
         <div class="columns is-variable is-8">
 
           {# Embedded Welcome video #}
-          <div id="wave-hero-centered" class="column is-half">
+          <div id="wave-hero-left" class="column is-half">
             <div class="force-aspect-container">
               <iframe
               class="force-aspect-content"
@@ -49,6 +43,13 @@
               allowfullscreen
               ></iframe>
             </div>
+          </div>
+
+          {# Code Jam banner #}
+          <div id="wave-hero-right" class="column is-half">
+            <a href="/events/code-jams/8/">
+              <img src="{% static "images/events/summer_code_jam_2021/front_page_banners/currently_live.png" %}" alt="Summer Code Jam 2021">
+            </a>
           </div>
         </div>
       </div>
@@ -200,6 +201,8 @@
           </a>
           <a href="https://streamyard.com" class="column is-narrow">
             <img src="{% static "images/sponsors/streamyard.png" %}" alt="StreamYard"/>
+          <a href="https://www.cloudflare.com/" class="column is-narrow">
+            <img src="{% static "images/sponsors/cloudflare.png" %}" alt="Cloudflare"/>
           </a>
         </div>
       </div>
