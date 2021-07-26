@@ -20,9 +20,8 @@ default_categories = [
 def yaml_file_matches_search(yaml_data: dict, search_terms: list[str]) -> bool:
     """Checks which resources contain tags for every search term passed."""
     search_terms = [x.lower() for x in search_terms]
-    search_len = len(search_terms)
     matching_tags = [x for x in chain(*yaml_data["tags"].values()) if x in search_terms]
-    return len(matching_tags) >= search_len
+    return len(matching_tags) >= len(search_terms)
 
 
 def get_resources_from_search(search_categories: list[str]) -> list[dict]:
