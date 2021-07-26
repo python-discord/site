@@ -1,9 +1,11 @@
 {% extends 'base/base.html' %}
+{% load as_icon %}
 {% load static %}
 
 {% block title %}Resources{% endblock %}
 {% block head %}
-  <link rel="stylesheet" href="{% static "css/resources/resources.css" %}">
+    <link rel="stylesheet" href="{% static "css/resources/resources.css" %}">
+    <link rel="stylesheet" href="{% static "css/resources/resources_list.css" %}">
 {% endblock %}
 
 {% block content %}
@@ -89,16 +91,49 @@
           </div>
       </div>
   </section>
+
+    {% if resources|length > 0 %}
+    <section class="section">
+        <div class="container">
+            <div class="content">
+                <div>
+                    {% for resource in resources %}
+                        {% include "resources/resource_box.html" %}
+                    {% endfor %}
+
+                    {% for subcategory in subcategories %}
+                        <h2 id="{{ subcategory.category_info.raw_name }}">
+                            <a href="{% url "resources:resources" category=category_info.raw_name %}#{{ subcategory.category_info.raw_name }}">
+                                {{ subcategory.category_info.name }}
+                            </a>
+                        </h2>
+                        <p>{{ subcategory.category_info.description|safe }}</p>
+
+                        {% for resource in subcategory.resources %}
+                            {% with category_info=subcategory.category_info %}
+                                {% include "resources/resource_box.html" %}
+                            {% endwith %}
+                        {% endfor %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </section>
+    {% else %}
+    <p>No resources matching search.</p>
+    {% endif %}
+
 <script>
     const initialParams = new URLSearchParams(window.location.search).get("checkboxOptions");
     const checkBoxes = document.querySelectorAll("input[name='checkboxOption']");
-    console.log(initialParams);
 
-    checkBoxes.forEach((x) => {
+    if(initialParams != null){
+        checkBoxes.forEach((x) => {
         if(initialParams.includes(x.value)){
             x.checked = true;
         }
     });
+    }
 
     function buildQueryParams(){
         let params = new URLSearchParams(window.location.search);
