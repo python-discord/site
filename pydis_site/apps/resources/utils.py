@@ -1,4 +1,6 @@
 import typing as t
+
+from itertools import chain
 from pathlib import Path
 
 import yaml
@@ -15,19 +17,16 @@ default_categories = [
 ]
 
 
-def yaml_file_matches_search(yaml_data: dict[str, t.Union[list[str], str]], search_terms: list[str]) -> bool:
-    match_count = 0
+def yaml_file_matches_search(yaml_data: dict, search_terms: list[str]) -> bool:
+    """Checks which resources contain tags for every search term passed."""
+    search_terms = [x.lower() for x in search_terms]
     search_len = len(search_terms)
-    for search in search_terms:
-        for _, values in yaml_data["tags"].items():
-            if search.lower() in values:
-                match_count += 1
-                if match_count >= search_len:
-                    return True
-    return False
+    matching_tags = [x for x in chain(*yaml_data["tags"].values()) if x in search_terms]
+    return len(matching_tags) >= search_len
 
 
-def get_resources_from_search(search_categories: list[str]) -> list[dict[str, t.Union[list[str], str]]]:
+def get_resources_from_search(search_categories: list[str]) -> list[dict]:
+    """Returns a list of all resources that match the given search terms."""
     out = []
     for item in RESOURCES_PATH.rglob("*.yaml"):
         this_dict = yaml.safe_load(item.read_text())
