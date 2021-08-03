@@ -28,7 +28,7 @@
                           {% for topic in topics %}
                             <div class="field">
                               <label class="checkbox ml-0">
-                                <input name="checkboxOption" type="checkbox" value="{{ topic }}">
+                                <input name="topicOption" type="checkbox" value="{{ topic }}">
                                   <span class="has-text-grey is-size-7">{{ topic }}</span>
                               </label>
                             </div>
@@ -41,7 +41,7 @@
                             {% for tag_type in tag_types %}
                             <div class="field">
                               <label class="checkbox ml-0">
-                                <input name="checkboxOption" type="checkbox" value="{{ tag_type }}">
+                                <input name="typeOption" type="checkbox" value="{{ tag_type }}">
                                   <span class="has-text-grey is-size-7">{{ tag_type }}</span>
                               </label>
                             </div>
@@ -54,7 +54,7 @@
                             {% for payment_tier in payment_tiers %}
                             <div class="field">
                               <label class="checkbox ml-0">
-                                <input name="checkboxOption" type="checkbox" value="{{ payment_tier }}">
+                                <input name="paymentOption" type="checkbox" value="{{ payment_tier }}">
                                   <span class="has-text-grey is-size-7">{{ payment_tier }}</span>
                               </label>
                             </div>
@@ -67,7 +67,7 @@
                             {% for complexity in complexities %}
                             <div class="field">
                               <label class="checkbox ml-0">
-                                <input name="checkboxOption" type="checkbox" value="{{ complexity }}">
+                                <input name="complexityOption" type="checkbox" value="{{ complexity }}">
                                   <span class="has-text-grey is-size-7">{{ complexity }}</span>
                               </label>
                             </div>
@@ -124,32 +124,45 @@
     {% endif %}
 
 <script>
-    const initialParams = new URLSearchParams(window.location.search).get("checkboxOptions");
-    const checkBoxes = document.querySelectorAll("input[name='checkboxOption']");
+    "use strict";
+    const initialParams = new URLSearchParams(window.location.search);
+    const checkboxOptions = ['topicOption', 'typeOption', 'paymentOption', 'complexityOption'];
+    // const topicOptions = document.querySelectorAll("input[name='topicOption']");
 
-    if(initialParams != null){
-        checkBoxes.forEach((x) => {
-        if(initialParams.includes(x.value)){
-            x.checked = true;
-        }
-    });
+    const createQuerySelect = (opt) => {
+        return "input[name=" + opt + "]"
     }
+
+    checkboxOptions.forEach((option) => {
+        document.querySelectorAll(createQuerySelect(option)).forEach((checkbox) => {
+            if(initialParams.get(option).includes(checkbox.value)){
+                checkbox.checked = true
+            }
+        });
+    });
+
 
     function buildQueryParams(){
         let params = new URLSearchParams(window.location.search);
-        let allOptions = "";
-        checkBoxes.forEach((x) => {
-            if(x.checked){
-                allOptions += x.value + ",";
-            }
-        });
-        params.set("checkboxOptions", allOptions);
+        checkboxOptions.forEach((option) => {
+            let tempOut = ""
+            document.querySelectorAll(createQuerySelect(option)).forEach((checkbox) => {
+                if(checkbox.checked){
+                    tempOut += checkbox.value + ",";
+                }
+            });
+            params.set(option, tempOut);
+    });
 
         window.location.search = params;
     }
 
     function clearQueryParams(){
-        checkBoxes.forEach((x) => {x.checked = false});
+        checkboxOptions.forEach((option) => {
+        document.querySelectorAll(createQuerySelect(option)).forEach((checkbox) => {
+            checkbox.checked = false;
+        });
+    });
     }
 </script>
 {% endblock %}
