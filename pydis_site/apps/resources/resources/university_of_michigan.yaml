@@ -4,7 +4,7 @@ name: 'University of Michigan: Programming for Everybody'
 title_url: https://www.coursera.org/learn/python
 tags:
   topics:
-    - python
+    - general
   payment_tiers:
     - free
   complexity:

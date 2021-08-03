@@ -17,7 +17,7 @@ urls:
     color: blurple
 tags:
   topics:
-    - python
+    - general
   payment_tiers:
     - free
   complexity:

@@ -4,7 +4,7 @@ name: Talk Python To Me
 title_url: https://talkpython.fm/
 tags:
   topics:
-    - python
+    - general
   payment_tiers:
     - free
   complexity:
