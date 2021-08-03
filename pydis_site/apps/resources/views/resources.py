@@ -13,7 +13,16 @@ def format_checkbox_options(options: str) -> list[str]:
 
 def resource_view(request: HttpRequest) -> HttpResponse:
     """View for resources index page."""
-    checkbox_options = format_checkbox_options(request.GET.get("checkboxOptions"))
+    checkbox_options = {
+        a: set(format_checkbox_options(request.GET.get(b)))
+        for a, b in (
+            ('topics', 'topicOption'),
+            ('type', 'typeOption'),
+            ('payment_tiers', 'paymentOption'),
+            ('complexity', 'complexityOption'),
+        )
+    }
+
     return render(
         request,
         template_name="resources/resources.html",
