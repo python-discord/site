@@ -47,7 +47,8 @@ def get_resources_from_search(search_categories: dict[str, set[str]]) -> list[Re
         (
             reduce(
                 or_,
-                (RESOURCE_TABLE[category][label] for label in labels)
+                (RESOURCE_TABLE[category][label] for label in labels),
+                set()
             )
             for category, labels in search_categories.items()
         )
