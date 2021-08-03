@@ -1,6 +1,8 @@
 import typing as t
 from collections import defaultdict
+from functools import reduce
 from itertools import chain
+from operator import and_, or_
 from pathlib import Path
 
 import yaml
@@ -38,11 +40,16 @@ def yaml_file_matches_search(yaml_data: dict, search_terms: list[str]) -> bool:
     return len(matching_tags) >= len(search_terms)
 
 
-def get_resources_from_search(search_categories: list[str]) -> list[Resource]:
+def get_resources_from_search(search_categories: dict[str, set[str]]) -> list[Resource]:
     """Returns a list of all resources that match the given search terms."""
-    out = []
-    for item in RESOURCES_PATH.rglob("*.yaml"):
-        this_dict = yaml.safe_load(item.read_text())
-        if yaml_file_matches_search(this_dict, search_categories):
-            out.append(this_dict)
-    return out
+    resource_names_that_match = reduce(
+        and_,
+        (
+            reduce(
+                or_,
+                (RESOURCE_TABLE[category][label] for label in labels)
+            )
+            for category, labels in search_categories.items()
+        )
+    )
+    return [RESOURCES[name_] for name_ in resource_names_that_match]
