@@ -53,3 +53,12 @@ i.resource-icon.is-black {
 i.has-icon-padding {
     padding: 0 10px 25px 0;
 }
+
+#tab-content p {
+    display: none;
+}
+
+#tab-content p.is-active {
+display: block;
+}
+  
