@@ -28,10 +28,10 @@ def resource_view(request: HttpRequest) -> HttpResponse:
         template_name="resources/resources.html",
         context={
             "checkboxOptions": checkbox_options,
-            "topics": RESOURCE_META_TAGS.get("topics"),
-            "tag_types": RESOURCE_META_TAGS.get("type"),
-            "payment_tiers": RESOURCE_META_TAGS.get("payment_tiers"),
-            "complexities": RESOURCE_META_TAGS.get("complexity"),
+            "topics": sorted(RESOURCE_META_TAGS.get("topics")),
+            "tag_types": sorted(RESOURCE_META_TAGS.get("type")),
+            "payment_tiers": sorted(RESOURCE_META_TAGS.get("payment_tiers")),
+            "complexities": sorted(RESOURCE_META_TAGS.get("complexity")),
             "resources": get_resources_from_search(checkbox_options)
         }
     )
