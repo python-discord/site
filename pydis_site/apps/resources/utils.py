@@ -1,13 +1,13 @@
 import typing as t
-
 from itertools import chain
 from pathlib import Path
 
 import yaml
 from django.conf import settings
 
-RESOURCES_PATH = Path(settings.BASE_DIR, "pydis_site", "apps", "resources", "resources")
+Resource = dict[str, t.Union[str, list[dict[str, str]], dict[str, list[str]]]]
 
+RESOURCES_PATH = Path(settings.BASE_DIR, "pydis_site", "apps", "resources", "resources")
 
 default_categories = [
     "topics",
@@ -24,7 +24,7 @@ def yaml_file_matches_search(yaml_data: dict, search_terms: list[str]) -> bool:
     return len(matching_tags) >= len(search_terms)
 
 
-def get_resources_from_search(search_categories: list[str]) -> list[dict]:
+def get_resources_from_search(search_categories: list[str]) -> list[Resource]:
     """Returns a list of all resources that match the given search terms."""
     out = []
     for item in RESOURCES_PATH.rglob("*.yaml"):
