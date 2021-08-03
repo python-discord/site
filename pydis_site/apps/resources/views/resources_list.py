@@ -2,7 +2,7 @@ from typing import Any, Dict
 
 from django.views.generic import TemplateView
 
-from pydis_site.apps.resources.utils import get_all_resources
+from pydis_site.apps.resources.utils import RESOURCES
 
 
 class ResourcesListView(TemplateView):
@@ -13,6 +13,6 @@ class ResourcesListView(TemplateView):
     def get_context_data(self, **kwargs) -> Dict[str, Any]:
         """Add resources and subcategories data into context."""
         context = super().get_context_data(**kwargs)
-        context["resources"] = get_all_resources()
+        context["resources"] = RESOURCES
 
         return context

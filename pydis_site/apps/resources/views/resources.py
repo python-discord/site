@@ -1,9 +1,9 @@
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
 
-from pydis_site.apps.resources.utils import get_all_resources, get_resources_from_search, get_resources_meta
+from pydis_site.apps.resources.utils import RESOURCE_TABLE, get_resources_from_search
 
-RESOURCE_META_TAGS = get_resources_meta()
+RESOURCE_META_TAGS = {k: list(v) for k, v in RESOURCE_TABLE.items()}
 
 
 def format_checkbox_options(options: str) -> list[str]:
