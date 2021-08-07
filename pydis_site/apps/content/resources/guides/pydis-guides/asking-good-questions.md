@@ -20,7 +20,7 @@ Use this formatting to paste code in Discord:
 Or use our [pastebin](https://paste.pydis.com/) for longer text samples.
 
 ### Asking "Why doesn't this work?"
-That can mean a lot of things. Explain what you expected the code to do, and what it actually did. That can include getting the wrong output or getting an error message.
+It's usually not possible to tell what the problem is just by looking at the code. Explain what you expected the code to do, and what it actually did. That can include getting the wrong output or getting an error message.
 
 If you get an error message, always share the whole error message (aka *traceback*), as this often contains valuable information.
 
