@@ -9,43 +9,43 @@
 {% endblock %}
 
 {% block content %}
-  {% include "base/navbar.html" %}
+    {% include "base/navbar.html" %}
 
-  <section class="section">
-      <div class="container">
-          <div class="content">
-             <h1 class="resource-title has-text-centered">Resources</h1>
-              <hr/>
-          </div>
-          <div class="panel is-hidden-mobile">
-              <p class="panel-heading has-text-centered">Search Options</p>
+    <section class="section">
+        <div class="container">
+            <div class="content">
+                <h1 class="resource-title has-text-centered">Resources</h1>
+                <hr/>
+            </div>
+            <div class="panel is-hidden-mobile">
+                <p class="panel-heading has-text-centered">Search Options</p>
 
-              <div class="field">
-                  <div class="columns">
-                      <div class="column pl-6">
-                          <div class="title is-5 pt-2 has-text-centered">Topic</div>
+                <div class="field">
+                    <div class="columns">
+                        <div class="column pl-6">
+                            <div class="title is-5 pt-2 has-text-centered">Topic</div>
 
-                          {% for topic in topics %}
+                            {% for topic in topics %}
                             <div class="field">
-                              <label class="checkbox">
-                                <input name="topicOption" type="checkbox" value="{{ topic }}">
-                                  <span class="has-text-grey is-size-6">{{ topic }}</span>
-                              </label>
+                                <label class="checkbox">
+                                    <input name="topicOption" type="checkbox" value="{{ topic }}"{% if topic == 'General' %} checked{% endif %}>
+                                    <span class="has-text-grey is-size-6">{{ topic }}</span>
+                                </label>
                             </div>
-                          {% endfor %}
-                      </div>
+                            {% endfor %}
+                        </div>
 
                         <div class="column pl-6">
                             <div class="title is-5 pt-2 has-text-centered">Type</div>
 
                             {% for tag_type in tag_types %}
                             <div class="field">
-                              <label class="checkbox ml-0">
-                                <input name="typeOption" type="checkbox" value="{{ tag_type }}">
-                                  <span class="has-text-grey is-size-6">{{ tag_type }}</span>
-                              </label>
+                                <label class="checkbox ml-0">
+                                    <input name="typeOption" type="checkbox" value="{{ tag_type }}"{% if tag_type == 'Tutorial' %} checked{% endif %}>
+                                    <span class="has-text-grey is-size-6">{{ tag_type }}</span>
+                                </label>
                             </div>
-                          {% endfor %}
+                            {% endfor %}
                         </div>
 
                         <div class="column pl-6">
@@ -53,12 +53,12 @@
 
                             {% for payment_tier in payment_tiers %}
                             <div class="field">
-                              <label class="checkbox ml-0">
-                                <input name="paymentOption" type="checkbox" value="{{ payment_tier }}">
-                                  <span class="has-text-grey is-size-6">{{ payment_tier }}</span>
-                              </label>
+                                <label class="checkbox ml-0">
+                                    <input name="paymentOption" type="checkbox" value="{{ payment_tier }}"{% if payment_tier == 'Free' %} checked{% endif %}>
+                                     <span class="has-text-grey is-size-6">{{ payment_tier }}</span>
+                               </label>
                             </div>
-                          {% endfor %}
+                            {% endfor %}
                         </div>
 
                         <div class="column pl-6">
@@ -66,27 +66,27 @@
 
                             {% for complexity in complexities %}
                             <div class="field">
-                              <label class="checkbox ml-0">
-                                <input name="complexityOption" type="checkbox" value="{{ complexity }}">
-                                  <span class="has-text-grey is-size-6">{{ complexity }}</span>
+                                <label class="checkbox ml-0">
+                                    <input name="complexityOption" type="checkbox" value="{{ complexity }}"{% if complexity == 'Beginner' %} checked{% endif %}>
+                                    <span class="has-text-grey is-size-6">{{ complexity }}</span>
                               </label>
                             </div>
-                          {% endfor %}
+                           {% endfor %}
                         </div>
-                  </div>
+                    </div>
 
-                  <div class="ml-3 pb-3">
-                      <span class="control">
-                        <button onclick="buildQueryParams()" class="button is-link is-small">Search</button>
-                      </span>
+                    <div class="ml-3 pb-3">
+                        <span class="control">
+                            <button onclick="buildQueryParams()" class="button is-link is-small">Search</button>
+                        </span>
 
-                      <span class="is-one-fifth control">
-                        <button onclick="clearQueryParams()" class="button is-danger is-small">Clear Search</button>
-                      </span>
-                  </div>
-              </div>
-          </div>
-  </section>
+                        <span class="is-one-fifth control">
+                            <button onclick="clearQueryParams()" class="button is-danger is-small">Clear Search</button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+    </section>
 
     {% if resources|length > 0 %}
     <section class="section">
