@@ -21,7 +21,7 @@ RESOURCES: dict[str, Resource] = {path.stem: yaml.safe_load(path.read_text()) fo
 
 RESOURCE_TABLE = {category: defaultdict(set) for category in (
     "topics",
-    "payment_tiers",    
+    "payment_tiers",
     "complexity",
     "type"
 )}
