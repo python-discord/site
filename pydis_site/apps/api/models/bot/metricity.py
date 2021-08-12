@@ -10,7 +10,7 @@ EXCLUDE_CHANNELS = [
 ]
 
 
-class NotFound(Exception):
+class NotFound(Exception):  # noqa: N818
     """Raised when an entity cannot be found."""
 
     pass
