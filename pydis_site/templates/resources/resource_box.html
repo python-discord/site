@@ -11,12 +11,17 @@
 
     <p class="is-italic">{{ resource.description|safe }}</p>
 
-    {# Icons #}
-    {% for icon in resource.urls %}
-        <span class="icon is-size-4 is-medium" style="margin: 5px;">
-            <a href="{{ icon.url }}">
-                <i class="{{ icon.icon|as_icon }} is-size-3 resource-icon is-{{ icon.color }}"></i>
-            </a>
-        </span>
-    {% endfor %}
+    <div class="is-flex">
+        {# Icons #}
+        {% for icon in resource.urls %}
+            <span class="icon is-size-4 is-medium" style="margin: 5px;">
+                <a href="{{ icon.url }}">
+                    <i class="{{ icon.icon|as_icon }} is-size-3 resource-icon is-{{ icon.color }}"></i>
+                </a>
+            </span>
+        {% endfor %}
+        <button class="button is-primary is-light is-small ml-auto p-1">
+            <a href="#">src</a>
+        </button>
+    </div>
 </div>
