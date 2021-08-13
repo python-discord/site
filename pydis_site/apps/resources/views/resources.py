@@ -23,12 +23,15 @@ def resource_view(request: HttpRequest) -> HttpResponse:
         )
     }
 
+    topics = sorted(RESOURCE_META_TAGS.get("topics"))
+
     return render(
         request,
         template_name="resources/resources.html",
         context={
             "checkboxOptions": checkbox_options,
-            "topics": sorted(RESOURCE_META_TAGS.get("topics")),
+            "topics_1": topics[:len(topics) // 2],
+            "topics_2": topics[len(topics) // 2:],
             "tag_types": sorted(RESOURCE_META_TAGS.get("type")),
             "payment_tiers": sorted(RESOURCE_META_TAGS.get("payment_tiers")),
             "complexities": sorted(RESOURCE_META_TAGS.get("complexity")),
