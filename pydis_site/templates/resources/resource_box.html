@@ -1,4 +1,5 @@
 {% load as_icon %}
+{% load get_category_icon %}
 
 <div class="box" style="max-width: 800px;">
     {% if 'title_url' in resource %}
@@ -11,7 +12,7 @@
 
     <p class="is-italic">{{ resource.description|safe }}</p>
 
-    <div class="is-flex">
+    <div class="is-flex is-align-items-center">
         {# Icons #}
         {% for icon in resource.urls %}
             <span class="icon is-size-4 is-medium" style="margin: 5px;">
@@ -20,8 +21,19 @@
                 </a>
             </span>
         {% endfor %}
-        <button class="button is-primary is-light is-small ml-auto p-1">
-            <a href="#">src</a>
-        </button>
+        <div class="is-flex ml-auto">
+            {% for tag in resource.tags.topics %}
+            <span class="tag is-primary ml-2"><i class="{{ tag|title|get_category_icon }} mr-1"></i>{{ tag|title }}</span>
+            {% endfor %}
+            {% for tag in resource.tags.type %}
+            <span class="tag is-primary ml-2"><i class="{{ tag|title|get_category_icon }} mr-1"></i>{{ tag|title }}</span>
+            {% endfor %}
+            {% for tag in resource.tags.payment_tiers %}
+            <span class="tag is-primary ml-2"><i class="{{ tag|title|get_category_icon }} mr-1"></i>{{ tag|title }}</span>
+            {% endfor %}
+            {% for tag in resource.tags.complexity %}
+            <span class="tag is-primary ml-2"><i class="{{ tag|title|get_category_icon }} mr-1"></i>{{ tag|title }}</span>
+            {% endfor %}
+        </div>
     </div>
 </div>
