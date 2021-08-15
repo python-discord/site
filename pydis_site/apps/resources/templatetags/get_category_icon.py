@@ -19,6 +19,7 @@ def get_category_icon(name: str) -> str:
         "Tooling": "fa-toolbox",
         "User Interface": "fa-desktop",
         "Web Development": "fa-wifi",
+        "Discord Bots": "fa-robot",
         "Book": "fa-book",
         "Community": "fa-users",
         "Course": "fa-chalkboard-teacher",
@@ -27,9 +28,9 @@ def get_category_icon(name: str) -> str:
         "Tool": "fa-tools",
         "Tutorial": "fa-clipboard-list",
         "Video": "fa-video",
-        "Free": "f",
+        "Free": "fa-first-aid",
         "Paid": "fa-sack",
-        "Subscription": "fa-vault",
+        "Subscription": "fa-credit-card",
         "Beginner": "fa-play-circle",
         "Intermediate": "fa-align-center"
     }

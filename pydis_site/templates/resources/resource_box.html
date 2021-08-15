@@ -21,18 +21,18 @@
                 </a>
             </span>
         {% endfor %}
-        <div class="is-flex ml-auto">
+        <div class="is-flex ml-auto is-flex-wrap-wrap is-justify-content-end">
             {% for tag in resource.tags.topics %}
-            <span class="tag is-primary ml-2"><i class="{{ tag|title|get_category_icon }} mr-1"></i>{{ tag|title }}</span>
+            <span class="tag is-primary is-light ml-2 mt-2"><i class="{{ tag|title|get_category_icon }} mr-1"></i>{{ tag|title }}</span>
             {% endfor %}
             {% for tag in resource.tags.type %}
-            <span class="tag is-primary ml-2"><i class="{{ tag|title|get_category_icon }} mr-1"></i>{{ tag|title }}</span>
+            <span class="tag has-background-success-light has-text-success-dark ml-2 mt-2"><i class="{{ tag|title|get_category_icon }} mr-1"></i>{{ tag|title }}</span>
             {% endfor %}
             {% for tag in resource.tags.payment_tiers %}
-            <span class="tag is-primary ml-2"><i class="{{ tag|title|get_category_icon }} mr-1"></i>{{ tag|title }}</span>
+            <span class="tag has-background-danger-light has-text-danger-dark ml-2 mt-2"><i class="{{ tag|title|get_category_icon }} mr-1"></i>{{ tag|title }}</span>
             {% endfor %}
             {% for tag in resource.tags.complexity %}
-            <span class="tag is-primary ml-2"><i class="{{ tag|title|get_category_icon }} mr-1"></i>{{ tag|title }}</span>
+            <span class="tag has-background-info-light has-text-info-dark ml-2 mt-2"><i class="{{ tag|title|get_category_icon }} mr-1"></i>{{ tag|title }}</span>
             {% endfor %}
         </div>
     </div>
