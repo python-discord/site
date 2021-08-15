@@ -9,6 +9,7 @@ from django.utils import timezone
 from django.views import View
 
 from pydis_site.apps.home.models import RepositoryMetadata
+from pydis_site.constants import GITHUB_TOKEN
 
 log = logging.getLogger(__name__)
 
@@ -33,6 +34,16 @@ class HomeView(View):
         """Clean up stale RepositoryMetadata."""
         RepositoryMetadata.objects.exclude(repo_name__in=self.repos).delete()
 
+        # If no token is defined (for example in local development), then
+        # it does not make sense to pass the Authorization header. More
+        # specifically, GitHub will reject any requests from us due to the
+        # invalid header. We can make a limited number of anonymous requests
+        # though, which is useful for testing.
+        if GITHUB_TOKEN:
+            self.headers = {"Authorization": f"token {GITHUB_TOKEN}"}
+        else:
+            self.headers = {}
+
     def _get_api_data(self) -> Dict[str, Dict[str, str]]:
         """
         Call the GitHub API and get information about our repos.
@@ -42,7 +53,7 @@ class HomeView(View):
         repo_dict = {}
 
         # Fetch the data from the GitHub API
-        api_data: List[dict] = requests.get(self.github_api).json()
+        api_data: List[dict] = requests.get(self.github_api, headers=self.headers).json()
 
         # Process the API data into our dict
         for repo in api_data:
@@ -72,35 +83,33 @@ class HomeView(View):
 
     def _get_repo_data(self) -> List[RepositoryMetadata]:
         """Build a list of RepositoryMetadata objects that we can use to populate the front page."""
-        database_repositories = []
+        # First off, load the timestamp of the least recently updated entry.
+        last_update = (
+            RepositoryMetadata.objects.values_list("last_updated", flat=True)
+            .order_by("last_updated").first()
+        )
 
-        # First, let's see if we have any metadata cached.
-        cached_data = RepositoryMetadata.objects.all()
-
-        # If we don't, we have to create some!
-        if not cached_data:
+        # If we did not retrieve any results here, we should import them!
+        if last_update is None:
 
             # Try to get new data from the API. If it fails, we'll return an empty list.
             # In this case, we simply don't display our projects on the site.
             api_repositories = self._get_api_data()
 
             # Create all the repodata records in the database.
-            for api_data in api_repositories.values():
-                repo_data = RepositoryMetadata(
+            return RepositoryMetadata.objects.bulk_create(
+                RepositoryMetadata(
                     repo_name=api_data["full_name"],
                     description=api_data["description"],
                     forks=api_data["forks_count"],
                     stargazers=api_data["stargazers_count"],
                     language=api_data["language"],
                 )
-
-                repo_data.save()
-                database_repositories.append(repo_data)
-
-            return database_repositories
+                for api_data in api_repositories.values()
+            )
 
         # If the data is stale, we should refresh it.
-        if (timezone.now() - cached_data[0].last_updated).seconds > self.repository_cache_ttl:
+        if (timezone.now() - last_update).seconds > self.repository_cache_ttl:
             # Try to get new data from the API. If it fails, return the cached data.
             api_repositories = self._get_api_data()
 
@@ -108,22 +117,18 @@ class HomeView(View):
                 return RepositoryMetadata.objects.all()
 
             # Update or create all RepoData objects in self.repos
-            for repo_name, api_data in api_repositories.items():
-                try:
-                    repo_data = RepositoryMetadata.objects.get(repo_name=repo_name)
-                    repo_data.description = api_data["description"]
-                    repo_data.language = api_data["language"]
-                    repo_data.forks = api_data["forks_count"]
-                    repo_data.stargazers = api_data["stargazers_count"]
-                except RepositoryMetadata.DoesNotExist:
-                    repo_data = RepositoryMetadata(
-                        repo_name=api_data["full_name"],
-                        description=api_data["description"],
-                        forks=api_data["forks_count"],
-                        stargazers=api_data["stargazers_count"],
-                        language=api_data["language"],
-                    )
-                repo_data.save()
+            database_repositories = []
+            for api_data in api_repositories.values():
+                repo_data, _created = RepositoryMetadata.objects.update_or_create(
+                    repo_name=api_data["full_name"],
+                    defaults={
+                        'repo_name': api_data["full_name"],
+                        'description': api_data["description"],
+                        'forks': api_data["forks_count"],
+                        'stargazers': api_data["stargazers_count"],
+                        'language': api_data["language"],
+                    }
+                )
                 database_repositories.append(repo_data)
             return database_repositories
 

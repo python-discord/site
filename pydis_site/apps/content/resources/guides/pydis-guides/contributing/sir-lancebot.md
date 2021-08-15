@@ -97,7 +97,7 @@ The first time you run this command, it may take a few minutes while Docker down
 $ docker-compose up
 ```
 
-If you get any Docker related errors, reference the [Possible Issues](./docker/possible-issues) section of the Docker page.
+If you get any Docker related errors, reference the [Possible Issues](../docker#possible-issues) section of the Docker page.
 {: .notification .is-warning }
 
 ## Run on the host

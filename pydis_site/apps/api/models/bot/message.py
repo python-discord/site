@@ -43,7 +43,7 @@ class Message(ModelReprMixin, models.Model):
         verbose_name="Channel ID"
     )
     content = models.CharField(
-        max_length=2_000,
+        max_length=4_000,
         help_text="The content of this message, taken from Discord.",
         blank=True
     )

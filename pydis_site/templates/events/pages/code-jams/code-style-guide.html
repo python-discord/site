@@ -1,0 +1,268 @@
+{% extends "events/base_sidebar.html" %}
+
+{% block breadcrumb %}
+    <li><a href="{% url "events:index" %}">Events</a></li>
+    <li><a href="{% url "events:page" path="code-jams" %}">Code Jams</a></li>
+    <li class="is-active"><a href="#">The Code Style Guide</a></li>
+{% endblock %}
+
+{% block title %}The Code Style Guide{% endblock %}
+
+{% block event_content %}
+    <p>
+        For end-users, the most important parts of the software are functionality and UI/UX.
+        But for developers, there is one more important aspect - code style.
+        While ugly code can do everything that it has to do, developing it further may be a difficult task,
+        especially if the developer didn't write the original code.
+        Which one of the following do you prefer to read and work with?
+    </p>
+    <pre><code class="language-python">MyPath = '/file.txt'
+from pathlib import *
+import os.path,sys
+def check(p):
+  """Uses os.path.exist         """
+  return os.path.exists(p)
+
+def getF(
+  p):
+  """Not sure what this do, this just worked.
+  """
+  return Path(p
+  )
+result=[check(MyPath),getF(MyPath)]</code></pre>
+    <p>or</p>
+    <pre><code class="language-python">import os.path
+from pathlib import Path
+
+FILE_PATH = '/file.txt'
+
+
+def check_file_exists(path: str) -> bool:
+    """Checks does file exists in path. Uses os.path.exists."""
+    return os.path.exists(path)
+
+
+def get_path_object(path: str) -> Path:
+    """
+    Returns Path object of the path provided in arguments.
+
+    This is here for backward compatibility, will be removed in the future.
+    """
+    return Path(path)
+
+result = [
+    check_file_exists(FILE_PATH),
+    get_path_object(FILE_PATH),
+]</code></pre>
+
+    <p>
+        The second is definitely easier to read and understand.
+        These scripts are small and even with the first code snippet you can understand what the code does pretty quickly,
+        but what if the project has thousands and thousands of files in a really complex folder structure?
+        Do you want to work with code that looks like the first example?
+        You can save hours sometimes if you write beautiful code that follows the style guidelines.
+    </p>
+    <p>
+        The most important code style document for Python is <b><a href="https://www.python.org/dev/peps/pep-0008/">PEP 8</a></b>.
+        This Python Enhancement Proposal lays out the majority of all Python code style guidelines.
+        This article will cover the most important aspects of PEP 8.
+    </p>
+
+    <h2>Linters</h2>
+    <p>
+        But everyone makes mistakes and there are so many style rules that can be really difficult to remember and always follow.
+        Luckily, we have amazing tools that help us - linters. While there are many linters,
+        we'd like code jam participants to use <b><a href="https://flake8.pycqa.org/en/latest/">flake8</a></b>.
+        Flake8 points out to you rules what you did break in your code so you can fix them.
+    </p>
+
+    <h2>Guidelines</h2>
+    <h3>Basics</h3>
+    <p>For indentation, you should use 4 spaces. Using tabs is not suggested, but if you do, you can't mix spaces and tabs.</p>
+    <p>
+        PEP 8 defines a maximum line length of 79 characters, however,
+        we are not so strict - teams are welcome to choose a maximum line length between 79 and 119 characters.
+    </p>
+    <p>2 blank lines should be left before functions and classes. Single blank lines are used to split sections and make logical breaks.</p>
+
+    <h3>Naming</h3>
+    <p>Module, file, function, and variable names (except type variables) should be lowercase and use underscores.</p>
+    <pre><code class="language-python"># File: my_module.py/mymodule.py
+
+def my_function():
+    my_variable = "value"</code></pre>
+    <p>Class and type variable names should use the PascalCase style.</p>
+    <pre><code class="language-python">from typing import List
+
+
+class MyClass:
+    pass
+
+ListOfMyClass = List[MyClass]</code></pre>
+    <p>Constant names should use the SCREAMING_SNAKE_CASE style.</p>
+    <pre><code class="language-python">MY_CONSTANT = 1</code></pre>
+    <p>
+        You should avoid single-character names, as these might be confusing.
+        But if you still do, you should avoid characters that may look like zero or one in some fonts:
+        "O" (uppercase o), "l" (lowercase L), and "I" (uppercase i).
+    </p>
+
+    <h3>Operators</h3>
+    <p>
+        If you have a chain of mathematic operations that you split into multiple lines,
+        you should put the operator at the beginning of the line and not the end of the line.
+    </p>
+    <pre><code class="language-python"># No
+result = (
+    1 +
+    2 *
+    3
+)
+
+# Yes
+result = (
+    1
+    + 2
+    * 3
+)</code></pre>
+    <p>If you ever check if something is equivalent to <code>None</code>, you should use <code>is</code> and <code>is not</code> instead of the <code>==</code> operator.</p>
+    <pre><code class="language-python"># No
+if variable == None:
+    print("Variable is None")
+
+# Yes
+if variable is None:
+    print("Variable is None")</code></pre>
+    <p>
+        You should prefer using <code>&lt;item one&gt; is not &lt;item two&gt;</code> over <code>not &lt;item one&gt; is &lt;item two&gt;</code>.
+        Using the latter makes it harder to understand what the expression is trying to do.
+    </p>
+    <pre><code class="language-python"># No
+if not variable is None:
+    print("Variable is not None")
+
+# Yes - it is much easier to read and understand this than previous
+if variable is not None:
+    print("Variable is not None")</code></pre>
+
+    <h3>Imports</h3>
+    <p>Imports should be at top of the file, the only things that should be before them are module comments and docstrings.</p>
+    <p>You shouldn't import multiple modules in one line, but give each module import its own line instead.</p>
+    <pre><code class="language-python"># No
+import pathlib, os
+
+# Yes
+import os
+import pathlib</code></pre>
+    <p>Wildcard imports should be avoided in most cases. It clutters the namespace and makes it less clear where functions or classes are coming from.</p>
+    <pre><code class="language-python"># No
+from pathlib import *
+
+# Yes
+from pathlib import Path</code></pre>
+    <p>You should use <b><a href="https://pycqa.github.io/isort/">isort</a></b> imports order specification, which means:</p>
+    <ul>
+        <li>
+            <b>Group by type:</b> order of import types should be: <code>__future__</code> imports, standard library imports,
+            third-party library imports, and finally project imports.
+        </li>
+        <li>
+            <b>Group by import method:</b> inside each group, first should come imports in format <code>import &lt;package&gt;</code>
+            and after them <code>from &lt;package&gt; import &lt;items&gt;</code>.
+        </li>
+        <li>
+            <b>Order imports alphabetically:</b> inside each import method group, imports should be ordered by package names.
+        </li>
+        <li>
+            <b>Order individual import items by type and alphabetically:</b> in <code>from &lt;package&gt; import &lt;items&gt;</code> format,
+            <code>&lt;items&gt;</code> should be ordered alphabetically, starting with bare module imports.
+        </li>
+    </ul>
+
+    <h3>Comments</h3>
+    <p>
+        Comments are really important because they help everyone understand what code does.
+        In general, comments should explain <i>why</i> you are doing something if it's not obvious.
+        You should aim to write code that makes it obvious what it is doing and you can use the comments to explain why and provide some context.
+    </p>
+    <p>
+        Keep in mind that just as important as having comments, is making sure they stay up to date.
+        Out-of-date and incorrect comments confuse readers of your code (including future you).
+    </p>
+    <p>Comments content should start with a capital letter and be a full sentence(s).</p>
+    <p>There are three types of comments: block comments, inline comments, and docstrings.</p>
+    <ul>
+        <li>
+            <h4>Block comments</h4>
+            <p>
+                Probably most common comment type. Should be indented to the same level as the code they describe.
+                Each line in the block comment has to start with <code>#</code> and should be followed by a single space.
+                To separate paragraphs, use one line containing only <code>#</code>.
+            </p>
+            <pre><code class="language-python">if variable is None or variable == 1:
+    # If variable is None, something went wrong previously.
+    #
+    # Here starts a new important paragraph.</code></pre>
+        </li>
+        <li>
+            <h4>Inline comments</h4>
+            <p>
+                You should prefer block comments over inline comments and use inline comments only where it is really necessary.
+                Never use inline comments to explain obvious things like what a line does.
+            </p>
+            <p>If you want to use an inline comment on a variable, think first, maybe you can use a better variable name instead.</p>
+            <p>
+                After code and before the start of inline comments should be at least two spaces.
+                Just like block comments, inline comments also have to start with <code>#</code> followed by a single space.
+            </p>
+            <pre><code class="language-python"># Do not use inline comments to explain things
+# that the reader can understand even without the inline comment.
+my_variable = "Value!"  # Assign value to my_variable
+
+# Here better variable name can be used like shown in the second line.
+x = "Walmart"  # Shop name
+shop_name = "Walmart"
+
+# Sometimes, if something is not obvious, then inline comments are useful.
+# Example is from PEP 8.
+x = x + 1  # Compensate for border</code></pre>
+        </li>
+        <li>
+            <h4>Docstrings</h4>
+            <p>
+                Last, but not least important comment type is docstring, which is a short version of documentation string.
+                Docstring rules haven't been defined by PEP 8, but by <a href="https://www.python.org/dev/peps/pep-0257">PEP 257</a> instead.
+            </p>
+            <p>Docstrings should start and end with three quotes (""").</p>
+            <p>There are two types of docstrings: one-line docstrings and multiline docstrings.</p>
+            <p>
+                One-line docstrings have to start and end in the same line, while multiline docstrings start and end in different lines.
+                Multiline docstring has two parts: summary line and a longer description, which are separated by one empty line.
+                The multiline docstring start and end quotes should be on different lines than the content.
+            </p>
+            <pre><code class="language-python"># This is a one-line docstring.
+"""This is one line module docstring."""
+
+
+# This is a multiline docstring.
+def my_function():
+    """
+    This is the summary line.
+
+    This is the description.
+    """</code></pre>
+        </li>
+    </ul>
+
+    <h2>Too much for you?</h2>
+    <p>
+        Do all these style rules make your head explode? We have something for you! We have a song!
+        We have <a href="https://www.youtube.com/watch?v=hgI0p1zf31k">The PEP 8 Song (featuring lemonsaurus)</a>!
+        Great way to get started with writing beautiful code.
+    </p>
+    <iframe width="500" height="315" src="https://www.youtube.com/embed/hgI0p1zf31k"></iframe>
+{% endblock %}
+
+{% block sidebar %}
+    {% include "events/sidebar/code-jams/useful-information.html" %}
+{% endblock %}
