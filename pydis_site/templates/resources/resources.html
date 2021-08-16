@@ -22,14 +22,14 @@
 
                 <div class="field">
                     <div class="columns">
-                        <div class="column pl-6 is-two-fifths">
+                        <div class="column pl-6 is-two-fifths is-flex is-flex-direction-column">
                             <div class="title is-5 pt-2 has-text-centered">Topic</div>
                             <div class="columns">
                                 <div class="column">
                                     {% for topic in topics_1 %}
                                     <div class="field">
                                         <label class="checkbox">
-                                            <input name="topicOption" type="checkbox" value="{{ topic }}"{% if topic == 'General' %} checked{% endif %}>
+                                            <input class="topic" name="topicOption" type="checkbox" value="{{ topic }}"{% if topic == 'General' %} checked{% endif %}>
                                             <span class="has-text-grey is-size-6">{{ topic }}</span>
                                         </label>
                                     </div>
@@ -39,52 +39,64 @@
                                     {% for topic in topics_2 %}
                                     <div class="field">
                                         <label class="checkbox">
-                                            <input name="topicOption" type="checkbox" value="{{ topic }}"{% if topic == 'General' %} checked{% endif %}>
+                                            <input class="topic" name="topicOption" type="checkbox" value="{{ topic }}"{% if topic == 'General' %} checked{% endif %}>
                                             <span class="has-text-grey is-size-6">{{ topic }}</span>
                                         </label>
                                     </div>
                                     {% endfor %}
                                 </div>
                             </div>
+                            <span class="control ml-2 is-flex is-align-items-end is-justify-content-end mt-auto">
+                                <button onclick="selectAllQueryParams('topic')" class="button is-success is-small">Select All</button>
+                            </span>
                         </div>
 
-                        <div class="column pl-6">
+                        <div class="column is-flex is-flex-direction-column pl-6">
                             <div class="title is-5 pt-2 has-text-centered">Type</div>
 
                             {% for tag_type in tag_types %}
                             <div class="field">
                                 <label class="checkbox ml-0">
-                                    <input name="typeOption" type="checkbox" value="{{ tag_type }}"{% if tag_type == 'Tutorial' %} checked{% endif %}>
+                                    <input class="type" name="typeOption" type="checkbox" value="{{ tag_type }}"{% if tag_type == 'Tutorial' %} checked{% endif %}>
                                     <span class="has-text-grey is-size-6">{{ tag_type }}</span>
                                 </label>
                             </div>
                             {% endfor %}
+                            <span class="control ml-2 is-flex is-align-items-end is-justify-content-end mt-auto">
+                                <button onclick="selectAllQueryParams('type')" class="button is-success is-small">Select All</button>
+                            </span>
                         </div>
 
-                        <div class="column pl-6">
+                        <div class="column is-flex is-flex-direction-column pl-6">
                             <div class="title is-5 pt-2 has-text-centered">Payment</div>
 
                             {% for payment_tier in payment_tiers %}
                             <div class="field">
                                 <label class="checkbox ml-0">
-                                    <input name="paymentOption" type="checkbox" value="{{ payment_tier }}"{% if payment_tier == 'Free' %} checked{% endif %}>
+                                    <input class="payment" name="paymentOption" type="checkbox" value="{{ payment_tier }}"{% if payment_tier == 'Free' %} checked{% endif %}>
                                      <span class="has-text-grey is-size-6">{{ payment_tier }}</span>
                                </label>
                             </div>
                             {% endfor %}
+                            <span class="control ml-2 is-flex is-align-items-end is-justify-content-end mt-auto">
+                                <button onclick="selectAllQueryParams('payment')" class="button is-success is-small">Select All</button>
+                            </span>
                         </div>
 
-                        <div class="column pl-6">
+                        <div class="column is-flex is-flex-direction-column px-6">
                             <div class="title is-5 pt-2 has-text-centered">Level</div>
 
                             {% for complexity in complexities %}
                             <div class="field">
                                 <label class="checkbox ml-0">
-                                    <input name="complexityOption" type="checkbox" value="{{ complexity }}"{% if complexity == 'Beginner' %} checked{% endif %}>
+                                    <input class="complexity" name="complexityOption" type="checkbox" value="{{ complexity }}"{% if complexity == 'Beginner' %} checked{% endif %}>
                                     <span class="has-text-grey is-size-6">{{ complexity }}</span>
                               </label>
                             </div>
                            {% endfor %}
+                            <span class="control ml-2 is-flex is-align-items-end is-justify-content-end mt-auto">
+                                <button onclick="selectAllQueryParams('complexity')" class="button is-success is-small">Select All</button>
+                            </span>
                         </div>
                     </div>
 
@@ -93,12 +105,8 @@
                             <button onclick="buildQueryParams()" class="button is-link is-small">Search</button>
                         </span>
 
-                        <span class="is-one-fifth control">
+                        <span class="is-one-fifth control is-flex is-align-items-end is-justify-content-end mt-auto">
                             <button onclick="clearQueryParams()" class="button is-danger is-small">Clear Search</button>
-                        </span>
-
-                        <span class="control ml-2">
-                            <button onclick="selectAllQueryParams()" class="button is-success is-small">Select All</button>
                         </span>
                     </div>
                 </div>
@@ -178,10 +186,12 @@
     });
     }
 
-    function selectAllQueryParams(){
+    function selectAllQueryParams(column){
         checkboxOptions.forEach((option) => {
         document.querySelectorAll(createQuerySelect(option)).forEach((checkbox) => {
-            checkbox.checked = true;
+            if (checkbox.className == column) {
+                checkbox.checked = true;
+            }
         });
     });
     }
