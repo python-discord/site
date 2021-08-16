@@ -96,6 +96,10 @@
                         <span class="is-one-fifth control">
                             <button onclick="clearQueryParams()" class="button is-danger is-small">Clear Search</button>
                         </span>
+
+                        <span class="control ml-2">
+                            <button onclick="selectAllQueryParams()" class="button is-success is-small">Select All</button>
+                        </span>
                     </div>
                 </div>
             </div>
@@ -173,5 +177,14 @@
         });
     });
     }
+
+    function selectAllQueryParams(){
+        checkboxOptions.forEach((option) => {
+        document.querySelectorAll(createQuerySelect(option)).forEach((checkbox) => {
+            checkbox.checked = true;
+        });
+    });
+    }
+
 </script>
 {% endblock %}
