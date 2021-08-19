@@ -1,3 +1,6 @@
+from datetime import datetime
+
+from django.db.models import QuerySet
 from django.http.request import HttpRequest
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.decorators import action
@@ -13,6 +16,7 @@ from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
 
 from pydis_site.apps.api.models.bot.infraction import Infraction
+from pydis_site.apps.api.pagination import LimitOffsetPaginationExtended
 from pydis_site.apps.api.serializers import (
     ExpandedInfractionSerializer,
     InfractionSerializer
@@ -38,14 +42,24 @@ class InfractionViewSet(
     - **active** `bool`: whether the infraction is still active
     - **actor__id** `int`: snowflake of the user which applied the infraction
     - **hidden** `bool`: whether the infraction is a shadow infraction
+    - **limit** `int`: number of results return per page (default 100)
+    - **offset** `int`: the initial index from which to return the results (default 0)
     - **search** `str`: regular expression applied to the infraction's reason
     - **type** `str`: the type of the infraction
+    - **types** `str`: comma separated sequence of types to filter for
     - **user__id** `int`: snowflake of the user to which the infraction was applied
     - **ordering** `str`: comma-separated sequence of fields to order the returned results
+    - **permanent** `bool`: whether or not to retrieve permanent infractions (default True)
+    - **expires_after** `isodatetime`: the earliest expires_at time to return infractions for
+    - **expires_before** `isodatetime`: the latest expires_at time to return infractions for
 
     Invalid query parameters are ignored.
+    Only one of `type` and `types` may be provided. If both `expires_before` and `expires_after`
+    are provided, `expires_after` must come after `expires_before`.
+    If `permanent` is provided and true, `expires_before` and `expires_after` must not be provided.
 
     #### Response format
+    Response is paginated but the result is returned without any pagination metadata.
     >>> [
     ...     {
     ...         'id': 5,
@@ -133,6 +147,7 @@ class InfractionViewSet(
 
     serializer_class = InfractionSerializer
     queryset = Infraction.objects.all()
+    pagination_class = LimitOffsetPaginationExtended
     filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
     filter_fields = ('user__id', 'actor__id', 'active', 'hidden', 'type')
     search_fields = ('$reason',)
@@ -150,6 +165,69 @@ class InfractionViewSet(
         serializer.save()
 
         return Response(serializer.data)
+
+    def get_queryset(self) -> QuerySet:
+        """
+        Called to fetch the initial queryset, used to implement some of the more complex filters.
+
+        This provides the `permanent` and the `expires_gte` and `expires_lte` options.
+        """
+        filter_permanent = self.request.query_params.get('permanent')
+        additional_filters = {}
+        if filter_permanent is not None:
+            additional_filters['expires_at__isnull'] = filter_permanent.lower() == 'true'
+
+        filter_expires_after = self.request.query_params.get('expires_after')
+        if filter_expires_after:
+            try:
+                additional_filters['expires_at__gte'] = datetime.fromisoformat(
+                    filter_expires_after
+                )
+            except ValueError:
+                raise ValidationError({'expires_after': ['failed to convert to datetime']})
+
+        filter_expires_before = self.request.query_params.get('expires_before')
+        if filter_expires_before:
+            try:
+                additional_filters['expires_at__lte'] = datetime.fromisoformat(
+                    filter_expires_before
+                )
+            except ValueError:
+                raise ValidationError({'expires_before': ['failed to convert to datetime']})
+
+        if 'expires_at__lte' in additional_filters and 'expires_at__gte' in additional_filters:
+            if additional_filters['expires_at__gte'] > additional_filters['expires_at__lte']:
+                raise ValidationError({
+                    'expires_before': ['cannot be after expires_after'],
+                    'expires_after': ['cannot be before expires_before'],
+                })
+
+        if (
+            ('expires_at__lte' in additional_filters or 'expires_at__gte' in additional_filters)
+            and 'expires_at__isnull' in additional_filters
+            and additional_filters['expires_at__isnull']
+        ):
+            raise ValidationError({
+                'permanent': [
+                    'cannot filter for permanent infractions at the'
+                    ' same time as expires_at or expires_before',
+                ]
+            })
+
+        if filter_expires_before:
+            # Filter out permanent infractions specifically if we want ones that will expire
+            # before a given date
+            additional_filters['expires_at__isnull'] = False
+
+        filter_types = self.request.query_params.get('types')
+        if filter_types:
+            if self.request.query_params.get('type'):
+                raise ValidationError({
+                    'types': ['you must provide only one of "type" or "types"'],
+                })
+            additional_filters['type__in'] = [i.strip() for i in filter_types.split(",")]
+
+        return self.queryset.filter(**additional_filters)
 
     @action(url_path='expanded', detail=False)
     def list_expanded(self, *args, **kwargs) -> Response:

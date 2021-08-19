@@ -4,7 +4,7 @@ on:
   workflow_run:
     workflows: ["Build"]
     branches:
-      - master
+      - main
     types:
       - completed
 
@@ -13,6 +13,7 @@ jobs:
     if: github.event.workflow_run.conclusion == 'success'
     name: Deploy to Kubernetes Cluster
     runs-on: ubuntu-latest
+    environment: production
 
     steps:
       - name: Create SHA Container Tag
@@ -43,3 +44,9 @@ jobs:
               site/deployment.yaml
           images: 'ghcr.io/python-discord/site:${{ steps.sha_tag.outputs.tag }}'
           kubectl-version: 'latest'
+
+      - name: Purge Cloudflare Edge Cache
+        uses: jakejarvis/cloudflare-purge-action@master
+        env:
+          CLOUDFLARE_ZONE: 989c984a358bfcd1e9b9d188cc86c1df
+          CLOUDFLARE_TOKEN: ${{ secrets.CLOUDFLARE_CACHE_TOKEN }}

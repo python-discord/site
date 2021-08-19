@@ -1,0 +1,55 @@
+[tool.poetry]
+name = "site"
+version = "1.0.0"
+description = "The project responsible for maintaining our website and all of its subdomains."
+authors = ["Python Discord <info@pythondiscord.com>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "3.9.*"
+django = "~=3.0.4"
+django-environ = "~=0.4.5"
+django-filter = "~=2.1.0"
+django-hosts = "~=4.0"
+djangorestframework = "~=3.11.0"
+psycopg2-binary = "~=2.8"
+django-simple-bulma = "~=2.1"
+whitenoise = "~=5.0"
+requests = "~=2.21"
+pyyaml = "~=5.1"
+gunicorn = "~=20.0.4"
+sentry-sdk = "~=0.19"
+markdown = "~=3.3.4"
+python-frontmatter = "~=1.0"
+
+[tool.poetry.dev-dependencies]
+coverage = "~=5.0"
+flake8 = "~=3.7"
+flake8-annotations = "~=2.0"
+flake8-bandit = "~=2.1"
+flake8-bugbear = "~=20.1"
+flake8-docstrings = "~=1.5"
+flake8-import-order = "~=0.18"
+flake8-string-format = "~=0.3"
+flake8-tidy-imports = "~=4.0"
+flake8-todo = "~=0.7"
+mccabe = "~=0.6.1"
+pep8-naming = "~=0.9"
+pre-commit = "~=2.1"
+pyfakefs = "~=4.4.0"
+coveralls = "~=2.1"
+taskipy = "~=1.7.0"
+python-dotenv = "~=0.17.1"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.taskipy.tasks]
+start = "python manage.py run --debug"
+makemigrations = "python manage.py makemigrations"
+django_shell = "python manage.py shell"
+test = "coverage run manage.py test"
+report = "coverage report -m"
+lint = "pre-commit run --all-files"
+precommit = "pre-commit install"

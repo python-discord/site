@@ -11,15 +11,9 @@
 
   <!-- Mobile-only Notice -->
   <section id="mobile-notice" class="message is-primary is-hidden-tablet">
-    <div class="message-header">
-      <p>100K Member Milestone!</p>
-    </div>
-    <div class="message-body">
-      Thanks to all our members for helping us create this friendly and helpful community!
-      <br><br>
-      As a nice treat, we've created a <a href="{% url 'timeline' %}">Timeline page</a> for people
-      to discover the events that made our community what it is today. Be sure to check it out!
-    </div>
+    <a href="/events/code-jams/8/">
+        <img src="{% static "images/events/summer_code_jam_2021/front_page_banners/currently_live.png" %}" alt="Summer Code Jam 2021">
+    </a>
   </section>
 
   <!-- Wave Hero -->
@@ -51,11 +45,12 @@
             </div>
           </div>
 
-          {# Right side content #}
+          {# Code Jam banner #}
           <div id="wave-hero-right" class="column is-half">
-            <img src="{% static "images/events/100k.png" %}" alt="100K members!">
+            <a href="/events/code-jams/8/">
+              <img src="{% static "images/events/summer_code_jam_2021/front_page_banners/currently_live.png" %}" alt="Summer Code Jam 2021">
+            </a>
           </div>
-
         </div>
       </div>
 
@@ -88,7 +83,7 @@
           </p>
           <p>
             You can find help with most Python-related problems in one of our help channels.
-            Our staff of over 50 dedicated expert Helpers are available around the clock
+            Our staff of over 100 dedicated expert Helpers are available around the clock
             in every timezone. Whether you're looking to learn the language or working on a
             complex project, we've got someone who can help you if you get stuck.
           </p>
@@ -98,7 +93,7 @@
         <section id="showcase" class="column is-half-desktop has-text-centered">
           <article class="box">
 
-            <header class="title">New Timeline!</header>
+            <header class="title">Interactive timeline</header>
 
             <div class="mini-timeline">
               <i class="fa fa-asterisk"></i>
@@ -110,7 +105,7 @@
             </div>
 
             <p class="subtitle">
-              Start from our humble beginnings to discover the events that made our community what it is today.
+              Discover the history of our community, and learn about the events that made our community what it is today.
             </p>
 
             <div class="buttons are-large is-centered">
@@ -203,6 +198,11 @@
           </a>
           <a href="https://notion.so" class="column is-narrow">
             <img src="{% static "images/sponsors/notion.png" %}" alt="Notion"/>
+          </a>
+          <a href="https://streamyard.com" class="column is-narrow">
+            <img src="{% static "images/sponsors/streamyard.png" %}" alt="StreamYard"/>
+          <a href="https://www.cloudflare.com/" class="column is-narrow">
+            <img src="{% static "images/sponsors/cloudflare.png" %}" alt="Cloudflare"/>
           </a>
         </div>
       </div>

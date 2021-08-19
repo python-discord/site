@@ -410,7 +410,7 @@ class UserMetricityTests(APISubdomainTestCase):
         joined_at = "foo"
         total_messages = 1
         total_blocks = 1
-        self.mock_metricity_user(joined_at, total_messages, total_blocks)
+        self.mock_metricity_user(joined_at, total_messages, total_blocks, [])
 
         # When
         url = reverse('bot:user-metricity-data', args=[0], host='api')
@@ -436,13 +436,24 @@ class UserMetricityTests(APISubdomainTestCase):
         # Then
         self.assertEqual(response.status_code, 404)
 
+    def test_no_metricity_user_for_review(self):
+        # Given
+        self.mock_no_metricity_user()
+
+        # When
+        url = reverse('bot:user-metricity-review-data', args=[0], host='api')
+        response = self.client.get(url)
+
+        # Then
+        self.assertEqual(response.status_code, 404)
+
     def test_metricity_voice_banned(self):
         cases = [
             {'exception': None, 'voice_banned': True},
             {'exception': ObjectDoesNotExist, 'voice_banned': False},
         ]
 
-        self.mock_metricity_user("foo", 1, 1)
+        self.mock_metricity_user("foo", 1, 1, [["bar", 1]])
 
         for case in cases:
             with self.subTest(exception=case['exception'], voice_banned=case['voice_banned']):
@@ -455,7 +466,27 @@ class UserMetricityTests(APISubdomainTestCase):
                     self.assertEqual(response.status_code, 200)
                     self.assertEqual(response.json()["voice_banned"], case["voice_banned"])
 
-    def mock_metricity_user(self, joined_at, total_messages, total_blocks):
+    def test_metricity_review_data(self):
+        # Given
+        joined_at = "foo"
+        total_messages = 10
+        total_blocks = 1
+        channel_activity = [["bar", 4], ["buzz", 6]]
+        self.mock_metricity_user(joined_at, total_messages, total_blocks, channel_activity)
+
+        # When
+        url = reverse('bot:user-metricity-review-data', args=[0], host='api')
+        response = self.client.get(url)
+
+        # Then
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json(), {
+            "joined_at": joined_at,
+            "top_channel_activity": channel_activity,
+            "total_messages": total_messages
+        })
+
+    def mock_metricity_user(self, joined_at, total_messages, total_blocks, top_channel_activity):
         patcher = patch("pydis_site.apps.api.viewsets.bot.user.Metricity")
         self.metricity = patcher.start()
         self.addCleanup(patcher.stop)
@@ -463,6 +494,7 @@ class UserMetricityTests(APISubdomainTestCase):
         self.metricity.user.return_value = dict(joined_at=joined_at)
         self.metricity.total_messages.return_value = total_messages
         self.metricity.total_message_blocks.return_value = total_blocks
+        self.metricity.top_channel_activity.return_value = top_channel_activity
 
     def mock_no_metricity_user(self):
         patcher = patch("pydis_site.apps.api.viewsets.bot.user.Metricity")
@@ -472,3 +504,4 @@ class UserMetricityTests(APISubdomainTestCase):
         self.metricity.user.side_effect = NotFound()
         self.metricity.total_messages.side_effect = NotFound()
         self.metricity.total_message_blocks.side_effect = NotFound()
+        self.metricity.top_channel_activity.side_effect = NotFound()

@@ -1,0 +1,72 @@
+{% extends "events/base_sidebar.html" %}
+
+{% block breadcrumb %}
+    <li><a href="{% url "events:index" %}">Events</a></li>
+    <li class="is-active"><a href="#">Code Jams</a></li>
+{% endblock %}
+
+{% block title %}Code Jams{% endblock %}
+
+{% block event_content %}
+    <p>
+        If you've been around the server for a while, or you just happened to join at the right time,
+        you may have heard of something known as a Code Jam.
+        This page will help answer some questions you may have about them.
+    </p>
+
+    <h2 class="title is-4" id="what-is-code-jam"><a href="#what-is-code-jam">What is a Code Jam?</a></h2>
+    <p>
+        This is the question you might be asking yourself right now.
+        A Code Jam is a chance to create something with a team.
+        In each jam, you are paired up with a group of other users just like yourself who will then be given a type of program to make and a theme to help guide it.
+        You then have a little over a week's time to create the best project you can.
+    </p>
+
+    <h2 class="title is-4" id="how-do-i-join"><a href="#how-do-i-join">How do I join?</a></h2>
+    <p>
+        Before each Code Jam, we open up a Qualifier.
+        The Qualifier is a challenge program that you have to write yourself and has to meet certain criteria in order to, well, qualify.
+        The kinds of qualifiers can vary from something like making an RPG inventory layout to making a password generator that meets certain conditions.
+    </p>
+
+    <h2 class="title is-4" id="how-often-do-these-happen"><a href="#how-often-do-these-happen">How often do these happen?</a></h2>
+    <p>
+        Our Code Jams happen twice a year. We have a Winter Jam and a Summer Jam.
+    </p>
+
+    <h2 class="title is-4" id="what-happens-if-i-have-to-drop-out"><a href="#what-happens-if-i-have-to-drop-out">What happens if I have to drop out?</a></h2>
+    <p>
+        This does happen from time to time.
+        Life gets in the way, we find out that relative passed away or your significant other RSVP'd you to a wedding you didn't know about until a week before.
+        Ideally we'd like to know about dropouts before the jam starts.
+        But if something does come up, please make sure to communicate that fact to any of our Event Coordinators, Moderators, or Admins.
+        The worst thing you could do is simply abandon your team, and doing so may hurt your chances for participating in future jams.
+    </p>
+
+    <h2 class="title is-4" id="how-experienced-do-i-need-to-be-to-join-a-code-jam">
+        <a href="#how-experienced-do-i-need-to-be-to-join-a-code-jam">How experienced do I need to be to join a Code Jam?</a>
+    </h2>
+    <p>
+        This is a question that we get asked a lot but is very difficult to answer.
+        Creating something fun with a team can be a great experience for almost everyone,
+        including relative beginners and more experienced developers.
+        That said, to make it a fun experience for everyone in the team,
+        we do require participants to complete a qualifier task so we can ensure that everyone
+        who enters the jam knows enough of the basics to activily participate in the development process.
+    </p>
+    <p>
+        Participating in a Code Jam often turns out to be a great learning experience.
+        Not only do you typically get to use packages and libraries you haven't touched before,
+        it will also increase your experience with developing an application in a team.
+        If you have never really done this before,
+        then you'll notice that collaborating with others adds a whole new dimension to the development process.
+        Even if you do have a lot of experience with working in teams,
+        having to collaborate with relative strangers of varying skill levels may provide a different experience than what you're used to.
+    </p>
+{% endblock %}
+
+{% block sidebar %}
+    {% include "events/sidebar/code-jams/ongoing-code-jam.html" %}
+    {% include "events/sidebar/code-jams/previous-code-jams.html" %}
+    {% include "events/sidebar/code-jams/useful-information.html" %}
+{% endblock %}

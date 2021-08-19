@@ -1,0 +1,17 @@
+<div class="dropdown is-pulled-right is-right" id="dropdown">
+    <div class="dropdown-trigger">
+        <a aria-haspopup="true" aria-controls="subarticle-menu">
+            <span>Sub-Articles</span>
+            <span class="icon is-small">
+                <i class="fas fa-angle-down" aria-hidden="true"></i>
+            </span>
+        </a>
+    </div>
+    <div class="dropdown-menu" id="subarticle-menu" role="menu">
+        <div class="dropdown-content">
+            {% for page in subarticles|dictsort:"name" %}
+                <a href="{{ page.path }}" class="dropdown-item">{{ page.name }}</a>
+            {% endfor %}
+        </div>
+    </div>
+</div>

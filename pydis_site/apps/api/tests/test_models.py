@@ -1,6 +1,7 @@
 from datetime import datetime as dt
 
-from django.test import SimpleTestCase
+from django.core.exceptions import ValidationError
+from django.test import SimpleTestCase, TestCase
 from django.utils import timezone
 
 from pydis_site.apps.api.models import (
@@ -10,6 +11,7 @@ from pydis_site.apps.api.models import (
     Message,
     MessageDeletionContext,
     Nomination,
+    NominationEntry,
     OffTopicChannelName,
     OffensiveMessage,
     Reminder,
@@ -33,21 +35,52 @@ class ReprMixinTests(SimpleTestCase):
         self.assertEqual(repr(self.klass), expected)
 
 
+class NitroMessageLengthTest(TestCase):
+    def setUp(self):
+        self.user = User.objects.create(id=50, name='bill', discriminator=5)
+        self.context = MessageDeletionContext.objects.create(
+            id=50,
+            actor=self.user,
+            creation=dt.utcnow()
+        )
+
+    def test_create(self):
+        message = DeletedMessage(
+            id=46,
+            author=self.user,
+            channel_id=666,
+            content="w"*4000,
+            deletion_context=self.context,
+            embeds=[]
+        )
+
+        try:
+            message.clean_fields()
+        except Exception as e:  # pragma: no cover
+            self.fail(f"Creation of message of length 3950 failed with: {e}")
+
+    def test_create_failure(self):
+        message = DeletedMessage(
+            id=47,
+            author=self.user,
+            channel_id=666,
+            content="w"*4001,
+            deletion_context=self.context,
+            embeds=[]
+        )
+
+        self.assertRaisesRegex(ValidationError, "content':", message.clean_fields)
+
+
 class StringDunderMethodTests(SimpleTestCase):
     def setUp(self):
         self.nomination = Nomination(
             id=123,
-            actor=User(
-                id=9876,
-                name='Mr. Hemlock',
-                discriminator=6666,
-            ),
             user=User(
                 id=9876,
                 name="Hemlock's Cat",
                 discriminator=7777,
             ),
-            reason="He purrrrs like the best!",
         )
 
         self.objects = (
@@ -135,6 +168,15 @@ class StringDunderMethodTests(SimpleTestCase):
                 ),
                 content="oh no",
                 expiration=dt(5018, 11, 20, 15, 52, tzinfo=timezone.utc)
+            ),
+            NominationEntry(
+                nomination_id=self.nomination.id,
+                actor=User(
+                    id=9876,
+                    name='Mr. Hemlock',
+                    discriminator=6666,
+                ),
+                reason="He purrrrs like the best!",
             )
         )
 

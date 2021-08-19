@@ -1,6 +1,5 @@
 {# Base template, with a few basic style definitions. #}
 {% load django_simple_bulma %}
-{% load sekizai_tags %}
 {% load static %}
 
 <!DOCTYPE html>
@@ -28,30 +27,15 @@
 
   {# Font-awesome here is defined explicitly so that we can have Pro #}
   <script src="https://kit.fontawesome.com/ae6a3152d8.js"></script>
-  <script src="{% static "js/base/modal.js" %}"></script>
 
   <link rel="stylesheet" href="{% static "css/base/base.css" %}">
-  <link rel="stylesheet" href="{% static "css/base/notification.css" %}">
   {% block head %}{% endblock %}
 
-  {% render_block "css" %}
 </head>
 <body class="site">
   <!-- Git hash for this release: {{ git_sha }} -->
 
 <main class="site-content">
-  {% if messages %}
-    <div class="messages">
-      {% for message in messages %}
-        <div class="notification {% if message.tags %}is-{{ message.tags }}{% endif %}">
-          <button class="delete"></button>
-
-          {{ message }}
-        </div>
-      {% endfor %}
-    </div>
-  {% endif %}
-
   {% block content %}
     {{ block.super }}
   {% endblock %}
@@ -61,6 +45,5 @@
   {% include "base/footer.html" %}
 {% endblock %}
 
-{% render_block "js" %}
 </body>
 </html>

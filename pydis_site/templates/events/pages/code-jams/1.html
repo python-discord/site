@@ -1,0 +1,82 @@
+{% extends "events/base.html" %}
+
+{% block title %}Code Jam 1: Snakes{% endblock %}
+
+{% block breadcrumb %}
+    <li><a href="{% url "events:index" %}">Events</a></li>
+    <li><a href="{% url "events:page" path="code-jams" %}">Code Jams</a></li>
+    <li class="is-active"><a href="#">Code Jam 1: Snakes</a></li>
+{% endblock %}
+
+{% block event_content %}
+    <p>
+        The theme of the code jam was <strong>snakes</strong> Participants were assigned a random partner,
+        and used Git to submit code to us. Staff members reviewed the code both during and after the code jam,
+        and provided suggestions for changes and improvements.
+        The best submissions were implemented into our community bot.
+        Winners recieved a special Code Jam Champion title.
+    </p>
+
+    <h2 id="task-description" class="title is-4"><a href="#task-description">Task description</a></h2>
+    <p>Here is the original task description which was posted on the code-jam-1 GitHub repo:</p>
+
+    <blockquote>
+        <p>
+            For this code jam, your task will be to create a Snake cog for a Discord.py rewrite bot.
+            <a href="https://discordpy.readthedocs.io/en/rewrite/">You can find the documentation for Discord.py rewrite here</a>.
+            The best cog commands will be added to the official Python Discord bot and made available to everyone on the server.
+            The overall best cog will be awarded custom Code Jam Champion roles,
+            but the best commands from the teams who did not win will also be added to our bot,
+            and any users who write something that ends up in the bot will be awarded Contributor roles on the server.
+        </p>
+        <p>
+            Your initial task will be to write <code>get_snek()</code>. This is the minimum requirement for this contest,
+            and everyone must do it. <code>get_snek()</code> should be a method that goes online and fetches information about a snake.
+            If you run it without providing an argument, it should fetch information about a random snake,
+            including the name of the snake, a picture of the snake, and various information about it.
+            Is it venomous? Where can it be found? What information you choose to get is up to you.
+        </p>
+        <p>
+            <code>get_snek()</code> should also take an optional argument name, which should be a string that represents the name of a snake.
+            For example, the call <code>get_snek('cobra')</code> should get information about a cobra. name should be case insensitive.
+        </p>
+        <p>
+            If <code>get_snek('Python')</code> is called, the method should instead return information about the programming language,
+            but making sure to return the same type of information as for all the other snakes.
+            Fill in this information in any way you want, try to have some fun with it.
+        </p>
+        <p>
+            Once you have finished <code>get_snek()</code>, you should make at least two bot commands.
+            The first command, <code>get()</code>, should simply call <code>get_snek()</code> with whatever arguments the user provided,
+            and then make a nice embed that it returns to Discord.
+            For example, if the user in the Discord channel says bot.snakes.get('anaconda'),
+            the bot should post an embed that shows a picture of an anaconda and some information about the snake.
+        </p>
+        <p>
+            The second command is entirely up to you. You can choose to use <code>get_snek</code> for this command as well,
+            or you can come up with something entirely different.
+            The only requirement is that it is snake related in some way or other.
+            Here is your chance to be creative. It is these commands that will win or lose you this code jam.
+            The best original ideas for these commands will walk away with the victory.
+        </p>
+    </blockquote>
+
+    <h2 id="result" class="title is-4"><a href="#result">Result</a></h2>
+    <p><strong>The Winning Team: Team 23, kel and Momo!</strong></p>
+    <p>
+        These two experts worked together to create what can only be described as a flawless submission.
+        The staff were unable to find a single thing to complain about in the 1100 lines that were committed.
+        Here are some of the features they created for their snake cog:
+    </p>
+    <ul>
+        <li>A fully functional implementation of Snakes and Ladders</li>
+        <li>A feature that uses perlin noise to draw a random snake, and posts the picture in the chat.</li>
+        <li>Hatch your very own baby snake!</li>
+        <li>Snakify your post history with a Markov chain</li>
+        <li>Rattlesnake sound effects in the voice channels</li>
+    </ul>
+    <p>
+        These features, as well as the best ones from the other teams,
+        have been implemented into our community bot. Use <code>.snakes</code> in <code>#sir-lancebot-commands</code> to play with it.
+    </p>
+{% endblock %}
