@@ -1,0 +1,5 @@
+description: Lightweight code editors supporting Python
+name: Editors
+default_icon: branding/python
+default_icon_color: black
+position: 1

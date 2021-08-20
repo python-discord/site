@@ -121,30 +121,34 @@ class RulesView(APIView):
 
         return Response([
             (
-                f"Follow the {discord_community_guidelines} and {discord_tos}."
-            ),
-            (
                 f"Follow the {pydis_coc}."
             ),
             (
-                "Listen to and respect staff members and their instructions."
+                f"Follow the {discord_community_guidelines} and {discord_tos}."
             ),
             (
-                "This is an English-speaking server, "
-                "so please speak English to the best of your ability."
+                "Respect staff members and listen to their instructions."
+            ),
+            (
+                "Use English to the best of your ability. "
+                "Be polite if someone speaks English imperfectly."
             ),
             (
                 "Do not provide or request help on projects that may break laws, "
-                "breach terms of services, be considered malicious or inappropriate. "
-                "Do not help with ongoing exams. Do not provide or request solutions "
-                "for graded assignments, although general guidance is okay."
+                "breach terms of services, or are malicious or inappropriate."
             ),
             (
-                "No spamming or unapproved advertising, including requests for paid work. "
-                "Open-source projects can be shared with others in #python-general and "
-                "code reviews can be asked for in a help channel."
+                "Do not post unapproved advertising."
             ),
             (
-                "Keep discussions relevant to channel topics and guidelines."
+                "Keep discussions relevant to the channel topic. "
+                "Each channel's description tells you the topic."
+            ),
+            (
+                "Do not help with ongoing exams. When helping with homework, "
+                "help people learn how to do the assignment without doing it for them."
+            ),
+            (
+                "Do not offer or ask for paid work of any kind."
             ),
         ])

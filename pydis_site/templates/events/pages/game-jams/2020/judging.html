@@ -1,0 +1,68 @@
+{% extends "events/base_sidebar.html" %}
+
+{% block title %}Judging{% endblock %}
+
+{% block breadcrumb %}
+    <li><a href="{% url "events:index" %}">Events</a></li>
+    <li><a href="{% url "events:page" path="game-jams" %}">Game Jams</a></li>
+    <li><a href="{% url "events:page" path="game-jams/2020" %}">Game Jam 2020: Three of a Kind</a></li>
+    <li class="is-active"><a href="#">Judging</a></li>
+{% endblock %}
+
+{% block event_content %}
+    <img src="https://user-images.githubusercontent.com/33516116/77762078-e02ce080-7030-11ea-947a-9c6733d4f33d.png">
+    <p>
+    The game jam has a greatly simplified judging process compared to the <a href="/events/code-jams/">Code Jam events</a>. We will not be evaluating your code quality, your commit history, or your teamwork. We will instead evaluate your project based on a few simple factors, which are outlined in this document.
+    </p>
+
+
+    <!-- Novelty -->
+    <h2>Creativity & Novelty Factor</h2>
+    <p>
+    The theme and the tech that we provide are provided as limitations, because we believe that <em>limitations breed creativity</em>. One of the big factors we consider when we judge these projects is the novelty factor. If you've created something truly unique, you've got a leg up on someone who made a very polished version of something that's very familiar. This means that even if you're not an expert programmer or experienced game dev, the right idea (and that ideas' adherence to the theme) might still net you a win!
+    </p>
+    <p>
+    Please try to spend some time coming up with the most fun and novel idea you can before diving into your actual programming. If you're not sure how, try googling for <strong>game dev ideation techniques</strong>. Professional game developers frequently make use of these techniques in order to help spin the wheels of creativity.
+    </p>
+    <p>
+    For example, you can try to write down a bunch of different adjectives (like "yellow" or "terrified") on red notes, nouns (like "lemon" or "snowman") on blue notes, and modifiers (like "in space!" or "the floor is lava!") on yellow notes. Then select a random note from each color, put them together in different orders and think about how you can create a game idea around it that fits the theme.
+    </p>
+
+    <!-- Execution-->
+    <h2>Execution</h2>
+    <p>
+    We will of course be evaluating the execution. How well does the game perform? How is the user experience? Is it fun? Is it easy to play? Does it look good, sound good, and feel good? The performance and interaction are probably the most important factors, but polish is nice, too!
+    </p>
+    <p>
+    We're going to try to do this in an objective way, but stuff like fun is always going to be a somewhat subjective thing to evaluate, and for that reason, this is not the single most critical criteria in the judging process, like it might have been in other game jams. To be more precise - A really fun and novel idea that ticks all the other boxes but has somewhat mediocre execution will still have a very good chance of doing well in this event.
+    </p>
+
+    <!-- Adherence-->
+    <h2>Theme Adherence</h2>
+    <p>Your submission must adhere to the theme we will present on the day the jam starts. There are different degrees of adherence here, and quite a lot of room to be creative, but a deeply thematic submission will be scored higher than a barely thematic submission, and a submission that does not adhere to the theme at all <strong>may be disqualified</strong>.
+    </p>
+    <p>
+    We love seeing multiple <em>layers</em> of thematic adherence - For example, your theme could play a part in your team name, your art style, your story, your sound effects, and of course, in the gameplay. You might even try to inject your theme into your documentation!
+    </p>
+
+    <!-- Documentation via README.md-->
+    <h2>Documentation</h2>
+    <p>We require that you make the project easy to comprehend, easy to install, and easy to run. To ensure this, your submission must contain a <code>README.md</code> in your team folder which clearly documents how to interact with it.
+    </p>
+    <p>
+    First of all, you need to include instructions on exactly how to get your game running. We require that you use a <strong>dependency manager</strong> and encourage you to make a <strong>click-and-play option</strong>, and these should be documented in this section. Please see <a href="/events/game-jam-2020/technical-requirements/">our technical requirements page</a> for more information on this. Remember, we have to judge dozens of submissions, so if every submission can be set up and run by just doing <code>pipenv install</code> and then <code>pipenv run start</code>, it will make our job significantly easier.
+    </p>
+    <p>
+    The readme should also contain information about the game, screenshots, a logo if you got it, your team name, instructions on how to play and anything else that helps provide a high-level overview over the game. This is also extremely helpful when we are judging so many projects, so that we can easily see which is which by looking through readmes. For an example of an excellent readme, check out <a href="https://github.com/python-discord/code-jam-6/blob/master/amphibian-alchemists/README.md">this readme created by the Amphibian Alchemists team during Code Jam 6</a>.
+    </p>
+
+    <!-- Team size-->
+    <h2>Team size</h2>
+    <p>
+    For this game jam, we are allowing you to sign up either by yourself, or with one or two friends. But, of course, it wouldn't be fair if we judged all entries the same regardless of team size - so we will be expecting slightly more from a team of 3 than from a solo team. To be more precise, we will not be expecting <em>three times as much</em> - working in a team has its own set of unique setbacks as well as advantages, and two developers does not equal 200% the output of one - but we will be expecting a full team to be able to deliver more content in ten days than a single person can.
+    </p>
+{% endblock %}
+
+{% block sidebar %}
+    {% include "events/sidebar/game-jams/2020.html" %}
+{% endblock %}

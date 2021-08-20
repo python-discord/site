@@ -6,7 +6,6 @@ source =
     pydis_site/apps/api
     pydis_site/apps/home
     pydis_site/apps/staff
-    pydis_site/apps/wiki
 omit =
     */migrations/*
     */admin.py
@@ -16,6 +15,7 @@ omit =
     pydis_site/wsgi.py
     pydis_site/settings.py
     pydis_site/utils/resources.py
+    pydis_site/apps/home/views/home.py
 
 [report]
 fail_under = 100

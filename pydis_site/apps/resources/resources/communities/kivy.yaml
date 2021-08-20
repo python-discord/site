@@ -1,0 +1,18 @@
+description: The Kivy project, through the Kivy framework and its sister projects,
+  aims to provide all the tools to create desktop and mobile applications in Python.
+  Allowing rapid development of multitouch applications with custom and exciting user interfaces.
+icon_image: https://raw.githubusercontent.com/kivy/kivy-website/master/logos/kivy-logo-black-256.png
+icon_size: 50
+title_image: https://i.imgur.com/EVP3jZR.png
+title_url: https://discord.gg/djPtTRJ
+position: 5
+urls:
+  - icon: branding/discord
+    url: https://discord.gg/djPtTRJ
+    color: blurple
+  - icon: regular/link
+    url: https://kivy.org/
+    color: teal
+  - icon: branding/github
+    url: https://github.com/kivy
+    color: black

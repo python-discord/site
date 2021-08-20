@@ -13,18 +13,13 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 import os
 import secrets
 import sys
-import typing
+from pathlib import Path
 
 import environ
 import sentry_sdk
-from django.contrib.messages import constants as messages
 from sentry_sdk.integrations.django import DjangoIntegration
 
 from pydis_site.constants import GIT_SHA
-
-if typing.TYPE_CHECKING:
-    from django.contrib.auth.models import User
-    from wiki.models import Article
 
 env = environ.Env(
     DEBUG=(bool, False),
@@ -47,21 +42,7 @@ DEBUG = env('DEBUG')
 
 # SECURITY WARNING: keep the secret key used in production secret!
 if DEBUG:
-    ALLOWED_HOSTS = env.list(
-        'ALLOWED_HOSTS',
-        default=[
-            'pythondiscord.local',
-            'api.pythondiscord.local',
-            'admin.pythondiscord.local',
-            'staff.pythondiscord.local',
-            '0.0.0.0',  # noqa: S104
-            'localhost',
-            'web',
-            'api.web',
-            'admin.web',
-            'staff.web'
-        ]
-    )
+    ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['*'])
     SECRET_KEY = "yellow polkadot bikini"  # noqa: S105
 
 elif 'CI' in os.environ:
@@ -76,55 +57,34 @@ else:
             'admin.pythondiscord.com',
             'api.pythondiscord.com',
             'staff.pythondiscord.com',
-            'pydis.com',
-            'api.pydis.com',
-            'admin.pydis.com',
-            'staff.pydis.com',
-            'api.site',
+            'pydis-api.default.svc.cluster.local',
         ]
     )
     SECRET_KEY = env('SECRET_KEY')
 
-
 # Application definition
-
 INSTALLED_APPS = [
     'pydis_site.apps.api',
     'pydis_site.apps.home',
     'pydis_site.apps.staff',
+    'pydis_site.apps.resources',
+    'pydis_site.apps.content',
+    'pydis_site.apps.events',
+    'pydis_site.apps.redirect',
 
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
-    'django.contrib.humanize.apps.HumanizeConfig',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.sites.apps.SitesConfig',
+    'django.contrib.sites',
     'django.contrib.staticfiles',
-
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-
-    'allauth.socialaccount.providers.discord',
-    'allauth.socialaccount.providers.github',
 
     'django_hosts',
     'django_filters',
-    'django_nyt.apps.DjangoNytConfig',
     'django_simple_bulma',
-    'mptt',
     'rest_framework',
-    'rest_framework.authtoken',
-    'sekizai',
-    'sorl.thumbnail',
-
-    'wiki.apps.WikiConfig',
-
-    'wiki.plugins.images.apps.ImagesConfig',
-    'wiki.plugins.links.apps.LinksConfig',
-    'wiki.plugins.redlinks.apps.RedlinksConfig',
-    'wiki.plugins.notifications.apps.NotificationsConfig',  # Required for migrations
+    'rest_framework.authtoken'
 ]
 
 MIDDLEWARE = [
@@ -155,12 +115,9 @@ TEMPLATES = [
 
             'context_processors': [
                 'django.template.context_processors.debug',
-                'django.template.context_processors.media',
                 'django.template.context_processors.request',
-                'django.template.context_processors.static',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                "sekizai.context_processors.sekizai",
                 "pydis_site.context_processors.git_sha_processor"
             ],
         },
@@ -209,9 +166,6 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'pydis_site', 'static')]
 STATIC_ROOT = env('STATIC_ROOT', default='/app/staticfiles')
-
-MEDIA_URL = '/media/'
-MEDIA_ROOT = env('MEDIA_ROOT', default='/site/media')
 
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
@@ -288,22 +242,10 @@ LOGGING = {
     }
 }
 
-# Django Messages framework config
-MESSAGE_TAGS = {
-    messages.DEBUG: 'primary',
-    messages.INFO: 'info',
-    messages.SUCCESS: 'success',
-    messages.WARNING: 'warning',
-    messages.ERROR: 'danger',
-}
-
 # Custom settings for django-simple-bulma
 BULMA_SETTINGS = {
     "variables": {  # If you update these colours, please update the notification.css file
         "primary": "#7289DA",    # Discord blurple
-
-        # "orange": "",          # Apparently unused, but the default is fine
-        # "yellow": "",          # The default yellow looks pretty good
         "green": "#32ac66",      # Colour picked after Discord discussion
         "turquoise": "#7289DA",  # Blurple, because Bulma uses this regardless of `primary` above
         "blue": "#2482c1",       # Colour picked after Discord discussion
@@ -316,96 +258,24 @@ BULMA_SETTINGS = {
         "dimensions": "16 24 32 48 64 96 128 256 512",  # Possible image dimensions
         "navbar-height": "4.75rem",
         "footer-padding": "1rem 1.5rem 1rem",
-    }
+        "tooltip-max-width": "30rem",
+    },
+    "extensions": [
+        "bulma-dropdown",
+        "bulma-navbar-burger",
+    ],
 }
 
-# Required for the wiki
-LOGIN_URL = "/admin/login"  # Update this when the real login system is in place
-SITE_ID = 1
+# Information about site repository
+SITE_REPOSITORY_OWNER = "python-discord"
+SITE_REPOSITORY_NAME = "site"
+SITE_REPOSITORY_BRANCH = "master"
 
-WIKI_ACCOUNT_HANDLING = False
-WIKI_ACCOUNT_SIGNUP_ALLOWED = False
+# Path for events pages
+EVENTS_PAGES_PATH = Path(BASE_DIR, "pydis_site", "templates", "events", "pages")
 
-WIKI_ANONYMOUS = True
-WIKI_ANONYMOUS_WRITE = False
+# Path for content pages
+CONTENT_PAGES_PATH = Path(BASE_DIR, "pydis_site", "apps", "content", "resources")
 
-WIKI_MARKDOWN_KWARGS = {
-    "extension_configs": {
-        "wiki.plugins.macros.mdx.toc": {
-            "anchorlink": True,
-            "baselevel": 2
-        }
-    }, "extensions": [
-        "markdown.extensions.abbr",
-        "markdown.extensions.attr_list",
-        "markdown.extensions.extra",
-        "markdown.extensions.footnotes",
-        "markdown.extensions.nl2br",
-        "markdown.extensions.sane_lists",
-
-        "wiki.core.markdown.mdx.codehilite",
-        "wiki.core.markdown.mdx.previewlinks",
-        "wiki.core.markdown.mdx.responsivetable",
-        "wiki.plugins.macros.mdx.toc",
-        "wiki.plugins.macros.mdx.wikilinks",
-    ]
-}
-
-WIKI_MESSAGE_TAG_CSS_CLASS = {
-    messages.DEBUG: "",  # is-info isn't distinctive enough from blurple
-    messages.ERROR: "is-danger",
-    messages.INFO: "is-primary",
-    messages.SUCCESS: "is-success",
-    messages.WARNING: "is-warning",
-}
-
-WIKI_MARKDOWN_SANITIZE_HTML = False
-
-
-# Wiki permissions
-
-
-def WIKI_CAN_DELETE(article: "Article", user: "User") -> bool:  # noqa: N802
-    """Check whether a user may delete an article."""
-    return user.has_perm('wiki.delete_article')
-
-
-def WIKI_CAN_MODERATE(article: "Article", user: "User") -> bool:  # noqa: N802
-    """Check whether a user may moderate an article."""
-    return user.has_perm('wiki.moderate')
-
-
-def WIKI_CAN_WRITE(article: "Article", user: "User") -> bool:  # noqa: N802
-    """Check whether a user may create or edit an article."""
-    return user.has_perm('wiki.change_article')
-
-
-# Django Allauth stuff
-
-AUTHENTICATION_BACKENDS = (
-    # Needed to login by username in Django admin, regardless of `allauth`
-    'django.contrib.auth.backends.ModelBackend',
-
-    # `allauth` specific authentication methods, such as login by e-mail
-    'allauth.account.auth_backends.AuthenticationBackend',
-)
-
-ACCOUNT_ADAPTER = "pydis_site.utils.account.AccountAdapter"
-ACCOUNT_EMAIL_REQUIRED = False       # Undocumented allauth setting; don't require emails
-ACCOUNT_EMAIL_VERIFICATION = "none"  # No verification required; we don't use emails for anything
-ACCOUNT_DEFAULT_HTTP_PROTOCOL = "https"
-
-# We use this validator because Allauth won't let us actually supply a list with no validators
-# in it, and we can't just give it a lambda - that'd be too easy, I suppose.
-ACCOUNT_USERNAME_VALIDATORS = "pydis_site.VALIDATORS"
-
-LOGIN_REDIRECT_URL = "home"
-SOCIALACCOUNT_ADAPTER = "pydis_site.utils.account.SocialAccountAdapter"
-SOCIALACCOUNT_PROVIDERS = {
-    "discord": {
-        "SCOPE": [
-            "identify",
-        ],
-        "AUTH_PARAMS": {"prompt": "none"}
-    }
-}
+# Path for redirection links
+REDIRECTIONS_PATH = Path(BASE_DIR, "pydis_site", "apps", "redirect", "redirects.yaml")

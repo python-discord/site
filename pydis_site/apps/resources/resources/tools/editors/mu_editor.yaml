@@ -1,0 +1,7 @@
+description: An editor aimed at beginners for the purpose of learning how to code
+  without the distractions more advanced editors sometimes cause.
+  Particularly useful for use with microcontrollers,
+  with built-in tools to interact with Adafruit and Arduino boards.
+name: Mu-Editor
+title_url: https://codewith.mu/
+position: 3

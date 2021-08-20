@@ -21,6 +21,7 @@ from .models import (
     Infraction,
     MessageDeletionContext,
     Nomination,
+    NominationEntry,
     OffTopicChannelName,
     OffensiveMessage,
     Reminder,
@@ -341,16 +342,36 @@ class UserSerializer(ModelSerializer):
             raise ValidationError({"id": ["User with ID already present."]})
 
 
+class NominationEntrySerializer(ModelSerializer):
+    """A class providing (de-)serialization of `NominationEntry` instances."""
+
+    # We need to define it here, because we don't want that nomination ID
+    # return inside nomination response entry, because ID is already available
+    # as top-level field. Queryset is required if field is not read only.
+    nomination = PrimaryKeyRelatedField(
+        queryset=Nomination.objects.all(),
+        write_only=True
+    )
+
+    class Meta:
+        """Metadata defined for the Django REST framework."""
+
+        model = NominationEntry
+        fields = ('nomination', 'actor', 'reason', 'inserted_at')
+
+
 class NominationSerializer(ModelSerializer):
     """A class providing (de-)serialization of `Nomination` instances."""
+
+    entries = NominationEntrySerializer(many=True, read_only=True)
 
     class Meta:
         """Metadata defined for the Django REST Framework."""
 
         model = Nomination
         fields = (
-            'id', 'active', 'actor', 'reason', 'user',
-            'inserted_at', 'end_reason', 'ended_at')
+            'id', 'active', 'user', 'inserted_at', 'end_reason', 'ended_at', 'reviewed', 'entries'
+        )
 
 
 class OffensiveMessageSerializer(ModelSerializer):

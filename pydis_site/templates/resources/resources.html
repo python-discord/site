@@ -1,0 +1,90 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}Resources{% endblock %}
+{% block head %}
+  <link rel="stylesheet" href="{% static "css/resources/resources.css" %}">
+{% endblock %}
+
+{% block content %}
+  {% include "base/navbar.html" %}
+
+  <section class="section">
+      <div class="container">
+          <div class="content">
+              <h1>Resources</h1>
+
+              <div class="tile is-ancestor">
+                  <a class="tile is-parent" href="{% url "content:page_category" location="guides" %}">
+                      <article class="tile is-child box hero is-primary is-bold">
+                          <p class="title is-size-1"><i class="fad fa-info-circle" aria-hidden="true"></i> Guides</p>
+                          <p class="subtitle is-size-4">Made by us, for you</p>
+                      </article>
+                  </a>
+
+                  <div class="tile is-vertical is-9">
+                      <div class="tile">
+                          <a class="tile is-8 is-parent" href="{% url "resources:resources" category="reading" %}">
+                              <article class="tile is-child box hero is-black" id="readingBlock">
+                                  <p class="title is-size-1"><i class="fad fa-book-alt" aria-hidden="true"></i> Read</p>
+                                  <p class="subtitle is-size-4">Lovingly curated books to explore</p>
+                              </article>
+                          </a>
+
+                          <div class="tile">
+                              <a class="tile is-parent" href="{% url "resources:resources" category="videos" %}">
+                                  <article class="tile is-child box hero is-danger is-bold">
+                                      <p class="title is-size-1"><i class="fad fa-video" aria-hidden="true"></i> Watch</p>
+                                      <p class="subtitle is-size-4">Visually engaging</p>
+                                  </article>
+                              </a>
+                          </div>
+                      </div>
+
+                      <div class="tile">
+                          <a class="tile is-parent" href="{% url "resources:resources" category="interactive" %}">
+                              <article class="tile is-child box hero is-black" id="interactiveBlock">
+                                  <p class="title is-size-1"><i class="fad fa-code" aria-hidden="true"></i> Try</p>
+                                  <p class="subtitle is-size-4">Interactively discover the possibilities</p>
+                              </article>
+                          </a>
+                          <a class="tile is-8 is-parent" href="{% url "resources:resources" category="courses" %}">
+                              <article class="tile is-child box hero is-success is-bold">
+                                  <p class="title is-size-1"><i class="fad fa-graduation-cap" aria-hidden="true"></i> Learn</p>
+                                  <p class="subtitle is-size-4">Structured courses with clear goals</p>
+                              </article>
+                          </a>
+                      </div>
+                  </div>
+              </div>
+
+              <div class="tile is-ancestor">
+                  <div class="tile is-vertical is-9">
+                      <div class="tile">
+                          <a class="tile is-8 is-parent" href="{% url "resources:resources" category="communities" %}">
+                              <article class="tile is-child box hero is-black" id="communitiesBlock">
+                                  <p class="title is-size-1"><i class="fad fa-users" aria-hidden="true"></i> Communities</p>
+                                  <p class="subtitle is-size-4">Some of our best friends</p>
+                              </article>
+                          </a>
+                          <div class="tile">
+                              <a class="tile is-parent" href="{% url "resources:resources" category="podcasts" %}">
+                                  <article class="tile is-child box hero is-black" id="podcastsBlock">
+                                      <p class="title is-size-1"><i class="fad fa-podcast" aria-hidden="true"></i> Listen</p>
+                                      <p class="subtitle is-size-4">Regular podcasts to follow</p>
+                                  </article>
+                              </a>
+                          </div>
+                      </div>
+                  </div>
+                  <a class="tile is-parent" href="{% url "resources:resources" category="tools" %}">
+                      <article class="tile is-child box hero is-dark">
+                          <p class="title is-size-1"><i class="fad fa-tools" aria-hidden="true"></i> Tools</p>
+                          <p class="subtitle is-size-4">Things we love to use</p>
+                      </article>
+                  </a>
+              </div>
+          </div>
+      </div>
+  </section>
+{% endblock %}

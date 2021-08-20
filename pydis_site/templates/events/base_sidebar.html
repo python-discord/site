@@ -1,0 +1,12 @@
+{% extends "events/base.html" %}
+
+{% block event_base_content %}
+<div class="columns is-variable is-8">
+    <div class="column is-two-thirds">
+        {% block event_content %}{% endblock %}
+    </div>
+    <div class="column">
+        {% block sidebar %}{% endblock %}
+    </div>
+</div>
+{% endblock %}

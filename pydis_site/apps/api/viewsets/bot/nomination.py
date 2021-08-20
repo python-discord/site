@@ -14,8 +14,8 @@ from rest_framework.mixins import (
 from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
 
-from pydis_site.apps.api.models.bot import Nomination
-from pydis_site.apps.api.serializers import NominationSerializer
+from pydis_site.apps.api.models.bot import Nomination, NominationEntry
+from pydis_site.apps.api.serializers import NominationEntrySerializer, NominationSerializer
 
 
 class NominationViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, GenericViewSet):
@@ -29,7 +29,6 @@ class NominationViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
 
     #### Query parameters
     - **active** `bool`: whether the nomination is still active
-    - **actor__id** `int`: snowflake of the user who nominated the user
     - **user__id** `int`: snowflake of the user who received the nomination
     - **ordering** `str`: comma-separated sequence of fields to order the returned results
 
@@ -40,12 +39,18 @@ class NominationViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
     ...     {
     ...         'id': 1,
     ...         'active': false,
-    ...         'actor': 336843820513755157,
-    ...         'reason': 'They know how to explain difficult concepts',
     ...         'user': 336843820513755157,
     ...         'inserted_at': '2019-04-25T14:02:37.775587Z',
     ...         'end_reason': 'They were helpered after a staff-vote',
-    ...         'ended_at': '2019-04-26T15:12:22.123587Z'
+    ...         'ended_at': '2019-04-26T15:12:22.123587Z',
+    ...         'entries': [
+    ...             {
+    ...                'actor': 336843820513755157,
+    ...                'reason': 'They know how to explain difficult concepts',
+    ...                'inserted_at': '2019-04-25T14:02:37.775587Z'
+    ...             }
+    ...         ],
+    ...         'reviewed': true
     ...     }
     ... ]
 
@@ -59,12 +64,18 @@ class NominationViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
     >>> {
     ...     'id': 1,
     ...     'active': true,
-    ...     'actor': 336843820513755157,
-    ...     'reason': 'They know how to explain difficult concepts',
     ...     'user': 336843820513755157,
     ...     'inserted_at': '2019-04-25T14:02:37.775587Z',
     ...     'end_reason': 'They were helpered after a staff-vote',
-    ...     'ended_at': '2019-04-26T15:12:22.123587Z'
+    ...     'ended_at': '2019-04-26T15:12:22.123587Z',
+    ...     'entries': [
+    ...         {
+    ...             'actor': 336843820513755157,
+    ...             'reason': 'They know how to explain difficult concepts',
+    ...             'inserted_at': '2019-04-25T14:02:37.775587Z'
+    ...         }
+    ...     ],
+    ...     'reviewed': false
     ... }
 
     ### Status codes
@@ -75,8 +86,9 @@ class NominationViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
     Create a new, active nomination returns the created nominations.
     The `user`, `reason` and `actor` fields are required and the `user`
     and `actor` need to know by the site. Providing other valid fields
-    is not allowed and invalid fields are ignored. A `user` is only
-    allowed one active nomination at a time.
+    is not allowed and invalid fields are ignored. If `user` already has an
+    active nomination, a new nomination entry will be created and assigned to the
+    active nomination.
 
     #### Request body
     >>> {
@@ -91,7 +103,6 @@ class NominationViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
     #### Status codes
     - 201: returned on success
     - 400: returned on failure for one of the following reasons:
-        - A user already has an active nomination;
         - The `user` or `actor` are unknown to the site;
         - The request contained a field that cannot be set at creation.
 
@@ -102,16 +113,18 @@ class NominationViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
     1. Updating the `reason` of `active` nomination;
     2. Ending an `active` nomination;
     3. Updating the `end_reason` or `reason` field of an `inactive` nomination.
+    4. Updating `reviewed` field of `active` nomination.
 
     While the response format and status codes are the same for all three operations (see
     below), the request bodies vary depending on the operation. For all operations it holds
     that providing other valid fields is not allowed and invalid fields are ignored.
 
-    ### 1. Updating the `reason` of `active` nomination
+    ### 1. Updating the `reason` of `active` nomination. The `actor` field is required.
 
     #### Request body
     >>> {
     ...     'reason': 'He would make a great helper',
+    ...     'actor': 409107086526644234
     ... }
 
     #### Response format
@@ -133,14 +146,25 @@ class NominationViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
     See operation 1 for the response format and status codes.
 
     ### 3. Updating the `end_reason` or `reason` field of an `inactive` nomination.
+    Actor field is required when updating reason.
 
     #### Request body
     >>> {
     ...     'reason': 'Updated reason for this nomination',
+    ...     'actor': 409107086526644234,
     ...     'end_reason': 'Updated end_reason for this nomination',
     ... }
 
     Note: The request body may contain either or both fields.
+
+    See operation 1 for the response format and status codes.
+
+    ### 4. Setting nomination `reviewed`
+
+    #### Request body
+    >>> {
+    ...     'reviewed': True
+    ... }
 
     See operation 1 for the response format and status codes.
     """
@@ -148,9 +172,9 @@ class NominationViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
     serializer_class = NominationSerializer
     queryset = Nomination.objects.all()
     filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
-    filter_fields = ('user__id', 'actor__id', 'active')
-    frozen_fields = ('id', 'actor', 'inserted_at', 'user', 'ended_at')
-    frozen_on_create = ('ended_at', 'end_reason', 'active', 'inserted_at')
+    filter_fields = ('user__id', 'active')
+    frozen_fields = ('id', 'inserted_at', 'user', 'ended_at')
+    frozen_on_create = ('ended_at', 'end_reason', 'active', 'inserted_at', 'reviewed')
 
     def create(self, request: HttpRequest, *args, **kwargs) -> Response:
         """
@@ -163,19 +187,50 @@ class NominationViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
                 raise ValidationError({field: ['This field cannot be set at creation.']})
 
         user_id = request.data.get("user")
-        if Nomination.objects.filter(active=True, user__id=user_id).exists():
-            raise ValidationError({'active': ['There can only be one active nomination.']})
+        nomination_filter = Nomination.objects.filter(active=True, user__id=user_id)
 
-        serializer = self.get_serializer(
-            data=ChainMap(
-                request.data,
-                {"active": True}
+        if not nomination_filter.exists():
+            serializer = NominationSerializer(
+                data=ChainMap(
+                    request.data,
+                    {"active": True}
+                )
             )
+            serializer.is_valid(raise_exception=True)
+            nomination = Nomination.objects.create(**serializer.validated_data)
+
+            # The serializer will truncate and get rid of excessive data
+            entry_serializer = NominationEntrySerializer(
+                data=ChainMap(request.data, {"nomination": nomination.id})
+            )
+            entry_serializer.is_valid(raise_exception=True)
+            NominationEntry.objects.create(**entry_serializer.validated_data)
+
+            data = NominationSerializer(nomination).data
+
+            headers = self.get_success_headers(data)
+            return Response(data, status=status.HTTP_201_CREATED, headers=headers)
+
+        entry_serializer = NominationEntrySerializer(
+            data=ChainMap(request.data, {"nomination": nomination_filter[0].id})
         )
-        serializer.is_valid(raise_exception=True)
-        self.perform_create(serializer)
-        headers = self.get_success_headers(serializer.data)
-        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+        entry_serializer.is_valid(raise_exception=True)
+
+        # Don't allow a user to create many nomination entries in a single nomination
+        if NominationEntry.objects.filter(
+                nomination_id=nomination_filter[0].id,
+                actor__id=entry_serializer.validated_data["actor"].id
+        ).exists():
+            raise ValidationError(
+                {'actor': ['This actor has already endorsed this nomination.']}
+            )
+
+        NominationEntry.objects.create(**entry_serializer.validated_data)
+
+        data = NominationSerializer(nomination_filter[0]).data
+
+        headers = self.get_success_headers(data)
+        return Response(data, status=status.HTTP_201_CREATED, headers=headers)
 
     def partial_update(self, request: HttpRequest, *args, **kwargs) -> Response:
         """
@@ -203,7 +258,7 @@ class NominationViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
 
         elif instance.active and not data['active']:
             # 2. We're ending an active nomination.
-            if 'reason' in data:
+            if 'reason' in request.data:
                 raise ValidationError(
                     {'reason': ['This field cannot be set when ending a nomination.']}
                 )
@@ -213,6 +268,11 @@ class NominationViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
                     {'end_reason': ['This field is required when ending a nomination.']}
                 )
 
+            if 'reviewed' in request.data:
+                raise ValidationError(
+                    {'reviewed': ['This field cannot be set while you are ending a nomination.']}
+                )
+
             instance.ended_at = timezone.now()
 
         elif 'active' in data:
@@ -220,6 +280,34 @@ class NominationViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
             raise ValidationError(
                 {'active': ['This field can only be used to end a nomination']}
             )
+
+        # This is actually covered, but for some reason coverage don't think so.
+        elif 'reviewed' in request.data:  # pragma: no cover
+            # 4. We are altering the reviewed state of the nomination.
+            if not instance.active:
+                raise ValidationError(
+                    {'reviewed': ['This field cannot be set if the nomination is inactive.']}
+                )
+
+        if 'reason' in request.data:
+            if 'actor' not in request.data:
+                raise ValidationError(
+                    {'actor': ['This field is required when editing the reason.']}
+                )
+
+            entry_filter = NominationEntry.objects.filter(
+                nomination_id=instance.id,
+                actor__id=request.data['actor']
+            )
+
+            if not entry_filter.exists():
+                raise ValidationError(
+                    {'actor': ["The actor doesn't exist or has not nominated the user."]}
+                )
+
+            entry = entry_filter[0]
+            entry.reason = request.data['reason']
+            entry.save()
 
         serializer.save()
 

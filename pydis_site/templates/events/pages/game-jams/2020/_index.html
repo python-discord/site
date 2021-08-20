@@ -1,0 +1,104 @@
+{% extends "events/base_sidebar.html" %}
+
+{% block title %}Game Jam 2020: Three of a Kind{% endblock %}
+
+{% block breadcrumb %}
+    <li><a href="{% url "events:index" %}">Events</a></li>
+    <li><a href="{% url "events:page" path="game-jams" %}">Game Jams</a></li>
+    <li class="is-active"><a href="#">Game Jam 2020: Three of a Kind</a></li>
+{% endblock %}
+
+{% block event_content %}
+    <p>
+		During the first ever Python Discord Game Jam,
+        23 teams signed up to create a game using the <a href="https://arcade.academy/">Python Arcade Library</a>.
+        Each team consisted of 1-3 people and teammates were chosen by the participants themselves,
+        unlike in our <a href="{% url "events:page" path="code-jams" %}">Code Jams</a>.
+        The Game Jam ran from <strong>April 17, 12:00 UTC to April 26, 18:00 UTC</strong>.
+	</p>
+
+	<h2 class="title is-4" id="task-description"><a href="#task-description">Task Description</a></h2>
+    <blockquote>
+        <p>The theme for this game jam is <strong>Three-of-a-kind</strong>.</p>
+        <p>
+            What you do with this theme or how you interpret it is up to you,
+            but it will be your task to come up with something fun using this theme.
+        </p>
+    </blockquote>
+
+    <h2 class="title is-4" id="judging-stream"><a href="#judging-stream">Judging Stream and Interview</a></h2>
+	<p>
+        The original Game Jam live stream is shown below,
+        where the top ten submissions were reviewed and showcased.
+        There was also an interview with <strong>Paul Craven</strong>,
+        the creator of the <a href="https://arcade.academy/">Python Arcade Library</a>,
+        where he answered many questions about his origin/backstory,
+        the development of the Arcade library, and general programming.
+    </p>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/KkLXMvKfEgs" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+    <blockquote>
+        <p>
+            You can also see the top ten submissions shown
+            <a href="https://arcade.academy/game_jam_2020.html">here</a>
+            on the Arcade website and all submissions were submitted
+            <a href="https://github.com/python-discord/game-jam-2020">here</a> to the repository.
+        </p>
+    </blockquote>
+
+    <h2 class="title is-4" id="results"><a href="#results">Results</a></h2>
+    <p>
+        The <strong>winning team</strong> for our first ever Game Jam was team <strong>Score AAA</strong>,
+        consisting of one person, <strong>EmberDuck</strong>. He created a very polished game,
+        focusing in on one core idea and just nailing it perfectly.
+        This is a game where the player controls <strong>3</strong> different characters which need to jump over obstacles.
+        The concept itself may seem simple, but EmberDuck kept iterating on the idea, making it better and better,
+        taking it to the point of perfection. The graphics were phenomenal, the UI was beautiful and intuitive, and the animations were just fantastic.
+        The parallax effect in the background was mesmerizing, which was an element that was unique and different from other submissions.
+        Taking this project to another level, all art assets for this submission were made by EmberDuck himself.
+        This was an incredible project, especially for a one-man-team. <strong>Congratulations EmberDuck!</strong>
+    </p>
+
+    <p>
+        Check out their submission
+        <a href="https://github.com/python-discord/game-jam-2020/tree/master/Finalists/Score_AAA/">here</a>
+        and watch it being played live <a href="https://youtu.be/KkLXMvKfEgs?t=7600">here</a>!
+    </p>
+
+    <h2 class="title is-4" id="runner-up-1"><a href="#runner-up-1">Runner Up 1: Gamer Gang</a></h2>
+    <p>
+        The <strong>Gamer Gang</strong> (SansPapyrus683, Blue Bird, & SimplyNarwell) created a platformer game where the player controls
+        <strong>3</strong> different slimes to get through 6 different levels.
+        The slimes can either move together in a stack, or the player can split them apart to control each of them one by one.
+        The physics in this game was a nice addition and tied the game together nicely.
+        The graphics in this game were quite beautiful and the UI complemented it well.
+        This game scored quite high on many factors, and was a very fun game overall. Excellent job!
+    </p>
+    <p>
+        Feel free to look at their submission
+        <a href="https://github.com/python-discord/game-jam-2020/tree/master/Finalists/gamer_gang/">here</a>
+        and watch it being played on stream <a href="https://youtu.be/KkLXMvKfEgs?t=3812">here</a>!
+    </p>
+
+    <h2 class="title is-4" id="runner-up-2"><a href="#runner-up-2">Runner Up 2: Monkeys and Frogs on Fire</a></h2>
+    <p>
+        Team <strong>Monkeys and Frogs on Fire</strong> (BrainDead, F4zi, & f1re)
+        created a dungeon-crawler type of game where the player can switch between
+        <strong>3</strong> different wizards, each having their own special abilities.
+        The red wizard has great strength, while the green wizard has a lot of defense and the blue wizard is quick and fast.
+        A unique and exceptional feature of this game was the backend server which allowed a player to register/login.
+        The goal of this game was to survive as long as you can to get the highest score,
+        which is then uploaded to the server and can be seen on the leaderboard.
+        This game had a crisp and smooth UI along with nice graphics and fantastic animations,
+        bringing this game together. Phenomenol work!
+    </p>
+    <p>
+        Have a look at this submission <a href="https://github.com/Den4200/game-jam-2020">here</a>
+        and watch this game played live on stream <a href="https://youtu.be/KkLXMvKfEgs?t=5188">here</a>!
+    </p>
+    <img src="https://user-images.githubusercontent.com/33516116/77762078-e02ce080-7030-11ea-947a-9c6733d4f33d.png" alt="">
+{% endblock %}
+
+{% block sidebar %}
+    {% include "events/sidebar/game-jams/2020.html" %}
+{% endblock %}

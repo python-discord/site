@@ -1,5 +1,6 @@
 html {
     overflow: auto;
+    scroll-behavior: smooth;
 }
 
 body.site {
@@ -69,6 +70,14 @@ main.site-content {
     background-color: transparent;
 }
 
+#linode-logo {
+    padding-left: 15px;
+    background: url(https://www.linode.com/wp-content/uploads/2021/01/Linode-Logo-Black.svg) no-repeat center;
+    filter: invert(1) grayscale(1);
+    background-size: 60px;
+    color: #00000000;
+}
+
 #django-logo {
     padding-bottom: 2px;
     background: url(https://static.djangoproject.com/img/logos/django-logo-negative.png) no-repeat center;
@@ -116,19 +125,18 @@ button.is-size-navbar-menu, a.is-size-navbar-menu {
     }
 }
 
-/* Fix for modals being behind the navbar */
-
-.modal * {
-    z-index: 1020;
+/* 16:9 aspect ratio fixing */
+.force-aspect-container {
+    position: relative;
+    padding-bottom: 56.25%;
 }
 
-.modal-background {
-    z-index: 1010;
-}
-
-/* Wiki style tweaks */
-.codehilite-wrap {
-    margin-bottom: 1em;
+.force-aspect-content {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    position: absolute;
 }
 
 /* 16:9 aspect ratio fixing */
@@ -143,4 +151,11 @@ button.is-size-navbar-menu, a.is-size-navbar-menu {
     width: 100%;
     height: 100%;
     position: absolute;
+}
+
+/* Tone down animations to avoid motion triggers */
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
 }

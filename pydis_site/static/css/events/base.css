@@ -1,0 +1,12 @@
+.breadcrumb-section {
+    padding: 1rem;
+}
+
+pre {
+    /*
+     * Style it the same as the <code> tag, since highlight.js does not style
+     * backgrounds of <pre> tags but bulma does, resulting in a weird off-white
+     * border.
+     */
+    background-color: #282c34;
+}
