@@ -29,7 +29,7 @@ class UserEvent(ModelReprMixin, models.Model):
             ),
         ),
         help_text=(
-            "The message ID of the message "
-            "sent in user events channel."
+            "The ID of the message "
+            "listing the event."
         )
     )
