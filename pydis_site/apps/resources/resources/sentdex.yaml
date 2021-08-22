@@ -9,11 +9,8 @@ description: 'An enormous amount of Python content for all skill levels
   Check out his channel for more video series!
   '
 title_image: https://i.imgur.com/kJgWZIu.png
-position: 1
+title_url: https://www.youtube.com/user/sentdex
 urls:
-  - icon: branding/youtube
-    url: https://www.youtube.com/user/sentdex
-    color: youtube-red
   - icon: branding/discord
     url: https://discord.gg/sentdex
     color: blurple
@@ -32,3 +29,4 @@ tags:
     - intermediate
   type:
     - video
+    - community

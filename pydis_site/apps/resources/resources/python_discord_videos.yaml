@@ -1,11 +1,7 @@
-description: It's our channel! We are slowly gathering content here directly related to Python,
+description: It's our YouTube channel! We are slowly gathering content here directly related to Python,
   our community and the events we host. Come check us out!
 title_image: https://raw.githubusercontent.com/python-discord/branding/master/logos/logo_banner/logo_site_banner_dark_512.png
-position: 2
-urls:
-  - icon: branding/youtube
-    url: https://www.youtube.com/pythondiscord
-    color: youtube-red
+title_url: https://www.youtube.com/pythondiscord
 tags:
   topics:
     - general

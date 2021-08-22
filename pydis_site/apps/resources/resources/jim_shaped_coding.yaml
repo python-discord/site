@@ -5,11 +5,9 @@ description: 'JimShapedCoding contains a set of YouTube tutorials covering thing
     <li><a href="https://www.youtube.com/watch?v=qMrAFscMBBc&list=PLOkVupluCIjvORWaF4kG-sXLgbVemYpEi">Django tutorials</a></li>
   </ul>
   Check out his channel for more videos!'
+name: JimShapedCoding
 title_image: https://i.imgur.com/DlovZPf.png
-urls:
-  - icon: branding/youtube
-    url: https://www.youtube.com/channel/UCU8d7rcShA7MGuDyYH1aWGg
-    color: youtube-red
+title_url: https://www.youtube.com/channel/UCU8d7rcShA7MGuDyYH1aWGg
 tags:
   topics:
     - general

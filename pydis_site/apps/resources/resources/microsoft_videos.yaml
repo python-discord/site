@@ -7,11 +7,10 @@ description: A trove of tutorials & guides for developers from Microsoft's Devel
   </ul>
   Microsoft's Python Development Team also runs a Discord Server for discussions of Python in the Microsoft ecosystem,
   including Visual Studio Code and Azure.
-title_image: http://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE2qVsJ?ver=3f74
+name: Microsoft Developer
+title_image: https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg
+title_url: https://www.youtube.com/channel/UCsMica-v34Irf9KVTh6xx-g
 urls:
-  - icon: branding/youtube
-    url: https://www.youtube.com/channel/UCsMica-v34Irf9KVTh6xx-g
-    color: youtube-red
   - icon: branding/discord
     url: https://aka.ms/python-discord
     color: blurple
@@ -24,3 +23,4 @@ tags:
     - beginner
   type:
     - video
+    - community
