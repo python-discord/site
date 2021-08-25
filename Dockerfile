@@ -29,7 +29,7 @@ RUN \
     SECRET_KEY=dummy_value \
     DATABASE_URL=postgres://localhost \
     METRICITY_DB_URL=postgres://localhost \
-    python manage.py collectstatic
+    python manage.py collectstatic --noinput --clear
 
 # Run web server through custom manager
 ENTRYPOINT ["python", "manage.py"]
