@@ -142,7 +142,12 @@ class SiteManager:
         if self.debug:
             # In Production, collectstatic is ran in the Docker image
             print("Collecting static files.")
-            call_command("collectstatic", interactive=False, clear=True, verbosity=self.verbosity - 1)
+            call_command(
+                "collectstatic",
+                interactive=False,
+                clear=True,
+                verbosity=self.verbosity - 1
+            )
 
             self.set_dev_site_name()
             self.create_superuser()
