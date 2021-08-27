@@ -24,6 +24,13 @@ ENV GIT_SHA=$git_sha
 # Copy the source code in last to optimize rebuilding the image
 COPY . .
 
+# Set dummy variables so collectstatic can load settings.py
+RUN \
+    SECRET_KEY=dummy_value \
+    DATABASE_URL=postgres://localhost \
+    METRICITY_DB_URL=postgres://localhost \
+    python manage.py collectstatic --noinput --clear
+
 # Run web server through custom manager
 ENTRYPOINT ["python", "manage.py"]
 CMD ["run"]
