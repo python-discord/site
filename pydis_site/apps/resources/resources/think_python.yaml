@@ -4,10 +4,8 @@ description: Think Python is an introduction to Python programming for beginners
   Larger pieces, like recursion and object-oriented programming are divided into a sequence of smaller steps
   and introduced over the course of several chapters.
 name: Think Python
+title_url: https://greenteapress.com/wp/think-python-2e/
 urls:
-  - icon: regular/link
-    url: https://greenteapress.com/wp/think-python-2e/
-    color: teal
   - icon: branding/goodreads
     url: https://www.goodreads.com/book/show/14514306-think-python
     color: goodreads-cream

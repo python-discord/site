@@ -1,10 +1,8 @@
 description: Tips, tricks, and best practices for your Django project.
   A highly recommended resource for Django web developers.
 name: Two Scoops of Django
+title_url: https://www.feldroy.com/collections/everything/products/two-scoops-of-django-3-x
 urls:
-- icon: regular/book
-  url: https://www.feldroy.com/collections/everything/products/two-scoops-of-django-3-x
-  color: teal
 - icon: branding/goodreads
   url: https://www.goodreads.com/book/show/55822151-two-scoops-of-django-3-x
   color: goodreads-cream

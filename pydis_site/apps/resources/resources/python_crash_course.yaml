@@ -7,10 +7,8 @@ description: "This fast-paced, thorough introduction to programming with Python 
   a Space Invaders–inspired arcade game, a set of data visualizations with Python’s handy libraries,
   and a simple web app you can deploy online."
 name: Python Crash Course
+title_url: https://nostarch.com/pythoncrashcourse2e
 urls:
-  - icon: regular/link
-    url: https://nostarch.com/pythoncrashcourse2e
-    color: teal
   - icon: branding/goodreads
     url: https://www.goodreads.com/book/show/23241059-python-crash-course
     color: goodreads-cream

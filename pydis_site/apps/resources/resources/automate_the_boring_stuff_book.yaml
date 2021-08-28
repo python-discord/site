@@ -4,10 +4,8 @@ description: One of the best books out there for Python beginners. This book wil
   the web, manipulating files and automating keyboard and mouse input. Ideal for an
   office worker who wants to make himself more useful.
 name: Automate the Boring Stuff with Python
+title_url: https://automatetheboringstuff.com/
 urls:
-- icon: regular/book
-  url: https://automatetheboringstuff.com/
-  color: black
 - icon: branding/goodreads
   url: https://www.goodreads.com/book/show/22514127-automate-the-boring-stuff-with-python
   color: goodreads-cream

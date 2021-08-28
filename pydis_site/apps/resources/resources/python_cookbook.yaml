@@ -1,10 +1,8 @@
 description: A book full of very smart problem-solving recipes for various Python topics,
   including moving from Python 2 to Python 3.
 name: Python Cookbook
+title_url: http://shop.oreilly.com/product/0636920027072.do
 urls:
-- icon: regular/link
-  url: http://shop.oreilly.com/product/0636920027072.do
-  color: teal
 - icon: branding/goodreads
   url: https://www.goodreads.com/book/show/17152735-python-cookbook
   color: goodreads-cream

@@ -3,10 +3,8 @@ description: Learn programming and Python while building a complete and awesome 
   images, and walk-throughs make this a pleasure to both read and follow along. Excellent
   book for beginners.
 name: Mission Python
+title_url: https://www.sean.co.uk/books/mission-python/index.shtm
 urls:
-- icon: regular/link
-  url: https://www.sean.co.uk/books/mission-python/index.shtm
-  color: teal
 - icon: branding/goodreads
   url: https://www.goodreads.com/book/show/35545850-mission-python
   color: goodreads-cream
