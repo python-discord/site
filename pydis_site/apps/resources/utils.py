@@ -3,6 +3,7 @@ from collections import defaultdict
 from functools import reduce
 from operator import and_, or_
 from pathlib import Path
+from types import MappingProxyType
 
 import yaml
 from django.conf import settings
@@ -16,10 +17,12 @@ Resource = dict[str, t.Union[str, list[dict[str, str]], dict[str, list[str]]]]
 
 RESOURCES_PATH = Path(settings.BASE_DIR, "pydis_site", "apps", "resources", "resources")
 
-RESOURCES: dict[str, Resource] = {path.stem: yaml.safe_load(path.read_text()) for path
-                                  in RESOURCES_PATH.rglob("*.yaml")}
+RESOURCES: MappingProxyType[str, Resource] = MappingProxyType({
+    path.stem: yaml.safe_load(path.read_text())
+    for path in RESOURCES_PATH.rglob("*.yaml")
+})
 
-RESOURCE_TABLE = {category: defaultdict(set) for category in (
+_resource_table = {category: defaultdict(set) for category in (
     "topics",
     "payment_tiers",
     "complexity",
@@ -29,7 +32,13 @@ RESOURCE_TABLE = {category: defaultdict(set) for category in (
 for name, resource in RESOURCES.items():
     for category, tags in resource['tags'].items():
         for tag in tags:
-            RESOURCE_TABLE[category][_transform_name(tag)].add(name)
+            _resource_table[category][_transform_name(tag)].add(name)
+
+# Freeze the resources table
+RESOURCE_TABLE = MappingProxyType({
+    category: MappingProxyType(d)
+    for category, d in _resource_table.items()
+})
 
 
 def get_resources_from_search(search_categories: dict[str, set[str]]) -> list[Resource]:
