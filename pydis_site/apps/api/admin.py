@@ -48,8 +48,8 @@ class BotSettingAdmin(admin.ModelAdmin):
 class DocumentationLinkAdmin(admin.ModelAdmin):
     """Admin formatting for the DocumentationLink model."""
 
-    fields = ("package", "base_url", "inventory_url")
-    list_display = ("package", "base_url", "inventory_url")
+    fields = ("package", "inventory_url", "base_url")
+    list_display = ("package", "inventory_url", "base_url")
     list_editable = ("base_url", "inventory_url")
     search_fields = ("package",)
 
