@@ -199,6 +199,7 @@ class CreationTests(AuthenticatedAPITestCase):
     def test_role_delete_unassigned(self):
         """Tests if the deleted Role gets unassigned from the user."""
         self.role_to_delete.delete()
+        self.role_unassigned_test_user.refresh_from_db()
         self.assertEqual(self.role_unassigned_test_user.roles, [])
 
     def test_role_detail_404_all_methods(self):
