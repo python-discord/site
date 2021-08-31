@@ -32,7 +32,7 @@ Additionally, you may find the following environment variables useful during dev
 | `REDIS_PASSWORD` | |
 | `USE_FAKEREDIS` | If the FakeRedis module should be used. Set this to true if you don't have a Redis database setup. |
 | `BOT_SENTRY_DSN` | The DSN of the sentry monitor. |
-| `TRASHCAN_EMOJI` | The emoji to use for the trashcan during paginated embeds |
+| `TRASHCAN_EMOJI` | The full emoji to use for the trashcan. Format should be like the output of `\:emoji:`. |
 
 
 ---
