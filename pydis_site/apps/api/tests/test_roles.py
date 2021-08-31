@@ -4,7 +4,6 @@ from .base import AuthenticatedAPITestCase
 from ..models import Role, User
 
 
-
 class CreationTests(AuthenticatedAPITestCase):
     @classmethod
     def setUpTestData(cls):
@@ -96,11 +95,11 @@ class CreationTests(AuthenticatedAPITestCase):
         url = reverse('api:bot:role-list')
 
         response = self.client.get(url)
-        self.assertContains(response, text="id", count=4, status_code=200)
+        self.assertContains(response, text="id", count=5, status_code=200)
 
         roles = response.json()
         self.assertIsInstance(roles, list)
-        self.assertEqual(len(roles), 4)
+        self.assertEqual(len(roles), 5)
 
         for role in roles:
             self._validate_roledict(role)
