@@ -139,7 +139,7 @@ WSGI_APPLICATION = 'pydis_site.wsgi.application'
 
 DATABASES = {
     'default': env.db(),
-    'metricity': env.db(),
+    'metricity': env.db('METRICITY_DB_URL'),
 }
 
 # Password validation
