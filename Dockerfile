@@ -26,6 +26,7 @@ COPY . .
 
 # Set dummy variables so collectstatic can load settings.py
 RUN \
+    BUILDING_DOCKER=yes \
     SECRET_KEY=dummy_value \
     DATABASE_URL=postgres://localhost \
     METRICITY_DB_URL=postgres://localhost \
