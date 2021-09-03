@@ -3,7 +3,7 @@ max-line-length=100
 docstring-convention=all
 import-order-style=pycharm
 application_import_names=pydis_site
-exclude=__pycache__, venv, .venv, **/migrations/**, .cache/
+exclude=__pycache__, venv, .venv, **/migrations/**, .cache/, gunicorn.conf.py
 ignore=
     B311,W503,E226,S311,T000
     # Missing Docstrings
