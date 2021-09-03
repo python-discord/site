@@ -1,7 +1,7 @@
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
 
-from pydis_site.apps.resources.utils import RESOURCE_TABLE, get_resources_from_search
+from pydis_site.apps.resources.resource_search import RESOURCE_TABLE, get_resources_from_search
 
 RESOURCE_META_TAGS = {k: list(v) for k, v in RESOURCE_TABLE.items()}
 

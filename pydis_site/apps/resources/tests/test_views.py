@@ -25,7 +25,7 @@ class TestResourcesListView(TestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
 
-    @patch("pydis_site.apps.resources.utils.RESOURCES_PATH", TESTING_RESOURCES_PATH)
+    @patch("pydis_site.apps.resources.resource_search.RESOURCES_PATH", TESTING_RESOURCES_PATH)
     def test_filter_resource_list(self):
         """TODO: Check that we can correctly filter resources with GET parameters."""
         pass

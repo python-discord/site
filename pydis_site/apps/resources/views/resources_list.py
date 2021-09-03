@@ -2,7 +2,7 @@ from typing import Any, Dict
 
 from django.views.generic import TemplateView
 
-from pydis_site.apps.resources.utils import RESOURCES
+from pydis_site.apps.resources.resource_search import RESOURCES
 
 
 class ResourcesListView(TemplateView):
