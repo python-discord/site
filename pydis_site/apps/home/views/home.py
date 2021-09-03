@@ -9,7 +9,7 @@ from django.utils import timezone
 from django.views import View
 
 from pydis_site.apps.home.models import RepositoryMetadata
-from pydis_site.constants import GITHUB_TOKEN
+from pydis_site.constants import GITHUB_TOKEN, TIMEOUT_PERIOD
 
 log = logging.getLogger(__name__)
 
@@ -51,9 +51,16 @@ class HomeView(View):
         If we're unable to get that info for any reason, return an empty dict.
         """
         repo_dict = {}
-
-        # Fetch the data from the GitHub API
-        api_data: List[dict] = requests.get(self.github_api, headers=self.headers).json()
+        try:
+            # Fetch the data from the GitHub API
+            api_data: List[dict] = requests.get(
+                self.github_api,
+                headers=self.headers,
+                timeout=TIMEOUT_PERIOD
+            ).json()
+        except requests.exceptions.Timeout:
+            log.error("Request to fetch GitHub repository metadata for timed out!")
+            return repo_dict
 
         # Process the API data into our dict
         for repo in api_data:
