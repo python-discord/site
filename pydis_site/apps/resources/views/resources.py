@@ -3,18 +3,22 @@ from django.shortcuts import render
 
 from pydis_site.apps.resources.resource_search import RESOURCE_TABLE, get_resources_from_search
 
-RESOURCE_META_TAGS = {k: list(v) for k, v in RESOURCE_TABLE.items()}
+RESOURCE_META_TAGS = {k: set(v) for k, v in RESOURCE_TABLE.items()}
 
 
-def format_checkbox_options(options: str) -> list[str]:
+def _parse_checkbox_options(options: str) -> set[str]:
     """Split up the comma separated query parameters for checkbox options into a list."""
-    return options.split(",")[:-1] if options else []
+    if not options:
+        return set()
+    if options == '*':
+        return {'*'}
+    return set(options.split(",")[:-1])
 
 
 def resource_view(request: HttpRequest) -> HttpResponse:
     """View for resources index page."""
     checkbox_options = {
-        a: set(format_checkbox_options(request.GET.get(b)))
+        a: _parse_checkbox_options(request.GET.get(b))
         for a, b in (
             ('topics', 'topic'),
             ('type', 'type'),
@@ -22,6 +26,10 @@ def resource_view(request: HttpRequest) -> HttpResponse:
             ('complexity', 'complexity'),
         )
     }
+
+    # This allows for an asterisk in the URL to be a wildcard for that selection
+    checkbox_options = {k: (v if v != {'*'} else RESOURCE_META_TAGS[k])
+                        for k, v in checkbox_options.items()}
 
     topics = sorted(RESOURCE_META_TAGS.get("topics"))
 
