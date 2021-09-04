@@ -14,6 +14,7 @@ import os
 import secrets
 import sys
 from pathlib import Path
+from socket import gethostname, gethostbyname
 
 import environ
 import sentry_sdk
@@ -59,6 +60,8 @@ else:
             'api.pythondiscord.com',
             'staff.pythondiscord.com',
             'pydis-api.default.svc.cluster.local',
+            gethostname(),
+            gethostbyname(gethostname())
         ]
     )
     SECRET_KEY = env('SECRET_KEY')
