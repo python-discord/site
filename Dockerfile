@@ -1,4 +1,4 @@
-FROM python:3.9.5-slim-buster
+FROM --platform=linux/amd64 python:3.9-slim-buster
 
 # Allow service to handle stops gracefully
 STOPSIGNAL SIGQUIT
