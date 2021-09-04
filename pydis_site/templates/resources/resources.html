@@ -29,7 +29,7 @@
                                     {% for topic in topics_1 %}
                                     <div class="field">
                                         <label class="checkbox">
-                                            <input class="topic" name="topicOption" type="checkbox" value="{{ topic }}"{% if topic == 'General' %} checked{% endif %}>
+                                            <input class="topic" name="topic" type="checkbox" value="{{ topic }}"{% if topic == 'General' %} checked{% endif %}>
                                             <span class="has-text-grey is-size-6">{{ topic }}</span>
                                         </label>
                                     </div>
@@ -39,7 +39,7 @@
                                     {% for topic in topics_2 %}
                                     <div class="field">
                                         <label class="checkbox">
-                                            <input class="topic" name="topicOption" type="checkbox" value="{{ topic }}"{% if topic == 'General' %} checked{% endif %}>
+                                            <input class="topic" name="topic" type="checkbox" value="{{ topic }}"{% if topic == 'General' %} checked{% endif %}>
                                             <span class="has-text-grey is-size-6">{{ topic }}</span>
                                         </label>
                                     </div>
@@ -57,7 +57,7 @@
                             {% for tag_type in tag_types %}
                             <div class="field">
                                 <label class="checkbox ml-0">
-                                    <input class="type" name="typeOption" type="checkbox" value="{{ tag_type }}"{% if tag_type == 'Tutorial' %} checked{% endif %}>
+                                    <input class="type" name="type" type="checkbox" value="{{ tag_type }}"{% if tag_type == 'Tutorial' %} checked{% endif %}>
                                     <span class="has-text-grey is-size-6">{{ tag_type }}</span>
                                 </label>
                             </div>
@@ -73,7 +73,7 @@
                             {% for payment_tier in payment_tiers %}
                             <div class="field">
                                 <label class="checkbox ml-0">
-                                    <input class="payment" name="paymentOption" type="checkbox" value="{{ payment_tier }}"{% if payment_tier == 'Free' %} checked{% endif %}>
+                                    <input class="payment" name="payment" type="checkbox" value="{{ payment_tier }}"{% if payment_tier == 'Free' %} checked{% endif %}>
                                      <span class="has-text-grey is-size-6">{{ payment_tier }}</span>
                                </label>
                             </div>
@@ -89,7 +89,7 @@
                             {% for complexity in complexities %}
                             <div class="field">
                                 <label class="checkbox ml-0">
-                                    <input class="complexity" name="complexityOption" type="checkbox" value="{{ complexity }}"{% if complexity == 'Beginner' %} checked{% endif %}>
+                                    <input class="complexity" name="complexity" type="checkbox" value="{{ complexity }}"{% if complexity == 'Beginner' %} checked{% endif %}>
                                     <span class="has-text-grey is-size-6">{{ complexity }}</span>
                               </label>
                             </div>
@@ -147,8 +147,7 @@
 <script>
     "use strict";
     const initialParams = new URLSearchParams(window.location.search);
-    const checkboxOptions = ['topicOption', 'typeOption', 'paymentOption', 'complexityOption'];
-    // const topicOptions = document.querySelectorAll("input[name='topicOption']");
+    const checkboxOptions = ['topic', 'type', 'payment', 'complexity'];
 
     const createQuerySelect = (opt) => {
         return "input[name=" + opt + "]"

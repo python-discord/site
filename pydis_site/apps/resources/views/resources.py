@@ -16,10 +16,10 @@ def resource_view(request: HttpRequest) -> HttpResponse:
     checkbox_options = {
         a: set(format_checkbox_options(request.GET.get(b)))
         for a, b in (
-            ('topics', 'topicOption'),
-            ('type', 'typeOption'),
-            ('payment_tiers', 'paymentOption'),
-            ('complexity', 'complexityOption'),
+            ('topics', 'topic'),
+            ('type', 'type'),
+            ('payment_tiers', 'payment'),
+            ('complexity', 'complexity'),
         )
     }
 
