@@ -23,7 +23,8 @@ from pydis_site.constants import GIT_SHA
 
 env = environ.Env(
     DEBUG=(bool, False),
-    SITE_DSN=(str, "")
+    SITE_DSN=(str, ""),
+    BUILDING_DOCKER=(bool, False)
 )
 
 sentry_sdk.init(
@@ -84,10 +85,15 @@ INSTALLED_APPS = [
     'django_filters',
     'django_simple_bulma',
     'rest_framework',
-    'rest_framework.authtoken'
+    'rest_framework.authtoken',
 ]
 
+if not env("BUILDING_DOCKER"):
+    INSTALLED_APPS.append("django_prometheus")
+
+# Ensure that Prometheus middlewares are first and last here.
 MIDDLEWARE = [
+    'django_prometheus.middleware.PrometheusBeforeMiddleware',
     'django_hosts.middleware.HostsRequestMiddleware',
 
     'django.middleware.security.SecurityMiddleware',
@@ -100,7 +106,9 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
     'django_hosts.middleware.HostsResponseMiddleware',
+    'django_prometheus.middleware.PrometheusAfterMiddleware'
 ]
+
 ROOT_URLCONF = 'pydis_site.urls'
 
 TEMPLATES = [

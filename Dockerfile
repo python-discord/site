@@ -26,6 +26,11 @@ COPY . .
 
 # Set dummy variables so collectstatic can load settings.py
 RUN \
+    # Set BUILDING_DOCKER to anything but undefined so settings.py
+    # does not insert django_prometheus into the list of installed apps.
+    # This prevents django_prometheus from attempting to connect to the database
+    # when the collectstatic task is ran.
+    BUILDING_DOCKER=yes \
     SECRET_KEY=dummy_value \
     DATABASE_URL=postgres://localhost \
     METRICITY_DB_URL=postgres://localhost \
