@@ -14,7 +14,7 @@ import os
 import secrets
 import sys
 from pathlib import Path
-from socket import gethostname, gethostbyname
+from socket import gethostbyname, gethostname
 
 import environ
 import sentry_sdk
