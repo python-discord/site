@@ -179,6 +179,7 @@ class SiteManager:
             "-w", "2",
             "--statsd-host", "graphite.default.svc.cluster.local:8125",
             "--statsd-prefix", "site",
+            "--config", "file:gunicorn.conf.py"
         ]
 
         # Run gunicorn for the production server.
