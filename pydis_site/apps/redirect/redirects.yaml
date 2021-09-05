@@ -87,10 +87,6 @@ resources_index_redirect:
   original_path: pages/resources/
   redirect_route: "resources:index"
 
-resources_resources_redirect:
-  original_path: pages/resources/<str:category>/
-  redirect_route: "resources:resources"
-
 # Events
 events_index_redirect:
   original_path: pages/events/
