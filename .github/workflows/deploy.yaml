@@ -41,7 +41,7 @@ jobs:
         uses: Azure/k8s-deploy@v1
         with:
           manifests: |
-              site/deployment.yaml
+              namespaces/default/site/deployment.yaml
           images: 'ghcr.io/python-discord/site:${{ steps.sha_tag.outputs.tag }}'
           kubectl-version: 'latest'
 

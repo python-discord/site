@@ -138,10 +138,17 @@ class SiteManager:
 
         print("Applying migrations.")
         call_command("migrate", verbosity=self.verbosity)
-        print("Collecting static files.")
-        call_command("collectstatic", interactive=False, clear=True, verbosity=self.verbosity)
 
         if self.debug:
+            # In Production, collectstatic is ran in the Docker image
+            print("Collecting static files.")
+            call_command(
+                "collectstatic",
+                interactive=False,
+                clear=True,
+                verbosity=self.verbosity - 1
+            )
+
             self.set_dev_site_name()
             self.create_superuser()
 
@@ -169,12 +176,10 @@ class SiteManager:
             "--preload",
             "-b", "0.0.0.0:8000",
             "pydis_site.wsgi:application",
-            "--threads", "8",
             "-w", "2",
-            "--max-requests", "1000",
-            "--max-requests-jitter", "50",
             "--statsd-host", "graphite.default.svc.cluster.local:8125",
             "--statsd-prefix", "site",
+            "--config", "file:gunicorn.conf.py"
         ]
 
         # Run gunicorn for the production server.
