@@ -161,7 +161,6 @@ class SiteManager:
             exists = cursor.fetchone()
             if exists:
                 # Assume metricity is already populated if it exists
-                print("Metricity already exists, not creating.")
                 return
             print("Creating metricity relations and populating with some data.")
             cursor.execute("CREATE DATABASE metricity")
@@ -171,8 +170,8 @@ class SiteManager:
             database="metricity",
             **db_connection_kwargs
         )
-        with conn.cursor() as cursor:
-            cursor.execute(open("postgres/init.sql").read())
+        with conn.cursor() as cursor, open("postgres/init.sql", encoding="utf-8") as f:
+            cursor.execute(f.read())
 
     def prepare_server(self) -> None:
         """Perform preparation tasks before running the server."""
