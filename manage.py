@@ -1,10 +1,9 @@
 #!/usr/bin/env python
 import os
-import re
 import socket
 import sys
 import time
-from typing import List
+from urllib.parse import SplitResult, urlsplit
 
 import django
 from django.contrib.auth import get_user_model
@@ -42,7 +41,7 @@ class SiteManager:
         --verbose  Sets verbose console output.
     """
 
-    def __init__(self, args: List[str]):
+    def __init__(self, args: list[str]):
         self.debug = "--debug" in args
         self.silent = "--silent" in args
 
@@ -54,6 +53,22 @@ class SiteManager:
         if self.debug:
             os.environ.setdefault("DEBUG", "true")
             print("Starting in debug mode.")
+
+    @staticmethod
+    def parse_db_url(db_url: str) -> SplitResult:
+        """Validate and split the given databse url."""
+        db_url_parts = urlsplit(db_url)
+        if not all((
+            db_url_parts.hostname,
+            db_url_parts.port,
+            db_url_parts.username,
+            db_url_parts.password,
+            db_url_parts.path
+        )):
+            raise ValueError(
+                "The DATABASE_URL environment variable is not a valid PostgreSQL database URL."
+            )
+        return db_url_parts
 
     @staticmethod
     def create_superuser() -> None:
@@ -90,12 +105,9 @@ class SiteManager:
         print("Waiting for PostgreSQL database.")
 
         # Get database URL based on environmental variable passed in compose
-        database_url = os.environ["DATABASE_URL"]
-        match = re.search(r"@([\w.]+):(\d+)/", database_url)
-        if not match:
-            raise OSError("Valid DATABASE_URL environmental variable not found.")
-        domain = match.group(1)
-        port = int(match.group(2))
+        database_url_parts = SiteManager.parse_db_url(os.environ["DATABASE_URL"])
+        domain = database_url_parts.hostname
+        port = database_url_parts.port
 
         # Attempt to connect to the database socket
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -129,12 +141,45 @@ class SiteManager:
                 name="pythondiscord.local:8000"
             )
 
+    @staticmethod
+    def run_metricity_init() -> None:
+        """
+        Initialise metricity relations and populate with some testing data.
+
+        This is done at run time since other projects, like Python bot,
+        rely on the site initialising it's own db, since they do not have
+        access to the init.sql file to mount a docker-compose volume.
+        """
+        import psycopg2
+        from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
+
+        print("Initialising metricity.")
+
+        db_url_parts = SiteManager.parse_db_url(os.environ["DATABASE_URL"])
+        conn = psycopg2.connect(
+            host=db_url_parts.hostname,
+            port=db_url_parts.port,
+            user=db_url_parts.username,
+            password=db_url_parts.password,
+            database=db_url_parts.path[1:]
+        )
+        # Required to create a db from `cursor.execute()`
+        conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
+
+        with conn.cursor() as cursor, open("postgres/init.sql", encoding="utf-8") as f:
+            cursor.execute(
+                f.read(),
+                ("metricity", db_url_parts.username, db_url_parts.password)
+            )
+        conn.close()
+
     def prepare_server(self) -> None:
         """Perform preparation tasks before running the server."""
-        django.setup()
-
+        self.wait_for_postgres()
         if self.debug:
-            self.wait_for_postgres()
+            self.run_metricity_init()
+
+        django.setup()
 
         print("Applying migrations.")
         call_command("migrate", verbosity=self.verbosity)
@@ -188,6 +233,11 @@ class SiteManager:
 
 def main() -> None:
     """Entry point for Django management script."""
+    # Always run metricity init when in CI, indicated by the CI env var
+    if os.environ.get("CI", "false").lower() == "true":
+        SiteManager.wait_for_postgres()
+        SiteManager.run_metricity_init()
+
     # Use the custom site manager for launching the server
     if len(sys.argv) > 1 and sys.argv[1] == "run":
         SiteManager(sys.argv).run_server()
