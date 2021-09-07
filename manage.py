@@ -153,6 +153,8 @@ class SiteManager:
         import psycopg2
         from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 
+        print("Initialising metricity.")
+
         db_url_parts = SiteManager.parse_db_url(os.environ["DATABASE_URL"])
         conn = psycopg2.connect(
             host=db_url_parts.hostname,
