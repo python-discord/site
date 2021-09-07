@@ -152,36 +152,21 @@ class SiteManager:
         from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 
         db_url_parts = SiteManager.parse_db_url(os.environ["DATABASE_URL"])
-        db_connection_kwargs = {
-            "host": db_url_parts.hostname,
-            "port": db_url_parts.port,
-            "user": db_url_parts.username,
-            "password": db_url_parts.password,
-        }
-        # Connect to pysite first to create metricity db
         conn = psycopg2.connect(
-            database=db_url_parts.path[1:],
-            **db_connection_kwargs
+            host=db_url_parts.hostname,
+            port=db_url_parts.port,
+            user=db_url_parts.username,
+            password=db_url_parts.password,
+            database=db_url_parts.path[1:]
         )
+        # Required to create a db from `cursor.execute()`
         conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
 
-        with conn.cursor() as cursor:
-            cursor.execute("SELECT 1 FROM pg_catalog.pg_database WHERE datname = 'metricity'")
-            exists = cursor.fetchone()
-            if exists:
-                # Assume metricity is already populated if it exists
-                return
-            print("Creating metricity relations and populating with some data.")
-            cursor.execute("CREATE DATABASE metricity")
-        conn.close()
-
-        # Switch connection to metricity and initialise some data
-        conn = psycopg2.connect(
-            database="metricity",
-            **db_connection_kwargs
-        )
         with conn.cursor() as cursor, open("postgres/init.sql", encoding="utf-8") as f:
-            cursor.execute(f.read())
+            cursor.execute(
+                f.read(),
+                ("metricity", db_url_parts.username, db_url_parts.password)
+            )
         conn.close()
 
     def prepare_server(self) -> None:
