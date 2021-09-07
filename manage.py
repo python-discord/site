@@ -229,9 +229,8 @@ class SiteManager:
 
 def main() -> None:
     """Entry point for Django management script."""
-    # Always run metricity init in CI
-    in_ci = os.environ.get("CI", "false").lower() == "true"
-    if in_ci:
+    # Always run metricity init when in CI, indicated by the CI env var
+    if os.environ.get("CI", "false").lower() == "true":
         SiteManager.wait_for_postgres()
         SiteManager.run_metricity_init()
 
