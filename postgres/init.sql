@@ -1,3 +1,7 @@
+-- The following function is from Stack Overflow
+-- https://stackoverflow.com/questions/18389124/simulate-create-database-if-not-exists-for-postgresql/36218838#36218838
+-- User frankhommers (https://stackoverflow.com/users/971229/frankhommers)
+
 DO
 $do$
 DECLARE
