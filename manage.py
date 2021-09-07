@@ -173,6 +173,7 @@ class SiteManager:
                 return
             print("Creating metricity relations and populating with some data.")
             cursor.execute("CREATE DATABASE metricity")
+        conn.close()
 
         # Switch connection to metricity and initialise some data
         conn = psycopg2.connect(
@@ -181,6 +182,7 @@ class SiteManager:
         )
         with conn.cursor() as cursor, open("postgres/init.sql", encoding="utf-8") as f:
             cursor.execute(f.read())
+        conn.close()
 
     def prepare_server(self) -> None:
         """Perform preparation tasks before running the server."""
