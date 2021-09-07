@@ -142,10 +142,10 @@ class SiteManager:
     @staticmethod
     def run_metricity_init() -> None:
         """
-        Initilise metricity relations and populate with some testing data.
+        Initialise metricity relations and populate with some testing data.
 
         This is done at run time since other projects, like Python bot,
-        rely on the site initilising it's own db, since they do not have
+        rely on the site initialising it's own db, since they do not have
         access to the init.sql file to mount a docker-compose volume.
         """
         import psycopg2
