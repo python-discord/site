@@ -65,7 +65,9 @@ class SiteManager:
             db_url_parts.password,
             db_url_parts.path
         )):
-            raise OSError("Valid DATABASE_URL environment variable not found.")
+            raise ValueError(
+                "The DATABASE_URL environment variable is not a valid PostgreSQL database URL."
+            )
         return db_url_parts
 
     @staticmethod
