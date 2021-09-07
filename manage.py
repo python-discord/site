@@ -60,7 +60,6 @@ class SiteManager:
         db_url_parts = urlsplit(db_url)
         if not all((
             db_url_parts.hostname,
-            db_url_parts.port,
             db_url_parts.username,
             db_url_parts.password,
             db_url_parts.path
@@ -107,7 +106,8 @@ class SiteManager:
         # Get database URL based on environmental variable passed in compose
         database_url_parts = SiteManager.parse_db_url(os.environ["DATABASE_URL"])
         domain = database_url_parts.hostname
-        port = database_url_parts.port
+        # Port may be omitted, 5432 is the default psql port
+        port = database_url_parts.port or 5432
 
         # Attempt to connect to the database socket
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
