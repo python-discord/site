@@ -1,10 +1,9 @@
 #!/usr/bin/env python
 import os
-import re
 import socket
 import sys
 import time
-from typing import List
+from urllib.parse import SplitResult, urlsplit
 
 import django
 from django.contrib.auth import get_user_model
@@ -42,7 +41,7 @@ class SiteManager:
         --verbose  Sets verbose console output.
     """
 
-    def __init__(self, args: List[str]):
+    def __init__(self, args: list[str]):
         self.debug = "--debug" in args
         self.silent = "--silent" in args
 
@@ -54,6 +53,20 @@ class SiteManager:
         if self.debug:
             os.environ.setdefault("DEBUG", "true")
             print("Starting in debug mode.")
+
+    @staticmethod
+    def parse_db_url(db_url: str) -> SplitResult:
+        """Validate and split the given databse url."""
+        db_url_parts = urlsplit(db_url)
+        if not all((
+            db_url_parts.hostname,
+            db_url_parts.port,
+            db_url_parts.username,
+            db_url_parts.password,
+            db_url_parts.path
+        )):
+            raise OSError("Valid DATABASE_URL environment variable not found.")
+        return db_url_parts
 
     @staticmethod
     def create_superuser() -> None:
@@ -90,12 +103,9 @@ class SiteManager:
         print("Waiting for PostgreSQL database.")
 
         # Get database URL based on environmental variable passed in compose
-        database_url = os.environ["DATABASE_URL"]
-        match = re.search(r"@([\w.]+):(\d+)/", database_url)
-        if not match:
-            raise OSError("Valid DATABASE_URL environmental variable not found.")
-        domain = match.group(1)
-        port = int(match.group(2))
+        database_url_parts = SiteManager.parse_db_url(os.environ["DATABASE_URL"])
+        domain = database_url_parts.hostname
+        port = database_url_parts.port
 
         # Attempt to connect to the database socket
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -140,9 +150,8 @@ class SiteManager:
         """
         import psycopg2
         from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
-        from urllib.parse import urlsplit
-        # The database URL has already been validated in `wait_for_postgres()`
-        db_url_parts = urlsplit(os.environ["DATABASE_URL"])
+
+        db_url_parts = SiteManager.parse_db_url(os.environ["DATABASE_URL"])
         db_connection_kwargs = {
             "host": db_url_parts.hostname,
             "port": db_url_parts.port,
