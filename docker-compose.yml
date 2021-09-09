@@ -18,6 +18,8 @@ services:
       POSTGRES_DB: pysite
       POSTGRES_PASSWORD: pysite
       POSTGRES_USER: pysite
+    volumes:
+      - ./postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
 
   web:
     build:

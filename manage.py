@@ -141,44 +141,8 @@ class SiteManager:
                 name="pythondiscord.local:8000"
             )
 
-    @staticmethod
-    def run_metricity_init() -> None:
-        """
-        Initialise metricity relations and populate with some testing data.
-
-        This is done at run time since other projects, like Python bot,
-        rely on the site initialising it's own db, since they do not have
-        access to the init.sql file to mount a docker-compose volume.
-        """
-        import psycopg2
-        from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
-
-        print("Initialising metricity.")
-
-        db_url_parts = SiteManager.parse_db_url(os.environ["DATABASE_URL"])
-        conn = psycopg2.connect(
-            host=db_url_parts.hostname,
-            port=db_url_parts.port,
-            user=db_url_parts.username,
-            password=db_url_parts.password,
-            database=db_url_parts.path[1:]
-        )
-        # Required to create a db from `cursor.execute()`
-        conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
-
-        with conn.cursor() as cursor, open("postgres/init.sql", encoding="utf-8") as f:
-            cursor.execute(
-                f.read(),
-                ("metricity", db_url_parts.username, db_url_parts.password)
-            )
-        conn.close()
-
     def prepare_server(self) -> None:
         """Perform preparation tasks before running the server."""
-        self.wait_for_postgres()
-        if self.debug:
-            self.run_metricity_init()
-
         django.setup()
 
         print("Applying migrations.")
@@ -236,7 +200,6 @@ def main() -> None:
     # Always run metricity init when in CI, indicated by the CI env var
     if os.environ.get("CI", "false").lower() == "true":
         SiteManager.wait_for_postgres()
-        SiteManager.run_metricity_init()
 
     # Use the custom site manager for launching the server
     if len(sys.argv) > 1 and sys.argv[1] == "run":
