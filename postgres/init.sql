@@ -1,28 +1,3 @@
--- The following function is from Stack Overflow
--- https://stackoverflow.com/questions/18389124/simulate-create-database-if-not-exists-for-postgresql/36218838#36218838
--- User frankhommers (https://stackoverflow.com/users/971229/frankhommers)
-
-DO
-$do$
-DECLARE
-  _db TEXT := %s;
-  _user TEXT := %s;
-  _password TEXT := %s;
-BEGIN
-  CREATE EXTENSION IF NOT EXISTS dblink;
-  IF EXISTS (SELECT 1 FROM pg_database WHERE datname = _db) THEN
-    RAISE NOTICE 'Database already exists';
-  ELSE
-    PERFORM dblink_connect(
-        'host=localhost user=' || _user ||
-        ' password=' || _password ||
-        ' dbname=' || current_database()
-    );
-    PERFORM dblink_exec('CREATE DATABASE ' || _db);
-  END IF;
-END
-$do$;
-
 CREATE TABLE IF NOT EXISTS users (
     id varchar,
     joined_at timestamp,

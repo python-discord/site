@@ -151,26 +151,53 @@ class SiteManager:
         access to the init.sql file to mount a docker-compose volume.
         """
         import psycopg2
+        from psycopg2 import sql
         from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 
         print("Initialising metricity.")
 
-        db_url_parts = SiteManager.parse_db_url(os.environ["DATABASE_URL"])
+        site_db_url_parts = SiteManager.parse_db_url(os.environ["DATABASE_URL"])
+        metricity_db_url_parts = SiteManager.parse_db_url(os.environ["METRICITY_DB_URL"])
+
         conn = psycopg2.connect(
-            host=db_url_parts.hostname,
-            port=db_url_parts.port,
-            user=db_url_parts.username,
-            password=db_url_parts.password,
-            database=db_url_parts.path[1:]
+            host=site_db_url_parts.hostname,
+            port=site_db_url_parts.port,
+            user=site_db_url_parts.username,
+            password=site_db_url_parts.password,
+            database=site_db_url_parts.path[1:]
         )
         # Required to create a db from `cursor.execute()`
         conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
 
-        with conn.cursor() as cursor, open("postgres/init.sql", encoding="utf-8") as f:
+        metricity_db_name = metricity_db_url_parts.path[1:]
+        with conn.cursor() as cursor:
             cursor.execute(
-                f.read(),
-                ("metricity", db_url_parts.username, db_url_parts.password)
+                "SELECT 1 FROM pg_catalog.pg_database WHERE datname = %s",
+                (metricity_db_name,)
             )
+            if cursor.fetchone():
+                print("Metricity already exists.")
+                return
+
+            cursor.execute(
+                sql.SQL("CREATE DATABASE {db}").format(
+                    db=sql.Identifier(metricity_db_name)
+                )
+            )
+        conn.close()
+
+        # PostgreSQL can't switch database contexts without switching connection.
+        # dblink extension could work, but we'd need to wrap every statement with dblink_exec()
+        conn = psycopg2.connect(
+            host=metricity_db_url_parts.hostname,
+            port=metricity_db_url_parts.port,
+            user=metricity_db_url_parts.username,
+            password=metricity_db_url_parts.password,
+            database=metricity_db_url_parts.path[1:]
+        )
+        conn.autocommit = True
+        with conn.cursor() as cursor, open("postgres/init.sql", encoding="utf-8") as f:
+            cursor.execute(f.read())
         conn.close()
 
     def prepare_server(self) -> None:
