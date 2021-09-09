@@ -1,9 +1,6 @@
 #!/usr/bin/env python
 import os
-import socket
 import sys
-import time
-from urllib.parse import SplitResult, urlsplit
 
 import django
 from django.contrib.auth import get_user_model
@@ -55,21 +52,6 @@ class SiteManager:
             print("Starting in debug mode.")
 
     @staticmethod
-    def parse_db_url(db_url: str) -> SplitResult:
-        """Validate and split the given databse url."""
-        db_url_parts = urlsplit(db_url)
-        if not all((
-            db_url_parts.hostname,
-            db_url_parts.username,
-            db_url_parts.password,
-            db_url_parts.path
-        )):
-            raise ValueError(
-                "The DATABASE_URL environment variable is not a valid PostgreSQL database URL."
-            )
-        return db_url_parts
-
-    @staticmethod
     def create_superuser() -> None:
         """Create a default django admin super user in development environments."""
         print("Creating a superuser.")
@@ -97,36 +79,6 @@ class SiteManager:
             print(f"New bot token created: {token}")
         else:
             print(f"Existing bot token found: {token}")
-
-    @staticmethod
-    def wait_for_postgres() -> None:
-        """Wait for the PostgreSQL database specified in DATABASE_URL."""
-        print("Waiting for PostgreSQL database.")
-
-        # Get database URL based on environmental variable passed in compose
-        database_url_parts = SiteManager.parse_db_url(os.environ["DATABASE_URL"])
-        domain = database_url_parts.hostname
-        # Port may be omitted, 5432 is the default psql port
-        port = database_url_parts.port or 5432
-
-        # Attempt to connect to the database socket
-        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
-        attempts_left = 10
-        while attempts_left:
-            try:
-                # Ignore 'incomplete startup packet'
-                s.connect((domain, port))
-                s.shutdown(socket.SHUT_RDWR)
-                print("Database is ready.")
-                break
-            except socket.error:
-                attempts_left -= 1
-                print("Not ready yet, retrying.")
-                time.sleep(0.5)
-        else:
-            print("Database could not be found, exiting.")
-            sys.exit(1)
 
     @staticmethod
     def set_dev_site_name() -> None:
@@ -197,10 +149,6 @@ class SiteManager:
 
 def main() -> None:
     """Entry point for Django management script."""
-    # Always run metricity init when in CI, indicated by the CI env var
-    if os.environ.get("CI", "false").lower() == "true":
-        SiteManager.wait_for_postgres()
-
     # Use the custom site manager for launching the server
     if len(sys.argv) > 1 and sys.argv[1] == "run":
         SiteManager(sys.argv).run_server()
