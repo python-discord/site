@@ -27,7 +27,7 @@ class HomeView(View):
         "python-discord/snekbox",
         "python-discord/sir-lancebot",
         "python-discord/metricity",
-        "python-discord/django-simple-bulma",
+        "python-discord/king-arthur",
     ]
 
     def __init__(self):
