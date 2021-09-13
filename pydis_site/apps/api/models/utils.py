@@ -142,7 +142,7 @@ def validate_embed(embed: Any) -> None:
             ),
             MaxLengthValidator(limit_value=256)
         ),
-        'description': (MaxLengthValidator(limit_value=2048),),
+        'description': (MaxLengthValidator(limit_value=4096),),
         'fields': (
             MaxLengthValidator(limit_value=25),
             validate_embed_fields

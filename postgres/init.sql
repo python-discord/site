@@ -1,8 +1,29 @@
-CREATE DATABASE metricity;
+-- The following function is from Stack Overflow
+-- https://stackoverflow.com/questions/18389124/simulate-create-database-if-not-exists-for-postgresql/36218838#36218838
+-- User frankhommers (https://stackoverflow.com/users/971229/frankhommers)
 
-\c metricity;
+DO
+$do$
+DECLARE
+  _db TEXT := %s;
+  _user TEXT := %s;
+  _password TEXT := %s;
+BEGIN
+  CREATE EXTENSION IF NOT EXISTS dblink;
+  IF EXISTS (SELECT 1 FROM pg_database WHERE datname = _db) THEN
+    RAISE NOTICE 'Database already exists';
+  ELSE
+    PERFORM dblink_connect(
+        'host=localhost user=' || _user ||
+        ' password=' || _password ||
+        ' dbname=' || current_database()
+    );
+    PERFORM dblink_exec('CREATE DATABASE ' || _db);
+  END IF;
+END
+$do$;
 
-CREATE TABLE users (
+CREATE TABLE IF NOT EXISTS users (
     id varchar,
     joined_at timestamp,
     primary key(id)
@@ -11,14 +32,14 @@ CREATE TABLE users (
 INSERT INTO users VALUES (
     0,
     current_timestamp
-);
+) ON CONFLICT (id) DO NOTHING;
 
 INSERT INTO users VALUES (
     1,
     current_timestamp
-);
+) ON CONFLICT (id) DO NOTHING;
 
-CREATE TABLE channels (
+CREATE TABLE IF NOT EXISTS channels (
     id varchar,
     name varchar,
     primary key(id)
@@ -27,44 +48,44 @@ CREATE TABLE channels (
 INSERT INTO channels VALUES(
     '267659945086812160',
     'python-general'
-);
+) ON CONFLICT (id) DO NOTHING;
 
 INSERT INTO channels VALUES(
     '11',
     'help-apple'
-);
+) ON CONFLICT (id) DO NOTHING;
 
 INSERT INTO channels VALUES(
     '12',
     'help-cherry'
-);
+) ON CONFLICT (id) DO NOTHING;
 
 INSERT INTO channels VALUES(
     '21',
     'ot0-hello'
-);
+) ON CONFLICT (id) DO NOTHING;
 
 INSERT INTO channels VALUES(
     '22',
     'ot1-world'
-);
+) ON CONFLICT (id) DO NOTHING;
 
 INSERT INTO channels VALUES(
     '31',
     'voice-chat-0'
-);
+) ON CONFLICT (id) DO NOTHING;
 
 INSERT INTO channels VALUES(
     '32',
     'code-help-voice-0'
-);
+) ON CONFLICT (id) DO NOTHING;
 
 INSERT INTO channels VALUES(
     '1234',
     'zebra'
-);
+) ON CONFLICT (id) DO NOTHING;
 
-CREATE TABLE messages (
+CREATE TABLE IF NOT EXISTS messages (
     id varchar,
     author_id varchar references users(id),
     is_deleted boolean,
@@ -79,7 +100,7 @@ INSERT INTO messages VALUES(
     false,
     now(),
     '267659945086812160'
-);
+) ON CONFLICT (id) DO NOTHING;
 
 INSERT INTO messages VALUES(
     1,
@@ -87,7 +108,7 @@ INSERT INTO messages VALUES(
     false,
     now() + INTERVAL '10 minutes,',
     '1234'
-);
+) ON CONFLICT (id) DO NOTHING;
 
 INSERT INTO messages VALUES(
     2,
@@ -95,7 +116,7 @@ INSERT INTO messages VALUES(
     false,
     now(),
     '11'
-);
+) ON CONFLICT (id) DO NOTHING;
 
 INSERT INTO messages VALUES(
     3,
@@ -103,7 +124,7 @@ INSERT INTO messages VALUES(
     false,
     now(),
     '12'
-);
+) ON CONFLICT (id) DO NOTHING;
 
 INSERT INTO messages VALUES(
     4,
@@ -111,7 +132,7 @@ INSERT INTO messages VALUES(
     false,
     now(),
     '21'
-);
+) ON CONFLICT (id) DO NOTHING;
 
 INSERT INTO messages VALUES(
     5,
@@ -119,7 +140,7 @@ INSERT INTO messages VALUES(
     false,
     now(),
     '22'
-);
+) ON CONFLICT (id) DO NOTHING;
 
 INSERT INTO messages VALUES(
     6,
@@ -127,7 +148,7 @@ INSERT INTO messages VALUES(
     false,
     now(),
     '31'
-);
+) ON CONFLICT (id) DO NOTHING;
 
 INSERT INTO messages VALUES(
     7,
@@ -135,7 +156,7 @@ INSERT INTO messages VALUES(
     false,
     now(),
     '32'
-);
+) ON CONFLICT (id) DO NOTHING;
 
 INSERT INTO messages VALUES(
     8,
@@ -143,4 +164,4 @@ INSERT INTO messages VALUES(
     true,
     now(),
     '32'
-);
+) ON CONFLICT (id) DO NOTHING;
