@@ -8,10 +8,6 @@ RESOURCE_META_TAGS = {k: set(v) for k, v in RESOURCE_TABLE.items()}
 
 def _parse_checkbox_options(options: str) -> set[str]:
     """Split up the comma separated query parameters for checkbox options into a list."""
-    if not options:
-        return set()
-    if options == '*':
-        return {'*'}
     return set(options.split(",")[:-1])
 
 
@@ -26,10 +22,6 @@ def resource_view(request: HttpRequest) -> HttpResponse:
             ('complexity', 'complexity'),
         )
     }
-
-    # This allows for an asterisk in the URL to be a wildcard for that selection
-    checkbox_options = {k: (v if v != {'*'} else RESOURCE_META_TAGS[k])
-                        for k, v in checkbox_options.items()}
 
     topics = sorted(RESOURCE_META_TAGS.get("topics"))
 
