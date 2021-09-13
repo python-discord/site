@@ -40,6 +40,8 @@ RESOURCE_TABLE = MappingProxyType({
     for category, d in _resource_table.items()
 })
 
+ALL_RESOURCE_NAMES = frozenset(RESOURCES.keys())
+
 
 def get_resources_from_search(search_categories: dict[str, set[str]]) -> list[Resource]:
     """Returns a list of all resources that match the given search terms."""
@@ -50,7 +52,7 @@ def get_resources_from_search(search_categories: dict[str, set[str]]) -> list[Re
                 or_,
                 (RESOURCE_TABLE[category][label] for label in labels),
                 set()
-            )
+            ) or ALL_RESOURCE_NAMES
             for category, labels in search_categories.items()
         )
     )
