@@ -2,191 +2,569 @@
 title: Contributing to Bot
 description: A guide to setting up and configuring Bot.
 icon: fab fa-github
-toc: 1
+toc: 3
 ---
+The purpose of this guide is to get you a running local version of [the Python bot](https://github.com/python-discord/bot).
+This page will focus on the quickest steps one can take, with mentions of alternatives afterwards.
 
-# Requirements
-* [Python 3.9](https://www.python.org/downloads/)
-* [Poetry](https://github.com/python-poetry/poetry#installation)
-    * `pip install poetry`
-* [Git](https://git-scm.com/downloads)
-    * [Windows](https://git-scm.com/download/win)
-    * [MacOS](https://git-scm.com/download/mac) or `brew install git`
-    * [Linux](https://git-scm.com/download/linux)
-* A running webserver for the [site](../site)
-    * Follow the linked guide only if you don't want to use Docker or if you plan to do development on the site project too.
+### Clone The Repository
+First things first, to run the bot's code and make changes to it, you need a local version of it (on your computer).
 
-## Using Docker
+Clone the repository from [here](https://github.com/python-discord/bot). If you are not a member of the organisation, you will need to create a fork of the project, and clone the fork instead.
+Once this is done, you will have completed the first step towards having a running version of the bot.
 
-Both the site and the bot can be started using Docker.
-Using Docker is generally recommended (but not strictly required) because it abstracts away some additional set up work, especially for the site.
-However, if you plan to attach a debugger to either the site or the bot, run the respective project directly on your system (AKA the _host_) instead.
+<div class="card">
+    <button type="button" class="card-header collapsible">
+        <span class="card-header-title subtitle is-6 my-2 ml-2">Getting started with git</span>
+        <span class="card-header-icon">
+            <i class="fas fa-angle-down title is-5" aria-hidden="true"></i>
+        </span>
+    </button>
+    <div class="collapsible-content">
+        <div class="card-content">
+              <p>If you don't have git on your computer already, <a href="https://git-scm.com/downloads">install it</a>. Optionally, you can install a git GUI such as <a href="https://www.gitkraken.com/download">GitKraken</a>, or the <a href="https://cli.github.com/manual/installation">GitHub CLI</a>.</p>
+              <p>To learn more about git, you can look into <a href="../working-with-git">our guides</a>, as well as <a href="https://education.github.com/git-cheat-sheet-education.pdf">this cheatsheet</a>, <a href="https://learngitbranching.js.org">Learn Git Branching</a>, and otherwise any guide you can find on the internet. Once you got the basic idea though, the best way to learn git is to use it.</p>
+              <p>To clone the repository, get the URL from the green <b>Clone</b> button in the <a href="https://github.com/python-discord/bot">repo</a> page, and use the command <code>git clone</code>.</p>
+              <p>For the purpose of this guide, the full command is <code>git clone https://github.com/python-discord/bot.git</code> to clone the main repo via HTTPS (assuming you're in the desired directory on your computer). If you already have some experience with git, our recommendation is cloning via SSH instead.</p>
+              <p>Creating a copy of a repository under your own account is called a <em>fork</em>. This is where all your changes and commits will be pushed to, and from where your PRs will originate from. For any staff member, since you have write permissions already to the original repository, you can just create a feature branch to push your commits to instead.</p>
+              <p>To learn about forking a project, check out <a href="../forking-repository">this guide</a>.</p>
+        </div>
+    </div>
+</div>
 
-The requirements for Docker are:
+### Set Up a Test Server
+The Python bot is tightly coupled with the Python Discord server, so to have a functional version of the bot you need a server with channels it can use.
+It's possible to set the bot to use a single channel for all cogs, but that will cause extreme spam and will be difficult to work with.
 
-* [Docker CE](https://docs.docker.com/install/)
-* [Docker Compose](https://docs.docker.com/compose/install/) (This already comes bundled on macOS and Windows, so you shouldn't need to install it)
-    * `pip install docker-compose`
+You can start your own server and set up channels as you see fit, but for your convenience we have a template for a development server you can use: [https://discord.new/zmHtscpYN9E3](https://discord.new/zmHtscpYN9E3). Keep in mind that this is not a mirror of the Python server, and is a reduced version for testing purposes. A lot of the channels in the Python server were merged.
 
----
-# Fork the project
-You will need access to a copy of the git repository of your own that will allow you to edit the code and push your commits to.
-Creating a copy of a repository under your own account is called a _fork_.
+### Set Up a Bot Account
+You will need your own bot account on Discord to test your changes to the bot.
+See [here](../creating-bot-account) for help with setting up a bot account, and invite your bot to the test server you created in the previous section.
 
-* [Learn how to create a fork of the repository here.](../forking-repository)
+#### Privileged Intents
 
-This is where all your changes and commits will be pushed to, and from where your PRs will originate from.
-
-For any staff member, since you have write permissions already to the original repository, you can just create a feature branch to push your commits to instead.
-
----
-# Development environment
-1. [Clone your fork to a local project directory](../cloning-repository/)
-2. [Install the project's dependencies](../installing-project-dependencies/)
-3. [Prepare your hosts file (Optional)](../hosts-file/)
-
----
-# Test server and bot account
-You will need your own test server and bot account on Discord to test your changes to the bot.
-
-* [**Create a test server**](../setting-test-server-and-bot-account#setting-up-a-test-server)
-* [**Create a bot account**](../setting-test-server-and-bot-account#setting-up-a-bot-account)
-* Invite it to the server you just created.
-
-### Privileged Intents
-
-With `discord.py` 1.5 and later, it is now necessary to explicitly request that your Discord bot receives certain gateway events.
+It is necessary to explicitly request that your Discord bot receives certain gateway events.
 The Python bot requires the `Server Member Intent` to function.
 In order to enable it, visit the [Developer Portal](https://discord.com/developers/applications/) (from where you copied your bot's login token) and scroll down to the `Privileged Gateway Intents` section.
 The `Presence Intent` is not necessary and can be left disabled.
 
 If your bot fails to start with a `PrivilegedIntentsRequired` exception, this indicates that the required intent was not enabled.
 
-### Server Setup
+### Configure the Bot
+You now have both the bot's code, and a server to run it on. Now you need to connect the two by changing the bot's configurations.
 
-Setup categories, channels, emojis, roles, and webhooks in your server. To see what needs to be added, please refer to the following sections in the `config-default.yml` file:
+#### config.yml
+Entering the directory of the cloned code, you will find a file named `config-default.yml`.
+This file contains the various configurations we use to make the bot run on the Python Discord server, such as channel and role ID's, and the emojis it works with.
+It also contains configurations such as how long it takes for a help channel to time out, and how many messages a user needs to voice-verify.
 
-* `style.emojis`
+To run the bot in your test server, you will need to override some of those configurations.
+Open a new file in the directory called `config.yml`. The bot will first look at the items in this file, and will fall back to `config-default.yml` only if necessary.
+
+For example, `config-default.yml` contains the item:
+```yaml
+bot:
+    prefix:         "!"
+```
+If you add the following lines to `config.yml`:
+```yaml
+bot:
+    prefix:         "~"
+```
+The bot will use `~` for its prefix instead.
+
+<div class="card">
+    <button type="button" class="card-header collapsible">
+        <span class="card-header-title subtitle is-6 my-2 ml-2">Optional config.yml</span>
+        <span class="card-header-icon">
+            <i class="fas fa-angle-down title is-5" aria-hidden="true"></i>
+        </span>
+    </button>
+    <div class="collapsible-content">
+        <div class="card-content">
+              <p>If you used the provided server template, and you're not sure which channels belong where in the config file, you can use the config below. Pay attention to the comments with several <code>#</code> symbols, and replace the <code>�</code> characters with the right ID's.</p>
+              <pre>
+                <code class="language-yaml">
+bot:
+    prefix:      "!"
+
+    redis:
+        host:  "redis"
+        password: null
+        port:  6379
+        use_fakeredis: true
+
+    stats:
+        presence_update_timeout: 300
+        statsd_host: "graphite.default.svc.cluster.local"
+
+urls:
+    # PyDis site vars
+    site:        &DOMAIN       "web:8000"
+    site_api:    &API    !JOIN ["api.", *DOMAIN]
+    site_api_schema:           "http://"
+    site_paste:  &PASTE  !JOIN ["paste.", "pythondiscord.com"]
+    site_schema: &SCHEMA       "http://"
+    site_staff:  &STAFF  !JOIN ["staff.", *DOMAIN]
+
+    paste_service:                      !JOIN ["https://", *PASTE, "/{key}"]
+    site_logs_view:                     !JOIN [*SCHEMA, *STAFF, "/bot/logs"]
+
+    # Snekbox
+    snekbox_eval_api: "http://localhost:8060/eval"
+
+##### <<  Replace the following � characters with the channel ID's in your test server  >> #####
+#  This assumes the template was used: https://discord.new/zmHtscpYN9E3
+dev_guild:
+    id: &DEV_GUILD_ID   �
+
+    categories:
+        logs:           &DEV_LOGS               �
+        help_available: &DEV_HELP_AVAILABLE     �
+        help_occupied:  &DEV_HELP_OCCUPIED      �
+        help_dormant:   &DEV_HELP_DORMANT       �
+        voice:          &DEV_VOICE              �
+
+    channels:
+        # Staff
+        admins_mods:            &DEV_ADMINS_MODS            �
+        lounge_helpers_org:     &DEV_LOUNGE_HELPERS_ORG     �
+        defcon:                 &DEV_DEFCON                 �
+        incidents:              &DEV_INCIDENTS              �
+        incidents_archive:      &DEV_INCIDENTS_ARCHIVE      �
+        staff_announcements:    &DEV_STAFF_ANNOUNCEMENTS    �
+        dev_logs:               &DEV_DEV_LOGS               �
+
+        # Logs
+        all_logs:   &DEV_ALL_LOGS   �
+        bb_logs:    &DEV_BB_LOGS    �
+        duck_pond:  &DEV_DUCK_POND  �
+
+        # Available Help Channels
+        how_to_get_help:    &DEV_HTGH   �
+
+        # Miscellaneous
+        bot_commands:       &DEV_BOT_CMD    �
+        general_meta_voice: &DEV_GMV        �
+        dev_core_contrib:   &DEV_DEV        �
+
+        # Voice
+        voice-verification: &DEV_VOICE_VER      �
+        vc:                 &DEV_VC             �
+        staff_voice:        &DEV_STAFF_VOICE    �
+
+        # News
+        announcements:  &DEV_ANNOUNCEMENTS  �
+        py_news:        &DEV_PY_NEWS        �
+
+        # Off-topic
+        off_topic_0: &DEV_OT_0  �
+        off_topic_1: &DEV_OT_1  �
+        off_topic_2: &DEV_OT_2  �
+
+guild:
+    ##### <<  Replace the following � characters with the role and webhook ID's in your test server  >> #####
+    roles:
+        announcements:                          �
+        contributors:                           �
+        help_cooldown:                          �
+        muted:              &MUTED_ROLE         �
+        partners:           &PY_PARTNER_ROLE    �
+        python_community:   &PY_COMMUNITY_ROLE  �
+        voice_verified:                         �
+
+        # Staff
+        admins:             &ADMINS_ROLE    �
+        core_developers:                    �
+        devops:                             �
+        domain_leads:                       �
+        helpers:            &HELPERS_ROLE   �
+        moderators:         &MODS_ROLE      �
+        mod_team:           &MOD_TEAM_ROLE  �
+        owners:             &OWNERS_ROLE    �
+        code_jam_event_team:                �
+        project_leads:                      �
+
+        # Code Jam
+        team_leaders:   �
+
+        # Streaming
+        video: �
+
+    webhooks:
+        big_brother:                            �
+        dev_log:                                �
+        duck_pond:                              �
+        incidents_archive:                      �
+        python_news:        &PYNEWS_WEBHOOK     �
+        talent_pool:                            �
+
+    ##### <<  At this point your test bot should be able to mostly work with your test server  >> #####
+    #  The following is the actual configs the bot uses, don't delete these.
+    id: *DEV_GUILD_ID
+    invite: "https://discord.gg/python"
+
+    categories:
+        help_available:                     *DEV_HELP_AVAILABLE
+        help_dormant:                       *DEV_HELP_DORMANT
+        help_in_use:                        *DEV_HELP_OCCUPIED
+        logs:                               *DEV_LOGS
+        voice:                              *DEV_VOICE
+
+    channels:
+        # Public announcement and news channels
+        announcements:  *DEV_ANNOUNCEMENTS
+        change_log:     *DEV_ANNOUNCEMENTS
+        mailing_lists:  *DEV_ANNOUNCEMENTS
+        python_events:  *DEV_ANNOUNCEMENTS
+        python_news:    *DEV_PY_NEWS
+
+        # Development
+        dev_contrib:        *DEV_DEV
+        dev_core:           *DEV_DEV
+        dev_log:            *DEV_DEV_LOGS
+
+        # Discussion
+        meta:                               *DEV_GMV
+        python_general:     *DEV_GMV
+
+        # Python Help: Available
+        cooldown:           *DEV_HTGH
+        how_to_get_help:    *DEV_HTGH
+
+        # Topical
+        discord_py:         *DEV_GMV
+
+        # Logs
+        attachment_log:     *DEV_ALL_LOGS
+        message_log:        *DEV_ALL_LOGS
+        mod_log:            *DEV_ALL_LOGS
+        user_log:           *DEV_ALL_LOGS
+        voice_log:          *DEV_ALL_LOGS
+
+        # Off-topic
+        off_topic_0:    *DEV_OT_0
+        off_topic_1:    *DEV_OT_1
+        off_topic_2:    *DEV_OT_2
+
+        # Special
+        bot_commands:       *DEV_BOT_CMD
+        voice_gate:         *DEV_VOICE_VER
+        code_jam_planning:  *DEV_ADMINS_MODS
+
+        # Staff
+        admins:             *DEV_ADMINS_MODS
+        admin_spam:         *DEV_ADMINS_MODS
+        defcon:             *DEV_DEFCON
+        duck_pond:          *DEV_DUCK_POND
+        helpers:            *DEV_LOUNGE_HELPERS_ORG
+        incidents:                          *DEV_INCIDENTS
+        incidents_archive:                  *DEV_INCIDENTS_ARCHIVE
+        mods:               *DEV_ADMINS_MODS
+        mod_alerts:                         *DEV_ADMINS_MODS
+        mod_meta:           *DEV_ADMINS_MODS
+        mod_spam:           *DEV_ADMINS_MODS
+        mod_tools:          *DEV_ADMINS_MODS
+        organisation:       *DEV_LOUNGE_HELPERS_ORG
+        staff_lounge:       *DEV_LOUNGE_HELPERS_ORG
+
+        # Staff announcement channels
+        admin_announcements:    *DEV_STAFF_ANNOUNCEMENTS
+        mod_announcements:      *DEV_STAFF_ANNOUNCEMENTS
+        staff_announcements:    *DEV_STAFF_ANNOUNCEMENTS
+
+        # Voice Channels
+        admins_voice:       *DEV_STAFF_VOICE
+        code_help_voice_1:  *DEV_VC
+        code_help_voice_2:  *DEV_VC
+        general_voice:      *DEV_VC
+        staff_voice:        *DEV_STAFF_VOICE
+
+        # Voice Chat
+        code_help_chat_1:                   *DEV_GMV
+        code_help_chat_2:                   *DEV_GMV
+        staff_voice_chat:                   *DEV_ADMINS_MODS
+        voice_chat:                         *DEV_GMV
+
+        # Watch
+        big_brother_logs:                   *DEV_BB_LOGS
+
+    moderation_categories:
+        - *DEV_LOGS
+
+    moderation_channels:
+        - *DEV_ADMINS_MODS
+
+    # Modlog cog ignores events which occur in these channels
+    modlog_blacklist:
+        - *DEV_ADMINS_MODS
+        - *DEV_ALL_LOGS
+        - *DEV_STAFF_VOICE
+
+    reminder_whitelist:
+        - *DEV_BOT_CMD
+        - *DEV_DEV
+
+    moderation_roles:
+        - *ADMINS_ROLE
+        - *MODS_ROLE
+        - *MOD_TEAM_ROLE
+        - *OWNERS_ROLE
+
+    staff_roles:
+        - *ADMINS_ROLE
+        - *HELPERS_ROLE
+        - *MODS_ROLE
+        - *OWNERS_ROLE
+
+##### <<  The bot shouldn't fail without these, but commands adding specific emojis won't work.  >> #####
+#  You should at least set the trashcan. Set the incidents emojis if relevant.
+style:
+    emojis:
+        badge_bug_hunter: "<:bug_hunter_lvl1:�>"
+        badge_bug_hunter_level_2: "<:bug_hunter_lvl2:�>"
+        badge_early_supporter: "<:early_supporter:�>"
+        badge_hypesquad: "<:hypesquad_events:�>"
+        badge_hypesquad_balance: "<:hypesquad_balance:�>"
+        badge_hypesquad_bravery: "<:hypesquad_bravery:�>"
+        badge_hypesquad_brilliance: "<:hypesquad_brilliance:�>"
+        badge_partner: "<:partner:�>"
+        badge_staff: "<:discord_staff:�>"
+        badge_verified_bot_developer: "<:verified_bot_dev:�>"
+
+        defcon_shutdown:    "<:defcondisabled:�>"
+        defcon_unshutdown:  "<:defconenabled:�>"
+        defcon_update:      "<:defconsettingsupdated:�>"
+
+        failmail: "<:failmail:�>"
+
+        #incident_actioned:      "<:incident_actioned:�>"
+        incident_investigating: "<:incident_investigating:�>"
+        incident_unactioned:    "<:incident_unactioned:�>"
+
+        status_dnd:     "<:status_dnd:�>"
+        status_idle:    "<:status_idle:�>"
+        status_offline: "<:status_offline:�>"
+        status_online:  "<:status_online:�>"
+
+        trashcan: "<:trashcan:�>"
+
+##### <<  Optional - If you don't care about the filtering and help channel cogs, ignore the rest of this file  >> #####
+filter:
+    # What do we filter?
+    filter_domains:        true
+    filter_everyone_ping:  true
+    filter_invites:        true
+    filter_zalgo:          false
+    watch_regex:           true
+    watch_rich_embeds:     true
+
+    # Notify user on filter?
+    # Notifications are not expected for "watchlist" type filters
+    notify_user_domains:        false
+    notify_user_everyone_ping:  true
+    notify_user_invites:        true
+    notify_user_zalgo:          false
+
+    # Filter configuration
+    offensive_msg_delete_days: 7     # How many days before deleting an offensive message?
+    ping_everyone:             true
+
+    # Censor doesn't apply to these
+    channel_whitelist:
+        - *DEV_ADMINS_MODS
+        - *DEV_BB_LOGS
+        - *DEV_ALL_LOGS
+        - *DEV_LOUNGE_HELPERS_ORG
+
+    role_whitelist:
+        - *ADMINS_ROLE
+        - *HELPERS_ROLE
+        - *MODS_ROLE
+        - *OWNERS_ROLE
+        - *PY_COMMUNITY_ROLE
+        - *PY_PARTNER_ROLE
+
+help_channels:
+    enable: true
+
+    # Minimum interval before allowing a certain user to claim a new help channel
+    claim_minutes: 1
+
+    # Roles which are allowed to use the command which makes channels dormant
+    cmd_whitelist:
+        - *HELPERS_ROLE
+
+    # Allowed duration of inactivity before making a channel dormant
+    idle_minutes: 1
+
+    # Allowed duration of inactivity when channel is empty (due to deleted messages)
+    # before message making a channel dormant
+    deleted_idle_minutes: 1
+
+    # Maximum number of channels to put in the available category
+    max_available: 2
+
+    # Maximum number of channels across all 3 categories
+    # Note Discord has a hard limit of 50 channels per category, so this shouldn't be > 50
+    max_total_channels: 20
+
+    # Prefix for help channel names
+    name_prefix: 'help-'
+
+    # Notify if more available channels are needed but there are no more dormant ones
+    notify: true
+
+    # Channel in which to send notifications
+    notify_channel: *DEV_LOUNGE_HELPERS_ORG
+
+    # Minimum interval between helper notifications
+    notify_minutes: 5
+
+    # Mention these roles in notifications
+    notify_roles:
+        - *HELPERS_ROLE
+
+##### <<  Add any additional sections you need to override from config-default.yml  >> #####
+            </code>
+          </pre>
+</div></div></div>
+<br>
+
+If you don't wish to use the provided `config.yml` above, you can copy the `config-default.yml` file, rename it, and change whatever values you need. Note that you don't need to specify all items in `config.yml`, just the ones you want to override such as channel ID's. 
+
+See [here](../obtaining-discord-ids) for help with obtaining Discord ID's.
+
+These are the main sections in `config-default.yml` that need overriding:
+
+* `guild.id`
 * `guild.categories`
 * `guild.channels`
 * `guild.roles`
 * `guild.webhooks`
+* `style.emojis`
+
+Additionally:
+
+* Set `urls.site_schema` and `urls.site_api_schema` to `"http://"`.
+* Set `urls.site_api` to `!JOIN ["api.", *DOMAIN]`.
+* Set `urls.snekbox_eval_api` to `"http://localhost:8060/eval"`.
+* At this stage, set `bot.redis.use_fakeredis` to `true`. If you're looking for instructions for working with Redis, see [Working with Redis](#optional-working-with-redis).
 
 We understand this is tedious and are working on a better solution for setting up test servers.
-In the meantime, [here](https://discord.new/zmHtscpYN9E3) is a template for you to use.<br>
 
----
-# Configure the bot
-You will need to copy IDs of the test Discord server, as well as the created channels and roles to paste in the config file.
-If you're not sure how to do this, [check out the information over here.](../setting-test-server-and-bot-account#obtain-the-ids)
+<div class="card">
+    <button type="button" class="card-header collapsible">
+        <span class="card-header-title subtitle is-6 my-2 ml-2">Why do you need a separate config file?</span>
+        <span class="card-header-icon">
+            <i class="fas fa-angle-down title is-5" aria-hidden="true"></i>
+        </span>
+    </button>
+    <div class="collapsible-content">
+        <div class="card-content">
+            While it's technically possible to edit <code>config-default.yml</code> to match your server, it is heavily discouraged.
+            This file's purpose is to provide the configurations the Python bot needs to run in the Python server in production, and should remain as such.
+            In contrast, the <code>config.yml</code> file can remain in your local copy of the code, and will be ignored by commits via the project's <code>.gitignore</code>.
+        </div>
+    </div>
+</div>
+<br>
 
-1. Create a copy of `config-default.yml` named `config.yml` in the same directory.
-2. Set `guild.id` to your test servers's ID.
-3. Change the IDs in the [sections](#server-setup) mentioned earlier to match the ones in your test server.
-4. Set `urls.site_schema` and `urls.site_api_schema` to `"http://"`.
-5. Set `urls.site`:
-    - If running the webserver in Docker, set it to `"web:8000"`.
-        - If the site container is running separately (i.e. started from a clone of the site repository), then [COMPOSE_PROJECT_NAME](../docker/#compose-project-names) has to be set to use this domain. If you choose not to set it, the domain in the following step can be used instead.
-    - If running the webserver locally and the hosts file has been configured, set it to `"pythondiscord.local:8000"`.
-    - Otherwise, use whatever domain corresponds to the server where the site is being hosted.
-6. Set `urls.site_api` to whatever value you assigned to `urls.site` with `api` prefixed to it, for example if you set `urls.site` to `web:8000` then set `urls.site_api` to `api.web:8000`.
-7. Setup the environment variables listed in the section below.
+#### .env
+The second file you need to open is the one containing the environment variables, and needs to have the name `.env`. 
+Inside, add the line `BOT_TOKEN=YourDiscordBotTokenHere`. See [here](../creating-bot-account) for help with obtaining the bot token.
 
-### Environment variables
+The `.env` file will be ignored by commits.
 
-These contain various settings used by the bot.
-To learn how to set environment variables, read [this page](../configure-environment-variables) first.
+### Run it!
+#### With Docker
+You are now almost ready to run the Python bot. The simplest way to do so is with Docker. 
 
-The following is a list of all available environment variables used by the bot:
+In your `config.yml` file, set `urls.site` to `"web:8000"`.
 
-| Variable | Required | Description |
-| -------- | -------- | -------- |
-| `BOT_TOKEN` | Always | Your Discord bot account's token (see [Test server and bot account](#test-server-and-bot-account)). |
-| `BOT_API_KEY` | When running bot without Docker | Used to authenticate with the site's API. When using Docker to run the bot, this is automatically set. By default, the site will always have the API key shown in the example below. |
-| `BOT_SENTRY_DSN` | When connecting the bot to sentry | The DSN of the sentry monitor. |
-| `BOT_TRACE_LOGGERS ` | When you wish to see specific or all trace logs | Comma separated list that specifies which loggers emit trace logs through the listed names. If the ! prefix is used, all of the loggers except the listed ones are set to the trace level. If * is used, the root logger is set to the trace level. |
-| `REDIS_PASSWORD` | When not using FakeRedis | The password to connect to the redis database. *Leave empty if you're not using REDIS.* |
+<div class="card">
+    <button type="button" class="card-header collapsible">
+        <span class="card-header-title subtitle is-6 my-2 ml-2">Getting started with Docker</span>
+        <span class="card-header-icon">
+            <i class="fas fa-angle-down title is-5" aria-hidden="true"></i>
+        </span>
+    </button>
+    <div class="collapsible-content">
+        <div class="card-content">
+            The requirements for Docker are:
+            <ul>
+                <li><a href="https://docs.docker.com/install">Docker CE</a></li>
+                <li>Docker Compose. If you're using macOS and Windows, this already comes bundled with the previous installation. Otherwise, you can download it either from the <a href="https://docs.docker.com/compose/install">website</a>, or by running <code>pip install docker-compose</code>.</li>
+            </ul>
+            <p>If you get any Docker related errors, reference the <a href="../docker#possible-issues">Possible Issue</a> section of the Docker page.</p>
+        </div>
+    </div>
+</div>
+<br>
 
----
+Assuming you have Docker installed, enter the cloned repo in the command line and type `docker-compose up`.
 
-If you are running on the host, while not required, we advise you set `use_fakeredis` to `true` in your `config.yml` file during development to avoid the need of setting up a Redis server.
-It does mean you may lose persistent data on restart but this is non-critical.
-Otherwise, you should set up a Redis instance and fill in the necessary config.
-{: .notification .is-warning }
+After pulling the images and building the containers, your bot will start. Enter your server and type `!help` (or whatever prefix you chose instead of `!`).
 
----
+Your bot is now running, but this method makes debugging with an IDE a fairly involved process. For additional running methods, continue reading the following sections.
 
-Example `.env` file:
+#### With the Bot Running Locally
+The advantage of this method is that you can run the bot's code in your preferred editor, with debugger and all, while keeping all the setup of the bot's various dependencies inside Docker.
 
-```shell
-BOT_TOKEN=YourDiscordBotTokenHere
-BOT_API_KEY=badbot13m0n8f570f942013fc818f234916ca531
-REDDIT_CLIENT_ID=YourRedditClientIDHere
-REDDIT_SECRET=YourRedditSecretHere
-```
+* [Prepare the hosts file on your machine](../hosts-file).
+* Append the following line to your `.env` file: `BOT_API_KEY=badbot13m0n8f570f942013fc818f234916ca531`.
+* In your `config.yml` file, set `urls.site` to `"pythondiscord.local:8000"`. If you wish to keep using `web:8000`, then [COMPOSE_PROJECT_NAME](../docker/#compose-project-names) has to be set to use this domain.
 
----
-# Run the project
+You will need to start the services separately, but if you got the previous section with Docker working, that's pretty simple:
 
-The bot can run with or without Docker.
-When using Docker, the site, which is a prerequisite, can be automatically set up too.
-If you don't use Docker, you have to first follow [the site guide](../site/) to set it up yourself.
-The bot and site can be started using independent methods.
-For example, the site could run with Docker and the bot could run directly on your system (AKA the _host_) or vice versa.
+* `docker-compose up web` to start the site container. This is required.
+* `docker-compose up snekbox` to start the snekbox container. You only need this if you're planning on working on the snekbox cog.
+* `docker-compose up redis` to start the Redis container. You only need this if you're not using fakeredis. For more info refer to [Working with Redis](#optional-working-with-redis).
 
-## Run with Docker
+You can start several services together: `docker-compose up web snekbox redis`.
 
-The following sections describe how to start either the site, bot, or both using Docker.
-If you are not interested in using Docker, see [this page](../site/) for setting up the site and [this section](#run-on-the-host) for running the bot.
+##### Setting Up a Development Environment
+The bot's code is Python code like any other. To run it locally, you will need the right version of Python with the necessary packages installed:
 
-If you get any Docker related errors, reference the [Possible Issues](../docker#possible-issues) section of the Docker page.
+1. Make sure you have [Python 3.9](https://www.python.org/downloads/) installed. It helps if it is your system's default Python version.
+2. Install Poetry by following [these instructions](https://github.com/python-poetry/poetry#installation), or with `pip install poetry`. In case of the latter, make sure pip installs to the right Python version.
+3. [Install the dependencies](../installing-project-dependencies).
 
-### Site and bot
+Assuming you have at least the site running in Docker already, you can now start the bot locally through the command line, or through your preferred IDE. Notice that the bot is started as a module.
+<div class="card">
+    <button type="button" class="card-header collapsible">
+        <span class="card-header-title subtitle is-6 my-2 ml-2">Ways to run code</span>
+        <span class="card-header-icon">
+            <i class="fas fa-angle-down title is-5" aria-hidden="true"></i>
+        </span>
+    </button>
+    <div class="collapsible-content">
+        <div class="card-content">
+            There are several ways to start the bot:
+            <ul>
+                <li>Through the command line, inside the bot directory, with either <code>poetry run task start</code>, or directly <code>python -m bot</code>.</li>
+                <li>If using PyCharm, enter <code>Edit Configurations</code> and set everything according to this image: <img src="/static/images/content/contributing/pycharm_run_module.png"></li>
+                <li>If using Visual Studio Code, set the interpreter to the poetry environment you created. In <code>launch.json</code> create a new Python configuration, and set the name of the program to be run to <code>bot</code>. VSC will correctly run it as a module.</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<br>
 
-This method will start both the site and the bot using Docker.
+#### With More Things Running Locally
+You can run additional services on the host. For the site, refer to the [site contributing guide](../site) to learn how to start it on the host, in which case you will need to change `urls.site` in `config.yml` to wherever the site is being hosted. This guide won't go over how to install and start the other dependencies on the host. If possible, prefer to start the services through Docker to replicate the production environment as much as possible.
 
-Start the containers using Docker Compose while inside the root of the project directory:
+#### Start Only the Bot with Docker
+This method will start only the bot using Docker. The site has to have been started somehow beforehand.
 
-```shell
-docker-compose up
-```
+Start the bot using Docker Compose while inside the root of the project directory: `docker-compose up --no-deps bot`.
 
-The `-d` option can be appended to the command to run in detached mode.
-This runs the containers in the background so the current terminal session is available for use with other things.
-
-### Site only
-
-This method will start only the site using Docker.
-
-```shell
-docker-compose up site
-```
-
-See [this section](#run-on-the-host) for how to start the bot on the host.
-
-### Bot only
-
-This method will start only the bot using Docker.
-The site has to have been started somehow beforehand.
-
-Start the bot using Docker Compose while inside the root of the project directory:
-
-```shell
-docker-compose up --no-deps bot
-```
-
-## Run on the host
-
-Running on the host is particularly useful if you wish to debug the bot.
-The site has to have been started somehow beforehand.
-
-```shell
-poetry run task start
-```
-
----
-## Working with Git
+### Development Tips
 Now that you have everything setup, it is finally time to make changes to the bot!
+
+#### Working with Git
+
 If you have not yet [read the contributing guidelines](../contributing-guidelines), now is a good time.
 Contributions that do not adhere to the guidelines may be rejected.
 
@@ -195,14 +573,72 @@ It can be intimidating at first, so feel free to ask for any help in the server.
 
 [**Click here to see the basic Git workflow when contributing to one of our projects.**](../working-with-git/)
 
-## Adding new statistics
-
-Details on how to add new statistics can be found on the [statistic infrastructure page](https://blog.pythondiscord.com/statistics-infrastructure).
-We are always open to more statistics so add as many as you can!
-
-## Running tests
+#### Running tests
 
 [This section](https://github.com/python-discord/bot/blob/main/tests/README.md#tools) of the README in the `tests` repository will explain how to run tests.
 The whole document explains how unittesting works, and how it fits in the context of our project.
 
-Have fun!
+#### Reloading parts of the bot
+If you make changes to a cog, you might not need to restart the entire bot for the changes to take effect. The command `!cog reload <cog_name>` (or `!c r <cog_name>` in short) re-imports the files associated with the cog.
+
+Note that if you changed code that is not associated with a particular cog, such as utilities, converters, and constants, you will need to restart the bot.
+
+#### Adding new statistics
+
+Details on how to add new statistics can be found on the [statistic infrastructure page](https://blog.pythondiscord.com/statistics-infrastructure).
+We are always open to more statistics so add as many as you can!
+
+### Optional: Working with Redis
+In [Configure the Bot](#configyml) you were asked to set `bot.redis.use_fakeredis` to `true`. If you do not need to work on features that rely on Redis, this is enough. Fakeredis will give the illusion that features relying on redis are saving information properly, but restarting the bot or the specific cog will wipe that information.
+
+If you are working on a feature that relies on redis, you will need to enable redis to make sure persistency is achieved for the feature across restarts. The first step towards that is going to `config.yml` and setting `bot.redis.use_fakeredis` to `false`.
+
+#### Starting Redis in Docker (Recommended)
+If you're using the Docker image provided in the project's docker-compose, open your `config.yml` file, set `bot.redis.host` to `redis`, and `bot.redis.password` to `null`.
+
+#### Starting Redis Using Other Methods
+You can run your own instance of Redis, but in that case you will need to correctly set `bot.redis.host` and `bot.redis.port`. Then, enter the `.env` file, and set `REDIS_PASSWORD` to whatever password you set.
+
+### Optional: Working with Metricity
+[Metricity](https://github.com/python-discord/metricity) is our home-grown bot for collecting metrics on activity within the server, such as what users are  present, and ID's of the messages they've sent. 
+Certain features in the Python bot rely on querying the Metricity database for information such as the number of messages a user has sent, most notably the voice verification system.
+
+If you wish to work on a feature that relies on Metricity, for your convenience we've made the process of using it relatively painless with docker: Enter the `.env` file you've written for the Python bot, and append the line `USE_METRICITY=true`.
+Note that if you don't need Metricity, there's no reason to have it enabled as it is just unnecessary overhead.
+
+To make the metricity bot work with your test server, you will need to override its configurations similarly to the Python bot.
+You can see the various configurations in [the Metricity repo](https://github.com/python-discord/metricity), but the bare minimum is the guild ID setting.
+In your local version of the Python bot repo, create a file called `metricity-config.toml` and insert the following lines:
+```yaml
+[bot]
+guild_id = replace_with_your_guild_id
+```
+To properly replicate production behavior, set the `staff_role_id`, `staff_categories` and `ignore_categories` fields as well.
+
+Now, `docker-compose up` will also start Metricity.
+
+If you want to run the bot locally, you can run `docker-compose up metricity` instead.
+
+### Issues?
+If you have any issues with setting up the bot, come discuss it with us on the [#dev-contrib](https://discord.gg/2h3qBv8Xaa) channel on our server.
+
+If you find any bugs in the bot or would like to request a feature, feel free to open an issue on the repository.
+
+### Appendix: Full ENV File Options
+The following is a list of all available environment variables used by the bot:
+
+| Variable | Required | Description |
+| -------- | -------- | -------- |
+| `BOT_TOKEN` | Always | Your Discord bot account's token (see [Set Up a Bot Account](##set-up-a-bot-account)). |
+| `BOT_API_KEY` | When running bot without Docker | Used to authenticate with the site's API. When using Docker to run the bot, this is automatically set. By default, the site will always have the API key shown in the example below. |
+| `BOT_SENTRY_DSN` | When connecting the bot to sentry | The DSN of the sentry monitor. |
+| `BOT_TRACE_LOGGERS ` | When you wish to see specific or all trace logs | Comma separated list that specifies which loggers emit trace logs through the listed names. If the ! prefix is used, all of the loggers except the listed ones are set to the trace level. If * is used, the root logger is set to the trace level. |
+| `BOT_DEBUG` | In production | `true` or `false`, depending on whether to enable debug mode, affecting the behavior of certain features. `true` by default.
+| `REDIS_PASSWORD` | When not using FakeRedis | The password to connect to the redis database. *Leave empty if you're not using REDIS.* |
+| `USE_METRICITY` | When using Metricity | `true` or `false`, depending on whether to enable metrics collection using Metricity (see [Optional: Working with Metricity](#optional-working-with-metricity). `false` by default. |
+| `GITHUB_API_KEY` | When you wish to interact with GitHub | The API key to interact with GitHub, for example to download files for the branding manager.
+| `METABASE_USERNAME` | When you wish to interact with Metabase | The username for a Metabase admin account.
+| `METABASE_PASSWORD` | When you wish to interact with Metabase | The password for a Metabase admin account.
+
+
+
