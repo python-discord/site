@@ -23,7 +23,7 @@ The easiest way to do this is by going to the role list in the guild's settings.
 
 #### Emoji ID
 
-Insert the emoji into the Discord text box, then add a backslash `\`  right before the emoji and send the message.
+Insert the emoji into the Discord text box, then add a backslash (`\`)  right before the emoji and send the message.
 The result should be similar to the following
 
 ```plaintext

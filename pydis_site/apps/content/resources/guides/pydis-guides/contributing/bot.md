@@ -10,33 +10,38 @@ This page will focus on the quickest steps one can take, with mentions of altern
 ### Clone The Repository
 First things first, to run the bot's code and make changes to it, you need a local version of it (on your computer).
 
-Clone the repository from [here](https://github.com/python-discord/bot). If you are not a member of the organisation, you will need to create a fork of the project, and clone the fork instead.
+You will need to create a fork of [the project](https://github.com/python-discord/bot), and clone the fork.
 Once this is done, you will have completed the first step towards having a running version of the bot.
+
+#### Working on the Repository Directly
+If you are a member of the organisation (a member of [this list](https://github.com/orgs/python-discord/people), or in our particular case, server staff), you can clone the project repository without creating a fork, and work on a feature branch instead.
 
 <div class="card">
     <button type="button" class="card-header collapsible">
-        <span class="card-header-title subtitle is-6 my-2 ml-2">Getting started with git</span>
+        <span class="card-header-title subtitle is-6 my-2 ml-2">Getting started with git and GitHub</span>
         <span class="card-header-icon">
             <i class="fas fa-angle-down title is-5" aria-hidden="true"></i>
         </span>
     </button>
     <div class="collapsible-content">
         <div class="card-content">
-              <p>If you don't have git on your computer already, <a href="https://git-scm.com/downloads">install it</a>. Optionally, you can install a git GUI such as <a href="https://www.gitkraken.com/download">GitKraken</a>, or the <a href="https://cli.github.com/manual/installation">GitHub CLI</a>.</p>
+              <p>If you don't have git on your computer already, <a href="https://git-scm.com/downloads">install it</a>. You can additionally install a git GUI such as <a href="https://www.gitkraken.com/download">GitKraken</a>, or the <a href="https://cli.github.com/manual/installation">GitHub CLI</a>.</p>
               <p>To learn more about git, you can look into <a href="../working-with-git">our guides</a>, as well as <a href="https://education.github.com/git-cheat-sheet-education.pdf">this cheatsheet</a>, <a href="https://learngitbranching.js.org">Learn Git Branching</a>, and otherwise any guide you can find on the internet. Once you got the basic idea though, the best way to learn git is to use it.</p>
-              <p>To clone the repository, get the URL from the green <b>Clone</b> button in the <a href="https://github.com/python-discord/bot">repo</a> page, and use the command <code>git clone</code>.</p>
-              <p>For the purpose of this guide, the full command is <code>git clone https://github.com/python-discord/bot.git</code> to clone the main repo via HTTPS (assuming you're in the desired directory on your computer). If you already have some experience with git, our recommendation is cloning via SSH instead.</p>
-              <p>Creating a copy of a repository under your own account is called a <em>fork</em>. This is where all your changes and commits will be pushed to, and from where your PRs will originate from. For any staff member, since you have write permissions already to the original repository, you can just create a feature branch to push your commits to instead.</p>
-              <p>To learn about forking a project, check out <a href="../forking-repository">this guide</a>.</p>
+              <p>Creating a copy of a repository under your own account is called a <em>fork</em>. This is where all your changes and commits will be pushed to, and from where your pull requests will originate from. For any staff member, since you have write permissions already to the original repository, you can just create a feature branch to push your commits to instead.</p>
+              <p><strong><a href="../forking-repository">Learn about forking a project</a></strong>.</p>
         </div>
     </div>
 </div>
+
+---
 
 ### Set Up a Test Server
 The Python bot is tightly coupled with the Python Discord server, so to have a functional version of the bot you need a server with channels it can use.
 It's possible to set the bot to use a single channel for all cogs, but that will cause extreme spam and will be difficult to work with.
 
 You can start your own server and set up channels as you see fit, but for your convenience we have a template for a development server you can use: [https://discord.new/zmHtscpYN9E3](https://discord.new/zmHtscpYN9E3). Keep in mind that this is not a mirror of the Python server, and is a reduced version for testing purposes. A lot of the channels in the Python server were merged.
+
+---
 
 ### Set Up a Bot Account
 You will need your own bot account on Discord to test your changes to the bot.
@@ -51,8 +56,10 @@ The `Presence Intent` is not necessary and can be left disabled.
 
 If your bot fails to start with a `PrivilegedIntentsRequired` exception, this indicates that the required intent was not enabled.
 
+---
+
 ### Configure the Bot
-You now have both the bot's code, and a server to run it on. Now you need to connect the two by changing the bot's configurations.
+You now have both the bot's code and a server to run it on. It's time you to connect the two by changing the bot's configurations.
 
 #### config.yml
 Entering the directory of the cloned code, you will find a file named `config-default.yml`.
@@ -60,19 +67,10 @@ This file contains the various configurations we use to make the bot run on the 
 It also contains configurations such as how long it takes for a help channel to time out, and how many messages a user needs to voice-verify.
 
 To run the bot in your test server, you will need to override some of those configurations.
-Open a new file in the directory called `config.yml`. The bot will first look at the items in this file, and will fall back to `config-default.yml` only if necessary.
+Open a new file in the directory called `config.yml`. Alternatively, copy the `config-default.yml` file and rename the copy to `config.yml`.
+The bot will first look at the items in `config.yml`, and will fall back to `config-default.yml` only if necessary. Note that you don't have to specify all items in `config.yml`, just the ones you want to override such as channel ID's.
 
-For example, `config-default.yml` contains the item:
-```yaml
-bot:
-    prefix:         "!"
-```
-If you add the following lines to `config.yml`:
-```yaml
-bot:
-    prefix:         "~"
-```
-The bot will use `~` for its prefix instead.
+See [here](../obtaining-discord-ids) for help with obtaining Discord ID's.
 
 <div class="card">
     <button type="button" class="card-header collapsible">
@@ -432,11 +430,7 @@ help_channels:
 </div></div></div>
 <br>
 
-If you don't wish to use the provided `config.yml` above, you can copy the `config-default.yml` file, rename it, and change whatever values you need. Note that you don't need to specify all items in `config.yml`, just the ones you want to override such as channel ID's. 
-
-See [here](../obtaining-discord-ids) for help with obtaining Discord ID's.
-
-These are the main sections in `config-default.yml` that need overriding:
+If you don't wish to use the provided `config.yml` above, these are the main sections in `config-default.yml` that need overriding:
 
 * `guild.id`
 * `guild.categories`
@@ -447,10 +441,9 @@ These are the main sections in `config-default.yml` that need overriding:
 
 Additionally:
 
-* Set `urls.site_schema` and `urls.site_api_schema` to `"http://"`.
-* Set `urls.site_api` to `!JOIN ["api.", *DOMAIN]`.
-* Set `urls.snekbox_eval_api` to `"http://localhost:8060/eval"`.
 * At this stage, set `bot.redis.use_fakeredis` to `true`. If you're looking for instructions for working with Redis, see [Working with Redis](#optional-working-with-redis).
+* Set `urls.site_api` to `!JOIN ["api.", *DOMAIN]`.
+* Set `urls.site_schema` and `urls.site_api_schema` to `"http://"`.
 
 We understand this is tedious and are working on a better solution for setting up test servers.
 
@@ -472,16 +465,16 @@ We understand this is tedious and are working on a better solution for setting u
 <br>
 
 #### .env
-The second file you need to open is the one containing the environment variables, and needs to have the name `.env`. 
+The second file you need to open is the one containing the environment variables, and needs to have the name `.env`.
 Inside, add the line `BOT_TOKEN=YourDiscordBotTokenHere`. See [here](../creating-bot-account) for help with obtaining the bot token.
 
 The `.env` file will be ignored by commits.
 
+---
+
 ### Run it!
 #### With Docker
-You are now almost ready to run the Python bot. The simplest way to do so is with Docker. 
-
-In your `config.yml` file, set `urls.site` to `"web:8000"`.
+You are now almost ready to run the Python bot. The simplest way to do so is with Docker.
 
 <div class="card">
     <button type="button" class="card-header collapsible">
@@ -497,13 +490,18 @@ In your `config.yml` file, set `urls.site` to `"web:8000"`.
                 <li><a href="https://docs.docker.com/install">Docker CE</a></li>
                 <li>Docker Compose. If you're using macOS and Windows, this already comes bundled with the previous installation. Otherwise, you can download it either from the <a href="https://docs.docker.com/compose/install">website</a>, or by running <code>pip install docker-compose</code>.</li>
             </ul>
-            <p>If you get any Docker related errors, reference the <a href="../docker#possible-issues">Possible Issue</a> section of the Docker page.</p>
+            <p class="notification is-warning">If you get any Docker related errors, reference the <a href="../docker#possible-issues">Possible Issue</a> section of the Docker page.</p>
         </div>
     </div>
 </div>
 <br>
 
-Assuming you have Docker installed, enter the cloned repo in the command line and type `docker-compose up`.
+In your `config.yml` file:
+
+* Set `urls.site` to `"web:8000"`.
+* If you wish to work with snekbox set `urls.snekbox_eval_api` to `"http://snekbox:8060/eval"`.
+
+Assuming you have Docker installed **and running**, enter the cloned repo in the command line and type `docker-compose up`.
 
 After pulling the images and building the containers, your bot will start. Enter your server and type `!help` (or whatever prefix you chose instead of `!`).
 
@@ -515,6 +513,7 @@ The advantage of this method is that you can run the bot's code in your preferre
 * [Prepare the hosts file on your machine](../hosts-file).
 * Append the following line to your `.env` file: `BOT_API_KEY=badbot13m0n8f570f942013fc818f234916ca531`.
 * In your `config.yml` file, set `urls.site` to `"pythondiscord.local:8000"`. If you wish to keep using `web:8000`, then [COMPOSE_PROJECT_NAME](../docker/#compose-project-names) has to be set to use this domain.
+* To work with snekbox, set `urls.snekbox_eval_api` to `"http://localhost:8060/eval"`
 
 You will need to start the services separately, but if you got the previous section with Docker working, that's pretty simple:
 
@@ -528,10 +527,10 @@ You can start several services together: `docker-compose up web snekbox redis`.
 The bot's code is Python code like any other. To run it locally, you will need the right version of Python with the necessary packages installed:
 
 1. Make sure you have [Python 3.9](https://www.python.org/downloads/) installed. It helps if it is your system's default Python version.
-2. Install Poetry by following [these instructions](https://github.com/python-poetry/poetry#installation), or with `pip install poetry`. In case of the latter, make sure pip installs to the right Python version.
+2. [Install Poetry](https://github.com/python-poetry/poetry#installation).
 3. [Install the dependencies](../installing-project-dependencies).
 
-Assuming you have at least the site running in Docker already, you can now start the bot locally through the command line, or through your preferred IDE. Notice that the bot is started as a module.
+With at least the site running in Docker already (see the previous section on how to start services separately), you can now start the bot locally through the command line, or through your preferred IDE.
 <div class="card">
     <button type="button" class="card-header collapsible">
         <span class="card-header-title subtitle is-6 my-2 ml-2">Ways to run code</span>
@@ -541,7 +540,7 @@ Assuming you have at least the site running in Docker already, you can now start
     </button>
     <div class="collapsible-content">
         <div class="card-content">
-            There are several ways to start the bot:
+            Notice that the bot is started as a module. There are several ways to do so:
             <ul>
                 <li>Through the command line, inside the bot directory, with either <code>poetry run task start</code>, or directly <code>python -m bot</code>.</li>
                 <li>If using PyCharm, enter <code>Edit Configurations</code> and set everything according to this image: <img src="/static/images/content/contributing/pycharm_run_module.png"></li>
@@ -553,13 +552,13 @@ Assuming you have at least the site running in Docker already, you can now start
 <br>
 
 #### With More Things Running Locally
-You can run additional services on the host. For the site, refer to the [site contributing guide](../site) to learn how to start it on the host, in which case you will need to change `urls.site` in `config.yml` to wherever the site is being hosted. This guide won't go over how to install and start the other dependencies on the host. If possible, prefer to start the services through Docker to replicate the production environment as much as possible.
+You can run additional services on the host, but this guide won't go over how to install and start them in this way.
+If possible, prefer to start the services through Docker to replicate the production environment as much as possible.
 
-#### Start Only the Bot with Docker
-This method will start only the bot using Docker. The site has to have been started somehow beforehand.
+The site, however, is a mandatory service for the bot.
+Refer to the [site contributing guide](../site) to learn how to start it on the host, in which case you will need to change `urls.site` in `config.yml` to wherever the site is being hosted.
 
-Start the bot using Docker Compose while inside the root of the project directory: `docker-compose up --no-deps bot`.
-
+---
 ### Development Tips
 Now that you have everything setup, it is finally time to make changes to the bot!
 
@@ -579,7 +578,7 @@ It can be intimidating at first, so feel free to ask for any help in the server.
 The whole document explains how unittesting works, and how it fits in the context of our project.
 
 #### Reloading parts of the bot
-If you make changes to a cog, you might not need to restart the entire bot for the changes to take effect. The command `!cog reload <cog_name>` (or `!c r <cog_name>` in short) re-imports the files associated with the cog.
+If you make changes to a cog, you might not need to restart the entire bot for the changes to take effect. The command `!cog reload <cog_name>` (or `!ext r <cog_name>`, or `!c r <cog_name>` in short) re-imports the files associated with the cog.
 
 Note that if you changed code that is not associated with a particular cog, such as utilities, converters, and constants, you will need to restart the bot.
 
@@ -587,6 +586,8 @@ Note that if you changed code that is not associated with a particular cog, such
 
 Details on how to add new statistics can be found on the [statistic infrastructure page](https://blog.pythondiscord.com/statistics-infrastructure).
 We are always open to more statistics so add as many as you can!
+
+---
 
 ### Optional: Working with Redis
 In [Configure the Bot](#configyml) you were asked to set `bot.redis.use_fakeredis` to `true`. If you do not need to work on features that rely on Redis, this is enough. Fakeredis will give the illusion that features relying on redis are saving information properly, but restarting the bot or the specific cog will wipe that information.
@@ -597,10 +598,12 @@ If you are working on a feature that relies on redis, you will need to enable re
 If you're using the Docker image provided in the project's docker-compose, open your `config.yml` file, set `bot.redis.host` to `redis`, and `bot.redis.password` to `null`.
 
 #### Starting Redis Using Other Methods
-You can run your own instance of Redis, but in that case you will need to correctly set `bot.redis.host` and `bot.redis.port`. Then, enter the `.env` file, and set `REDIS_PASSWORD` to whatever password you set.
+You can run your own instance of Redis, but in that case you will need to correctly set `bot.redis.host` and `bot.redis.port`, and the `bot.redis.password` value in `config-default.yml` should not be overridden. Then, enter the `.env` file, and set `REDIS_PASSWORD` to whatever password you set.
+
+---
 
 ### Optional: Working with Metricity
-[Metricity](https://github.com/python-discord/metricity) is our home-grown bot for collecting metrics on activity within the server, such as what users are  present, and ID's of the messages they've sent. 
+[Metricity](https://github.com/python-discord/metricity) is our home-grown bot for collecting metrics on activity within the server, such as what users are  present, and ID's of the messages they've sent.
 Certain features in the Python bot rely on querying the Metricity database for information such as the number of messages a user has sent, most notably the voice verification system.
 
 If you wish to work on a feature that relies on Metricity, for your convenience we've made the process of using it relatively painless with docker: Enter the `.env` file you've written for the Python bot, and append the line `USE_METRICITY=true`.
@@ -619,10 +622,14 @@ Now, `docker-compose up` will also start Metricity.
 
 If you want to run the bot locally, you can run `docker-compose up metricity` instead.
 
+---
+
 ### Issues?
 If you have any issues with setting up the bot, come discuss it with us on the [#dev-contrib](https://discord.gg/2h3qBv8Xaa) channel on our server.
 
 If you find any bugs in the bot or would like to request a feature, feel free to open an issue on the repository.
+
+---
 
 ### Appendix: Full ENV File Options
 The following is a list of all available environment variables used by the bot:
@@ -634,11 +641,10 @@ The following is a list of all available environment variables used by the bot:
 | `BOT_SENTRY_DSN` | When connecting the bot to sentry | The DSN of the sentry monitor. |
 | `BOT_TRACE_LOGGERS ` | When you wish to see specific or all trace logs | Comma separated list that specifies which loggers emit trace logs through the listed names. If the ! prefix is used, all of the loggers except the listed ones are set to the trace level. If * is used, the root logger is set to the trace level. |
 | `BOT_DEBUG` | In production | `true` or `false`, depending on whether to enable debug mode, affecting the behavior of certain features. `true` by default.
-| `REDIS_PASSWORD` | When not using FakeRedis | The password to connect to the redis database. *Leave empty if you're not using REDIS.* |
-| `USE_METRICITY` | When using Metricity | `true` or `false`, depending on whether to enable metrics collection using Metricity (see [Optional: Working with Metricity](#optional-working-with-metricity). `false` by default. |
+| `REDIS_PASSWORD` | When not using FakeRedis | The password to connect to the redis database (see [Optional: Working with Redis](#optional-working-with-redis)). |
+| `USE_METRICITY` | When using Metricity | `true` or `false`, depending on whether to enable metrics collection using Metricity (see [Optional: Working with Metricity](#optional-working-with-metricity)). `false` by default. |
 | `GITHUB_API_KEY` | When you wish to interact with GitHub | The API key to interact with GitHub, for example to download files for the branding manager.
 | `METABASE_USERNAME` | When you wish to interact with Metabase | The username for a Metabase admin account.
 | `METABASE_PASSWORD` | When you wish to interact with Metabase | The password for a Metabase admin account.
 
-
-
+Have fun!
