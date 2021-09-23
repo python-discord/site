@@ -43,4 +43,7 @@ The possible actions we take based on infractions can include the following:
 
 While we do discuss more serious matters internally before handing out a punishment, simpler infractions are dealt with directly by individual staffers and the punishment they hand out is left to their own discretion.
 
-If you receive an infraction and would like to appeal it, send an e-mail to [appeals@pythondiscord.com](mailto:appeals@pythondiscord.com).
+If you wish to appeal a decision or action taken by the moderation team, you can do so in one of the following ways:
+
+* By sending a direct message (DM) to ModMail from our Discord server.
+* Joining our [ban appeals server](https://discord.gg/WXrCJxWBnm) and sending a direct message (DM) to the Ban Appeals bot.
