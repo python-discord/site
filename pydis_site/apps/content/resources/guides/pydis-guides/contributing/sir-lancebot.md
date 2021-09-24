@@ -16,6 +16,10 @@ toc: 1
     - [MacOS Installer](https://git-scm.com/download/mac) or `brew install git`
     - [Linux](https://git-scm.com/download/linux)
 
+## Using Gitpod
+Sir Lancebot can be edited and tested on Gitpod. Gitpod will automatically install the correct dependencies and Python version, so you can get straight to coding.
+To do this, you will need a Gitpod account, which you can get [here](https://www.gitpod.io/#get-started). Afterwards, copy your fork's URL(without https://github.com) to the end of this link: https://gitpod.io/#/github.com.
+
 ## Using Docker
 Sir Lancebot can be started using Docker. Using Docker is generally recommended (but not strictly required) because it abstracts away some additional set up work.
 
