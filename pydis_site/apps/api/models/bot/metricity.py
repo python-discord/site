@@ -10,7 +10,7 @@ EXCLUDE_CHANNELS = [
 ]
 
 
-class NotFound(Exception):
+class NotFoundError(Exception):
     """Raised when an entity cannot be found."""
 
     pass
@@ -37,7 +37,7 @@ class Metricity:
         values = self.cursor.fetchone()
 
         if not values:
-            raise NotFound()
+            raise NotFoundError()
 
         return dict(zip(columns, values))
 
@@ -58,7 +58,7 @@ class Metricity:
         values = self.cursor.fetchone()
 
         if not values:
-            raise NotFound()
+            raise NotFoundError()
 
         return values[0]
 
@@ -88,7 +88,7 @@ class Metricity:
         values = self.cursor.fetchone()
 
         if not values:
-            raise NotFound()
+            raise NotFoundError()
 
         return values[0]
 
@@ -127,6 +127,6 @@ class Metricity:
         values = self.cursor.fetchall()
 
         if not values:
-            raise NotFound()
+            raise NotFoundError()
 
         return values

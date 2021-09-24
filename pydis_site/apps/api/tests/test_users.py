@@ -5,7 +5,7 @@ from django_hosts.resolvers import reverse
 
 from .base import APISubdomainTestCase
 from ..models import Role, User
-from ..models.bot.metricity import NotFound
+from ..models.bot.metricity import NotFoundError
 
 
 class UnauthedUserAPITests(APISubdomainTestCase):
@@ -501,7 +501,7 @@ class UserMetricityTests(APISubdomainTestCase):
         self.metricity = patcher.start()
         self.addCleanup(patcher.stop)
         self.metricity = self.metricity.return_value.__enter__.return_value
-        self.metricity.user.side_effect = NotFound()
-        self.metricity.total_messages.side_effect = NotFound()
-        self.metricity.total_message_blocks.side_effect = NotFound()
-        self.metricity.top_channel_activity.side_effect = NotFound()
+        self.metricity.user.side_effect = NotFoundError()
+        self.metricity.total_messages.side_effect = NotFoundError()
+        self.metricity.total_message_blocks.side_effect = NotFoundError()
+        self.metricity.top_channel_activity.side_effect = NotFoundError()
