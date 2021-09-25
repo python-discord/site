@@ -104,12 +104,10 @@ class FilterSettingsMixin(models.Model, metaclass=AbstractModelMeta):
     #   - disallowed categories
     #   - allowed categories
     #   - allowed channels
-    #   - default
     disallowed_channels = ArrayField(models.IntegerField())
     disallowed_categories = ArrayField(models.IntegerField())
     allowed_channels = ArrayField(models.IntegerField())
     allowed_categories = ArrayField(models.IntegerField())
-    default = models.BooleanField()
 
     class Meta:
         """Metaclass for settings mixin."""

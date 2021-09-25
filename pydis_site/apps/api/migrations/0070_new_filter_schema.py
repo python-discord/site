@@ -37,8 +37,7 @@ def forward(apps: Apps, schema_editor: BaseDatabaseSchemaEditor) -> None:
             disallowed_channels=[],
             disallowed_categories=[],
             allowed_channels=[],
-            allowed_categories=[],
-            default=True
+            allowed_categories=[]
         )
 
         for object_ in objects:
@@ -60,8 +59,7 @@ def forward(apps: Apps, schema_editor: BaseDatabaseSchemaEditor) -> None:
                 disallowed_channels=[],
                 disallowed_categories=[],
                 allowed_channels=[],
-                allowed_categories=[],
-                default=False
+                allowed_categories=[]
             )
             new_object.save()
 
@@ -98,7 +96,6 @@ class Migration(migrations.Migration):
                 ('disallowed_categories', django.contrib.postgres.fields.ArrayField(base_field=models.IntegerField(), size=None)),
                 ('allowed_channels', django.contrib.postgres.fields.ArrayField(base_field=models.IntegerField(), size=None)),
                 ('allowed_categories', django.contrib.postgres.fields.ArrayField(base_field=models.IntegerField(), size=None)),
-                ('default', models.BooleanField()),
             ],
         ),
         migrations.CreateModel(
@@ -121,7 +118,6 @@ class Migration(migrations.Migration):
                 ('disallowed_categories', django.contrib.postgres.fields.ArrayField(base_field=models.IntegerField(), size=None)),
                 ('allowed_channels', django.contrib.postgres.fields.ArrayField(base_field=models.IntegerField(), size=None)),
                 ('allowed_categories', django.contrib.postgres.fields.ArrayField(base_field=models.IntegerField(), size=None)),
-                ('default', models.BooleanField()),
             ],
         ),
         migrations.AddField(
