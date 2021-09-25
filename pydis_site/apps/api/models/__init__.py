@@ -1,11 +1,7 @@
 # flake8: noqa
 from .bot import (
     FilterList,
-    FilterSettings,
-    FilterAction,
-    ChannelRange,
     Filter,
-    FilterOverride,
     BotSetting,
     DocumentationLink,
     DeletedMessage,

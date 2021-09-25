@@ -7,11 +7,7 @@ from .viewsets import (  # noqa: I101 - Preserving the filter order
     DeletedMessageViewSet,
     DocumentationLinkViewSet,
     FilterListViewSet,
-    FilterSettingsViewSet,
-    FilterActionViewSet,
-    FilterChannelRangeViewSet,
     FilterViewSet,
-    FilterOverrideViewSet,
     InfractionViewSet,
     NominationViewSet,
     OffTopicChannelNameViewSet,
@@ -26,22 +22,6 @@ bot_router = DefaultRouter(trailing_slash=False)
 bot_router.register(
     'filter/filter_lists',
     FilterListViewSet
-)
-bot_router.register(
-    'filter/filter_settings',
-    FilterSettingsViewSet
-)
-bot_router.register(
-    'filter/filter_action',
-    FilterActionViewSet
-)
-bot_router.register(
-    'filter/channel_range',
-    FilterChannelRangeViewSet
-)
-bot_router.register(
-    'filter/filter_override',
-    FilterOverrideViewSet
 )
 bot_router.register(
     'filter/filters',

@@ -18,11 +18,7 @@ from .models import (  # noqa: I101 - Preserving the filter order
     DocumentationLink,
     Infraction,
     FilterList,
-    FilterSettings,
-    FilterAction,
-    ChannelRange,
     Filter,
-    FilterOverride,
     MessageDeletionContext,
     Nomination,
     NominationEntry,
@@ -136,7 +132,18 @@ class FilterListSerializer(ModelSerializer):
         """Metadata defined for the Django REST Framework."""
 
         model = FilterList
-        fields = ('id', 'name', 'list_type', 'filters', 'default_settings')
+        fields = (
+            'id',
+            'name',
+            'list_type',
+            'filters',
+            'ping_type',
+            'filter_dm',
+            'dm_ping_type',
+            'delete_messages',
+            'bypass_roles',
+            ''
+        )
 
         # Ensure that we can only have one filter list with the same name and field
         validators = [
@@ -148,73 +155,6 @@ class FilterListSerializer(ModelSerializer):
                 )
             ),
         ]
-
-
-class FilterSettingsSerializer(ModelSerializer):
-    """A class providing (de-)serialization of `FilterSettings` instances."""
-
-    class Meta:
-        """Metadata defined for the Django REST Framework."""
-
-        model = FilterSettings
-        fields = (
-            'id',
-            'ping_type',
-            'filter_dm',
-            'dm_ping_type',
-            'delete_messages',
-            'bypass_roles',
-            'enabled',
-            'default_action',
-            'default_range'
-        )
-
-
-class FilterActionSerializer(ModelSerializer):
-    """A class providing (de-)serialization of `FilterAction` instances."""
-
-    class Meta:
-        """Metadata defined for the Django REST Framework."""
-
-        model = FilterAction
-        fields = ('id', 'dm_content', 'infraction_type', 'infraction_reason', 'infraction_duration')
-
-
-class FilterChannelRangeSerializer(ModelSerializer):
-    """A class providing (de-)serialization of `ChannelRange` instances."""
-
-    class Meta:
-        """Metadata defined for the Django REST Framework."""
-
-        model = ChannelRange
-        fields = (
-            'id',
-            'disallowed_channels',
-            'disallowed_categories',
-            'allowed_channels',
-            'allowed_categories',
-            'default'
-        )
-
-
-class FilterOverrideSerializer(ModelSerializer):
-    """A class providing (de-)serialization of `FilterOverride` instances."""
-
-    class Meta:
-        """Metadata defined for the Django REST Framework."""
-
-        model = FilterOverride
-        fields = (
-            'id',
-            'ping_type',
-            'filter_dm',
-            'dm_ping_type',
-            'delete_messages',
-            'bypass_roles',
-            'enabled',
-            'filter_action',
-            'filter_range'
-        )
 
 
 class InfractionSerializer(ModelSerializer):
