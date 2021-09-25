@@ -1,9 +1,12 @@
+from abc import abstractmethod
 from typing import List
 
 from django.contrib.postgres.fields import ArrayField
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models import UniqueConstraint
+
+from pydis_site.apps.api.models.mixins import AbstractModelMeta
 
 
 class FilterListType(models.IntegerChoices):
@@ -40,70 +43,40 @@ def validate_ping_field(value_list: List[str]) -> None:
         raise ValidationError(f"{value!r} isn't a valid ping type.")
 
 
-class FilterList(models.Model):
-    """Represent a list in its allow or deny form."""
+class FilterSettingsMixin(models.Model, metaclass=AbstractModelMeta):
+    """Mixin for settings of a filter list."""
 
-    name = models.CharField(max_length=50, help_text="The unique name of this list.")
-    list_type = models.IntegerField(
-        choices=FilterListType.choices,
-        help_text="Whether this list is an allowlist or denylist"
-    )
-    default_settings = models.ForeignKey(
-        "FilterSettings",
-        models.CASCADE,
-        help_text="Default parameters of this list."
-    )
-
-    class Meta:
-        """Constrain name and list_type unique."""
-
-        constraints = (
-            UniqueConstraint(fields=("name", "list_type"), name="unique_name_type"),
-        )
-
-    def __str__(self) -> str:
-        return f"Filter {FilterListType(self.list_type).label}list {self.name!r}"
-
-
-class FilterSettings(models.Model):
-    """Persistent settings of a filter list."""
+    @staticmethod
+    @abstractmethod
+    def allow_null() -> bool:
+        """Abstract property for allowing null values."""
 
     ping_type = ArrayField(
         models.CharField(max_length=20),
         validators=(validate_ping_field,),
-        help_text="Who to ping when this filter triggers."
+        help_text="Who to ping when this filter triggers.",
+        null=allow_null.__func__()
     )
-    filter_dm = models.BooleanField(help_text="Whether DMs should be filtered.")
+    filter_dm = models.BooleanField(help_text="Whether DMs should be filtered.", null=True)
     dm_ping_type = ArrayField(
         models.CharField(max_length=20),
         validators=(validate_ping_field,),
-        help_text="Who to ping when this filter triggers on a DM."
+        help_text="Who to ping when this filter triggers on a DM.",
+        null=allow_null.__func__()
     )
     delete_messages = models.BooleanField(
-        help_text="Whether this filter should delete messages triggering it."
+        help_text="Whether this filter should delete messages triggering it.",
+        null=allow_null.__func__()
     )
     bypass_roles = ArrayField(
         models.BigIntegerField(),
-        help_text="Roles and users who can bypass this filter."
+        help_text="Roles and users who can bypass this filter.",
+        null=allow_null.__func__()
     )
     enabled = models.BooleanField(
-        help_text="Whether this filter is currently enabled."
+        help_text="Whether this filter is currently enabled.",
+        null=allow_null.__func__()
     )
-    default_action = models.ForeignKey(
-        "FilterAction",
-        models.CASCADE,
-        help_text="What action to perform on the triggering user."
-    )
-    default_range = models.ForeignKey(
-        "ChannelRange",
-        models.CASCADE,
-        help_text="The channels and categories in which this filter applies."
-    )
-
-
-class FilterAction(models.Model):
-    """The action to take when a filter is triggered."""
-
     dm_content = models.CharField(
         max_length=1000,
         null=True,
@@ -124,27 +97,52 @@ class FilterAction(models.Model):
         help_text="The duration of the infraction. Null if permanent."
     )
 
-
-class ChannelRange(models.Model):
-    """
-    Where a filter should apply.
-
-    The resolution is done in the following order:
-    - disallowed channels
-    - disallowed categories
-    - allowed categories
-    - allowed channels
-    - default
-    """
-
+    # Where a filter should apply.
+    #
+    # The resolution is done in the following order:
+    #   - disallowed channels
+    #   - disallowed categories
+    #   - allowed categories
+    #   - allowed channels
+    #   - default
     disallowed_channels = ArrayField(models.IntegerField())
     disallowed_categories = ArrayField(models.IntegerField())
     allowed_channels = ArrayField(models.IntegerField())
     allowed_categories = ArrayField(models.IntegerField())
     default = models.BooleanField()
 
+    class Meta:
+        """Metaclass for settings mixin."""
 
-class Filter(models.Model):
+        abstract = True
+
+
+class FilterList(FilterSettingsMixin):
+    """Represent a list in its allow or deny form."""
+
+    name = models.CharField(max_length=50, help_text="The unique name of this list.")
+    list_type = models.IntegerField(
+        choices=FilterListType.choices,
+        help_text="Whether this list is an allowlist or denylist"
+    )
+
+    @staticmethod
+    def allow_null() -> bool:
+        """Do not allow null values for default settings."""
+        return False
+
+    class Meta:
+        """Constrain name and list_type unique."""
+
+        constraints = (
+            UniqueConstraint(fields=("name", "list_type"), name="unique_name_type"),
+        )
+
+    def __str__(self) -> str:
+        return f"Filter {FilterListType(self.list_type).label}list {self.name!r}"
+
+
+class Filter(FilterSettingsMixin):
     """One specific trigger of a list."""
 
     content = models.CharField(max_length=100, help_text="The definition of this filter.")
@@ -154,36 +152,11 @@ class Filter(models.Model):
         FilterList, models.CASCADE, related_name="filters",
         help_text="The filter list containing this filter."
     )
-    override = models.ForeignKey(
-        "FilterOverride",
-        models.SET_NULL,
-        null=True,
-        help_text="Override the default settings."
-    )
 
     def __str__(self) -> str:
         return f"Filter {self.content!r}"
 
-
-class FilterOverride(models.Model):
-    """
-    Setting overrides of a specific filter.
-
-    Any non-null value will override the default ones.
-    """
-
-    ping_type = ArrayField(
-        models.CharField(max_length=20),
-        validators=(validate_ping_field,), null=True
-    )
-    filter_dm = models.BooleanField(null=True)
-    dm_ping_type = ArrayField(
-        models.CharField(max_length=20),
-        validators=(validate_ping_field,),
-        null=True
-    )
-    delete_messages = models.BooleanField(null=True)
-    bypass_roles = ArrayField(models.IntegerField(), null=True)
-    enabled = models.BooleanField(null=True)
-    filter_action = models.ForeignKey("FilterAction", models.CASCADE, null=True)
-    filter_range = models.ForeignKey("ChannelRange", models.CASCADE, null=True)
+    @staticmethod
+    def allow_null() -> bool:
+        """Allow null values for overrides."""
+        return True
