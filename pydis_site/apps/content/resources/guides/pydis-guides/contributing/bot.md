@@ -10,12 +10,6 @@ This page will focus on the quickest steps one can take, with mentions of altern
 ### Clone The Repository
 First things first, to run the bot's code and make changes to it, you need a local version of it (on your computer).
 
-You will need to create a fork of [the project](https://github.com/python-discord/bot), and clone the fork.
-Once this is done, you will have completed the first step towards having a running version of the bot.
-
-#### Working on the Repository Directly
-If you are a member of the organisation (a member of [this list](https://github.com/orgs/python-discord/people), or in our particular case, server staff), you can clone the project repository without creating a fork, and work on a feature branch instead.
-
 <div class="card">
     <button type="button" class="card-header collapsible">
         <span class="card-header-title subtitle is-6 my-2 ml-2">Getting started with git and GitHub</span>
@@ -32,6 +26,13 @@ If you are a member of the organisation (a member of [this list](https://github.
         </div>
     </div>
 </div>
+<br>
+
+You will need to create a fork of [the project](https://github.com/python-discord/bot), and clone the fork.
+Once this is done, you will have completed the first step towards having a running version of the bot.
+
+#### Working on the Repository Directly
+If you are a member of the organisation (a member of [this list](https://github.com/orgs/python-discord/people), or in our particular case, server staff), you can clone the project repository without creating a fork, and work on a feature branch instead.
 
 ---
 
@@ -39,7 +40,8 @@ If you are a member of the organisation (a member of [this list](https://github.
 The Python bot is tightly coupled with the Python Discord server, so to have a functional version of the bot you need a server with channels it can use.
 It's possible to set the bot to use a single channel for all cogs, but that will cause extreme spam and will be difficult to work with.
 
-You can start your own server and set up channels as you see fit, but for your convenience we have a template for a development server you can use: [https://discord.new/zmHtscpYN9E3](https://discord.new/zmHtscpYN9E3). Keep in mind that this is not a mirror of the Python server, and is a reduced version for testing purposes. A lot of the channels in the Python server were merged.
+You can start your own server and set up channels as you see fit, but for your convenience we have a template for a development server you can use: [https://discord.new/zmHtscpYN9E3](https://discord.new/zmHtscpYN9E3).
+Keep in mind that this is not a mirror of the Python server, but a reduced version for testing purposes. A lot of the channels in the Python server were merged.
 
 ---
 
@@ -512,7 +514,7 @@ The advantage of this method is that you can run the bot's code in your preferre
 
 * [Prepare the hosts file on your machine](../hosts-file).
 * Append the following line to your `.env` file: `BOT_API_KEY=badbot13m0n8f570f942013fc818f234916ca531`.
-* In your `config.yml` file, set `urls.site` to `"pythondiscord.local:8000"`. If you wish to keep using `web:8000`, then [COMPOSE_PROJECT_NAME](../docker/#compose-project-names) has to be set to use this domain.
+* In your `config.yml` file, set `urls.site` to `"pythondiscord.local:8000"`. If you wish to keep using `web:8000`, then [COMPOSE_PROJECT_NAME](../docker/#compose-project-names) has to be set.
 * To work with snekbox, set `urls.snekbox_eval_api` to `"http://localhost:8060/eval"`
 
 You will need to start the services separately, but if you got the previous section with Docker working, that's pretty simple:
@@ -556,7 +558,7 @@ You can run additional services on the host, but this guide won't go over how to
 If possible, prefer to start the services through Docker to replicate the production environment as much as possible.
 
 The site, however, is a mandatory service for the bot.
-Refer to the [site contributing guide](../site) to learn how to start it on the host, in which case you will need to change `urls.site` in `config.yml` to wherever the site is being hosted.
+Refer to the [previous section](#with-the-bot-running-locally) and the [site contributing guide](../site) to learn how to start it on the host, in which case you will need to change `urls.site` in `config.yml` to wherever the site is being hosted.
 
 ---
 ### Development Tips
