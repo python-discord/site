@@ -18,7 +18,12 @@ toc: 1
 
 ## Using Gitpod
 Sir Lancebot can be edited and tested on Gitpod. Gitpod will automatically install the correct dependencies and Python version, so you can get straight to coding.
-To do this, you will need a Gitpod account, which you can get [here](https://www.gitpod.io/#get-started). Afterwards, copy your fork's URL(without https://github.com) to the end of this link: https://gitpod.io/#/github.com.
+To do this, you will need a Gitpod account, which you can get [here](https://www.gitpod.io/#get-started). Afterwards, either click the button on Sir Lancebot's README or go to https://gitpod.io/#/python-discord/sir-lancebot and run the following commands in the terminal: 
+```sh
+git remote rename origin upstream
+git add remote origin https://github.com/{your_username}/sir-lancebot
+```
+This will swap the Python Discord origin to upstream and add your own repository as the origin. Once you add your environment variables, you're ready to start contributing.
 
 ## Using Docker
 Sir Lancebot can be started using Docker. Using Docker is generally recommended (but not strictly required) because it abstracts away some additional set up work.
