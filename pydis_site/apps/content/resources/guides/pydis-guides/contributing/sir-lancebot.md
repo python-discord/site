@@ -18,7 +18,7 @@ toc: 1
 
 ## Using Gitpod
 Sir Lancebot can be edited and tested on Gitpod. Gitpod will automatically install the correct dependencies and Python version, so you can get straight to coding.
-To do this, you will need a Gitpod account, which you can get [here](https://www.gitpod.io/#get-started). Afterwards, either click the button on Sir Lancebot's README or go to https://gitpod.io/#/python-discord/sir-lancebot and run the following commands in the terminal: 
+To do this, you will need a Gitpod account, which you can get [here](https://www.gitpod.io/#get-started). Afterwards, either click the button on Sir Lancebot's README or go to https://gitpod.io/#/python-discord/sir-lancebot and run the following commands in the terminal:
 ```sh
 git remote rename origin upstream
 git add remote origin https://github.com/{your_username}/sir-lancebot
