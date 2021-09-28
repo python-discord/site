@@ -23,7 +23,7 @@ To do this, you will need a Gitpod account, which you can get [here](https://www
 git remote rename origin upstream
 git add remote origin https://github.com/{your_username}/sir-lancebot
 ```
-Make sure you replace {your_username} with your Github username. **You must have a fork of Sir Lancebot for this to work.** 
+Make sure you replace {your_username} with your Github username. **You must have a fork of Sir Lancebot for this to work.**
 These commands will set Python Discord as the parent repository, and your branch as the fork. This means you can easily grab new changes from the parent repository. Once you set your environment variables to test your code, you are good to go!
 
 ## Using Docker
