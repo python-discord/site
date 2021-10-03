@@ -8,6 +8,7 @@ from django.shortcuts import render
 from django.utils import timezone
 from django.views import View
 
+from pydis_site import settings
 from pydis_site.apps.home.models import RepositoryMetadata
 from pydis_site.constants import GITHUB_TOKEN, TIMEOUT_PERIOD
 
@@ -32,7 +33,10 @@ class HomeView(View):
 
     def __init__(self):
         """Clean up stale RepositoryMetadata."""
-        RepositoryMetadata.objects.exclude(repo_name__in=self.repos).delete()
+        self._static_build = settings.env("STATIC_BUILD")
+
+        if not self._static_build:
+            RepositoryMetadata.objects.exclude(repo_name__in=self.repos).delete()
 
         # If no token is defined (for example in local development), then
         # it does not make sense to pass the Authorization header. More
@@ -91,10 +95,13 @@ class HomeView(View):
     def _get_repo_data(self) -> List[RepositoryMetadata]:
         """Build a list of RepositoryMetadata objects that we can use to populate the front page."""
         # First off, load the timestamp of the least recently updated entry.
-        last_update = (
-            RepositoryMetadata.objects.values_list("last_updated", flat=True)
-            .order_by("last_updated").first()
-        )
+        if self._static_build:
+            last_update = None
+        else:
+            last_update = (
+                RepositoryMetadata.objects.values_list("last_updated", flat=True)
+                .order_by("last_updated").first()
+            )
 
         # If we did not retrieve any results here, we should import them!
         if last_update is None:
@@ -104,7 +111,7 @@ class HomeView(View):
             api_repositories = self._get_api_data()
 
             # Create all the repodata records in the database.
-            return RepositoryMetadata.objects.bulk_create(
+            data = [
                 RepositoryMetadata(
                     repo_name=api_data["full_name"],
                     description=api_data["description"],
@@ -113,7 +120,12 @@ class HomeView(View):
                     language=api_data["language"],
                 )
                 for api_data in api_repositories.values()
-            )
+            ]
+
+            if settings.env("STATIC_BUILD"):
+                return data
+            else:
+                return RepositoryMetadata.objects.bulk_create(data)
 
         # If the data is stale, we should refresh it.
         if (timezone.now() - last_update).seconds > self.repository_cache_ttl:
