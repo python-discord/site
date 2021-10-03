@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import os
 import sys
+from pathlib import Path
 
 import django
 from django.contrib.auth import get_user_model
@@ -147,6 +148,16 @@ class SiteManager:
         gunicorn.app.wsgiapp.run()
 
 
+def clean_up_static_files(build_folder: Path) -> None:
+    """Recursively loop over the build directory and fix on-site urls."""
+    for file in build_folder.iterdir():
+        if file.is_dir():
+            clean_up_static_files(file)
+        elif file.name.endswith(".html"):
+            new = file.read_text(encoding="utf-8").replace(f"//{os.getenv('PARENT_HOST')}", "")
+            file.write_text(new, encoding="utf-8")
+
+
 def main() -> None:
     """Entry point for Django management script."""
     # Use the custom site manager for launching the server
@@ -155,11 +166,20 @@ def main() -> None:
 
     # Pass any others directly to standard management commands
     else:
-        if "distill" in sys.argv[1]:
+        if _static_build := "distill" in sys.argv[1]:
             # Build a static version of the site with no databases and API support
             os.environ["STATIC_BUILD"] = "True"
+            if not os.getenv("PARENT_HOST"):
+                os.environ["PARENT_HOST"] = "REPLACE_THIS.HOST"
 
         execute_from_command_line(sys.argv)
+
+        if _static_build:
+            # Clean up parent host in generated files
+            for arg in sys.argv[2:]:
+                if not arg.startswith("-"):
+                    clean_up_static_files(Path(arg))
+                    break
 
 
 if __name__ == '__main__':
