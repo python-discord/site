@@ -155,6 +155,10 @@ def main() -> None:
 
     # Pass any others directly to standard management commands
     else:
+        if "distill" in sys.argv[1]:
+            # Build a static version of the site with no databases and API support
+            os.environ["STATIC_BUILD"] = "True"
+
         execute_from_command_line(sys.argv)
 
 

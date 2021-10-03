@@ -22,6 +22,7 @@ sentry-sdk = "~=0.19"
 markdown = "~=3.3.4"
 python-frontmatter = "~=1.0"
 django-prometheus = "~=2.1"
+django-distill = "~=2.9.0"
 
 [tool.poetry.dev-dependencies]
 coverage = "~=5.0"

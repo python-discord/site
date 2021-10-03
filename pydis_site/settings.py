@@ -25,7 +25,8 @@ from pydis_site.constants import GIT_SHA
 env = environ.Env(
     DEBUG=(bool, False),
     SITE_DSN=(str, ""),
-    BUILDING_DOCKER=(bool, False)
+    BUILDING_DOCKER=(bool, False),
+    STATIC_BUILD=(bool, False),
 )
 
 sentry_sdk.init(
@@ -67,10 +68,14 @@ else:
     SECRET_KEY = env('SECRET_KEY')
 
 # Application definition
-INSTALLED_APPS = [
+NON_STATIC_APPS = [
     'pydis_site.apps.api',
-    'pydis_site.apps.home',
     'pydis_site.apps.staff',
+] if not env("STATIC_BUILD") else []
+
+INSTALLED_APPS = [
+    *NON_STATIC_APPS,
+    'pydis_site.apps.home',
     'pydis_site.apps.resources',
     'pydis_site.apps.content',
     'pydis_site.apps.events',
@@ -89,14 +94,20 @@ INSTALLED_APPS = [
     'django_simple_bulma',
     'rest_framework',
     'rest_framework.authtoken',
+
+    'django_distill',
 ]
 
 if not env("BUILDING_DOCKER"):
     INSTALLED_APPS.append("django_prometheus")
 
+NON_STATIC_MIDDLEWARE = [
+    'django_prometheus.middleware.PrometheusBeforeMiddleware',
+] if not env("STATIC_BUILD") else []
+
 # Ensure that Prometheus middlewares are first and last here.
 MIDDLEWARE = [
-    'django_prometheus.middleware.PrometheusBeforeMiddleware',
+    *NON_STATIC_MIDDLEWARE,
     'django_hosts.middleware.HostsRequestMiddleware',
 
     'django.middleware.security.SecurityMiddleware',
@@ -143,7 +154,7 @@ WSGI_APPLICATION = 'pydis_site.wsgi.application'
 DATABASES = {
     'default': env.db(),
     'metricity': env.db('METRICITY_DB_URL'),
-}
+} if not env("STATIC_BUILD") else {}
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
