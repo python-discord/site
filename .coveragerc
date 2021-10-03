@@ -16,6 +16,3 @@ omit =
     pydis_site/settings.py
     pydis_site/utils/resources.py
     pydis_site/apps/home/views/home.py
-
-[report]
-fail_under = 100
