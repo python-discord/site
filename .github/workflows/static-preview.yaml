@@ -51,7 +51,7 @@ jobs:
           npm install netlify-cli -g
 
       - name: Build Site
-        run: python mange.py distill-local build --traceback --force
+        run: python manage.py distill-local build --traceback --force
         env:
           PARENT_HOST: ${{ github.event.pull_request.number }}
 
