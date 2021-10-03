@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import os
+import platform
 import sys
 from pathlib import Path
 
@@ -149,12 +150,18 @@ class SiteManager:
 
 
 def clean_up_static_files(build_folder: Path) -> None:
-    """Recursively loop over the build directory and fix on-site urls."""
+    """Recursively loop over the build directory and fix links."""
     for file in build_folder.iterdir():
         if file.is_dir():
             clean_up_static_files(file)
         elif file.name.endswith(".html"):
+            # Fix parent host url
             new = file.read_text(encoding="utf-8").replace(f"//{os.getenv('PARENT_HOST')}", "")
+
+            # Fix windows paths if on windows
+            if platform.system() == "Windows":
+                new = new.replace("%5C", "/")
+
             file.write_text(new, encoding="utf-8")
 
 
