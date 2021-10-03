@@ -126,3 +126,6 @@ staticfiles/
 
 *.js.tmp
 log.*
+
+# Local Netlify folder
+netlify

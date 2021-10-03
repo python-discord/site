@@ -1,0 +1,35 @@
+name: Build & Deploy Static Preview
+
+on:
+  workflow_run:
+    workflows: ["Lint & Test"]
+    pull_requests:
+
+jobs:
+  build:
+    name: Build Static Preview
+    if: github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'push'
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+
+      - name: Install Depedencies
+        run: |
+          pip install -U poetry
+          poetry install
+          npm install netlify-cli -g
+
+      - name: Build Site
+        run: python mange.py distill-local build --traceback --force
+        env:
+          PARENT_HOST: ${{ github.event.pull_request.number }}
+
+      - run: netlify login && netlify link --id ${{ secrets.NETLIFY_SITE_ID }}
+      - run: netlify deploy --dir=build
