@@ -1,11 +1,11 @@
 name: Build & Deploy Static Preview
 
 on:
+  pull_request:
   workflow_run:
     workflows: ["Lint & Test"]
     types:
       - completed
-    pull_request:
 
 jobs:
   build:
