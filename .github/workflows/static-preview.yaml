@@ -51,10 +51,10 @@ jobs:
 
       - run: npm install netlify-cli -g
 
-#      - name: Build Site
-#        run: python manage.py distill-local build --traceback --force --collectstatic
-#        env:
-#          PARENT_HOST: ${{ github.event.pull_request.number }}
-#
-#      - run: netlify login && netlify link --id ${{ secrets.NETLIFY_SITE_ID }}
-#      - run: netlify deploy --dir=build
+      - name: Build Site
+        run: python manage.py distill-local build --traceback --force --collectstatic
+        env:
+          PARENT_HOST: ${{ github.event.pull_request.number }}
+
+      - run: netlify login && netlify link --id ${{ secrets.NETLIFY_SITE_ID }}
+      - run: netlify deploy --dir=build
