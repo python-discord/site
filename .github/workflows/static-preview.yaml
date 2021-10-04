@@ -67,7 +67,7 @@ jobs:
             git_sha=${{ github.sha }}
 
       - name: Extract Build From Docker Image
-        run: docker run --name site pydis-site:latest && docker cp site:/app/build build/
+        run: docker run --name site pydis-site && docker cp site:/app/build build/
 
       - run: netlify login && netlify link --id ${{ secrets.NETLIFY_SITE_ID }}
       - run: netlify deploy --dir=build
