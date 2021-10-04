@@ -57,7 +57,7 @@ jobs:
         with:
           context: .
           file: ./Dockerfile
-          push: false
+          push: true
           cache-from: type=registry,ref=ghcr.io/hassanabouelela/pydis-site:latest
           cache-to: type=inline
           tags: |
@@ -67,7 +67,9 @@ jobs:
             git_sha=${{ github.sha }}
 
       - name: Extract Build From Docker Image
-        run: docker run --name site pydis-site && docker cp site:/app/build build/
+        run: |
+          docker run --name site ghcr.io/hassanabouelela/pydis-site:${{ steps.sha_tag.outputs.tag }} \
+          && docker cp site:/app/build build/
 
       - run: netlify login && netlify link --id ${{ secrets.NETLIFY_SITE_ID }}
       - run: netlify deploy --dir=build
