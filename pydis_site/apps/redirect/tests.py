@@ -1,5 +1,3 @@
-import unittest
-
 import yaml
 from django.conf import settings
 from django.test import TestCase
@@ -14,7 +12,6 @@ TESTING_ARGUMENTS = {
 class RedirectTests(TestCase):
     """Survival tests for redirects."""
 
-    @unittest.skip
     def test_redirects(self) -> None:
         """
         Should redirect to given route based on redirect rules.
