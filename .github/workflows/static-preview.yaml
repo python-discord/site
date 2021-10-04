@@ -23,38 +23,51 @@ jobs:
       PRE_COMMIT_HOME: ${{ github.workspace }}/.cache/pre-commit-cache
 
     steps:
-      - name: Add custom PYTHONUSERBASE to PATH
-        run: echo '${{ env.PYTHONUSERBASE }}/bin/' >> $GITHUB_PATH
-
       - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
-        with:
-          python-version: 3.9
       - uses: actions/setup-node@v2
         with:
           node-version: '16'
 
-      - name: Python Dependency Caching
-        uses: actions/cache@v2
-        id: python_cache
-        with:
-          path: ${{ env.PYTHONUSERBASE }}
-          key: "python-0-${{ runner.os }}-${{ env.PYTHONUSERBASE }}-\
-          ${{ steps.python.outputs.python-version }}-\
-          ${{ hashFiles('./pyproject.toml', './poetry.lock') }}"
-
-      - name: Install Depedencies
-        if: steps.python_cache.outputs.cache-hit != 'true'
-        run: |
-          pip install -U poetry
-          poetry install
-
       - run: npm install netlify-cli -g
 
-      - name: Build Site
-        run: python manage.py distill-local build --traceback --force --collectstatic
-        env:
-          PARENT_HOST: ${{ github.event.pull_request.number }}
+     # Create a commit SHA-based tag for the container repositories
+      - name: Create SHA Container Tag
+        id: sha_tag
+        run: |
+          tag=$(cut -c 1-7 <<< $GITHUB_SHA)
+          echo "::set-output name=tag::$tag"
+
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Login to Github Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      # Build the container, including an inline cache manifest to
+      # allow us to use the registry as a cache source.
+      - name: Build and push
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: ./Dockerfile
+          push: false
+          cache-from: type=registry,ref=ghcr.io/hassanabouelela/pydis-site:latest
+          cache-to: type=inline
+          tags: |
+            ghcr.io/hassanabouelela/pydis-site:latest
+            ghcr.io/hassanabouelela/pydis-site:${{ steps.sha_tag.outputs.tag }}
+          build-args: |
+            git_sha=${{ github.sha }}
+
+      - name: Extract Build From Docker Image
+        run: docker run --name site pydis-site:latest && docker cp site:/app/build build/
 
       - run: netlify login && netlify link --id ${{ secrets.NETLIFY_SITE_ID }}
       - run: netlify deploy --dir=build
