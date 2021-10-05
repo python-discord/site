@@ -89,7 +89,7 @@ It's also to ease the burden on our moderators, otherwise they would have to dow
 
 Even though Discord does support previewing of files like `.txt` and `.py`, that support is only available on Desktop, not mobile. Additionally, we prefer people to use hastebin as it encourages them to only copy over the relevant code snippets instead of their whole code; this makes helping much easier for all involved.
 
-If you want to share code please use our hosted hastebin, [paste.pythondiscord.com](http://paste.pythondiscord.com).
+If you want to share code please use our hosted hastebin, [paste.pythondiscord.com](https://paste.pythondiscord.com).
 
 
 #### **Q: Why is this permission not allowed in that channel?**

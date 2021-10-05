@@ -43,7 +43,7 @@ If you will be working with an external service, you might have to set one of th
 | -------- | -------- |
 | `GITHUB_TOKEN` | Personal access token for GitHub, raises rate limits from 60 to 5000 requests per hour. |
 | `GIPHY_TOKEN` | Required for API access. [Docs](https://developers.giphy.com/docs/api) |
-| `OMDB_API_KEY` | Required for API access. [Docs](http://www.omdbapi.com/) |
+| `OMDB_API_KEY` | Required for API access. [Docs](https://www.omdbapi.com/) |
 | `REDDIT_CLIENT_ID` | OAuth2 client ID for authenticating with the [reddit API](https://github.com/reddit-archive/reddit/wiki/OAuth2). |
 | `REDDIT_SECRET` | OAuth2 secret for authenticating with the reddit API. *Leave empty if you're not using the reddit API.* |
 | `REDDIT_WEBHOOK` | Webhook ID for Reddit channel |
