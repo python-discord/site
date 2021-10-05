@@ -8,7 +8,7 @@ urls:
   url: https://python.swaroopch.com/
   color: teal
 - icon: regular/book
-  url: http://www.lulu.com/shop/swaroop-c-h/a-byte-of-python/paperback/product-21142968.html
+  url: https://www.lulu.com/shop/swaroop-c-h/a-byte-of-python/paperback/product-21142968.html
   color: black
 - icon: branding/amazon
   url: https://www.amazon.com/Byte-Python-Swaroop-C-H-ebook/dp/B00FJ7S2JU/
