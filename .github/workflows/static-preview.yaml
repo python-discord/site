@@ -38,8 +38,9 @@ jobs:
 
       # Build the container, including an inline cache manifest to
       # allow us to use the registry as a cache source.
-      - name: Build and push
+      - name: Build & Push Base Image
         uses: docker/build-push-action@v2
+        if: github.ref == 'refs/heads/main'
         with:
           context: .
           file: ./Dockerfile
@@ -47,7 +48,18 @@ jobs:
           cache-from: type=registry,ref=ghcr.io/hassanabouelela/static-site:latest
           cache-to: type=inline
           tags: |
-            ghcr.io/hassanabouelela/pydis-site:${{ steps.sha_tag.outputs.tag }}
+            ghcr.io/hassanabouelela/static-site:latest
+            ghcr.io/hassanabouelela/static-site:${{ steps.sha_tag.outputs.tag }}
+          build-args: |
+            git_sha=${{ github.sha }}
+
+      - name: Build Local Docker Image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: false
+          tags: static-site:${{ steps.sha_tag.outputs.tag }}
+          cache-from: type=registry,ref=ghcr.io/hassanabouelela/static-site:latest
           build-args: |
             git_sha=${{ github.sha }}
 
