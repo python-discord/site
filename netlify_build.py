@@ -12,6 +12,7 @@
 # httpx == 0.19.0
 
 import os
+import time
 import zipfile
 from pathlib import Path
 from urllib import parse
@@ -24,25 +25,23 @@ OWNER, REPO = parse.urlparse(os.getenv("REPOSITORY_URL")).path.lstrip("/").split
 
 def get_build_artifact() -> str:
     """Search for a build artifact, and return the download URL."""
-    if os.getenv("PULL_REQUEST").lower() == "true":
+    if os.getenv("PULL_REQUEST").lower() == "true" or True:
         pull_url = f"{API_URL}/repos/{OWNER}/{REPO}/pulls/{os.getenv('REVIEW_ID')}"
         pull_request = httpx.get(pull_url)
         pull_request.raise_for_status()
 
+        commit_sha = pull_request.json()["head"]["sha"]
+
         workflows_params = parse.urlencode({
             "event": "pull_request",
-            "status": "success",
             "per_page": 100
         })
-
-        commit_sha = pull_request.json()["head"]["sha"]
 
     else:
         commit_sha = os.getenv("COMMIT_REF")
 
         workflows_params = parse.urlencode({
             "event": "push",
-            "status": "success",
             "per_page": 100
         })
 
@@ -51,9 +50,28 @@ def get_build_artifact() -> str:
 
     for run in workflows.json()["workflow_runs"]:
         if run["name"] == "Build & Deploy Static Preview" and commit_sha == run["head_sha"]:
+            break
+    else:
+        raise Exception("Could not find the workflow run for this event.")
+
+    polls = 0
+    while polls <= 20:
+        if run["status"] != "completed":
+            polls += 1
+            time.sleep(30)
+
+        elif run["conclusion"] != "success":
+            print("Aborting build due to a failure in a previous CI step.")
+            exit(0)
+
+        else:
             return run["artifacts_url"]
 
-    raise Exception("Could not find the workflow run for this event.")
+        _run = httpx.get(run["url"])
+        _run.raise_for_status()
+        run = _run.json()
+
+    raise Exception("Polled for the artifact workflow, but it was not ready in time.")
 
 
 def download_artifact(url: str) -> None:
