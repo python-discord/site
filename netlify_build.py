@@ -25,7 +25,11 @@ OWNER, REPO = parse.urlparse(os.getenv("REPOSITORY_URL")).path.lstrip("/").split
 
 def get_build_artifact() -> str:
     """Search for a build artifact, and return the download URL."""
-    if os.getenv("PULL_REQUEST").lower() == "true" or True:
+    print("Fetching build URL.")
+
+    if os.getenv("PULL_REQUEST").lower() == "true":
+        print(f"Fetching data for PR #{os.getenv('REVIEW_ID')}")
+
         pull_url = f"{API_URL}/repos/{OWNER}/{REPO}/pulls/{os.getenv('REVIEW_ID')}"
         pull_request = httpx.get(pull_url)
         pull_request.raise_for_status()
@@ -45,11 +49,14 @@ def get_build_artifact() -> str:
             "per_page": 100
         })
 
+    print(f"Fetching action data for commit {commit_sha}")
+
     workflows = httpx.get(f"{API_URL}/repos/{OWNER}/{REPO}/actions/runs?{workflows_params}")
     workflows.raise_for_status()
 
     for run in workflows.json()["workflow_runs"]:
         if run["name"] == "Build & Deploy Static Preview" and commit_sha == run["head_sha"]:
+            print(f"Found action for this commit: {run['id']}\n{run['html_url']}")
             break
     else:
         raise Exception("Could not find the workflow run for this event.")
@@ -57,6 +64,7 @@ def get_build_artifact() -> str:
     polls = 0
     while polls <= 20:
         if run["status"] != "completed":
+            print("Action isn't completed, sleeping for 30 seconds.")
             polls += 1
             time.sleep(30)
 
@@ -65,6 +73,7 @@ def get_build_artifact() -> str:
             exit(0)
 
         else:
+            print(f"Found artifact URL:\n{run['artifacts_url']}")
             return run["artifacts_url"]
 
         _run = httpx.get(run["url"])
@@ -76,6 +85,8 @@ def get_build_artifact() -> str:
 
 def download_artifact(url: str) -> None:
     """Download a build artifact from `url`, and unzip the content."""
+    print("Fetching artifact data.")
+
     artifacts = httpx.get(url)
     artifacts.raise_for_status()
     artifacts = artifacts.json()
@@ -85,6 +96,7 @@ def download_artifact(url: str) -> None:
 
     for artifact in artifacts["artifacts"]:
         if artifact["name"] == "static-build":
+            print("Found artifact with build.")
             break
     else:
         raise Exception("Could not find an artifact with the expected name.")
@@ -101,6 +113,8 @@ def download_artifact(url: str) -> None:
         zip_ref.extractall("build")
 
     zip_file.unlink(missing_ok=True)
+
+    print("Wrote artifact content to target directory.")
 
 
 if __name__ == "__main__":
