@@ -69,5 +69,8 @@ jobs:
           docker run --name site static-site:${{ steps.sha_tag.outputs.tag }} \
           && docker cp site:/app/build build/
 
-      - run: netlify login && netlify link --id ${{ secrets.NETLIFY_SITE_ID }}
-      - run: netlify deploy --dir=build
+      - name: Upload Build
+        uses: actions/upload-artifact@v2
+        with:
+          name: static-build
+          path: build/
