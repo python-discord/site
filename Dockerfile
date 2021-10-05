@@ -17,6 +17,7 @@ WORKDIR /app
 COPY pyproject.toml poetry.lock ./
 RUN poetry install --no-dev
 
+ARG git_sha="development"
 ENV GIT_SHA=$git_sha
 ENV PARENT_HOST=replace_me.host
 
