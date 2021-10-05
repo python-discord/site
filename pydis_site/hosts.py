@@ -9,5 +9,6 @@ host_patterns = patterns(
     # Internal API ingress (cluster local)
     host(r'pydis-api', 'pydis_site.apps.api.urls', name='internal_api'),
     host(r'staff', 'pydis_site.apps.staff.urls', name='staff'),
-    host(r'.*', 'pydis_site.apps.home.urls', name=settings.DEFAULT_HOST)
+    host(r'www', 'pydis_site.apps.home.urls', name=settings.DEFAULT_HOST),
+    host(r'.*', 'pydis_site.apps.home.urls', name="fallback")
 )
