@@ -199,7 +199,7 @@ if DEBUG:
     else:
         ALLOWED_HOSTS.append(PARENT_HOST)
 else:
-    PARENT_HOST = env('PARENT_HOST', default='www.pythondiscord.com')
+    PARENT_HOST = env('PARENT_HOST', default='pythondiscord.com')
 
 # Django REST framework
 # http://www.django-rest-framework.org
