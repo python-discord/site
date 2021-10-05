@@ -102,7 +102,7 @@ def download_artifact(url: str) -> None:
         raise Exception("Could not find an artifact with the expected name.")
 
     zipped_content = httpx.get(artifact["archive_download_url"], headers={
-        # "Authorization": f"token {os.getenv('TOKEN')}"
+        "Authorization": f"token {os.getenv('TOKEN')}"
     })
     zipped_content.raise_for_status()
 
@@ -118,5 +118,6 @@ def download_artifact(url: str) -> None:
 
 
 if __name__ == "__main__":
+    print("Build started")
     artifact_url = get_build_artifact()
     download_artifact(artifact_url)
