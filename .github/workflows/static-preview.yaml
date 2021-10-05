@@ -54,14 +54,12 @@ jobs:
             git_sha=${{ github.sha }}
 
       - name: Build Local Docker Image
-        uses: docker/build-push-action@v2
-        with:
-          context: .
-          push: false
-          tags: static-site:${{ steps.sha_tag.outputs.tag }}
-          cache-from: type=registry,ref=ghcr.io/hassanabouelela/static-site:latest
-          build-args: |
-            git_sha=${{ github.sha }}
+        run: |
+          docker build \
+          --build-arg git_sha=${{ github.sha }} \
+          --cache-from ghcr.io/hassanabouelela/static-site:latest \
+          -t static-site:${{ steps.sha_tag.outputs.tag }} \
+          .
 
       - name: Extract Build From Docker Image
         run: |
