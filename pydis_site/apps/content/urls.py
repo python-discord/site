@@ -15,14 +15,16 @@ def __get_all_files(root: Path, folder: typing.Optional[Path] = None) -> list[st
 
     results = []
 
-    for sub_folder in folder.iterdir():
-        if sub_folder.is_dir():
-            results.append(sub_folder.relative_to(root).__str__().replace("\\", "/"))
-            results.extend(__get_all_files(root, sub_folder))
+    for item in folder.iterdir():
+        name = item.relative_to(root).__str__().replace("\\", "/")
+
+        if item.is_dir():
+            results.append(name)
+            results.extend(__get_all_files(root, item))
         else:
-            path, extension = sub_folder.relative_to(root).__str__().rsplit(".", maxsplit=1)
+            path, extension = name.rsplit(".", maxsplit=1)
             if extension == "md":
-                results.append(path.replace("\\", "/"))
+                results.append(path)
 
     return results
 
