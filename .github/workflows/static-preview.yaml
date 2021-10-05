@@ -1,6 +1,9 @@
 name: Build & Deploy Static Preview
 
 on:
+  push:
+    branches:
+      - main
   pull_request:
 
 jobs:
