@@ -1,10 +1,6 @@
 #!/usr/bin/env python
 import os
-import re
-import socket
 import sys
-import time
-from typing import List
 
 import django
 from django.contrib.auth import get_user_model
@@ -42,7 +38,7 @@ class SiteManager:
         --verbose  Sets verbose console output.
     """
 
-    def __init__(self, args: List[str]):
+    def __init__(self, args: list[str]):
         self.debug = "--debug" in args
         self.silent = "--silent" in args
 
@@ -85,38 +81,6 @@ class SiteManager:
             print(f"Existing bot token found: {token}")
 
     @staticmethod
-    def wait_for_postgres() -> None:
-        """Wait for the PostgreSQL database specified in DATABASE_URL."""
-        print("Waiting for PostgreSQL database.")
-
-        # Get database URL based on environmental variable passed in compose
-        database_url = os.environ["DATABASE_URL"]
-        match = re.search(r"@([\w.]+):(\d+)/", database_url)
-        if not match:
-            raise OSError("Valid DATABASE_URL environmental variable not found.")
-        domain = match.group(1)
-        port = int(match.group(2))
-
-        # Attempt to connect to the database socket
-        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
-        attempts_left = 10
-        while attempts_left:
-            try:
-                # Ignore 'incomplete startup packet'
-                s.connect((domain, port))
-                s.shutdown(socket.SHUT_RDWR)
-                print("Database is ready.")
-                break
-            except socket.error:
-                attempts_left -= 1
-                print("Not ready yet, retrying.")
-                time.sleep(0.5)
-        else:
-            print("Database could not be found, exiting.")
-            sys.exit(1)
-
-    @staticmethod
     def set_dev_site_name() -> None:
         """Set the development site domain in admin from default example."""
         # import Site model now after django setup
@@ -132,9 +96,6 @@ class SiteManager:
     def prepare_server(self) -> None:
         """Perform preparation tasks before running the server."""
         django.setup()
-
-        if self.debug:
-            self.wait_for_postgres()
 
         print("Applying migrations.")
         call_command("migrate", verbosity=self.verbosity)
@@ -176,12 +137,10 @@ class SiteManager:
             "--preload",
             "-b", "0.0.0.0:8000",
             "pydis_site.wsgi:application",
-            "--threads", "8",
             "-w", "2",
-            "--max-requests", "1000",
-            "--max-requests-jitter", "50",
             "--statsd-host", "graphite.default.svc.cluster.local:8125",
             "--statsd-prefix", "site",
+            "--config", "file:gunicorn.conf.py"
         ]
 
         # Run gunicorn for the production server.

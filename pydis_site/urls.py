@@ -13,6 +13,7 @@ urlpatterns = (
     # This must be mounted before the `content` app to prevent Django
     # from wildcard matching all requests to `pages/...`.
     path('', include('pydis_site.apps.redirect.urls')),
+    path('', include('django_prometheus.urls')),
     path('pages/', include('pydis_site.apps.content.urls', namespace='content')),
     path('resources/', include('pydis_site.apps.resources.urls')),
     path('events/', include('pydis_site.apps.events.urls', namespace='events')),

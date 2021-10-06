@@ -14,6 +14,7 @@ import os
 import secrets
 import sys
 from pathlib import Path
+from socket import gethostbyname, gethostname
 
 import environ
 import sentry_sdk
@@ -23,7 +24,8 @@ from pydis_site.constants import GIT_SHA
 
 env = environ.Env(
     DEBUG=(bool, False),
-    SITE_DSN=(str, "")
+    SITE_DSN=(str, ""),
+    BUILDING_DOCKER=(bool, False)
 )
 
 sentry_sdk.init(
@@ -52,7 +54,17 @@ elif 'CI' in os.environ:
 else:
     ALLOWED_HOSTS = env.list(
         'ALLOWED_HOSTS',
-        default=['pythondiscord.com'],
+        default=[
+            'www.pythondiscord.com',
+            'pythondiscord.com',
+            gethostname(),
+            gethostbyname(gethostname()),
+            # "That needs to be there for now, until we move back to...
+            # no, don't put that there, actually, yeah, put that there,
+            # that's fine, yeah, no no no no no no, stop it, you're being
+            # a problem now, I'm phoning [DAD'S NAME]" - Joe
+            'pydis-api.default.svc.cluster.local',
+        ],
     )
     SECRET_KEY = env('SECRET_KEY')
 
@@ -77,10 +89,16 @@ INSTALLED_APPS = [
     'django_filters',
     'django_simple_bulma',
     'rest_framework',
-    'rest_framework.authtoken'
+    'rest_framework.authtoken',
 ]
 
+if not env("BUILDING_DOCKER"):
+    INSTALLED_APPS.append("django_prometheus")
+
+# Ensure that Prometheus middlewares are first and last here.
 MIDDLEWARE = [
+    'django_prometheus.middleware.PrometheusBeforeMiddleware',
+
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -89,7 +107,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'django_prometheus.middleware.PrometheusAfterMiddleware'
 ]
+
 ROOT_URLCONF = 'pydis_site.urls'
 
 TEMPLATES = [
@@ -170,7 +191,7 @@ else:
     PARENT_HOST = env('PARENT_HOST', default='pythondiscord.com')
 
 # Django REST framework
-# http://www.django-rest-framework.org
+# https://www.django-rest-framework.org
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',

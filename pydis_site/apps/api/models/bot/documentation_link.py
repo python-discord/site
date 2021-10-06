@@ -30,6 +30,7 @@ class DocumentationLink(ModelReprMixin, models.Model):
             "The base URL from which documentation will be available for this project. "
             "Used to generate links to various symbols within this package."
         ),
+        blank=True,
         validators=(ends_with_slash_validator,)
     )
     inventory_url = models.URLField(
