@@ -59,11 +59,7 @@ else:
             'pythondiscord.com',
             gethostname(),
             gethostbyname(gethostname()),
-            # "That needs to be there for now, until we move back to...
-            # no, don't put that there, actually, yeah, put that there,
-            # that's fine, yeah, no no no no no no, stop it, you're being
-            # a problem now, I'm phoning [DAD'S NAME]" - Joe
-            'pydis-api.default.svc.cluster.local',
+            'site.default.svc.cluster.local',
         ],
     )
     SECRET_KEY = env('SECRET_KEY')
