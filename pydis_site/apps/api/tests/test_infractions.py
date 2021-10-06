@@ -4,44 +4,44 @@ from unittest.mock import patch
 from urllib.parse import quote
 
 from django.db.utils import IntegrityError
-from django_hosts.resolvers import reverse
+from django.urls import reverse
 
-from .base import APISubdomainTestCase
+from .base import AuthenticatedAPITestCase
 from ..models import Infraction, User
 from ..serializers import InfractionSerializer
 
 
-class UnauthenticatedTests(APISubdomainTestCase):
+class UnauthenticatedTests(AuthenticatedAPITestCase):
     def setUp(self):
         super().setUp()
         self.client.force_authenticate(user=None)
 
     def test_detail_lookup_returns_401(self):
-        url = reverse('bot:infraction-detail', args=(6,), host='api')
+        url = reverse('api:bot:infraction-detail', args=(6,))
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, 401)
 
     def test_list_returns_401(self):
-        url = reverse('bot:infraction-list', host='api')
+        url = reverse('api:bot:infraction-list')
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, 401)
 
     def test_create_returns_401(self):
-        url = reverse('bot:infraction-list', host='api')
+        url = reverse('api:bot:infraction-list')
         response = self.client.post(url, data={'reason': 'Have a nice day.'})
 
         self.assertEqual(response.status_code, 401)
 
     def test_partial_update_returns_401(self):
-        url = reverse('bot:infraction-detail', args=(6,), host='api')
+        url = reverse('api:bot:infraction-detail', args=(6,))
         response = self.client.patch(url, data={'reason': 'Have a nice day.'})
 
         self.assertEqual(response.status_code, 401)
 
 
-class InfractionTests(APISubdomainTestCase):
+class InfractionTests(AuthenticatedAPITestCase):
     @classmethod
     def setUpTestData(cls):
         cls.user = User.objects.create(
@@ -92,7 +92,7 @@ class InfractionTests(APISubdomainTestCase):
 
     def test_list_all(self):
         """Tests the list-view, which should be ordered by inserted_at (newest first)."""
-        url = reverse('bot:infraction-list', host='api')
+        url = reverse('api:bot:infraction-list')
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, 200)
@@ -106,7 +106,7 @@ class InfractionTests(APISubdomainTestCase):
         self.assertEqual(infractions[4]['id'], self.ban_hidden.id)
 
     def test_filter_search(self):
-        url = reverse('bot:infraction-list', host='api')
+        url = reverse('api:bot:infraction-list')
         pattern = quote(r'^James(\s\w+){3},')
         response = self.client.get(f'{url}?search={pattern}')
 
@@ -117,7 +117,7 @@ class InfractionTests(APISubdomainTestCase):
         self.assertEqual(infractions[0]['id'], self.ban_inactive.id)
 
     def test_filter_field(self):
-        url = reverse('bot:infraction-list', host='api')
+        url = reverse('api:bot:infraction-list')
         response = self.client.get(f'{url}?type=ban&hidden=true')
 
         self.assertEqual(response.status_code, 200)
@@ -127,7 +127,7 @@ class InfractionTests(APISubdomainTestCase):
         self.assertEqual(infractions[0]['id'], self.ban_hidden.id)
 
     def test_filter_permanent_false(self):
-        url = reverse('bot:infraction-list', host='api')
+        url = reverse('api:bot:infraction-list')
         response = self.client.get(f'{url}?type=mute&permanent=false')
 
         self.assertEqual(response.status_code, 200)
@@ -136,7 +136,7 @@ class InfractionTests(APISubdomainTestCase):
         self.assertEqual(len(infractions), 0)
 
     def test_filter_permanent_true(self):
-        url = reverse('bot:infraction-list', host='api')
+        url = reverse('api:bot:infraction-list')
         response = self.client.get(f'{url}?type=mute&permanent=true')
 
         self.assertEqual(response.status_code, 200)
@@ -145,7 +145,7 @@ class InfractionTests(APISubdomainTestCase):
         self.assertEqual(infractions[0]['id'], self.mute_permanent.id)
 
     def test_filter_after(self):
-        url = reverse('bot:infraction-list', host='api')
+        url = reverse('api:bot:infraction-list')
         target_time = datetime.datetime.utcnow() + datetime.timedelta(hours=5)
         response = self.client.get(f'{url}?type=superstar&expires_after={target_time.isoformat()}')
 
@@ -154,7 +154,7 @@ class InfractionTests(APISubdomainTestCase):
         self.assertEqual(len(infractions), 0)
 
     def test_filter_before(self):
-        url = reverse('bot:infraction-list', host='api')
+        url = reverse('api:bot:infraction-list')
         target_time = datetime.datetime.utcnow() + datetime.timedelta(hours=5)
         response = self.client.get(f'{url}?type=superstar&expires_before={target_time.isoformat()}')
 
@@ -164,21 +164,21 @@ class InfractionTests(APISubdomainTestCase):
         self.assertEqual(infractions[0]['id'], self.superstar_expires_soon.id)
 
     def test_filter_after_invalid(self):
-        url = reverse('bot:infraction-list', host='api')
+        url = reverse('api:bot:infraction-list')
         response = self.client.get(f'{url}?expires_after=gibberish')
 
         self.assertEqual(response.status_code, 400)
         self.assertEqual(list(response.json())[0], "expires_after")
 
     def test_filter_before_invalid(self):
-        url = reverse('bot:infraction-list', host='api')
+        url = reverse('api:bot:infraction-list')
         response = self.client.get(f'{url}?expires_before=000000000')
 
         self.assertEqual(response.status_code, 400)
         self.assertEqual(list(response.json())[0], "expires_before")
 
     def test_after_before_before(self):
-        url = reverse('bot:infraction-list', host='api')
+        url = reverse('api:bot:infraction-list')
         target_time = datetime.datetime.utcnow() + datetime.timedelta(hours=4)
         target_time_late = datetime.datetime.utcnow() + datetime.timedelta(hours=6)
         response = self.client.get(
@@ -191,7 +191,7 @@ class InfractionTests(APISubdomainTestCase):
         self.assertEqual(response.json()[0]["id"], self.superstar_expires_soon.id)
 
     def test_after_after_before_invalid(self):
-        url = reverse('bot:infraction-list', host='api')
+        url = reverse('api:bot:infraction-list')
         target_time = datetime.datetime.utcnow() + datetime.timedelta(hours=5)
         target_time_late = datetime.datetime.utcnow() + datetime.timedelta(hours=9)
         response = self.client.get(
@@ -205,7 +205,7 @@ class InfractionTests(APISubdomainTestCase):
         self.assertIn("expires_after", errors)
 
     def test_permanent_after_invalid(self):
-        url = reverse('bot:infraction-list', host='api')
+        url = reverse('api:bot:infraction-list')
         target_time = datetime.datetime.utcnow() + datetime.timedelta(hours=5)
         response = self.client.get(f'{url}?permanent=true&expires_after={target_time.isoformat()}')
 
@@ -214,7 +214,7 @@ class InfractionTests(APISubdomainTestCase):
         self.assertEqual("permanent", errors[0])
 
     def test_permanent_before_invalid(self):
-        url = reverse('bot:infraction-list', host='api')
+        url = reverse('api:bot:infraction-list')
         target_time = datetime.datetime.utcnow() + datetime.timedelta(hours=5)
         response = self.client.get(f'{url}?permanent=true&expires_before={target_time.isoformat()}')
 
@@ -223,7 +223,7 @@ class InfractionTests(APISubdomainTestCase):
         self.assertEqual("permanent", errors[0])
 
     def test_nonpermanent_before(self):
-        url = reverse('bot:infraction-list', host='api')
+        url = reverse('api:bot:infraction-list')
         target_time = datetime.datetime.utcnow() + datetime.timedelta(hours=6)
         response = self.client.get(
             f'{url}?permanent=false&expires_before={target_time.isoformat()}'
@@ -234,7 +234,7 @@ class InfractionTests(APISubdomainTestCase):
         self.assertEqual(response.json()[0]["id"], self.superstar_expires_soon.id)
 
     def test_filter_manytypes(self):
-        url = reverse('bot:infraction-list', host='api')
+        url = reverse('api:bot:infraction-list')
         response = self.client.get(f'{url}?types=mute,ban')
 
         self.assertEqual(response.status_code, 200)
@@ -242,7 +242,7 @@ class InfractionTests(APISubdomainTestCase):
         self.assertEqual(len(infractions), 3)
 
     def test_types_type_invalid(self):
-        url = reverse('bot:infraction-list', host='api')
+        url = reverse('api:bot:infraction-list')
         response = self.client.get(f'{url}?types=mute,ban&type=superstar')
 
         self.assertEqual(response.status_code, 400)
@@ -250,7 +250,7 @@ class InfractionTests(APISubdomainTestCase):
         self.assertEqual("types", errors[0])
 
     def test_sort_expiresby(self):
-        url = reverse('bot:infraction-list', host='api')
+        url = reverse('api:bot:infraction-list')
         response = self.client.get(f'{url}?ordering=expires_at&permanent=false')
         self.assertEqual(response.status_code, 200)
         infractions = response.json()
@@ -261,34 +261,34 @@ class InfractionTests(APISubdomainTestCase):
         self.assertEqual(infractions[2]['id'], self.ban_hidden.id)
 
     def test_returns_empty_for_no_match(self):
-        url = reverse('bot:infraction-list', host='api')
+        url = reverse('api:bot:infraction-list')
         response = self.client.get(f'{url}?type=ban&search=poop')
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(response.json()), 0)
 
     def test_ignores_bad_filters(self):
-        url = reverse('bot:infraction-list', host='api')
+        url = reverse('api:bot:infraction-list')
         response = self.client.get(f'{url}?type=ban&hidden=maybe&foo=bar')
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(response.json()), 2)
 
     def test_retrieve_single_from_id(self):
-        url = reverse('bot:infraction-detail', args=(self.ban_inactive.id,), host='api')
+        url = reverse('api:bot:infraction-detail', args=(self.ban_inactive.id,))
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json()['id'], self.ban_inactive.id)
 
     def test_retrieve_returns_404_for_absent_id(self):
-        url = reverse('bot:infraction-detail', args=(1337,), host='api')
+        url = reverse('api:bot:infraction-detail', args=(1337,))
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, 404)
 
     def test_partial_update(self):
-        url = reverse('bot:infraction-detail', args=(self.ban_hidden.id,), host='api')
+        url = reverse('api:bot:infraction-detail', args=(self.ban_hidden.id,))
         data = {
             'expires_at': '4143-02-15T21:04:31+00:00',
             'active': False,
@@ -313,7 +313,7 @@ class InfractionTests(APISubdomainTestCase):
         self.assertEqual(infraction.hidden, self.ban_hidden.hidden)
 
     def test_partial_update_returns_400_for_frozen_field(self):
-        url = reverse('bot:infraction-detail', args=(self.ban_hidden.id,), host='api')
+        url = reverse('api:bot:infraction-detail', args=(self.ban_hidden.id,))
         data = {'user': 6}
 
         response = self.client.patch(url, data=data)
@@ -323,7 +323,7 @@ class InfractionTests(APISubdomainTestCase):
         })
 
 
-class CreationTests(APISubdomainTestCase):
+class CreationTests(AuthenticatedAPITestCase):
     @classmethod
     def setUpTestData(cls):
         cls.user = User.objects.create(
@@ -338,7 +338,7 @@ class CreationTests(APISubdomainTestCase):
         )
 
     def test_accepts_valid_data(self):
-        url = reverse('bot:infraction-list', host='api')
+        url = reverse('api:bot:infraction-list')
         data = {
             'user': self.user.id,
             'actor': self.user.id,
@@ -367,7 +367,7 @@ class CreationTests(APISubdomainTestCase):
         self.assertEqual(infraction.active, True)
 
     def test_returns_400_for_missing_user(self):
-        url = reverse('bot:infraction-list', host='api')
+        url = reverse('api:bot:infraction-list')
         data = {
             'actor': self.user.id,
             'type': 'kick',
@@ -381,7 +381,7 @@ class CreationTests(APISubdomainTestCase):
         })
 
     def test_returns_400_for_bad_user(self):
-        url = reverse('bot:infraction-list', host='api')
+        url = reverse('api:bot:infraction-list')
         data = {
             'user': 1337,
             'actor': self.user.id,
@@ -396,7 +396,7 @@ class CreationTests(APISubdomainTestCase):
         })
 
     def test_returns_400_for_bad_type(self):
-        url = reverse('bot:infraction-list', host='api')
+        url = reverse('api:bot:infraction-list')
         data = {
             'user': self.user.id,
             'actor': self.user.id,
@@ -411,7 +411,7 @@ class CreationTests(APISubdomainTestCase):
         })
 
     def test_returns_400_for_bad_expired_at_format(self):
-        url = reverse('bot:infraction-list', host='api')
+        url = reverse('api:bot:infraction-list')
         data = {
             'user': self.user.id,
             'actor': self.user.id,
@@ -430,7 +430,7 @@ class CreationTests(APISubdomainTestCase):
         })
 
     def test_returns_400_for_expiring_non_expirable_type(self):
-        url = reverse('bot:infraction-list', host='api')
+        url = reverse('api:bot:infraction-list')
 
         for infraction_type in ('kick', 'warning'):
             data = {
@@ -448,7 +448,7 @@ class CreationTests(APISubdomainTestCase):
             })
 
     def test_returns_400_for_hidden_non_hideable_type(self):
-        url = reverse('bot:infraction-list', host='api')
+        url = reverse('api:bot:infraction-list')
 
         for infraction_type in ('superstar', 'warning'):
             data = {
@@ -466,7 +466,7 @@ class CreationTests(APISubdomainTestCase):
             })
 
     def test_returns_400_for_non_hidden_required_hidden_type(self):
-        url = reverse('bot:infraction-list', host='api')
+        url = reverse('api:bot:infraction-list')
 
         data = {
             'user': self.user.id,
@@ -484,7 +484,7 @@ class CreationTests(APISubdomainTestCase):
 
     def test_returns_400_for_active_infraction_of_type_that_cannot_be_active(self):
         """Test if the API rejects active infractions for types that cannot be active."""
-        url = reverse('bot:infraction-list', host='api')
+        url = reverse('api:bot:infraction-list')
         restricted_types = (
             ('note', True),
             ('warning', False),
@@ -511,7 +511,7 @@ class CreationTests(APISubdomainTestCase):
 
     def test_returns_400_for_second_active_infraction_of_the_same_type(self):
         """Test if the API rejects a second active infraction of the same type for a given user."""
-        url = reverse('bot:infraction-list', host='api')
+        url = reverse('api:bot:infraction-list')
         active_infraction_types = ('mute', 'ban', 'superstar')
 
         for infraction_type in active_infraction_types:
@@ -550,7 +550,7 @@ class CreationTests(APISubdomainTestCase):
 
     def test_returns_201_for_second_active_infraction_of_different_type(self):
         """Test if the API accepts a second active infraction of a different type than the first."""
-        url = reverse('bot:infraction-list', host='api')
+        url = reverse('api:bot:infraction-list')
         first_active_infraction = {
             'user': self.user.id,
             'actor': self.user.id,
@@ -677,7 +677,7 @@ class CreationTests(APISubdomainTestCase):
             )
 
 
-class InfractionDeletionTests(APISubdomainTestCase):
+class InfractionDeletionTests(AuthenticatedAPITestCase):
     @classmethod
     def setUpTestData(cls):
         cls.user = User.objects.create(
@@ -694,20 +694,20 @@ class InfractionDeletionTests(APISubdomainTestCase):
         )
 
     def test_delete_unknown_infraction_returns_404(self):
-        url = reverse('bot:infraction-detail', args=('something',), host='api')
+        url = reverse('api:bot:infraction-detail', args=('something',))
         response = self.client.delete(url)
 
         self.assertEqual(response.status_code, 404)
 
     def test_delete_known_infraction_returns_204(self):
-        url = reverse('bot:infraction-detail', args=(self.warning.id,), host='api')
+        url = reverse('api:bot:infraction-detail', args=(self.warning.id,))
         response = self.client.delete(url)
 
         self.assertEqual(response.status_code, 204)
         self.assertRaises(Infraction.DoesNotExist, Infraction.objects.get, id=self.warning.id)
 
 
-class ExpandedTests(APISubdomainTestCase):
+class ExpandedTests(AuthenticatedAPITestCase):
     @classmethod
     def setUpTestData(cls):
         cls.user = User.objects.create(
@@ -735,7 +735,7 @@ class ExpandedTests(APISubdomainTestCase):
                 self.assertTrue(field in obj, msg=f'field "{field}" missing from {key}')
 
     def test_list_expanded(self):
-        url = reverse('bot:infraction-list-expanded', host='api')
+        url = reverse('api:bot:infraction-list-expanded')
 
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
@@ -747,7 +747,7 @@ class ExpandedTests(APISubdomainTestCase):
             self.check_expanded_fields(infraction)
 
     def test_create_expanded(self):
-        url = reverse('bot:infraction-list-expanded', host='api')
+        url = reverse('api:bot:infraction-list-expanded')
         data = {
             'user': self.user.id,
             'actor': self.user.id,
@@ -762,7 +762,7 @@ class ExpandedTests(APISubdomainTestCase):
         self.check_expanded_fields(response.json())
 
     def test_retrieve_expanded(self):
-        url = reverse('bot:infraction-detail-expanded', args=(self.warning.id,), host='api')
+        url = reverse('api:bot:infraction-detail-expanded', args=(self.warning.id,))
 
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
@@ -772,7 +772,7 @@ class ExpandedTests(APISubdomainTestCase):
         self.check_expanded_fields(infraction)
 
     def test_partial_update_expanded(self):
-        url = reverse('bot:infraction-detail-expanded', args=(self.kick.id,), host='api')
+        url = reverse('api:bot:infraction-detail-expanded', args=(self.kick.id,))
         data = {'active': False}
 
         response = self.client.patch(url, data=data)
@@ -783,7 +783,7 @@ class ExpandedTests(APISubdomainTestCase):
         self.check_expanded_fields(response.json())
 
 
-class SerializerTests(APISubdomainTestCase):
+class SerializerTests(AuthenticatedAPITestCase):
     @classmethod
     def setUpTestData(cls):
         cls.user = User.objects.create(

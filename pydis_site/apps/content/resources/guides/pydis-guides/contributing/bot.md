@@ -43,7 +43,6 @@ For any staff member, since you have write permissions already to the original r
 # Development environment
 1. [Clone your fork to a local project directory](../cloning-repository/)
 2. [Install the project's dependencies](../installing-project-dependencies/)
-3. [Prepare your hosts file (Optional)](../hosts-file/)
 
 ---
 # Test server and bot account

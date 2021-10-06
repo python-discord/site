@@ -57,13 +57,14 @@ else:
         default=[
             'www.pythondiscord.com',
             'pythondiscord.com',
-            'admin.pythondiscord.com',
-            'api.pythondiscord.com',
-            'staff.pythondiscord.com',
-            'pydis-api.default.svc.cluster.local',
             gethostname(),
-            gethostbyname(gethostname())
-        ]
+            gethostbyname(gethostname()),
+            # "That needs to be there for now, until we move back to...
+            # no, don't put that there, actually, yeah, put that there,
+            # that's fine, yeah, no no no no no no, stop it, you're being
+            # a problem now, I'm phoning [DAD'S NAME]" - Joe
+            'pydis-api.default.svc.cluster.local',
+        ],
     )
     SECRET_KEY = env('SECRET_KEY')
 
@@ -85,7 +86,6 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.staticfiles',
 
-    'django_hosts',
     'django_filters',
     'django_simple_bulma',
     'rest_framework',
@@ -98,7 +98,6 @@ if not env("BUILDING_DOCKER"):
 # Ensure that Prometheus middlewares are first and last here.
 MIDDLEWARE = [
     'django_prometheus.middleware.PrometheusBeforeMiddleware',
-    'django_hosts.middleware.HostsRequestMiddleware',
 
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
@@ -109,7 +108,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
-    'django_hosts.middleware.HostsResponseMiddleware',
     'django_prometheus.middleware.PrometheusAfterMiddleware'
 ]
 
@@ -121,10 +119,6 @@ TEMPLATES = [
         'DIRS': [os.path.join(BASE_DIR, 'pydis_site', 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
-            'builtins': [
-                'django_hosts.templatetags.hosts_override',
-            ],
-
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
@@ -185,11 +179,6 @@ STATICFILES_FINDERS = [
 
     'django_simple_bulma.finders.SimpleBulmaFinder',
 ]
-
-# django-hosts
-# https://django-hosts.readthedocs.io/en/latest/
-ROOT_HOSTCONF = 'pydis_site.hosts'
-DEFAULT_HOST = 'home'
 
 if DEBUG:
     PARENT_HOST = env('PARENT_HOST', default='pythondiscord.local:8000')

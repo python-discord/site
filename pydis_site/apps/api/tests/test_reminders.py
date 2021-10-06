@@ -1,52 +1,52 @@
 from datetime import datetime
 
 from django.forms.models import model_to_dict
-from django_hosts.resolvers import reverse
+from django.urls import reverse
 
-from .base import APISubdomainTestCase
+from .base import AuthenticatedAPITestCase
 from ..models import Reminder, User
 
 
-class UnauthedReminderAPITests(APISubdomainTestCase):
+class UnauthedReminderAPITests(AuthenticatedAPITestCase):
     def setUp(self):
         super().setUp()
         self.client.force_authenticate(user=None)
 
     def test_list_returns_401(self):
-        url = reverse('bot:reminder-list', host='api')
+        url = reverse('api:bot:reminder-list')
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, 401)
 
     def test_create_returns_401(self):
-        url = reverse('bot:reminder-list', host='api')
+        url = reverse('api:bot:reminder-list')
         response = self.client.post(url, data={'not': 'important'})
 
         self.assertEqual(response.status_code, 401)
 
     def test_delete_returns_401(self):
-        url = reverse('bot:reminder-detail', args=('1234',), host='api')
+        url = reverse('api:bot:reminder-detail', args=('1234',))
         response = self.client.delete(url)
 
         self.assertEqual(response.status_code, 401)
 
 
-class EmptyDatabaseReminderAPITests(APISubdomainTestCase):
+class EmptyDatabaseReminderAPITests(AuthenticatedAPITestCase):
     def test_list_all_returns_empty_list(self):
-        url = reverse('bot:reminder-list', host='api')
+        url = reverse('api:bot:reminder-list')
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json(), [])
 
     def test_delete_returns_404(self):
-        url = reverse('bot:reminder-detail', args=('1234',), host='api')
+        url = reverse('api:bot:reminder-detail', args=('1234',))
         response = self.client.delete(url)
 
         self.assertEqual(response.status_code, 404)
 
 
-class ReminderCreationTests(APISubdomainTestCase):
+class ReminderCreationTests(AuthenticatedAPITestCase):
     @classmethod
     def setUpTestData(cls):
         cls.author = User.objects.create(
@@ -64,7 +64,7 @@ class ReminderCreationTests(APISubdomainTestCase):
             'channel_id': 123,
             'mentions': [8888, 9999],
         }
-        url = reverse('bot:reminder-list', host='api')
+        url = reverse('api:bot:reminder-list')
         response = self.client.post(url, data=data)
         self.assertEqual(response.status_code, 201)
         self.assertIsNotNone(Reminder.objects.filter(id=1).first())
@@ -73,13 +73,13 @@ class ReminderCreationTests(APISubdomainTestCase):
         data = {
             'author': self.author.id,  # Missing multiple required fields
         }
-        url = reverse('bot:reminder-list', host='api')
+        url = reverse('api:bot:reminder-list')
         response = self.client.post(url, data=data)
         self.assertEqual(response.status_code, 400)
         self.assertRaises(Reminder.DoesNotExist, Reminder.objects.get, id=1)
 
 
-class ReminderDeletionTests(APISubdomainTestCase):
+class ReminderDeletionTests(AuthenticatedAPITestCase):
     @classmethod
     def setUpTestData(cls):
         cls.author = User.objects.create(
@@ -97,20 +97,20 @@ class ReminderDeletionTests(APISubdomainTestCase):
         )
 
     def test_delete_unknown_reminder_returns_404(self):
-        url = reverse('bot:reminder-detail', args=('something',), host='api')
+        url = reverse('api:bot:reminder-detail', args=('something',))
         response = self.client.delete(url)
 
         self.assertEqual(response.status_code, 404)
 
     def test_delete_known_reminder_returns_204(self):
-        url = reverse('bot:reminder-detail', args=(self.reminder.id,), host='api')
+        url = reverse('api:bot:reminder-detail', args=(self.reminder.id,))
         response = self.client.delete(url)
 
         self.assertEqual(response.status_code, 204)
         self.assertRaises(Reminder.DoesNotExist, Reminder.objects.get, id=self.reminder.id)
 
 
-class ReminderListTests(APISubdomainTestCase):
+class ReminderListTests(AuthenticatedAPITestCase):
     @classmethod
     def setUpTestData(cls):
         cls.author = User.objects.create(
@@ -142,28 +142,28 @@ class ReminderListTests(APISubdomainTestCase):
         cls.rem_dict_two['expiration'] += 'Z'  # Massaging a quirk of the response time format
 
     def test_reminders_in_full_list(self):
-        url = reverse('bot:reminder-list', host='api')
+        url = reverse('api:bot:reminder-list')
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, 200)
         self.assertCountEqual(response.json(), [self.rem_dict_one, self.rem_dict_two])
 
     def test_filter_search(self):
-        url = reverse('bot:reminder-list', host='api')
+        url = reverse('api:bot:reminder-list')
         response = self.client.get(f'{url}?search={self.author.name}')
 
         self.assertEqual(response.status_code, 200)
         self.assertCountEqual(response.json(), [self.rem_dict_one, self.rem_dict_two])
 
     def test_filter_field(self):
-        url = reverse('bot:reminder-list', host='api')
+        url = reverse('api:bot:reminder-list')
         response = self.client.get(f'{url}?active=true')
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json(), [self.rem_dict_one])
 
 
-class ReminderRetrieveTests(APISubdomainTestCase):
+class ReminderRetrieveTests(AuthenticatedAPITestCase):
     @classmethod
     def setUpTestData(cls):
         cls.author = User.objects.create(
@@ -181,17 +181,17 @@ class ReminderRetrieveTests(APISubdomainTestCase):
         )
 
     def test_retrieve_unknown_returns_404(self):
-        url = reverse('bot:reminder-detail', args=("not_an_id",), host='api')
+        url = reverse('api:bot:reminder-detail', args=("not_an_id",))
         response = self.client.get(url)
         self.assertEqual(response.status_code, 404)
 
     def test_retrieve_known_returns_200(self):
-        url = reverse('bot:reminder-detail', args=(self.reminder.id,), host='api')
+        url = reverse('api:bot:reminder-detail', args=(self.reminder.id,))
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
 
 
-class ReminderUpdateTests(APISubdomainTestCase):
+class ReminderUpdateTests(AuthenticatedAPITestCase):
     @classmethod
     def setUpTestData(cls):
         cls.author = User.objects.create(
@@ -211,7 +211,7 @@ class ReminderUpdateTests(APISubdomainTestCase):
         cls.data = {'content': 'Oops I forgot'}
 
     def test_patch_updates_record(self):
-        url = reverse('bot:reminder-detail', args=(self.reminder.id,), host='api')
+        url = reverse('api:bot:reminder-detail', args=(self.reminder.id,))
         response = self.client.patch(url, data=self.data)
 
         self.assertEqual(response.status_code, 200)

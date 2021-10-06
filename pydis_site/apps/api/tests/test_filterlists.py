@@ -1,9 +1,9 @@
-from django_hosts.resolvers import reverse
+from django.urls import reverse
 
 from pydis_site.apps.api.models import FilterList
-from pydis_site.apps.api.tests.base import APISubdomainTestCase
+from pydis_site.apps.api.tests.base import AuthenticatedAPITestCase
 
-URL = reverse('bot:filterlist-list', host='api')
+URL = reverse('api:bot:filterlist-list')
 JPEG_ALLOWLIST = {
     "type": 'FILE_FORMAT',
     "allowed": True,
@@ -16,7 +16,7 @@ PNG_ALLOWLIST = {
 }
 
 
-class UnauthenticatedTests(APISubdomainTestCase):
+class UnauthenticatedTests(AuthenticatedAPITestCase):
     def setUp(self):
         super().setUp()
         self.client.force_authenticate(user=None)
@@ -27,7 +27,7 @@ class UnauthenticatedTests(APISubdomainTestCase):
         self.assertEqual(response.status_code, 401)
 
 
-class EmptyDatabaseTests(APISubdomainTestCase):
+class EmptyDatabaseTests(AuthenticatedAPITestCase):
     @classmethod
     def setUpTestData(cls):
         FilterList.objects.all().delete()
@@ -39,7 +39,7 @@ class EmptyDatabaseTests(APISubdomainTestCase):
         self.assertEqual(response.json(), [])
 
 
-class FetchTests(APISubdomainTestCase):
+class FetchTests(AuthenticatedAPITestCase):
     @classmethod
     def setUpTestData(cls):
         FilterList.objects.all().delete()
@@ -68,7 +68,7 @@ class FetchTests(APISubdomainTestCase):
             self.assertEquals(api_type[1], model_type[1])
 
 
-class CreationTests(APISubdomainTestCase):
+class CreationTests(AuthenticatedAPITestCase):
     @classmethod
     def setUpTestData(cls):
         FilterList.objects.all().delete()
@@ -103,7 +103,7 @@ class CreationTests(APISubdomainTestCase):
         self.assertEqual(response.status_code, 400)
 
 
-class DeletionTests(APISubdomainTestCase):
+class DeletionTests(AuthenticatedAPITestCase):
     @classmethod
     def setUpTestData(cls):
         FilterList.objects.all().delete()
