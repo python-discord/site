@@ -1,21 +1,20 @@
 ## Summary
-This PR introduces [ brief summary ] in accordance with site#[ issue number ]
+<!-- Please provide a brief description of this PR along with the related issue it fixes -->
+
 
 ## Description of changes
-- `foo` was refactored to `bar`
-- The baz feature was implemented
-- ...
+<!-- This should look like a condensed down version of your commit history -->
 
-<!-- For your PR to be accepted, these must all be completed -->
 
 ### I confirm I have:
+<!-- Replace [ ] below with [X] to check the boxes -->
 - [ ] Joined the [Python Discord community](discord.gg/python)
 - [ ] Read the [Code of Conduct](https://www.pydis.com/pages/code-of-conduct) and agree to it
 - [ ] I have discussed implementing this feature on the relevant service (Discord, GitHub, etc.)
 
-<!-- Please remove the below section if you haven't edited files under pydis_site/apps/api/models -->
 
 ### I have changed API models and I ensure I have:
+<!-- Please remove this section if you haven't edited files under pydis_site/apps/api/models -->
 - [ ] Opened a PR updating the model on the [API GitHub Repository](https://github.com/python-discord/api)
 
 **OR**
