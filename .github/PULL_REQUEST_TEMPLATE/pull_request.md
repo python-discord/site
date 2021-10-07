@@ -3,7 +3,7 @@
 
 
 ## Description of changes
-<!-- This should look like a condensed down version of your commit history -->
+<!-- Describe what changes you've made, and how you implemented them -->
 
 
 ### I confirm I have:
