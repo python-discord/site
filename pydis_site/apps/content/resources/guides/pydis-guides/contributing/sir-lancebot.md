@@ -62,7 +62,11 @@ You will need your own test server and bot account on Discord to test your chang
     * `#dev-log`
     * `#sir-lancebot-commands`
 4. Create the following roles:
-    * `@Admin`
+    * `@Owners`
+    * `@Admins`
+    * `@Moderation Team`
+    * `@Helpers`
+    * `@Core Developers`
 5. Note down the IDs for your server, as well as any channels and roles created.
     * [**Learn how to obtain the ID of a server, channel or role here.**](../setting-test-server-and-bot-account#obtain-the-ids)
 
@@ -79,8 +83,11 @@ The following variables are needed for running Sir Lancebot:
 | -------- | -------- |
 | `BOT_TOKEN` | Bot Token from the [Discord developer portal](https://discord.com/developers/applications) |
 | `BOT_GUILD` | ID of the Discord Server |
+| `ROLE_OWNERS` | ID of the role `@Owners` |
 | `BOT_ADMIN_ROLE_ID` | ID of the role `@Admins` |
+| `ROLE_MODERATION_TEAM` | ID of the role `@Moderation Team`
 | `ROLE_HELPERS` | ID of the role `@Helpers` |
+| `ROLE_CORE_DEVELOPERS` | ID of the role `@Core Developers` |
 | `CHANNEL_ANNOUNCEMENTS` | ID of the `#announcements` channel |
 | `CHANNEL_DEVLOG` | ID of the `#dev-log` channel |
 | `CHANNEL_COMMUNITY_BOT_COMMANDS` | ID of the `#sir-lancebot-commands` channel |
