@@ -14,8 +14,6 @@ OLD_LIST_NAMES = (('GUILD_INVITE', 'ALLOW'), ('FILE_FORMAT', 'DENY'), ('DOMAIN_N
 def forward(apps: Apps, schema_editor: BaseDatabaseSchemaEditor) -> None:
     filter_: pydis_site.apps.api.models.Filter = apps.get_model("api", "Filter")
     filter_list: pydis_site.apps.api.models.FilterList = apps.get_model("api", "FilterList")
-    channel_range: pydis_site.apps.api.models.ChannelRange = apps.get_model("api", "ChannelRange")
-    filter_action: pydis_site.apps.api.models.FilterAction = apps.get_model("api", "FilterAction")
     filter_list_old = apps.get_model("api", "FilterListOld")
 
     for name, type_ in OLD_LIST_NAMES:
