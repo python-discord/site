@@ -6,6 +6,7 @@ from django.urls import reverse
 from .base import AuthenticatedAPITestCase
 from ..models import Role, User
 from ..models.bot.metricity import NotFoundError
+from ..viewsets.bot.user import UserListPagination
 
 
 class UnauthedUserAPITests(AuthenticatedAPITestCase):
@@ -357,7 +358,7 @@ class UserPaginatorTests(AuthenticatedAPITestCase):
     @classmethod
     def setUpTestData(cls):
         users = []
-        for i in range(1, 10_001):
+        for i in range(1, UserListPagination.page_size + 1):
             users.append(User(
                 id=i,
                 name=f"user{i}",
@@ -373,9 +374,10 @@ class UserPaginatorTests(AuthenticatedAPITestCase):
         self.assertIsNone(response["previous_page_no"])
 
     def test_returns_next_page_number(self):
+        user_id = UserListPagination.page_size + 1
         User.objects.create(
-            id=10_001,
-            name="user10001",
+            id=user_id,
+            name=f"user{user_id}",
             discriminator=1111,
             in_guild=True
         )
@@ -384,9 +386,10 @@ class UserPaginatorTests(AuthenticatedAPITestCase):
         self.assertEqual(2, response["next_page_no"])
 
     def test_returns_previous_page_number(self):
+        user_id = UserListPagination.page_size + 1
         User.objects.create(
-            id=10_001,
-            name="user10001",
+            id=user_id,
+            name=f"user{user_id}",
             discriminator=1111,
             in_guild=True
         )
