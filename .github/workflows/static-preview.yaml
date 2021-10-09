@@ -1,0 +1,69 @@
+name: Build & Publish Static Preview
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  build:
+    name: Build Static Preview
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+     # Create a commit SHA-based tag for the container repositories
+      - name: Create SHA Container Tag
+        id: sha_tag
+        run: |
+          tag=$(cut -c 1-7 <<< $GITHUB_SHA)
+          echo "::set-output name=tag::$tag"
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Login to Github Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      # Build the container, including an inline cache manifest to
+      # allow us to use the registry as a cache source.
+      - name: Build & Push Base Image
+        uses: docker/build-push-action@v2
+        if: github.ref == 'refs/heads/main'
+        with:
+          context: .
+          file: ./static-builds/Dockerfile
+          push: true
+          cache-from: type=registry,ref=ghcr.io/python-discord/static-site:latest
+          cache-to: type=inline
+          tags: |
+            ghcr.io/python-discord/static-site:latest
+            ghcr.io/python-discord/static-site:${{ steps.sha_tag.outputs.tag }}
+          build-args: |
+            git_sha=${{ github.sha }}
+
+      - name: Build Local Docker Image
+        run: |
+          docker build \
+          --build-arg git_sha=${{ github.sha }} \
+          --cache-from ghcr.io/python-discord/static-site:latest \
+          -t static-site:${{ steps.sha_tag.outputs.tag }} \
+          -f static-builds/Dockerfile \
+          .
+
+      - name: Extract Build From Docker Image
+        run: |
+          docker run --name site static-site:${{ steps.sha_tag.outputs.tag }} \
+          && docker cp site:/app/build build/
+
+      - name: Upload Build
+        uses: actions/upload-artifact@v2
+        with:
+          name: static-build
+          path: build/
