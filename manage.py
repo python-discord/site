@@ -173,7 +173,9 @@ def main() -> None:
 
     # Pass any others directly to standard management commands
     else:
-        if _static_build := "distill" in sys.argv[1]:
+        _static_build = "distill" in sys.argv[1]
+
+        if _static_build:
             # Build a static version of the site with no databases and API support
             os.environ["STATIC_BUILD"] = "True"
             if not os.getenv("PARENT_HOST"):
