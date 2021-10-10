@@ -64,9 +64,9 @@ def get_build_artifact() -> str:
     polls = 0
     while polls <= 20:
         if run["status"] != "completed":
-            print("Action isn't completed, sleeping for 30 seconds.")
+            print("Action isn't ready, sleeping for 10 seconds.")
             polls += 1
-            time.sleep(30)
+            time.sleep(10)
 
         elif run["conclusion"] != "success":
             print("Aborting build due to a failure in a previous CI step.")

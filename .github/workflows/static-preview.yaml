@@ -33,7 +33,7 @@ jobs:
 
       # Build the container, including an inline cache manifest to
       # allow us to use the registry as a cache source.
-      - name: Build & Push Base Image
+      - name: Build Docker Image (Main)
         uses: docker/build-push-action@v2
         if: github.ref == 'refs/heads/main'
         with:
@@ -48,22 +48,28 @@ jobs:
           build-args: |
             git_sha=${{ github.sha }}
 
-      - name: Build Local Docker Image
+      - name: Extract Build From Docker Image (Main)
+        if: github.ref == 'refs/heads/main'
         run: |
-          docker build \
-          --build-arg git_sha=${{ github.sha }} \
-          --cache-from ghcr.io/python-discord/static-site:latest \
-          -t static-site:${{ steps.sha_tag.outputs.tag }} \
-          -f static-builds/Dockerfile \
-          .
+          mkdir docker_build \
+          && docker run --name site ghcr.io/python-discord/static-site:${{ steps.sha_tag.outputs.tag }} \
+          && docker cp site:/app docker_build/
 
-      - name: Extract Build From Docker Image
-        run: |
-          docker run --name site static-site:${{ steps.sha_tag.outputs.tag }} \
-          && docker cp site:/app/build build/
+      # Build directly to a local folder
+      - name: Build Docker Image (PR)
+        uses: docker/build-push-action@v2
+        if: github.ref != 'refs/heads/main'
+        with:
+          context: .
+          file: ./static-builds/Dockerfile
+          push: false
+          cache-from: type=registry,ref=ghcr.io/python-discord/static-site:latest
+          outputs: type=local,dest=docker_build/
+          build-args: |
+            git_sha=${{ github.sha }}
 
       - name: Upload Build
         uses: actions/upload-artifact@v2
         with:
           name: static-build
-          path: build/
+          path: docker_build/app/build/
