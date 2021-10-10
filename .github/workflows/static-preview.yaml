@@ -38,7 +38,6 @@ jobs:
         if: github.ref == 'refs/heads/main'
         with:
           context: .
-          file: ./static-builds/Dockerfile
           push: true
           cache-from: type=registry,ref=ghcr.io/python-discord/static-site:latest
           cache-to: type=inline
@@ -47,12 +46,14 @@ jobs:
             ghcr.io/python-discord/static-site:${{ steps.sha_tag.outputs.tag }}
           build-args: |
             git_sha=${{ github.sha }}
+            STATIC_BUILD=TRUE
 
       - name: Extract Build From Docker Image (Main)
         if: github.ref == 'refs/heads/main'
         run: |
           mkdir docker_build \
-          && docker run --name site ghcr.io/python-discord/static-site:${{ steps.sha_tag.outputs.tag }} \
+          && docker run --entrypoint /bin/echo --name site \
+          ghcr.io/python-discord/static-site:${{ steps.sha_tag.outputs.tag }} \
           && docker cp site:/app docker_build/
 
       # Build directly to a local folder
@@ -61,12 +62,12 @@ jobs:
         if: github.ref != 'refs/heads/main'
         with:
           context: .
-          file: ./static-builds/Dockerfile
           push: false
           cache-from: type=registry,ref=ghcr.io/python-discord/static-site:latest
           outputs: type=local,dest=docker_build/
           build-args: |
             git_sha=${{ github.sha }}
+            STATIC_BUILD=TRUE
 
       - name: Upload Build
         uses: actions/upload-artifact@v2

@@ -21,7 +21,7 @@ python -m pip install httpx==0.19.0
 python manage.py distill-local build --traceback --force --collectstatic
 ```
 
-Alternatively, you can use the [Dockerfile](./Dockerfile) in this folder.
+Alternatively, you can use the [Dockerfile](/Dockerfile) and extract the build.
 
 Both output their builds to a `build/` directory.
 
