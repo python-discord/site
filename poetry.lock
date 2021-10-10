@@ -138,6 +138,18 @@ argon2 = ["argon2-cffi (>=16.1.0)"]
 bcrypt = ["bcrypt"]
 
 [[package]]
+name = "django-distill"
+version = "2.9.0"
+description = "Static site renderer and publisher for Django."
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+django = "*"
+requests = "*"
+
+[[package]]
 name = "django-environ"
 version = "0.4.5"
 description = "Django-environ allows you to utilize 12factor inspired environment variables to configure your Django application."
@@ -757,7 +769,7 @@ brotli = ["brotli"]
 [metadata]
 lock-version = "1.1"
 python-versions = "3.9.*"
-content-hash = "ed7da8dbc905d4f2c47e01301b49c4aed0083bee269da0ee5ebcc3abee4ab1a0"
+content-hash = "9f0c069c14e2dbff63d58474702693f0c02b8cfd30e5af38303975a73b71bcfd"
 
 [metadata.files]
 asgiref = [
@@ -857,6 +869,9 @@ distlib = [
 django = [
     {file = "Django-3.0.14-py3-none-any.whl", hash = "sha256:9bc7aa619ed878fedba62ce139abe663a147dccfd20e907725ec11e02a1ca225"},
     {file = "Django-3.0.14.tar.gz", hash = "sha256:d58d8394036db75a81896037d757357e79406e8f68816c3e8a28721c1d9d4c11"},
+]
+django-distill = [
+    {file = "django-distill-2.9.0.tar.gz", hash = "sha256:08f31dcde2e79e73c0bc4f36941830603a811cc89472be11f79f14affb460d84"},
 ]
 django-environ = [
     {file = "django-environ-0.4.5.tar.gz", hash = "sha256:6c9d87660142608f63ec7d5ce5564c49b603ea8ff25da595fd6098f6dc82afde"},
