@@ -74,3 +74,4 @@ jobs:
         with:
           name: static-build
           path: docker_build/app/build/
+          if-no-files-found: error
