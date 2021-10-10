@@ -3,16 +3,12 @@
 # WARNING: This file must remain compatible with python 3.8
 
 # This script performs all the actions required to build and deploy our project on netlify
-# It requires the following environment variable:
-
-# TOKEN: A GitHub access token that can download the artifact.
-#        For PAT, the only scope needed is `public_repos`
-
 # It depends on the following packages, which are set in the netlify UI:
 # httpx == 0.19.0
 
 import os
 import time
+import typing
 import zipfile
 from pathlib import Path
 from urllib import parse
@@ -20,11 +16,16 @@ from urllib import parse
 import httpx
 
 API_URL = "https://api.github.com"
+NIGHTLY_URL = "https://nightly.link"
 OWNER, REPO = parse.urlparse(os.getenv("REPOSITORY_URL")).path.lstrip("/").split("/")[0:2]
 
 
-def get_build_artifact() -> str:
-    """Search for a build artifact, and return the download URL."""
+def get_build_artifact() -> typing.Tuple[int, str]:
+    """
+    Search for a build artifact, and return the result.
+
+    The return is a tuple of the check suite ID, and the URL to the artifacts.
+    """
     print("Fetching build URL.")
 
     if os.getenv("PULL_REQUEST").lower() == "true":
@@ -74,7 +75,7 @@ def get_build_artifact() -> str:
 
         else:
             print(f"Found artifact URL:\n{run['artifacts_url']}")
-            return run["artifacts_url"]
+            return run["check_suite_id"], run["artifacts_url"]
 
         _run = httpx.get(run["url"])
         _run.raise_for_status()
@@ -83,7 +84,7 @@ def get_build_artifact() -> str:
     raise Exception("Polled for the artifact workflow, but it was not ready in time.")
 
 
-def download_artifact(url: str) -> None:
+def download_artifact(suite_id: int, url: str) -> None:
     """Download a build artifact from `url`, and unzip the content."""
     print("Fetching artifact data.")
 
@@ -101,9 +102,8 @@ def download_artifact(url: str) -> None:
     else:
         raise Exception("Could not find an artifact with the expected name.")
 
-    zipped_content = httpx.get(artifact["archive_download_url"], headers={
-        "Authorization": f"token {os.getenv('TOKEN')}"
-    })
+    artifact_url = f"{NIGHTLY_URL}/{OWNER}/{REPO}/suites/{suite_id}/artifacts/{artifact['id']}"
+    zipped_content = httpx.get(artifact_url)
     zipped_content.raise_for_status()
 
     zip_file = Path("temp.zip")
@@ -119,5 +119,4 @@ def download_artifact(url: str) -> None:
 
 if __name__ == "__main__":
     print("Build started")
-    artifact_url = get_build_artifact()
-    download_artifact(artifact_url)
+    download_artifact(*get_build_artifact())

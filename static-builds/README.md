@@ -27,6 +27,8 @@ Both output their builds to a `build/` directory.
 
 > Warning: If you are modifying the [build script](./netlify_build.py), make sure it is compatible with Python 3.8.
 
+Note: The build script uses [nightly.link](https://github.com/oprypin/nightly.link)
+to fetch the artifact with no verification.
 
 ### Deploying To Netlify
 To deploy to netlify, link your site GitHub repository to a netlify site, and use the following settings:
@@ -39,7 +41,6 @@ Publish Directory:
 
 Environment Variables:
 - PYTHON_VERSION: 3.8
-- TOKEN: A GitHub token with access to download build artifacts.
 
 
 Note that at this time, if you are deploying to netlify yourself, you won't have access to the
