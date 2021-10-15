@@ -11,7 +11,7 @@ from rest_framework.serializers import ModelSerializer
 from rest_framework.viewsets import ModelViewSet
 
 from pydis_site.apps.api.models.bot.infraction import Infraction
-from pydis_site.apps.api.models.bot.metricity import Metricity, NotFound
+from pydis_site.apps.api.models.bot.metricity import Metricity, NotFoundError
 from pydis_site.apps.api.models.bot.user import User
 from pydis_site.apps.api.serializers import UserSerializer
 
@@ -19,7 +19,7 @@ from pydis_site.apps.api.serializers import UserSerializer
 class UserListPagination(PageNumberPagination):
     """Custom pagination class for the User Model."""
 
-    page_size = 10000
+    page_size = 2500
     page_size_query_param = "page_size"
 
     def get_next_page_number(self) -> typing.Optional[int]:
@@ -275,7 +275,7 @@ class UserViewSet(ModelViewSet):
                 data["voice_banned"] = voice_banned
                 data["activity_blocks"] = metricity.total_message_blocks(user.id)
                 return Response(data, status=status.HTTP_200_OK)
-            except NotFound:
+            except NotFoundError:
                 return Response(dict(detail="User not found in metricity"),
                                 status=status.HTTP_404_NOT_FOUND)
 
@@ -290,6 +290,6 @@ class UserViewSet(ModelViewSet):
                 data["total_messages"] = metricity.total_messages(user.id)
                 data["top_channel_activity"] = metricity.top_channel_activity(user.id)
                 return Response(data, status=status.HTTP_200_OK)
-            except NotFound:
+            except NotFoundError:
                 return Response(dict(detail="User not found in metricity"),
                                 status=status.HTTP_404_NOT_FOUND)

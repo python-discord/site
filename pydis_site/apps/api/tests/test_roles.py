@@ -1,10 +1,10 @@
-from django_hosts.resolvers import reverse
+from django.urls import reverse
 
-from .base import APISubdomainTestCase
+from .base import AuthenticatedAPITestCase
 from ..models import Role
 
 
-class CreationTests(APISubdomainTestCase):
+class CreationTests(AuthenticatedAPITestCase):
     @classmethod
     def setUpTestData(cls):
         cls.admins_role = Role.objects.create(
@@ -78,7 +78,7 @@ class CreationTests(APISubdomainTestCase):
 
     def test_role_list(self):
         """Tests the GET list-view and validates the contents."""
-        url = reverse('bot:role-list', host='api')
+        url = reverse('api:bot:role-list')
 
         response = self.client.get(url)
         self.assertContains(response, text="id", count=4, status_code=200)
@@ -92,7 +92,7 @@ class CreationTests(APISubdomainTestCase):
 
     def test_role_get_detail_success(self):
         """Tests GET detail view of an existing role."""
-        url = reverse('bot:role-detail', host='api', args=(self.admins_role.id, ))
+        url = reverse('api:bot:role-detail', args=(self.admins_role.id, ))
         response = self.client.get(url)
         self.assertContains(response, text="id", count=1, status_code=200)
 
@@ -107,7 +107,7 @@ class CreationTests(APISubdomainTestCase):
 
     def test_role_post_201(self):
         """Tests creation of a role with a valid request."""
-        url = reverse('bot:role-list', host='api')
+        url = reverse('api:bot:role-list')
         data = {
             "id": 1234567890,
             "name": "Role Creation Test",
@@ -120,7 +120,7 @@ class CreationTests(APISubdomainTestCase):
 
     def test_role_post_invalid_request_body(self):
         """Tests creation of a role with an invalid request body."""
-        url = reverse('bot:role-list', host='api')
+        url = reverse('api:bot:role-list')
         data = {
             "name": "Role Creation Test",
             "permissions": 0b01010010101,
@@ -133,7 +133,7 @@ class CreationTests(APISubdomainTestCase):
 
     def test_role_put_200(self):
         """Tests PUT role request with valid request body."""
-        url = reverse('bot:role-detail', host='api', args=(self.admins_role.id,))
+        url = reverse('api:bot:role-detail', args=(self.admins_role.id,))
         data = {
             "id": 123454321,
             "name": "Role Put Alteration Test",
@@ -153,7 +153,7 @@ class CreationTests(APISubdomainTestCase):
 
     def test_role_put_invalid_request_body(self):
         """Tests PUT role request with invalid request body."""
-        url = reverse('bot:role-detail', host='api', args=(self.admins_role.id,))
+        url = reverse('api:bot:role-detail', args=(self.admins_role.id,))
         data = {
             "name": "Role Put Alteration Test",
             "permissions": 255,
@@ -165,7 +165,7 @@ class CreationTests(APISubdomainTestCase):
 
     def test_role_patch_200(self):
         """Tests PATCH role request with valid request body."""
-        url = reverse('bot:role-detail', host='api', args=(self.admins_role.id,))
+        url = reverse('api:bot:role-detail', args=(self.admins_role.id,))
         data = {
             "name": "Owners"
         }
@@ -177,13 +177,13 @@ class CreationTests(APISubdomainTestCase):
 
     def test_role_delete_200(self):
         """Tests DELETE requests for existing role."""
-        url = reverse('bot:role-detail', host='api', args=(self.admins_role.id,))
+        url = reverse('api:bot:role-detail', args=(self.admins_role.id,))
         response = self.client.delete(url)
         self.assertEqual(response.status_code, 204)
 
     def test_role_detail_404_all_methods(self):
         """Tests detail view with non-existing ID."""
-        url = reverse('bot:role-detail', host='api', args=(20190815,))
+        url = reverse('api:bot:role-detail', args=(20190815,))
 
         for method in ('get', 'put', 'patch', 'delete'):
             response = getattr(self.client, method)(url)

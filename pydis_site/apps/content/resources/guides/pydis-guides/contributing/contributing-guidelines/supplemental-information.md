@@ -90,7 +90,7 @@ Our projects currently defines logging levels as follows, from lowest to highest
 - **ERROR:** These events can cause a failure in a specific part of the application and require urgent attention.
 - **CRITICAL:** These events can cause the whole application to fail and require immediate intervention.
 
-Any logging above the **INFO** level will trigger a [Sentry](http://sentry.io) issue and alert the Core Developer team.
+Any logging above the **INFO** level will trigger a [Sentry](https://sentry.io) issue and alert the Core Developer team.
 
 ## Draft Pull Requests
 
