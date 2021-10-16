@@ -580,6 +580,8 @@ The whole document explains how unittesting works, and how it fits in the contex
 
 Make sure to run tests *before* pushing code.
 
+Even if you run the bot through docker, you might want to [setup a development environment](#setting-up-a-development-environment) in order to run the tests locally.
+
 #### Lint before you push
 As mentioned in the [contributing guidelines](../contributing-guidelines), you should make sure your code passes linting for each commit you make.
 
