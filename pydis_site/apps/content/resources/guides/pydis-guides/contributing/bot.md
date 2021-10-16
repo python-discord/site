@@ -12,16 +12,16 @@ First things first, to run the bot's code and make changes to it, you need a loc
 
 <div class="card">
     <button type="button" class="card-header collapsible">
-        <span class="card-header-title subtitle is-6 my-2 ml-2">Getting started with git and GitHub</span>
+        <span class="card-header-title subtitle is-6 my-2 ml-2">Getting started with Git and GitHub</span>
         <span class="card-header-icon">
             <i class="fas fa-angle-down title is-5" aria-hidden="true"></i>
         </span>
     </button>
     <div class="collapsible-content">
         <div class="card-content">
-              <p>If you don't have git on your computer already, <a href="https://git-scm.com/downloads">install it</a>. You can additionally install a git GUI such as <a href="https://www.gitkraken.com/download">GitKraken</a>, or the <a href="https://cli.github.com/manual/installation">GitHub CLI</a>.</p>
-              <p>To learn more about git, you can look into <a href="../working-with-git">our guides</a>, as well as <a href="https://education.github.com/git-cheat-sheet-education.pdf">this cheatsheet</a>, <a href="https://learngitbranching.js.org">Learn Git Branching</a>, and otherwise any guide you can find on the internet. Once you got the basic idea though, the best way to learn git is to use it.</p>
-              <p>Creating a copy of a repository under your own account is called a <em>fork</em>. This is where all your changes and commits will be pushed to, and from where your pull requests will originate from. For any staff member, since you have write permissions already to the original repository, you can just create a feature branch to push your commits to instead.</p>
+              <p>If you don't have Git on your computer already, <a href="https://git-scm.com/downloads">install it</a>. You can additionally install a Git GUI such as <a href="https://www.gitkraken.com/download">GitKraken</a>, or the <a href="https://cli.github.com/manual/installation">GitHub CLI</a>.</p>
+              <p>To learn more about Git, you can look into <a href="../working-with-git">our guides</a>, as well as <a href="https://education.github.com/git-cheat-sheet-education.pdf">this cheatsheet</a>, <a href="https://learngitbranching.js.org">Learn Git Branching</a>, and otherwise any guide you can find on the internet. Once you got the basic idea though, the best way to learn Git is to use it.</p>
+              <p>Creating a copy of a repository under your own account is called a <em>fork</em>. This is where all your changes and commits will be pushed to, and from where your pull requests will originate from.</p>
               <p><strong><a href="../forking-repository">Learn about forking a project</a></strong>.</p>
         </div>
     </div>
@@ -47,7 +47,7 @@ Keep in mind that this is not a mirror of the Python server, but a reduced versi
 
 ### Set Up a Bot Account
 You will need your own bot account on Discord to test your changes to the bot.
-See [here](../creating-bot-account) for help with setting up a bot account, and invite your bot to the test server you created in the previous section.
+See [here](../creating-bot-account) for help with setting up a bot account. Once you have a bot account, invite it to the test server you created in the previous section.
 
 #### Privileged Intents
 
@@ -65,14 +65,14 @@ You now have both the bot's code and a server to run it on. It's time you to con
 
 #### config.yml
 Entering the directory of the cloned code, you will find a file named `config-default.yml`.
-This file contains the various configurations we use to make the bot run on the Python Discord server, such as channel and role ID's, and the emojis it works with.
+This file contains the various configurations we use to make the bot run on the Python Discord server, such as channel and role IDs, and the emojis it works with.
 It also contains configurations such as how long it takes for a help channel to time out, and how many messages a user needs to voice-verify.
 
 To run the bot in your test server, you will need to override some of those configurations.
-Open a new file in the directory called `config.yml`. Alternatively, copy the `config-default.yml` file and rename the copy to `config.yml`.
-The bot will first look at the items in `config.yml`, and will fall back to `config-default.yml` only if necessary. Note that you don't have to specify all items in `config.yml`, just the ones you want to override such as channel ID's.
+Create and open a new file in the directory called `config.yml`. Alternatively, copy the `config-default.yml` file and rename the copy to `config.yml`.
+The bot will first look at the items in `config.yml`, and will fall back to `config-default.yml` only if necessary. Note that you don't have to specify all items in `config.yml`, just the ones you want to override such as channel IDs.
 
-See [here](../obtaining-discord-ids) for help with obtaining Discord ID's.
+See [here](../obtaining-discord-ids) for help with obtaining Discord IDs.
 
 <div class="card">
     <button type="button" class="card-header collapsible">
@@ -83,7 +83,7 @@ See [here](../obtaining-discord-ids) for help with obtaining Discord ID's.
     </button>
     <div class="collapsible-content">
         <div class="card-content">
-              <p>If you used the provided server template, and you're not sure which channels belong where in the config file, you can use the config below. Pay attention to the comments with several <code>#</code> symbols, and replace the <code>�</code> characters with the right ID's.</p>
+              <p>If you used the provided server template, and you're not sure which channels belong where in the config file, you can use the config below. Pay attention to the comments with several <code>#</code> symbols, and replace the <code>�</code> characters with the right IDs.</p>
               <pre>
                 <code class="language-yaml">
 bot:
@@ -114,7 +114,7 @@ urls:
     # Snekbox
     snekbox_eval_api: "http://localhost:8060/eval"
 
-##### <<  Replace the following � characters with the channel ID's in your test server  >> #####
+##### <<  Replace the following � characters with the channel IDs in your test server  >> #####
 #  This assumes the template was used: https://discord.new/zmHtscpYN9E3
 dev_guild:
     id: &DEV_GUILD_ID   �
@@ -164,7 +164,7 @@ dev_guild:
         off_topic_2: &DEV_OT_2  �
 
 guild:
-    ##### <<  Replace the following � characters with the role and webhook ID's in your test server  >> #####
+    ##### <<  Replace the following � characters with the role and webhook IDs in your test server  >> #####
     roles:
         announcements:                          �
         contributors:                           �
@@ -467,7 +467,7 @@ We understand this is tedious and are working on a better solution for setting u
 <br>
 
 #### .env
-The second file you need to open is the one containing the environment variables, and needs to have the name `.env`.
+The second file you need to create is the one containing the environment variables, and needs to be named `.env`.
 Inside, add the line `BOT_TOKEN=YourDiscordBotTokenHere`. See [here](../creating-bot-account) for help with obtaining the bot token.
 
 The `.env` file will be ignored by commits.
@@ -580,18 +580,19 @@ The whole document explains how unittesting works, and how it fits in the contex
 
 Make sure to run tests *before* pushing code.
 
-Even if you run the bot through docker, you might want to [setup a development environment](#setting-up-a-development-environment) in order to run the tests locally.
+Even if you run the bot through Docker, you might want to [setup a development environment](#setting-up-a-development-environment) in order to run the tests locally.
 
 #### Lint before you push
 As mentioned in the [contributing guidelines](../contributing-guidelines), you should make sure your code passes linting for each commit you make.
 
 For ease of development, you can install the pre-commit hook with `poetry run task precommit`, which will check your code every time you try to commit it.
-For that purpose, even if you run the bot through docker, you might want to [setup a development environment](#setting-up-a-development-environment), as otherwise the hook installation will fail.
+For that purpose, even if you run the bot through Docker, you might want to [setup a development environment](#setting-up-a-development-environment), as otherwise the hook installation will fail.
 
 #### Reloading parts of the bot
-If you make changes to a cog, you might not need to restart the entire bot for the changes to take effect. The command `!cog reload <cog_name>` (or `!ext r <cog_name>`, or `!c r <cog_name>` in short) re-imports the files associated with the cog.
+If you make changes to an extension, you might not need to restart the entire bot for the changes to take effect. The command `!ext reload <extension_name>` re-imports the files associated with the extension.
+Invoke `!ext list` for a full list of the available extensions. In this bot in particular, cogs are defined inside extensions.
 
-Note that if you changed code that is not associated with a particular cog, such as utilities, converters, and constants, you will need to restart the bot.
+Note that if you changed code that is not associated with a particular extension, such as utilities, converters, and constants, you will need to restart the bot.
 
 #### Adding new statistics
 
@@ -601,12 +602,12 @@ We are always open to more statistics so add as many as you can!
 ---
 
 ### Optional: Working with Redis
-In [Configure the Bot](#configyml) you were asked to set `bot.redis.use_fakeredis` to `true`. If you do not need to work on features that rely on Redis, this is enough. Fakeredis will give the illusion that features relying on redis are saving information properly, but restarting the bot or the specific cog will wipe that information.
+In [Configure the Bot](#configyml) you were asked to set `bot.redis.use_fakeredis` to `true`. If you do not need to work on features that rely on Redis, this is enough. Fakeredis will give the illusion that features relying on Redis are saving information properly, but restarting the bot or the specific cog will wipe that information.
 
-If you are working on a feature that relies on redis, you will need to enable redis to make sure persistency is achieved for the feature across restarts. The first step towards that is going to `config.yml` and setting `bot.redis.use_fakeredis` to `false`.
+If you are working on a feature that relies on Redis, you will need to enable Redis to make sure persistency is achieved for the feature across restarts. The first step towards that is going to `config.yml` and setting `bot.redis.use_fakeredis` to `false`.
 
 #### Starting Redis in Docker (Recommended)
-If you're using the Docker image provided in the project's docker-compose, open your `config.yml` file, set `bot.redis.host` to `redis`, and `bot.redis.password` to `null`.
+If you're using the Docker image provided in the project's Docker Compose, open your `config.yml` file, set `bot.redis.host` to `redis`, and `bot.redis.password` to `null`.
 
 #### Starting Redis Using Other Methods
 You can run your own instance of Redis, but in that case you will need to correctly set `bot.redis.host` and `bot.redis.port`, and the `bot.redis.password` value in `config-default.yml` should not be overridden. Then, enter the `.env` file, and set `REDIS_PASSWORD` to whatever password you set.
@@ -614,20 +615,20 @@ You can run your own instance of Redis, but in that case you will need to correc
 ---
 
 ### Optional: Working with Metricity
-[Metricity](https://github.com/python-discord/metricity) is our home-grown bot for collecting metrics on activity within the server, such as what users are  present, and ID's of the messages they've sent.
+[Metricity](https://github.com/python-discord/metricity) is our home-grown bot for collecting metrics on activity within the server, such as what users are  present, and IDs of the messages they've sent.
 Certain features in the Python bot rely on querying the Metricity database for information such as the number of messages a user has sent, most notably the voice verification system.
 
-If you wish to work on a feature that relies on Metricity, for your convenience we've made the process of using it relatively painless with docker: Enter the `.env` file you've written for the Python bot, and append the line `USE_METRICITY=true`.
+If you wish to work on a feature that relies on Metricity, for your convenience we've made the process of using it relatively painless with Docker: Enter the `.env` file you've written for the Python bot, and append the line `USE_METRICITY=true`.
 Note that if you don't need Metricity, there's no reason to have it enabled as it is just unnecessary overhead.
 
-To make the metricity bot work with your test server, you will need to override its configurations similarly to the Python bot.
+To make the Metricity bot work with your test server, you will need to override its configurations similarly to the Python bot.
 You can see the various configurations in [the Metricity repo](https://github.com/python-discord/metricity), but the bare minimum is the guild ID setting.
 In your local version of the Python bot repo, create a file called `metricity-config.toml` and insert the following lines:
 ```yaml
 [bot]
 guild_id = replace_with_your_guild_id
 ```
-To properly replicate production behavior, set the `staff_role_id`, `staff_categories` and `ignore_categories` fields as well.
+To properly replicate production behavior, set the `staff_role_id`, `staff_categories`, and `ignore_categories` fields as well.
 
 Now, `docker-compose up` will also start Metricity.
 
@@ -652,7 +653,7 @@ The following is a list of all available environment variables used by the bot:
 | `BOT_SENTRY_DSN` | When connecting the bot to sentry | The DSN of the sentry monitor. |
 | `BOT_TRACE_LOGGERS ` | When you wish to see specific or all trace logs | Comma separated list that specifies which loggers emit trace logs through the listed names. If the ! prefix is used, all of the loggers except the listed ones are set to the trace level. If * is used, the root logger is set to the trace level. |
 | `BOT_DEBUG` | In production | `true` or `false`, depending on whether to enable debug mode, affecting the behavior of certain features. `true` by default.
-| `REDIS_PASSWORD` | When not using FakeRedis | The password to connect to the redis database (see [Optional: Working with Redis](#optional-working-with-redis)). |
+| `REDIS_PASSWORD` | When not using FakeRedis | The password to connect to the Redis database (see [Optional: Working with Redis](#optional-working-with-redis)). |
 | `USE_METRICITY` | When using Metricity | `true` or `false`, depending on whether to enable metrics collection using Metricity (see [Optional: Working with Metricity](#optional-working-with-metricity)). `false` by default. |
 | `GITHUB_API_KEY` | When you wish to interact with GitHub | The API key to interact with GitHub, for example to download files for the branding manager.
 | `METABASE_USERNAME` | When you wish to interact with Metabase | The username for a Metabase admin account.
