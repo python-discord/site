@@ -578,6 +578,14 @@ It can be intimidating at first, so feel free to ask for any help in the server.
 [This section](https://github.com/python-discord/bot/blob/main/tests/README.md#tools) of the README in the `tests` repository will explain how to run tests.
 The whole document explains how unittesting works, and how it fits in the context of our project.
 
+Make sure to run tests *before* pushing code.
+
+#### Lint before you push
+As mentioned in the [contributing guidelines](../contributing-guidelines), you should make sure your code passes linting for each commit you make.
+
+For ease of development, you can install the pre-commit hook with `poetry run task precommit`, which will check your code every time you try to commit it.
+For that purpose, even if you run the bot through docker, you might want to [setup a development environment](#setting-up-a-development-environment), as otherwise the hook installation will fail.
+
 #### Reloading parts of the bot
 If you make changes to a cog, you might not need to restart the entire bot for the changes to take effect. The command `!cog reload <cog_name>` (or `!ext r <cog_name>`, or `!c r <cog_name>` in short) re-imports the files associated with the cog.
 
