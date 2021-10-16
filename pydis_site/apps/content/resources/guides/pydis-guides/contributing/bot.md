@@ -102,11 +102,11 @@ bot:
 urls:
     # PyDis site vars
     site:        &DOMAIN       "web:8000"
-    site_api:    &API    !JOIN ["api.", *DOMAIN]
+    site_api:    &API    !JOIN [*DOMAIN, "/api"]
     site_api_schema:           "http://"
     site_paste:  &PASTE  !JOIN ["paste.", "pythondiscord.com"]
     site_schema: &SCHEMA       "http://"
-    site_staff:  &STAFF  !JOIN ["staff.", *DOMAIN]
+    site_staff:  &STAFF  !JOIN [*DOMAIN, "/staff"]
 
     paste_service:                      !JOIN ["https://", *PASTE, "/{key}"]
     site_logs_view:                     !JOIN [*SCHEMA, *STAFF, "/bot/logs"]
@@ -444,7 +444,7 @@ If you don't wish to use the provided `config.yml` above, these are the main sec
 Additionally:
 
 * At this stage, set `bot.redis.use_fakeredis` to `true`. If you're looking for instructions for working with Redis, see [Working with Redis](#optional-working-with-redis).
-* Set `urls.site_api` to `!JOIN ["api.", *DOMAIN]`.
+* Set `urls.site_api` to `!JOIN [*DOMAIN, "/api]`.
 * Set `urls.site_schema` and `urls.site_api_schema` to `"http://"`.
 
 We understand this is tedious and are working on a better solution for setting up test servers.
@@ -512,9 +512,8 @@ Your bot is now running, but this method makes debugging with an IDE a fairly in
 #### With the Bot Running Locally
 The advantage of this method is that you can run the bot's code in your preferred editor, with debugger and all, while keeping all the setup of the bot's various dependencies inside Docker.
 
-* [Prepare the hosts file on your machine](../hosts-file).
 * Append the following line to your `.env` file: `BOT_API_KEY=badbot13m0n8f570f942013fc818f234916ca531`.
-* In your `config.yml` file, set `urls.site` to `"pythondiscord.local:8000"`. If you wish to keep using `web:8000`, then [COMPOSE_PROJECT_NAME](../docker/#compose-project-names) has to be set.
+* In your `config.yml` file, set `urls.site` to `"localhost:8000"`. If you wish to keep using `web:8000`, then [COMPOSE_PROJECT_NAME](../docker/#compose-project-names) has to be set.
 * To work with snekbox, set `urls.snekbox_eval_api` to `"http://localhost:8060/eval"`
 
 You will need to start the services separately, but if you got the previous section with Docker working, that's pretty simple:
