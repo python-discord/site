@@ -648,7 +648,7 @@ The following is a list of all available environment variables used by the bot:
 
 | Variable | Required | Description |
 | -------- | -------- | -------- |
-| `BOT_TOKEN` | Always | Your Discord bot account's token (see [Set Up a Bot Account](##set-up-a-bot-account)). |
+| `BOT_TOKEN` | Always | Your Discord bot account's token (see [Set Up a Bot Account](#set-up-a-bot-account)). |
 | `BOT_API_KEY` | When running bot without Docker | Used to authenticate with the site's API. When using Docker to run the bot, this is automatically set. By default, the site will always have the API key shown in the example below. |
 | `BOT_SENTRY_DSN` | When connecting the bot to sentry | The DSN of the sentry monitor. |
 | `BOT_TRACE_LOGGERS ` | When you wish to see specific or all trace logs | Comma separated list that specifies which loggers emit trace logs through the listed names. If the ! prefix is used, all of the loggers except the listed ones are set to the trace level. If * is used, the root logger is set to the trace level. |
