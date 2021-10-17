@@ -154,7 +154,7 @@ class DeletionTests(AuthenticatedAPITestCase):
         cls.test_name_2 = OffTopicChannelName.objects.create(name='bbq-with-bisk')
 
     def test_deleting_unknown_name_returns_404(self):
-        """Return 404 reponse when trying to delete unknown name."""
+        """Return 404 response when trying to delete unknown name."""
         url = reverse('api:bot:offtopicchannelname-detail', args=('unknown-name',))
         response = self.client.delete(url)
 
