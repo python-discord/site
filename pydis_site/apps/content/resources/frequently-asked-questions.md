@@ -119,7 +119,7 @@ You can also open an issue on our meta repo on GitHub, which can be found [here]
 While we love our blurple Python logo, we also enjoy celebrating other events throughout the year, like Advent of Code, Pride Month, Black History Month, Valentine's Day, Diwali, and more! In the spirit of those celebrations, we like to have some fun and change our icon instead.
 If you're wondering why it's changed this time, check out `#changelog` on the server, as the reasoning for the recent change will be there.
 
-If you'd like to contribute and create a Python Discord server icon for us to use, check out [our branding repo](https://github.com/python-discord/branding) for what we currently have and talk to us in the `#media-branding` channel in the server.
+If you'd like to contribute and create a Python Discord server icon for us to use, check out [our branding repo](https://github.com/python-discord/branding) for what we currently have and talk to us in the `#dev-branding` channel in the server.
 
 ## Misc
 
