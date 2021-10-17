@@ -4,7 +4,7 @@ name: Flask Web Development
 position: 6
 urls:
 - icon: regular/link
-  url: http://shop.oreilly.com/product/0636920031116.do
+  url: https://shop.oreilly.com/product/0636920031116.do
   color: teal
 - icon: branding/amazon
   url: https://www.amazon.com/Flask-Web-Development-Developing-Applications/dp/1449372627
