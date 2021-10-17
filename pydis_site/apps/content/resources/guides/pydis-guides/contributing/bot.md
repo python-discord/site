@@ -444,7 +444,7 @@ If you don't wish to use the provided `config.yml` above, these are the main sec
 Additionally:
 
 * At this stage, set `bot.redis.use_fakeredis` to `true`. If you're looking for instructions for working with Redis, see [Working with Redis](#optional-working-with-redis).
-* Set `urls.site_api` to `!JOIN [*DOMAIN, "/api]`.
+* Set `urls.site_api` to `!JOIN [*DOMAIN, "/api"]`.
 * Set `urls.site_schema` and `urls.site_api_schema` to `"http://"`.
 
 We understand this is tedious and are working on a better solution for setting up test servers.
