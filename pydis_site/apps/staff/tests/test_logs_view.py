@@ -1,6 +1,6 @@
-from django.test import Client, TestCase
+from django.test import TestCase
+from django.urls import reverse
 from django.utils import timezone
-from django_hosts.resolvers import reverse, reverse_host
 
 from pydis_site.apps.api.models.bot import DeletedMessage, MessageDeletionContext, Role, User
 from pydis_site.apps.staff.templatetags.deletedmessage_filters import hex_colour
@@ -105,22 +105,18 @@ class TestLogsView(TestCase):
             deletion_context=cls.deletion_context,
         )
 
-    def setUp(self):
-        """Sets up a test client that automatically sets the correct HOST header."""
-        self.client = Client(HTTP_HOST=reverse_host(host="staff"))
-
     def test_logs_returns_200_for_existing_logs_pk(self):
-        url = reverse('logs', host="staff", args=(self.deletion_context.id,))
+        url = reverse('staff:logs', args=(self.deletion_context.id,))
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
 
     def test_logs_returns_404_for_nonexisting_logs_pk(self):
-        url = reverse('logs', host="staff", args=(self.deletion_context.id + 100,))
+        url = reverse('staff:logs', args=(self.deletion_context.id + 100,))
         response = self.client.get(url)
         self.assertEqual(response.status_code, 404)
 
     def test_author_color_is_set_in_response(self):
-        url = reverse('logs', host="staff", args=(self.deletion_context.id,))
+        url = reverse('staff:logs', args=(self.deletion_context.id,))
         response = self.client.get(url)
         role_colour = hex_colour(self.developers_role.colour)
         html_needle = (
@@ -129,7 +125,7 @@ class TestLogsView(TestCase):
         self.assertInHTML(html_needle, response.content.decode())
 
     def test_correct_messages_have_been_passed_to_template(self):
-        url = reverse('logs', host="staff", args=(self.deletion_context.id,))
+        url = reverse('staff:logs', args=(self.deletion_context.id,))
         response = self.client.get(url)
         self.assertIn("messages", response.context)
         self.assertListEqual(
@@ -138,7 +134,7 @@ class TestLogsView(TestCase):
         )
 
     def test_if_both_embeds_are_included_html_response(self):
-        url = reverse('logs', host="staff", args=(self.deletion_context.id,))
+        url = reverse('staff:logs', args=(self.deletion_context.id,))
         response = self.client.get(url)
 
         html_response = response.content.decode()
@@ -151,7 +147,7 @@ class TestLogsView(TestCase):
         self.assertInHTML(embed_colour_needle.format(colour=embed_two_colour), html_response)
 
     def test_if_both_attachments_are_included_html_response(self):
-        url = reverse('logs', host="staff", args=(self.deletion_context.id,))
+        url = reverse('staff:logs', args=(self.deletion_context.id,))
         response = self.client.get(url)
 
         html_response = response.content.decode()
@@ -166,7 +162,7 @@ class TestLogsView(TestCase):
         )
 
     def test_if_html_in_content_is_properly_escaped(self):
-        url = reverse('logs', host="staff", args=(self.deletion_context.id,))
+        url = reverse('staff:logs', args=(self.deletion_context.id,))
         response = self.client.get(url)
 
         html_response = response.content.decode()

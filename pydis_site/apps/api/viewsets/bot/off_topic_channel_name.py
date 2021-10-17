@@ -20,7 +20,7 @@ class OffTopicChannelNameViewSet(DestroyModelMixin, ViewSet):
     ### GET /bot/off-topic-channel-names
     Return all known off-topic channel names from the database.
     If the `random_items` query parameter is given, for example using...
-        $ curl api.pythondiscord.local:8000/bot/off-topic-channel-names?random_items=5
+        $ curl 127.0.0.1:8000/api/bot/off-topic-channel-names?random_items=5
     ... then the API will return `5` random items from the database
     that is not used in current rotation.
     When running out of names, API will mark all names to not used and start new rotation.
@@ -39,7 +39,7 @@ class OffTopicChannelNameViewSet(DestroyModelMixin, ViewSet):
     ### POST /bot/off-topic-channel-names
     Create a new off-topic-channel name in the database.
     The name must be given as a query parameter, for example:
-        $ curl api.pythondiscord.local:8000/bot/off-topic-channel-names?name=lemons-lemonade-shop
+        $ curl 127.0.0.1:8000/api/bot/off-topic-channel-names?name=lemons-lemonade-shop
 
     #### Status codes
     - 201: returned on success

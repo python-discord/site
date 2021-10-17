@@ -11,7 +11,7 @@ test_user, _created = User.objects.get_or_create(
 )
 
 
-class APISubdomainTestCase(APITestCase):
+class AuthenticatedAPITestCase(APITestCase):
     """
     Configures the test client.
 
@@ -24,14 +24,13 @@ class APISubdomainTestCase(APITestCase):
     `self.client.force_authenticate(user=created_user)` to force authentication
     through the created user.
 
-    Using this performs the following niceties for you which ease writing tests:
-    - setting the `HTTP_HOST` request header to `api.pythondiscord.local:8000`, and
+    Using this performs the following nicety for you which eases writing tests:
     - forcing authentication for the test user.
     If you don't want to force authentication (for example, to test a route's response
     for an unauthenticated user), un-force authentication by using the following:
 
-    >>> from pydis_site.apps.api.tests.base import APISubdomainTestCase
-    >>> class UnauthedUserTestCase(APISubdomainTestCase):
+    >>> from pydis_site.apps.api.tests.base import AuthenticatedAPITestCase
+    >>> class UnauthedUserTestCase(AuthenticatedAPITestCase):
     ...     def setUp(self):
     ...         super().setUp()
     ...         self.client.force_authentication(user=None)
@@ -42,30 +41,26 @@ class APISubdomainTestCase(APITestCase):
     ...         resp = self.client.delete('/my-publicly-readable-endpoint/42')
     ...         self.assertEqual(resp.status_code, 401)
 
-    Make sure to include the `super().setUp(self)` call, otherwise, you may get
-    status code 404 for some URLs due to the missing `HTTP_HOST` header.
-
     ## Example
     Using this in a test case is rather straightforward:
 
-    >>> from pydis_site.apps.api.tests.base import APISubdomainTestCase
-    >>> class MyAPITestCase(APISubdomainTestCase):
+    >>> from pydis_site.apps.api.tests.base import AuthenticatedAPITestCase
+    >>> class MyAPITestCase(AuthenticatedAPITestCase):
     ...     def test_that_it_works(self):
     ...         response = self.client.get('/my-endpoint')
     ...         self.assertEqual(response.status_code, 200)
 
-    To reverse URLs of the API host, you need to use `django_hosts`:
+    To reverse URLs of the API host, you need to use `django.urls`:
 
-    >>> from django_hosts.resolvers import reverse
-    >>> from pydis_site.apps.api.tests.base import APISubdomainTestCase
-    >>> class MyReversedTestCase(APISubdomainTestCase):
+    >>> from django.urls import reverse
+    >>> from pydis_site.apps.api.tests.base import AuthenticatedAPITestCase
+    >>> class MyReversedTestCase(AuthenticatedAPITestCase):
     ...     def test_my_endpoint(self):
-    ...         url = reverse('user-detail', host='api')
+    ...         url = reverse('api:user-detail')
     ...         response = self.client.get(url)
     ...         self.assertEqual(response.status_code, 200)
     """
 
     def setUp(self):
         super().setUp()
-        self.client.defaults['HTTP_HOST'] = 'api.pythondiscord.local:8000'
         self.client.force_authenticate(test_user)

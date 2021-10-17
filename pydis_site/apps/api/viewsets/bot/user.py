@@ -19,7 +19,7 @@ from pydis_site.apps.api.serializers import UserSerializer
 class UserListPagination(PageNumberPagination):
     """Custom pagination class for the User Model."""
 
-    page_size = 10000
+    page_size = 2500
     page_size_query_param = "page_size"
 
     def get_next_page_number(self) -> typing.Optional[int]:
