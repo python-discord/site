@@ -167,11 +167,16 @@ class PageOrCategoryViewTests(MockPagesTestCase, SimpleTestCase, TestCase):
         self.ViewClass.dispatch(request, location="category/subcategory/with_metadata")
 
         context = self.ViewClass.get_context_data()
+
+        # Convert to paths to avoid dealing with non-standard path separators
+        for item in context["breadcrumb_items"]:
+            item["path"] = Path(item["path"])
+
         self.assertEquals(
             context["breadcrumb_items"],
             [
-                {"name": PARSED_CATEGORY_INFO["title"], "path": "."},
-                {"name": PARSED_CATEGORY_INFO["title"], "path": "category"},
-                {"name": PARSED_CATEGORY_INFO["title"], "path": "category/subcategory"},
+                {"name": PARSED_CATEGORY_INFO["title"], "path": Path(".")},
+                {"name": PARSED_CATEGORY_INFO["title"], "path": Path("category")},
+                {"name": PARSED_CATEGORY_INFO["title"], "path": Path("category/subcategory")},
             ]
         )
