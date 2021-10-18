@@ -112,7 +112,7 @@ Presenting a solution that is considered a bad practice might be useful in certa
 >     for i in range(len(your_list)):
 >         print(your_list[i])
 >
-> The second replier gave a valid solution, but it's important that he clarifies that it is concidered a bad practice in Python, and that the first solution should usually be used in this case.
+> The second replier gave a valid solution, but it's important that he clarifies that it is considered a bad practice in Python, and that the first solution should usually be used in this case.
 
 
 ## It's OK to Step Away

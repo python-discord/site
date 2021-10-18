@@ -27,7 +27,7 @@ If you use SSH, use `git@github.com:python-discord/sir-lancebot.git` for the ups
 You will be committing your changes to a new branch rather than to `main`.
 Using branches allows you to work on muiltiple pull requests without conflicts.
 
-You can name your branch whatever you want, but it's recommended to name it something succint and relevant to the changes you will be making.
+You can name your branch whatever you want, but it's recommended to name it something succinct and relevant to the changes you will be making.
 
 Run the following commands to create a new branch. Replace `branch_name` with the name you wish to give your branch.
 ```sh
