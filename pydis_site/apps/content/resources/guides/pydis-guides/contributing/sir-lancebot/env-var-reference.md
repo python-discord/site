@@ -61,10 +61,10 @@ These variables might come in handy while working on certain cogs:
 
 | Cog | Environment Variable | Description |
 | -------- | -------- | -------- |
-| Advent of Code | `AOC_LEADERBOARDS` | List of leaderboards seperated by `::`. Each entry should have an `id,session cookie,join code` seperated by commas in that order. |
+| Advent of Code | `AOC_LEADERBOARDS` | List of leaderboards separated by `::`. Each entry should have an `id,session cookie,join code` separated by commas in that order. |
 | Advent of Code | `AOC_STAFF_LEADERBOARD_ID` | Integer ID of the staff leaderboard. |
 | Advent of Code | `AOC_ROLE_ID` | ID of the advent of code role.
-| Advent of Code | `AOC_IGNORED_DAYS` | Comma seperated list of days to ignore while calculating score. |
+| Advent of Code | `AOC_IGNORED_DAYS` | Comma separated list of days to ignore while calculating score. |
 | Advent of Code | `AOC_YEAR` | Debug variable to change the year used for AoC. |
 | Advent of Code | `AOC_CHANNEL_ID` | The ID of the #advent-of-code channel |
 | Advent of Code | `AOC_COMMANDS_CHANNEL_ID` | The ID of the #advent-of-code-commands channel |
