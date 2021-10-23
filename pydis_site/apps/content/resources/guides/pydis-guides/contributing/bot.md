@@ -607,7 +607,7 @@ In [Configure the Bot](#configyml) you were asked to set `bot.redis.use_fakeredi
 If you are working on a feature that relies on Redis, you will need to enable Redis to make sure persistency is achieved for the feature across restarts. The first step towards that is going to `config.yml` and setting `bot.redis.use_fakeredis` to `false`.
 
 #### Starting Redis in Docker (Recommended)
-If you're using the Docker image provided in the project's Docker Compose, open your `config.yml` file, set `bot.redis.host` to `redis`, and `bot.redis.password` to `null`.
+If you're using the Docker image provided in the project's Docker Compose, open your `config.yml` file. If you're running the bot in Docker, set `bot.redis.host` to `redis`, and if you're running it on the host set it to `localhost`. Set `bot.redis.password` to `null`.
 
 #### Starting Redis Using Other Methods
 You can run your own instance of Redis, but in that case you will need to correctly set `bot.redis.host` and `bot.redis.port`, and the `bot.redis.password` value in `config-default.yml` should not be overridden. Then, enter the `.env` file, and set `REDIS_PASSWORD` to whatever password you set.
