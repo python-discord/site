@@ -112,6 +112,20 @@ class FilterList(FilterSettingsMixin):
     allowed_channels = ArrayField(models.IntegerField())
     allowed_categories = ArrayField(models.IntegerField())
 
+    def clean(self):
+        """Do not allow duplicates in allowed and disallowed lists."""
+        # Still run infraction fields validation
+        super().clean()
+
+        channels_collection = self.allowed_channels + self.disallowed_channels
+        categories_collection = self.allowed_categories + self.disallowed_categories
+
+        if len(channels_collection) != len(set(channels_collection)):
+            raise ValidationError("Allowed and disallowed channels lists contain duplicates.")
+
+        if len(categories_collection) != len(set(categories_collection)):
+            raise ValidationError("Allowed and disallowed categories lists contain duplicates.")
+
     class Meta:
         """Constrain name and list_type unique."""
 
@@ -165,6 +179,21 @@ class Filter(FilterSettingsMixin):
     disallowed_categories = ArrayField(models.IntegerField(), null=True)
     allowed_channels = ArrayField(models.IntegerField(), null=True)
     allowed_categories = ArrayField(models.IntegerField(), null=True)
+
+    def clean(self):
+        """Do not allow duplicates in allowed and disallowed lists."""
+        # Still run infraction fields validation
+        super().clean()
+
+        if self.allowed_channels is not None or self.disallowed_channels is not None:
+            channels_collection = self.allowed_channels + self.disallowed_channels
+            if len(channels_collection) != len(set(channels_collection)):
+                raise ValidationError("Allowed and disallowed channels lists contain duplicates.")
+
+        if self.allowed_categories is not None or self.disallowed_categories is not None:
+            categories_collection = self.allowed_categories + self.disallowed_categories
+            if len(categories_collection) != len(set(categories_collection)):
+                raise ValidationError("Allowed and disallowed categories lists contain duplicates.")
 
     def __str__(self) -> str:
         return f"Filter {self.content!r}"
