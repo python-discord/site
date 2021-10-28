@@ -1,11 +1,12 @@
 from typing import List
 
-from django.contrib.postgres.fields import ArrayField
+from django.contrib.postgres.fields import ArrayField, JSONField
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models import UniqueConstraint
 
-from pydis_site.apps.api.models import Infraction
+# Must be imported that way to avoid circular imports
+from .infraction import Infraction
 
 
 class FilterListType(models.IntegerChoices):
@@ -42,7 +43,7 @@ class FilterSettingsMixin(models.Model):
     )
     infraction_type = models.CharField(
         choices=Infraction.TYPE_CHOICES,
-        max_length=4,
+        max_length=9,
         null=True,
         help_text="The infraction to apply to this user."
     )
@@ -142,7 +143,7 @@ class Filter(FilterSettingsMixin):
 
     content = models.CharField(max_length=100, help_text="The definition of this filter.")
     description = models.CharField(max_length=200, help_text="Why this filter has been added.")
-    additional_field = models.BooleanField(null=True, help_text="Implementation specific field.")
+    additional_field = JSONField(null=True, help_text="Implementation specific field.")
     filter_list = models.ForeignKey(
         FilterList, models.CASCADE, related_name="filters",
         help_text="The filter list containing this filter."
