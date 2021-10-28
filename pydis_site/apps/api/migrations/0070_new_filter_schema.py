@@ -54,10 +54,10 @@ def forward(apps: Apps, schema_editor: BaseDatabaseSchemaEditor) -> None:
                 infraction_type=None,
                 infraction_reason="",
                 infraction_duration=None,
-                disallowed_channels=[],
-                disallowed_categories=[],
-                allowed_channels=[],
-                allowed_categories=[]
+                disallowed_channels=None,
+                disallowed_categories=None,
+                allowed_channels=None,
+                allowed_categories=None
             )
             new_object.save()
 
@@ -90,10 +90,10 @@ class Migration(migrations.Migration):
                 ('infraction_type', models.CharField(choices=[('Note', 'Note'), ('Warn', 'Warn'), ('Mute', 'Mute'), ('Kick', 'Kick'), ('Ban', 'Ban')], help_text='The infraction to apply to this user.', max_length=4, null=True)),
                 ('infraction_reason', models.CharField(help_text='The reason to give for the infraction.', max_length=1000)),
                 ('infraction_duration', models.DurationField(help_text='The duration of the infraction. Null if permanent.', null=True)),
-                ('disallowed_channels', django.contrib.postgres.fields.ArrayField(base_field=models.IntegerField(), size=None)),
-                ('disallowed_categories', django.contrib.postgres.fields.ArrayField(base_field=models.IntegerField(), size=None)),
-                ('allowed_channels', django.contrib.postgres.fields.ArrayField(base_field=models.IntegerField(), size=None)),
-                ('allowed_categories', django.contrib.postgres.fields.ArrayField(base_field=models.IntegerField(), size=None)),
+                ('disallowed_channels', django.contrib.postgres.fields.ArrayField(base_field=models.IntegerField(), null=True, size=None)),
+                ('disallowed_categories', django.contrib.postgres.fields.ArrayField(base_field=models.IntegerField(), null=True, size=None)),
+                ('allowed_channels', django.contrib.postgres.fields.ArrayField(base_field=models.IntegerField(), null=True, size=None)),
+                ('allowed_categories', django.contrib.postgres.fields.ArrayField(base_field=models.IntegerField(), null=True, size=None)),
             ],
         ),
         migrations.CreateModel(

@@ -113,6 +113,29 @@ class DocumentationLinkSerializer(ModelSerializer):
         fields = ('package', 'base_url', 'inventory_url')
 
 
+ALWAYS_OPTIONAL_SETTINGS = (
+    'dm_content',
+    'infraction_type',
+    'infraction_reason',
+    'infraction_duration',
+)
+
+REQUIRED_FOR_FILTER_LIST_SETTINGS = (
+    'ping_type',
+    'filter_dm',
+    'dm_ping_type',
+    'delete_messages',
+    'bypass_roles',
+    'enabled',
+    'disallowed_channels',
+    'disallowed_categories',
+    'allowed_channels',
+    'allowed_categories',
+)
+
+SETTINGS_FIELDS = ALWAYS_OPTIONAL_SETTINGS + REQUIRED_FOR_FILTER_LIST_SETTINGS
+
+
 class FilterSerializer(ModelSerializer):
     """A class providing (de-)serialization of `Filter` instances."""
 
@@ -120,7 +143,16 @@ class FilterSerializer(ModelSerializer):
         """Metadata defined for the Django REST Framework."""
 
         model = Filter
-        fields = ('id', 'content', 'description', 'additional_field', 'filter_list', 'override')
+        fields = ('id', 'content', 'description', 'additional_field', 'filter_list') + SETTINGS_FIELDS
+        extra_kwargs = {
+            field: {'required': False, 'allow_null': True} for field in SETTINGS_FIELDS
+        } | {
+            'infraction_reason': {'allow_blank': True, 'allow_null': True, 'required': False},
+            'disallowed_channels': {'allow_empty': True, 'allow_null': True, 'required': False},
+            'disallowed_categories': {'allow_empty': True, 'allow_null': True, 'required': False},
+            'allowed_channels': {'allow_empty': True, 'allow_null': True, 'required': False},
+            'allowed_categories': {'allow_empty': True, 'allow_null': True, 'required': False},
+        }
 
 
 class FilterListSerializer(ModelSerializer):
@@ -132,18 +164,16 @@ class FilterListSerializer(ModelSerializer):
         """Metadata defined for the Django REST Framework."""
 
         model = FilterList
-        fields = (
-            'id',
-            'name',
-            'list_type',
-            'filters',
-            'ping_type',
-            'filter_dm',
-            'dm_ping_type',
-            'delete_messages',
-            'bypass_roles',
-            ''
-        )
+        fields = ('id', 'name', 'list_type', 'filters') + SETTINGS_FIELDS
+        extra_kwargs = {
+            field: {'required': False, 'allow_null': True} for field in ALWAYS_OPTIONAL_SETTINGS
+        } | {
+            'infraction_reason': {'allow_blank': True, 'allow_null': True, 'required': False},
+            'disallowed_channels': {'allow_empty': True},
+            'disallowed_categories': {'allow_empty': True},
+            'allowed_channels': {'allow_empty': True},
+            'allowed_categories': {'allow_empty': True},
+        }
 
         # Ensure that we can only have one filter list with the same name and field
         validators = [
@@ -200,7 +230,7 @@ class InfractionSerializer(ModelSerializer):
         if hidden and infr_type in ('superstar', 'warning', 'voice_ban'):
             raise ValidationError({'hidden': [f'{infr_type} infractions cannot be hidden.']})
 
-        if not hidden and infr_type in ('note', ):
+        if not hidden and infr_type in ('note',):
             raise ValidationError({'hidden': [f'{infr_type} infractions must be hidden.']})
 
         return attrs

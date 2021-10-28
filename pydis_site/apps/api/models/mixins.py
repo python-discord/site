@@ -1,4 +1,3 @@
-from abc import ABCMeta
 from operator import itemgetter
 
 from django.db import models
@@ -30,7 +29,3 @@ class ModelTimestampMixin(models.Model):
         """Metaconfig for the mixin."""
 
         abstract = True
-
-
-class AbstractModelMeta(ABCMeta, type(models.Model)):
-    """Metaclass for ABCModel class."""

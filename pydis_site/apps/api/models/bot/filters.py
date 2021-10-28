@@ -1,12 +1,9 @@
-from abc import abstractmethod
 from typing import List
 
 from django.contrib.postgres.fields import ArrayField
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models import UniqueConstraint
-
-from pydis_site.apps.api.models.mixins import AbstractModelMeta
 
 
 class FilterListType(models.IntegerChoices):
@@ -43,40 +40,9 @@ def validate_ping_field(value_list: List[str]) -> None:
         raise ValidationError(f"{value!r} isn't a valid ping type.")
 
 
-class FilterSettingsMixin(models.Model, metaclass=AbstractModelMeta):
-    """Mixin for settings of a filter list."""
+class FilterSettingsMixin(models.Model):
+    """Mixin for common settings of a filters and filter lists."""
 
-    @staticmethod
-    @abstractmethod
-    def allow_null() -> bool:
-        """Abstract property for allowing null values."""
-
-    ping_type = ArrayField(
-        models.CharField(max_length=20),
-        validators=(validate_ping_field,),
-        help_text="Who to ping when this filter triggers.",
-        null=allow_null.__func__()
-    )
-    filter_dm = models.BooleanField(help_text="Whether DMs should be filtered.", null=True)
-    dm_ping_type = ArrayField(
-        models.CharField(max_length=20),
-        validators=(validate_ping_field,),
-        help_text="Who to ping when this filter triggers on a DM.",
-        null=allow_null.__func__()
-    )
-    delete_messages = models.BooleanField(
-        help_text="Whether this filter should delete messages triggering it.",
-        null=allow_null.__func__()
-    )
-    bypass_roles = ArrayField(
-        models.BigIntegerField(),
-        help_text="Roles and users who can bypass this filter.",
-        null=allow_null.__func__()
-    )
-    enabled = models.BooleanField(
-        help_text="Whether this filter is currently enabled.",
-        null=allow_null.__func__()
-    )
     dm_content = models.CharField(
         max_length=1000,
         null=True,
@@ -97,18 +63,6 @@ class FilterSettingsMixin(models.Model, metaclass=AbstractModelMeta):
         help_text="The duration of the infraction. Null if permanent."
     )
 
-    # Where a filter should apply.
-    #
-    # The resolution is done in the following order:
-    #   - disallowed channels
-    #   - disallowed categories
-    #   - allowed categories
-    #   - allowed channels
-    disallowed_channels = ArrayField(models.IntegerField())
-    disallowed_categories = ArrayField(models.IntegerField())
-    allowed_channels = ArrayField(models.IntegerField())
-    allowed_categories = ArrayField(models.IntegerField())
-
     class Meta:
         """Metaclass for settings mixin."""
 
@@ -123,11 +77,43 @@ class FilterList(FilterSettingsMixin):
         choices=FilterListType.choices,
         help_text="Whether this list is an allowlist or denylist"
     )
-
-    @staticmethod
-    def allow_null() -> bool:
-        """Do not allow null values for default settings."""
-        return False
+    ping_type = ArrayField(
+        models.CharField(max_length=20),
+        validators=(validate_ping_field,),
+        help_text="Who to ping when this filter triggers.",
+        null=False
+    )
+    filter_dm = models.BooleanField(help_text="Whether DMs should be filtered.", null=False)
+    dm_ping_type = ArrayField(
+        models.CharField(max_length=20),
+        validators=(validate_ping_field,),
+        help_text="Who to ping when this filter triggers on a DM.",
+        null=False
+    )
+    delete_messages = models.BooleanField(
+        help_text="Whether this filter should delete messages triggering it.",
+        null=False
+    )
+    bypass_roles = ArrayField(
+        models.BigIntegerField(),
+        help_text="Roles and users who can bypass this filter.",
+        null=False
+    )
+    enabled = models.BooleanField(
+        help_text="Whether this filter is currently enabled.",
+        null=False
+    )
+    # Where a filter should apply.
+    #
+    # The resolution is done in the following order:
+    #   - disallowed channels
+    #   - disallowed categories
+    #   - allowed categories
+    #   - allowed channels
+    disallowed_channels = ArrayField(models.IntegerField())
+    disallowed_categories = ArrayField(models.IntegerField())
+    allowed_channels = ArrayField(models.IntegerField())
+    allowed_categories = ArrayField(models.IntegerField())
 
     class Meta:
         """Constrain name and list_type unique."""
@@ -150,11 +136,38 @@ class Filter(FilterSettingsMixin):
         FilterList, models.CASCADE, related_name="filters",
         help_text="The filter list containing this filter."
     )
+    ping_type = ArrayField(
+        models.CharField(max_length=20),
+        validators=(validate_ping_field,),
+        help_text="Who to ping when this filter triggers.",
+        null=True
+    )
+    filter_dm = models.BooleanField(help_text="Whether DMs should be filtered.", null=True)
+    dm_ping_type = ArrayField(
+        models.CharField(max_length=20),
+        validators=(validate_ping_field,),
+        help_text="Who to ping when this filter triggers on a DM.",
+        null=True
+    )
+    delete_messages = models.BooleanField(
+        help_text="Whether this filter should delete messages triggering it.",
+        null=True
+    )
+    bypass_roles = ArrayField(
+        models.BigIntegerField(),
+        help_text="Roles and users who can bypass this filter.",
+        null=True
+    )
+    enabled = models.BooleanField(
+        help_text="Whether this filter is currently enabled.",
+        null=True
+    )
+
+    # Check FilterList model for information about these properties.
+    disallowed_channels = ArrayField(models.IntegerField(), null=True)
+    disallowed_categories = ArrayField(models.IntegerField(), null=True)
+    allowed_channels = ArrayField(models.IntegerField(), null=True)
+    allowed_categories = ArrayField(models.IntegerField(), null=True)
 
     def __str__(self) -> str:
         return f"Filter {self.content!r}"
-
-    @staticmethod
-    def allow_null() -> bool:
-        """Allow null values for overrides."""
-        return True
