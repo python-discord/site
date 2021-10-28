@@ -5,22 +5,14 @@ from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models import UniqueConstraint
 
+from pydis_site.apps.api.models import Infraction
+
 
 class FilterListType(models.IntegerChoices):
     """Choice between allow or deny for a list type."""
 
     ALLOW = 1
     DENY = 0
-
-
-class InfractionType(models.TextChoices):
-    """Possible type of infractions."""
-
-    NOTE = "Note"
-    WARN = "Warn"
-    MUTE = "Mute"
-    KICK = "Kick"
-    BAN = "Ban"
 
 
 # Valid special values in ping related fields
@@ -49,7 +41,7 @@ class FilterSettingsMixin(models.Model):
         help_text="The DM to send to a user triggering this filter."
     )
     infraction_type = models.CharField(
-        choices=InfractionType.choices,
+        choices=Infraction.TYPE_CHOICES,
         max_length=4,
         null=True,
         help_text="The infraction to apply to this user."
@@ -62,6 +54,11 @@ class FilterSettingsMixin(models.Model):
         null=True,
         help_text="The duration of the infraction. Null if permanent."
     )
+
+    def clean(self):
+        """Validate infraction fields as whole."""
+        if (self.infraction_duration or self.infraction_reason) and not self.infraction_type:
+            raise ValidationError("Infraction type is required if setting infraction duration or reason.")
 
     class Meta:
         """Metaclass for settings mixin."""
