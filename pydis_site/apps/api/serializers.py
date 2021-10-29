@@ -139,6 +139,23 @@ SETTINGS_FIELDS = ALWAYS_OPTIONAL_SETTINGS + REQUIRED_FOR_FILTER_LIST_SETTINGS
 class FilterSerializer(ModelSerializer):
     """A class providing (de-)serialization of `Filter` instances."""
 
+    def validate(self, data):
+        """Perform infraction data + allow and disallowed lists validation."""
+        if (data.get('infraction_reason') or data.get('infraction_duration')) and not data.get('infraction_type'):
+            raise ValidationError("Infraction type is required with infraction duration or reason")
+
+        if data.get('allowed_channels') is not None and data.get('disallowed_channels') is not None:
+            channels_collection = data['allowed_channels'] + data['disallowed_channels']
+            if len(channels_collection) != len(set(channels_collection)):
+                raise ValidationError("Allowed and disallowed channels lists contain duplicates.")
+
+        if data.get('allowed_categories') is not None and data.get('disallowed_categories') is not None:
+            categories_collection = data['allowed_categories'] + data['disallowed_categories']
+            if len(categories_collection) != len(set(categories_collection)):
+                raise ValidationError("Allowed and disallowed categories lists contain duplicates.")
+
+        return data
+
     class Meta:
         """Metadata defined for the Django REST Framework."""
 
@@ -159,6 +176,22 @@ class FilterListSerializer(ModelSerializer):
     """A class providing (de-)serialization of `FilterList` instances."""
 
     filters = FilterSerializer(many=True, read_only=True)
+
+    def validate(self, data):
+        """Perform infraction data + allow and disallowed lists validation."""
+        if (data['infraction_reason'] or data['infraction_duration']) and not data['infraction_type']:
+            raise ValidationError("Infraction type is required with infraction duration or reason")
+
+        channels_collection = data['allowed_channels'] + data['disallowed_channels']
+        categories_collection = data['allowed_categories'] + data['disallowed_categories']
+
+        if len(channels_collection) != len(set(channels_collection)):
+            raise ValidationError("Allowed and disallowed channels lists contain duplicates.")
+
+        if len(categories_collection) != len(set(categories_collection)):
+            raise ValidationError("Allowed and disallowed categories lists contain duplicates.")
+
+        return data
 
     class Meta:
         """Metadata defined for the Django REST Framework."""
