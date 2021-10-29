@@ -139,17 +139,25 @@ SETTINGS_FIELDS = ALWAYS_OPTIONAL_SETTINGS + REQUIRED_FOR_FILTER_LIST_SETTINGS
 class FilterSerializer(ModelSerializer):
     """A class providing (de-)serialization of `Filter` instances."""
 
-    def validate(self, data):
+    def validate(self, data: dict) -> dict:
         """Perform infraction data + allow and disallowed lists validation."""
-        if (data.get('infraction_reason') or data.get('infraction_duration')) and not data.get('infraction_type'):
+        if (
+            data.get('infraction_reason') or data.get('infraction_duration')
+        ) and not data.get('infraction_type'):
             raise ValidationError("Infraction type is required with infraction duration or reason")
 
-        if data.get('allowed_channels') is not None and data.get('disallowed_channels') is not None:
+        if (
+            data.get('allowed_channels') is not None
+            and data.get('disallowed_channels') is not None
+        ):
             channels_collection = data['allowed_channels'] + data['disallowed_channels']
             if len(channels_collection) != len(set(channels_collection)):
                 raise ValidationError("Allowed and disallowed channels lists contain duplicates.")
 
-        if data.get('allowed_categories') is not None and data.get('disallowed_categories') is not None:
+        if (
+            data.get('allowed_categories') is not None
+            and data.get('disallowed_categories') is not None
+        ):
             categories_collection = data['allowed_categories'] + data['disallowed_categories']
             if len(categories_collection) != len(set(categories_collection)):
                 raise ValidationError("Allowed and disallowed categories lists contain duplicates.")
@@ -160,7 +168,9 @@ class FilterSerializer(ModelSerializer):
         """Metadata defined for the Django REST Framework."""
 
         model = Filter
-        fields = ('id', 'content', 'description', 'additional_field', 'filter_list') + SETTINGS_FIELDS
+        fields = (
+            'id', 'content', 'description', 'additional_field', 'filter_list'
+        ) + SETTINGS_FIELDS
         extra_kwargs = {
             field: {'required': False, 'allow_null': True} for field in SETTINGS_FIELDS
         } | {
@@ -177,9 +187,11 @@ class FilterListSerializer(ModelSerializer):
 
     filters = FilterSerializer(many=True, read_only=True)
 
-    def validate(self, data):
+    def validate(self, data: dict) -> dict:
         """Perform infraction data + allow and disallowed lists validation."""
-        if (data['infraction_reason'] or data['infraction_duration']) and not data['infraction_type']:
+        if (
+            data['infraction_reason'] or data['infraction_duration']
+        ) and not data['infraction_type']:
             raise ValidationError("Infraction type is required with infraction duration or reason")
 
         channels_collection = data['allowed_channels'] + data['disallowed_channels']
