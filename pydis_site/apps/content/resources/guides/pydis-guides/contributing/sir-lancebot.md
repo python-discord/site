@@ -21,7 +21,7 @@ Sir Lancebot can be edited and tested on Gitpod. Gitpod will automatically insta
 
 To do this, you will need a Gitpod account, which you can get [here](https://www.gitpod.io/#get-started), and a fork of Sir Lancebot. This guide covers forking the repository [here](#fork-the-project).
 
-Afterwards, click on this link: [https://gitpod.io/#/python-discord/sir-lancebot](https://gitpod.io/#/python-discord/sir-lancebot) to spin up a new workspace for Sir Lancebot. Then run the following commands in the terminal after the existing tasks have finished running:
+Afterwards, click on [this link](https://gitpod.io/#/github.com/python-discord/sir-lancebot) to spin up a new workspace for Sir Lancebot. Then run the following commands in the terminal after the existing tasks have finished running:
 ```sh
 git remote rename origin upstream
 git add remote origin https://github.com/{your_username}/sir-lancebot
