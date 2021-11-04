@@ -18,12 +18,17 @@ toc: 1
 
 ## Using Gitpod
 Sir Lancebot can be edited and tested on Gitpod. Gitpod will automatically install the correct dependencies and Python version, so you can get straight to coding.
-To do this, you will need a Gitpod account, which you can get [here](https://www.gitpod.io/#get-started), and a fork of Sir Lancebot. This guide covers forking the repository [here](#fork-the-project). Afterwards, either click the button on Sir Lancebot's README or go to [https://gitpod.io/#/python-discord/sir-lancebot]() and run the following commands in the terminal:
+
+To do this, you will need a Gitpod account, which you can get [here](https://www.gitpod.io/#get-started), and a fork of Sir Lancebot. This guide covers forking the repository [here](#fork-the-project).
+
+Afterwards, click on this link: [https://gitpod.io/#/python-discord/sir-lancebot](https://gitpod.io/#/python-discord/sir-lancebot) to spin up a new workspace for Sir Lancebot. Then run the following commands in the terminal after the existing tasks have finished running:
 ```sh
 git remote rename origin upstream
 git add remote origin https://github.com/{your_username}/sir-lancebot
 ```
-Make sure you replace `{your_username}` with your Github username. These commands will set Python Discord as the parent repository, and your branch as the fork. This means you can easily grab new changes from the parent repository. Once you set your environment variables to test your code, you are ready to begin contributing to Sir Lancebot.
+Make sure you replace `{your_username}` with your Github username. These commands will set the Sir Lancebot repository as the secondary remote, and your fork as the primary remote. This means you can easily grab new changes from the main Sir Lancebot repository.
+
+Once you've set up [a test server and bot account](#test-server-and-bot-account) and your [environment variables](#environment-variables), you are ready to begin contributing to Sir Lancebot!
 
 ## Using Docker
 Sir Lancebot can be started using Docker. Using Docker is generally recommended (but not strictly required) because it abstracts away some additional set up work.
