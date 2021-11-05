@@ -112,7 +112,7 @@ class ListTests(AuthenticatedAPITestCase):
 
     def test_returns_inactive_ot_names(self):
         """Return inactive off topic names."""
-        url = reverse('bot:offtopicchannelname-list')
+        url = reverse('api:bot:offtopicchannelname-list')
         response = self.client.get(f"{url}?active=false")
 
         self.assertEqual(response.status_code, 200)
@@ -123,7 +123,7 @@ class ListTests(AuthenticatedAPITestCase):
 
     def test_returns_active_ot_names(self):
         """Return active off topic names."""
-        url = reverse('bot:offtopicchannelname-list')
+        url = reverse('api:bot:offtopicchannelname-list')
         response = self.client.get(f"{url}?active=true")
 
         self.assertEqual(response.status_code, 200)
