@@ -70,7 +70,7 @@ class OffTopicChannelNameViewSet(ModelViewSet):
 
     def get_queryset(self, **kwargs) -> QuerySet:
         """Returns a queryset that covers the entire OffTopicChannelName table."""
-        return OffTopicChannelName.objects.filter(**kwargs)
+        return OffTopicChannelName.objects.all()
 
     def create(self, request: Request, *args, **kwargs) -> Response:
         """
@@ -137,6 +137,6 @@ class OffTopicChannelNameViewSet(ModelViewSet):
         if active_param := request.query_params.get("active"):
             params["active"] = active_param.lower() == "true"
 
-        queryset = self.get_queryset(**params)
+        queryset = self.get_queryset().filter(**params)
         serialized = self.serializer_class(queryset, many=True)
         return Response(serialized.data)
