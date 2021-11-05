@@ -8,16 +8,13 @@ toc: 3
 # What's a hosts file?
 The hosts file maps a hostname/domain to an IP address, allowing you to visit a given domain on your browser and have it resolve by your system to the given IP address, even if it's pointed back to your own system or network.
 
-When staging a local [Site](https://pythondiscord.com/pages/contributing/site/) project, you will need to add some entries to your hosts file so you can visit the site with the domain `http://pythondiscord.local`
+When staging a local [Site](https://pythondiscord.com/pages/contributing/site/) project, you may want to add an entries to your hosts file so you can visit the site with the domain `http://pythondiscord.local`. This is purely for convenience, and you can use `localhost` or `127.0.0.1` instead if you prefer.
 
 # What to add
-You would add the following entries to your hosts file.
+You would add the following entry to your hosts file.
 
 ```plaintext
 127.0.0.1   pythondiscord.local
-127.0.0.1   api.pythondiscord.local
-127.0.0.1   staff.pythondiscord.local
-127.0.0.1   admin.pythondiscord.local
 ```
 
 # How to add it

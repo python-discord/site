@@ -1,12 +1,12 @@
 from datetime import datetime as dt, timedelta, timezone
 
-from django_hosts.resolvers import reverse
+from django.urls import reverse
 
-from .base import APISubdomainTestCase
+from .base import AuthenticatedAPITestCase
 from ..models import Nomination, NominationEntry, User
 
 
-class CreationTests(APISubdomainTestCase):
+class CreationTests(AuthenticatedAPITestCase):
     @classmethod
     def setUpTestData(cls):
         cls.user = User.objects.create(
@@ -21,7 +21,7 @@ class CreationTests(APISubdomainTestCase):
         )
 
     def test_accepts_valid_data(self):
-        url = reverse('bot:nomination-list', host='api')
+        url = reverse('api:bot:nomination-list')
         data = {
             'actor': self.user.id,
             'reason': 'Joe Dart on Fender Bass',
@@ -46,7 +46,7 @@ class CreationTests(APISubdomainTestCase):
         self.assertEqual(nomination.active, True)
 
     def test_returns_200_on_second_active_nomination_by_different_user(self):
-        url = reverse('bot:nomination-list', host='api')
+        url = reverse('api:bot:nomination-list')
         first_data = {
             'actor': self.user.id,
             'reason': 'Joe Dart on Fender Bass',
@@ -65,7 +65,7 @@ class CreationTests(APISubdomainTestCase):
         self.assertEqual(response2.status_code, 201)
 
     def test_returns_400_on_second_active_nomination_by_existing_nominator(self):
-        url = reverse('bot:nomination-list', host='api')
+        url = reverse('api:bot:nomination-list')
         data = {
             'actor': self.user.id,
             'reason': 'Joe Dart on Fender Bass',
@@ -82,7 +82,7 @@ class CreationTests(APISubdomainTestCase):
         })
 
     def test_returns_400_for_missing_user(self):
-        url = reverse('bot:nomination-list', host='api')
+        url = reverse('api:bot:nomination-list')
         data = {
             'actor': self.user.id,
             'reason': 'Joe Dart on Fender Bass',
@@ -95,7 +95,7 @@ class CreationTests(APISubdomainTestCase):
         })
 
     def test_returns_400_for_missing_actor(self):
-        url = reverse('bot:nomination-list', host='api')
+        url = reverse('api:bot:nomination-list')
         data = {
             'user': self.user.id,
             'reason': 'Joe Dart on Fender Bass',
@@ -108,7 +108,7 @@ class CreationTests(APISubdomainTestCase):
         })
 
     def test_returns_201_for_missing_reason(self):
-        url = reverse('bot:nomination-list', host='api')
+        url = reverse('api:bot:nomination-list')
         data = {
             'user': self.user.id,
             'actor': self.user.id,
@@ -118,7 +118,7 @@ class CreationTests(APISubdomainTestCase):
         self.assertEqual(response.status_code, 201)
 
     def test_returns_400_for_bad_user(self):
-        url = reverse('bot:nomination-list', host='api')
+        url = reverse('api:bot:nomination-list')
         data = {
             'user': 1024,
             'reason': 'Joe Dart on Fender Bass',
@@ -132,7 +132,7 @@ class CreationTests(APISubdomainTestCase):
         })
 
     def test_returns_400_for_bad_actor(self):
-        url = reverse('bot:nomination-list', host='api')
+        url = reverse('api:bot:nomination-list')
         data = {
             'user': self.user.id,
             'reason': 'Joe Dart on Fender Bass',
@@ -146,7 +146,7 @@ class CreationTests(APISubdomainTestCase):
         })
 
     def test_returns_400_for_end_reason_at_creation(self):
-        url = reverse('bot:nomination-list', host='api')
+        url = reverse('api:bot:nomination-list')
         data = {
             'user': self.user.id,
             'reason': 'Joe Dart on Fender Bass',
@@ -161,7 +161,7 @@ class CreationTests(APISubdomainTestCase):
         })
 
     def test_returns_400_for_ended_at_at_creation(self):
-        url = reverse('bot:nomination-list', host='api')
+        url = reverse('api:bot:nomination-list')
         data = {
             'user': self.user.id,
             'reason': 'Joe Dart on Fender Bass',
@@ -176,7 +176,7 @@ class CreationTests(APISubdomainTestCase):
         })
 
     def test_returns_400_for_inserted_at_at_creation(self):
-        url = reverse('bot:nomination-list', host='api')
+        url = reverse('api:bot:nomination-list')
         data = {
             'user': self.user.id,
             'reason': 'Joe Dart on Fender Bass',
@@ -191,7 +191,7 @@ class CreationTests(APISubdomainTestCase):
         })
 
     def test_returns_400_for_active_at_creation(self):
-        url = reverse('bot:nomination-list', host='api')
+        url = reverse('api:bot:nomination-list')
         data = {
             'user': self.user.id,
             'reason': 'Joe Dart on Fender Bass',
@@ -206,7 +206,7 @@ class CreationTests(APISubdomainTestCase):
         })
 
 
-class NominationTests(APISubdomainTestCase):
+class NominationTests(AuthenticatedAPITestCase):
     @classmethod
     def setUpTestData(cls):
         cls.user = User.objects.create(
@@ -236,7 +236,7 @@ class NominationTests(APISubdomainTestCase):
         )
 
     def test_returns_200_update_reason_on_active_with_actor(self):
-        url = reverse('bot:nomination-detail', args=(self.active_nomination.id,), host='api')
+        url = reverse('api:bot:nomination-detail', args=(self.active_nomination.id,))
         data = {
             'reason': "He's one funky duck",
             'actor': self.user.id
@@ -252,7 +252,7 @@ class NominationTests(APISubdomainTestCase):
         self.assertEqual(nomination_entry.reason, data['reason'])
 
     def test_returns_400_on_frozen_field_update(self):
-        url = reverse('bot:nomination-detail', args=(self.active_nomination.id,), host='api')
+        url = reverse('api:bot:nomination-detail', args=(self.active_nomination.id,))
         data = {
             'user': "Theo Katzman"
         }
@@ -264,7 +264,7 @@ class NominationTests(APISubdomainTestCase):
         })
 
     def test_returns_400_update_end_reason_on_active(self):
-        url = reverse('bot:nomination-detail', args=(self.active_nomination.id,), host='api')
+        url = reverse('api:bot:nomination-detail', args=(self.active_nomination.id,))
         data = {
             'end_reason': 'He started playing jazz'
         }
@@ -276,7 +276,7 @@ class NominationTests(APISubdomainTestCase):
         })
 
     def test_returns_200_update_reason_on_inactive(self):
-        url = reverse('bot:nomination-detail', args=(self.inactive_nomination.id,), host='api')
+        url = reverse('api:bot:nomination-detail', args=(self.inactive_nomination.id,))
         data = {
             'reason': "He's one funky duck",
             'actor': self.user.id
@@ -292,7 +292,7 @@ class NominationTests(APISubdomainTestCase):
         self.assertEqual(nomination_entry.reason, data['reason'])
 
     def test_returns_200_update_end_reason_on_inactive(self):
-        url = reverse('bot:nomination-detail', args=(self.inactive_nomination.id,), host='api')
+        url = reverse('api:bot:nomination-detail', args=(self.inactive_nomination.id,))
         data = {
             'end_reason': 'He started playing jazz'
         }
@@ -305,9 +305,8 @@ class NominationTests(APISubdomainTestCase):
 
     def test_returns_200_on_valid_end_nomination(self):
         url = reverse(
-            'bot:nomination-detail',
+            'api:bot:nomination-detail',
             args=(self.active_nomination.id,),
-            host='api'
         )
         data = {
             'active': False,
@@ -328,9 +327,8 @@ class NominationTests(APISubdomainTestCase):
 
     def test_returns_400_on_invalid_field_end_nomination(self):
         url = reverse(
-            'bot:nomination-detail',
+            'api:bot:nomination-detail',
             args=(self.active_nomination.id,),
-            host='api'
         )
         data = {
             'active': False,
@@ -344,9 +342,8 @@ class NominationTests(APISubdomainTestCase):
 
     def test_returns_400_on_missing_end_reason_end_nomination(self):
         url = reverse(
-            'bot:nomination-detail',
+            'api:bot:nomination-detail',
             args=(self.active_nomination.id,),
-            host='api'
         )
         data = {
             'active': False,
@@ -360,9 +357,8 @@ class NominationTests(APISubdomainTestCase):
 
     def test_returns_400_on_invalid_use_of_active(self):
         url = reverse(
-            'bot:nomination-detail',
+            'api:bot:nomination-detail',
             args=(self.inactive_nomination.id,),
-            host='api'
         )
         data = {
             'active': False,
@@ -376,9 +372,8 @@ class NominationTests(APISubdomainTestCase):
 
     def test_returns_404_on_get_unknown_nomination(self):
         url = reverse(
-            'bot:nomination-detail',
+            'api:bot:nomination-detail',
             args=(9999,),
-            host='api'
         )
 
         response = self.client.get(url, data={})
@@ -389,9 +384,8 @@ class NominationTests(APISubdomainTestCase):
 
     def test_returns_404_on_patch_unknown_nomination(self):
         url = reverse(
-            'bot:nomination-detail',
+            'api:bot:nomination-detail',
             args=(9999,),
-            host='api'
         )
 
         response = self.client.patch(url, data={})
@@ -401,7 +395,7 @@ class NominationTests(APISubdomainTestCase):
         })
 
     def test_returns_405_on_list_put(self):
-        url = reverse('bot:nomination-list', host='api')
+        url = reverse('api:bot:nomination-list')
 
         response = self.client.put(url, data={})
         self.assertEqual(response.status_code, 405)
@@ -410,7 +404,7 @@ class NominationTests(APISubdomainTestCase):
         })
 
     def test_returns_405_on_list_patch(self):
-        url = reverse('bot:nomination-list', host='api')
+        url = reverse('api:bot:nomination-list')
 
         response = self.client.patch(url, data={})
         self.assertEqual(response.status_code, 405)
@@ -419,7 +413,7 @@ class NominationTests(APISubdomainTestCase):
         })
 
     def test_returns_405_on_list_delete(self):
-        url = reverse('bot:nomination-list', host='api')
+        url = reverse('api:bot:nomination-list')
 
         response = self.client.delete(url, data={})
         self.assertEqual(response.status_code, 405)
@@ -428,7 +422,7 @@ class NominationTests(APISubdomainTestCase):
         })
 
     def test_returns_405_on_detail_post(self):
-        url = reverse('bot:nomination-detail', args=(self.active_nomination.id,), host='api')
+        url = reverse('api:bot:nomination-detail', args=(self.active_nomination.id,))
 
         response = self.client.post(url, data={})
         self.assertEqual(response.status_code, 405)
@@ -437,7 +431,7 @@ class NominationTests(APISubdomainTestCase):
         })
 
     def test_returns_405_on_detail_delete(self):
-        url = reverse('bot:nomination-detail', args=(self.active_nomination.id,), host='api')
+        url = reverse('api:bot:nomination-detail', args=(self.active_nomination.id,))
 
         response = self.client.delete(url, data={})
         self.assertEqual(response.status_code, 405)
@@ -446,7 +440,7 @@ class NominationTests(APISubdomainTestCase):
         })
 
     def test_returns_405_on_detail_put(self):
-        url = reverse('bot:nomination-detail', args=(self.active_nomination.id,), host='api')
+        url = reverse('api:bot:nomination-detail', args=(self.active_nomination.id,))
 
         response = self.client.put(url, data={})
         self.assertEqual(response.status_code, 405)
@@ -455,7 +449,7 @@ class NominationTests(APISubdomainTestCase):
         })
 
     def test_filter_returns_0_objects_unknown_user__id(self):
-        url = reverse('bot:nomination-list', host='api')
+        url = reverse('api:bot:nomination-list')
 
         response = self.client.get(
             url,
@@ -470,7 +464,7 @@ class NominationTests(APISubdomainTestCase):
         self.assertEqual(len(infractions), 0)
 
     def test_filter_returns_2_objects_for_testdata(self):
-        url = reverse('bot:nomination-list', host='api')
+        url = reverse('api:bot:nomination-list')
 
         response = self.client.get(
             url,
@@ -485,14 +479,14 @@ class NominationTests(APISubdomainTestCase):
         self.assertEqual(len(infractions), 2)
 
     def test_patch_nomination_set_reviewed_of_active_nomination(self):
-        url = reverse('api:nomination-detail', args=(self.active_nomination.id,), host='api')
+        url = reverse('api:bot:nomination-detail', args=(self.active_nomination.id,))
         data = {'reviewed': True}
 
         response = self.client.patch(url, data=data)
         self.assertEqual(response.status_code, 200)
 
     def test_patch_nomination_set_reviewed_of_inactive_nomination(self):
-        url = reverse('api:nomination-detail', args=(self.inactive_nomination.id,), host='api')
+        url = reverse('api:bot:nomination-detail', args=(self.inactive_nomination.id,))
         data = {'reviewed': True}
 
         response = self.client.patch(url, data=data)
@@ -502,7 +496,7 @@ class NominationTests(APISubdomainTestCase):
         })
 
     def test_patch_nomination_set_reviewed_and_end(self):
-        url = reverse('api:nomination-detail', args=(self.active_nomination.id,), host='api')
+        url = reverse('api:bot:nomination-detail', args=(self.active_nomination.id,))
         data = {'reviewed': True, 'active': False, 'end_reason': "What?"}
 
         response = self.client.patch(url, data=data)
@@ -512,7 +506,7 @@ class NominationTests(APISubdomainTestCase):
         })
 
     def test_modifying_reason_without_actor(self):
-        url = reverse('api:nomination-detail', args=(self.active_nomination.id,), host='api')
+        url = reverse('api:bot:nomination-detail', args=(self.active_nomination.id,))
         data = {'reason': 'That is my reason!'}
 
         response = self.client.patch(url, data=data)
@@ -522,7 +516,7 @@ class NominationTests(APISubdomainTestCase):
         })
 
     def test_modifying_reason_with_unknown_actor(self):
-        url = reverse('api:nomination-detail', args=(self.active_nomination.id,), host='api')
+        url = reverse('api:bot:nomination-detail', args=(self.active_nomination.id,))
         data = {'reason': 'That is my reason!', 'actor': 90909090909090}
 
         response = self.client.patch(url, data=data)

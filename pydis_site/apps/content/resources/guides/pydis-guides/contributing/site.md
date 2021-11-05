@@ -43,7 +43,6 @@ For any Core Developers, since you have write permissions already to the origina
 
 1. [Clone your fork to a local project directory](../cloning-repository/)
 2. [Install the project's dependencies](../installing-project-dependencies/)
-3. [Prepare your hosts file](../hosts-file/)
 
 ## Without Docker
 
@@ -84,7 +83,7 @@ detailed information about these settings.
 
 #### Notes regarding `DATABASE_URL`
 
-- If the database is hosted locally i.e. on the same machine as the webserver, then use `localhost` for the host. Windows and macOS users may need to use the [Docker host IP](../hosts-file/#windows) instead.
+- If the database is hosted locally i.e. on the same machine as the webserver, then use `localhost` for the host. Windows and macOS users may need to use the [Docker host IP](https://stackoverflow.com/questions/22944631/how-to-get-the-ip-address-of-the-docker-host-from-inside-a-docker-container) instead.
 - If the database is running in Docker, use port `7777`. Otherwise, use `5432` as that is the default port used by PostegreSQL.
 - If you configured PostgreSQL in a different manner or you are not hosting it locally, then you will need to determine the correct host and port yourself.
 The user, password, and database name should all still be `pysite` unless you deviated from the setup instructions in the previous section.
@@ -109,7 +108,7 @@ If you get any Docker related errors, reference the [Possible Issues](https://py
 
 ## Run on the host
 
-Running on the host is particularily useful if you wish to debug the site. The [environment variables](#2-environment-variables) shown in a previous section need to have been configured.
+Running on the host is particularly useful if you wish to debug the site. The [environment variables](#2-environment-variables) shown in a previous section need to have been configured.
 
 ### Database
 
@@ -145,7 +144,7 @@ Unless you are editing the Dockerfile or docker-compose.yml, you shouldn't need 
 
 Django provides an interface for administration with which you can view and edit the models among other things.
 
-It can be found at [http://admin.pythondiscord.local:8000](http://admin.pythondiscord.local:8000). The default credentials are `admin` for the username and `admin` for the password.
+It can be found at [http://127.0.0.1:8000/admin/](http://127.0.0.1:8000/admin/). The default credentials are `admin` for the username and `admin` for the password.
 
 ---
 

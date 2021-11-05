@@ -2,7 +2,7 @@ from pathlib import Path
 
 from django.conf import settings
 from django.test import TestCase, override_settings
-from django_hosts.resolvers import reverse
+from django.urls import reverse
 
 
 PAGES_PATH = Path(settings.BASE_DIR, "pydis_site", "templates", "events", "test-pages")
@@ -21,8 +21,8 @@ class PageTests(TestCase):
     def test_valid_event_page_reponse_200(self):
         """Should return response code 200 when visiting valid event page."""
         pages = (
-            reverse("events:page", ("my-event",)),
-            reverse("events:page", ("my-event/subpage",)),
+            reverse("events:page", args=("my-event",)),
+            reverse("events:page", args=("my-event/subpage",)),
         )
         for page in pages:
             with self.subTest(page=page):
@@ -33,8 +33,8 @@ class PageTests(TestCase):
     def test_invalid_event_page_404(self):
         """Should return response code 404 when visiting invalid event page."""
         pages = (
-            reverse("events:page", ("invalid",)),
-            reverse("events:page", ("invalid/invalid",))
+            reverse("events:page", args=("invalid",)),
+            reverse("events:page", args=("invalid/invalid",))
         )
         for page in pages:
             with self.subTest(page=page):

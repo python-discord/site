@@ -4,7 +4,7 @@ name: Python Cookbook
 position: 8
 urls:
 - icon: regular/link
-  url: http://shop.oreilly.com/product/0636920027072.do
+  url: https://shop.oreilly.com/product/0636920027072.do
   color: teal
 - icon: branding/amazon
   url: https://www.amazon.com/Python-Cookbook-Third-David-Beazley/dp/1449340377

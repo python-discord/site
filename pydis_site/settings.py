@@ -14,6 +14,7 @@ import os
 import secrets
 import sys
 from pathlib import Path
+from socket import gethostbyname, gethostname
 
 import environ
 import sentry_sdk
@@ -23,7 +24,9 @@ from pydis_site.constants import GIT_SHA
 
 env = environ.Env(
     DEBUG=(bool, False),
-    SITE_DSN=(str, "")
+    SITE_DSN=(str, ""),
+    BUILDING_DOCKER=(bool, False),
+    STATIC_BUILD=(bool, False),
 )
 
 sentry_sdk.init(
@@ -53,20 +56,24 @@ else:
     ALLOWED_HOSTS = env.list(
         'ALLOWED_HOSTS',
         default=[
+            'www.pythondiscord.com',
             'pythondiscord.com',
-            'admin.pythondiscord.com',
-            'api.pythondiscord.com',
-            'staff.pythondiscord.com',
-            'pydis-api.default.svc.cluster.local',
-        ]
+            gethostname(),
+            gethostbyname(gethostname()),
+            'site.default.svc.cluster.local',
+        ],
     )
     SECRET_KEY = env('SECRET_KEY')
 
 # Application definition
-INSTALLED_APPS = [
+NON_STATIC_APPS = [
     'pydis_site.apps.api',
-    'pydis_site.apps.home',
     'pydis_site.apps.staff',
+] if not env("STATIC_BUILD") else []
+
+INSTALLED_APPS = [
+    *NON_STATIC_APPS,
+    'pydis_site.apps.home',
     'pydis_site.apps.resources',
     'pydis_site.apps.content',
     'pydis_site.apps.events',
@@ -80,15 +87,24 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.staticfiles',
 
-    'django_hosts',
     'django_filters',
     'django_simple_bulma',
     'rest_framework',
-    'rest_framework.authtoken'
+    'rest_framework.authtoken',
+
+    'django_distill',
 ]
 
+if not env("BUILDING_DOCKER"):
+    INSTALLED_APPS.append("django_prometheus")
+
+NON_STATIC_MIDDLEWARE = [
+    'django_prometheus.middleware.PrometheusBeforeMiddleware',
+] if not env("STATIC_BUILD") else []
+
+# Ensure that Prometheus middlewares are first and last here.
 MIDDLEWARE = [
-    'django_hosts.middleware.HostsRequestMiddleware',
+    *NON_STATIC_MIDDLEWARE,
 
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
@@ -99,8 +115,9 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
-    'django_hosts.middleware.HostsResponseMiddleware',
+    'django_prometheus.middleware.PrometheusAfterMiddleware'
 ]
+
 ROOT_URLCONF = 'pydis_site.urls'
 
 TEMPLATES = [
@@ -109,10 +126,6 @@ TEMPLATES = [
         'DIRS': [os.path.join(BASE_DIR, 'pydis_site', 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
-            'builtins': [
-                'django_hosts.templatetags.hosts_override',
-            ],
-
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
@@ -132,7 +145,7 @@ WSGI_APPLICATION = 'pydis_site.wsgi.application'
 DATABASES = {
     'default': env.db(),
     'metricity': env.db('METRICITY_DB_URL'),
-}
+} if not env("STATIC_BUILD") else {}
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
@@ -174,11 +187,6 @@ STATICFILES_FINDERS = [
     'django_simple_bulma.finders.SimpleBulmaFinder',
 ]
 
-# django-hosts
-# https://django-hosts.readthedocs.io/en/latest/
-ROOT_HOSTCONF = 'pydis_site.hosts'
-DEFAULT_HOST = 'home'
-
 if DEBUG:
     PARENT_HOST = env('PARENT_HOST', default='pythondiscord.local:8000')
 
@@ -190,7 +198,7 @@ else:
     PARENT_HOST = env('PARENT_HOST', default='pythondiscord.com')
 
 # Django REST framework
-# http://www.django-rest-framework.org
+# https://www.django-rest-framework.org
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',

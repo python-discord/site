@@ -27,7 +27,7 @@ The following will use the [Sir-Lancebot](https://github.com/python-discord/sir-
 ## Creating a New Branch
 > You will be committing your changes to a new branch rather than to `main`. Using branches allows you to work on multiple pull requests at the same time without conflicts.
 
-> You can name your branch whatever you want, but it's recommended to name it something succint and relevant to the changes you will be making.
+> You can name your branch whatever you want, but it's recommended to name it something succinct and relevant to the changes you will be making.
 
 > Before making new branches, be sure to checkout the `main` branch and ensure it's up to date.
 

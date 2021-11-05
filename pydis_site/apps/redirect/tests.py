@@ -31,7 +31,7 @@ class RedirectTests(TestCase):
             ):
                 resp = self.client.get(
                     reverse(
-                        f"home:redirect:{name}",
+                        f"redirect:{name}",
                         args=TESTING_ARGUMENTS.get(name, ())
                     ),
                     follow=True
@@ -53,7 +53,7 @@ class RedirectTests(TestCase):
                 self.assertRedirects(
                     resp,
                     reverse(
-                        f"home:{data['redirect_route']}",
+                        f"{data['redirect_route']}",
                         args=expected_args
                     ),
                     status_code=301

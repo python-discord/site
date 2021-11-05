@@ -1,0 +1,42 @@
+---
+title: Obtaining Discord IDs
+description: How to obtain Discord IDs to set up the bots.
+icon: fab fa-discord
+---
+First, enable developer mode in your client so you can easily copy IDs.
+
+1. Go to your `User Settings` and click on the `Appearance` tab.
+2. Under `Advanced`, enable `Developer Mode`.
+
+#### Guild ID
+
+Right click the server icon and click `Copy ID`.
+
+#### Channel ID
+
+Right click a channel name and click `Copy ID`.
+
+#### Role ID
+
+Right click a role and click `Copy ID`.
+The easiest way to do this is by going to the role list in the guild's settings.
+
+#### Emoji ID
+
+Insert the emoji into the Discord text box, then add a backslash (`\`)  right before the emoji and send the message.
+The result should be similar to the following
+
+```plaintext
+<:bbmessage:511950877733552138>
+```
+
+The long number you see, in this case `511950877733552138`, is the emoji's ID.
+
+#### Webhook ID
+
+Once a [webhook](https://support.discordapp.com/hc/en-us/articles/228383668-Intro-to-Webhooks) is created, the ID is found in the penultimate part of the URL.
+For example, in the following URL, `661995360146817053` is the ID of the webhook.
+
+```plaintext
+https://discordapp.com/api/webhooks/661995360146817053/t-9mI2VehOGcPuPS_F8R-6mB258Ob6K7ifhtoxerCvWyM9VEQug-anUr4hCHzdbhzfbz
+```

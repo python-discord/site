@@ -72,7 +72,7 @@ class TagEmbedValidatorTests(TestCase):
     def test_rejects_too_long_description(self):
         with self.assertRaises(ValidationError):
             validate_embed({
-                'description': 'd' * 2049
+                'description': 'd' * 4097
             })
 
     def test_allows_valid_embed(self):

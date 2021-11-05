@@ -1,14 +1,14 @@
 import datetime
 
-from django_hosts.resolvers import reverse
+from django.urls import reverse
 
-from .base import APISubdomainTestCase
+from .base import AuthenticatedAPITestCase
 from ..models import OffensiveMessage
 
 
-class CreationTests(APISubdomainTestCase):
+class CreationTests(AuthenticatedAPITestCase):
     def test_accept_valid_data(self):
-        url = reverse('bot:offensivemessage-list', host='api')
+        url = reverse('api:bot:offensivemessage-list')
         delete_at = datetime.datetime.now() + datetime.timedelta(days=1)
         data = {
             'id': '602951077675139072',
@@ -31,7 +31,7 @@ class CreationTests(APISubdomainTestCase):
         self.assertEqual(data['channel_id'], str(offensive_message.channel_id))
 
     def test_returns_400_on_non_future_date(self):
-        url = reverse('bot:offensivemessage-list', host='api')
+        url = reverse('api:bot:offensivemessage-list')
         delete_at = datetime.datetime.now() - datetime.timedelta(days=1)
         data = {
             'id': '602951077675139072',
@@ -45,7 +45,7 @@ class CreationTests(APISubdomainTestCase):
         })
 
     def test_returns_400_on_negative_id_or_channel_id(self):
-        url = reverse('bot:offensivemessage-list', host='api')
+        url = reverse('api:bot:offensivemessage-list')
         delete_at = datetime.datetime.now() + datetime.timedelta(days=1)
         data = {
             'id': '602951077675139072',
@@ -58,7 +58,7 @@ class CreationTests(APISubdomainTestCase):
         )
 
         for field, invalid_value in cases:
-            with self.subTest(fied=field, invalid_value=invalid_value):
+            with self.subTest(field=field, invalid_value=invalid_value):
                 test_data = data.copy()
                 test_data.update({field: invalid_value})
 
@@ -69,7 +69,7 @@ class CreationTests(APISubdomainTestCase):
                 })
 
 
-class ListTests(APISubdomainTestCase):
+class ListTests(AuthenticatedAPITestCase):
     @classmethod
     def setUpTestData(cls):
         delete_at = datetime.datetime.now() + datetime.timedelta(days=1)
@@ -100,7 +100,7 @@ class ListTests(APISubdomainTestCase):
         cls.messages[1]['delete_date'] = delete_at.isoformat() + 'Z'
 
     def test_get_data(self):
-        url = reverse('bot:offensivemessage-list', host='api')
+        url = reverse('api:bot:offensivemessage-list')
 
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
@@ -108,7 +108,7 @@ class ListTests(APISubdomainTestCase):
         self.assertEqual(response.json(), self.messages)
 
 
-class DeletionTests(APISubdomainTestCase):
+class DeletionTests(AuthenticatedAPITestCase):
     @classmethod
     def setUpTestData(cls):
         delete_at = datetime.datetime.now(tz=datetime.timezone.utc) + datetime.timedelta(days=1)
@@ -121,7 +121,7 @@ class DeletionTests(APISubdomainTestCase):
 
     def test_delete_data(self):
         url = reverse(
-            'bot:offensivemessage-detail', host='api', args=(self.valid_offensive_message.id,)
+            'api:bot:offensivemessage-detail', args=(self.valid_offensive_message.id,)
         )
 
         response = self.client.delete(url)
@@ -132,7 +132,7 @@ class DeletionTests(APISubdomainTestCase):
         )
 
 
-class NotAllowedMethodsTests(APISubdomainTestCase):
+class NotAllowedMethodsTests(AuthenticatedAPITestCase):
     @classmethod
     def setUpTestData(cls):
         delete_at = datetime.datetime.now(tz=datetime.timezone.utc) + datetime.timedelta(days=1)
@@ -145,7 +145,7 @@ class NotAllowedMethodsTests(APISubdomainTestCase):
 
     def test_returns_405_for_patch_and_put_requests(self):
         url = reverse(
-            'bot:offensivemessage-detail', host='api', args=(self.valid_offensive_message.id,)
+            'api:bot:offensivemessage-detail', args=(self.valid_offensive_message.id,)
         )
         not_allowed_methods = (self.client.patch, self.client.put)
 
