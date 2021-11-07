@@ -231,7 +231,15 @@ class ReminderSerializer(ModelSerializer):
 
         model = Reminder
         fields = (
-            'active', 'author', 'jump_url', 'channel_id', 'content', 'expiration', 'id', 'mentions'
+            'active',
+            'author',
+            'jump_url',
+            'channel_id',
+            'content',
+            'expiration',
+            'id',
+            'mentions',
+            'failures'
         )
 
 
