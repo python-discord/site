@@ -145,7 +145,7 @@ class InfractionSerializer(ModelSerializer):
 
         model = Infraction
         fields = (
-            'id', 'inserted_at', 'expires_at', 'active', 'user', 'actor', 'type', 'reason', 'hidden'
+            'id', 'inserted_at', 'expires_at', 'active', 'user', 'actor', 'type', 'reason', 'hidden', 'dm_sent'
         )
         validators = [
             UniqueTogetherValidator(
