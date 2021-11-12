@@ -42,14 +42,14 @@ There are always 3 available help channels waiting to be claimed in the **Python
 
 In order to claim one, simply start typing your question into one of these channels. Once your question has been posted, you have claimed this channel, and the channel will be moved down to the **Python Help: Occupied** category.
 
-If you're unable to type into these channels, this means you're currently **on cooldown**. In order to prevent someone from claiming all the channels for themselves, **we only allow someone to claim a new help channel every 15 minutes**. However, if you close your help channel using the `!dormant` command, this cooldown is reset early.
+If you're unable to type into these channels, this means you're currently **on cooldown**. In order to prevent someone from claiming all the channels for themselves, **we only allow someone to claim a single help channel at the same time**. You can search in the top right corner of your Discord client `from:yourusername#xxxx` to find back your channel.
 
 ![Channel available message](/static/images/content/help_channels/available_message.png)
 *This message is always posted when a channel becomes available for use.*
 
 ## Q: For how long is the channel mine?
 
-The channel is yours until it has been inactive for **30 minutes**. When this happens, we move the channel down to the **Python Help: Dormant** category, and make the channel read-only. After a while, the channel will be rotated back into **Python Help: Available** for the next question. Please try to resist the urge to continue bumping the channel so that it never gets marked as inactive. If nobody is answering your question, you should try to reformulate the question to increase your chances of getting help.
+The channel is yours until it has been inactive for **10 minutes**, or 30 minutes until someone participate in the channel. When this happens, we move the channel down to the **Python Help: Dormant** category, and make the channel read-only. After a while, the channel will be rotated back into **Python Help: Available** for the next question. Please try to resist the urge to continue bumping the channel so that it never gets marked as inactive. If nobody is answering your question, you should try to reformulate the question to increase your chances of getting help.
 
 ![Channel dormant message](/static/images/content/help_channels/dormant_message.png)
 *You'll see this message in your channel when the channel is marked as inactive.*
