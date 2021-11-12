@@ -34,7 +34,15 @@
     <section class="section">
         <div class="container">
             <div class="content">
-                <h1 class="title">{{ page_title }}</h1>
+                <div class="is-flex" style="justify-content: space-between;">
+                    <h1 class="title is-flex">{{ page_title }}</h1>
+                    <button class="button is-flex is-pulled-right is-primary is-light">
+                        <a href="{{ request.path }}">
+                            <i class="fab fa-github mr-2"></i>
+                            <b>Edit on Github</b>
+                        </a>
+                    </button>
+                </div>
                 {% block page_content %}{% endblock %}
             </div>
         </div>
