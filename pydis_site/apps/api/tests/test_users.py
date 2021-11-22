@@ -408,7 +408,7 @@ class UserMetricityTests(AuthenticatedAPITestCase):
             in_guild=True,
         )
 
-    def test_get_metricity_data(self):
+    def test_get_metricity_data_under_1k(self):
         # Given
         joined_at = "foo"
         total_messages = 1
@@ -421,7 +421,7 @@ class UserMetricityTests(AuthenticatedAPITestCase):
 
         # Then
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.json(), {
+        self.assertCountEqual(response.json(), {
             "joined_at": joined_at,
             "total_messages": total_messages,
             "voice_banned": False,
