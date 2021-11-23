@@ -408,7 +408,7 @@ class UserMetricityTests(AuthenticatedAPITestCase):
             in_guild=True,
         )
 
-    def test_get_metricity_data(self):
+    def test_get_metricity_data_under_1k(self):
         # Given
         joined_at = "foo"
         total_messages = 1
@@ -421,11 +421,30 @@ class UserMetricityTests(AuthenticatedAPITestCase):
 
         # Then
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.json(), {
+        self.assertCountEqual(response.json(), {
             "joined_at": joined_at,
             "total_messages": total_messages,
             "voice_banned": False,
             "activity_blocks": total_blocks
+        })
+
+    def test_get_metricity_data_over_1k(self):
+        # Given
+        joined_at = "foo"
+        total_messages = 1001
+        total_blocks = 1001
+        self.mock_metricity_user(joined_at, total_messages, total_blocks, [])
+
+        # When
+        url = reverse('api:bot:user-metricity-data', args=[0])
+        response = self.client.get(url)
+
+        # Then
+        self.assertEqual(response.status_code, 200)
+        self.assertCountEqual(response.json(), {
+            "joined_at": joined_at,
+            "total_messages": total_messages,
+            "voice_banned": False,
         })
 
     def test_no_metricity_user(self):

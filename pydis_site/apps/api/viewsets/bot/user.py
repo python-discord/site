@@ -271,9 +271,15 @@ class UserViewSet(ModelViewSet):
         with Metricity() as metricity:
             try:
                 data = metricity.user(user.id)
+
                 data["total_messages"] = metricity.total_messages(user.id)
+                if data["total_messages"] < 1000:
+                    # Only calculate and return activity_blocks if the user has a small amount
+                    # of messages, as calculating activity_blocks is expensive.
+                    # 1000 message chosen as an arbitrarily large number.
+                    data["activity_blocks"] = metricity.total_message_blocks(user.id)
+
                 data["voice_banned"] = voice_banned
-                data["activity_blocks"] = metricity.total_message_blocks(user.id)
                 return Response(data, status=status.HTTP_200_OK)
             except NotFoundError:
                 return Response(dict(detail="User not found in metricity"),
