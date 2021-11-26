@@ -145,7 +145,16 @@ class InfractionSerializer(ModelSerializer):
 
         model = Infraction
         fields = (
-            'id', 'inserted_at', 'expires_at', 'active', 'user', 'actor', 'type', 'reason', 'hidden'
+            'id',
+            'inserted_at',
+            'expires_at',
+            'active',
+            'user',
+            'actor',
+            'type',
+            'reason',
+            'hidden',
+            'dm_sent'
         )
         validators = [
             UniqueTogetherValidator(
@@ -231,7 +240,15 @@ class ReminderSerializer(ModelSerializer):
 
         model = Reminder
         fields = (
-            'active', 'author', 'jump_url', 'channel_id', 'content', 'expiration', 'id', 'mentions'
+            'active',
+            'author',
+            'jump_url',
+            'channel_id',
+            'content',
+            'expiration',
+            'id',
+            'mentions',
+            'failures'
         )
 
 

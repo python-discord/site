@@ -58,7 +58,7 @@ class CreationTests(AuthenticatedAPITestCase):
         )
 
         for field, invalid_value in cases:
-            with self.subTest(fied=field, invalid_value=invalid_value):
+            with self.subTest(field=field, invalid_value=invalid_value):
                 test_data = data.copy()
                 test_data.update({field: invalid_value})
 

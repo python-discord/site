@@ -96,7 +96,7 @@ Otherwise, please see the below linked guide for Redis related variables.
 
 ---
 # Run the project
-The sections below describe the two ways you can run this project. We recomend Docker as it requires less setup.
+The sections below describe the two ways you can run this project. We recommend Docker as it requires less setup.
 
 ## Run with Docker
 Make sure to have Docker running, then use the Docker command `docker-compose up` in the project root.
