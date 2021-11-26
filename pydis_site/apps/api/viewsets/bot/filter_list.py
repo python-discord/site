@@ -59,7 +59,8 @@ class FilterListViewSet(ModelViewSet):
     ...     ["GUILD_INVITE","Guild Invite"],
     ...     ["FILE_FORMAT","File Format"],
     ...     ["DOMAIN_NAME","Domain Name"],
-    ...     ["FILTER_TOKEN","Filter Token"]
+    ...     ["FILTER_TOKEN","Filter Token"],
+    ...     ["REDIRECT", "Redirect"]
     ... ]
 
     #### Status codes
