@@ -159,14 +159,14 @@ python-versions = "*"
 
 [[package]]
 name = "django-filter"
-version = "2.1.0"
+version = "21.1"
 description = "Django-filter is a reusable Django application for allowing users to filter querysets dynamically."
 category = "main"
 optional = false
-python-versions = ">=3.4"
+python-versions = ">=3.6"
 
 [package.dependencies]
-Django = ">=1.11"
+Django = ">=2.2"
 
 [[package]]
 name = "django-prometheus"
@@ -769,7 +769,7 @@ brotli = ["brotli"]
 [metadata]
 lock-version = "1.1"
 python-versions = "3.9.*"
-content-hash = "4588ff7b75b20c57c5ab674486764cda32de90af35f3e59a5ca8706aabeeb566"
+content-hash = "52569d311f19fb121cd6f824bf35bdb9611705b393d8aa013b8a1ce6e4ebbcbb"
 
 [metadata.files]
 asgiref = [
@@ -878,8 +878,8 @@ django-environ = [
     {file = "django_environ-0.4.5-py2.py3-none-any.whl", hash = "sha256:c57b3c11ec1f319d9474e3e5a79134f40174b17c7cc024bbb2fad84646b120c4"},
 ]
 django-filter = [
-    {file = "django-filter-2.1.0.tar.gz", hash = "sha256:3dafb7d2810790498895c22a1f31b2375795910680ac9c1432821cbedb1e176d"},
-    {file = "django_filter-2.1.0-py3-none-any.whl", hash = "sha256:a3014de317bef0cd43075a0f08dfa1d319a7ccc5733c3901fb860da70b0dda68"},
+    {file = "django-filter-21.1.tar.gz", hash = "sha256:632a251fa8f1aadb4b8cceff932bb52fe2f826dd7dfe7f3eac40e5c463d6836e"},
+    {file = "django_filter-21.1-py3-none-any.whl", hash = "sha256:f4a6737a30104c98d2e2a5fb93043f36dd7978e0c7ddc92f5998e85433ea5063"},
 ]
 django-prometheus = [
     {file = "django-prometheus-2.1.0.tar.gz", hash = "sha256:dd3f8da1399140fbef5c00d1526a23d1ade286b144281c325f8e409a781643f2"},
