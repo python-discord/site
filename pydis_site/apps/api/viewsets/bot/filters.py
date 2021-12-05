@@ -27,11 +27,28 @@ class FilterListViewSet(ModelViewSet):
     ...         "filters": [
     ...             {
     ...                 "id": 1,
+    ...                 "filter_list": 1
     ...                 "content": "267624335836053506",
     ...                 "description": "Python Discord",
     ...                 "additional_field": None,
-    ...                 "override": 1,
-    ...                 "filter_list": 1
+    ...                 "settings": {
+    ...                        "ping_type": None,
+    ...                        "dm_ping_type": None
+    ...                        "bypass_roles": None
+    ...                        "filter_dm": None,
+    ...                        "infraction": {
+    ...                            "infraction_type": None,
+    ...                            "infraction_reason": "",
+    ...                            "infraction_duration": None
+    ...                        },
+    ...                        "channel_scope": {
+    ...                            "allowed_channels": None,
+    ...                            "allowed_categories": None,
+    ...                            "disallowed_channels": None,
+    ...                            "disallowed_categories": None
+    ...                        }
+    ...                    }
+    ...
     ...             },
     ...             ...
     ...         ],
@@ -48,23 +65,40 @@ class FilterListViewSet(ModelViewSet):
     Returns a specific FilterList item from the database.
 
     #### Response format
-    >>> {
-    ...     "id": 1,
-    ...     "name": "guild_invite",
-    ...     "list_type": 1,
-    ...     "filters": [
-    ...         {
-    ...             "id": 1,
-    ...             "content": "267624335836053506",
-    ...             "description": "Python Discord",
-    ...             "additional_field": None,
-    ...             "override": 1,
-    ...             "filter_list": 1
-    ...         },
-    ...         ...
-    ...     ],
-    ...     "default_settings": 1
-    ... }
+    ...     {
+    ...         "id": 1,
+    ...         "name": "guild_invite",
+    ...         "list_type": 1,
+    ...         "filters": [
+    ...             {
+    ...                 "id": 1,
+    ...                 "filter_list": 1
+    ...                 "content": "267624335836053506",
+    ...                 "description": "Python Discord",
+    ...                 "additional_field": None,
+    ...                 "settings": {
+    ...                        "ping_type": None,
+    ...                        "dm_ping_type": None
+    ...                        "bypass_roles": None
+    ...                        "filter_dm": None,
+    ...                        "infraction": {
+    ...                            "infraction_type": None,
+    ...                            "infraction_reason": "",
+    ...                            "infraction_duration": None
+    ...                        },
+    ...                        "channel_scope": {
+    ...                            "allowed_channels": None,
+    ...                            "allowed_categories": None,
+    ...                            "disallowed_channels": None,
+    ...                            "disallowed_categories": None
+    ...                        }
+    ...                    }
+    ...
+    ...             },
+    ...             ...
+    ...         ],
+    ...         "default_settings": 1
+    ...     }
 
     #### Status codes
     - 200: returned on success
@@ -93,12 +127,28 @@ class FilterViewSet(ModelViewSet):
     #### Response format
     >>> [
     ...     {
-    ...         "id": 1,
-    ...         "content": "267624335836053506",
-    ...         "description": "Python Discord",
-    ...         "additional_field": None,
-    ...         "override": 1,
-    ...         "filter_list": 1
+    ...                 "id": 1,
+    ...                 "filter_list": 1
+    ...                 "content": "267624335836053506",
+    ...                 "description": "Python Discord",
+    ...                 "additional_field": None,
+    ...                 "settings": {
+    ...                        "ping_type": None,
+    ...                        "dm_ping_type": None
+    ...                        "bypass_roles": None
+    ...                        "filter_dm": None,
+    ...                        "infraction": {
+    ...                            "infraction_type": None,
+    ...                            "infraction_reason": "",
+    ...                            "infraction_duration": None
+    ...                        },
+    ...                        "channel_scope": {
+    ...                            "allowed_channels": None,
+    ...                            "allowed_categories": None,
+    ...                            "disallowed_channels": None,
+    ...                            "disallowed_categories": None
+    ...                        }
+    ...                    }
     ...     },
     ...     ...
     ... ]
@@ -112,11 +162,28 @@ class FilterViewSet(ModelViewSet):
 
     #### Response format
     >>> {
-    ...     "id": 1,
-    ...     "content": "267624335836053506",
-    ...     "description": "Python Discord",
-    ...     "additional_field": None,
-    ...     "override": 1
+    ...                 "id": 1,
+    ...                 "filter_list": 1
+    ...                 "content": "267624335836053506",
+    ...                 "description": "Python Discord",
+    ...                 "additional_field": None,
+    ...                 "settings": {
+    ...                        "ping_type": None,
+    ...                        "dm_ping_type": None
+    ...                        "bypass_roles": None
+    ...                        "filter_dm": None,
+    ...                        "infraction": {
+    ...                            "infraction_type": None,
+    ...                            "infraction_reason": "",
+    ...                            "infraction_duration": None
+    ...                        },
+    ...                        "channel_scope": {
+    ...                            "allowed_channels": None,
+    ...                            "allowed_categories": None,
+    ...                            "disallowed_channels": None,
+    ...                            "disallowed_categories": None
+    ...                        }
+    ...                    }
     ... }
 
     #### Status codes

@@ -133,6 +133,17 @@ REQUIRED_FOR_FILTER_LIST_SETTINGS = (
     'allowed_categories',
 )
 
+# Required fields for custom JSON representation purposes
+BASE_FIELDS = ('id', 'content', 'description', 'additional_field')
+BASE_SETTINGS_FIELDS = ("ping_type", "dm_ping_type", "bypass_roles", "filter_dm")
+INFRACTION_FIELDS = ("infraction_type", "infraction_reason", "infraction_duration")
+CHANNEL_SCOPE_FIELDS = (
+    "allowed_channels",
+    "allowed_categories",
+    "disallowed_channels",
+    "disallowed_categories"
+)
+
 SETTINGS_FIELDS = ALWAYS_OPTIONAL_SETTINGS + REQUIRED_FOR_FILTER_LIST_SETTINGS
 
 
@@ -180,6 +191,25 @@ class FilterSerializer(ModelSerializer):
             'allowed_channels': {'allow_empty': True, 'allow_null': True, 'required': False},
             'allowed_categories': {'allow_empty': True, 'allow_null': True, 'required': False},
         }
+
+    def to_representation(self, instance: Filter) -> dict:
+        """
+        Provides a custom JSON representation to the Filter Serializers
+
+        That does not affect how the Serializer works in general.
+        """
+        item = Filter.objects.get(id=instance.id)
+        schema_settings = {
+            "settings":
+                {name: getattr(item, name) for name in BASE_SETTINGS_FIELDS}
+                | {"infraction": {name: getattr(item, name) for name in INFRACTION_FIELDS}}
+                | {"channel_scope": {name: getattr(item, name) for name in CHANNEL_SCOPE_FIELDS}}
+        }
+
+        schema_base = {name: getattr(item, name) for name in BASE_FIELDS} | \
+                      {"filter_list": item.filter_list.id}
+
+        return schema_base | schema_settings
 
 
 class FilterListSerializer(ModelSerializer):
