@@ -181,7 +181,7 @@ class FilterSerializer(ModelSerializer):
         model = Filter
         fields = (
             'id', 'content', 'description', 'additional_field', 'filter_list'
-        ) + SETTINGS_FIELDS
+        )
         extra_kwargs = {
             field: {'required': False, 'allow_null': True} for field in SETTINGS_FIELDS
         } | {
@@ -194,7 +194,8 @@ class FilterSerializer(ModelSerializer):
 
     def to_representation(self, instance: Filter) -> dict:
         """
-        Provides a custom JSON representation to the Filter Serializers
+
+        Provides a custom JSON representation to the Filter Serializers.
 
         That does not affect how the Serializer works in general.
         """
@@ -239,7 +240,7 @@ class FilterListSerializer(ModelSerializer):
         """Metadata defined for the Django REST Framework."""
 
         model = FilterList
-        fields = ('id', 'name', 'list_type', 'filters') + SETTINGS_FIELDS
+        fields = ('id', 'name', 'list_type', 'filters')
         extra_kwargs = {
             field: {'required': False, 'allow_null': True} for field in ALWAYS_OPTIONAL_SETTINGS
         } | {
@@ -260,6 +261,16 @@ class FilterListSerializer(ModelSerializer):
                 )
             ),
         ]
+
+    def to_representation(self, instance: FilterList) -> dict:
+        """
+        Provides a custom JSON representation to the FilterList Serializers.
+
+        That does not affect how the Serializer works in general.
+        """
+        ret = super().to_representation(instance)
+        ret["settings"] = {name: getattr(instance, name) for name in SETTINGS_FIELDS}
+        return ret
 
 
 class InfractionSerializer(ModelSerializer):

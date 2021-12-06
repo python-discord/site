@@ -52,7 +52,28 @@ class FilterListViewSet(ModelViewSet):
     ...             },
     ...             ...
     ...         ],
-    ...         "default_settings": 1
+    ...     "settings": {
+    ...            "dm_content": None,
+    ...            "infraction_type": None,
+    ...            "infraction_reason": "",
+    ...            "infraction_duration": None,
+    ...            "ping_type": [
+    ...                "onduty"
+    ...            ],
+    ...            "filter_dm": True,
+    ...            "dm_ping_type": [
+    ...                "onduty"
+    ...            ],
+    ...            "delete_messages": True,
+    ...            "bypass_roles": [
+    ...                267630620367257601
+    ...            ],
+    ...            "enabled": False,
+    ...            "disallowed_channels": [],
+    ...            "disallowed_categories": [],
+    ...            "allowed_channels": [],
+    ...            "allowed_categories": []
+    ...    }
     ...     },
     ...     ...
     ... ]
@@ -65,6 +86,7 @@ class FilterListViewSet(ModelViewSet):
     Returns a specific FilterList item from the database.
 
     #### Response format
+    >>>
     ...     {
     ...         "id": 1,
     ...         "name": "guild_invite",
@@ -95,9 +117,30 @@ class FilterListViewSet(ModelViewSet):
     ...                    }
     ...
     ...             },
-    ...             ...
+    ...
     ...         ],
-    ...         "default_settings": 1
+    ...            "settings": {
+    ...            "dm_content": None,
+    ...            "infraction_type": None,
+    ...            "infraction_reason": "",
+    ...            "infraction_duration": None,
+    ...            "ping_type": [
+    ...                "onduty"
+    ...            ],
+    ...            "filter_dm": True,
+    ...            "dm_ping_type": [
+    ...                "onduty"
+    ...            ],
+    ...            "delete_messages": True,
+    ...            "bypass_roles": [
+    ...                267630620367257601
+    ...            ],
+    ...            "enabled": False,
+    ...            "disallowed_channels": [],
+    ...            "disallowed_categories": [],
+    ...            "allowed_channels": [],
+    ...            "allowed_categories": []
+    ...         }
     ...     }
 
     #### Status codes
