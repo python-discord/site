@@ -269,7 +269,14 @@ class FilterListSerializer(ModelSerializer):
         That does not affect how the Serializer works in general.
         """
         ret = super().to_representation(instance)
-        ret["settings"] = {name: getattr(instance, name) for name in SETTINGS_FIELDS}
+        schema_base = {name: getattr(instance, name) for name in BASE_SETTINGS_FIELDS}
+        schema_settings = {
+            "infraction":
+            {name: getattr(instance, name) for name in INFRACTION_FIELDS}} \
+            | {
+            "channel_scope":
+            {name: getattr(instance, name) for name in CHANNEL_SCOPE_FIELDS}}
+        ret["settings"] = schema_base | schema_settings
         return ret
 
 

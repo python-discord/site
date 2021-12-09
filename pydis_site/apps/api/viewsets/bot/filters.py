@@ -52,31 +52,29 @@ class FilterListViewSet(ModelViewSet):
     ...             },
     ...             ...
     ...         ],
-    ...     "settings": {
-    ...            "dm_content": None,
-    ...            "infraction_type": None,
-    ...            "infraction_reason": "",
-    ...            "infraction_duration": None,
-    ...            "ping_type": [
-    ...                "onduty"
-    ...            ],
-    ...            "filter_dm": True,
-    ...            "dm_ping_type": [
-    ...                "onduty"
-    ...            ],
-    ...            "delete_messages": True,
-    ...            "bypass_roles": [
-    ...                267630620367257601
-    ...            ],
-    ...            "enabled": False,
-    ...            "disallowed_channels": [],
-    ...            "disallowed_categories": [],
-    ...            "allowed_channels": [],
-    ...            "allowed_categories": []
-    ...    }
-    ...     },
-    ...     ...
-    ... ]
+    ...            "settings": {
+    ...              "ping_type": [
+    ...                  "onduty"
+    ...              ],
+    ...              "dm_ping_type": [
+    ...                  "onduty"
+    ...              ],
+    ...              "bypass_roles": [
+    ...                  267630620367257601
+    ...              ],
+    ...              "filter_dm": True,
+    ...              "infraction": {
+    ...                   "infraction_type": None,
+    ...                   "infraction_reason": "",
+    ...                   "infraction_duration": None,
+    ...               }
+    ...              "channel_scope": {
+    ...                "disallowed_channels": [],
+    ...                "disallowed_categories": [],
+    ...                "allowed_channels": [],
+    ...                "allowed_categories": []
+    ...               }
+    ...           }
 
     #### Status codes
     - 200: returned on success
@@ -120,28 +118,29 @@ class FilterListViewSet(ModelViewSet):
     ...
     ...         ],
     ...            "settings": {
-    ...            "dm_content": None,
-    ...            "infraction_type": None,
-    ...            "infraction_reason": "",
-    ...            "infraction_duration": None,
-    ...            "ping_type": [
-    ...                "onduty"
-    ...            ],
-    ...            "filter_dm": True,
-    ...            "dm_ping_type": [
-    ...                "onduty"
-    ...            ],
-    ...            "delete_messages": True,
-    ...            "bypass_roles": [
-    ...                267630620367257601
-    ...            ],
-    ...            "enabled": False,
-    ...            "disallowed_channels": [],
-    ...            "disallowed_categories": [],
-    ...            "allowed_channels": [],
-    ...            "allowed_categories": []
-    ...         }
-    ...     }
+    ...              "ping_type": [
+    ...                  "onduty"
+    ...              ],
+    ...              "dm_ping_type": [
+    ...                  "onduty"
+    ...              ],
+    ...              "bypass_roles": [
+    ...                  267630620367257601
+    ...              ],
+    ...              "filter_dm": True,
+    ...              "infraction": {
+    ...                   "infraction_type": None,
+    ...                   "infraction_reason": "",
+    ...                   "infraction_duration": None,
+    ...               }
+    ...              "channel_scope": {
+    ...                "disallowed_channels": [],
+    ...                "disallowed_categories": [],
+    ...                "allowed_channels": [],
+    ...                "allowed_categories": []
+    ...               }
+    ...           }
+    ...       }
 
     #### Status codes
     - 200: returned on success
