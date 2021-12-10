@@ -134,8 +134,16 @@ REQUIRED_FOR_FILTER_LIST_SETTINGS = (
 )
 
 # Required fields for custom JSON representation purposes
-BASE_FIELDS = ('id', 'content', 'description', 'additional_field')
-BASE_SETTINGS_FIELDS = ("ping_type", "dm_ping_type", "bypass_roles", "filter_dm")
+BASE_FILTER_FIELDS = ('id', 'content', 'description', 'additional_field')
+BASE_FILTERLIST_FIELDS = ('id', 'name', 'list_type')
+BASE_SETTINGS_FIELDS = (
+    "ping_type",
+    "dm_ping_type",
+    "bypass_roles",
+    "filter_dm",
+    "enabled",
+    "delete_messages"
+)
 INFRACTION_FIELDS = ("infraction_type", "infraction_reason", "infraction_duration")
 CHANNEL_SCOPE_FIELDS = (
     "allowed_channels",
@@ -181,7 +189,7 @@ class FilterSerializer(ModelSerializer):
         model = Filter
         fields = (
             'id', 'content', 'description', 'additional_field', 'filter_list'
-        )
+        ) + SETTINGS_FIELDS
         extra_kwargs = {
             field: {'required': False, 'allow_null': True} for field in SETTINGS_FIELDS
         } | {
@@ -199,16 +207,18 @@ class FilterSerializer(ModelSerializer):
 
         That does not affect how the Serializer works in general.
         """
-        item = Filter.objects.get(id=instance.id)
         schema_settings = {
             "settings":
-                {name: getattr(item, name) for name in BASE_SETTINGS_FIELDS}
-                | {"infraction": {name: getattr(item, name) for name in INFRACTION_FIELDS}}
-                | {"channel_scope": {name: getattr(item, name) for name in CHANNEL_SCOPE_FIELDS}}
+                {name: getattr(instance, name) for name in BASE_SETTINGS_FIELDS}
+                | {"infraction": {name: getattr(instance, name) for name in INFRACTION_FIELDS}}
+                | {
+                    "channel_scope":
+                        {name: getattr(instance, name) for name in CHANNEL_SCOPE_FIELDS}
+                }
         }
 
-        schema_base = {name: getattr(item, name) for name in BASE_FIELDS} | \
-                      {"filter_list": item.filter_list.id}
+        schema_base = {name: getattr(instance, name) for name in BASE_FILTER_FIELDS} | \
+                      {"filter_list": instance.filter_list.id}
 
         return schema_base | schema_settings
 
@@ -221,18 +231,25 @@ class FilterListSerializer(ModelSerializer):
     def validate(self, data: dict) -> dict:
         """Perform infraction data + allow and disallowed lists validation."""
         if (
-            data['infraction_reason'] or data['infraction_duration']
-        ) and not data['infraction_type']:
+            data.get('infraction_reason') or data.get('infraction_duration')
+        ) and not data.get('infraction_type'):
             raise ValidationError("Infraction type is required with infraction duration or reason")
 
-        channels_collection = data['allowed_channels'] + data['disallowed_channels']
-        categories_collection = data['allowed_categories'] + data['disallowed_categories']
+        if (
+            data.get('allowed_channels') is not None
+            and data.get('disallowed_channels') is not None
+        ):
+            channels_collection = data['allowed_channels'] + data['disallowed_channels']
+            if len(channels_collection) != len(set(channels_collection)):
+                raise ValidationError("Allowed and disallowed channels lists contain duplicates.")
 
-        if len(channels_collection) != len(set(channels_collection)):
-            raise ValidationError("Allowed and disallowed channels lists contain duplicates.")
-
-        if len(categories_collection) != len(set(categories_collection)):
-            raise ValidationError("Allowed and disallowed categories lists contain duplicates.")
+        if (
+            data.get('allowed_categories') is not None
+            and data.get('disallowed_categories') is not None
+        ):
+            categories_collection = data['allowed_categories'] + data['disallowed_categories']
+            if len(categories_collection) != len(set(categories_collection)):
+                raise ValidationError("Allowed and disallowed categories lists contain duplicates.")
 
         return data
 
@@ -240,7 +257,7 @@ class FilterListSerializer(ModelSerializer):
         """Metadata defined for the Django REST Framework."""
 
         model = FilterList
-        fields = ('id', 'name', 'list_type', 'filters')
+        fields = ('id', 'name', 'list_type', 'filters') + SETTINGS_FIELDS
         extra_kwargs = {
             field: {'required': False, 'allow_null': True} for field in ALWAYS_OPTIONAL_SETTINGS
         } | {
@@ -268,16 +285,24 @@ class FilterListSerializer(ModelSerializer):
 
         That does not affect how the Serializer works in general.
         """
-        ret = super().to_representation(instance)
-        schema_base = {name: getattr(instance, name) for name in BASE_SETTINGS_FIELDS}
-        schema_settings = {
+        # Fetches the relating filters
+        filters = [
+            FilterSerializer(many=False).to_representation(
+                instance=item
+            ) for item in Filter.objects.filter(
+                filter_list=instance.id
+            )
+        ]
+        schema_base = {name: getattr(instance, name) for name in BASE_FILTERLIST_FIELDS} \
+            | {"filters": filters}
+        schema_settings_base = {name: getattr(instance, name) for name in BASE_SETTINGS_FIELDS}
+        schema_settings_categories = {
             "infraction":
             {name: getattr(instance, name) for name in INFRACTION_FIELDS}} \
             | {
             "channel_scope":
             {name: getattr(instance, name) for name in CHANNEL_SCOPE_FIELDS}}
-        ret["settings"] = schema_base | schema_settings
-        return ret
+        return schema_base | {"settings": schema_settings_base | schema_settings_categories}
 
 
 class InfractionSerializer(ModelSerializer):

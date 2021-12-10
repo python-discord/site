@@ -36,6 +36,8 @@ class FilterListViewSet(ModelViewSet):
     ...                        "dm_ping_type": None
     ...                        "bypass_roles": None
     ...                        "filter_dm": None,
+    ...                        "enabled": False
+    ...                        "delete_messages": True
     ...                        "infraction": {
     ...                            "infraction_type": None,
     ...                            "infraction_reason": "",
@@ -63,6 +65,8 @@ class FilterListViewSet(ModelViewSet):
     ...                  267630620367257601
     ...              ],
     ...              "filter_dm": True,
+    ...              "enabled": False
+    ...              "delete_messages": True
     ...              "infraction": {
     ...                   "infraction_type": None,
     ...                   "infraction_reason": "",
@@ -101,6 +105,8 @@ class FilterListViewSet(ModelViewSet):
     ...                        "dm_ping_type": None
     ...                        "bypass_roles": None
     ...                        "filter_dm": None,
+    ...                        "enabled": False
+    ...                        "delete_messages": True
     ...                        "infraction": {
     ...                            "infraction_type": None,
     ...                            "infraction_reason": "",
@@ -128,6 +134,8 @@ class FilterListViewSet(ModelViewSet):
     ...                  267630620367257601
     ...              ],
     ...              "filter_dm": True,
+    ...              "enabled": False
+    ...              "delete_messages": True
     ...              "infraction": {
     ...                   "infraction_type": None,
     ...                   "infraction_reason": "",
@@ -179,6 +187,8 @@ class FilterViewSet(ModelViewSet):
     ...                        "dm_ping_type": None
     ...                        "bypass_roles": None
     ...                        "filter_dm": None,
+    ...                        "enabled": False
+    ...                        "delete_messages": True
     ...                        "infraction": {
     ...                            "infraction_type": None,
     ...                            "infraction_reason": "",
@@ -214,6 +224,8 @@ class FilterViewSet(ModelViewSet):
     ...                        "dm_ping_type": None
     ...                        "bypass_roles": None
     ...                        "filter_dm": None,
+    ...                        "enabled": False
+    ...                        "delete_messages": True
     ...                        "infraction": {
     ...                            "infraction_type": None,
     ...                            "infraction_reason": "",
