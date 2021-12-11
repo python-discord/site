@@ -48,7 +48,7 @@ class Message(ModelReprMixin, models.Model):
         blank=True
     )
     embeds = pgfields.ArrayField(
-        pgfields.JSONField(
+        models.JSONField(
             validators=(validate_embed,)
         ),
         blank=True,
