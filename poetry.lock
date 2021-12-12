@@ -122,7 +122,7 @@ python-versions = "*"
 
 [[package]]
 name = "django"
-version = "3.1.13"
+version = "3.1.14"
 description = "A high-level Python Web framework that encourages rapid development and clean, pragmatic design."
 category = "main"
 optional = false
@@ -769,7 +769,7 @@ brotli = ["brotli"]
 [metadata]
 lock-version = "1.1"
 python-versions = "3.9.*"
-content-hash = "52569d311f19fb121cd6f824bf35bdb9611705b393d8aa013b8a1ce6e4ebbcbb"
+content-hash = "fa1fc3596f32e88a15696551d172b9d1da97acebbba224915c48fb6692996e56"
 
 [metadata.files]
 asgiref = [
@@ -867,8 +867,8 @@ distlib = [
     {file = "distlib-0.3.3.zip", hash = "sha256:d982d0751ff6eaaab5e2ec8e691d949ee80eddf01a62eaa96ddb11531fe16b05"},
 ]
 django = [
-    {file = "Django-3.1.13-py3-none-any.whl", hash = "sha256:a6e0d1ff11095b7394c079ade7094c73b2dc3df4a7a373c9b58ed73b77a97feb"},
-    {file = "Django-3.1.13.tar.gz", hash = "sha256:9f8be75646f62204320b195062b1d696ba28aa3d45ee72fb7c888ffaebc5bdb2"},
+    {file = "Django-3.1.14-py3-none-any.whl", hash = "sha256:0fabc786489af16ad87a8c170ba9d42bfd23f7b699bd5ef05675864e8d012859"},
+    {file = "Django-3.1.14.tar.gz", hash = "sha256:72a4a5a136a214c39cf016ccdd6b69e2aa08c7479c66d93f3a9b5e4bb9d8a347"},
 ]
 django-distill = [
     {file = "django-distill-2.9.0.tar.gz", hash = "sha256:08f31dcde2e79e73c0bc4f36941830603a811cc89472be11f79f14affb460d84"},
