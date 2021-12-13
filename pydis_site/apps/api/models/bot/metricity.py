@@ -4,10 +4,10 @@ from django.db import connections
 
 BLOCK_INTERVAL = 10 * 60  # 10 minute blocks
 
-EXCLUDE_CHANNELS = [
+EXCLUDE_CHANNELS = (
     "267659945086812160",  # Bot commands
     "607247579608121354"  # SeasonalBot commands
-]
+)
 
 
 class NotFoundError(Exception):
@@ -46,14 +46,12 @@ class Metricity:
         self.cursor.execute(
             """
             SELECT
-              COUNT(*)
-            FROM messages
+                message_count
+            FROM user_has_approx_message_count
             WHERE
-              author_id = '%s'
-              AND NOT is_deleted
-              AND NOT %s::varchar[] @> ARRAY[channel_id]
+                author_id = '%s'
             """,
-            [user_id, EXCLUDE_CHANNELS]
+            [user_id]
         )
         values = self.cursor.fetchone()
 
@@ -79,7 +77,7 @@ class Metricity:
                 WHERE
                     author_id='%s'
                     AND NOT is_deleted
-                    AND NOT %s::varchar[] @> ARRAY[channel_id]
+                    AND channel_id NOT IN %s
                 GROUP BY interval
             ) block_query;
             """,

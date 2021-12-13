@@ -17,18 +17,14 @@ They are split into two parts:
 To get started with building, you can use the following command:
 
 ```shell
+poetry install
 python -m pip install httpx==0.19.0
-python manage.py distill-local build --traceback --force --collectstatic
+poetry run task static
 ```
 
 Alternatively, you can use the [Dockerfile](/Dockerfile) and extract the build.
 
 Both output their builds to a `build/` directory.
-
-> Warning: If you are modifying the [build script](./netlify_build.py), make sure it is compatible with Python 3.8.
-
-Note: The build script uses [nightly.link](https://github.com/oprypin/nightly.link)
-to fetch the artifact with no verification.
 
 ### Deploying To Netlify
 To deploy to netlify, link your site GitHub repository to a netlify site, and use the following settings:
@@ -46,3 +42,9 @@ Environment Variables:
 Note that at this time, if you are deploying to netlify yourself, you won't have access to the
 fa-icons pack we are using, which will lead to many missing icons on your preview.
 You can either update the pack to one which will work on your domain, or you'll have to live with the missing icons.
+
+
+> Warning: If you are modifying the [build script](./netlify_build.py), make sure it is compatible with Python 3.8.
+
+Note: The build script uses [nightly.link](https://github.com/oprypin/nightly.link)
+to fetch the artifact with no authentication.
