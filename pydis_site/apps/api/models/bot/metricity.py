@@ -46,12 +46,14 @@ class Metricity:
         self.cursor.execute(
             """
             SELECT
-                message_count
-            FROM user_has_approx_message_count
+                COUNT(*)
+            FROM messages
             WHERE
                 author_id = '%s'
+                AND NOT is_deleted
+                AND channel_id NOT IN %s
             """,
-            [user_id]
+            [user_id, EXCLUDE_CHANNELS]
         )
         values = self.cursor.fetchone()
 
