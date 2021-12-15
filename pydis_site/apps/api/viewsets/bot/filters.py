@@ -32,8 +32,6 @@ class FilterListViewSet(ModelViewSet):
     ...                 "description": "Python Discord",
     ...                 "additional_field": None,
     ...                 "settings": {
-    ...                        "ping_type": None,
-    ...                        "dm_ping_type": None
     ...                        "bypass_roles": None
     ...                        "filter_dm": None,
     ...                        "enabled": False
@@ -44,11 +42,14 @@ class FilterListViewSet(ModelViewSet):
     ...                            "infraction_duration": None
     ...                        },
     ...                        "channel_scope": {
-    ...                            "allowed_channels": None,
-    ...                            "allowed_categories": None,
-    ...                            "disallowed_channels": None,
-    ...                            "disallowed_categories": None
+    ...                            "disabled_channels": None,
+    ...                            "disabled_categories": None,
+    ...                            "enabled_channels": None
     ...                        }
+    ...                        "mentions": {
+    ...                            "ping_type": None
+    ...                            "dm_ping_type": None
+    ...                         }
     ...                    }
     ...
     ...             },
@@ -72,13 +73,18 @@ class FilterListViewSet(ModelViewSet):
     ...                   "infraction_reason": "",
     ...                   "infraction_duration": None,
     ...               }
-    ...              "channel_scope": {
-    ...                "disallowed_channels": [],
-    ...                "disallowed_categories": [],
-    ...                "allowed_channels": [],
-    ...                "allowed_categories": []
-    ...               }
-    ...           }
+    ...               "channel_scope": {
+    ...                 "disabled_channels": None,
+    ...                 "disabled_categories": None,
+    ...                 "enabled_channels": None
+    ...                }
+    ...               "mentions": {
+    ...                 "ping_type": None
+    ...                 "dm_ping_type": None
+    ...                }
+    ...           },
+    ...     ...
+    ... ]
 
     #### Status codes
     - 200: returned on success
@@ -88,8 +94,7 @@ class FilterListViewSet(ModelViewSet):
     Returns a specific FilterList item from the database.
 
     #### Response format
-    >>>
-    ...     {
+    >>> {
     ...         "id": 1,
     ...         "name": "guild_invite",
     ...         "list_type": 1,
@@ -101,8 +106,6 @@ class FilterListViewSet(ModelViewSet):
     ...                 "description": "Python Discord",
     ...                 "additional_field": None,
     ...                 "settings": {
-    ...                        "ping_type": None,
-    ...                        "dm_ping_type": None
     ...                        "bypass_roles": None
     ...                        "filter_dm": None,
     ...                        "enabled": False
@@ -113,15 +116,18 @@ class FilterListViewSet(ModelViewSet):
     ...                            "infraction_duration": None
     ...                        },
     ...                        "channel_scope": {
-    ...                            "allowed_channels": None,
-    ...                            "allowed_categories": None,
-    ...                            "disallowed_channels": None,
-    ...                            "disallowed_categories": None
+    ...                            "disabled_channels": None,
+    ...                            "disabled_categories": None,
+    ...                            "enabled_channels": None
     ...                        }
+    ...                        "mentions": {
+    ...                            "ping_type": None
+    ...                            "dm_ping_type": None
+    ...                         }
     ...                    }
     ...
     ...             },
-    ...
+    ...             ...
     ...         ],
     ...            "settings": {
     ...              "ping_type": [
@@ -141,14 +147,16 @@ class FilterListViewSet(ModelViewSet):
     ...                   "infraction_reason": "",
     ...                   "infraction_duration": None,
     ...               }
-    ...              "channel_scope": {
-    ...                "disallowed_channels": [],
-    ...                "disallowed_categories": [],
-    ...                "allowed_channels": [],
-    ...                "allowed_categories": []
-    ...               }
-    ...           }
-    ...       }
+    ...               "channel_scope": {
+    ...                 "disabled_channels": None,
+    ...                 "disabled_categories": None,
+    ...                 "enabled_channels": None
+    ...                }
+    ...               "mentions": {
+    ...                 "ping_type": None
+    ...                 "dm_ping_type": None
+    ...                }
+    ... }
 
     #### Status codes
     - 200: returned on success
@@ -183,8 +191,6 @@ class FilterViewSet(ModelViewSet):
     ...                 "description": "Python Discord",
     ...                 "additional_field": None,
     ...                 "settings": {
-    ...                        "ping_type": None,
-    ...                        "dm_ping_type": None
     ...                        "bypass_roles": None
     ...                        "filter_dm": None,
     ...                        "enabled": False
@@ -195,11 +201,14 @@ class FilterViewSet(ModelViewSet):
     ...                            "infraction_duration": None
     ...                        },
     ...                        "channel_scope": {
-    ...                            "allowed_channels": None,
-    ...                            "allowed_categories": None,
-    ...                            "disallowed_channels": None,
-    ...                            "disallowed_categories": None
+    ...                          "disabled_channels": None,
+    ...                          "disabled_categories": None,
+    ...                          "enabled_channels": None
     ...                        }
+    ...                        "mentions": {
+    ...                          "ping_type": None,
+    ...                          "dm_ping_type": None
+    ...                       }
     ...                    }
     ...     },
     ...     ...
@@ -220,8 +229,6 @@ class FilterViewSet(ModelViewSet):
     ...                 "description": "Python Discord",
     ...                 "additional_field": None,
     ...                 "settings": {
-    ...                        "ping_type": None,
-    ...                        "dm_ping_type": None
     ...                        "bypass_roles": None
     ...                        "filter_dm": None,
     ...                        "enabled": False
@@ -232,11 +239,14 @@ class FilterViewSet(ModelViewSet):
     ...                            "infraction_duration": None
     ...                        },
     ...                        "channel_scope": {
-    ...                            "allowed_channels": None,
-    ...                            "allowed_categories": None,
-    ...                            "disallowed_channels": None,
-    ...                            "disallowed_categories": None
+    ...                          "disabled_channels": None,
+    ...                          "disabled_categories": None,
+    ...                          "enabled_channels": None,
     ...                        }
+    ...                       "mentions": {
+    ...                         "ping_type": None
+    ...                         "dm_ping_type": None
+    ...                       }
     ...                    }
     ... }
 

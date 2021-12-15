@@ -127,18 +127,15 @@ REQUIRED_FOR_FILTER_LIST_SETTINGS = (
     'delete_messages',
     'bypass_roles',
     'enabled',
-    'disallowed_channels',
-    'disallowed_categories',
-    'allowed_channels',
-    'allowed_categories',
+    'enabled_channels',
+    'disabled_channels',
+    'disabled_categories',
 )
 
 # Required fields for custom JSON representation purposes
 BASE_FILTER_FIELDS = ('id', 'content', 'description', 'additional_field')
 BASE_FILTERLIST_FIELDS = ('id', 'name', 'list_type')
 BASE_SETTINGS_FIELDS = (
-    "ping_type",
-    "dm_ping_type",
     "bypass_roles",
     "filter_dm",
     "enabled",
@@ -146,11 +143,11 @@ BASE_SETTINGS_FIELDS = (
 )
 INFRACTION_FIELDS = ("infraction_type", "infraction_reason", "infraction_duration")
 CHANNEL_SCOPE_FIELDS = (
-    "allowed_channels",
-    "allowed_categories",
-    "disallowed_channels",
-    "disallowed_categories"
+    "disabled_channels",
+    "disabled_categories",
+    "enabled_channels",
 )
+MENTIONS_FIELDS = ("ping_type", "dm_ping_type")
 
 SETTINGS_FIELDS = ALWAYS_OPTIONAL_SETTINGS + REQUIRED_FOR_FILTER_LIST_SETTINGS
 
@@ -166,20 +163,17 @@ class FilterSerializer(ModelSerializer):
             raise ValidationError("Infraction type is required with infraction duration or reason")
 
         if (
-            data.get('allowed_channels') is not None
-            and data.get('disallowed_channels') is not None
+            data.get('disabled_channels') is not None
+            and data.get('enabled_channels') is not None
         ):
-            channels_collection = data['allowed_channels'] + data['disallowed_channels']
+            channels_collection = data['disabled_channels'] + data['enabled_channels']
             if len(channels_collection) != len(set(channels_collection)):
-                raise ValidationError("Allowed and disallowed channels lists contain duplicates.")
+                raise ValidationError("Enabled and Disabled channels lists contain duplicates.")
 
-        if (
-            data.get('allowed_categories') is not None
-            and data.get('disallowed_categories') is not None
-        ):
-            categories_collection = data['allowed_categories'] + data['disallowed_categories']
+        if data.get('disabled_categories') is not None:
+            categories_collection = data['disabled_categories']
             if len(categories_collection) != len(set(categories_collection)):
-                raise ValidationError("Allowed and disallowed categories lists contain duplicates.")
+                raise ValidationError("Disabled categories lists contain duplicates.")
 
         return data
 
@@ -194,18 +188,20 @@ class FilterSerializer(ModelSerializer):
             field: {'required': False, 'allow_null': True} for field in SETTINGS_FIELDS
         } | {
             'infraction_reason': {'allow_blank': True, 'allow_null': True, 'required': False},
-            'disallowed_channels': {'allow_empty': True, 'allow_null': True, 'required': False},
-            'disallowed_categories': {'allow_empty': True, 'allow_null': True, 'required': False},
-            'allowed_channels': {'allow_empty': True, 'allow_null': True, 'required': False},
-            'allowed_categories': {'allow_empty': True, 'allow_null': True, 'required': False},
+            'enabled_channels': {'allow_empty': True, 'allow_null': True, 'required': False},
+            'disabled_channels': {'allow_empty': True, 'allow_null': True, 'required': False},
+            'disabled_categories': {'allow_empty': True, 'allow_null': True, 'required': False},
         }
 
     def to_representation(self, instance: Filter) -> dict:
         """
-
         Provides a custom JSON representation to the Filter Serializers.
 
-        That does not affect how the Serializer works in general.
+        This representation restructures how the Filter is represented.
+        It groups the Infraction, Channel and Mention related fields into their own separated group.
+
+        Furthermore, it puts the fields that meant to represent Filter settings,
+        into a sub-field called `settings`.
         """
         schema_settings = {
             "settings":
@@ -214,6 +210,11 @@ class FilterSerializer(ModelSerializer):
                 | {
                     "channel_scope":
                         {name: getattr(instance, name) for name in CHANNEL_SCOPE_FIELDS}
+                } | {
+                    "mentions":
+                        {
+                            schema_field_name: getattr(instance, schema_field_name)
+                            for schema_field_name in MENTIONS_FIELDS}
                 }
         }
 
@@ -236,20 +237,17 @@ class FilterListSerializer(ModelSerializer):
             raise ValidationError("Infraction type is required with infraction duration or reason")
 
         if (
-            data.get('allowed_channels') is not None
-            and data.get('disallowed_channels') is not None
+            data.get('disabled_channels') is not None
+            and data.get('enabled_channels') is not None
         ):
-            channels_collection = data['allowed_channels'] + data['disallowed_channels']
+            channels_collection = data['disabled_channels'] + data['enabled_channels']
             if len(channels_collection) != len(set(channels_collection)):
-                raise ValidationError("Allowed and disallowed channels lists contain duplicates.")
+                raise ValidationError("Enabled and Disabled channels lists contain duplicates.")
 
-        if (
-            data.get('allowed_categories') is not None
-            and data.get('disallowed_categories') is not None
-        ):
-            categories_collection = data['allowed_categories'] + data['disallowed_categories']
+        if data.get('disabled_categories') is not None:
+            categories_collection = data['disabled_categories']
             if len(categories_collection) != len(set(categories_collection)):
-                raise ValidationError("Allowed and disallowed categories lists contain duplicates.")
+                raise ValidationError("Disabled categories lists contain duplicates.")
 
         return data
 
@@ -262,10 +260,9 @@ class FilterListSerializer(ModelSerializer):
             field: {'required': False, 'allow_null': True} for field in ALWAYS_OPTIONAL_SETTINGS
         } | {
             'infraction_reason': {'allow_blank': True, 'allow_null': True, 'required': False},
-            'disallowed_channels': {'allow_empty': True},
-            'disallowed_categories': {'allow_empty': True},
-            'allowed_channels': {'allow_empty': True},
-            'allowed_categories': {'allow_empty': True},
+            'enabled_channels': {'allow_empty': True},
+            'disabled_channels': {'allow_empty': True},
+            'disabled_categories': {'allow_empty': True},
         }
 
         # Ensure that we can only have one filter list with the same name and field
@@ -283,7 +280,11 @@ class FilterListSerializer(ModelSerializer):
         """
         Provides a custom JSON representation to the FilterList Serializers.
 
-        That does not affect how the Serializer works in general.
+        This representation restructures how the Filter is represented.
+        It groups the Infraction, Channel and Mention related fields into their own separated group.
+
+        Furthermore, it puts the fields that meant to represent FilterList settings,
+        into a sub-field called `settings`.
         """
         # Fetches the relating filters
         filters = [
@@ -301,7 +302,12 @@ class FilterListSerializer(ModelSerializer):
             {name: getattr(instance, name) for name in INFRACTION_FIELDS}} \
             | {
             "channel_scope":
-            {name: getattr(instance, name) for name in CHANNEL_SCOPE_FIELDS}}
+            {name: getattr(instance, name) for name in CHANNEL_SCOPE_FIELDS}} | {
+            "mentions": {
+                schema_field_name: getattr(instance, schema_field_name)
+                for schema_field_name in MENTIONS_FIELDS
+            }
+        }
         return schema_base | {"settings": schema_settings_base | schema_settings_categories}
 
 

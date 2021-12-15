@@ -99,14 +99,12 @@ class FilterList(FilterSettingsMixin):
     # Where a filter should apply.
     #
     # The resolution is done in the following order:
-    #   - disallowed channels
-    #   - disallowed categories
-    #   - allowed categories
-    #   - allowed channels
-    disallowed_channels = ArrayField(models.IntegerField())
-    disallowed_categories = ArrayField(models.IntegerField())
-    allowed_channels = ArrayField(models.IntegerField())
-    allowed_categories = ArrayField(models.IntegerField())
+    #   - enabled_channels
+    #   - disabled_categories
+    #   - disabled_channels
+    enabled_channels = ArrayField(models.IntegerField())
+    disabled_channels = ArrayField(models.IntegerField())
+    disabled_categories = ArrayField(models.IntegerField())
 
     class Meta:
         """Constrain name and list_type unique."""
@@ -157,10 +155,9 @@ class Filter(FilterSettingsMixin):
     )
 
     # Check FilterList model for information about these properties.
-    disallowed_channels = ArrayField(models.IntegerField(), null=True)
-    disallowed_categories = ArrayField(models.IntegerField(), null=True)
-    allowed_channels = ArrayField(models.IntegerField(), null=True)
-    allowed_categories = ArrayField(models.IntegerField(), null=True)
+    enabled_channels = ArrayField(models.IntegerField(), null=True)
+    disabled_channels = ArrayField(models.IntegerField(), null=True)
+    disabled_categories = ArrayField(models.IntegerField(), null=True)
 
     def __str__(self) -> str:
         return f"Filter {self.content!r}"
