@@ -139,7 +139,8 @@ BASE_SETTINGS_FIELDS = (
     "bypass_roles",
     "filter_dm",
     "enabled",
-    "delete_messages"
+    "delete_messages",
+    "send_alert"
 )
 INFRACTION_FIELDS = ("infraction_type", "infraction_reason", "infraction_duration")
 CHANNEL_SCOPE_FIELDS = (
@@ -147,6 +148,7 @@ CHANNEL_SCOPE_FIELDS = (
     "disabled_categories",
     "enabled_channels",
 )
+SERVER_MESSAGE_FIELDS = ("server_message_text", "server_message_embed")
 MENTIONS_FIELDS = ("ping_type", "dm_ping_type")
 
 SETTINGS_FIELDS = ALWAYS_OPTIONAL_SETTINGS + REQUIRED_FOR_FILTER_LIST_SETTINGS
@@ -214,10 +216,16 @@ class FilterSerializer(ModelSerializer):
                     "mentions":
                         {
                             schema_field_name: getattr(instance, schema_field_name)
-                            for schema_field_name in MENTIONS_FIELDS}
+                            for schema_field_name in MENTIONS_FIELDS
+                        }
                 }
+        } | {
+            "server_message":
+            {
+                schema_field_name: getattr(instance, schema_field_name)
+                for schema_field_name in SERVER_MESSAGE_FIELDS
+            }
         }
-
         schema_base = {name: getattr(instance, name) for name in BASE_FILTER_FIELDS} | \
                       {"filter_list": instance.filter_list.id}
 
@@ -306,6 +314,11 @@ class FilterListSerializer(ModelSerializer):
             "mentions": {
                 schema_field_name: getattr(instance, schema_field_name)
                 for schema_field_name in MENTIONS_FIELDS
+            }
+        } | {
+            "server_message": {
+                schema_field_name: getattr(instance, schema_field_name)
+                for schema_field_name in SERVER_MESSAGE_FIELDS
             }
         }
         return schema_base | {"settings": schema_settings_base | schema_settings_categories}

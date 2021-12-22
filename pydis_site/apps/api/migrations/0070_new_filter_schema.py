@@ -1,4 +1,5 @@
 # Modified migration file to migrate existing filters to the new one
+from datetime import timedelta
 
 import django.contrib.postgres.fields
 from django.apps.registry import Apps
@@ -18,20 +19,27 @@ def forward(apps: Apps, schema_editor: BaseDatabaseSchemaEditor) -> None:
 
     for name, type_ in OLD_LIST_NAMES:
         objects = filter_list_old.objects.filter(type=name)
+        if name == "DOMAIN_NAME":
+            dm_content = "Your URL has been removed because it matched a blacklisted domain: {match}"
+        elif name == "GUILD_INVITE":
+            dm_content = "Per Rule 6, your invite link has been removed. " \
+                         "Our server rules can be found here: https://pythondiscord.com/pages/rules"
+        else:
+            dm_content = ""
 
         list_ = filter_list.objects.create(
             name=name.lower(),
             list_type=1 if type_ == "ALLOW" else 0,
-            ping_type=["onduty"],
+            ping_type=(["onduty"] if name != "FILE_FORMAT" else []),
             filter_dm=True,
-            dm_ping_type=["onduty"],
-            delete_messages=True,
-            bypass_roles=[267630620367257601],
-            enabled=False,
-            dm_content=None,
-            infraction_type=None,
+            dm_ping_type=[],
+            delete_messages=(True if name != "FILTER_TOKEN" else False),
+            bypass_roles=["staff"],
+            enabled=True,
+            dm_content=dm_content,
+            infraction_type="",
             infraction_reason="",
-            infraction_duration=None,
+            infraction_duration=timedelta(seconds=0),
             disallowed_channels=[],
             disallowed_categories=[],
             allowed_channels=[],
@@ -84,7 +92,7 @@ class Migration(migrations.Migration):
                 ('filter_dm', models.BooleanField(help_text='Whether DMs should be filtered.', null=True)),
                 ('dm_ping_type', django.contrib.postgres.fields.ArrayField(base_field=models.CharField(max_length=20), help_text='Who to ping when this filter triggers on a DM.', size=None, validators=[pydis_site.apps.api.models.bot.filters.validate_ping_field], null=True)),
                 ('delete_messages', models.BooleanField(help_text='Whether this filter should delete messages triggering it.', null=True)),
-                ('bypass_roles', django.contrib.postgres.fields.ArrayField(base_field=models.BigIntegerField(), help_text='Roles and users who can bypass this filter.', size=None, null=True)),
+                ('bypass_roles', django.contrib.postgres.fields.ArrayField(base_field=models.CharField(max_length=100), help_text='Roles and users who can bypass this filter.', size=None, validators=[pydis_site.apps.api.models.bot.filters.validate_bypass_roles_field], null=True)),
                 ('enabled', models.BooleanField(help_text='Whether this filter is currently enabled.', null=True)),
                 ('dm_content', models.CharField(help_text='The DM to send to a user triggering this filter.', max_length=1000, null=True)),
                 ('infraction_type', models.CharField(choices=[('note', 'Note'), ('warning', 'Warning'), ('watch', 'Watch'), ('mute', 'Mute'), ('kick', 'Kick'), ('ban', 'Ban'), ('superstar', 'Superstar'), ('voice_ban', 'Voice Ban')], help_text='The infraction to apply to this user.', max_length=9, null=True)),
@@ -106,7 +114,7 @@ class Migration(migrations.Migration):
                 ('filter_dm', models.BooleanField(help_text='Whether DMs should be filtered.')),
                 ('dm_ping_type', django.contrib.postgres.fields.ArrayField(base_field=models.CharField(max_length=20), help_text='Who to ping when this filter triggers on a DM.', size=None, validators=[pydis_site.apps.api.models.bot.filters.validate_ping_field])),
                 ('delete_messages', models.BooleanField(help_text='Whether this filter should delete messages triggering it.')),
-                ('bypass_roles', django.contrib.postgres.fields.ArrayField(base_field=models.BigIntegerField(), help_text='Roles and users who can bypass this filter.', size=None)),
+                ('bypass_roles', django.contrib.postgres.fields.ArrayField(base_field=models.CharField(max_length=100), help_text='Roles and users who can bypass this filter.', size=None, validators=[pydis_site.apps.api.models.bot.filters.validate_bypass_roles_field])),
                 ('enabled', models.BooleanField(help_text='Whether this filter is currently enabled.')),
                 ('dm_content', models.CharField(help_text='The DM to send to a user triggering this filter.', max_length=1000, null=True)),
                 ('infraction_type', models.CharField(choices=[('note', 'Note'), ('warning', 'Warning'), ('watch', 'Watch'), ('mute', 'Mute'), ('kick', 'Kick'), ('ban', 'Ban'), ('superstar', 'Superstar'), ('voice_ban', 'Voice Ban')], help_text='The infraction to apply to this user.', max_length=9, null=True)),

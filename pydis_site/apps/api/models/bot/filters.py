@@ -18,6 +18,7 @@ class FilterListType(models.IntegerChoices):
 
 # Valid special values in ping related fields
 VALID_PINGS = ("everyone", "here", "moderators", "onduty", "admins")
+VALID_BYPASS_ROLES = ("staff",)
 
 
 def validate_ping_field(value_list: List[str]) -> None:
@@ -31,6 +32,14 @@ def validate_ping_field(value_list: List[str]) -> None:
             continue
 
         raise ValidationError(f"{value!r} isn't a valid ping type.")
+
+
+def validate_bypass_roles_field(value_list: List[str]) -> None:
+    """Validate that the vclues are either a special value or a Role ID."""
+    for value in value_list:
+        if value.isnumeric() or value in VALID_BYPASS_ROLES:
+            continue
+        raise ValidationError(f"{value!r} isn't a valid (bypass) role.")
 
 
 class FilterSettingsMixin(models.Model):
@@ -88,13 +97,29 @@ class FilterList(FilterSettingsMixin):
         null=False
     )
     bypass_roles = ArrayField(
-        models.BigIntegerField(),
+        models.CharField(max_length=100),
         help_text="Roles and users who can bypass this filter.",
+        validators=(validate_bypass_roles_field,),
         null=False
     )
     enabled = models.BooleanField(
         help_text="Whether this filter is currently enabled.",
         null=False
+    )
+    send_alert = models.BooleanField(
+        help_text="Whether alert should be sent.",
+        null=False,
+        default=True
+    )
+    server_message_text = models.CharField(
+        max_length=100,
+        help_text="The message to send on the server",
+        null=True
+    )
+    server_message_embed = models.CharField(
+        max_length=100,
+        help_text="The content of the server message embed",
+        null=True
     )
     # Where a filter should apply.
     #
@@ -145,12 +170,27 @@ class Filter(FilterSettingsMixin):
         null=True
     )
     bypass_roles = ArrayField(
-        models.BigIntegerField(),
+        models.CharField(max_length=100),
         help_text="Roles and users who can bypass this filter.",
+        validators=(validate_bypass_roles_field,),
         null=True
     )
     enabled = models.BooleanField(
         help_text="Whether this filter is currently enabled.",
+        null=True
+    )
+    send_alert = models.BooleanField(
+        help_text="Whether alert should be sent.",
+        null=True
+    )
+    server_message_text = models.CharField(
+        max_length=100,
+        help_text="The message to send on the server",
+        null=True
+    )
+    server_message_embed = models.CharField(
+        max_length=100,
+        help_text="The content of the server message embed",
         null=True
     )
 

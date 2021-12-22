@@ -22,20 +22,21 @@ class FilterListViewSet(ModelViewSet):
     >>> [
     ...     {
     ...         "id": 1,
-    ...         "name": "guild_invite",
+    ...         "name": "invites",
     ...         "list_type": 1,
     ...         "filters": [
     ...             {
     ...                 "id": 1,
-    ...                 "filter_list": 1
     ...                 "content": "267624335836053506",
     ...                 "description": "Python Discord",
     ...                 "additional_field": None,
+    ...                 "filter_list": 1
     ...                 "settings": {
     ...                        "bypass_roles": None
     ...                        "filter_dm": None,
-    ...                        "enabled": False
-    ...                        "delete_messages": True
+    ...                        "enabled": None
+    ...                        "send_alert": True,
+    ...                        "delete_messages": None
     ...                        "infraction": {
     ...                            "infraction_type": None,
     ...                            "infraction_reason": "",
@@ -50,37 +51,42 @@ class FilterListViewSet(ModelViewSet):
     ...                            "ping_type": None
     ...                            "dm_ping_type": None
     ...                         }
+    ...                        "server_message": {
+    ...                            "server_message_text": None,
+    ...                            "server_message_embed": None
+    ...                        }
     ...                    }
     ...
     ...             },
     ...             ...
     ...         ],
     ...            "settings": {
-    ...              "ping_type": [
-    ...                  "onduty"
-    ...              ],
-    ...              "dm_ping_type": [
-    ...                  "onduty"
-    ...              ],
     ...              "bypass_roles": [
-    ...                  267630620367257601
+    ...                  "staff"
     ...              ],
     ...              "filter_dm": True,
-    ...              "enabled": False
-    ...              "delete_messages": True
+    ...              "enabled": True
+    ...              "delete_messages": True,
+    ...              "send_alert": True
     ...              "infraction": {
-    ...                   "infraction_type": None,
+    ...                   "infraction_type": "",
     ...                   "infraction_reason": "",
-    ...                   "infraction_duration": None,
+    ...                   "infraction_duration": "0.0",
     ...               }
     ...               "channel_scope": {
-    ...                 "disabled_channels": None,
-    ...                 "disabled_categories": None,
-    ...                 "enabled_channels": None
-    ...                }
+    ...                 "disabled_channels": [],
+    ...                 "disabled_categories": [],
+    ...                 "enabled_channels": []
+    ...               }
     ...               "mentions": {
-    ...                 "ping_type": None
-    ...                 "dm_ping_type": None
+    ...                 "ping_type": [
+    ...                     "onduty"
+    ...                 ]
+    ...                 "dm_ping_type": []
+    ...                }
+    ...                "server_message": {
+    ...                 "server_message_text": "",
+    ...                 "server_message_embed": ""
     ...                }
     ...           },
     ...     ...
@@ -96,7 +102,7 @@ class FilterListViewSet(ModelViewSet):
     #### Response format
     >>> {
     ...         "id": 1,
-    ...         "name": "guild_invite",
+    ...         "name": "invites",
     ...         "list_type": 1,
     ...         "filters": [
     ...             {
@@ -108,8 +114,9 @@ class FilterListViewSet(ModelViewSet):
     ...                 "settings": {
     ...                        "bypass_roles": None
     ...                        "filter_dm": None,
-    ...                        "enabled": False
-    ...                        "delete_messages": True
+    ...                        "enabled": None
+    ...                        "delete_messages": None,
+    ...                        "send_alert": None
     ...                        "infraction": {
     ...                            "infraction_type": None,
     ...                            "infraction_reason": "",
@@ -124,37 +131,42 @@ class FilterListViewSet(ModelViewSet):
     ...                            "ping_type": None
     ...                            "dm_ping_type": None
     ...                         }
+    ...                         "server_message": {
+    ...                             "server_message_text": None,
+    ...                             "server_message_embed": None
+    ...                         }
     ...                    }
     ...
     ...             },
     ...             ...
     ...         ],
     ...            "settings": {
-    ...              "ping_type": [
-    ...                  "onduty"
-    ...              ],
-    ...              "dm_ping_type": [
-    ...                  "onduty"
-    ...              ],
     ...              "bypass_roles": [
-    ...                  267630620367257601
+    ...                  "staff"
     ...              ],
     ...              "filter_dm": True,
-    ...              "enabled": False
+    ...              "enabled": True
     ...              "delete_messages": True
+    ...              "send_alert": True
     ...              "infraction": {
-    ...                   "infraction_type": None,
+    ...                   "infraction_type": "",
     ...                   "infraction_reason": "",
-    ...                   "infraction_duration": None,
+    ...                   "infraction_duration": "0.0",
     ...               }
     ...               "channel_scope": {
-    ...                 "disabled_channels": None,
-    ...                 "disabled_categories": None,
-    ...                 "enabled_channels": None
+    ...                 "disabled_channels": [],
+    ...                 "disabled_categories": [],
+    ...                 "enabled_channels": []
     ...                }
     ...               "mentions": {
-    ...                 "ping_type": None
-    ...                 "dm_ping_type": None
+    ...                 "ping_type": [
+    ...                     "onduty"
+    ...                 ]
+    ...                 "dm_ping_type": []
+    ...                }
+    ...               "server_message": {
+    ...                 "server_message_text": "",
+    ...                 "server_message_embed": ""
     ...                }
     ... }
 
@@ -193,11 +205,12 @@ class FilterViewSet(ModelViewSet):
     ...                 "settings": {
     ...                        "bypass_roles": None
     ...                        "filter_dm": None,
-    ...                        "enabled": False
-    ...                        "delete_messages": True
+    ...                        "enabled": None
+    ...                        "delete_messages": True,
+    ...                        "send_alert": True
     ...                        "infraction": {
     ...                            "infraction_type": None,
-    ...                            "infraction_reason": "",
+    ...                            "infraction_reason": None,
     ...                            "infraction_duration": None
     ...                        },
     ...                        "channel_scope": {
@@ -231,11 +244,12 @@ class FilterViewSet(ModelViewSet):
     ...                 "settings": {
     ...                        "bypass_roles": None
     ...                        "filter_dm": None,
-    ...                        "enabled": False
-    ...                        "delete_messages": True
+    ...                        "enabled": None
+    ...                        "delete_messages": True,
+    ...                        "send_alert": True
     ...                        "infraction": {
     ...                            "infraction_type": None,
-    ...                            "infraction_reason": "",
+    ...                            "infraction_reason": None,
     ...                            "infraction_duration": None
     ...                        },
     ...                        "channel_scope": {
