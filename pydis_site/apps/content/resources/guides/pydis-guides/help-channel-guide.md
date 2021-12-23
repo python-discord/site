@@ -54,6 +54,12 @@ The channel remains open for **30 minutes** after your last message, but if anot
 *You'll see this message in your channel once it goes dormant:*
 ![Channel dormant message](/static/images/content/help_channels/dormant_message.png)
 
+## Q: No one answered my question. How come?
+
+The server has users active all over the world and all hours of the day, but some days are less active than others. If no one answered your question, feel free to claim another help channel a little later.
+
+If you still feel like your question is being overlooked, read our guide on [asking good questions](../asking-good-questions) to incease your chances of getting a response.
+
 ## Q: I don't need my help channel anymore, my question was answered. What do I do?
 
 Once you have finished with your help channel you or a staff member can run `!dormant`. This will move the channel to the **Python Help: Dormant** category where it will sit until it is returned to circulation. You will only be able to run the command if you claimed the channel from the available category, you cannot close channels belonging to others.
