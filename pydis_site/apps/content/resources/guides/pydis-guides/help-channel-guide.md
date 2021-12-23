@@ -22,17 +22,15 @@ If your question fits into the domain of one of our topical help channels, and i
 
 ![List of topical help channels](/static/images/content/help_channels/topical_channels.png)
 
-Some of the topical help channels have a broad scope, so they can cover many (somewhat) related topics.
+Some of the topical help channels have a broad scope, so they can cover many related topics.
 For example, `#data-science-and-ai` covers scientific Python, statistics, and machine learning, while `#algos-and-data-structs` covers everything from data structures and algorithms to maths.
 
-To help you navigate this, we've added a list of suggested topics in the topic of every channel.
-If you're not sure where to post, feel free to ask us which channel is relevant for a topic in `#community-meta`.
+Each channel on the server has a channel description which briefly describes the topics covered by that channel. If you're not sure where to post, feel free to ask us which channel is appropriate in `#community-meta`.
 
 # General Help Channels
 
-Our general help channels move at a fast pace, and attract a far more diverse spectrum of helpers.
-This is a great choice for a generic Python question, and a good choice if you need an answer as soon as possible.
-It's particularly important to [ask good questions](../asking-good-questions) when asking in these channels, or you risk not getting an answer and having your help channel be claimed by someone else.
+Our general help channels cycle quickly, with the advantage of attracting a more diverse spectrum of helpers, and getting individual attention and help for your question. These channels are a great choice for generic Python questions, but they can be used for domain-specific Python help as well. 
+Be sure to [ask good questions](../asking-good-questions) in order to give yourself the best chances of getting help. 
 
 ## How To Claim a Channel
 
@@ -40,12 +38,12 @@ There are always 3 available help channels waiting to be claimed in the **Python
 
 ![Available help channels](/static/images/content/help_channels/available_channels.png)
 
-In order to claim one, simply start typing your question into one of these channels. Once your question has been posted, you have claimed this channel, and the channel will be moved down to the **Python Help: Occupied** category.
-
-If you're unable to type into these channels, this means you're currently **on cooldown**. In order to prevent someone from claiming all the channels for themselves, **we only allow someone to claim a single help channel at the same time**. You can search in the top right corner of your Discord client `from:yourusername#xxxx` to find back your channel.
-
+This message is posted when a channel becomes available for use:
 ![Channel available message](/static/images/content/help_channels/available_message.png)
-*This message is always posted when a channel becomes available for use.*
+
+In order to claim one, simply start typing your question into one of these channels. Once your question is posted, you have claimed this channel it will be moved down to the **Occupied Help Channels** category.
+
+At this point you will have the **Help Cooldown** role which will remain on your profile until your help channel is closed (with the `!closed` command) or goes dormant due to inactivity.
 
 ## Q: For how long is the channel mine?
 
