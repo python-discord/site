@@ -47,12 +47,12 @@ At this point you will have the **Help Cooldown** role which will remain on your
 
 # Frequently Asked Questions
 
-## Q: For how long is the channel mine?
+## Q: How long does my help channel stay active?
 
-The channel is yours until it has been inactive for **10 minutes**, or 30 minutes until someone participate in the channel. When this happens, we move the channel down to the **Python Help: Dormant** category, and make the channel read-only. After a while, the channel will be rotated back into **Python Help: Available** for the next question. Please try to resist the urge to continue bumping the channel so that it never gets marked as inactive. If nobody is answering your question, you should try to reformulate the question to increase your chances of getting help.
+The channel remains open for **30 minutes** after your last message, but if another user posts in your channel, the closing will be delayed by 10 minutes.
 
+*You'll see this message in your channel once it goes dormant:*
 ![Channel dormant message](/static/images/content/help_channels/dormant_message.png)
-*You'll see this message in your channel when the channel is marked as inactive.*
 
 ## Q: I don't need my help channel anymore, my question was answered. What do I do?
 
