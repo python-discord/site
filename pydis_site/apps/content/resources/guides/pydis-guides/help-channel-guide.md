@@ -29,8 +29,8 @@ Each channel on the server has a channel description which briefly describes the
 
 # General Help Channels
 
-Our general help channels cycle quickly, with the advantage of attracting a more diverse spectrum of helpers, and getting individual attention and help for your question. These channels are a great choice for generic Python questions, but they can be used for domain-specific Python help as well. 
-Be sure to [ask good questions](../asking-good-questions) in order to give yourself the best chances of getting help. 
+Our general help channels cycle quickly, with the advantage of attracting a more diverse spectrum of helpers, and getting individual attention and help for your question. These channels are a great choice for generic Python questions, but they can be used for domain-specific Python help as well.
+Be sure to [ask good questions](../asking-good-questions) in order to give yourself the best chances of getting help.
 
 ## How To Claim a Channel
 
@@ -64,13 +64,11 @@ If you still feel like your question is being overlooked, read our guide on [ask
 
 Go ahead and move your channel to the dormant category by running the `!closed` command. You will only be able to run this command in your own help channel, and likewise no one will be able to prematurely close your claimed help channel (with the exception of staff).
 
-## Q: Are only Helpers supposed to answer questions?
+## Q: Can only Helpers answer help questions?
 
-Absolutely not. We strongly encourage all members of the community to help answer questions. If you'd like to help answer some questions, simply head over to one of the help channels that are currently in use. These can be found in the **Python Help: Occupied** category.
+Definitely not! We encourage all members of the community to participate in giving help. If you'd like to help answer some questions, head over to the **Occupied Help Channels** or **Topical Chat/Help** categories.
 
-![Occupied help channels](/static/images/content/help_channels/occupied_channels.png)
-
-Anyone can type in these channels, and users who are particularly helpful [may be offered a chance to join the staff on Python Discord](/pages/server-info/roles/#note-regarding-staff-roles).
+Before jumping in, please read our guide on [helping others](../helping-others) which explains our expectations for the culture and quailty of help that we aim for on the server.
 
 ## Q: I lost my help channel!
 
