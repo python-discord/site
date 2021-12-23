@@ -62,7 +62,7 @@ If you still feel like your question is being overlooked, read our guide on [ask
 
 ## Q: I don't need my help channel anymore, my question was answered. What do I do?
 
-Once you have finished with your help channel you or a staff member can run `!dormant`. This will move the channel to the **Python Help: Dormant** category where it will sit until it is returned to circulation. You will only be able to run the command if you claimed the channel from the available category, you cannot close channels belonging to others.
+Go ahead and move your channel to the dormant category by running the `!closed` command. You will only be able to run this command in your own help channel, and likewise no one will be able to prematurely close your claimed help channel (with the exception of staff).
 
 ## Q: Are only Helpers supposed to answer questions?
 
