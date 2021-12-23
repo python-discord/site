@@ -45,6 +45,8 @@ In order to claim one, simply start typing your question into one of these chann
 
 At this point you will have the **Help Cooldown** role which will remain on your profile until your help channel is closed (with the `!closed` command) or goes dormant due to inactivity.
 
+# Frequently Asked Questions
+
 ## Q: For how long is the channel mine?
 
 The channel is yours until it has been inactive for **10 minutes**, or 30 minutes until someone participate in the channel. When this happens, we move the channel down to the **Python Help: Dormant** category, and make the channel read-only. After a while, the channel will be rotated back into **Python Help: Available** for the next question. Please try to resist the urge to continue bumping the channel so that it never gets marked as inactive. If nobody is answering your question, you should try to reformulate the question to increase your chances of getting help.
