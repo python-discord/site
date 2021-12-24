@@ -26,7 +26,7 @@ def migrate_filterlist(apps: Apps, schema_editor: BaseDatabaseSchemaEditor) -> N
         list_type=0,
         filter_dm=True,
         delete_messages=False,
-        bypass_roles=[0],
+        bypass_roles=["staff"],
         enabled=True
     )
     redirects.save()
