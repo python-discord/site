@@ -142,7 +142,7 @@ BASE_SETTINGS_FIELDS = (
     "delete_messages",
     "send_alert"
 )
-INFRACTION_FIELDS = ("infraction_type", "infraction_reason", "infraction_duration")
+INFRACTION_FIELDS = ("infraction_type", "infraction_reason", "infraction_duration", "dm_content")
 CHANNEL_SCOPE_FIELDS = (
     "disabled_channels",
     "disabled_categories",
