@@ -37,10 +37,12 @@ class FilterListViewSet(ModelViewSet):
     ...                        "enabled": None
     ...                        "send_alert": True,
     ...                        "delete_messages": None
-    ...                        "infraction": {
+    ...                        "infraction_and_notification": {
     ...                            "infraction_type": None,
     ...                            "infraction_reason": "",
     ...                            "infraction_duration": None
+    ...                            "dm_content": None,
+    ...                            "dm_embed": None
     ...                        },
     ...                        "channel_scope": {
     ...                            "disabled_channels": None,
@@ -51,10 +53,6 @@ class FilterListViewSet(ModelViewSet):
     ...                            "ping_type": None
     ...                            "dm_ping_type": None
     ...                         }
-    ...                        "server_message": {
-    ...                            "server_message_text": None,
-    ...                            "server_message_embed": None
-    ...                        }
     ...                    }
     ...
     ...             },
@@ -68,10 +66,12 @@ class FilterListViewSet(ModelViewSet):
     ...              "enabled": True
     ...              "delete_messages": True,
     ...              "send_alert": True
-    ...              "infraction": {
+    ...              "infraction_and_notification": {
     ...                   "infraction_type": "",
     ...                   "infraction_reason": "",
     ...                   "infraction_duration": "0.0",
+    ...                   "dm_content": "",
+    ...                   "dm_embed": ""
     ...               }
     ...               "channel_scope": {
     ...                 "disabled_channels": [],
@@ -83,10 +83,6 @@ class FilterListViewSet(ModelViewSet):
     ...                     "onduty"
     ...                 ]
     ...                 "dm_ping_type": []
-    ...                }
-    ...                "server_message": {
-    ...                 "server_message_text": "",
-    ...                 "server_message_embed": ""
     ...                }
     ...           },
     ...     ...
@@ -117,10 +113,12 @@ class FilterListViewSet(ModelViewSet):
     ...                        "enabled": None
     ...                        "delete_messages": None,
     ...                        "send_alert": None
-    ...                        "infraction": {
+    ...                        "infraction_and_notification": {
     ...                            "infraction_type": None,
     ...                            "infraction_reason": "",
     ...                            "infraction_duration": None
+    ...                            "dm_content": None,
+    ...                            "dm_embed": None
     ...                        },
     ...                        "channel_scope": {
     ...                            "disabled_channels": None,
@@ -130,10 +128,6 @@ class FilterListViewSet(ModelViewSet):
     ...                        "mentions": {
     ...                            "ping_type": None
     ...                            "dm_ping_type": None
-    ...                         }
-    ...                         "server_message": {
-    ...                             "server_message_text": None,
-    ...                             "server_message_embed": None
     ...                         }
     ...                    }
     ...
@@ -148,10 +142,12 @@ class FilterListViewSet(ModelViewSet):
     ...              "enabled": True
     ...              "delete_messages": True
     ...              "send_alert": True
-    ...              "infraction": {
+    ...              "infraction_and_notification": {
     ...                   "infraction_type": "",
     ...                   "infraction_reason": "",
     ...                   "infraction_duration": "0.0",
+    ...                   "dm_content": "",
+    ...                   "dm_embed": ""
     ...               }
     ...               "channel_scope": {
     ...                 "disabled_channels": [],
@@ -163,10 +159,6 @@ class FilterListViewSet(ModelViewSet):
     ...                     "onduty"
     ...                 ]
     ...                 "dm_ping_type": []
-    ...                }
-    ...               "server_message": {
-    ...                 "server_message_text": "",
-    ...                 "server_message_embed": ""
     ...                }
     ... }
 

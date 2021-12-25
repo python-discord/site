@@ -15,8 +15,7 @@ def migrate_filterlist(apps: Apps, schema_editor: BaseDatabaseSchemaEditor) -> N
     }
     for filter_list in FilterList.objects.all():
         filter_list.send_alert = change_map.get(filter_list.name)
-        filter_list.server_message_text = ""
-        filter_list.server_message_embed = ""
+        filter_list.dm_embed = ""
         filter_list.save()
 
 
@@ -24,7 +23,6 @@ def unmigrate_filterlist(apps: Apps, schema_editor: BaseDatabaseSchemaEditor) ->
     FilterList = apps.get_model("api", "FilterList")
     for filter_list in FilterList.objects.all():
         filter_list.send_alert = True
-        filter_list.server_message_text = None
         filter_list.server_message_embed = None
         filter_list.save()
 
@@ -42,13 +40,8 @@ class Migration(migrations.Migration):
         ),
         migrations.AddField(
             model_name='filter',
-            name='server_message_embed',
-            field=models.CharField(help_text='The content of the server message embed', max_length=100, null=True),
-        ),
-        migrations.AddField(
-            model_name='filter',
-            name='server_message_text',
-            field=models.CharField(help_text='The message to send on the server', max_length=100, null=True),
+            name='dm_embed',
+            field=models.CharField(help_text='The content of the DM embed', max_length=2000, null=True),
         ),
         migrations.AddField(
             model_name='filterlist',
@@ -57,13 +50,8 @@ class Migration(migrations.Migration):
         ),
         migrations.AddField(
             model_name='filterlist',
-            name='server_message_embed',
-            field=models.CharField(help_text='The content of the server message embed', max_length=100, null=True),
-        ),
-        migrations.AddField(
-            model_name='filterlist',
-            name='server_message_text',
-            field=models.CharField(help_text='The message to send on the server', max_length=100, null=True),
+            name='dm_embed',
+            field=models.CharField(help_text='The content of the DM embed', max_length=2000, null=True),
         ),
         migrations.RunPython(migrate_filterlist, unmigrate_filterlist)
     ]

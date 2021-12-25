@@ -142,13 +142,18 @@ BASE_SETTINGS_FIELDS = (
     "delete_messages",
     "send_alert"
 )
-INFRACTION_FIELDS = ("infraction_type", "infraction_reason", "infraction_duration", "dm_content")
+INFRACTION_AND_NOTIFICATION_FIELDS = (
+    "infraction_type",
+    "infraction_reason",
+    "infraction_duration",
+    "dm_content",
+    "dm_embed"
+)
 CHANNEL_SCOPE_FIELDS = (
     "disabled_channels",
     "disabled_categories",
     "enabled_channels",
 )
-SERVER_MESSAGE_FIELDS = ("server_message_text", "server_message_embed")
 MENTIONS_FIELDS = ("ping_type", "dm_ping_type")
 
 SETTINGS_FIELDS = ALWAYS_OPTIONAL_SETTINGS + REQUIRED_FOR_FILTER_LIST_SETTINGS
@@ -208,8 +213,10 @@ class FilterSerializer(ModelSerializer):
         schema_settings = {
             "settings":
                 {name: getattr(instance, name) for name in BASE_SETTINGS_FIELDS}
-                | {"infraction": {name: getattr(instance, name) for name in INFRACTION_FIELDS}}
                 | {
+                    "infraction_and_notification":
+                        {name: getattr(instance, name) for name in INFRACTION_AND_NOTIFICATION_FIELDS}
+                } | {
                     "channel_scope":
                         {name: getattr(instance, name) for name in CHANNEL_SCOPE_FIELDS}
                 } | {
@@ -219,12 +226,6 @@ class FilterSerializer(ModelSerializer):
                             for schema_field_name in MENTIONS_FIELDS
                         }
                 }
-        } | {
-            "server_message":
-            {
-                schema_field_name: getattr(instance, schema_field_name)
-                for schema_field_name in SERVER_MESSAGE_FIELDS
-            }
         }
         schema_base = {name: getattr(instance, name) for name in BASE_FILTER_FIELDS} | \
                       {"filter_list": instance.filter_list.id}
@@ -306,19 +307,14 @@ class FilterListSerializer(ModelSerializer):
             | {"filters": filters}
         schema_settings_base = {name: getattr(instance, name) for name in BASE_SETTINGS_FIELDS}
         schema_settings_categories = {
-            "infraction":
-            {name: getattr(instance, name) for name in INFRACTION_FIELDS}} \
+            "infraction_and_notification":
+            {name: getattr(instance, name) for name in INFRACTION_AND_NOTIFICATION_FIELDS}} \
             | {
             "channel_scope":
             {name: getattr(instance, name) for name in CHANNEL_SCOPE_FIELDS}} | {
             "mentions": {
                 schema_field_name: getattr(instance, schema_field_name)
                 for schema_field_name in MENTIONS_FIELDS
-            }
-        } | {
-            "server_message": {
-                schema_field_name: getattr(instance, schema_field_name)
-                for schema_field_name in SERVER_MESSAGE_FIELDS
             }
         }
         return schema_base | {"settings": schema_settings_base | schema_settings_categories}

@@ -50,6 +50,11 @@ class FilterSettingsMixin(models.Model):
         null=True,
         help_text="The DM to send to a user triggering this filter."
     )
+    dm_embed = models.CharField(
+        max_length=2000,
+        help_text="The content of the DM embed",
+        null=True
+    )
     infraction_type = models.CharField(
         choices=Infraction.TYPE_CHOICES,
         max_length=9,
@@ -111,16 +116,6 @@ class FilterList(FilterSettingsMixin):
         null=False,
         default=True
     )
-    server_message_text = models.CharField(
-        max_length=100,
-        help_text="The message to send on the server",
-        null=True
-    )
-    server_message_embed = models.CharField(
-        max_length=100,
-        help_text="The content of the server message embed",
-        null=True
-    )
     # Where a filter should apply.
     #
     # The resolution is done in the following order:
@@ -181,16 +176,6 @@ class Filter(FilterSettingsMixin):
     )
     send_alert = models.BooleanField(
         help_text="Whether alert should be sent.",
-        null=True
-    )
-    server_message_text = models.CharField(
-        max_length=100,
-        help_text="The message to send on the server",
-        null=True
-    )
-    server_message_embed = models.CharField(
-        max_length=100,
-        help_text="The content of the server message embed",
         null=True
     )
 
