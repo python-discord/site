@@ -29,6 +29,7 @@ def unmigrate_filterlist(apps: Apps, schema_editor: BaseDatabaseSchemaEditor) ->
 
 class Migration(migrations.Migration):
     dependencies = [
+        ('api', '0078_merge_20211213_0552'),
         ('api', '0078_merge_20211218_2200'),
     ]
 
