@@ -91,7 +91,7 @@ main.site-content {
     background: url(https://static.djangoproject.com/img/logos/django-logo-negative.svg) no-repeat center;
     filter: grayscale(1) invert(0.09);
     background-size: 52px 25.5px;
-    background-position: -1px -2px;
+    background-position: -2px -1px;
     color: #00000000;
 }
 
@@ -100,6 +100,7 @@ main.site-content {
     height: 20px;
     background: url(https://bulma.io/images/bulma-logo-white.png) no-repeat center;
     background-size: 60px;
+    background-position: 0px 3px;
     color: #00000000;
 }
 
