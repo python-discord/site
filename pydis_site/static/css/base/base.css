@@ -78,6 +78,14 @@ main.site-content {
     color: #00000000;
 }
 
+#netcup-logo {
+    padding-left: 15px;
+    background: url(https://www.netcup-wiki.de/static/assets/images/netcup_logo_white.svg) no-repeat center;
+    background-size: 60px;
+    background-position: 0px 3px;
+    color: #00000000;
+}
+
 #django-logo {
     padding-bottom: 2px;
     background: url(https://static.djangoproject.com/img/logos/django-logo-negative.png) no-repeat center;
