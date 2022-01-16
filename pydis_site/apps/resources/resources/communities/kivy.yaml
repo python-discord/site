@@ -5,7 +5,7 @@ icon_image: https://raw.githubusercontent.com/kivy/kivy-website/master/logos/kiv
 icon_size: 50
 title_image: https://i.imgur.com/EVP3jZR.png
 title_url: https://discord.gg/djPtTRJ
-position: 5
+position: 6
 urls:
   - icon: branding/discord
     url: https://discord.gg/djPtTRJ
