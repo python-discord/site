@@ -1,7 +1,7 @@
 from django.urls import reverse
 
 from .base import AuthenticatedAPITestCase
-from ..models import Role
+from ..models import Role, User
 
 
 class CreationTests(AuthenticatedAPITestCase):
@@ -34,6 +34,20 @@ class CreationTests(AuthenticatedAPITestCase):
             colour=6,
             permissions=6,
             position=0,
+        )
+        cls.role_to_delete = Role.objects.create(
+            id=7,
+            name="role to delete",
+            colour=7,
+            permissions=7,
+            position=0,
+        )
+        cls.role_unassigned_test_user = User.objects.create(
+            id=8,
+            name="role_unassigned_test_user",
+            discriminator="0000",
+            roles=[cls.role_to_delete.id],
+            in_guild=True
         )
 
     def _validate_roledict(self, role_dict: dict) -> None:
@@ -81,11 +95,11 @@ class CreationTests(AuthenticatedAPITestCase):
         url = reverse('api:bot:role-list')
 
         response = self.client.get(url)
-        self.assertContains(response, text="id", count=4, status_code=200)
+        self.assertContains(response, text="id", count=5, status_code=200)
 
         roles = response.json()
         self.assertIsInstance(roles, list)
-        self.assertEqual(len(roles), 4)
+        self.assertEqual(len(roles), 5)
 
         for role in roles:
             self._validate_roledict(role)
@@ -180,6 +194,12 @@ class CreationTests(AuthenticatedAPITestCase):
         url = reverse('api:bot:role-detail', args=(self.admins_role.id,))
         response = self.client.delete(url)
         self.assertEqual(response.status_code, 204)
+
+    def test_role_delete_unassigned(self):
+        """Tests if the deleted Role gets unassigned from the user."""
+        self.role_to_delete.delete()
+        self.role_unassigned_test_user.refresh_from_db()
+        self.assertEqual(self.role_unassigned_test_user.roles, [])
 
     def test_role_detail_404_all_methods(self):
         """Tests detail view with non-existing ID."""

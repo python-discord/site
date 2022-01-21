@@ -421,7 +421,7 @@ class UserMetricityTests(AuthenticatedAPITestCase):
 
         # Then
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.json(), {
+        self.assertCountEqual(response.json(), {
             "joined_at": joined_at,
             "total_messages": total_messages,
             "voice_banned": False,

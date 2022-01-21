@@ -36,6 +36,12 @@ RUN \
     METRICITY_DB_URL=postgres://localhost \
     python manage.py collectstatic --noinput --clear
 
+# Build static files if we are doing a static build
+ARG STATIC_BUILD=false
+RUN if [ $STATIC_BUILD = "TRUE" ] ; \
+  then SECRET_KEY=dummy_value python manage.py distill-local build --traceback --force ; \
+fi
+
 # Run web server through custom manager
 ENTRYPOINT ["python", "manage.py"]
 CMD ["run"]

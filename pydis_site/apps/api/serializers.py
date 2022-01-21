@@ -145,7 +145,16 @@ class InfractionSerializer(ModelSerializer):
 
         model = Infraction
         fields = (
-            'id', 'inserted_at', 'expires_at', 'active', 'user', 'actor', 'type', 'reason', 'hidden'
+            'id',
+            'inserted_at',
+            'expires_at',
+            'active',
+            'user',
+            'actor',
+            'type',
+            'reason',
+            'hidden',
+            'dm_sent'
         )
         validators = [
             UniqueTogetherValidator(
@@ -200,25 +209,30 @@ class ExpandedInfractionSerializer(InfractionSerializer):
         return ret
 
 
+class OffTopicChannelNameListSerializer(ListSerializer):
+    """Custom ListSerializer to override to_representation() when list views are triggered."""
+
+    def to_representation(self, objects: list[OffTopicChannelName]) -> list[str]:
+        """
+        Return a list with all `OffTopicChannelName`s in the database.
+
+        This returns the list of off topic channel names. We want to only return
+        the name attribute, hence it is unnecessary to create a nested dictionary.
+        Additionally, this allows off topic channel name routes to simply return an
+        array of names instead of objects, saving on bandwidth.
+        """
+        return [obj.name for obj in objects]
+
+
 class OffTopicChannelNameSerializer(ModelSerializer):
     """A class providing (de-)serialization of `OffTopicChannelName` instances."""
 
     class Meta:
         """Metadata defined for the Django REST Framework."""
 
+        list_serializer_class = OffTopicChannelNameListSerializer
         model = OffTopicChannelName
-        fields = ('name',)
-
-    def to_representation(self, obj: OffTopicChannelName) -> str:
-        """
-        Return the representation of this `OffTopicChannelName`.
-
-        This only returns the name of the off topic channel name. As the model
-        only has a single attribute, it is unnecessary to create a nested dictionary.
-        Additionally, this allows off topic channel name routes to simply return an
-        array of names instead of objects, saving on bandwidth.
-        """
-        return obj.name
+        fields = ('name', 'used', 'active')
 
 
 class ReminderSerializer(ModelSerializer):
@@ -231,7 +245,15 @@ class ReminderSerializer(ModelSerializer):
 
         model = Reminder
         fields = (
-            'active', 'author', 'jump_url', 'channel_id', 'content', 'expiration', 'id', 'mentions'
+            'active',
+            'author',
+            'jump_url',
+            'channel_id',
+            'content',
+            'expiration',
+            'id',
+            'mentions',
+            'failures'
         )
 
 

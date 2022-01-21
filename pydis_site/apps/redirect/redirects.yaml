@@ -182,7 +182,7 @@ events_game_jams_twenty_twenty_rules_redirect:
   redirect_arguments: ["game-jams/2020/rules"]
 
 events_game_jams_twenty_twenty_technical_requirements_redirect:
-  original_path: pages/events/game-jam-2020/technical-requirements
+  original_path: pages/events/game-jam-2020/technical-requirements/
   redirect_route: "events:page"
   redirect_arguments: ["game-jams/2020/technical-requirements"]
 

@@ -108,7 +108,7 @@ If you get any Docker related errors, reference the [Possible Issues](https://py
 
 ## Run on the host
 
-Running on the host is particularily useful if you wish to debug the site. The [environment variables](#2-environment-variables) shown in a previous section need to have been configured.
+Running on the host is particularly useful if you wish to debug the site. The [environment variables](#2-environment-variables) shown in a previous section need to have been configured.
 
 ### Database
 
