@@ -14,8 +14,8 @@ def _parse_checkbox_options(options: str) -> set[str]:
 def resource_view(request: HttpRequest) -> HttpResponse:
     """View for resources index page."""
     checkbox_options = {
-        a: _parse_checkbox_options(request.GET.get(b))
-        for a, b in (
+        option: _parse_checkbox_options(request.GET.get(url_param, ""))
+        for option, url_param in (
             ('topics', 'topic'),
             ('type', 'type'),
             ('payment_tiers', 'payment'),
