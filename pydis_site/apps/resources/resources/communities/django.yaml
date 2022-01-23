@@ -1,0 +1,13 @@
+description: Django is a high-level Python web framework that encourages rapid development and clean,
+  pragmatic design. Built by experienced developers, it takes care of much of the hassle of web development,
+  so you can focus on writing your app without needing to reinvent the wheel. It’s free and open source.
+title_image: https://static.djangoproject.com/img/logos/django-logo-positive.png
+title_url: https://discord.gg/M9Mx3RvKM5
+position: 5
+urls:
+  - icon: branding/discord
+    url: https://discord.gg/M9Mx3RvKM5
+    color: blurple
+  - icon: regular/link
+    url: https://www.djangoproject.com/
+    color: teal

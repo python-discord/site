@@ -271,9 +271,11 @@ class UserViewSet(ModelViewSet):
         with Metricity() as metricity:
             try:
                 data = metricity.user(user.id)
+
                 data["total_messages"] = metricity.total_messages(user.id)
-                data["voice_banned"] = voice_banned
                 data["activity_blocks"] = metricity.total_message_blocks(user.id)
+
+                data["voice_banned"] = voice_banned
                 return Response(data, status=status.HTTP_200_OK)
             except NotFoundError:
                 return Response(dict(detail="User not found in metricity"),

@@ -18,13 +18,11 @@ icon: fab fa-discord
 4. Change your bot's `Public Bot` setting off so only you can invite it, save, and then get your **Bot Token** with the `Copy` button.
 > **Note:** **DO NOT** post your bot token anywhere public, or it can and will be compromised.
 5. Save your **Bot Token** somewhere safe to use in the project settings later.
-6. In the `General Information` tab, grab the **Client ID**.
+6. In the `OAuth2` tab, grab the **Client ID**.
 7. Replace `<CLIENT_ID_HERE>` in the following URL and visit it in the browser to invite your bot to your new test server.
 ```plaintext
 https://discordapp.com/api/oauth2/authorize?client_id=<CLIENT_ID_HERE>&permissions=8&scope=bot
 ```
-Optionally, you can generate your own invite url in the `OAuth` tab, after selecting `bot` as the scope.
-
 ---
 
 ## Obtain the IDs

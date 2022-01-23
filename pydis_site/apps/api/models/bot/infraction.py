@@ -57,6 +57,10 @@ class Infraction(ModelReprMixin, models.Model):
         default=False,
         help_text="Whether the infraction is a shadow infraction."
     )
+    dm_sent = models.BooleanField(
+        null=True,
+        help_text="Whether a DM was sent to the user when infraction was applied."
+    )
 
     def __str__(self):
         """Returns some info on the current infraction, for display purposes."""
