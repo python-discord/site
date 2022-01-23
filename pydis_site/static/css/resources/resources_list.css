@@ -34,20 +34,14 @@ i.resource-icon.is-youtube-red:hover {
     color: #f80000;
 }
 
-i.resource-icon.is-goodreads-cream {
-    color: #f3f2e9;
-}
-
-i.resource-icon.is-goodreads-cream:hover {
-    color: #ffffff;
-}
-
+i.resource-icon.is-goodreads-cream,
 i.resource-icon.is-black {
-    color: #000000;
+    color: #2c3334;
 }
 
-i.resource-icon.is-black {
-    color: #191919;
+i.resource-icon.is-goodreads-cream:hover,
+i.resource-icon.is-black:hover {
+    color: #475d6d;
 }
 
 i.has-icon-padding {
