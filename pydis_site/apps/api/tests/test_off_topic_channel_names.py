@@ -103,7 +103,7 @@ class ListTests(AuthenticatedAPITestCase):
         self.assertEqual(len(response.json()), 2)
         self.assertTrue(
             all(
-                item in (self.test_name.name, self.test_name_2.name, self.test_name_4.name) 
+                item in (self.test_name.name, self.test_name_2.name, self.test_name_4.name)
                 for item in response.json()
             )
         )
@@ -115,10 +115,13 @@ class ListTests(AuthenticatedAPITestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(response.json()), 3)
-        self.assertEqual(set(response.json()), {self.test_name.name, self.test_name_2.name, self.test_name_4.name})
+        self.assertEqual(
+            set(response.json()),
+            {self.test_name.name, self.test_name_2.name, self.test_name_4.name}
+        )
 
     def test_running_out_of_names_with_random_parameter(self):
-        """Reset names `used` parameter to `False` when running out of names and return active names."""
+        """Reset names `used` parameter to `False` when running out of active names."""
         url = reverse('api:bot:offtopicchannelname-list')
         response = self.client.get(f'{url}?random_items=3')
 
