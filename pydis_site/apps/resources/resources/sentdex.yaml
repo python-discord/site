@@ -11,12 +11,12 @@ description: 'An enormous amount of Python content for all skill levels
 title_image: https://i.imgur.com/kJgWZIu.png
 title_url: https://www.youtube.com/user/sentdex
 urls:
-  - icon: branding/discord
-    url: https://discord.gg/sentdex
-    color: blurple
   - icon: regular/link
     url: https://pythonprogramming.net/
     color: teal
+  - icon: branding/discord
+    url: https://discord.gg/sentdex
+    color: blurple
 tags:
   topics:
     - general

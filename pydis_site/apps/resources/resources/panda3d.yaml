@@ -4,12 +4,12 @@ title_image: http://www.panda3d.org/wp-content/uploads/2019/01/panda3d_logo.png
 title_url: https://discord.gg/9XsucTT
 position: 9
 urls:
-  - icon: branding/discord
-    url: https://discord.gg/9XsucTT
-    color: blurple
   - icon: regular/link
     url: https://www.panda3d.org/
     color: teal
+  - icon: branding/discord
+    url: https://discord.gg/9XsucTT
+    color: blurple
 tags:
   topics:
     - user interface
