@@ -12,6 +12,7 @@ class FilterList(ModelTimestampMixin, ModelReprMixin, models.Model):
         'FILE_FORMAT '
         'DOMAIN_NAME '
         'FILTER_TOKEN '
+        'REDIRECT '
     )
     type = models.CharField(
         max_length=50,

@@ -26,7 +26,7 @@ Additionally, you may find the following environment variables useful during dev
 | `BOT_DEBUG` | Debug mode of the bot | False |
 | `PREFIX` | The bot's invocation prefix | `.` |
 | `CYCLE_FREQUENCY` | Amount of days between cycling server icon | 3 |
-| `MONTH_OVERRIDE` | Interger in range `[0, 12]`, overrides current month w.r.t. seasonal decorators |
+| `MONTH_OVERRIDE` | Integer in range `[0, 12]`, overrides current month w.r.t. seasonal decorators |
 | `REDIS_HOST` | The address to connect to for the Redis database. |
 | `REDIS_PORT` | |
 | `REDIS_PASSWORD` | |
@@ -43,7 +43,7 @@ If you will be working with an external service, you might have to set one of th
 | -------- | -------- |
 | `GITHUB_TOKEN` | Personal access token for GitHub, raises rate limits from 60 to 5000 requests per hour. |
 | `GIPHY_TOKEN` | Required for API access. [Docs](https://developers.giphy.com/docs/api) |
-| `OMDB_API_KEY` | Required for API access. [Docs](http://www.omdbapi.com/) |
+| `OMDB_API_KEY` | Required for API access. [Docs](https://www.omdbapi.com/) |
 | `REDDIT_CLIENT_ID` | OAuth2 client ID for authenticating with the [reddit API](https://github.com/reddit-archive/reddit/wiki/OAuth2). |
 | `REDDIT_SECRET` | OAuth2 secret for authenticating with the reddit API. *Leave empty if you're not using the reddit API.* |
 | `REDDIT_WEBHOOK` | Webhook ID for Reddit channel |
@@ -61,10 +61,10 @@ These variables might come in handy while working on certain cogs:
 
 | Cog | Environment Variable | Description |
 | -------- | -------- | -------- |
-| Advent of Code | `AOC_LEADERBOARDS` | List of leaderboards seperated by `::`. Each entry should have an `id,session cookie,join code` seperated by commas in that order. |
+| Advent of Code | `AOC_LEADERBOARDS` | List of leaderboards separated by `::`. Each entry should have an `id,session cookie,join code` separated by commas in that order. |
 | Advent of Code | `AOC_STAFF_LEADERBOARD_ID` | Integer ID of the staff leaderboard. |
 | Advent of Code | `AOC_ROLE_ID` | ID of the advent of code role.
-| Advent of Code | `AOC_IGNORED_DAYS` | Comma seperated list of days to ignore while calulating score. |
+| Advent of Code | `AOC_IGNORED_DAYS` | Comma separated list of days to ignore while calculating score. |
 | Advent of Code | `AOC_YEAR` | Debug variable to change the year used for AoC. |
 | Advent of Code | `AOC_CHANNEL_ID` | The ID of the #advent-of-code channel |
 | Advent of Code | `AOC_COMMANDS_CHANNEL_ID` | The ID of the #advent-of-code-commands channel |

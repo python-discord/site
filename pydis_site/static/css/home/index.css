@@ -215,12 +215,20 @@ h1 {
 }
 
 #sponsors .columns {
+    display: block;
     justify-content: center;
     margin: auto;
     max-width: 80%;
 }
 
+#sponsors a {
+    margin: auto;
+    display: inline-block;
+}
+
 #sponsors img {
-    height: 5rem;
-    margin: auto 1rem;
+    width: auto;
+    height: auto;
+
+    max-height: 5rem;
 }

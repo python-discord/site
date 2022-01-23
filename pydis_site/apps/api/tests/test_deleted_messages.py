@@ -1,13 +1,13 @@
 from datetime import datetime
 
+from django.urls import reverse
 from django.utils import timezone
-from django_hosts.resolvers import reverse
 
-from .base import APISubdomainTestCase
+from .base import AuthenticatedAPITestCase
 from ..models import MessageDeletionContext, User
 
 
-class DeletedMessagesWithoutActorTests(APISubdomainTestCase):
+class DeletedMessagesWithoutActorTests(AuthenticatedAPITestCase):
     @classmethod
     def setUpTestData(cls):
         cls.author = User.objects.create(
@@ -40,14 +40,14 @@ class DeletedMessagesWithoutActorTests(APISubdomainTestCase):
         }
 
     def test_accepts_valid_data(self):
-        url = reverse('bot:messagedeletioncontext-list', host='api')
+        url = reverse('api:bot:messagedeletioncontext-list')
         response = self.client.post(url, data=self.data)
         self.assertEqual(response.status_code, 201)
         [context] = MessageDeletionContext.objects.all()
         self.assertIsNone(context.actor)
 
 
-class DeletedMessagesWithActorTests(APISubdomainTestCase):
+class DeletedMessagesWithActorTests(AuthenticatedAPITestCase):
     @classmethod
     def setUpTestData(cls):
         cls.author = cls.actor = User.objects.create(
@@ -72,14 +72,14 @@ class DeletedMessagesWithActorTests(APISubdomainTestCase):
         }
 
     def test_accepts_valid_data_and_sets_actor(self):
-        url = reverse('bot:messagedeletioncontext-list', host='api')
+        url = reverse('api:bot:messagedeletioncontext-list')
         response = self.client.post(url, data=self.data)
         self.assertEqual(response.status_code, 201)
         [context] = MessageDeletionContext.objects.all()
         self.assertEqual(context.actor.id, self.actor.id)
 
 
-class DeletedMessagesLogURLTests(APISubdomainTestCase):
+class DeletedMessagesLogURLTests(AuthenticatedAPITestCase):
     @classmethod
     def setUpTestData(cls):
         cls.author = cls.actor = User.objects.create(
@@ -94,6 +94,6 @@ class DeletedMessagesLogURLTests(APISubdomainTestCase):
         )
 
     def test_valid_log_url(self):
-        expected_url = reverse('logs', host="staff", args=(1,))
+        expected_url = reverse('staff:logs', args=(1,))
         [context] = MessageDeletionContext.objects.all()
         self.assertEqual(context.log_url, expected_url)

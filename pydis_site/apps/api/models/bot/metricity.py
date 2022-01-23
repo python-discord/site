@@ -4,13 +4,13 @@ from django.db import connections
 
 BLOCK_INTERVAL = 10 * 60  # 10 minute blocks
 
-EXCLUDE_CHANNELS = [
+EXCLUDE_CHANNELS = (
     "267659945086812160",  # Bot commands
     "607247579608121354"  # SeasonalBot commands
-]
+)
 
 
-class NotFound(Exception):  # noqa: N818
+class NotFoundError(Exception):  # noqa: N818
     """Raised when an entity cannot be found."""
 
     pass
@@ -37,7 +37,7 @@ class Metricity:
         values = self.cursor.fetchone()
 
         if not values:
-            raise NotFound()
+            raise NotFoundError()
 
         return dict(zip(columns, values))
 
@@ -46,19 +46,19 @@ class Metricity:
         self.cursor.execute(
             """
             SELECT
-              COUNT(*)
+                COUNT(*)
             FROM messages
             WHERE
-              author_id = '%s'
-              AND NOT is_deleted
-              AND NOT %s::varchar[] @> ARRAY[channel_id]
+                author_id = '%s'
+                AND NOT is_deleted
+                AND channel_id NOT IN %s
             """,
             [user_id, EXCLUDE_CHANNELS]
         )
         values = self.cursor.fetchone()
 
         if not values:
-            raise NotFound()
+            raise NotFoundError()
 
         return values[0]
 
@@ -79,7 +79,7 @@ class Metricity:
                 WHERE
                     author_id='%s'
                     AND NOT is_deleted
-                    AND NOT %s::varchar[] @> ARRAY[channel_id]
+                    AND channel_id NOT IN %s
                 GROUP BY interval
             ) block_query;
             """,
@@ -88,7 +88,7 @@ class Metricity:
         values = self.cursor.fetchone()
 
         if not values:
-            raise NotFound()
+            raise NotFoundError()
 
         return values[0]
 
@@ -127,6 +127,6 @@ class Metricity:
         values = self.cursor.fetchall()
 
         if not values:
-            raise NotFound()
+            raise NotFoundError()
 
         return values

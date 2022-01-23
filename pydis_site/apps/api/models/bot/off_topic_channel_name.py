@@ -11,14 +11,19 @@ class OffTopicChannelName(ModelReprMixin, models.Model):
         primary_key=True,
         max_length=96,
         validators=(
-            RegexValidator(regex=r"^[a-z0-9\U0001d5a0-\U0001d5b9-ǃ？’']+$"),
+            RegexValidator(regex=r"^[a-z0-9\U0001d5a0-\U0001d5b9-ǃ？’'＜＞]+$"),
         ),
         help_text="The actual channel name that will be used on our Discord server."
     )
 
     used = models.BooleanField(
         default=False,
-        help_text="Whether or not this name has already been used during this rotation",
+        help_text="Whether or not this name has already been used during this rotation.",
+    )
+
+    active = models.BooleanField(
+        default=True,
+        help_text="Whether or not this name should be considered for naming channels."
     )
 
     def __str__(self):

@@ -103,11 +103,10 @@ def validate_embed(embed: Any) -> None:
 
     Example:
 
-        >>> from django.contrib.postgres import fields as pgfields
         >>> from django.db import models
         >>> from pydis_site.apps.api.models.utils import validate_embed
         >>> class MyMessage(models.Model):
-        ...     embed = pgfields.JSONField(
+        ...     embed = models.JSONField(
         ...         validators=(
         ...             validate_embed,
         ...         )

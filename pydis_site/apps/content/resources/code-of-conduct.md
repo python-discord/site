@@ -77,8 +77,8 @@ You may report in the following ways:
 
 If you wish to appeal a decision or action taken by the moderation team, you can do so in one of the following ways:
 
-* By sending an email to [appeals@pythondiscord.com](mailto:appeals@pythondiscord.com)
 * By sending a direct message (DM) to ModMail from our Discord server.
+* Joining our [ban appeals server](https://discord.gg/WXrCJxWBnm) and sending a direct message (DM) to the Ban Appeals bot.
 
 Please provide all relevant information in your appeal, including:
 

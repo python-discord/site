@@ -59,6 +59,10 @@ class Reminder(ModelReprMixin, models.Model):
         blank=True,
         help_text="IDs of roles or users to ping with the reminder."
     )
+    failures = models.IntegerField(
+        default=0,
+        help_text="Number of times we attempted to send the reminder and failed."
+    )
 
     def __str__(self):
         """Returns some info on the current reminder, for display purposes."""

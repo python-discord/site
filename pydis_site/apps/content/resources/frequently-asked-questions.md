@@ -89,7 +89,7 @@ It's also to ease the burden on our moderators, otherwise they would have to dow
 
 Even though Discord does support previewing of files like `.txt` and `.py`, that support is only available on Desktop, not mobile. Additionally, we prefer people to use hastebin as it encourages them to only copy over the relevant code snippets instead of their whole code; this makes helping much easier for all involved.
 
-If you want to share code please use our hosted hastebin, [paste.pythondiscord.com](http://paste.pythondiscord.com).
+If you want to share code please use our hosted hastebin, [paste.pythondiscord.com](https://paste.pythondiscord.com).
 
 
 #### **Q: Why is this permission not allowed in that channel?**
@@ -119,7 +119,7 @@ You can also open an issue on our meta repo on GitHub, which can be found [here]
 While we love our blurple Python logo, we also enjoy celebrating other events throughout the year, like Advent of Code, Pride Month, Black History Month, Valentine's Day, Diwali, and more! In the spirit of those celebrations, we like to have some fun and change our icon instead.
 If you're wondering why it's changed this time, check out `#changelog` on the server, as the reasoning for the recent change will be there.
 
-If you'd like to contribute and create a Python Discord server icon for us to use, check out [our branding repo](https://github.com/python-discord/branding) for what we currently have and talk to us in the `#media-branding` channel in the server.
+If you'd like to contribute and create a Python Discord server icon for us to use, check out [our branding repo](https://github.com/python-discord/branding) for what we currently have and talk to us in the `#dev-branding` channel in the server.
 
 ## Misc
 

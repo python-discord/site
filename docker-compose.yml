@@ -18,6 +18,13 @@ services:
       POSTGRES_DB: pysite
       POSTGRES_PASSWORD: pysite
       POSTGRES_USER: pysite
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U pysite"]
+      interval: 2s
+      timeout: 1s
+      retries: 5
+    volumes:
+      - ./postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
 
   web:
     build:
@@ -33,7 +40,8 @@ services:
     ports:
       - "127.0.0.1:8000:8000"
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
     tty: true
     volumes:
       - .:/app:ro

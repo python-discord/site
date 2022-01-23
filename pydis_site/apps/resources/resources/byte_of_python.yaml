@@ -5,7 +5,7 @@ name: A Byte of Python
 title_url: https://python.swaroopch.com/
 urls:
 - icon: regular/book
-  url: http://www.lulu.com/shop/swaroop-c-h/a-byte-of-python/paperback/product-21142968.html
+  url: https://www.lulu.com/shop/swaroop-c-h/a-byte-of-python/paperback/product-21142968.html
   color: black
 - icon: branding/goodreads
   url: https://www.goodreads.com/book/show/6762544-a-byte-of-python

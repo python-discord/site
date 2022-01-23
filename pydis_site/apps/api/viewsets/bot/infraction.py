@@ -70,7 +70,8 @@ class InfractionViewSet(
     ...         'actor': 125435062127820800,
     ...         'type': 'ban',
     ...         'reason': 'He terk my jerb!',
-    ...         'hidden': True
+    ...         'hidden': True,
+    ...         'dm_sent': True
     ...     }
     ... ]
 
@@ -100,7 +101,8 @@ class InfractionViewSet(
     ...     'hidden': True,
     ...     'type': 'ban',
     ...     'reason': 'He terk my jerb!',
-    ...     'user': 172395097705414656
+    ...     'user': 172395097705414656,
+    ...     'dm_sent': False
     ... }
 
     #### Response format
@@ -118,7 +120,8 @@ class InfractionViewSet(
     >>> {
     ...     'active': True,
     ...     'expires_at': '4143-02-15T21:04:31+00:00',
-    ...     'reason': 'durka derr'
+    ...     'reason': 'durka derr',
+    ...     'dm_sent': True
     ... }
 
     #### Response format

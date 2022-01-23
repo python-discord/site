@@ -56,7 +56,7 @@ Definitely try to:
 
 Labels allow us to better organise Issues by letting us view what type of Issue it is, how it might impact the codebase and at what stage it's at.
 
-In our repositories, we try to prefix labels belonging to the same group, for example the label groups `status` or `type`.  We will be trying to keep to the same general structure across our project repositories, but just have a look at the full lables list in the respective repository to get a clear idea what's available.
+In our repositories, we try to prefix labels belonging to the same group, for example the label groups `status` or `type`.  We will be trying to keep to the same general structure across our project repositories, but just have a look at the full labels list in the respective repository to get a clear idea what's available.
 
 If you're a contributor, you can add relevant labels yourself to any new Issue ticket you create.
 
