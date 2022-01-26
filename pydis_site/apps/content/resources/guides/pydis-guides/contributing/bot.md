@@ -196,6 +196,7 @@ guild:
         big_brother:                            �
         dev_log:                                �
         duck_pond:                              �
+        incidents:                              �
         incidents_archive:                      �
         python_news:        &PYNEWS_WEBHOOK     �
         talent_pool:                            �
