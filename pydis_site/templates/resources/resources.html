@@ -1,146 +1,106 @@
 {% extends 'base/base.html' %}
 {% load as_icon %}
+{% load as_css_class %}
 {% load static %}
 
 {% block title %}Resources{% endblock %}
 {% block head %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="{% static "js/resources.js" %}"></script>
+    <script src="{% static "js/content/page.js" %}"></script>
     <link rel="stylesheet" href="{% static "css/resources/resources.css" %}">
     <link rel="stylesheet" href="{% static "css/resources/resources_list.css" %}">
+    <link rel="stylesheet" href="{% static "css/content/page.css" %}">
 {% endblock %}
 
 {% block content %}
     {% include "base/navbar.html" %}
-
-    <section class="section">
-        <div class="container">
+    {% if resources|length > 0 %}
+        <section class="section">
+            {#  Headline #}
             <div class="content">
                 <h1 class="resource-title has-text-centered">Resources</h1>
                 <hr/>
             </div>
-            <div class="panel is-hidden-mobile">
-                <p class="panel-heading has-text-centered">Search Options</p>
 
-                <div class="field">
-                    <div class="columns">
-                        <div class="column pl-6 is-two-fifths is-flex is-flex-direction-column">
-                            <div class="title is-5 pt-2 has-text-centered">Topic</div>
-                            <div class="columns">
-                                <div class="column">
-                                    {% for topic in topics_1 %}
-                                    <div class="field">
-                                        <label class="checkbox">
-                                            <input class="topic" name="topic" type="checkbox" value="{{ topic }}">
-                                            <span class="has-text-grey is-size-6">{{ topic }}</span>
-                                        </label>
+            <div class="columns is-centered">
+                {# Filtering toolbox #}
+                <div class="column is-one-third">
+                    <div class="content is-justify-content-center">
+                        <nav id="resource-filtering-panel" class="panel is-primary">
+                            <p class="panel-heading has-text-centered" id="filter-panel-header">Filters</p>
+
+                            {# Filter checkboxes #}
+                            {% for filter_name, filter_data in filters.items %}
+                                    <div class="card">
+                                        <button type="button" class="card-header collapsible">
+                                            <span class="card-header-title subtitle is-6 my-2 ml-2">
+                                                <i class="{{ filter_data.icon }} is-primary" aria-hidden="true"></i>&nbsp&nbsp{{ filter_name }}
+                                            </span>
+                                            <span class="card-header-icon">
+                                                {% if not filter_data.hidden %}
+                                                    <i class="far fa-window-minimize is-6 title" aria-hidden="true"></i>
+                                                {% else %}
+                                                    <i class="fas fa-angle-down is-6 title" aria-hidden="true"></i>
+                                                {% endif %}
+                                            </span>
+                                        </button>
+                                        {# Checkboxes #}
+                                        {% if filter_data.hidden %}
+                                            <div class="collapsible-content">
+                                        {% else %}
+                                            <div class="collapsible-content" style="max-height: 480px;">
+                                        {% endif %}
+                                            <div class="card-content">
+                                                {% for filter_item in filter_data.filters %}
+                                                    <a class="panel-block filter-panel">
+                                                        <label class="checkbox">
+                                                          <input
+                                                            class="filter-checkbox"
+                                                            type="checkbox"
+                                                            data-filter-name="{{ filter_name|as_css_class }}"
+                                                            data-filter-item="{{ filter_item|as_css_class }}"
+                                                          >
+                                                            {{ filter_item }}
+                                                        </label>
+                                                    </a>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
                                     </div>
-                                    {% endfor %}
-                                </div>
-                                <div class="column">
-                                    {% for topic in topics_2 %}
-                                    <div class="field">
-                                        <label class="checkbox">
-                                            <input class="topic" name="topic" type="checkbox" value="{{ topic }}">
-                                            <span class="has-text-grey is-size-6">{{ topic }}</span>
-                                        </label>
-                                    </div>
-                                    {% endfor %}
-                                </div>
-                            </div>
-                            <span class="control ml-2 is-flex is-align-items-end is-justify-content-center mt-auto">
-                                <button onclick="selectAllQueryParams('topic')" class="button is-success is-small">Select All</button>
-                            </span>
-                        </div>
-
-                        <div class="column is-flex is-flex-direction-column pl-6">
-                            <div class="title is-5 pt-2 has-text-centered">Type</div>
-
-                            {% for tag_type in tag_types %}
-                            <div class="field">
-                                <label class="checkbox ml-0">
-                                    <input class="type" name="type" type="checkbox" value="{{ tag_type }}">
-                                    <span class="has-text-grey is-size-6">{{ tag_type }}</span>
-                                </label>
-                            </div>
                             {% endfor %}
-                            <span class="control ml-2 is-flex is-align-items-end is-justify-content-center mt-auto">
-                                <button onclick="selectAllQueryParams('type')" class="button is-success is-small">Select All</button>
-                            </span>
-                        </div>
-
-                        <div class="column is-flex is-flex-direction-column pl-6">
-                            <div class="title is-5 pt-2 has-text-centered">Payment</div>
-
-                            {% for payment_tier in payment_tiers %}
-                            <div class="field">
-                                <label class="checkbox ml-0">
-                                    <input class="payment" name="payment" type="checkbox" value="{{ payment_tier }}">
-                                     <span class="has-text-grey is-size-6">{{ payment_tier }}</span>
-                               </label>
-                            </div>
-                            {% endfor %}
-                            <span class="control ml-2 is-flex is-align-items-end is-justify-content-center mt-auto">
-                                <button onclick="selectAllQueryParams('payment')" class="button is-success is-small">Select All</button>
-                            </span>
-                        </div>
-
-                        <div class="column is-flex is-flex-direction-column px-6">
-                            <div class="title is-5 pt-2 has-text-centered">Level</div>
-
-                            {% for complexity in complexities %}
-                            <div class="field">
-                                <label class="checkbox ml-0">
-                                    <input class="complexity" name="complexity" type="checkbox" value="{{ complexity }}">
-                                    <span class="has-text-grey is-size-6">{{ complexity }}</span>
-                              </label>
-                            </div>
-                           {% endfor %}
-                            <span class="control ml-2 is-flex is-align-items-end is-justify-content-center mt-auto">
-                                <button onclick="selectAllQueryParams('complexity')" class="button is-success is-small">Select All</button>
-                            </span>
-                        </div>
-                    </div>
-
-                    <div class="is-flex is-justify-content-center pb-3">
-                        <span class="control mr-2">
-                            <button onclick="buildQueryParams()" class="button is-link is-small">Search</button>
-                        </span>
-
-                        <span class="is-one-fifth control is-flex is-align-items-end is-justify-content-end mt-auto">
-                            <button onclick="clearQueryParams()" class="button is-danger is-small">Clear Search</button>
-                        </span>
+                        </nav>
                     </div>
                 </div>
-            </div>
-    </section>
 
-    {% if resources|length > 0 %}
-    <section class="section">
-        <div class="container">
-            <div class="content is-flex is-justify-content-center">
-                <div>
-                    {% for resource in resources %}
-                        {% include "resources/resource_box.html" %}
-                    {% endfor %}
-
-                    {% for subcategory in subcategories %}
-                        <h2 id="{{ subcategory.category_info.raw_name }}">
-                            <a href="{% url "resources:resources" category=category_info.raw_name %}#{{ subcategory.category_info.raw_name }}">
-                                {{ subcategory.category_info.name }}
-                            </a>
-                        </h2>
-                        <p>{{ subcategory.category_info.description|safe }}</p>
-
-                        {% for resource in subcategory.resources %}
-                            {% with category_info=subcategory.category_info %}
+                {# Actual resources #}
+                <div class="column is-two-thirds">
+                    <div class="content is-flex is-justify-content-center">
+                        <div>
+                            {% for resource in resources.values %}
                                 {% include "resources/resource_box.html" %}
-                            {% endwith %}
-                        {% endfor %}
-                    {% endfor %}
+                            {% endfor %}
+
+                            {% for subcategory in subcategories %}
+                                <h2 id="{{ subcategory.category_info.raw_name }}">
+                                    <a href="whatevenisthis#{{ subcategory.category_info.raw_name }}">
+                                        {{ subcategory.category_info.name }}
+                                    </a>
+                                </h2>
+                                <p>{{ subcategory.category_info.description|safe }}</p>
+
+                                {% for resource in subcategory.resources %}
+                                    {% with category_info=subcategory.category_info %}
+                                        {% include "resources/resource_box.html" %}
+                                    {% endwith %}
+                                {% endfor %}
+                            {% endfor %}
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
     {% else %}
-    <h2 class="title is-3 has-text-centered pt-0 pb-6 ">No resources matching search.</p>
+        <h2 class="title is-3 has-text-centered pt-0 pb-6 ">No resources matching search.</p>
     {% endif %}
 {% endblock %}

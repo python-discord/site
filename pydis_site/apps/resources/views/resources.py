@@ -1,40 +1,103 @@
+from pathlib import Path
+
+import yaml
+from django.core.handlers.wsgi import WSGIRequest
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
+from django.views import View
 
-from pydis_site.apps.resources.resource_search import RESOURCE_TABLE, get_resources_from_search
+from pydis_site import settings
 
-RESOURCE_META_TAGS = {k: set(v) for k, v in RESOURCE_TABLE.items()}
-
-
-def _parse_checkbox_options(options: str) -> set[str]:
-    """Split up the comma separated query parameters for checkbox options into a list."""
-    return set(options.split(",")[:-1])
+RESOURCES_PATH = Path(settings.BASE_DIR, "pydis_site", "apps", "resources", "resources")
 
 
-def resource_view(request: HttpRequest) -> HttpResponse:
-    """View for resources index page."""
-    checkbox_options = {
-        option: _parse_checkbox_options(request.GET.get(url_param, ""))
-        for option, url_param in (
-            ('topics', 'topic'),
-            ('type', 'type'),
-            ('payment_tiers', 'payment'),
-            ('complexity', 'complexity'),
-        )
-    }
+class ResourceView(View):
+    """Our curated list of good learning resources."""
 
-    topics = sorted(RESOURCE_META_TAGS.get("topics"))
+    def __init__(self, *args, **kwargs):
+        """Set up all the resources."""
+        super().__init__(*args, **kwargs)
 
-    return render(
-        request,
-        template_name="resources/resources.html",
-        context={
-            "checkboxOptions": checkbox_options,
-            "topics_1": topics[:len(topics) // 2],
-            "topics_2": topics[len(topics) // 2:],
-            "tag_types": sorted(RESOURCE_META_TAGS.get("type")),
-            "payment_tiers": sorted(RESOURCE_META_TAGS.get("payment_tiers")),
-            "complexities": sorted(RESOURCE_META_TAGS.get("complexity")),
-            "resources": get_resources_from_search(checkbox_options)
+        # Load the resources from the yaml files in /resources/
+        self.resources = {
+            path.stem: yaml.safe_load(path.read_text())
+            for path in RESOURCES_PATH.rglob("*.yaml")
         }
-    )
+
+        # Parse out all current tags
+        resource_tags = {
+            "topics": set(),
+            "payment_tiers": set(),
+            "complexity": set(),
+            "type": set(),
+        }
+        for resource_name, resource in self.resources.items():
+            css_classes = []
+            for tag_type in resource_tags.keys():
+                # Store the tags into `resource_tags`
+                tags = resource.get("tags", {}).get(tag_type, [])
+                for tag in tags:
+                    tag = tag.title()
+                    tag = tag.replace("And", "and")
+                    resource_tags[tag_type].add(tag)
+
+                # Make a CSS class friendly representation too, while we're already iterating.
+                for tag in tags:
+                    css_tag = f"{tag_type}-{tag}"
+                    css_tag = css_tag.replace("_", "-")
+                    css_tag = css_tag.replace(" ", "-")
+                    css_classes.append(css_tag)
+
+            # Now add the css classes back to the resource, so we can use them in the template.
+            self.resources[resource_name]["css_classes"] = " ".join(css_classes)
+
+        # Set up all the filter checkbox metadata
+        self.filters = {
+            "Complexity": {
+                "filters": sorted(resource_tags.get("complexity")),
+                "icon": "fas fa-brain",
+                "hidden": False,
+            },
+            "Type": {
+                "filters": sorted(resource_tags.get("type")),
+                "icon": "fas fa-photo-video",
+                "hidden": False,
+            },
+            "Payment tiers": {
+                "filters": sorted(resource_tags.get("payment_tiers")),
+                "icon": "fas fa-dollar-sign",
+                "hidden": True,
+            },
+            "Topics": {
+                "filters": sorted(resource_tags.get("topics")),
+                "icon": "fas fa-lightbulb",
+                "hidden": True,
+            }
+        }
+
+    @staticmethod
+    def _get_filter_options(request: WSGIRequest) -> dict[str, set]:
+        """Get the requested filter options out of the request object."""
+        return {
+            option: set(request.GET.get(url_param, "").split(",")[:-1])
+            for option, url_param in (
+                ('topics', 'topics'),
+                ('type', 'type'),
+                ('payment_tiers', 'payment'),
+                ('complexity', 'complexity'),
+            )
+        }
+
+    def get(self, request: WSGIRequest) -> HttpResponse:
+        """List out all the resources, and any filtering options from the URL."""
+        filter_options = self._get_filter_options(request)
+
+        return render(
+            request,
+            template_name="resources/resources.html",
+            context={
+                "resources": self.resources,
+                "filters": self.filters,
+                "filter_options": filter_options,
+            }
+        )
