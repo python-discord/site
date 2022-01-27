@@ -25,3 +25,94 @@
 i.is-primary {
     color: #7289da;
 }
+
+/* A little space around the filter card, please! */
+.filter-tags {
+    padding-bottom: .5em;
+    padding-right: .5em;
+}
+
+/* Set default display to inline-flex, for centering. */
+span.filter-box-tag {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+}
+
+/* Make resource tags clickable */
+.resource-tag {
+    cursor: pointer;
+    user-select: none;
+}
+
+/* Move the x down 1 pixel to align center */
+button.delete {
+    margin-top: 1px;
+}
+
+/* Colors for delete button x's */
+button.delete.is-primary::before,
+button.delete.is-primary::after {
+    background-color: #2a45a2;
+}
+button.delete.is-success::before,
+button.delete.is-success::after {
+    background-color: #2c9659;
+}
+button.delete.is-danger::before,
+button.delete.is-danger::after {
+    background-color: #c32841;
+}
+button.delete.is-info::before,
+button.delete.is-info::after {
+    background-color: #237fbd;
+}
+
+/* Give outlines to active tags */
+span.filter-box-tag,
+span.resource-tag.active {
+    outline-width: 1px;
+    outline-style: solid;
+}
+
+/* Make filter tags sparkle when selected! */
+@keyframes glow_success {
+    from { box-shadow: 0 0 2px 2px #aef4af; }
+    33% { box-shadow: 0 0 2px 2px #87af7a; }
+    66% { box-shadow: 0 0 2px 2px #9ceaac; }
+    to { box-shadow: 0 0 2px 2px #7cbf64; }
+}
+
+@keyframes glow_primary {
+    from { box-shadow: 0 0 2px 2px #aeb8f3; }
+    33% { box-shadow: 0 0 2px 2px #909ed9; }
+    66% { box-shadow: 0 0 2px 2px #6d7ed4; }
+    to { box-shadow: 0 0 2px 2px #6383b3; }
+}
+
+@keyframes glow_danger {
+    from { box-shadow: 0 0 2px 2px #c9495f; }
+    33% { box-shadow: 0 0 2px 2px #92486f; }
+    66% { box-shadow: 0 0 2px 2px #d455ba; }
+    to { box-shadow: 0 0 2px 2px #ff8192; }
+}
+@keyframes glow_info {
+    from { box-shadow: 0 0 2px 2px #4592c9; }
+    33% { box-shadow: 0 0 2px 2px #6196bb; }
+    66% { box-shadow: 0 0 2px 2px #5adade; }
+    to { box-shadow: 0 0 2px 2px #6bcfdc; }
+}
+
+span.resource-tag.active.is-primary {
+    animation: glow_primary 4s infinite alternate;
+}
+span.resource-tag.active.has-background-danger-light {
+    animation: glow_danger 4s infinite alternate;
+}
+span.resource-tag.active.has-background-success-light {
+    animation: glow_success 4s infinite alternate;
+}
+span.resource-tag.active.has-background-info-light {
+    animation: glow_info 4s infinite alternate;
+}

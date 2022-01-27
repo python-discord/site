@@ -1,4 +1,5 @@
 {% load as_icon %}
+{% load as_css_class %}
 {% load get_category_icon %}
 
 <div class="box resource-box {{ resource.css_classes }}">
@@ -34,16 +35,44 @@
         {#  Tags #}
         <div class="is-flex ml-auto is-flex-wrap-wrap is-justify-content-end">
             {% for tag in resource.tags.topics %}
-            <span class="tag is-primary is-light ml-2 mt-2"><i class="{{ tag|title|get_category_icon }} mr-1"></i>{{ tag|title }}</span>
+            <span
+                class="tag resource-tag is-primary is-light ml-2 mt-2"
+                data-filter-name="topics"
+                data-filter-item="{{ tag|as_css_class }}"
+            >
+                <i class="{{ tag|title|get_category_icon }} mr-1"></i>
+                {{ tag|title }}
+            </span>
             {% endfor %}
             {% for tag in resource.tags.type %}
-            <span class="tag has-background-success-light has-text-success-dark ml-2 mt-2"><i class="{{ tag|title|get_category_icon }} mr-1"></i>{{ tag|title }}</span>
+            <span
+                class="tag resource-tag has-background-success-light has-text-success-dark ml-2 mt-2"
+                data-filter-name="type"
+                data-filter-item="{{ tag|as_css_class }}"
+            >
+                <i class="{{ tag|title|get_category_icon }} mr-1"></i>
+                {{ tag|title }}
+            </span>
             {% endfor %}
             {% for tag in resource.tags.payment_tiers %}
-            <span class="tag has-background-danger-light has-text-danger-dark ml-2 mt-2"><i class="{{ tag|title|get_category_icon }} mr-1"></i>{{ tag|title }}</span>
+            <span
+                class="tag resource-tag has-background-danger-light has-text-danger-dark ml-2 mt-2"
+                data-filter-name="payment-tiers"
+                data-filter-item="{{ tag|as_css_class }}"
+            >
+                <i class="{{ tag|title|get_category_icon }} mr-1"></i>
+                {{ tag|title }}
+            </span>
             {% endfor %}
             {% for tag in resource.tags.complexity %}
-            <span class="tag has-background-info-light has-text-info-dark ml-2 mt-2"><i class="{{ tag|title|get_category_icon }} mr-1"></i>{{ tag|title }}</span>
+            <span
+                class="tag resource-tag has-background-info-light has-text-info-dark ml-2 mt-2"
+                data-filter-name="complexity"
+                data-filter-item="{{ tag|as_css_class }}"
+            >
+                <i class="{{ tag|title|get_category_icon }} mr-1"></i>
+                {{ tag|title }}
+            </span>
             {% endfor %}
         </div>
     </div>

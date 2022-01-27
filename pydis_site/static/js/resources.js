@@ -8,6 +8,37 @@ var activeFilters = {
     complexity: []
 };
 
+function addFilter(filterName, filterItem) {
+    // Push the filter into the stack
+    var filterIndex = activeFilters[filterName].indexOf(filterItem);
+    if (filterIndex === -1) {
+        activeFilters[filterName].push(filterItem);
+    }
+    updateUI();
+
+    // Show a corresponding filter box tag
+    $(`.filter-box-tag[data-filter-name=${filterName}][data-filter-item=${filterItem}]`).show();
+    $(".filter-tags").css("padding-bottom", "0.5em");
+
+    // Make corresponding resource tags active
+    $(`.resource-tag[data-filter-name=${filterName}][data-filter-item=${filterItem}]`).addClass("active");
+}
+
+function removeFilter(filterName, filterItem) {
+    // Remove the filter from the stack
+    var filterIndex = activeFilters[filterName].indexOf(filterItem);
+    if (filterIndex !== -1) {
+        activeFilters[filterName].splice(filterIndex, 1);
+    }
+    updateUI();
+
+    // Hide the corresponding filter box tag
+    $(`.filter-box-tag[data-filter-name=${filterName}][data-filter-item=${filterItem}]`).hide();
+
+    // Make corresponding resource tags inactive
+    $(`.resource-tag[data-filter-name=${filterName}][data-filter-item=${filterItem}]`).removeClass("active");
+}
+
 /* Check if there are no filters */
 function noFilters() {
     return (
@@ -16,6 +47,32 @@ function noFilters() {
         activeFilters["payment-tiers"].length === 0 &&
         activeFilters.complexity.length === 0
     );
+}
+
+/* Get the params out of the URL and use them. This is run when the page loads. */
+function deserializeURLParams() {
+    let searchParams = new window.URLSearchParams(window.location.search);
+
+    // Work through the parameters and add them to the filter object
+    $.each(Object.keys(activeFilters), function(_, filterType) {
+        let paramFilterContent = searchParams.get(filterType);
+
+        if (paramFilterContent !== null) {
+            // We use split here because we always want an array, not a string.
+            let paramFilterArray = paramFilterContent.split(",");
+            activeFilters[filterType] = paramFilterArray;
+
+            // Update the corresponding filter UI, so it reflects the internal state.
+            $(paramFilterArray).each(function(_, filter) {
+                let checkbox = $(`.filter-checkbox[data-filter-name=${filterType}][data-filter-item=${filter}]`);
+                let filterTag = $(`.filter-box-tag[data-filter-name=${filterType}][data-filter-item=${filter}]`);
+                let resourceTags = $(`.resource-tag[data-filter-name=${filterType}][data-filter-item=${filter}]`);
+                checkbox.prop("checked", true);
+                filterTag.show();
+                resourceTags.addClass("active");
+            });
+        }
+    });
 }
 
 /* Update the URL with new parameters */
@@ -38,31 +95,10 @@ function updateURL() {
     window.history.replaceState(null, document.title, `?${searchParams.toString()}`);
 }
 
-/* Get the params out of the URL and use them. This is run when the page loads. */
-function deserializeURLParams() {
-    let searchParams = new window.URLSearchParams(window.location.search);
-
-    // Work through the parameters and add them to the filter object
-    $.each(Object.keys(activeFilters), function(_, filterType) {
-        let paramFilterContent = searchParams.get(filterType);
-
-        if (paramFilterContent !== null) {
-            // We use split here because we always want an array, not a string.
-            let paramFilterArray = paramFilterContent.split(",");
-            activeFilters[filterType] = paramFilterArray;
-
-            // Check corresponding checkboxes, so the UI reflects the internal state.
-            $(paramFilterArray).each(function(_, filter) {
-                let checkbox = $(`.filter-checkbox[data-filter-name=${filterType}][data-filter-item=${filter}]`);
-                checkbox.prop("checked", true);
-            });
-        }
-    });
-}
-
 /* Update the resources to match 'active_filters' */
-function update() {
+function updateUI() {
     let resources = $('.resource-box');
+    let filterTags = $('.filter-box-tag');
 
     // Update the URL to match the new filters.
     updateURL();
@@ -70,6 +106,8 @@ function update() {
     // If there's nothing in the filters, show everything and return.
     if (noFilters()) {
         resources.show();
+        filterTags.hide();
+        $(".filter-tags").css("padding-bottom", "0");
         return;
     }
 
@@ -112,8 +150,9 @@ function update() {
 // Executed when the page has finished loading.
 document.addEventListener("DOMContentLoaded", function () {
     // Update the filters on page load to reflect URL parameters.
+    $('.filter-box-tag').hide();
     deserializeURLParams();
-    update();
+    updateUI();
 
     // If you collapse or uncollapse a filter group, swap the icon.
     $('button.collapsible').click(function() {
@@ -128,29 +167,47 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // If you click on the div surrounding the filter checkbox, it clicks the checkbox.
+    // If you click on the div surrounding the filter checkbox, it clicks the corresponding checkbox.
     $('.filter-panel').click(function() {
         let checkbox = $(this).find(".filter-checkbox");
         checkbox.prop("checked", !checkbox.prop("checked"));
         checkbox.change();
     });
 
+    // If you click on one of the tags in the filter box, it unchecks the corresponding checkbox.
+    $('.filter-box-tag').click(function() {
+        let filterItem = this.dataset.filterItem;
+        let filterName = this.dataset.filterName;
+        let checkbox = $(`.filter-checkbox[data-filter-name=${filterName}][data-filter-item=${filterItem}]`);
+
+        removeFilter(filterName, filterItem);
+        checkbox.prop("checked", false);
+    });
+
+    // If you click on one of the tags in the resource cards, it clicks the corresponding checkbox.
+    $('.resource-tag').click(function() {
+        let filterItem = this.dataset.filterItem;
+        let filterName = this.dataset.filterName;
+        let checkbox = $(`.filter-checkbox[data-filter-name=${filterName}][data-filter-item=${filterItem}]`)
+
+        if (!$(this).hasClass("active")) {
+            addFilter(filterName, filterItem);
+            checkbox.prop("checked", true);
+        } else {
+            removeFilter(filterName, filterItem);
+            checkbox.prop("checked", false);
+        }
+    });
+
     // When checkboxes are toggled, trigger a filter update.
     $('.filter-checkbox').change(function () {
         let filterItem = this.dataset.filterItem;
         let filterName = this.dataset.filterName;
-        var filterIndex = activeFilters[filterName].indexOf(filterItem);
 
         if (this.checked) {
-            if (filterIndex === -1) {
-                activeFilters[filterName].push(filterItem);
-            }
-            update();
+            addFilter(filterName, filterItem);
         } else {
-            if (filterIndex !== -1) {
-                activeFilters[filterName].splice(filterIndex, 1);
-            }
-            update();
+            removeFilter(filterName, filterItem);
         }
     });
 });
