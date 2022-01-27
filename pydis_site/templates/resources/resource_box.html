@@ -1,7 +1,7 @@
 {% load as_icon %}
 {% load get_category_icon %}
 
-<div class="box">
+<div class="box resource-box {{ resource.css_classes }}">
     {% if 'title_url' in resource %}
         <a href="{{ resource.title_url }}">
             {% include "resources/resource_box_header.html" %}
@@ -13,7 +13,7 @@
     <p class="is-italic">{{ resource.description|safe }}</p>
 
     <div class="is-flex is-align-items-center">
-        {# Add primary link #}
+        {#  Add primary link #}
         {% if 'title_url' in resource %}
             <span class="icon is-size-4 is-medium" style="margin: 5px;">
                 <a href="{{ resource.title_url }}">
@@ -21,7 +21,8 @@
                 </a>
             </span>
         {% endif %}
-        {# Add all additional icon #}
+
+        {#Add all additional icon #}
         {% for icon in resource.urls %}
             <span class="icon is-size-4 is-medium" style="margin: 5px;">
                 <a href="{{ icon.url }}">
