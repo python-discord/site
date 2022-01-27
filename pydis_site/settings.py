@@ -271,8 +271,8 @@ BULMA_SETTINGS = {
     "extensions": [
         "bulma-dropdown",
         "bulma-navbar-burger",
-        "bulma-modal",
     ],
+    "fontawesome_token": "ff22cb6f41",
 }
 
 # Information about site repository
