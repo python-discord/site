@@ -7,8 +7,8 @@ title_image: https://i.imgur.com/EVP3jZR.png
 title_url: https://discord.gg/djPtTRJ
 urls:
   - icon: regular/link
-  url: https://kivy.org/
-  color: teal
+    url: https://kivy.org/
+    color: teal
   - icon: branding/discord
     url: https://discord.gg/djPtTRJ
     color: blurple
