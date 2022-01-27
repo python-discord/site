@@ -17,6 +17,7 @@ class Infraction(ModelReprMixin, models.Model):
         ("ban", "Ban"),
         ("superstar", "Superstar"),
         ("voice_ban", "Voice Ban"),
+        ("voice_mute", "Voice Mute"),
     )
     inserted_at = models.DateTimeField(
         default=timezone.now,
@@ -45,7 +46,7 @@ class Infraction(ModelReprMixin, models.Model):
         help_text="The user which applied the infraction."
     )
     type = models.CharField(
-        max_length=9,
+        max_length=10,
         choices=TYPE_CHOICES,
         help_text="The type of the infraction."
     )
