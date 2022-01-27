@@ -18,7 +18,7 @@ _ICONS = {
     "Intermediate": "fa-align-center",
     "Microcontrollers": "fa-microchip",
     "Other": "fa-question-circle",
-    "Paid": "fa-sack",
+    "Paid": "fa-dollar-sign",
     "Podcast": "fa-microphone-alt",
     "Project Ideas": "fa-lightbulb-o",
     "Software Design": "fa-paint-brush",
