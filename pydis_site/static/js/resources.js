@@ -8,17 +8,67 @@ var activeFilters = {
     complexity: []
 };
 
-/* Update the resources to match 'active_filters' */
-function update() {
-    let resources = $('.resource-box');
-
-    // If there's nothing in the filters, show everything and return.
-    if (
+/* Check if there are no filters */
+function noFilters() {
+    return (
         activeFilters.topics.length === 0 &&
         activeFilters.type.length === 0 &&
         activeFilters["payment-tiers"].length === 0 &&
         activeFilters.complexity.length === 0
-    ) {
+    );
+}
+
+/* Update the URL with new parameters */
+function updateURL() {
+    // If there's nothing in the filters, we don't want anything in the URL.
+    if (noFilters()) {
+        window.history.replaceState(null, document.title, './');
+        return;
+    }
+
+    // Iterate through and get rid of empty ones
+    let searchParams = new URLSearchParams(activeFilters);
+    $.each(activeFilters, function(filterType, filters) {
+        if (filters.length === 0) {
+            searchParams.delete(filterType);
+        }
+    });
+
+    // Now update the URL
+    window.history.replaceState(null, document.title, `?${searchParams.toString()}`);
+}
+
+/* Get the params out of the URL and use them. This is run when the page loads. */
+function deserializeURLParams() {
+    let searchParams = new window.URLSearchParams(window.location.search);
+
+    // Work through the parameters and add them to the filter object
+    $.each(Object.keys(activeFilters), function(_, filterType) {
+        let paramFilterContent = searchParams.get(filterType);
+
+        if (paramFilterContent !== null) {
+            // We use split here because we always want an array, not a string.
+            let paramFilterArray = paramFilterContent.split(",");
+            activeFilters[filterType] = paramFilterArray;
+
+            // Check corresponding checkboxes, so the UI reflects the internal state.
+            $(paramFilterArray).each(function(_, filter) {
+                let checkbox = $(`.filter-checkbox[data-filter-name=${filterType}][data-filter-item=${filter}]`);
+                checkbox.prop("checked", true);
+            });
+        }
+    });
+}
+
+/* Update the resources to match 'active_filters' */
+function update() {
+    let resources = $('.resource-box');
+
+    // Update the URL to match the new filters.
+    updateURL();
+
+    // If there's nothing in the filters, show everything and return.
+    if (noFilters()) {
         resources.show();
         return;
     }
@@ -35,16 +85,16 @@ function update() {
         let resourceBox = $(this);
 
         // Validate the filters
-        $.each(activeFilters, function(filterType, activeFilters) {
+        $.each(activeFilters, function(filterType, filters) {
             // If the filter list is empty, this passes validation.
-            if (activeFilters.length === 0) {
+            if (filters.length === 0) {
                 validation[filterType] = true;
                 return;
             }
 
             // Otherwise, we need to check if one of the classes exist.
-            $.each(activeFilters, function(index, filter) {
-                if (resourceBox.hasClass(filter)) {
+            $.each(filters, function(index, filter) {
+                if (resourceBox.hasClass(`${filterType}-${filter}`)) {
                     validation[filterType] = true;
                 }
             });
@@ -61,6 +111,9 @@ function update() {
 
 // Executed when the page has finished loading.
 document.addEventListener("DOMContentLoaded", function () {
+    // Update the filters on page load to reflect URL parameters.
+    deserializeURLParams();
+    update();
 
     // If you collapse or uncollapse a filter group, swap the icon.
     $('button.collapsible').click(function() {
@@ -75,8 +128,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // Update the filters on page load to reflect URL parameters.
-
     // If you click on the div surrounding the filter checkbox, it clicks the checkbox.
     $('.filter-panel').click(function() {
         let checkbox = $(this).find(".filter-checkbox");
@@ -88,12 +139,11 @@ document.addEventListener("DOMContentLoaded", function () {
     $('.filter-checkbox').change(function () {
         let filterItem = this.dataset.filterItem;
         let filterName = this.dataset.filterName;
-        let cssClass = filterName + "-" + filterItem;
-        var filterIndex = activeFilters[filterName].indexOf(cssClass);
+        var filterIndex = activeFilters[filterName].indexOf(filterItem);
 
         if (this.checked) {
             if (filterIndex === -1) {
-                activeFilters[filterName].push(cssClass);
+                activeFilters[filterName].push(filterItem);
             }
             update();
         } else {
@@ -104,53 +154,3 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
-
-
-
-// const initialParams = new URLSearchParams(window.location.search);
-// const checkboxOptions = ['topic', 'type', 'payment', 'complexity'];
-//
-// const createQuerySelect = (opt) => {
-//     return "input[name=" + opt + "]"
-// }
-//
-// checkboxOptions.forEach((option) => {
-//     document.querySelectorAll(createQuerySelect(option)).forEach((checkbox) => {
-//         if (initialParams.get(option).includes(checkbox.value)) {
-//             checkbox.checked = true
-//         }
-//     });
-// });
-//
-// function buildQueryParams() {
-//     let params = new URLSearchParams(window.location.search);
-//     checkboxOptions.forEach((option) => {
-//         let tempOut = ""
-//         document.querySelectorAll(createQuerySelect(option)).forEach((checkbox) => {
-//             if (checkbox.checked) {
-//                 tempOut += checkbox.value + ",";
-//             }
-//         });
-//         params.set(option, tempOut);
-//     });
-//
-//     window.location.search = params;
-// }
-//
-// function clearQueryParams() {
-//     checkboxOptions.forEach((option) => {
-//         document.querySelectorAll(createQuerySelect(option)).forEach((checkbox) => {
-//             checkbox.checked = false;
-//         });
-//     });
-// }
-//
-// function selectAllQueryParams(column) {
-//     checkboxOptions.forEach((option) => {
-//         document.querySelectorAll(createQuerySelect(option)).forEach((checkbox) => {
-//             if (checkbox.className == column) {
-//                 checkbox.checked = true;
-//             }
-//         });
-//     });
-// }
