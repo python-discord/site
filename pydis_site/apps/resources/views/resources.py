@@ -2,7 +2,7 @@ from pathlib import Path
 
 import yaml
 from django.core.handlers.wsgi import WSGIRequest
-from django.http import HttpRequest, HttpResponse
+from django.http import HttpResponse
 from django.shortcuts import render
 from django.views import View
 
@@ -23,6 +23,9 @@ class ResourceView(View):
             path.stem: yaml.safe_load(path.read_text())
             for path in RESOURCES_PATH.rglob("*.yaml")
         }
+
+        # Sort the resources alphabetically
+        self.resources = dict(sorted(self.resources.items()))
 
         # Parse out all current tags
         resource_tags = {
