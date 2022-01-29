@@ -14,7 +14,7 @@ tags:
     - web development
   payment_tiers:
     - paid
-  complexity:
+  difficulty:
     - beginner
     - intermediate
   type:

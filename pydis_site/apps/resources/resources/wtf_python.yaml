@@ -12,7 +12,7 @@ tags:
     - other
   payment_tiers:
     - free
-  complexity:
+  difficulty:
     - intermediate
   type:
     - tutorial

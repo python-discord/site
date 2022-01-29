@@ -8,7 +8,7 @@ tags:
     - software design
   payment_tiers:
     - free
-  complexity:
+  difficulty:
     - beginner
     - intermediate
   type:

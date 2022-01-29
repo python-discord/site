@@ -28,7 +28,7 @@ class ResourceView(View):
         resource_tags = {
             "topics": set(),
             "payment_tiers": set(),
-            "complexity": set(),
+            "difficulty": set(),
             "type": set(),
         }
         for resource_name, resource in self.resources.items():
@@ -53,8 +53,8 @@ class ResourceView(View):
 
         # Set up all the filter checkbox metadata
         self.filters = {
-            "Complexity": {
-                "filters": sorted(resource_tags.get("complexity")),
+            "Difficulty": {
+                "filters": sorted(resource_tags.get("difficulty")),
                 "icon": "fas fa-brain",
                 "hidden": False,
             },
@@ -84,7 +84,7 @@ class ResourceView(View):
                 ('topics', 'topics'),
                 ('type', 'type'),
                 ('payment_tiers', 'payment'),
-                ('complexity', 'complexity'),
+                ('difficulty', 'difficulty'),
             )
         }
 

@@ -14,7 +14,7 @@ tags:
     - microcontrollers
   payment_tiers:
     - free
-  complexity:
+  difficulty:
     - beginner
     - intermediate
   type:

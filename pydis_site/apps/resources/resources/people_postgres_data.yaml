@@ -20,7 +20,7 @@ tags:
     - databases
   payment_tiers:
     - free
-  complexity:
+  difficulty:
     - beginner
     - intermediate
   type:

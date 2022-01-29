@@ -9,7 +9,7 @@ tags:
     - microcontrollers
   payment_tiers:
     - free
-  complexity:
+  difficulty:
     - beginner
   type:
     - tool

@@ -29,7 +29,7 @@
                             <div class="is-flex ml-auto is-flex-wrap-wrap">
                                 {% for filter_name, filter_data in filters.items %}
                                     {% for filter_item in filter_data.filters %}
-                                        {% if filter_name == "Complexity" %}
+                                        {% if filter_name == "Difficulty" %}
                                             <span
                                                     class="filter-box-tag tag has-background-info-light has-text-info-dark ml-2 mt-2"
                                                     data-filter-name="{{ filter_name|as_css_class }}"

@@ -13,7 +13,7 @@ tags:
   payment_tiers:
     - free
     - subscription
-  complexity:
+  difficulty:
     - beginner
     - intermediate
   type:

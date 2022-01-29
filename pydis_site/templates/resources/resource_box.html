@@ -64,10 +64,10 @@
                 {{ tag|title }}
             </span>
             {% endfor %}
-            {% for tag in resource.tags.complexity %}
+            {% for tag in resource.tags.difficulty %}
             <span
                 class="tag resource-tag has-background-info-light has-text-info-dark ml-2 mt-2"
-                data-filter-name="complexity"
+                data-filter-name="difficulty"
                 data-filter-item="{{ tag|as_css_class }}"
             >
                 <i class="{{ tag|title|get_category_icon }} mr-1"></i>

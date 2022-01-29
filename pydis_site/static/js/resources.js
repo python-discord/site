@@ -5,7 +5,7 @@ var activeFilters = {
     topics: [],
     type: [],
     "payment-tiers": [],
-    complexity: []
+    difficulty: []
 };
 
 function addFilter(filterName, filterItem) {
@@ -45,7 +45,7 @@ function noFilters() {
         activeFilters.topics.length === 0 &&
         activeFilters.type.length === 0 &&
         activeFilters["payment-tiers"].length === 0 &&
-        activeFilters.complexity.length === 0
+        activeFilters.difficulty.length === 0
     );
 }
 
@@ -120,7 +120,7 @@ function updateUI() {
             topics: false,
             type: false,
             'payment-tiers': false,
-            complexity: false
+            difficulty: false
         };
         let resourceBox = $(this);
 

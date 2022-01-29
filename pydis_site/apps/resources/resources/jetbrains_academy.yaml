@@ -12,7 +12,7 @@ tags:
     - data science
   payment_tiers:
     - subscription
-  complexity:
+  difficulty:
     - beginner
   type:
     - interactive

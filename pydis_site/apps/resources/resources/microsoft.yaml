@@ -12,7 +12,7 @@ tags:
     - tooling
   payment_tiers:
     - free
-  complexity:
+  difficulty:
     - beginner
     - intermediate
   type:

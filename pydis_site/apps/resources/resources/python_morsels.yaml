@@ -13,7 +13,7 @@ tags:
     - software design
   payment_tiers:
     - subscription
-  complexity:
+  difficulty:
     - intermediate
   type:
     - interactive

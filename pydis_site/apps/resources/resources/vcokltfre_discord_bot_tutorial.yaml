@@ -8,7 +8,7 @@ tags:
     - discord bots
   payment_tiers:
     - free
-  complexity:
+  difficulty:
     - intermediate
   type:
     - tutorial

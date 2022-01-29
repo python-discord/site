@@ -8,7 +8,7 @@ tags:
   payment_tiers:
     - free
     - paid
-  complexity:
+  difficulty:
     - intermediate
   type:
     - tool

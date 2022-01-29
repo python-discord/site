@@ -13,7 +13,7 @@ tags:
     - data science
   payment_tiers:
     - paid
-  complexity:
+  difficulty:
     - intermediate
   type:
     - book

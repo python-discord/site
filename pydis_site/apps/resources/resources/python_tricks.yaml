@@ -13,7 +13,7 @@ tags:
     - software design
   payment_tiers:
     - paid
-  complexity:
+  difficulty:
     - intermediate
   type:
     - book

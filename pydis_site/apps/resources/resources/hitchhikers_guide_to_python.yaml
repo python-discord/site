@@ -11,7 +11,7 @@ tags:
     - general
   payment_tiers:
     - paid
-  complexity:
+  difficulty:
     - beginner
     - intermediate
   type:

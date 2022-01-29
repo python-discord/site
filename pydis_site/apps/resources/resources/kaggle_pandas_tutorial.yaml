@@ -7,7 +7,7 @@ tags:
     - data science
   payment_tiers:
     - free
-  complexity:
+  difficulty:
     - intermediate
   type:
     - tutorial

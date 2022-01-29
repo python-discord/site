@@ -15,7 +15,7 @@ tags:
   payment_tiers:
     - free
     - paid
-  complexity:
+  difficulty:
     - beginner
   type:
     - book
