@@ -87,6 +87,34 @@ resources_index_redirect:
   original_path: pages/resources/
   redirect_route: "resources:index"
 
+resources_reading_redirect:
+  original_path: resources/reading/
+  redirect_route: "resources:index"
+
+resources_videos_redirect:
+  original_path: resources/videos/
+  redirect_route: "resources:index"
+
+resources_interactive_redirect:
+  original_path: resources/interactive/
+  redirect_route: "resources:index"
+
+resources_courses_redirect:
+  original_path: resources/courses/
+  redirect_route: "resources:index"
+
+resources_communities_redirect:
+  original_path: resources/communities/
+  redirect_route: "resources:index"
+
+resources_podcasts_redirect:
+  original_path: resources/podcasts/
+  redirect_route: "resources:index"
+
+resources_tools_redirect:
+  original_path: resources/tools/
+  redirect_route: "resources:index"
+
 # Events
 events_index_redirect:
   original_path: pages/events/
