@@ -15,6 +15,12 @@
     padding:0
 }
 
+/* Hide the no resources h2 by default */
+h2.no-resources-found {
+    display: none;
+    margin-top: 1em;
+}
+
 /* Disable clicking on the checkbox itself. */
 /* Instead, we want to let the anchor tag handle clicks. */
 .filter-checkbox {

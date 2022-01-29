@@ -112,6 +112,8 @@ function updateUI() {
     }
 
     // Otherwise, hide everything and then filter the resources to decide what to show.
+    let hasMatches = false;
+    console.log(hasMatches);
     resources.hide();
     resources.filter(function() {
         let validation = {
@@ -140,11 +142,20 @@ function updateUI() {
 
         // If validation passes, show the resource.
         if (Object.values(validation).every(Boolean)) {
+            hasMatches = true;
             return true;
         } else {
             return false;
         }
     }).show();
+
+    // If there are no matches, show the no matches message
+    console.log(hasMatches);
+    if (!hasMatches) {
+        $(".no-resources-found").show();
+    } else {
+        $(".no-resources-found").hide();
+    }
 }
 
 // Executed when the page has finished loading.
