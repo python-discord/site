@@ -1,8 +1,8 @@
-from django.urls import path
+from django_distill import distill_path
 
 from pydis_site.apps.resources import views
 
 app_name = "resources"
 urlpatterns = [
-    path("", views.resources.ResourceView.as_view(), name="index"),
+    distill_path("", views.resources.ResourceView.as_view(), name="index"),
 ]
