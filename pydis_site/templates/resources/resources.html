@@ -83,13 +83,13 @@
                             <div class="card filter-category-header">
                                 <button type="button" class="card-header collapsible">
                                     <span class="card-header-title subtitle is-6 my-2 ml-2">
-                                        <i class="{{ filter_data.icon }} is-primary" aria-hidden="true"></i>&nbsp&nbsp{{ filter_name }}
+                                        <i class="fa-fw {{ filter_data.icon }} is-primary" aria-hidden="true"></i>&nbsp&nbsp{{ filter_name }}
                                     </span>
                                     <span class="card-header-icon">
                                         {% if not filter_data.hidden %}
-                                            <i class="far fa-window-minimize is-6 title" aria-hidden="true"></i>
+                                            <i class="far fa-fw fa-window-minimize is-6 title" aria-hidden="true"></i>
                                         {% else %}
-                                            <i class="fas fa-angle-down is-6 title" aria-hidden="true"></i>
+                                            <i class="fas fa-fw fa-angle-down is-6 title" aria-hidden="true"></i>
                                         {% endif %}
                                     </span>
                                 </button>
