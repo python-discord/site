@@ -15,6 +15,11 @@
     padding:0
 }
 
+/* Don't round the corners of the collapsibles */
+.filter-category-header {
+    border-radius: 0;
+}
+
 /* Hide the no resources h2 by default */
 h2.no-resources-found {
     display: none;
