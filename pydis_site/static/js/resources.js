@@ -18,10 +18,12 @@ function addFilter(filterName, filterItem) {
 
     // Show a corresponding filter box tag
     $(`.filter-box-tag[data-filter-name=${filterName}][data-filter-item=${filterItem}]`).show();
-    $(".filter-tags").css("padding-bottom", "0.5em");
 
     // Make corresponding resource tags active
     $(`.resource-tag[data-filter-name=${filterName}][data-filter-item=${filterItem}]`).addClass("active");
+
+    // Hide the "No filters selected" tag.
+    $(".no-tags-selected.tag").hide();
 }
 
 function removeFilter(filterName, filterItem) {
@@ -37,6 +39,11 @@ function removeFilter(filterName, filterItem) {
 
     // Make corresponding resource tags inactive
     $(`.resource-tag[data-filter-name=${filterName}][data-filter-item=${filterItem}]`).removeClass("active");
+
+    // Show "No filters selected" tag, if there are no filters active
+    if (noFilters()) {
+        $(".no-tags-selected.tag").show();
+    }
 }
 
 /* Check if there are no filters */
@@ -107,7 +114,6 @@ function updateUI() {
     if (noFilters()) {
         resources.show();
         filterTags.hide();
-        $(".filter-tags").css("padding-bottom", "0");
         return;
     }
 

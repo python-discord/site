@@ -27,6 +27,12 @@
                         {# Filter box tags #}
                         <div class="card filter-tags">
                             <div class="is-flex ml-auto is-flex-wrap-wrap">
+                                {# A filter tag for when there are no filters active #}
+                                <span class="no-tags-selected tag has-background-disabled has-text-disabled ml-2 mt-2">
+                                        <i class="fas fa-ban mr-1"></i>
+                                        No filters selected
+                                </span>
+
                                 {% for filter_name, filter_data in filters.items %}
                                     {% for filter_item in filter_data.filters %}
                                         {% if filter_name == "Difficulty" %}
@@ -125,7 +131,7 @@
             <div class="column is-two-thirds">
                 {# Message to display when there are no hits #}
                 <div class="no-resources-found">
-                    <h2 class="title is-3 has-text-centered pt-0 pb-6 no-resources-found">No matching resources found!</h2>
+                    <h2 class="title is-3 has-text-centered pt-0 pb-6">No matching resources found!</h2>
                     <img src="{% static "images/resources/duck_pond_404.png" %}" width="650px">
                 </div>
 
