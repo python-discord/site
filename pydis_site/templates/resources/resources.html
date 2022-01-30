@@ -106,23 +106,23 @@
                             {% else %}
                                 <div class="collapsible-content" style="max-height: fit-content;">
                             {% endif %}
-                        <div class="card-content">
-                            {% for filter_item in filter_data.filters %}
-                                <a class="panel-block filter-panel">
-                                    <label class="checkbox">
-                                        <input
-                                                class="filter-checkbox"
-                                                type="checkbox"
-                                                data-filter-name="{{ filter_name|as_css_class }}"
-                                                data-filter-item="{{ filter_item|as_css_class }}"
-                                        >
-                                        {{ filter_item }}
-                                    </label>
-                                </a>
-                            {% endfor %}
-                        </div>
-                        </div>
-                        </div>
+                                    <div class="card-content">
+                                        {% for filter_item in filter_data.filters %}
+                                            <a class="panel-block filter-panel">
+                                                <label class="checkbox">
+                                                    <input
+                                                            class="filter-checkbox"
+                                                            type="checkbox"
+                                                            data-filter-name="{{ filter_name|as_css_class }}"
+                                                            data-filter-item="{{ filter_item|as_css_class }}"
+                                                    >
+                                                    {{ filter_item }}
+                                                </label>
+                                            </a>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
                         {% endfor %}
                     </nav>
                 </div>
