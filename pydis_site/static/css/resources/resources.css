@@ -1,3 +1,45 @@
+/* Colors for icons */
+i.resource-icon.is-orangered {
+    color: #FE640A;
+}
+i.resource-icon.is-blurple {
+    color: #7289DA;
+}
+i.resource-icon.is-teal {
+    color: #95DBE5;
+}
+i.resource-icon.is-youtube-red {
+    color: #BB0000;
+}
+i.resource-icon.is-black {
+    color: #2c3334;
+}
+
+/* Colors when icons are hovered */
+i.resource-icon.is-hoverable:hover {
+    filter: brightness(125%);
+}
+i.resource-icon.is-hoverable.is-black:hover {
+    filter: brightness(170%);
+}
+i.resource-icon.is-hoverable.is-teal:hover {
+    filter: brightness(80%);
+}
+
+/* Icon padding */
+.breadcrumb-section {
+    padding: 1rem;
+}
+i.has-icon-padding {
+    padding: 0 10px 25px 0;
+}
+#tab-content p {
+    display: none;
+}
+#tab-content p.is-active {
+display: block;
+}
+
 /* Disable highlighting for all text in the filters. */
 .filter-checkbox,
 .filter-panel label,
@@ -55,6 +97,12 @@ span.filter-box-tag {
 .resource-tag {
     cursor: pointer;
     user-select: none;
+}
+
+/* When hovering tags, brighten them a bit. */
+.resource-tag:hover,
+.filter-box-tag:hover {
+    filter: brightness(95%);
 }
 
 /* Move the x down 1 pixel to align center */

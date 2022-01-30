@@ -18,7 +18,7 @@
         {% if 'title_url' in resource %}
             <span class="icon is-size-4 is-medium" style="margin: 5px;">
                 <a href="{{ resource.title_url }}">
-                    <i class="fas fa-link is-size-3 resource-icon is-primary"></i>
+                    <i class="fas fa-link is-size-3 resource-icon is-hoverable is-primary"></i>
                 </a>
             </span>
         {% endif %}
@@ -27,7 +27,7 @@
         {% for icon in resource.urls %}
             <span class="icon is-size-4 is-medium" style="margin: 5px;">
                 <a href="{{ icon.url }}">
-                    <i class="{{ icon.icon|as_icon }} is-size-3 resource-icon is-{{ icon.color }}"></i>
+                    <i class="{{ icon.icon|as_icon }} is-size-3 resource-icon is-hoverable is-{{ icon.color }}"></i>
                 </a>
             </span>
         {% endfor %}
