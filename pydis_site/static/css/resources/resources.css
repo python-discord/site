@@ -93,6 +93,13 @@ span.filter-box-tag {
     user-select: none;
 }
 
+/* Center the 404 div */
+.no-resources-found {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 /* Make resource tags clickable */
 .resource-tag {
     cursor: pointer;

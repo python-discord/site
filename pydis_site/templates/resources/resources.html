@@ -124,7 +124,11 @@
 
             <div class="column is-two-thirds">
                 {# Message to display when there are no hits #}
-                <h2 class="title is-3 has-text-centered pt-0 pb-6 no-resources-found">No matching resources found!</h2>
+                <div class="no-resources-found">
+                    <h2 class="title is-3 has-text-centered pt-0 pb-6 no-resources-found">No matching resources found!</h2>
+                    <img src="{% static "images/resources/duck_pond_404.png" %}" width="650px">
+                </div>
+
 
                 {# Resource cards #}
                 <div class="content is-flex is-justify-content-center">
