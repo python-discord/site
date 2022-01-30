@@ -30,7 +30,7 @@ def __get_all_files(root: Path, folder: typing.Optional[Path] = None) -> list[st
 
 
 def get_all_pages() -> typing.Iterator[dict[str, str]]:
-    """Yield a dict of all pag categories."""
+    """Yield a dict of all page categories."""
     for location in __get_all_files(Path("pydis_site", "apps", "content", "resources")):
         yield {"location": location}
 
