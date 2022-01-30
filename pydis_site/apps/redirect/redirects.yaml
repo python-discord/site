@@ -92,6 +92,11 @@ resources_reading_redirect:
   redirect_route: "resources:index"
   redirect_arguments: ["book"]
 
+resources_books_redirect:
+  original_path: resources/books/
+  redirect_route: "resources:index"
+  redirect_arguments: [ "book" ]
+
 resources_videos_redirect:
   original_path: resources/videos/
   redirect_route: "resources:index"
@@ -111,6 +116,11 @@ resources_podcasts_redirect:
   original_path: resources/podcasts/
   redirect_route: "resources:index"
   redirect_arguments: ["podcast"]
+
+resources_tutorials_redirect:
+  original_path: resources/tutorials/
+  redirect_route: "resources:index"
+  redirect_arguments: ["tutorial"]
 
 resources_tools_redirect:
   original_path: resources/tools/
