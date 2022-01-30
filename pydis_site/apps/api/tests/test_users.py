@@ -1,3 +1,4 @@
+import random
 from unittest.mock import Mock, patch
 
 from django.urls import reverse
@@ -520,3 +521,45 @@ class UserMetricityTests(AuthenticatedAPITestCase):
         self.metricity.total_messages.side_effect = NotFoundError()
         self.metricity.total_message_blocks.side_effect = NotFoundError()
         self.metricity.top_channel_activity.side_effect = NotFoundError()
+
+
+class UserViewSetTests(AuthenticatedAPITestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.searched_user = User.objects.create(
+            id=12095219,
+            name=f"Test user {random.randint(100, 1000)}",
+            discriminator=random.randint(1, 9999),
+            in_guild=True,
+        )
+        cls.other_user = User.objects.create(
+            id=18259125,
+            name=f"Test user {random.randint(100, 1000)}",
+            discriminator=random.randint(1, 9999),
+            in_guild=True,
+        )
+
+    def test_search_lookup_of_wanted_user(self) -> None:
+        """Searching a user by name and discriminator should return that user."""
+        url = reverse('api:bot:user-list')
+        params = {
+            'username': self.searched_user.name,
+            'discriminator': self.searched_user.discriminator,
+        }
+        response = self.client.get(url, params)
+        result = response.json()
+        self.assertEqual(result['count'], 1)
+        [user] = result['results']
+        self.assertEqual(user['id'], self.searched_user.id)
+
+    def test_search_lookup_of_unknown_user(self) -> None:
+        """Searching an unknown user should return no results."""
+        url = reverse('api:bot:user-list')
+        params = {
+            'username': "f-string enjoyer",
+            'discriminator': 1245,
+        }
+        response = self.client.get(url, params)
+        result = response.json()
+        self.assertEqual(result['count'], 0)
+        self.assertEqual(result['results'], [])
