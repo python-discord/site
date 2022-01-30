@@ -31,6 +31,7 @@ VALID_RESOURCE_TYPES = [
 
 
 def get_all_pages() -> typing.Iterator[dict[str, str]]:
+    """Get all the valid options for the resource_type path selector."""
     for resource_type in VALID_RESOURCE_TYPES:
         yield {"resource_type": resource_type}
 
