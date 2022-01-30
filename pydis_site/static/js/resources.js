@@ -113,7 +113,6 @@ function updateUI() {
 
     // Otherwise, hide everything and then filter the resources to decide what to show.
     let hasMatches = false;
-    console.log(hasMatches);
     resources.hide();
     resources.filter(function() {
         let validation = {
@@ -164,7 +163,7 @@ document.addEventListener("DOMContentLoaded", function () {
        like pydis.com/resources/communities. In this case, we'll rewrite
        the URL before we do anything else. */
     let resourceTypeInput = $("#resource-type-input").val();
-    if (resourceTypeInput.length !== 0) {
+    if (resourceTypeInput !== "None") {
         window.history.replaceState(null, document.title, `../?type=${resourceTypeInput}`);
     }
 
