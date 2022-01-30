@@ -187,3 +187,15 @@ span.resource-tag.active.has-background-success-light {
 span.resource-tag.active.has-background-info-light {
     animation: glow_info 4s infinite alternate;
 }
+
+/* Smaller filter category headers when on mobile */
+@media screen and (max-width: 480px) {
+    .filter-category-header .card-header .card-header-title {
+        font-size: 14px;
+        padding: 0;
+    }
+    .filter-panel {
+        padding-top: 4px;
+        padding-bottom: 4px;
+    }
+}
