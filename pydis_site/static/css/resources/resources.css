@@ -94,10 +94,15 @@ i.is-primary {
 
 /* Set default display to inline-flex, for centering. */
 span.filter-box-tag {
-    display: inline-flex;
+    display: none;
     align-items: center;
     cursor: pointer;
     user-select: none;
+}
+
+/* Make sure jQuery will use inline-flex when setting `show()` again. */
+span.filter-box-tag[style*='display: block'] {
+    display: inline-flex !important;
 }
 
 /* Make resource tags clickable */
