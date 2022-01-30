@@ -196,6 +196,7 @@ guild:
         big_brother:                            �
         dev_log:                                �
         duck_pond:                              �
+        incidents:                              �
         incidents_archive:                      �
         python_news:        &PYNEWS_WEBHOOK     �
         talent_pool:                            �
@@ -350,7 +351,7 @@ style:
 
         trashcan: "<:trashcan:�>"
 
-##### <<  Optional - If you don't care about the filtering and help channel cogs, ignore the rest of this file  >> #####
+##### <<  Optional - If you don't care about the filtering, help channel and py-news cogs, ignore the rest of this file  >> #####
 filter:
     # What do we filter?
     filter_domains:        true
@@ -425,6 +426,10 @@ help_channels:
     # Mention these roles in notifications
     notify_roles:
         - *HELPERS_ROLE
+
+python_news:
+    channel: *DEV_PY_NEWS
+    webhook: *PYNEWS_WEBHOOK
 
 ##### <<  Add any additional sections you need to override from config-default.yml  >> #####
             </code>

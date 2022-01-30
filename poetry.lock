@@ -25,17 +25,22 @@ tests_no_zope = ["coverage[toml] (>=5.0.2)", "hypothesis", "pympler", "pytest (>
 
 [[package]]
 name = "bandit"
-version = "1.7.1"
+version = "1.7.2"
 description = "Security oriented static analyser for python code."
 category = "dev"
 optional = false
-python-versions = ">=3.5"
+python-versions = ">=3.7"
 
 [package.dependencies]
 colorama = {version = ">=0.3.9", markers = "platform_system == \"Windows\""}
 GitPython = ">=1.0.1"
 PyYAML = ">=5.3.1"
 stevedore = ">=1.20.0"
+
+[package.extras]
+test = ["beautifulsoup4 (>=4.8.0)", "coverage (>=4.5.4)", "fixtures (>=3.0.0)", "flake8 (>=4.0.0)", "pylint (==1.9.4)", "stestr (>=2.5.0)", "testscenarios (>=0.5.0)", "testtools (>=2.3.0)", "toml"]
+toml = ["toml"]
+yaml = ["pyyaml"]
 
 [[package]]
 name = "certifi"
@@ -55,7 +60,7 @@ python-versions = ">=3.6.1"
 
 [[package]]
 name = "charset-normalizer"
-version = "2.0.10"
+version = "2.0.11"
 description = "The Real First Universal Charset Detector. Open, modern and actively maintained alternative to Chardet."
 category = "main"
 optional = false
@@ -370,11 +375,11 @@ tornado = ["tornado (>=0.2)"]
 
 [[package]]
 name = "identify"
-version = "2.4.4"
+version = "2.4.6"
 description = "File identification library for Python"
 category = "dev"
 optional = false
-python-versions = ">=3.6.1"
+python-versions = ">=3.7"
 
 [package.extras]
 license = ["ukkonen"]
@@ -502,11 +507,11 @@ virtualenv = ">=20.0.8"
 
 [[package]]
 name = "prometheus-client"
-version = "0.12.0"
+version = "0.13.1"
 description = "Python client for the Prometheus monitoring system."
 category = "main"
 optional = false
-python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
+python-versions = ">=3.6"
 
 [package.extras]
 twisted = ["twisted"]
@@ -554,11 +559,11 @@ toml = ["toml"]
 
 [[package]]
 name = "pyfakefs"
-version = "4.4.0"
+version = "4.5.4"
 description = "pyfakefs implements a fake file system that mocks the Python file system modules."
 category = "dev"
 optional = false
-python-versions = ">=3.5"
+python-versions = ">=3.6"
 
 [[package]]
 name = "pyflakes"
@@ -777,7 +782,7 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytest-
 [metadata]
 lock-version = "1.1"
 python-versions = "3.9.*"
-content-hash = "efb0a9b06698ebd10044baf97e43df8bdf220b760ea41be3a08848c708d16e78"
+content-hash = "fc9b20c33c65a289122d710844285ac20d7598e65c7f8237f8903509f5b2dea4"
 
 [metadata.files]
 asgiref = [
@@ -789,8 +794,8 @@ attrs = [
     {file = "attrs-21.4.0.tar.gz", hash = "sha256:626ba8234211db98e869df76230a137c4c40a12d72445c45d5f5b716f076e2fd"},
 ]
 bandit = [
-    {file = "bandit-1.7.1-py3-none-any.whl", hash = "sha256:f5acd838e59c038a159b5c621cf0f8270b279e884eadd7b782d7491c02add0d4"},
-    {file = "bandit-1.7.1.tar.gz", hash = "sha256:a81b00b5436e6880fa8ad6799bc830e02032047713cbb143a12939ac67eb756c"},
+    {file = "bandit-1.7.2-py3-none-any.whl", hash = "sha256:e20402cadfd126d85b68ed4c8862959663c8c372dbbb1fca8f8e2c9f55a067ec"},
+    {file = "bandit-1.7.2.tar.gz", hash = "sha256:6d11adea0214a43813887bfe71a377b5a9955e4c826c8ffd341b494e3ab25260"},
 ]
 certifi = [
     {file = "certifi-2021.10.8-py2.py3-none-any.whl", hash = "sha256:d62a0163eb4c2344ac042ab2bdf75399a71a2d8c7d47eac2e2ee91b9d6339569"},
@@ -801,8 +806,8 @@ cfgv = [
     {file = "cfgv-3.3.1.tar.gz", hash = "sha256:f5a830efb9ce7a445376bb66ec94c638a9787422f96264c98edc6bdeed8ab736"},
 ]
 charset-normalizer = [
-    {file = "charset-normalizer-2.0.10.tar.gz", hash = "sha256:876d180e9d7432c5d1dfd4c5d26b72f099d503e8fcc0feb7532c9289be60fcbd"},
-    {file = "charset_normalizer-2.0.10-py3-none-any.whl", hash = "sha256:cb957888737fc0bbcd78e3df769addb41fd1ff8cf950dc9e7ad7793f1bf44455"},
+    {file = "charset-normalizer-2.0.11.tar.gz", hash = "sha256:98398a9d69ee80548c762ba991a4728bfc3836768ed226b3945908d1a688371c"},
+    {file = "charset_normalizer-2.0.11-py3-none-any.whl", hash = "sha256:2842d8f5e82a1f6aa437380934d5e1cd4fcf2003b06fed6940769c164a480a45"},
 ]
 colorama = [
     {file = "colorama-0.4.4-py2.py3-none-any.whl", hash = "sha256:9f47eda37229f68eee03b24b9748937c7dc3868f906e8ba69fbcbdd3bc5dc3e2"},
@@ -955,8 +960,8 @@ gunicorn = [
     {file = "gunicorn-20.0.4.tar.gz", hash = "sha256:1904bb2b8a43658807108d59c3f3d56c2b6121a701161de0ddf9ad140073c626"},
 ]
 identify = [
-    {file = "identify-2.4.4-py2.py3-none-any.whl", hash = "sha256:aa68609c7454dbcaae60a01ff6b8df1de9b39fe6e50b1f6107ec81dcda624aa6"},
-    {file = "identify-2.4.4.tar.gz", hash = "sha256:6b4b5031f69c48bf93a646b90de9b381c6b5f560df4cbe0ed3cf7650ae741e4d"},
+    {file = "identify-2.4.6-py2.py3-none-any.whl", hash = "sha256:cf06b1639e0dca0c184b1504d8b73448c99a68e004a80524c7923b95f7b6837c"},
+    {file = "identify-2.4.6.tar.gz", hash = "sha256:233679e3f61a02015d4293dbccf16aa0e4996f868bd114688b8c124f18826706"},
 ]
 idna = [
     {file = "idna-3.3-py3-none-any.whl", hash = "sha256:84d9dd047ffa80596e0f246e2eab0b391788b0503584e8945f2368256d2735ff"},
@@ -1011,8 +1016,8 @@ pre-commit = [
     {file = "pre_commit-2.17.0.tar.gz", hash = "sha256:c1a8040ff15ad3d648c70cc3e55b93e4d2d5b687320955505587fd79bbaed06a"},
 ]
 prometheus-client = [
-    {file = "prometheus_client-0.12.0-py2.py3-none-any.whl", hash = "sha256:317453ebabff0a1b02df7f708efbab21e3489e7072b61cb6957230dd004a0af0"},
-    {file = "prometheus_client-0.12.0.tar.gz", hash = "sha256:1b12ba48cee33b9b0b9de64a1047cbd3c5f2d0ab6ebcead7ddda613a750ec3c5"},
+    {file = "prometheus_client-0.13.1-py3-none-any.whl", hash = "sha256:357a447fd2359b0a1d2e9b311a0c5778c330cfbe186d880ad5a6b39884652316"},
+    {file = "prometheus_client-0.13.1.tar.gz", hash = "sha256:ada41b891b79fca5638bd5cfe149efa86512eaa55987893becd2c6d8d0a5dfc5"},
 ]
 psutil = [
     {file = "psutil-5.9.0-cp27-cp27m-manylinux2010_i686.whl", hash = "sha256:55ce319452e3d139e25d6c3f85a1acf12d1607ddedea5e35fb47a552c051161b"},
@@ -1094,8 +1099,8 @@ pydocstyle = [
     {file = "pydocstyle-6.1.1.tar.gz", hash = "sha256:1d41b7c459ba0ee6c345f2eb9ae827cab14a7533a88c5c6f7e94923f72df92dc"},
 ]
 pyfakefs = [
-    {file = "pyfakefs-4.4.0-py3-none-any.whl", hash = "sha256:1ac3b2845dabe69af56c20691b9347914581195ccdde352535fb7d4ff0055c19"},
-    {file = "pyfakefs-4.4.0.tar.gz", hash = "sha256:082d863e0e2a74351f697da404e329a91e18e5055942e59d1b836e8459b2c94c"},
+    {file = "pyfakefs-4.5.4-py3-none-any.whl", hash = "sha256:e0cc0d22cb74badf4fb2143a112817d7aea1a58ee9dca015a68bf38c3691cb52"},
+    {file = "pyfakefs-4.5.4.tar.gz", hash = "sha256:5b5951e873f73bf12e3a19d8e4470c4b7962c51df753cf8c4caaf64e24a0a323"},
 ]
 pyflakes = [
     {file = "pyflakes-2.3.1-py2.py3-none-any.whl", hash = "sha256:7893783d01b8a89811dd72d7dfd4d84ff098e5eed95cfa8905b22bbffe52efc3"},
