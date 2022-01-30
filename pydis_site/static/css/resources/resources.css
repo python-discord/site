@@ -62,8 +62,15 @@ display: block;
     border-radius: 0;
 }
 
+/* Center the 404 div */
+.no-resources-found {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 /* Hide the no resources h2 by default */
-h2.no-resources-found {
+.no-resources-found {
     display: none;
     margin-top: 1em;
 }
@@ -91,13 +98,6 @@ span.filter-box-tag {
     align-items: center;
     cursor: pointer;
     user-select: none;
-}
-
-/* Center the 404 div */
-.no-resources-found {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
 }
 
 /* Make resource tags clickable */
