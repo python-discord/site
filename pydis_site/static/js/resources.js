@@ -64,9 +64,9 @@ function deserializeURLParams() {
 
             // Update the corresponding filter UI, so it reflects the internal state.
             $(paramFilterArray).each(function(_, filter) {
-                let checkbox = $(`.filter-checkbox[data-filter-name=${filterType}][data-filter-item=${filter}]`);
-                let filterTag = $(`.filter-box-tag[data-filter-name=${filterType}][data-filter-item=${filter}]`);
-                let resourceTags = $(`.resource-tag[data-filter-name=${filterType}][data-filter-item=${filter}]`);
+                let checkbox = $(`.filter-checkbox[data-filter-name='${filterType}'][data-filter-item='${filter}']`);
+                let filterTag = $(`.filter-box-tag[data-filter-name='${filterType}'][data-filter-item='${filter}']`);
+                let resourceTags = $(`.resource-tag[data-filter-name='${filterType}'][data-filter-item='${filter}']`);
                 checkbox.prop("checked", true);
                 filterTag.show();
                 resourceTags.addClass("active");
@@ -149,7 +149,6 @@ function updateUI() {
     }).show();
 
     // If there are no matches, show the no matches message
-    console.log(hasMatches);
     if (!hasMatches) {
         $(".no-resources-found").show();
     } else {
@@ -196,7 +195,7 @@ document.addEventListener("DOMContentLoaded", function () {
     $('.filter-box-tag').click(function() {
         let filterItem = this.dataset.filterItem;
         let filterName = this.dataset.filterName;
-        let checkbox = $(`.filter-checkbox[data-filter-name=${filterName}][data-filter-item=${filterItem}]`);
+        let checkbox = $(`.filter-checkbox[data-filter-name='${filterName}'][data-filter-item='${filterItem}']`);
 
         removeFilter(filterName, filterItem);
         checkbox.prop("checked", false);
@@ -206,7 +205,7 @@ document.addEventListener("DOMContentLoaded", function () {
     $('.resource-tag').click(function() {
         let filterItem = this.dataset.filterItem;
         let filterName = this.dataset.filterName;
-        let checkbox = $(`.filter-checkbox[data-filter-name=${filterName}][data-filter-item=${filterItem}]`)
+        let checkbox = $(`.filter-checkbox[data-filter-name='${filterName}'][data-filter-item='${filterItem}']`);
 
         if (!$(this).hasClass("active")) {
             addFilter(filterName, filterItem);

@@ -82,9 +82,12 @@ class ResourceView(View):
     def get(self, request: WSGIRequest, resource_type: t.Optional[str] = None) -> HttpResponse:
         """List out all the resources, and any filtering options from the URL."""
 
-        # Add type filtering if the request is made to somewhere like /resources/video
-        if resource_type and resource_type.title() not in self.filters['Type']['filters']:
+        # Add type filtering if the request is made to somewhere like /resources/video.
+        # We also convert all spaces to dashes, so they'll correspond with the filters.
+        dashless_resource_type = resource_type.replace("-", " ")
+        if resource_type and dashless_resource_type.title() not in self.filters['Type']['filters']:
             return HttpResponseNotFound()
+        resource_type = resource_type.replace(" ", "-")
 
         return render(
             request,
