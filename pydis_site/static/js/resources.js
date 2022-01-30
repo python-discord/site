@@ -160,6 +160,14 @@ function updateUI() {
 
 // Executed when the page has finished loading.
 document.addEventListener("DOMContentLoaded", function () {
+    /* Check if the user has navigated to one of the old resource pages,
+       like pydis.com/resources/communities. In this case, we'll rewrite
+       the URL before we do anything else. */
+    let resourceTypeInput = $("#resource-type-input").val();
+    if (resourceTypeInput.length !== 0) {
+        window.history.replaceState(null, document.title, `../?type=${resourceTypeInput}`);
+    }
+
     // Update the filters on page load to reflect URL parameters.
     $('.filter-box-tag').hide();
     deserializeURLParams();

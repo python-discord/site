@@ -1,8 +1,9 @@
 from pathlib import Path
+import typing as t
 
 import yaml
 from django.core.handlers.wsgi import WSGIRequest
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseNotFound
 from django.shortcuts import render
 from django.views import View
 
@@ -78,22 +79,12 @@ class ResourceView(View):
             }
         }
 
-    @staticmethod
-    def _get_filter_options(request: WSGIRequest) -> dict[str, set]:
-        """Get the requested filter options out of the request object."""
-        return {
-            option: set(request.GET.get(url_param, "").split(",")[:-1])
-            for option, url_param in (
-                ('topics', 'topics'),
-                ('type', 'type'),
-                ('payment_tiers', 'payment'),
-                ('difficulty', 'difficulty'),
-            )
-        }
-
-    def get(self, request: WSGIRequest) -> HttpResponse:
+    def get(self, request: WSGIRequest, resource_type: t.Optional[str] = None) -> HttpResponse:
         """List out all the resources, and any filtering options from the URL."""
-        filter_options = self._get_filter_options(request)
+
+        # Add type filtering if the request is made to somewhere like /resources/video
+        if resource_type and resource_type.title() not in self.filters['Type']['filters']:
+            return HttpResponseNotFound()
 
         return render(
             request,
@@ -101,6 +92,6 @@ class ResourceView(View):
             context={
                 "resources": self.resources,
                 "filters": self.filters,
-                "filter_options": filter_options,
+                "resource_type": resource_type,
             }
         )

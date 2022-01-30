@@ -90,30 +90,32 @@ resources_index_redirect:
 resources_reading_redirect:
   original_path: resources/reading/
   redirect_route: "resources:index"
+  redirect_arguments: ["book"]
 
 resources_videos_redirect:
   original_path: resources/videos/
   redirect_route: "resources:index"
-
-resources_interactive_redirect:
-  original_path: resources/interactive/
-  redirect_route: "resources:index"
+  redirect_arguments: ["video"]
 
 resources_courses_redirect:
   original_path: resources/courses/
   redirect_route: "resources:index"
+  redirect_arguments: ["course"]
 
 resources_communities_redirect:
   original_path: resources/communities/
   redirect_route: "resources:index"
+  redirect_arguments: ["community"]
 
 resources_podcasts_redirect:
   original_path: resources/podcasts/
   redirect_route: "resources:index"
+  redirect_arguments: ["podcast"]
 
 resources_tools_redirect:
   original_path: resources/tools/
   redirect_route: "resources:index"
+  redirect_arguments: ["tool"]
 
 # Events
 events_index_redirect:
