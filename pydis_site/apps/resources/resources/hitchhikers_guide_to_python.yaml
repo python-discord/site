@@ -5,7 +5,7 @@ title_url: https://python-guide.org/
 urls:
 - icon: branding/goodreads
   url: https://www.goodreads.com/book/show/28321007-the-hitchhiker-s-guide-to-python
-  color: goodreads-cream
+  color: black
 tags:
   topics:
     - general

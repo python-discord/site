@@ -8,7 +8,7 @@ title_url: https://greenteapress.com/wp/think-python-2e/
 urls:
   - icon: branding/goodreads
     url: https://www.goodreads.com/book/show/14514306-think-python
-    color: goodreads-cream
+    color: black
   - icon: branding/github
     url: https://github.com/AllenDowney/ThinkPython2
     color: black

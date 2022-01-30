@@ -9,7 +9,7 @@ urls:
   color: black
 - icon: branding/goodreads
   url: https://www.goodreads.com/book/show/6762544-a-byte-of-python
-  color: goodreads-cream
+  color: black
 tags:
   topics:
     - general

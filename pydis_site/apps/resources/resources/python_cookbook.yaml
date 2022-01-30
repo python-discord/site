@@ -5,7 +5,7 @@ title_url: http://shop.oreilly.com/product/0636920027072.do
 urls:
 - icon: branding/goodreads
   url: https://www.goodreads.com/book/show/17152735-python-cookbook
-  color: goodreads-cream
+  color: black
 - icon: branding/github
   url: https://github.com/dabeaz/python-cookbook
   color: black

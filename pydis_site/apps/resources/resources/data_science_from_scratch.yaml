@@ -7,7 +7,7 @@ title_url: https://www.oreilly.com/library/view/data-science-from/9781492041122/
 urls:
   - icon: branding/goodreads
     url: https://www.goodreads.com/en/book/show/52059715-data-science-from-scratch
-    color: goodreads-cream
+    color: black
   - icon: branding/github
     url: https://github.com/joelgrus/data-science-from-scratch
     color: black

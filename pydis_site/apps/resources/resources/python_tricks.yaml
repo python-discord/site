@@ -6,7 +6,7 @@ title_url: https://realpython.com/products/python-tricks-book/
 urls:
 - icon: branding/goodreads
   url: https://www.goodreads.com/book/show/36990732-python-tricks
-  color: goodreads-cream
+  color: black
 tags:
   topics:
     - general

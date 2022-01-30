@@ -7,7 +7,7 @@ title_url: https://www.sean.co.uk/books/mission-python/index.shtm
 urls:
 - icon: branding/goodreads
   url: https://www.goodreads.com/book/show/35545850-mission-python
-  color: goodreads-cream
+  color: black
 tags:
   topics:
     - general

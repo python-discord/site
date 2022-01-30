@@ -11,7 +11,7 @@ title_url: https://nostarch.com/pythoncrashcourse2e
 urls:
   - icon: branding/goodreads
     url: https://www.goodreads.com/book/show/23241059-python-crash-course
-    color: goodreads-cream
+    color: black
   - icon: branding/github
     url: https://ehmatthes.github.io/pcc/
     color: black

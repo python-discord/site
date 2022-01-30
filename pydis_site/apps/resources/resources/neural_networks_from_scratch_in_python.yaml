@@ -7,7 +7,7 @@ title_url: https://nnfs.io/
 urls:
   - icon: branding/goodreads
     url: https://www.goodreads.com/book/show/55927899-neural-networks-from-scratch-in-python
-    color: goodreads-cream
+    color: black
 tags:
   topics:
     - data science
