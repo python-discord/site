@@ -178,7 +178,7 @@ document.addEventListener("DOMContentLoaded", function () {
     updateUI();
 
     // If you collapse or uncollapse a filter group, swap the icon.
-    $('button.collapsible').click(function() {
+    $('button.collapsible').on("click", function() {
         let icon = $(this).find(".card-header-icon i");
 
         if ($(icon).hasClass("fa-window-minimize")) {
@@ -189,6 +189,17 @@ document.addEventListener("DOMContentLoaded", function () {
             $(icon).addClass(["far", "fa-window-minimize"]);
         }
     });
+
+    // If this is a mobile device, collapse the categories to win back some screen real estate.
+    if (screen.width < 480) {
+        let categoryHeaders = $(".filter-category-header .collapsible-content");
+        let icons = $('.filter-category-header button .card-header-icon i');
+        categoryHeaders.addClass("no-transition");
+        categoryHeaders.css("max-height", 0);
+        icons.removeClass(["far", "fa-window-minimize"]);
+        icons.addClass(["fas", "fa-angle-down"]);
+        categoryHeaders.removeClass("no-transition");
+    }
 
     // If you click on the div surrounding the filter checkbox, it clicks the corresponding checkbox.
     $('.filter-panel').click(function() {

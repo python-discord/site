@@ -199,3 +199,11 @@ span.resource-tag.active.has-background-info-light {
         padding-bottom: 4px;
     }
 }
+
+/* Disable transitions */
+.no-transition {
+  -webkit-transition: none !important;
+  -moz-transition: none !important;
+  -o-transition: none !important;
+  transition: none !important;
+}
