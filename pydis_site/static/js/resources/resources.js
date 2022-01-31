@@ -147,6 +147,7 @@ function updateUI() {
         let resourceBox = $(this);
 
         // Validate the filters
+
         $.each(activeFilters, function(filterType, filters) {
             // If the filter list is empty, this passes validation.
             if (filters.length === 0) {
@@ -170,6 +171,7 @@ function updateUI() {
             return false;
         }
     }).show();
+
 
     // If there are no matches, show the no matches message
     if (!hasMatches) {
@@ -219,14 +221,18 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // If you click on the div surrounding the filter checkbox, it clicks the corresponding checkbox.
-    $('.filter-panel').click(function() {
-        let checkbox = $(this).find(".filter-checkbox");
-        checkbox.prop("checked", !checkbox.prop("checked"));
-        checkbox.change();
+    $('.filter-panel').on("click",function(event) {
+        let hitsCheckbox = Boolean(String(event.target));
+
+        if (!hitsCheckbox) {
+            let checkbox = $(this).find(".filter-checkbox");
+            checkbox.prop("checked", !checkbox.prop("checked"));
+            checkbox.trigger("change");
+        }
     });
 
     // If you click on one of the tags in the filter box, it unchecks the corresponding checkbox.
-    $('.filter-box-tag').click(function() {
+    $('.filter-box-tag').on("click", function() {
         let filterItem = this.dataset.filterItem;
         let filterName = this.dataset.filterName;
         let checkbox = $(`.filter-checkbox[data-filter-name='${filterName}'][data-filter-item='${filterItem}']`);
@@ -236,7 +242,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // If you click on one of the tags in the resource cards, it clicks the corresponding checkbox.
-    $('.resource-tag').click(function() {
+    $('.resource-tag').on("click", function() {
         let filterItem = this.dataset.filterItem;
         let filterName = this.dataset.filterName;
         let checkbox = $(`.filter-checkbox[data-filter-name='${filterName}'][data-filter-item='${filterItem}']`);
@@ -251,13 +257,13 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // When checkboxes are toggled, trigger a filter update.
-    $('.filter-checkbox').change(function () {
+    $('.filter-checkbox').on("change", function (event) {
         let filterItem = this.dataset.filterItem;
         let filterName = this.dataset.filterName;
 
-        if (this.checked) {
+        if (this.checked && !activeFilters[filterName].includes(filterItem)) {
             addFilter(filterName, filterItem);
-        } else {
+        } else if (!this.checked && activeFilters[filterName].includes(filterItem)) {
             removeFilter(filterName, filterItem);
         }
     });
