@@ -62,6 +62,17 @@ display: block;
     border-radius: 0;
 }
 
+/* Make the checkboxes indent under the filter headers */
+.filter-category-header .card-header .card-header-title {
+    padding-left: 0;
+}
+.filter-panel {
+    padding-left: 1.5rem;
+}
+.filter-checkbox {
+    margin-right: 0.25em !important;
+}
+
 /* Center the 404 div */
 .no-resources-found {
     display: none;
