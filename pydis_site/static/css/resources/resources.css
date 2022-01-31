@@ -163,6 +163,14 @@ span.resource-tag.active {
     outline-style: solid;
 }
 
+/* Disable transitions */
+.no-transition {
+  -webkit-transition: none !important;
+  -moz-transition: none !important;
+  -o-transition: none !important;
+  transition: none !important;
+}
+
 /* Make filter tags sparkle when selected! */
 @keyframes glow_success {
     from { box-shadow: 0 0 2px 2px #aef4af; }
@@ -216,10 +224,10 @@ span.resource-tag.active.has-background-info-light {
     }
 }
 
-/* Disable transitions */
-.no-transition {
-  -webkit-transition: none !important;
-  -moz-transition: none !important;
-  -o-transition: none !important;
-  transition: none !important;
+/* Constrain the width of the filterbox */
+@media screen and (min-width: 769px) {
+    .filtering-column {
+        max-width: 25rem;
+        min-width: 18rem;
+    }
 }
