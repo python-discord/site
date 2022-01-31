@@ -15,3 +15,15 @@ class TestResourcesView(TestCase):
         url = reverse("resources:index")
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
+
+    def test_resources_with_valid_argument(self):
+        """Check that you can resolve the resources when passing a valid argument."""
+        url = reverse("resources:index", kwargs={"resource_type": "book"})
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+
+    def test_resources_with_invalid_argument(self):
+        """Check that you can resolve the resources when passing an invalid argument."""
+        url = reverse("resources:index", kwargs={"resource_type": "urinal-cake"})
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 404)
