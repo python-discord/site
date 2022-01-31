@@ -214,7 +214,7 @@ document.addEventListener("DOMContentLoaded", function () {
         let categoryHeaders = $(".filter-category-header .collapsible-content");
         let icons = $('.filter-category-header button .card-header-icon i');
         categoryHeaders.addClass("no-transition");
-        categoryHeaders.css("max-height", 0);
+        categoryHeaders.css("max-height", "");
         icons.removeClass(["far", "fa-window-minimize"]);
         icons.addClass(["fas", "fa-angle-down"]);
         categoryHeaders.removeClass("no-transition");
