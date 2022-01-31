@@ -69,6 +69,7 @@ function deserializeURLParams() {
             let paramFilterArray = paramFilterContent.split(",");
 
             // Update the corresponding filter UI, so it reflects the internal state.
+            let filterAdded = false;
             $(paramFilterArray).each(function(_, filter) {
                 // Make sure the filter is valid before we do anything.
                 if (String(filter) === "rickroll" && filterType === "type") {
@@ -83,11 +84,17 @@ function deserializeURLParams() {
                     filterTag.show();
                     resourceTags.addClass("active");
                     activeFilters[filterType].push(filter);
+                    filterAdded = true;
                 }
             });
 
             // Ditch all the params from the URL, and recalculate the URL params
             updateURL();
+
+            // If we've added a filter, hide the no filters tag.
+            if (filterAdded) {
+                $(".no-tags-selected.tag").hide();
+            }
         }
     });
 }
