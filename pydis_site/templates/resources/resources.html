@@ -6,6 +6,11 @@
 
 {% block title %}Resources{% endblock %}
 {% block head %}
+    {# Inject a JSON object of all valid filter types from the view #}
+    <script>
+        const validFilters = {{ valid_filters | safe }}
+    </script>
+
     <link rel="stylesheet" href="{% static "css/resources/resources.css" %}">
     <link rel="stylesheet" href="{% static "css/collapsibles.css" %}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>

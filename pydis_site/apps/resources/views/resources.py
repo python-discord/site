@@ -1,3 +1,4 @@
+import json
 import typing as t
 from pathlib import Path
 
@@ -8,6 +9,7 @@ from django.shortcuts import render
 from django.views import View
 
 from pydis_site import settings
+from pydis_site.apps.resources.templatetags.as_css_class import as_css_class
 
 RESOURCES_PATH = Path(settings.BASE_DIR, "pydis_site", "apps", "resources", "resources")
 
@@ -83,6 +85,14 @@ class ResourceView(View):
         self.filters["Topics"]["filters"].remove("Other")
         self.filters["Topics"]["filters"].append("Other")
 
+        # A complete list of valid filter names
+        self.valid_filters = {
+            "topics": [as_css_class(topic) for topic in self.filters["Topics"]["filters"]],
+            "payment_tiers": [as_css_class(tier) for tier in self.filters["Payment tiers"]["filters"]],
+            "type": [as_css_class(type_) for type_ in self.filters["Type"]["filters"]],
+            "difficulty": [as_css_class(tier) for tier in self.filters["Difficulty"]["filters"]],
+        }
+
     def get(self, request: WSGIRequest, resource_type: t.Optional[str] = None) -> HttpResponse:
         """List out all the resources, and any filtering options from the URL."""
         # Add type filtering if the request is made to somewhere like /resources/video.
@@ -101,6 +111,7 @@ class ResourceView(View):
             context={
                 "resources": self.resources,
                 "filters": self.filters,
+                "valid_filters": json.dumps(self.valid_filters),
                 "resource_type": resource_type,
             }
         )

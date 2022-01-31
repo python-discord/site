@@ -67,17 +67,27 @@ function deserializeURLParams() {
         if (paramFilterContent !== null) {
             // We use split here because we always want an array, not a string.
             let paramFilterArray = paramFilterContent.split(",");
-            activeFilters[filterType] = paramFilterArray;
 
             // Update the corresponding filter UI, so it reflects the internal state.
             $(paramFilterArray).each(function(_, filter) {
-                let checkbox = $(`.filter-checkbox[data-filter-name='${filterType}'][data-filter-item='${filter}']`);
-                let filterTag = $(`.filter-box-tag[data-filter-name='${filterType}'][data-filter-item='${filter}']`);
-                let resourceTags = $(`.resource-tag[data-filter-name='${filterType}'][data-filter-item='${filter}']`);
-                checkbox.prop("checked", true);
-                filterTag.show();
-                resourceTags.addClass("active");
+                // Make sure the filter is valid before we do anything.
+                if (String(filter) === "rickroll" && filterType === "type") {
+                    window.location.href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
+                } else if (String(filter) === "sneakers" && filterType === "topics") {
+                    window.location.href = "https://www.youtube.com/watch?v=NNZscmNE9QI";
+                } else if (validFilters[filterType].includes(String(filter))) {
+                    let checkbox = $(`.filter-checkbox[data-filter-name='${filterType}'][data-filter-item='${filter}']`);
+                    let filterTag = $(`.filter-box-tag[data-filter-name='${filterType}'][data-filter-item='${filter}']`);
+                    let resourceTags = $(`.resource-tag[data-filter-name='${filterType}'][data-filter-item='${filter}']`);
+                    checkbox.prop("checked", true);
+                    filterTag.show();
+                    resourceTags.addClass("active");
+                    activeFilters[filterType].push(filter);
+                }
             });
+
+            // Ditch all the params from the URL, and recalculate the URL params
+            updateURL();
         }
     });
 }
