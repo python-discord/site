@@ -1,8 +1,8 @@
-description: Google Collab is a high-powered custom version of Jupyter Notebook which supports e.g.
+description: Google Colab is a high-powered custom version of Jupyter Notebook which supports e.g.
   !apt-get to install arbitrary Debian packages to the runtime, which is very generous with CPU and memory,
   and well-integrated with Google Drive.
-  You can share your Collab Notebooks with other people and work collaboratively.
-name: Google Collab
+  You can share your Colab Notebooks with other people and work collaboratively.
+name: Google Colab
 title_url: https://colab.research.google.com/notebooks/intro.ipynb
 tags:
   topics:

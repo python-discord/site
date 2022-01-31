@@ -12,7 +12,7 @@ _ICONS = {
     "Databases": "fa-server",
     "Discord Bots": "fa-robot",
     "Free": "fa-first-aid",
-    "Game Development": "fa-joystick",
+    "Game Development": "fa-gamepad",
     "General": "fa-book",
     "Interactive": "fa-mouse-pointer",
     "Intermediate": "fa-align-center",
