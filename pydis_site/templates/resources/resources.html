@@ -32,6 +32,9 @@
                         {# Filter box tags #}
                         <div class="card filter-tags">
                             <div class="is-flex ml-auto is-flex-wrap-wrap">
+                                {# A little x in the top right, visible only when filters are active, which removes all filters. #}
+                                <i class="fas fa-window-close"></i>
+
                                 {# A filter tag for when there are no filters active #}
                                 <span class="no-tags-selected tag has-background-disabled has-text-disabled ml-2 mt-2">
                                         <i class="fas fa-ban mr-1"></i>
@@ -153,5 +156,3 @@
         </div>
     </section>
 {% endblock %}
-
-
