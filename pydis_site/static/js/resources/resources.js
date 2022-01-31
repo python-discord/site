@@ -8,42 +8,33 @@ var activeFilters = {
     difficulty: []
 };
 
+/* Add a filter, and update the UI */
 function addFilter(filterName, filterItem) {
-    // Push the filter into the stack
     var filterIndex = activeFilters[filterName].indexOf(filterItem);
     if (filterIndex === -1) {
         activeFilters[filterName].push(filterItem);
     }
     updateUI();
-
-    // Show a corresponding filter box tag
-    $(`.filter-box-tag[data-filter-name=${filterName}][data-filter-item=${filterItem}]`).show();
-
-    // Make corresponding resource tags active
-    $(`.resource-tag[data-filter-name=${filterName}][data-filter-item=${filterItem}]`).addClass("active");
-
-    // Hide the "No filters selected" tag.
-    $(".no-tags-selected.tag").hide();
 }
 
+/* Remove all filters, and update the UI */
+function removeAllFilters() {
+    activeFilters = {
+        topics: [],
+        type: [],
+        "payment-tiers": [],
+        difficulty: []
+    };
+    updateUI();
+}
+
+/* Remove a filter, and update the UI */
 function removeFilter(filterName, filterItem) {
-    // Remove the filter from the stack
     var filterIndex = activeFilters[filterName].indexOf(filterItem);
     if (filterIndex !== -1) {
         activeFilters[filterName].splice(filterIndex, 1);
     }
     updateUI();
-
-    // Hide the corresponding filter box tag
-    $(`.filter-box-tag[data-filter-name=${filterName}][data-filter-item=${filterItem}]`).hide();
-
-    // Make corresponding resource tags inactive
-    $(`.resource-tag[data-filter-name=${filterName}][data-filter-item=${filterItem}]`).removeClass("active");
-
-    // Show "No filters selected" tag, if there are no filters active
-    if (noFilters()) {
-        $(".no-tags-selected.tag").show();
-    }
 }
 
 /* Check if there are no filters */
@@ -76,7 +67,7 @@ function deserializeURLParams() {
                     window.location.href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
                 } else if (String(filter) === "sneakers" && filterType === "topics") {
                     window.location.href = "https://www.youtube.com/watch?v=NNZscmNE9QI";
-                } else if (validFilters[filterType].includes(String(filter))) {
+                } else if (validFilters.hasOwnProperty(filterType) && validFilters[filterType].includes(String(filter))) {
                     let checkbox = $(`.filter-checkbox[data-filter-name='${filterType}'][data-filter-item='${filter}']`);
                     let filterTag = $(`.filter-box-tag[data-filter-name='${filterType}'][data-filter-item='${filter}']`);
                     let resourceTags = $(`.resource-tag[data-filter-name='${filterType}'][data-filter-item='${filter}']`);
@@ -91,9 +82,10 @@ function deserializeURLParams() {
             // Ditch all the params from the URL, and recalculate the URL params
             updateURL();
 
-            // If we've added a filter, hide the no filters tag.
+            // If we've added a filter, hide stuff
             if (filterAdded) {
                 $(".no-tags-selected.tag").hide();
+                $(".close-filters-button").show();
             }
         }
     });
@@ -123,15 +115,36 @@ function updateURL() {
 function updateUI() {
     let resources = $('.resource-box');
     let filterTags = $('.filter-box-tag');
+    let noTagsSelected = $(".no-tags-selected.tag");
+    let closeFiltersButton = $(".close-filters-button");
 
     // Update the URL to match the new filters.
     updateURL();
 
-    // If there's nothing in the filters, show everything and return.
+    // If there's nothing in the filters, we can return early.
     if (noFilters()) {
         resources.show();
         filterTags.hide();
+        noTagsSelected.show();
+        closeFiltersButton.hide();
+        $(`.filter-checkbox:checked`).prop("checked", false)
         return;
+    } else {
+        $.each(activeFilters, function(filterType, filters) {
+            $.each(filters, function(index, filter) {
+                // Show a corresponding filter box tag
+                $(`.filter-box-tag[data-filter-name=${filterType}][data-filter-item=${filter}]`).show();
+
+                // Make corresponding resource tags active
+                $(`.resource-tag[data-filter-name=${filterType}][data-filter-item=${filter}]`).addClass("active");
+
+                // Hide the "No filters selected" tag.
+                noTagsSelected.hide();
+
+                // Show the close filters button
+                closeFiltersButton.show();
+            });
+        });
     }
 
     // Otherwise, hide everything and then filter the resources to decide what to show.
@@ -147,7 +160,6 @@ function updateUI() {
         let resourceBox = $(this);
 
         // Validate the filters
-
         $.each(activeFilters, function(filterType, filters) {
             // If the filter list is empty, this passes validation.
             if (filters.length === 0) {
@@ -254,6 +266,11 @@ document.addEventListener("DOMContentLoaded", function () {
             removeFilter(filterName, filterItem);
             checkbox.prop("checked", false);
         }
+    });
+
+    // When you click the little gray x, remove all filters.
+    $(".close-filters-button").on("click", function() {
+        removeAllFilters();
     });
 
     // When checkboxes are toggled, trigger a filter update.

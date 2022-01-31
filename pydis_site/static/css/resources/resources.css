@@ -97,11 +97,28 @@ i.is-primary {
     color: #7289da;
 }
 
-/* A little space around the filter card, please! */
+/* A little space above the filter card, please! */
 .filter-tags {
     padding-bottom: .5em;
-    padding-right: .5em;
 }
+
+/* Style the close all filters button */
+.close-filters-button {
+    margin-left: auto;
+    display:none;
+}
+.close-filters-button a {
+    height: fit-content;
+    width: fit-content;
+    margin-right: 6px;
+}
+.close-filters-button a i {
+    color: #939bb3;
+}
+.close-filters-button a i:hover {
+    filter: brightness(115%);
+}
+
 
 /* Set default display to inline-flex, for centering. */
 span.filter-box-tag {

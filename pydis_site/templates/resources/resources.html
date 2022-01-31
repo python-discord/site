@@ -31,64 +31,70 @@
 
                         {# Filter box tags #}
                         <div class="card filter-tags">
-                            <div class="is-flex ml-auto is-flex-wrap-wrap">
-                                {# A little x in the top right, visible only when filters are active, which removes all filters. #}
-                                <i class="fas fa-window-close"></i>
+                            <div class="is-flex ml-auto">
+                                <div>
+                                    {# A filter tag for when there are no filters active #}
+                                    <span class="no-tags-selected tag has-background-disabled has-text-disabled ml-2 mt-2">
+                                            <i class="fas fa-ban mr-1"></i>
+                                            No filters selected
+                                    </span>
 
-                                {# A filter tag for when there are no filters active #}
-                                <span class="no-tags-selected tag has-background-disabled has-text-disabled ml-2 mt-2">
-                                        <i class="fas fa-ban mr-1"></i>
-                                        No filters selected
-                                </span>
-
-                                {% for filter_name, filter_data in filters.items %}
-                                    {% for filter_item in filter_data.filters %}
-                                        {% if filter_name == "Difficulty" %}
-                                            <span
-                                                    class="filter-box-tag tag has-background-info-light has-text-info-dark ml-2 mt-2"
-                                                    data-filter-name="{{ filter_name|as_css_class }}"
-                                                    data-filter-item="{{ filter_item|as_css_class }}"
-                                            >
-                                                    <i class="{{ filter_item|title|get_category_icon }} mr-1"></i>
-                                                    {{ filter_item|title }}
-                                                    <button class="delete is-small is-info has-background-info-light"></button>
-                                                </span>
-                                        {% endif %}
-                                        {% if filter_name == "Type" %}
-                                            <span
-                                                    class="filter-box-tag tag has-background-success-light has-text-success-dark ml-2 mt-2"
-                                                    data-filter-name="{{ filter_name|as_css_class }}"
-                                                    data-filter-item="{{ filter_item|as_css_class }}"
-                                            >
-                                                    <i class="{{ filter_item|title|get_category_icon }} mr-1"></i>
-                                                    {{ filter_item|title }}
-                                                    <button class="delete is-small is-success has-background-success-light"></button>
-                                                </span>
-                                        {% endif %}
-                                        {% if filter_name == "Payment tiers" %}
-                                            <span
-                                                    class="filter-box-tag tag has-background-danger-light has-text-danger-dark ml-2 mt-2"
-                                                    data-filter-name="{{ filter_name|as_css_class }}"
-                                                    data-filter-item="{{ filter_item|as_css_class }}"
-                                            >
-                                                    <i class="{{ filter_item|title|get_category_icon }} mr-1"></i>
-                                                    {{ filter_item|title }}
-                                                    <button class="delete is-small is-danger has-background-danger-light"></button>
-                                                </span>
-                                        {% endif %}
-                                        {% if filter_name == "Topics" %}
-                                            <span
-                                                    class="filter-box-tag tag is-primary is-light ml-2 mt-2"
-                                                    data-filter-name="{{ filter_name|as_css_class }}"
-                                                    data-filter-item="{{ filter_item|as_css_class }}"
-                                            >
-                                                    <i class="{{ filter_item|title|get_category_icon }} mr-1"></i>
-                                                    {{ filter_item|title }}
-                                                    <button class="delete is-small is-primary has-background-primary-light"></button>
-                                                </span>
-                                        {% endif %}
+                                    {% for filter_name, filter_data in filters.items %}
+                                        {% for filter_item in filter_data.filters %}
+                                            {% if filter_name == "Difficulty" %}
+                                                <span
+                                                        class="filter-box-tag tag has-background-info-light has-text-info-dark ml-2 mt-2"
+                                                        data-filter-name="{{ filter_name|as_css_class }}"
+                                                        data-filter-item="{{ filter_item|as_css_class }}"
+                                                >
+                                                        <i class="{{ filter_item|title|get_category_icon }} mr-1"></i>
+                                                        {{ filter_item|title }}
+                                                        <button class="delete is-small is-info has-background-info-light"></button>
+                                                    </span>
+                                            {% endif %}
+                                            {% if filter_name == "Type" %}
+                                                <span
+                                                        class="filter-box-tag tag has-background-success-light has-text-success-dark ml-2 mt-2"
+                                                        data-filter-name="{{ filter_name|as_css_class }}"
+                                                        data-filter-item="{{ filter_item|as_css_class }}"
+                                                >
+                                                        <i class="{{ filter_item|title|get_category_icon }} mr-1"></i>
+                                                        {{ filter_item|title }}
+                                                        <button class="delete is-small is-success has-background-success-light"></button>
+                                                    </span>
+                                            {% endif %}
+                                            {% if filter_name == "Payment tiers" %}
+                                                <span
+                                                        class="filter-box-tag tag has-background-danger-light has-text-danger-dark ml-2 mt-2"
+                                                        data-filter-name="{{ filter_name|as_css_class }}"
+                                                        data-filter-item="{{ filter_item|as_css_class }}"
+                                                >
+                                                        <i class="{{ filter_item|title|get_category_icon }} mr-1"></i>
+                                                        {{ filter_item|title }}
+                                                        <button class="delete is-small is-danger has-background-danger-light"></button>
+                                                    </span>
+                                            {% endif %}
+                                            {% if filter_name == "Topics" %}
+                                                <span
+                                                        class="filter-box-tag tag is-primary is-light ml-2 mt-2"
+                                                        data-filter-name="{{ filter_name|as_css_class }}"
+                                                        data-filter-item="{{ filter_item|as_css_class }}"
+                                                >
+                                                        <i class="{{ filter_item|title|get_category_icon }} mr-1"></i>
+                                                        {{ filter_item|title }}
+                                                        <button class="delete is-small is-primary has-background-primary-light"></button>
+                                                    </span>
+                                            {% endif %}
+                                        {% endfor %}
                                     {% endfor %}
-                                {% endfor %}
+                                </div>
+                                <div class="close-filters-button">
+                                    {# A little x in the top right, visible only when filters are active, which removes all filters. #}
+                                    <a class="icon">
+                                        <i class="fas fa-window-close"></i>
+                                    </a>
+
+                                </div>
                             </div>
                         </div>
 
