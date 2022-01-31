@@ -64,15 +64,15 @@ display: block;
 
 /* Center the 404 div */
 .no-resources-found {
-    display: flex;
+    display: none;
     flex-direction: column;
     align-items: center;
+    margin-top: 1em;
 }
 
-/* Hide the no resources h2 by default */
-.no-resources-found {
-    display: none;
-    margin-top: 1em;
+/* Make sure jQuery will use flex when setting `show()` again. */
+.no-resources-found[style*='display: block'] {
+    display: flex !important;
 }
 
 /* Disable clicking on the checkbox itself. */
