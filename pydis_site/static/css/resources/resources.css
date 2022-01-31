@@ -111,6 +111,11 @@ span.filter-box-tag[style*='display: block'] {
     user-select: none;
 }
 
+/* Give the resource tags a bit of breathing room */
+.resource-tag-container {
+    padding-left: 1.5rem;
+}
+
 /* When hovering tags, brighten them a bit. */
 .resource-tag:hover,
 .filter-box-tag:hover {
