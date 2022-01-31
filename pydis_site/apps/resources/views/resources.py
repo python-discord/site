@@ -88,7 +88,9 @@ class ResourceView(View):
         # A complete list of valid filter names
         self.valid_filters = {
             "topics": [as_css_class(topic) for topic in self.filters["Topics"]["filters"]],
-            "payment_tiers": [as_css_class(tier) for tier in self.filters["Payment tiers"]["filters"]],
+            "payment_tiers": [
+                as_css_class(tier) for tier in self.filters["Payment tiers"]["filters"]
+            ],
             "type": [as_css_class(type_) for type_ in self.filters["Type"]["filters"]],
             "difficulty": [as_css_class(tier) for tier in self.filters["Difficulty"]["filters"]],
         }
