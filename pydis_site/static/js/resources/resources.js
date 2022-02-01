@@ -217,20 +217,7 @@ document.addEventListener("DOMContentLoaded", function () {
     deserializeURLParams();
     updateUI();
 
-    // If you collapse or uncollapse a filter group, swap the icon.
-    $('button.collapsible').on("click", function() {
-        let icon = $(this).find(".card-header-icon i");
-
-        if ($(icon).hasClass("fa-window-minimize")) {
-            $(icon).removeClass(["far", "fa-window-minimize"]);
-            $(icon).addClass(["fas", "fa-angle-down"]);
-        } else {
-            $(icon).removeClass(["fas", "fa-angle-down"]);
-            $(icon).addClass(["far", "fa-window-minimize"]);
-        }
-    });
-
-    // If this is a mobile device, collapse the categories to win back some screen real estate.
+    // If this is a mobile device, collapse all the categories to win back some screen real estate.
     if (screen.width < 480) {
         let categoryHeaders = $(".filter-category-header .collapsible-content");
         let icons = $('.filter-category-header button .card-header-icon i');
