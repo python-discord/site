@@ -115,6 +115,7 @@ function updateURL() {
 function updateUI() {
     let resources = $('.resource-box');
     let filterTags = $('.filter-box-tag');
+    let resourceTags = $('.resource-tag');
     let noTagsSelected = $(".no-tags-selected.tag");
     let closeFiltersButton = $(".close-filters-button");
 
@@ -127,9 +128,17 @@ function updateUI() {
         filterTags.hide();
         noTagsSelected.show();
         closeFiltersButton.hide();
+        resourceTags.removeClass("active");
         $(`.filter-checkbox:checked`).prop("checked", false)
         return;
     } else {
+        // Hide everything
+        $('.filter-box-tag').hide();
+        $('.resource-tag').removeClass("active");
+        noTagsSelected.show();
+        closeFiltersButton.hide();
+
+        // Now conditionally show the stuff we want
         $.each(activeFilters, function(filterType, filters) {
             $.each(filters, function(index, filter) {
                 // Show a corresponding filter box tag
