@@ -1,5 +1,5 @@
 {% load as_icon %}
-{% load as_css_class %}
+{% load to_kebabcase %}
 {% load get_category_icon %}
 
 <div class="box resource-box {{ resource.css_classes }}">
@@ -38,7 +38,7 @@
             <span
                 class="tag resource-tag is-primary is-light ml-2 mt-2"
                 data-filter-name="topics"
-                data-filter-item="{{ tag|as_css_class }}"
+                data-filter-item="{{ tag|to_kebabcase }}"
             >
                 <i class="{{ tag|title|get_category_icon }} mr-1"></i>
                 {{ tag|title }}
@@ -48,7 +48,7 @@
             <span
                 class="tag resource-tag has-background-success-light has-text-success-dark ml-2 mt-2"
                 data-filter-name="type"
-                data-filter-item="{{ tag|as_css_class }}"
+                data-filter-item="{{ tag|to_kebabcase }}"
             >
                 <i class="{{ tag|title|get_category_icon }} mr-1"></i>
                 {{ tag|title }}
@@ -58,7 +58,7 @@
             <span
                 class="tag resource-tag has-background-danger-light has-text-danger-dark ml-2 mt-2"
                 data-filter-name="payment-tiers"
-                data-filter-item="{{ tag|as_css_class }}"
+                data-filter-item="{{ tag|to_kebabcase }}"
             >
                 <i class="{{ tag|title|get_category_icon }} mr-1"></i>
                 {{ tag|title }}
@@ -68,7 +68,7 @@
             <span
                 class="tag resource-tag has-background-info-light has-text-info-dark ml-2 mt-2"
                 data-filter-name="difficulty"
-                data-filter-item="{{ tag|as_css_class }}"
+                data-filter-item="{{ tag|to_kebabcase }}"
             >
                 <i class="{{ tag|title|get_category_icon }} mr-1"></i>
                 {{ tag|title }}

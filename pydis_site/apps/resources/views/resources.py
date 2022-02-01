@@ -9,7 +9,7 @@ from django.shortcuts import render
 from django.views import View
 
 from pydis_site import settings
-from pydis_site.apps.resources.templatetags.as_css_class import as_css_class
+from pydis_site.apps.resources.templatetags.to_kebabcase import to_kebabcase
 
 RESOURCES_PATH = Path(settings.BASE_DIR, "pydis_site", "apps", "resources", "resources")
 
@@ -58,9 +58,7 @@ class ResourceView(View):
 
                 # Make a CSS class friendly representation too, while we're already iterating.
                 for tag in tags:
-                    css_tag = f"{tag_type}-{tag}"
-                    css_tag = css_tag.replace("_", "-")
-                    css_tag = css_tag.replace(" ", "-")
+                    css_tag = to_kebabcase(f"{tag_type}-{tag}")
                     css_classes.append(css_tag)
 
             # Now add the css classes back to the resource, so we can use them in the template.
@@ -96,12 +94,12 @@ class ResourceView(View):
 
         # A complete list of valid filter names
         self.valid_filters = {
-            "topics": [as_css_class(topic) for topic in self.filters["Topics"]["filters"]],
+            "topics": [to_kebabcase(topic) for topic in self.filters["Topics"]["filters"]],
             "payment_tiers": [
-                as_css_class(tier) for tier in self.filters["Payment tiers"]["filters"]
+                to_kebabcase(tier) for tier in self.filters["Payment tiers"]["filters"]
             ],
-            "type": [as_css_class(type_) for type_ in self.filters["Type"]["filters"]],
-            "difficulty": [as_css_class(tier) for tier in self.filters["Difficulty"]["filters"]],
+            "type": [to_kebabcase(type_) for type_ in self.filters["Type"]["filters"]],
+            "difficulty": [to_kebabcase(tier) for tier in self.filters["Difficulty"]["filters"]],
         }
 
     def get(self, request: WSGIRequest, resource_type: t.Optional[str] = None) -> HttpResponse:
