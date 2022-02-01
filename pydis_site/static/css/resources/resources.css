@@ -119,6 +119,12 @@ i.is-primary {
     filter: brightness(115%);
 }
 
+/* When hovering title anchors, just make the color a lighter primary, not black. */
+.resource-box a:hover {
+    filter: brightness(120%);
+    color: #7289DA;
+}
+
 
 /* Set default display to inline-flex, for centering. */
 span.filter-box-tag {
