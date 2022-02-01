@@ -18,7 +18,7 @@ class ResourceView(View):
     """Our curated list of good learning resources."""
 
     @staticmethod
-    def _sort_key_disregard_the(tuple_):
+    def _sort_key_disregard_the(tuple_: tuple) -> str:
         """Sort a tuple by its key alphabetically, disregarding 'the' as a prefix."""
         name, resource = tuple_
         name = name.casefold()
