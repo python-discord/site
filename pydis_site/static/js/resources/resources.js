@@ -234,11 +234,12 @@ document.addEventListener("DOMContentLoaded", function () {
     if (screen.width < 480) {
         let categoryHeaders = $(".filter-category-header .collapsible-content");
         let icons = $('.filter-category-header button .card-header-icon i');
-        categoryHeaders.addClass("no-transition");
-        categoryHeaders.css("max-height", "");
+        categoryHeaders.addClass("no-transition collapsed");
         icons.removeClass(["far", "fa-window-minimize"]);
         icons.addClass(["fas", "fa-angle-down"]);
-        categoryHeaders.removeClass("no-transition");
+
+        // Wait 10ms before removing this class, or else the transition will animate due to a race condition.
+        setTimeout(() => { categoryHeaders.removeClass("no-transition"); }, 10);
     }
 
     // If you click on the div surrounding the filter checkbox, it clicks the corresponding checkbox.
