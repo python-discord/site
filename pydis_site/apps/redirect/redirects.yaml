@@ -95,7 +95,7 @@ resources_reading_redirect:
 resources_books_redirect:
   original_path: resources/books/
   redirect_route: "resources:index"
-  redirect_arguments: [ "book" ]
+  redirect_arguments: ["book"]
 
 resources_videos_redirect:
   original_path: resources/videos/
