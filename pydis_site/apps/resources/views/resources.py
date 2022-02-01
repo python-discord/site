@@ -17,6 +17,15 @@ RESOURCES_PATH = Path(settings.BASE_DIR, "pydis_site", "apps", "resources", "res
 class ResourceView(View):
     """Our curated list of good learning resources."""
 
+    @staticmethod
+    def _sort_key_disregard_the(tuple_):
+        """Sort a tuple by its key alphabetically, disregarding 'the' as a prefix."""
+        name, resource = tuple_
+        name = name.casefold()
+        if name.startswith("the ") or name.startswith("the_"):
+            return name[4:]
+        return name
+
     def __init__(self, *args, **kwargs):
         """Set up all the resources."""
         super().__init__(*args, **kwargs)
@@ -28,7 +37,7 @@ class ResourceView(View):
         }
 
         # Sort the resources alphabetically
-        self.resources = dict(sorted(self.resources.items()))
+        self.resources = dict(sorted(self.resources.items(), key=self._sort_key_disregard_the))
 
         # Parse out all current tags
         resource_tags = {
