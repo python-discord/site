@@ -1,29 +1,256 @@
-.box, .tile.is-parent {
-    transition: 0.1s ease-out;
+/* Colors for icons */
+i.resource-icon.is-orangered {
+    color: #FE640A;
 }
-.box {
-    min-height: 15vh;
+i.resource-icon.is-blurple {
+    color: #7289DA;
 }
-.tile.is-parent:hover .box {
-    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+i.resource-icon.is-teal {
+    color: #95DBE5;
 }
-.tile.is-parent:hover {
-    padding: 0.65rem 0.85rem 0.85rem 0.65rem;
-    filter: saturate(1.1) brightness(1.1);
+i.resource-icon.is-youtube-red {
+    color: #BB0000;
 }
-
-#readingBlock {
-    background-image: linear-gradient(141deg, #911eb4 0%, #b631de 71%, #cf4bf7 100%);
-}
-
-#interactiveBlock {
-    background-image: linear-gradient(141deg, #d05600 0%, #da722a 71%, #e68846 100%);
+i.resource-icon.is-black {
+    color: #2c3334;
 }
 
-#communitiesBlock {
-    background-image: linear-gradient(141deg, #3b756f 0%, #3a847c 71%, #41948b 100%);
+/* Colors when icons are hovered */
+i.resource-icon.is-hoverable:hover {
+    filter: brightness(125%);
+}
+i.resource-icon.is-hoverable.is-black:hover {
+    filter: brightness(170%);
+}
+i.resource-icon.is-hoverable.is-teal:hover {
+    filter: brightness(80%);
 }
 
-#podcastsBlock {
-    background-image: linear-gradient(141deg, #232382 0%, #30309c 71%, #4343ad 100%);
+/* Icon padding */
+.breadcrumb-section {
+    padding: 1rem;
+}
+i.has-icon-padding {
+    padding: 0 10px 25px 0;
+}
+#tab-content p {
+    display: none;
+}
+#tab-content p.is-active {
+display: block;
+}
+
+/* Disable highlighting for all text in the filters. */
+.filter-checkbox,
+.filter-panel label,
+.card-header span {
+    user-select: none
+}
+
+/* Remove pointless margin in panel header */
+#filter-panel-header {
+    margin-bottom: 0;
+}
+
+/* Full width filter cards */
+#resource-filtering-panel .card .collapsible-content .card-content {
+    padding:0
+}
+
+/* Don't round the corners of the collapsibles */
+.filter-category-header {
+    border-radius: 0;
+}
+
+/* Make the checkboxes indent under the filter headers */
+.filter-category-header .card-header .card-header-title {
+    padding-left: 0;
+}
+.filter-panel {
+    padding-left: 1.5rem;
+}
+.filter-checkbox {
+    margin-right: 0.25em !important;
+}
+
+/* Center the 404 div */
+.no-resources-found {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 1em;
+}
+
+/* Make sure jQuery will use flex when setting `show()` again. */
+.no-resources-found[style*='display: block'] {
+    display: flex !important;
+}
+
+/* Disable clicking on the checkbox itself. */
+/* Instead, we want to let the anchor tag handle clicks. */
+.filter-checkbox {
+    pointer-events: none;
+}
+
+/* Blurple category icons */
+i.is-primary {
+    color: #7289da;
+}
+
+/* A little space above the filter card, please! */
+.filter-tags {
+    padding-bottom: .5em;
+}
+
+/* Style the close all filters button */
+.close-filters-button {
+    margin-left: auto;
+    display:none;
+}
+.close-filters-button a {
+    height: fit-content;
+    width: fit-content;
+    margin-right: 6px;
+}
+.close-filters-button a i {
+    color: #939bb3;
+}
+.close-filters-button a i:hover {
+    filter: brightness(115%);
+}
+
+/* When hovering title anchors, just make the color a lighter primary, not black. */
+.resource-box a:hover {
+    filter: brightness(120%);
+    color: #7289DA;
+}
+
+
+/* Set default display to inline-flex, for centering. */
+span.filter-box-tag {
+    display: none;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+}
+
+/* Make sure jQuery will use inline-flex when setting `show()` again. */
+span.filter-box-tag[style*='display: block'] {
+    display: inline-flex !important;
+}
+
+/* Make resource tags clickable */
+.resource-tag {
+    cursor: pointer;
+    user-select: none;
+}
+
+/* Give the resource tags a bit of breathing room */
+.resource-tag-container {
+    padding-left: 1.5rem;
+}
+
+/* When hovering tags, brighten them a bit. */
+.resource-tag:hover,
+.filter-box-tag:hover {
+    filter: brightness(95%);
+}
+
+/* Move the x down 1 pixel to align center */
+button.delete {
+    margin-top: 1px;
+}
+
+/* Colors for delete button x's */
+button.delete.is-primary::before,
+button.delete.is-primary::after {
+    background-color: #2a45a2;
+}
+button.delete.is-success::before,
+button.delete.is-success::after {
+    background-color: #2c9659;
+}
+button.delete.is-danger::before,
+button.delete.is-danger::after {
+    background-color: #c32841;
+}
+button.delete.is-info::before,
+button.delete.is-info::after {
+    background-color: #237fbd;
+}
+
+/* Give outlines to active tags */
+span.filter-box-tag,
+span.resource-tag.active {
+    outline-width: 1px;
+    outline-style: solid;
+}
+
+/* Disable transitions */
+.no-transition {
+  -webkit-transition: none !important;
+  -moz-transition: none !important;
+  -o-transition: none !important;
+  transition: none !important;
+}
+
+/* Make filter tags sparkle when selected! */
+@keyframes glow_success {
+    from { box-shadow: 0 0 2px 2px #aef4af; }
+    33% { box-shadow: 0 0 2px 2px #87af7a; }
+    66% { box-shadow: 0 0 2px 2px #9ceaac; }
+    to { box-shadow: 0 0 2px 2px #7cbf64; }
+}
+
+@keyframes glow_primary {
+    from { box-shadow: 0 0 2px 2px #aeb8f3; }
+    33% { box-shadow: 0 0 2px 2px #909ed9; }
+    66% { box-shadow: 0 0 2px 2px #6d7ed4; }
+    to { box-shadow: 0 0 2px 2px #6383b3; }
+}
+
+@keyframes glow_danger {
+    from { box-shadow: 0 0 2px 2px #c9495f; }
+    33% { box-shadow: 0 0 2px 2px #92486f; }
+    66% { box-shadow: 0 0 2px 2px #d455ba; }
+    to { box-shadow: 0 0 2px 2px #ff8192; }
+}
+@keyframes glow_info {
+    from { box-shadow: 0 0 2px 2px #4592c9; }
+    33% { box-shadow: 0 0 2px 2px #6196bb; }
+    66% { box-shadow: 0 0 2px 2px #5adade; }
+    to { box-shadow: 0 0 2px 2px #6bcfdc; }
+}
+
+span.resource-tag.active.is-primary {
+    animation: glow_primary 4s infinite alternate;
+}
+span.resource-tag.active.has-background-danger-light {
+    animation: glow_danger 4s infinite alternate;
+}
+span.resource-tag.active.has-background-success-light {
+    animation: glow_success 4s infinite alternate;
+}
+span.resource-tag.active.has-background-info-light {
+    animation: glow_info 4s infinite alternate;
+}
+
+/* Smaller filter category headers when on mobile */
+@media screen and (max-width: 480px) {
+    .filter-category-header .card-header .card-header-title {
+        font-size: 14px;
+        padding: 0;
+    }
+    .filter-panel {
+        padding-top: 4px;
+        padding-bottom: 4px;
+    }
+}
+
+/* Constrain the width of the filterbox */
+@media screen and (min-width: 769px) {
+    .filtering-column {
+        max-width: 25rem;
+        min-width: 18rem;
+    }
 }

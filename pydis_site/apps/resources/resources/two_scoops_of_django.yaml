@@ -1,0 +1,20 @@
+description: Tips, tricks, and best practices for your Django project.
+  A highly recommended resource for Django web developers.
+name: Two Scoops of Django
+title_url: https://www.feldroy.com/collections/everything/products/two-scoops-of-django-3-x
+urls:
+- icon: branding/goodreads
+  url: https://www.goodreads.com/book/show/55822151-two-scoops-of-django-3-x
+  color: black
+- icon: branding/github
+  url: https://github.com/twoscoops/two-scoops-of-django-2.0-code-examples
+  color: black
+tags:
+  topics:
+    - web development
+  payment_tiers:
+    - paid
+  difficulty:
+    - intermediate
+  type:
+    - book

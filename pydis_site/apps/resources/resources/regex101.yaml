@@ -1,0 +1,15 @@
+description: An online tool for testing regular expressions that helps you understand what the regular expression can
+  match. Remember to set the "flavor" to Python.
+name: regex101
+title_url: https://regex101.com/
+tags:
+  topics:
+    - general
+    - other
+  payment_tiers:
+    - free
+  difficulty:
+    - beginner
+    - intermediate
+  type:
+    - tool

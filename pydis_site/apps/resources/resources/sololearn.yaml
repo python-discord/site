@@ -1,0 +1,17 @@
+description: SoloLearn's Python 3 course serves as a simple and convenient introduction to Python.
+  Containing exercises and quizzes in modules to cover introductory subjects of the language,
+  you can pick it up and put it down between your busier aspects of life thanks to both PC
+  and mobile apps being available to use.
+name: SoloLearn
+title_url: https://www.sololearn.com/Course/Python/
+tags:
+  topics:
+    - general
+  payment_tiers:
+    - free
+    - subscription
+  difficulty:
+    - beginner
+  type:
+    - interactive
+    - course

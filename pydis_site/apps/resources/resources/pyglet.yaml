@@ -1,0 +1,22 @@
+description: Pyglet is a powerful,
+  yet easy to use Python library for developing games and other visually-rich applications on Windows,
+  Mac OS X and Linux. It supports windowing, user interface event handling, Joysticks, OpenGL graphics,
+  loading images and videos, and playing sounds and music. All of this with a friendly Pythonic API,
+  that's simple to learn and doesn't get in your way.
+title_image: https://i.imgur.com/LfQwXUe.png
+title_url: http://pyglet.org/
+urls:
+  - icon: branding/discord
+    url: https://discord.gg/QXyegWe
+    color: blurple
+tags:
+  topics:
+    - user interface
+    - game development
+  payment_tiers:
+    - free
+  difficulty:
+    - beginner
+    - intermediate
+  type:
+    - community

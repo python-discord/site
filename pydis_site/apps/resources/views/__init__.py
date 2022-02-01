@@ -1,4 +1,3 @@
-from .resources import ResourcesView
-from .resources_list import ResourcesListView
+from .resources import ResourceView
 
-__all__ = ["ResourcesView", "ResourcesListView"]
+__all__ = ["ResourceView"]

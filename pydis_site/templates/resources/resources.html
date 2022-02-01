@@ -1,90 +1,164 @@
 {% extends 'base/base.html' %}
+{% load as_icon %}
+{% load to_kebabcase %}
+{% load get_category_icon %}
 {% load static %}
 
 {% block title %}Resources{% endblock %}
 {% block head %}
-  <link rel="stylesheet" href="{% static "css/resources/resources.css" %}">
+    {# Inject a JSON object of all valid filter types from the view #}
+    <script>
+        const validFilters = {{ valid_filters | safe }}
+    </script>
+
+    <link rel="stylesheet" href="{% static "css/resources/resources.css" %}">
+    <link rel="stylesheet" href="{% static "css/collapsibles.css" %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script defer src="{% static "js/resources/resources.js" %}"></script>
+    <script defer src="{% static "js/collapsibles.js" %}"></script>
 {% endblock %}
 
 {% block content %}
-  {% include "base/navbar.html" %}
+    {% include "base/navbar.html" %}
+    <input type="hidden" id="resource-type-input" value="{{ resource_type }}">
+    <section class="section">
+        <div class="columns is-variable is-6 is-centered">
+            {# Filtering toolbox #}
+            <div class="column filtering-column is-one-third">
+                <div class="content is-justify-content-center">
+                    <nav id="resource-filtering-panel" class="panel is-primary">
+                        <p class="panel-heading has-text-centered" id="filter-panel-header">Filter Resources</p>
 
-  <section class="section">
-      <div class="container">
-          <div class="content">
-              <h1>Resources</h1>
+                        {# Filter box tags #}
+                        <div class="card filter-tags">
+                            <div class="is-flex ml-auto">
+                                <div>
+                                    {# A filter tag for when there are no filters active #}
+                                    <span class="no-tags-selected tag has-background-disabled has-text-disabled ml-2 mt-2">
+                                            <i class="fas fa-ban mr-1"></i>
+                                            No filters selected
+                                    </span>
 
-              <div class="tile is-ancestor">
-                  <a class="tile is-parent" href="{% url "content:page_category" location="guides" %}">
-                      <article class="tile is-child box hero is-primary is-bold">
-                          <p class="title is-size-1"><i class="fad fa-info-circle" aria-hidden="true"></i> Guides</p>
-                          <p class="subtitle is-size-4">Made by us, for you</p>
-                      </article>
-                  </a>
+                                    {% for filter_name, filter_data in filters.items %}
+                                        {% for filter_item in filter_data.filters %}
+                                            {% if filter_name == "Difficulty" %}
+                                                <span
+                                                        class="filter-box-tag tag has-background-info-light has-text-info-dark ml-2 mt-2"
+                                                        data-filter-name="{{ filter_name|to_kebabcase }}"
+                                                        data-filter-item="{{ filter_item|to_kebabcase }}"
+                                                >
+                                                        <i class="{{ filter_item|title|get_category_icon }} mr-1"></i>
+                                                        {{ filter_item|title }}
+                                                        <button class="delete is-small is-info has-background-info-light"></button>
+                                                    </span>
+                                            {% endif %}
+                                            {% if filter_name == "Type" %}
+                                                <span
+                                                        class="filter-box-tag tag has-background-success-light has-text-success-dark ml-2 mt-2"
+                                                        data-filter-name="{{ filter_name|to_kebabcase }}"
+                                                        data-filter-item="{{ filter_item|to_kebabcase }}"
+                                                >
+                                                        <i class="{{ filter_item|title|get_category_icon }} mr-1"></i>
+                                                        {{ filter_item|title }}
+                                                        <button class="delete is-small is-success has-background-success-light"></button>
+                                                    </span>
+                                            {% endif %}
+                                            {% if filter_name == "Payment tiers" %}
+                                                <span
+                                                        class="filter-box-tag tag has-background-danger-light has-text-danger-dark ml-2 mt-2"
+                                                        data-filter-name="{{ filter_name|to_kebabcase }}"
+                                                        data-filter-item="{{ filter_item|to_kebabcase }}"
+                                                >
+                                                        <i class="{{ filter_item|title|get_category_icon }} mr-1"></i>
+                                                        {{ filter_item|title }}
+                                                        <button class="delete is-small is-danger has-background-danger-light"></button>
+                                                    </span>
+                                            {% endif %}
+                                            {% if filter_name == "Topics" %}
+                                                <span
+                                                        class="filter-box-tag tag is-primary is-light ml-2 mt-2"
+                                                        data-filter-name="{{ filter_name|to_kebabcase }}"
+                                                        data-filter-item="{{ filter_item|to_kebabcase }}"
+                                                >
+                                                        <i class="{{ filter_item|title|get_category_icon }} mr-1"></i>
+                                                        {{ filter_item|title }}
+                                                        <button class="delete is-small is-primary has-background-primary-light"></button>
+                                                    </span>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endfor %}
+                                </div>
+                                <div class="close-filters-button">
+                                    {# A little x in the top right, visible only when filters are active, which removes all filters. #}
+                                    <a class="icon">
+                                        <i class="fas fa-window-close"></i>
+                                    </a>
 
-                  <div class="tile is-vertical is-9">
-                      <div class="tile">
-                          <a class="tile is-8 is-parent" href="{% url "resources:resources" category="reading" %}">
-                              <article class="tile is-child box hero is-black" id="readingBlock">
-                                  <p class="title is-size-1"><i class="fad fa-book-alt" aria-hidden="true"></i> Read</p>
-                                  <p class="subtitle is-size-4">Lovingly curated books to explore</p>
-                              </article>
-                          </a>
+                                </div>
+                            </div>
+                        </div>
 
-                          <div class="tile">
-                              <a class="tile is-parent" href="{% url "resources:resources" category="videos" %}">
-                                  <article class="tile is-child box hero is-danger is-bold">
-                                      <p class="title is-size-1"><i class="fad fa-video" aria-hidden="true"></i> Watch</p>
-                                      <p class="subtitle is-size-4">Visually engaging</p>
-                                  </article>
-                              </a>
-                          </div>
-                      </div>
+                        {# Filter checkboxes #}
+                        {% for filter_name, filter_data in filters.items %}
+                            <div class="card filter-category-header">
+                                <button type="button" class="card-header collapsible">
+                                    <span class="card-header-title subtitle is-6 my-2 ml-2">
+                                        <i class="fa-fw {{ filter_data.icon }} is-primary" aria-hidden="true"></i>&nbsp&nbsp{{ filter_name }}
+                                    </span>
+                                    <span class="card-header-icon">
+                                        {% if not filter_data.hidden %}
+                                            <i class="far fa-fw fa-window-minimize is-6 title" aria-hidden="true"></i>
+                                        {% else %}
+                                            <i class="fas fa-fw fa-angle-down is-6 title" aria-hidden="true"></i>
+                                        {% endif %}
+                                    </span>
+                                </button>
 
-                      <div class="tile">
-                          <a class="tile is-parent" href="{% url "resources:resources" category="interactive" %}">
-                              <article class="tile is-child box hero is-black" id="interactiveBlock">
-                                  <p class="title is-size-1"><i class="fad fa-code" aria-hidden="true"></i> Try</p>
-                                  <p class="subtitle is-size-4">Interactively discover the possibilities</p>
-                              </article>
-                          </a>
-                          <a class="tile is-8 is-parent" href="{% url "resources:resources" category="courses" %}">
-                              <article class="tile is-child box hero is-success is-bold">
-                                  <p class="title is-size-1"><i class="fad fa-graduation-cap" aria-hidden="true"></i> Learn</p>
-                                  <p class="subtitle is-size-4">Structured courses with clear goals</p>
-                              </article>
-                          </a>
-                      </div>
-                  </div>
-              </div>
+                            {# Checkboxes #}
+                            {% if filter_data.hidden %}
+                                <div class="collapsible-content collapsed">
+                            {% else %}
+                                <div class="collapsible-content">
+                            {% endif %}
+                                    <div class="card-content">
+                                        {% for filter_item in filter_data.filters %}
+                                            <a class="panel-block filter-panel">
+                                                <label class="checkbox">
+                                                    <input
+                                                            class="filter-checkbox"
+                                                            type="checkbox"
+                                                            data-filter-name="{{ filter_name|to_kebabcase }}"
+                                                            data-filter-item="{{ filter_item|to_kebabcase }}"
+                                                    >
+                                                    {{ filter_item }}
+                                                </label>
+                                            </a>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </nav>
+                </div>
+            </div>
 
-              <div class="tile is-ancestor">
-                  <div class="tile is-vertical is-9">
-                      <div class="tile">
-                          <a class="tile is-8 is-parent" href="{% url "resources:resources" category="communities" %}">
-                              <article class="tile is-child box hero is-black" id="communitiesBlock">
-                                  <p class="title is-size-1"><i class="fad fa-users" aria-hidden="true"></i> Communities</p>
-                                  <p class="subtitle is-size-4">Some of our best friends</p>
-                              </article>
-                          </a>
-                          <div class="tile">
-                              <a class="tile is-parent" href="{% url "resources:resources" category="podcasts" %}">
-                                  <article class="tile is-child box hero is-black" id="podcastsBlock">
-                                      <p class="title is-size-1"><i class="fad fa-podcast" aria-hidden="true"></i> Listen</p>
-                                      <p class="subtitle is-size-4">Regular podcasts to follow</p>
-                                  </article>
-                              </a>
-                          </div>
-                      </div>
-                  </div>
-                  <a class="tile is-parent" href="{% url "resources:resources" category="tools" %}">
-                      <article class="tile is-child box hero is-dark">
-                          <p class="title is-size-1"><i class="fad fa-tools" aria-hidden="true"></i> Tools</p>
-                          <p class="subtitle is-size-4">Things we love to use</p>
-                      </article>
-                  </a>
-              </div>
-          </div>
-      </div>
-  </section>
+            <div class="column is-two-thirds">
+                {# Message to display when there are no hits #}
+                <div class="no-resources-found">
+                    <h2 class="title is-3 has-text-centered pt-0 pb-6">No matching resources found!</h2>
+                    <img src="{% static "images/resources/duck_pond_404.jpg" %}">
+                </div>
+
+
+                {# Resource cards #}
+                <div class="content is-flex is-justify-content-center">
+                    <div>
+                        {% for resource in resources.values %}
+                            {% include "resources/resource_box.html" %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 {% endblock %}
