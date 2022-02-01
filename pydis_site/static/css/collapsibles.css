@@ -6,11 +6,10 @@
 }
 
 .collapsible-content {
-  max-height: 40em;
   transition: max-height 0.3s ease-out;
 }
 
 .collapsible-content.collapsed {
   overflow: hidden;
-  max-height: 0;
+  max-height: 0 !important;
 }
