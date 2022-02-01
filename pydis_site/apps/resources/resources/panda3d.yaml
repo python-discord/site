@@ -4,7 +4,7 @@ title_image: https://www.panda3d.org/wp-content/uploads/2019/01/panda3d_logo.png
 title_url: https://discord.gg/9XsucTT
 position: 9
 urls:
-  - icon: regular/link
+  - icon: solid/external-link-alt
     url: https://www.panda3d.org/
     color: teal
   - icon: branding/discord

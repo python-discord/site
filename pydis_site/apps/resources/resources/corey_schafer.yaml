@@ -11,7 +11,7 @@ description: 'Corey has a number of exceptionally high quality tutorial series
 title_image: https://i.imgur.com/KIfWw3b.png
 title_url: https://www.youtube.com/channel/UCCezIgC97PvUuR4_gbFUs5g
 urls:
-  - icon: regular/link
+  - icon: solid/external-link-alt
     url: https://coreyms.com/
     color: teal
 tags:

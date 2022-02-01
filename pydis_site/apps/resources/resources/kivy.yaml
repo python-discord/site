@@ -6,7 +6,7 @@ icon_size: 50
 title_image: https://i.imgur.com/EVP3jZR.png
 title_url: https://discord.gg/djPtTRJ
 urls:
-  - icon: regular/link
+  - icon: solid/external-link-alt
     url: https://kivy.org/
     color: teal
   - icon: branding/discord

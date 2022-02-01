@@ -6,7 +6,7 @@ description: People, Postgres, Data specializes in building users of Postgres
 title_image: https://media.discordapp.net/attachments/748954447857844318/750519488268730377/people_postgres_data.png
 title_url: https://discord.gg/Ujw8m8v
 urls:
-  - icon: regular/link
+  - icon: solid/external-link-alt
     url: https://postgresconf.org/
     color: teal
   - icon: branding/discord
