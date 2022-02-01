@@ -14,8 +14,8 @@
     <p>{{ resource.description|safe }}</p>
 
     <div class="is-flex is-align-items-center">
-        {#  Add primary link #}
-        {% if 'title_url' in resource %}
+        {# Add primary link #}
+        {% if "title_url" in resource %}
             <span class="icon is-size-4" style="margin: 5px;">
                 <a href="{{ resource.title_url }}">
                     <i class="fas fa-external-link-alt fa-fw is-size-4 resource-icon is-hoverable is-primary"></i>

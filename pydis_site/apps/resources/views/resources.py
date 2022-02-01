@@ -111,7 +111,7 @@ class ResourceView(View):
         if resource_type:
             dashless_resource_type = resource_type.replace("-", " ")
 
-            if dashless_resource_type.title() not in self.filters['Type']['filters']:
+            if dashless_resource_type.title() not in self.filters["Type"]["filters"]:
                 return HttpResponseNotFound()
 
             resource_type = resource_type.replace(" ", "-")
