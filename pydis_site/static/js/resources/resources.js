@@ -129,7 +129,8 @@ function updateUI() {
         noTagsSelected.show();
         closeFiltersButton.hide();
         resourceTags.removeClass("active");
-        $(`.filter-checkbox:checked`).prop("checked", false)
+        $(`.filter-checkbox:checked`).prop("checked", false);
+        $(".no-resources-found").hide();
         return;
     } else {
         // Hide everything
