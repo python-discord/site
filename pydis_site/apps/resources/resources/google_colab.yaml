@@ -1,5 +1,5 @@
-description: Google Colab is a custom version of Jupyter Notebook that runs code in the cloud, with support for
-  Debian package installation with `apt-get`. You can share your Colab Notebooks with other people and work collaboratively.
+description: Google Colab is a custom version of Jupyter Notebook that runs code in the cloud, allowing you to
+  share your Colab notebooks with other people and work collaboratively.
   Colab offers a generous amount of memory and computation time for free, and allows you to run programs on GPUs,
   making it a great deep learning sandbox for beginners.
 name: Google Colab
