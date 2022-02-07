@@ -268,6 +268,15 @@ BULMA_SETTINGS = {
         "footer-padding": "1rem 1.5rem 1rem",
         "tooltip-max-width": "30rem",
     },
+    "dark_variables": {
+        "primary": "#373737",
+
+        # Use the same sizes
+        "dimensions": "16 24 32 48 64 96 128 256 512",
+        "navbar-height": "4.75rem",
+        "footer-padding": "1rem 1.5rem 1rem",
+        "tooltip-max-width": "30rem",
+    },
     "extensions": [
         "bulma-dropdown",
         "bulma-navbar-burger",
