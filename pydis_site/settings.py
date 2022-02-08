@@ -269,11 +269,20 @@ BULMA_SETTINGS = {
         "tooltip-max-width": "30rem",
     },
     "dark_variables": {
-        "primary": "#7289DA",
-        "white": "#22272E",
-        "text": "#F4F4F4",
+        "primary": "#7289DA",       # Top bar, Hyperlinks, "Check it out" Button, Resources page bar
+        "link": "#3d5dcc",          # Links, un-hovered
 
-        "link": "$primary",
+        "white": "#292E36",         # Main background / body
+        "black ": "#F4F4F4",        # Element glow & menu text highlighting
+
+        "white-ter": "#2D333B",     # Burger menu hover, Embed like sections background, footer text
+        "grey-lighter": "#7289DA",  # Burger menu highlighting
+        "grey": "#7289DA",          # "Sponsors" text
+        "grey-darker ": "#22272E",  # Footer background
+
+        "text": "#F4F4F4",          # Most Text
+        "text-light": "#F7F7F7",    # Small headings like Table of Contents on pages
+        "text-strong": "#FEFEFE",   # Big Title Text
 
 
         # Use the same sizes
