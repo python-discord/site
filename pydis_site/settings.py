@@ -269,7 +269,12 @@ BULMA_SETTINGS = {
         "tooltip-max-width": "30rem",
     },
     "dark_variables": {
-        "primary": "#373737",
+        "primary": "#7289DA",
+        "white": "#22272E",
+        "text": "#F4F4F4",
+
+        "link": "$primary",
+
 
         # Use the same sizes
         "dimensions": "16 24 32 48 64 96 128 256 512",

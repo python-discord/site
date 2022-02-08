@@ -1,5 +1,12 @@
 {% load static %}
 
+{% block head %}
+    <link rel="stylesheet" href="{% static "css/base/navbar.css" %}">
+    <link href="https://css.gg/css?=|moon|sun" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="{% static "js/base/navbar.js" %}"></script>
+{% endblock %}
+
 <nav class="navbar is-primary" role="navigation" aria-label="main navigation">
   <div class="navbar-brand">
 
@@ -91,6 +98,16 @@
           <a class="navbar-item" href="{% url "content:page_category" location="privacy" %}">
             Privacy
           </a>
+        </div>
+      </div>
+
+      <div class="navbar-item">
+        <div id="theme-switch" class="switch dark">
+          <div class="switch-outer"></div>
+          <div class="switch-inner"></div>
+          <i class="theme-icon light gg-sun"></i>
+          <div class="knob dark"></div>
+          <i class="theme-icon dark gg-moon"></i>
         </div>
       </div>
 
