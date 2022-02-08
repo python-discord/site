@@ -10,13 +10,13 @@
 
 {% block page_content %}
     {% if relevant_links or toc %}
-        <div class="columns is-variable is-8 has-background-danger">
-            <div class="column is-two-thirds has-background-danger">
+        <div class="columns is-variable is-8">
+            <div class="column is-two-thirds">
                 {{ page|safe }}
             </div>
             <div class="column">
                 {% if toc %}
-                    <div class="box">
+                    <div class="box has-background-white-bis">
                         <p class="menu-label">Table of Contents</p>
                         <ul class="menu-list toc">
                             {{ toc|safe }}
