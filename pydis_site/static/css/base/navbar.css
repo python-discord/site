@@ -1,7 +1,7 @@
 .switch {
   position: relative;
-  height: 3.25em;
-  width: 6.5em;
+  height: 2em;
+  width: 5em;
   cursor: pointer;
 }
 
@@ -58,20 +58,20 @@
 .theme-icon {
   position: absolute !important;
   color: white;
-  --ggs: 1.25;
+  --ggs: 1;
   opacity: 100%;
-  transition: opacity 0.2s ease-out;
-  top: 33%;
+  transition: opacity 0.3s ease-out;
   bottom: auto;
 }
 
 .theme-icon.light {
-  left: 18%;
+  left: 15%;
+  top: 20%
 }
 
 .theme-icon.dark {
-  right: 18%;
-  top: 35%
+  right: 15%;
+  top: 20%
 }
 
 .switch.dark .theme-icon.light {
