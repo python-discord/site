@@ -21,8 +21,8 @@
 {% block content %}
     {% include "base/navbar.html" %}
     <input type="hidden" id="resource-type-input" value="{{ resource_type }}">
-    <section class="section">
-        <div class="columns is-variable is-6 is-centered">
+    <section class="section has-text-danger">
+        <div class="columns is-variable is-6 is-centered ">
             {# Filtering toolbox #}
             <div class="column filtering-column is-one-third">
                 <div class="content is-justify-content-center">
@@ -30,11 +30,11 @@
                         <p class="panel-heading has-text-centered" id="filter-panel-header">Filter Resources</p>
 
                         {# Filter box tags #}
-                        <div class="card filter-tags">
+                        <div class="card filter-tags is-white has-background-white-ter">
                             <div class="is-flex ml-auto">
                                 <div>
                                     {# A filter tag for when there are no filters active #}
-                                    <span class="no-tags-selected tag has-background-disabled has-text-disabled ml-2 mt-2">
+                                    <span class="no-tags-selected tag has-background-disabled has-text-disabled ml-2 mt-2 has-background-white-bis">
                                             <i class="fas fa-ban mr-1"></i>
                                             No filters selected
                                     </span>
@@ -43,7 +43,7 @@
                                         {% for filter_item in filter_data.filters %}
                                             {% if filter_name == "Difficulty" %}
                                                 <span
-                                                        class="filter-box-tag tag has-background-info-light has-text-info-dark ml-2 mt-2"
+                                                        class="filter-box-tag tag has-background-info-light has-text-info-dark ml-2 mt-2 has-background-white-ter"
                                                         data-filter-name="{{ filter_name|to_kebabcase }}"
                                                         data-filter-item="{{ filter_item|to_kebabcase }}"
                                                 >
@@ -54,29 +54,29 @@
                                             {% endif %}
                                             {% if filter_name == "Type" %}
                                                 <span
-                                                        class="filter-box-tag tag has-background-success-light has-text-success-dark ml-2 mt-2"
+                                                        class="filter-box-tag tag has-background-success-light has-text-success-dark ml-2 mt-2 has-background-white-ter"
                                                         data-filter-name="{{ filter_name|to_kebabcase }}"
                                                         data-filter-item="{{ filter_item|to_kebabcase }}"
                                                 >
                                                         <i class="{{ filter_item|title|get_category_icon }} mr-1"></i>
                                                         {{ filter_item|title }}
-                                                        <button class="delete is-small is-success has-background-success-light"></button>
+                                                        <button class="delete is-small is-success has-background-success-light "></button>
                                                     </span>
                                             {% endif %}
                                             {% if filter_name == "Payment tiers" %}
                                                 <span
-                                                        class="filter-box-tag tag has-background-danger-light has-text-danger-dark ml-2 mt-2"
+                                                        class="filter-box-tag tag has-background-danger-light has-text-danger-dark ml-2 mt-2 has-background-white-ter"
                                                         data-filter-name="{{ filter_name|to_kebabcase }}"
                                                         data-filter-item="{{ filter_item|to_kebabcase }}"
                                                 >
-                                                        <i class="{{ filter_item|title|get_category_icon }} mr-1"></i>
+                                                        <i class="{{ filter_item|title|get_category_icon }} mr-1 is-danger"></i>
                                                         {{ filter_item|title }}
                                                         <button class="delete is-small is-danger has-background-danger-light"></button>
                                                     </span>
                                             {% endif %}
                                             {% if filter_name == "Topics" %}
                                                 <span
-                                                        class="filter-box-tag tag is-primary is-light ml-2 mt-2"
+                                                        class="filter-box-tag tag is-primary is-light ml-2 mt-2 has-background-white-ter"
                                                         data-filter-name="{{ filter_name|to_kebabcase }}"
                                                         data-filter-item="{{ filter_item|to_kebabcase }}"
                                                 >
@@ -100,7 +100,7 @@
 
                         {# Filter checkboxes #}
                         {% for filter_name, filter_data in filters.items %}
-                            <div class="card filter-category-header">
+                            <div class="card filter-category-header has-background-white-ter">
                                 <button type="button" class="card-header collapsible">
                                     <span class="card-header-title subtitle is-6 my-2 ml-2">
                                         <i class="fa-fw {{ filter_data.icon }} is-primary" aria-hidden="true"></i>&nbsp&nbsp{{ filter_name }}
@@ -122,7 +122,7 @@
                             {% endif %}
                                     <div class="card-content">
                                         {% for filter_item in filter_data.filters %}
-                                            <a class="panel-block filter-panel">
+                                            <a class="panel-block filter-panel panel-primary">
                                                 <label class="checkbox">
                                                     <input
                                                             class="filter-checkbox"
