@@ -270,20 +270,20 @@ BULMA_SETTINGS = {
     },
     "dark_variables": {
         "primary": "#7289DA",       # Top bar, Hyperlinks, "Check it out" Button, Resources page bar
-        "link": "#3d5dcc",          # Links, un-hovered
 
-        "white": "#292E36",         # Main background / body
-        "black ": "#F4F4F4",        # Element glow & menu text highlighting
+        "white": "#202225",
+        "white-bis": "#2F3136",
+        "white-ter": "#36393F",
 
-        "white-ter": "#2D333B",     # Burger menu hover, Embed like sections background, footer text
-        "grey-lighter": "#7289DA",  # Burger menu highlighting
-        "grey": "#7289DA",          # "Sponsors" text
-        "grey-darker ": "#22272E",  # Footer background
+        "black": "#36393F",
+        "black-ter": "#36393F",
+        "black-bis": "#36393F",
 
         "text": "#F4F4F4",          # Most Text
         "text-light": "#F7F7F7",    # Small headings like Table of Contents on pages
         "text-strong": "#FEFEFE",   # Big Title Text
 
+        "link": "$primary",
 
         # Use the same sizes
         "dimensions": "16 24 32 48 64 96 128 256 512",
