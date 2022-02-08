@@ -275,10 +275,6 @@ BULMA_SETTINGS = {
         "white-bis": "#2F3136",
         "white-ter": "#36393F",
 
-        "black": "#36393F",
-        "black-ter": "#36393F",
-        "black-bis": "#36393F",
-
         "text": "#F4F4F4",          # Most Text
         "text-light": "#F7F7F7",    # Small headings like Table of Contents on pages
         "text-strong": "#FEFEFE",   # Big Title Text
