@@ -30,11 +30,11 @@
                         <p class="panel-heading has-text-centered" id="filter-panel-header">Filter Resources</p>
 
                         {# Filter box tags #}
-                        <div class="card filter-tags is-white has-background-white-ter">
+                        <div class="card filter-tags is-white has-background-white-bis">
                             <div class="is-flex ml-auto">
                                 <div>
                                     {# A filter tag for when there are no filters active #}
-                                    <span class="no-tags-selected tag has-background-disabled has-text-disabled ml-2 mt-2 has-background-white-bis">
+                                    <span class="no-tags-selected tag has-background-disabled has-text-disabled ml-2 mt-2 has-background-white-ter">
                                             <i class="fas fa-ban mr-1"></i>
                                             No filters selected
                                     </span>
@@ -100,7 +100,7 @@
 
                         {# Filter checkboxes #}
                         {% for filter_name, filter_data in filters.items %}
-                            <div class="card filter-category-header has-background-white-ter">
+                            <div class="card filter-category-header has-background-white-bis">
                                 <button type="button" class="card-header collapsible">
                                     <span class="card-header-title subtitle is-6 my-2 ml-2">
                                         <i class="fa-fw {{ filter_data.icon }} is-primary" aria-hidden="true"></i>&nbsp&nbsp{{ filter_name }}

@@ -9,8 +9,8 @@ Our projects on Python Discord are open source and [available on Github](https:/
 <!-- Project cards -->
 <div class="columns is-multiline is-centered is-3 is-variable">
   <div class="column is-one-third-desktop is-half-tablet">
-    <div class="card github-card">
-      <div class="card-header">
+    <div class="card github-card has-background-white">
+      <div class="card-header has-background-white">
         <div class="card-header-title is-centered">
           <a class="is-size-5" href="https://github.com/python-discord/sir-lancebot">
             <i class="fab fa-github"></i>&ensp;<strong >Sir Lancebot</strong>
@@ -26,11 +26,11 @@ Our projects on Python Discord are open source and [available on Github](https:/
           <span class="tag is-primary">Beginner</span>
         </div>
       </div>
-      <div class="card-footer">
+      <div class="card-footer has-background-white">
         <a href="https://github.com/python-discord/sir-lancebot/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc" class="card-footer-item"><i class="fas fa-exclamation-circle"></i>&ensp;Issues</a>
         <a href="https://github.com/python-discord/sir-lancebot/pulls?q=is%3Apr+is%3Aopen+sort%3Aupdated-desc" class="card-footer-item"><i class="fas fa-code-merge"></i>&ensp;PRs</a>
       </div>
-      <div class="card-footer">
+      <div class="card-footer has-background-white">
         <a href="/pages/guides/pydis-guides/contributing/sir-lancebot" class="card-footer-item"><i class="fas fa-cogs"></i>&ensp;Setup and Configuration Guide</a>
       </div>
     </div>
