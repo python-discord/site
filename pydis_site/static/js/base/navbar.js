@@ -4,6 +4,9 @@ const defaultCssElement = $("#bulma-css")[0];
 const darkCssElement = $("#bulma-css-dark")[0];
 
 function getCurrentTheme() {
+    if (document.cookie === "")
+        return "default";
+
     return document.cookie
         .split('; ')
         .find(row => row.startsWith('theme='))
