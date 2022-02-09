@@ -269,15 +269,21 @@ BULMA_SETTINGS = {
         "tooltip-max-width": "30rem",
     },
     "dark_variables": {
-        "primary": "#7289DA",       # Top bar, Hyperlinks, "Check it out" Button, Resources page bar
+        "primary": "#7289DA",
 
-        "white": "#202225",
-        "white-bis": "#2F3136",
+        "white": "#2C2F33",
+        "white-bis": "#23272A ",
         "white-ter": "#36393F",
+        "light": "$white",
 
-        "text": "#F4F4F4",          # Most Text
-        "text-light": "#F7F7F7",    # Small headings like Table of Contents on pages
-        "text-strong": "#FEFEFE",   # Big Title Text
+        "black": "#F7F7F7",
+        "black-bis": "#F2F2F2",
+        "black-ter": "#E6E6E6",
+        "dark": "$black",
+
+        "text": "#F4F4F4",
+        "text-light": "#F7F7F7",
+        "text-strong": "#FEFEFE",
 
         "link": "$primary",
 
