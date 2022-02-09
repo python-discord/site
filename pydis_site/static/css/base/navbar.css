@@ -42,7 +42,7 @@
 
 .theme-icon {
   position: absolute !important;
-  --ggs: 1;
+  --ggs: 0.75;
   transition: opacity 0.3s ease-out;
 }
 
