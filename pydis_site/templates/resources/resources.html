@@ -27,7 +27,16 @@
             <div class="column filtering-column is-one-third">
                 <div class="content is-justify-content-center">
                     <nav id="resource-filtering-panel" class="panel is-primary">
-                        <p class="panel-heading has-text-centered" id="filter-panel-header">Filter Resources</p>
+                        <p class="panel-heading has-text-centered" id="filter-panel-header">Filter resources</p>
+
+                        {# Search bar #}
+                        <p id="resource-search" class="control has-icons-left">
+                            <input class="input" placeholder="Search resources ">
+                            <span class="icon is-small is-left">
+                                <i class="fas fa-magnifying-glass"></i>
+                            </span>
+                        </p>
+
 
                         {# Filter box tags #}
                         <div class="card filter-tags">

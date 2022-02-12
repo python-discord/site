@@ -73,6 +73,11 @@ display: block;
     margin-right: 0.25em !important;
 }
 
+/* Style the search bar */
+#resource-search {
+    margin: 0.25em 0.25em 0 0.25em;
+}
+
 /* Center the 404 div */
 .no-resources-found {
     display: none;
