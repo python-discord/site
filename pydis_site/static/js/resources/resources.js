@@ -8,6 +8,12 @@ var activeFilters = {
     difficulty: []
 };
 
+// Options for fuzzysort
+const fuzzysortOptions = {
+  allowTypo: true,    // Allow our users to make typos
+  threshold: -10000,  // The threshold for the fuzziness. Adjust for precision.
+};
+
 /* Add a filter, and update the UI */
 function addFilter(filterName, filterItem) {
     var filterIndex = activeFilters[filterName].indexOf(filterItem);
@@ -54,7 +60,6 @@ function deserializeURLParams() {
     // Add the search query to the search bar.
     if (searchParams.has("search")) {
         let searchQuery = searchParams.get("search");
-        console.log("Adding query to search box! Query is ${searchQuery}");
         $("#resource-search input").val(searchQuery);
     }
 
@@ -127,6 +132,17 @@ function updateURL() {
     window.history.replaceState(null, document.title, `?${searchParams.toString()}`);
 }
 
+/* Apply search terms */
+function filterBySearch(resourceItems) {
+    let searchQuery = $("#resource-search input").val();
+
+    resourceItems.filter(function() {
+        // Run a fuzzy search over the item. Does the search query match?
+        let name = $(this).attr("name");
+        return Boolean(fuzzysort.single(searchQuery, name, fuzzysortOptions));
+    }).show();
+}
+
 /* Update the resources to match 'active_filters' */
 function updateUI() {
     let resources = $('.resource-box');
@@ -134,19 +150,28 @@ function updateUI() {
     let resourceTags = $('.resource-tag');
     let noTagsSelected = $(".no-tags-selected.tag");
     let closeFiltersButton = $(".close-filters-button");
+    let searchQuery = $("#resource-search input").val();
 
     // Update the URL to match the new filters.
     updateURL();
 
     // If there's nothing in the filters, we can return early.
     if (noFilters()) {
-        resources.show();
+        // If we have a searchQuery, we need to run all resources through a search.
+        if (searchQuery.length > 0) {
+            resources.hide();
+            filterBySearch(resources);
+        } else {
+            resources.show();
+        }
+
         filterTags.hide();
         noTagsSelected.show();
         closeFiltersButton.hide();
         resourceTags.removeClass("active");
         $(`.filter-checkbox:checked`).prop("checked", false);
         $(".no-resources-found").hide();
+
         return;
     } else {
         // Hide everything
@@ -176,7 +201,7 @@ function updateUI() {
     // Otherwise, hide everything and then filter the resources to decide what to show.
     let hasMatches = false;
     resources.hide();
-    resources.filter(function() {
+    let filteredResources = resources.filter(function() {
         let validation = {
             topics: false,
             type: false,
@@ -208,8 +233,14 @@ function updateUI() {
         } else {
             return false;
         }
-    }).show();
+    });
 
+    // Run the items we've found through the search filter, if necessary.
+    if (searchQuery.length > 0) {
+        filterBySearch(filteredResources);
+    } else {
+        filteredResources.show();
+    }
 
     // If there are no matches, show the no matches message
     if (!hasMatches) {
