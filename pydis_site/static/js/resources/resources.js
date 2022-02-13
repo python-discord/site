@@ -32,6 +32,7 @@ function removeAllFilters() {
         "payment-tiers": [],
         difficulty: []
     };
+    $("#resource-search input").val("");
     updateUI();
 }
 
@@ -62,6 +63,7 @@ function deserializeURLParams() {
     if (searchParams.has("search")) {
         let searchQuery = searchParams.get("search");
         $("#resource-search input").val(searchQuery);
+        $(".close-filters-button").show();
     }
 
     // Work through the parameters and add them to the filter object
@@ -143,6 +145,7 @@ function filterBySearch(resourceItems) {
         let tagText = $(".tag.search-query span");
         tagText.text(`Search: ${searchQuery}`);
         tag.show();
+        $(".close-filters-button").show();
     }
 
     resourceItems.filter(function() {
@@ -184,11 +187,11 @@ function updateUI() {
         } else {
             resources.show();
             noTagsSelected.show();
+            closeFiltersButton.hide();
             $(".tag.search-query").hide();
         }
 
         filterTags.hide();
-        closeFiltersButton.hide();
         resourceTags.removeClass("active");
         $(`.filter-checkbox:checked`).prop("checked", false);
         $(".no-resources-found").hide();
