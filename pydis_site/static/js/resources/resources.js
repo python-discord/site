@@ -10,8 +10,9 @@ var activeFilters = {
 
 // Options for fuzzysort
 const fuzzysortOptions = {
-  allowTypo: true,    // Allow our users to make typos
-  threshold: -10000,  // The threshold for the fuzziness. Adjust for precision.
+  allowTypo: true,             // Allow our users to make typos
+  titleThreshold: -10000,      // The threshold for the fuzziness on title matches. Closer to 0 is stricter.
+  descriptionThreshold: -500,  // The threshold for the fuzziness on description matches.
 };
 
 /* Add a filter, and update the UI */
@@ -145,10 +146,18 @@ function filterBySearch(resourceItems) {
     }
 
     resourceItems.filter(function() {
-        // Run a fuzzy search over the item. Does the search query match?
-        let name = $(this).attr("name");
-        let result = fuzzysort.single(searchQuery, name, fuzzysortOptions);
-        return Boolean(result) && result.score > fuzzysortOptions.threshold;
+        // Get the resource title and description
+        let title = $(this).attr("name");
+        let description = $(this).find("p").text();
+
+        // Run a fuzzy search. Does the title or description match the query?
+        let titleMatch = fuzzysort.single(searchQuery, title, fuzzysortOptions);
+        titleMatch = Boolean(titleMatch) && titleMatch.score > fuzzysortOptions.titleThreshold;
+
+        let descriptionMatch = fuzzysort.single(searchQuery, description, fuzzysortOptions);
+        descriptionMatch = Boolean(descriptionMatch) && descriptionMatch.score > fuzzysortOptions.descriptionThreshold;
+
+        return titleMatch || descriptionMatch;
     }).show();
 }
 
