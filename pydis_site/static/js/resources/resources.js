@@ -220,7 +220,6 @@ function updateUI() {
     }
 
     // Otherwise, hide everything and then filter the resources to decide what to show.
-    let hasMatches = false;
     resources.hide();
     let filteredResources = resources.filter(function() {
         let validation = {
@@ -249,7 +248,6 @@ function updateUI() {
 
         // If validation passes, show the resource.
         if (Object.values(validation).every(Boolean)) {
-            hasMatches = true;
             return true;
         } else {
             return false;
@@ -265,7 +263,8 @@ function updateUI() {
     }
 
     // If there are no matches, show the no matches message
-    if (!hasMatches) {
+    let visibleResources = Boolean($(".resource-box:visible").length);
+    if (!visibleResources) {
         $(".no-resources-found").show();
     } else {
         $(".no-resources-found").hide();
