@@ -95,6 +95,7 @@ display: block;
 .tag.search-query {
     display: none;
     max-width: fit-content;
+    min-width: fit-content;
 }
 .tag.search-query .inner {
     padding: 0;
