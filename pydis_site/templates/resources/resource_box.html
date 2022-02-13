@@ -2,7 +2,7 @@
 {% load to_kebabcase %}
 {% load get_category_icon %}
 
-<div class="box resource-box {{ resource.css_classes }}" name="{{ resource.name }}">
+<div class="box resource-box {{ resource.css_classes }}" data-resource-name="{{ resource.name }}">
     {% if 'title_url' in resource %}
         <a href="{{ resource.title_url }}">
             {% include "resources/resource_box_header.html" %}

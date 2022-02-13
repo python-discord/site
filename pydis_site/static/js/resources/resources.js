@@ -150,7 +150,7 @@ function filterBySearch(resourceItems) {
 
     resourceItems.filter(function() {
         // Get the resource title and description
-        let title = $(this).attr("name");
+        let title = $(this).attr("data-resource-name");
         let description = $(this).find("p").text();
 
         // Run a fuzzy search. Does the title or description match the query?
