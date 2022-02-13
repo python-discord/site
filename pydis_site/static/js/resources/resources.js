@@ -246,6 +246,11 @@ document.addEventListener("DOMContentLoaded", function () {
         setTimeout(() => { categoryHeaders.removeClass("no-transition"); }, 10);
     }
 
+    // When you type into the search bar, trigger an UI update.
+    $("#resource-search input").on("input", function() {
+        updateUI();
+    });
+
     // If you click on the div surrounding the filter checkbox, it clicks the corresponding checkbox.
     $('.filter-panel').on("click",function(event) {
         let hitsCheckbox = Boolean(String(event.target));
