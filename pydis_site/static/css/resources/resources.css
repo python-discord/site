@@ -95,11 +95,13 @@ display: block;
 .tag.search-query {
     display: none;
     min-width: fit-content;
+    max-width: fit-content;
+    padding-right: 2em;
 }
 .tag.search-query .inner {
     display: inline-block;
     padding: 0;
-    max-width: 17.5rem;
+    max-width: 16.5rem;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -156,7 +158,6 @@ i.is-primary {
     filter: brightness(120%);
     color: #7289DA;
 }
-
 
 /* Set default display to inline-flex, for centering. */
 span.filter-box-tag {
