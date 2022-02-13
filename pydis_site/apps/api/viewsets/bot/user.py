@@ -2,6 +2,7 @@ import typing
 from collections import OrderedDict
 
 from django.db.models import Q
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.pagination import PageNumberPagination
@@ -77,6 +78,8 @@ class UserViewSet(ModelViewSet):
     ... }
 
     #### Optional Query Parameters
+    - username: username to search for
+    - discriminator: discriminator to search for
     - page_size: number of Users in one page, defaults to 10,000
     - page: page number
 
@@ -233,6 +236,8 @@ class UserViewSet(ModelViewSet):
     serializer_class = UserSerializer
     queryset = User.objects.all().order_by("id")
     pagination_class = UserListPagination
+    filter_backends = (DjangoFilterBackend,)
+    filter_fields = ('name', 'discriminator')
 
     def get_serializer(self, *args, **kwargs) -> ModelSerializer:
         """Set Serializer many attribute to True if request body contains a list."""
