@@ -98,10 +98,25 @@ display: block;
     min-width: fit-content;
 }
 .tag.search-query .inner {
+    display: inline-block;
     padding: 0;
+    max-width: 17.5rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    line-height: 2em;
 }
 .tag.search-query i {
     margin: 0 !important;
+    display: inline-block;
+    line-height: 2em;
+    float: left;
+    padding-right: 1em;
+}
+
+/* Don't allow the tag pool to exceed its parent containers width. */
+#tag-pool {
+    max-width: 100%;
 }
 
 /* Disable clicking on the checkbox itself. */
@@ -263,6 +278,9 @@ span.resource-tag.active.has-background-info-light {
     .filter-panel {
         padding-top: 4px;
         padding-bottom: 4px;
+    }
+    .tag.search-query .inner {
+        max-width: 16.2rem;
     }
 }
 
