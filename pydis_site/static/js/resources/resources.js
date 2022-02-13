@@ -108,6 +108,17 @@ function deserializeURLParams() {
     });
 }
 
+/* Show or hide the duckies, depending on whether or not there are any resources visible. */
+function updateDuckies() {
+    let visibleResources = Boolean($(".resource-box:visible").length);
+    if (!visibleResources) {
+        $(".no-resources-found").show();
+    } else {
+        $(".no-resources-found").hide();
+    }
+}
+
+
 /* Update the URL with new parameters */
 function updateURL() {
     let searchQuery = $("#resource-search input").val();
@@ -194,7 +205,7 @@ function updateUI() {
         filterTags.hide();
         resourceTags.removeClass("active");
         $(`.filter-checkbox:checked`).prop("checked", false);
-        $(".no-resources-found").hide();
+        updateDuckies();
 
         return;
     } else {
@@ -265,13 +276,8 @@ function updateUI() {
         searchTag.hide();
     }
 
-    // If there are no matches, show the no matches message
-    let visibleResources = Boolean($(".resource-box:visible").length);
-    if (!visibleResources) {
-        $(".no-resources-found").show();
-    } else {
-        $(".no-resources-found").hide();
-    }
+    // Gotta update those duckies!
+    updateDuckies();
 }
 
 // Executed when the page has finished loading.
