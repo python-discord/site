@@ -17,8 +17,7 @@
 <span class="is-size-4 has-text-weight-bold">
     {% if 'title_image' in resource %}
         <img src="{{ resource.title_image }}" alt="" style="height: 50px; {{ resource.title_image_style }}">
-    {% endif %}
-    {% if 'name' in resource %}
+    {% elif 'name' in resource %}
         {{ resource.name }}
     {% endif %}
 </span>
