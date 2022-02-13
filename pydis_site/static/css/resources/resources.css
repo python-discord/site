@@ -94,7 +94,6 @@ display: block;
 /* By default, we hide the search tag. We'll add it only when there's a search happening. */
 .tag.search-query {
     display: none;
-    max-width: fit-content;
     min-width: fit-content;
 }
 .tag.search-query .inner {
