@@ -136,10 +136,19 @@ function updateURL() {
 function filterBySearch(resourceItems) {
     let searchQuery = $("#resource-search input").val();
 
+    /* Show and update the tag if there's a search query */
+    if (searchQuery) {
+        let tag = $(".tag.search-query");
+        let tagText = $(".tag.search-query span");
+        tagText.text(`Search: ${searchQuery}`);
+        tag.show();
+    }
+
     resourceItems.filter(function() {
         // Run a fuzzy search over the item. Does the search query match?
         let name = $(this).attr("name");
-        return Boolean(fuzzysort.single(searchQuery, name, fuzzysortOptions));
+        let result = fuzzysort.single(searchQuery, name, fuzzysortOptions);
+        return Boolean(result) && result.score > fuzzysortOptions.threshold;
     }).show();
 }
 
@@ -151,6 +160,7 @@ function updateUI() {
     let noTagsSelected = $(".no-tags-selected.tag");
     let closeFiltersButton = $(".close-filters-button");
     let searchQuery = $("#resource-search input").val();
+    let searchTag = $(".tag.search-query");
 
     // Update the URL to match the new filters.
     updateURL();
@@ -160,13 +170,15 @@ function updateUI() {
         // If we have a searchQuery, we need to run all resources through a search.
         if (searchQuery.length > 0) {
             resources.hide();
+            noTagsSelected.hide();
             filterBySearch(resources);
         } else {
             resources.show();
+            noTagsSelected.show();
+            $(".tag.search-query").hide();
         }
 
         filterTags.hide();
-        noTagsSelected.show();
         closeFiltersButton.hide();
         resourceTags.removeClass("active");
         $(`.filter-checkbox:checked`).prop("checked", false);
@@ -240,6 +252,7 @@ function updateUI() {
         filterBySearch(filteredResources);
     } else {
         filteredResources.show();
+        searchTag.hide();
     }
 
     // If there are no matches, show the no matches message

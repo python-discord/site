@@ -91,6 +91,14 @@ display: block;
     display: flex !important;
 }
 
+/* By default, we hide the search tag. We'll add it only when there's a search happening. */
+.tag.search-query {
+    display: none;
+}
+.tag.search-query .inner {
+    padding: 0;
+}
+
 /* Disable clicking on the checkbox itself. */
 /* Instead, we want to let the anchor tag handle clicks. */
 .filter-checkbox {

@@ -44,9 +44,15 @@
                             <div class="is-flex ml-auto">
                                 <div>
                                     {# A filter tag for when there are no filters active #}
-                                    <span class="no-tags-selected tag has-background-disabled has-text-disabled ml-2 mt-2">
-                                            <i class="fas fa-ban mr-1"></i>
+                                    <span class="tag no-tags-selected is-secondary ml-2 mt-2">
+                                            <i class="fas fa-fw fa-ban mr-1"></i>
                                             No filters selected
+                                    </span>
+
+                                    {# A filter tag for search queries #}
+                                    <span class="tag search-query is-secondary ml-2 mt-2">
+                                            <i class="fas fa-fw fa-magnifying-glass mr-1"></i>
+                                            <span class="tag inner">Search: ...</span>
                                     </span>
 
                                     {% for filter_name, filter_data in filters.items %}
