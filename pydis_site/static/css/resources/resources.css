@@ -94,9 +94,13 @@ display: block;
 /* By default, we hide the search tag. We'll add it only when there's a search happening. */
 .tag.search-query {
     display: none;
+    max-width: fit-content;
 }
 .tag.search-query .inner {
     padding: 0;
+}
+.tag.search-query i {
+    margin: 0 !important;
 }
 
 /* Disable clicking on the checkbox itself. */
@@ -194,7 +198,8 @@ button.delete.is-info::after {
 
 /* Give outlines to active tags */
 span.filter-box-tag,
-span.resource-tag.active {
+span.resource-tag.active,
+.tag.search-query {
     outline-width: 1px;
     outline-style: solid;
 }
