@@ -51,6 +51,13 @@ function noFilters() {
 function deserializeURLParams() {
     let searchParams = new window.URLSearchParams(window.location.search);
 
+    // Add the search query to the search bar.
+    if (searchParams.has("search")) {
+        let searchQuery = searchParams.get("search");
+        console.log("Adding query to search box! Query is ${searchQuery}");
+        $("#resource-search input").val(searchQuery);
+    }
+
     // Work through the parameters and add them to the filter object
     $.each(Object.keys(activeFilters), function(_, filterType) {
         let paramFilterContent = searchParams.get(filterType);
@@ -62,11 +69,13 @@ function deserializeURLParams() {
             // Update the corresponding filter UI, so it reflects the internal state.
             let filterAdded = false;
             $(paramFilterArray).each(function(_, filter) {
-                // Make sure the filter is valid before we do anything.
+                // Catch special cases.
                 if (String(filter) === "rickroll" && filterType === "type") {
                     window.location.href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
                 } else if (String(filter) === "sneakers" && filterType === "topics") {
                     window.location.href = "https://www.youtube.com/watch?v=NNZscmNE9QI";
+
+                // If the filter is valid, mirror it to the UI.
                 } else if (validFilters.hasOwnProperty(filterType) && validFilters[filterType].includes(String(filter))) {
                     let checkbox = $(`.filter-checkbox[data-filter-name='${filterType}'][data-filter-item='${filter}']`);
                     let filterTag = $(`.filter-box-tag[data-filter-name='${filterType}'][data-filter-item='${filter}']`);
@@ -93,8 +102,10 @@ function deserializeURLParams() {
 
 /* Update the URL with new parameters */
 function updateURL() {
-    // If there's nothing in the filters, we don't want anything in the URL.
-    if (noFilters()) {
+    let searchQuery = $("#resource-search input").val();
+
+    // If there's no active filtering parameters, we can return early.
+    if (noFilters() && searchQuery.length === 0) {
         window.history.replaceState(null, document.title, './');
         return;
     }
@@ -106,6 +117,11 @@ function updateURL() {
             searchParams.delete(filterType);
         }
     });
+
+    // Add the search query, if necessary.
+    if (searchQuery.length > 0) {
+        searchParams.set("search", searchQuery);
+    }
 
     // Now update the URL
     window.history.replaceState(null, document.title, `?${searchParams.toString()}`);
