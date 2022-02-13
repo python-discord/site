@@ -1,3 +1,4 @@
+name: Pyglet
 description: Pyglet is a powerful,
   yet easy to use Python library for developing games and other visually-rich applications on Windows,
   Mac OS X and Linux. It supports windowing, user interface event handling, Joysticks, OpenGL graphics,
