@@ -50,7 +50,7 @@ def forward(apps: Apps, schema_editor: BaseDatabaseSchemaEditor) -> None:
             new_object = filter_.objects.create(
                 content=object_.content,
                 filter_list=list_,
-                description=object_.comment or "<no description provided>",
+                description=object_.comment,
                 additional_field=None,
                 ping_type=None,
                 filter_dm=None,
@@ -86,7 +86,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('content', models.CharField(help_text='The definition of this filter.', max_length=100)),
-                ('description', models.CharField(help_text='Why this filter has been added.', max_length=200)),
+                ('description', models.CharField(help_text='Why this filter has been added.', max_length=200, null=True)),
                 ('additional_field', django.contrib.postgres.fields.jsonb.JSONField(help_text='Implementation specific field.', null=True)),
                 ('ping_type', django.contrib.postgres.fields.ArrayField(base_field=models.CharField(max_length=20), help_text='Who to ping when this filter triggers.', size=None, validators=[pydis_site.apps.api.models.bot.filters.validate_ping_field], null=True)),
                 ('filter_dm', models.BooleanField(help_text='Whether DMs should be filtered.', null=True)),
