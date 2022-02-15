@@ -7,10 +7,10 @@ from django.db.backends.base.schema import BaseDatabaseSchemaEditor
 def migrate_filterlist(apps: Apps, schema_editor: BaseDatabaseSchemaEditor) -> None:
     FilterList = apps.get_model("api", "FilterList")
     change_map = {
-        "filter_token": "tokens",
-        "domain_name": "domains",
-        "guild_invite": "invites",
-        "file_format": "extensions"
+        "filter_token": "token",
+        "domain_name": "domain",
+        "guild_invite": "invite",
+        "file_format": "extension"
     }
     for filter_list in FilterList.objects.all():
         if change_map.get(filter_list.name):
