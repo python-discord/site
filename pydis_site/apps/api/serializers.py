@@ -215,7 +215,8 @@ class FilterSerializer(ModelSerializer):
                 {name: getattr(instance, name) for name in BASE_SETTINGS_FIELDS}
                 | {
                     "infraction_and_notification":
-                        {name: getattr(instance, name) for name in INFRACTION_AND_NOTIFICATION_FIELDS}
+                        {name: getattr(instance, name)
+                         for name in INFRACTION_AND_NOTIFICATION_FIELDS}
                 } | {
                     "channel_scope":
                         {name: getattr(instance, name) for name in CHANNEL_SCOPE_FIELDS}

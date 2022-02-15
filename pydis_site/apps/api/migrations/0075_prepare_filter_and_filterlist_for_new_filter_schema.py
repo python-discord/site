@@ -17,7 +17,7 @@ def migrate_filterlist(apps: Apps, schema_editor: BaseDatabaseSchemaEditor) -> N
             filter_list.name = change_map.get(filter_list.name)
             filter_list.save()
     redirects = FilterList(
-        name="redirects",
+        name="redirect",
         ping_type=[],
         dm_ping_type=[],
         enabled_channels=[],
@@ -35,16 +35,16 @@ def migrate_filterlist(apps: Apps, schema_editor: BaseDatabaseSchemaEditor) -> N
 def unmigrate_filterlist(apps: Apps, schema_editor: BaseDatabaseSchemaEditor) -> None:
     FilterList = apps.get_model("api", "FilterList")
     change_map = {
-        "tokens": "filter_token",
-        "domains": "domain_name",
-        "invites": "guild_invite",
-        "formats": "file_format"
+        "token": "filter_token",
+        "domain": "domain_name",
+        "invite": "guild_invite",
+        "format": "file_format"
     }
     for filter_list in FilterList.objects.all():
         if change_map.get(filter_list.name):
             filter_list.name = change_map.get(filter_list.name)
             filter_list.save()
-    FilterList.objects.filter(name="redirects").delete()
+    FilterList.objects.filter(name="redirect").delete()
 
 
 class Migration(migrations.Migration):

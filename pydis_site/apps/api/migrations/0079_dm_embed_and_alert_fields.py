@@ -7,11 +7,11 @@ from django.db.backends.base.schema import BaseDatabaseSchemaEditor
 def migrate_filterlist(apps: Apps, schema_editor: BaseDatabaseSchemaEditor) -> None:
     FilterList = apps.get_model("api", "FilterList")
     change_map = {
-        "tokens": True,
-        "domains": True,
-        "invites": True,
-        "extensions": False,
-        "redirects": False
+        "token": True,
+        "domain": True,
+        "invite": True,
+        "extension": False,
+        "redirect": False
     }
     for filter_list in FilterList.objects.all():
         filter_list.send_alert = change_map.get(filter_list.name)
