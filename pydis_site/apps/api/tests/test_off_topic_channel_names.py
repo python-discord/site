@@ -74,6 +74,9 @@ class ListTests(AuthenticatedAPITestCase):
         cls.test_name_3 = OffTopicChannelName.objects.create(
             name="frozen-with-iceman", used=True, active=False
         )
+        cls.test_name_4 = OffTopicChannelName.objects.create(
+            name="xith-is-cool", used=True, active=True
+        )
 
     def test_returns_name_in_list(self):
         """Return all off-topic channel names."""
@@ -86,28 +89,46 @@ class ListTests(AuthenticatedAPITestCase):
             {
                 self.test_name.name,
                 self.test_name_2.name,
-                self.test_name_3.name
+                self.test_name_3.name,
+                self.test_name_4.name
             }
         )
 
-    def test_returns_two_items_with_random_items_param_set_to_2(self):
-        """Return not-used name instead used."""
+    def test_returns_two_active_items_with_random_items_param_set_to_2(self):
+        """Return not-used active names instead used."""
         url = reverse('api:bot:offtopicchannelname-list')
         response = self.client.get(f'{url}?random_items=2')
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(response.json()), 2)
-        self.assertEqual(set(response.json()), {self.test_name.name, self.test_name_2.name})
+        self.assertTrue(
+            all(
+                item in (self.test_name.name, self.test_name_2.name, self.test_name_4.name)
+                for item in response.json()
+            )
+        )
+
+    def test_returns_three_active_items_with_random_items_param_set_to_3(self):
+        """Return not-used active names instead used."""
+        url = reverse('api:bot:offtopicchannelname-list')
+        response = self.client.get(f'{url}?random_items=3')
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.json()), 3)
+        self.assertEqual(
+            set(response.json()),
+            {self.test_name.name, self.test_name_2.name, self.test_name_4.name}
+        )
 
     def test_running_out_of_names_with_random_parameter(self):
-        """Reset names `used` parameter to `False` when running out of names."""
+        """Reset names `used` parameter to `False` when running out of active names."""
         url = reverse('api:bot:offtopicchannelname-list')
         response = self.client.get(f'{url}?random_items=3')
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(
             set(response.json()),
-            {self.test_name.name, self.test_name_2.name, self.test_name_3.name}
+            {self.test_name.name, self.test_name_2.name, self.test_name_4.name}
         )
 
     def test_returns_inactive_ot_names(self):
@@ -129,7 +150,7 @@ class ListTests(AuthenticatedAPITestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(
             set(response.json()),
-            {self.test_name.name, self.test_name_2.name}
+            {self.test_name.name, self.test_name_2.name, self.test_name_4.name}
         )
 
 
