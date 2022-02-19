@@ -6,6 +6,7 @@ from .viewsets import (
     AocAccountLinkViewSet,
     AocCompletionistBlockViewSet,
     BotSettingViewSet,
+    BumpedThreadViewSet,
     DeletedMessageViewSet,
     DocumentationLinkViewSet,
     FilterListViewSet,
@@ -31,6 +32,10 @@ bot_router.register(
 bot_router.register(
     'bot-settings',
     BotSettingViewSet
+)
+bot_router.register(
+    'bumped-threads',
+    BumpedThreadViewSet
 )
 bot_router.register(
     'deleted-messages',

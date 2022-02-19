@@ -1,5 +1,6 @@
 # flake8: noqa
 from .bot_setting import BotSetting
+from .bumped_thread import BumpedThread
 from .deleted_message import DeletedMessage
 from .documentation_link import DocumentationLink
 from .filter_list import FilterList
