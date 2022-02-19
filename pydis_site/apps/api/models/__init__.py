@@ -1,9 +1,9 @@
 # flake8: noqa
 from .bot import (
-    FilterList,
     BotSetting,
     DocumentationLink,
     DeletedMessage,
+    FilterList,
     Infraction,
     Message,
     MessageDeletionContext,

@@ -1,8 +1,8 @@
 # flake8: noqa
-from .filter_list import FilterList
 from .bot_setting import BotSetting
 from .deleted_message import DeletedMessage
 from .documentation_link import DocumentationLink
+from .filter_list import FilterList
 from .infraction import Infraction
 from .message import Message
 from .aoc_completionist_block import AocCompletionistBlock

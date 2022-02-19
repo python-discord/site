@@ -21,8 +21,12 @@ from .viewsets import (
 # https://www.django-rest-framework.org/api-guide/routers/#defaultrouter
 bot_router = DefaultRouter(trailing_slash=False)
 bot_router.register(
-    'filter-lists',
-    FilterListViewSet
+    "aoc-account-links",
+    AocAccountLinkViewSet
+)
+bot_router.register(
+    "aoc-completionist-blocks",
+    AocCompletionistBlockViewSet
 )
 bot_router.register(
     'bot-settings',
@@ -37,12 +41,8 @@ bot_router.register(
     DocumentationLinkViewSet
 )
 bot_router.register(
-    "aoc-account-links",
-    AocAccountLinkViewSet
-)
-bot_router.register(
-    "aoc-completionist-blocks",
-    AocCompletionistBlockViewSet
+    'filter-lists',
+    FilterListViewSet
 )
 bot_router.register(
     'infractions',
