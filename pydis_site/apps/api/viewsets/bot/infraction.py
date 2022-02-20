@@ -1,5 +1,6 @@
 from datetime import datetime
 
+from django.db import IntegrityError
 from django.db.models import QuerySet
 from django.http.request import HttpRequest
 from django_filters.rest_framework import DjangoFilterBackend
@@ -271,3 +272,20 @@ class InfractionViewSet(
         """
         self.serializer_class = ExpandedInfractionSerializer
         return self.partial_update(*args, **kwargs)
+
+    def create(self, request: HttpRequest, *args, **kwargs) -> Response:
+        """
+        Create an infraction for a target user.
+
+        Called by the Django Rest Framework in response to the corresponding HTTP request.
+        """
+        try:
+            return super().create(request, *args, **kwargs)
+        except IntegrityError:
+            raise ValidationError(
+                {
+                    'non_field_errors': [
+                        'This user already has an active infraction of this type.',
+                    ]
+                }
+            )

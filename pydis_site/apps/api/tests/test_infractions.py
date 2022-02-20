@@ -3,6 +3,7 @@ from datetime import datetime as dt, timedelta, timezone
 from unittest.mock import patch
 from urllib.parse import quote
 
+from django.db import transaction
 from django.db.utils import IntegrityError
 from django.urls import reverse
 
@@ -492,6 +493,7 @@ class CreationTests(AuthenticatedAPITestCase):
         )
 
         for infraction_type, hidden in restricted_types:
+            # https://stackoverflow.com/a/23326971
             with self.subTest(infraction_type=infraction_type):
                 invalid_infraction = {
                     'user': self.user.id,
@@ -516,37 +518,38 @@ class CreationTests(AuthenticatedAPITestCase):
 
         for infraction_type in active_infraction_types:
             with self.subTest(infraction_type=infraction_type):
-                first_active_infraction = {
-                    'user': self.user.id,
-                    'actor': self.user.id,
-                    'type': infraction_type,
-                    'reason': 'Take me on!',
-                    'active': True,
-                    'expires_at': '2019-10-04T12:52:00+00:00'
-                }
-
-                # Post the first active infraction of a type and confirm it's accepted.
-                first_response = self.client.post(url, data=first_active_infraction)
-                self.assertEqual(first_response.status_code, 201)
-
-                second_active_infraction = {
-                    'user': self.user.id,
-                    'actor': self.user.id,
-                    'type': infraction_type,
-                    'reason': 'Take on me!',
-                    'active': True,
-                    'expires_at': '2019-10-04T12:52:00+00:00'
-                }
-                second_response = self.client.post(url, data=second_active_infraction)
-                self.assertEqual(second_response.status_code, 400)
-                self.assertEqual(
-                    second_response.json(),
-                    {
-                        'non_field_errors': [
-                            'This user already has an active infraction of this type.'
-                        ]
+                with transaction.atomic():
+                    first_active_infraction = {
+                        'user': self.user.id,
+                        'actor': self.user.id,
+                        'type': infraction_type,
+                        'reason': 'Take me on!',
+                        'active': True,
+                        'expires_at': '2019-10-04T12:52:00+00:00'
                     }
-                )
+
+                    # Post the first active infraction of a type and confirm it's accepted.
+                    first_response = self.client.post(url, data=first_active_infraction)
+                    self.assertEqual(first_response.status_code, 201)
+
+                    second_active_infraction = {
+                        'user': self.user.id,
+                        'actor': self.user.id,
+                        'type': infraction_type,
+                        'reason': 'Take on me!',
+                        'active': True,
+                        'expires_at': '2019-10-04T12:52:00+00:00'
+                    }
+                    second_response = self.client.post(url, data=second_active_infraction)
+                    self.assertEqual(second_response.status_code, 400)
+                    self.assertEqual(
+                        second_response.json(),
+                        {
+                            'non_field_errors': [
+                                'This user already has an active infraction of this type.'
+                            ]
+                        }
+                    )
 
     def test_returns_201_for_second_active_infraction_of_different_type(self):
         """Test if the API accepts a second active infraction of a different type than the first."""
@@ -810,22 +813,6 @@ class SerializerTests(AuthenticatedAPITestCase):
         serializer = InfractionSerializer(instance, data=data, partial=True)
 
         self.assertTrue(serializer.is_valid(), msg=serializer.errors)
-
-    def test_validation_error_if_active_duplicate(self):
-        self.create_infraction('ban', active=True)
-        instance = self.create_infraction('ban', active=False)
-
-        data = {'active': True}
-        serializer = InfractionSerializer(instance, data=data, partial=True)
-
-        if not serializer.is_valid():
-            self.assertIn('non_field_errors', serializer.errors)
-
-            code = serializer.errors['non_field_errors'][0].code
-            msg = f'Expected failure on unique validator but got {serializer.errors}'
-            self.assertEqual(code, 'unique', msg=msg)
-        else:  # pragma: no cover
-            self.fail('Validation unexpectedly succeeded.')
 
     def test_is_valid_for_new_active_infraction(self):
         self.create_infraction('ban', active=False)
