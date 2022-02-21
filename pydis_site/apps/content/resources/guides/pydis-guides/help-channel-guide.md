@@ -26,7 +26,7 @@ Each channel on the server has a channel description which briefly describes the
 
 # General Help Channels
 
-General help channels can be used for all Python-related help, and have the advantage of attracting a more diverse spectrum of helpers, and getting individual focus and attention on your question. These channels are a great choice for generic Python help, but can be used for domain-specific Python help as well.
+General help channels can be used for all Python-related help, and have the advantage of attracting a more diverse spectrum of helpers. There is also the added benefit of receiving individual focus and attention on your question. These channels are a great choice for generic Python help, but can be used for domain-specific Python help as well.
 
 ## How to Claim a Channel
 
@@ -57,7 +57,7 @@ The channel remains open for **30 minutes** after your last message, or 10 minut
 
 The server has users active all over the world and all hours of the day, but some time periods are less active than others. It's also possible that the users that read your question didn't have the knowledge required to help you. If no one responded, feel free to claim another help channel a little later, or try an appropriate topical channel.
 
-If you feel like your question is continuously being overlooked, read our guide on [asking good questions](../asking-good-questions) to incease your chances of getting a response.
+If you feel like your question is continuously being overlooked, read our guide on [asking good questions](../asking-good-questions) to increase your chances of getting a response.
 
 ### My question was answered. What do I do?
 
