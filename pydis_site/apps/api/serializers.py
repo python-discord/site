@@ -156,13 +156,6 @@ class InfractionSerializer(ModelSerializer):
             'hidden',
             'dm_sent'
         )
-        validators = [
-            UniqueTogetherValidator(
-                queryset=Infraction.objects.filter(active=True),
-                fields=['user', 'type', 'active'],
-                message='This user already has an active infraction of this type.',
-            )
-        ]
 
     def validate(self, attrs: dict) -> dict:
         """Validate data constraints for the given data and abort if it is invalid."""
