@@ -272,6 +272,7 @@ BULMA_SETTINGS = {
         "bulma-dropdown",
         "bulma-navbar-burger",
     ],
+    "fontawesome_token": "ff22cb6f41",
 }
 
 # Information about site repository

@@ -27,7 +27,7 @@ Our projects on Python Discord are open source and [available on Github](https:/
         </div>
       </div>
       <div class="card-footer">
-        <a href="https://github.com/python-discord/sir-lancebot/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc" class="card-footer-item"><i class="far fa-exclamation-circle"></i>&ensp;Issues</a>
+        <a href="https://github.com/python-discord/sir-lancebot/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc" class="card-footer-item"><i class="fas fa-exclamation-circle"></i>&ensp;Issues</a>
         <a href="https://github.com/python-discord/sir-lancebot/pulls?q=is%3Apr+is%3Aopen+sort%3Aupdated-desc" class="card-footer-item"><i class="fas fa-code-merge"></i>&ensp;PRs</a>
       </div>
       <div class="card-footer">
@@ -54,7 +54,7 @@ Our projects on Python Discord are open source and [available on Github](https:/
         </div>
       </div>
       <div class="card-footer">
-        <a href="https://github.com/python-discord/bot/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc" class="card-footer-item"><i class="far fa-exclamation-circle"></i>&ensp;Issues</a>
+        <a href="https://github.com/python-discord/bot/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc" class="card-footer-item"><i class="fas fa-exclamation-circle"></i>&ensp;Issues</a>
         <a href="https://github.com/python-discord/bot/pulls?q=is%3Apr+is%3Aopen+sort%3Aupdated-desc" class="card-footer-item"><i class="fas fa-code-merge"></i>&ensp;PRs</a>
       </div>
       <div class="card-footer">
@@ -81,7 +81,7 @@ Our projects on Python Discord are open source and [available on Github](https:/
         </div>
       </div>
       <div class="card-footer">
-        <a href="https://github.com/python-discord/site/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc" class="card-footer-item"><i class="far fa-exclamation-circle"></i>&ensp;Issues</a>
+        <a href="https://github.com/python-discord/site/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc" class="card-footer-item"><i class="fas fa-exclamation-circle"></i>&ensp;Issues</a>
         <a href="https://github.com/python-discord/site/pulls?q=is%3Apr+is%3Aopen+sort%3Aupdated-desc" class="card-footer-item"><i class="fas fa-code-merge"></i>&ensp;PRs</a>
       </div>
       <div class="card-footer">

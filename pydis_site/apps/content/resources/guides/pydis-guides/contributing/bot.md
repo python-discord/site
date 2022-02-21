@@ -14,10 +14,10 @@ First things first, to run the bot's code and make changes to it, you need a loc
     <button type="button" class="card-header collapsible">
         <span class="card-header-title subtitle is-6 my-2 ml-2">Getting started with Git and GitHub</span>
         <span class="card-header-icon">
-            <i class="fas fa-angle-down title is-5" aria-hidden="true"></i>
+            <i class="fas fa-fw fa-angle-down title is-5" aria-hidden="true"></i>
         </span>
     </button>
-    <div class="collapsible-content">
+    <div class="collapsible-content collapsed">
         <div class="card-content">
               <p>If you don't have Git on your computer already, <a href="https://git-scm.com/downloads">install it</a>. You can additionally install a Git GUI such as <a href="https://www.gitkraken.com/download">GitKraken</a>, or the <a href="https://cli.github.com/manual/installation">GitHub CLI</a>.</p>
               <p>To learn more about Git, you can look into <a href="../working-with-git">our guides</a>, as well as <a href="https://education.github.com/git-cheat-sheet-education.pdf">this cheatsheet</a>, <a href="https://learngitbranching.js.org">Learn Git Branching</a>, and otherwise any guide you can find on the internet. Once you got the basic idea though, the best way to learn Git is to use it.</p>
@@ -78,10 +78,10 @@ See [here](../obtaining-discord-ids) for help with obtaining Discord IDs.
     <button type="button" class="card-header collapsible">
         <span class="card-header-title subtitle is-6 my-2 ml-2">Optional config.yml</span>
         <span class="card-header-icon">
-            <i class="fas fa-angle-down title is-5" aria-hidden="true"></i>
+            <i class="fas fa-fw fa-angle-down title is-5" aria-hidden="true"></i>
         </span>
     </button>
-    <div class="collapsible-content">
+    <div class="collapsible-content collapsed">
         <div class="card-content">
               <p>If you used the provided server template, and you're not sure which channels belong where in the config file, you can use the config below. Pay attention to the comments with several <code>#</code> symbols, and replace the <code>�</code> characters with the right IDs.</p>
               <pre>
@@ -196,6 +196,7 @@ guild:
         big_brother:                            �
         dev_log:                                �
         duck_pond:                              �
+        incidents:                              �
         incidents_archive:                      �
         python_news:        &PYNEWS_WEBHOOK     �
         talent_pool:                            �
@@ -350,7 +351,7 @@ style:
 
         trashcan: "<:trashcan:�>"
 
-##### <<  Optional - If you don't care about the filtering and help channel cogs, ignore the rest of this file  >> #####
+##### <<  Optional - If you don't care about the filtering, help channel and py-news cogs, ignore the rest of this file  >> #####
 filter:
     # What do we filter?
     filter_domains:        true
@@ -426,6 +427,10 @@ help_channels:
     notify_roles:
         - *HELPERS_ROLE
 
+python_news:
+    channel: *DEV_PY_NEWS
+    webhook: *PYNEWS_WEBHOOK
+
 ##### <<  Add any additional sections you need to override from config-default.yml  >> #####
             </code>
           </pre>
@@ -453,10 +458,10 @@ We understand this is tedious and are working on a better solution for setting u
     <button type="button" class="card-header collapsible">
         <span class="card-header-title subtitle is-6 my-2 ml-2">Why do you need a separate config file?</span>
         <span class="card-header-icon">
-            <i class="fas fa-angle-down title is-5" aria-hidden="true"></i>
+            <i class="fas fa-fw fa-angle-down title is-5" aria-hidden="true"></i>
         </span>
     </button>
-    <div class="collapsible-content">
+    <div class="collapsible-content collapsed">
         <div class="card-content">
             While it's technically possible to edit <code>config-default.yml</code> to match your server, it is heavily discouraged.
             This file's purpose is to provide the configurations the Python bot needs to run in the Python server in production, and should remain as such.
@@ -482,10 +487,10 @@ You are now almost ready to run the Python bot. The simplest way to do so is wit
     <button type="button" class="card-header collapsible">
         <span class="card-header-title subtitle is-6 my-2 ml-2">Getting started with Docker</span>
         <span class="card-header-icon">
-            <i class="fas fa-angle-down title is-5" aria-hidden="true"></i>
+            <i class="fas fa-fw fa-angle-down title is-5" aria-hidden="true"></i>
         </span>
     </button>
-    <div class="collapsible-content">
+    <div class="collapsible-content collapsed">
         <div class="card-content">
             The requirements for Docker are:
             <ul>
@@ -536,10 +541,10 @@ With at least the site running in Docker already (see the previous section on ho
     <button type="button" class="card-header collapsible">
         <span class="card-header-title subtitle is-6 my-2 ml-2">Ways to run code</span>
         <span class="card-header-icon">
-            <i class="fas fa-angle-down title is-5" aria-hidden="true"></i>
+            <i class="fas fa-fw fa-angle-down title is-5" aria-hidden="true"></i>
         </span>
     </button>
-    <div class="collapsible-content">
+    <div class="collapsible-content collapsed">
         <div class="card-content">
             Notice that the bot is started as a module. There are several ways to do so:
             <ul>

@@ -1,0 +1,21 @@
+description: A collection of videos made by the PyCharm team at JetBrains on subjects such as TDD,
+  Django, pytest and much more!<br><br>
+  Episodes of their "What does this package do?" series go over all sorts of libraries in Python
+  both in the standard library and from the community and give a video explanation of the key concepts.
+name: JetBrains YouTube Channel
+icon_image: https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/JetBrains_Logo_2016.svg/1200px-JetBrains_Logo_2016.svg.png
+icon_size: 50
+title_image: https://resources.jetbrains.com/storage/products/pycharm/img/meta/pycharm_logo_300x300.png
+title_url: https://www.youtube.com/channel/UCak6beUTLlVmf0E4AmnQkmw
+tags:
+  topics:
+    - general
+    - testing
+    - web development
+  payment_tiers:
+    - free
+  difficulty:
+    - beginner
+    - intermediate
+  type:
+    - video

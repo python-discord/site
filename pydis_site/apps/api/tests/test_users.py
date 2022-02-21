@@ -1,10 +1,10 @@
-from unittest.mock import patch
+import random
+from unittest.mock import Mock, patch
 
-from django.core.exceptions import ObjectDoesNotExist
 from django.urls import reverse
 
 from .base import AuthenticatedAPITestCase
-from ..models import Role, User
+from ..models import Infraction, Role, User
 from ..models.bot.metricity import NotFoundError
 from ..viewsets.bot.user import UserListPagination
 
@@ -421,10 +421,10 @@ class UserMetricityTests(AuthenticatedAPITestCase):
 
         # Then
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.json(), {
+        self.assertCountEqual(response.json(), {
             "joined_at": joined_at,
             "total_messages": total_messages,
-            "voice_banned": False,
+            "voice_gate_blocked": False,
             "activity_blocks": total_blocks
         })
 
@@ -451,23 +451,36 @@ class UserMetricityTests(AuthenticatedAPITestCase):
         self.assertEqual(response.status_code, 404)
 
     def test_metricity_voice_banned(self):
+        queryset_with_values = Mock(spec=Infraction.objects)
+        queryset_with_values.filter.return_value = queryset_with_values
+        queryset_with_values.exists.return_value = True
+
+        queryset_without_values = Mock(spec=Infraction.objects)
+        queryset_without_values.filter.return_value = queryset_without_values
+        queryset_without_values.exists.return_value = False
         cases = [
-            {'exception': None, 'voice_banned': True},
-            {'exception': ObjectDoesNotExist, 'voice_banned': False},
+            {'voice_infractions': queryset_with_values, 'voice_gate_blocked': True},
+            {'voice_infractions': queryset_without_values, 'voice_gate_blocked': False},
         ]
 
         self.mock_metricity_user("foo", 1, 1, [["bar", 1]])
 
         for case in cases:
-            with self.subTest(exception=case['exception'], voice_banned=case['voice_banned']):
-                with patch("pydis_site.apps.api.viewsets.bot.user.Infraction.objects.get") as p:
-                    p.side_effect = case['exception']
+            with self.subTest(
+                voice_infractions=case['voice_infractions'],
+                voice_gate_blocked=case['voice_gate_blocked']
+            ):
+                with patch("pydis_site.apps.api.viewsets.bot.user.Infraction.objects.filter") as p:
+                    p.return_value = case['voice_infractions']
 
                     url = reverse('api:bot:user-metricity-data', args=[0])
                     response = self.client.get(url)
 
                     self.assertEqual(response.status_code, 200)
-                    self.assertEqual(response.json()["voice_banned"], case["voice_banned"])
+                    self.assertEqual(
+                        response.json()["voice_gate_blocked"],
+                        case["voice_gate_blocked"]
+                    )
 
     def test_metricity_review_data(self):
         # Given
@@ -508,3 +521,45 @@ class UserMetricityTests(AuthenticatedAPITestCase):
         self.metricity.total_messages.side_effect = NotFoundError()
         self.metricity.total_message_blocks.side_effect = NotFoundError()
         self.metricity.top_channel_activity.side_effect = NotFoundError()
+
+
+class UserViewSetTests(AuthenticatedAPITestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.searched_user = User.objects.create(
+            id=12095219,
+            name=f"Test user {random.randint(100, 1000)}",
+            discriminator=random.randint(1, 9999),
+            in_guild=True,
+        )
+        cls.other_user = User.objects.create(
+            id=18259125,
+            name=f"Test user {random.randint(100, 1000)}",
+            discriminator=random.randint(1, 9999),
+            in_guild=True,
+        )
+
+    def test_search_lookup_of_wanted_user(self) -> None:
+        """Searching a user by name and discriminator should return that user."""
+        url = reverse('api:bot:user-list')
+        params = {
+            'username': self.searched_user.name,
+            'discriminator': self.searched_user.discriminator,
+        }
+        response = self.client.get(url, params)
+        result = response.json()
+        self.assertEqual(result['count'], 1)
+        [user] = result['results']
+        self.assertEqual(user['id'], self.searched_user.id)
+
+    def test_search_lookup_of_unknown_user(self) -> None:
+        """Searching an unknown user should return no results."""
+        url = reverse('api:bot:user-list')
+        params = {
+            'username': "f-string enjoyer",
+            'discriminator': 1245,
+        }
+        response = self.client.get(url, params)
+        result = response.json()
+        self.assertEqual(result['count'], 0)
+        self.assertEqual(result['results'], [])

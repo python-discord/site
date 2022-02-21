@@ -1,0 +1,16 @@
+name: Python Discord YouTube Channel
+description: It's our YouTube channel! We are slowly gathering content here directly related to Python,
+  our community and the events we host. Come check us out!
+title_image: https://raw.githubusercontent.com/python-discord/branding/master/logos/logo_banner/logo_site_banner_dark_512.png
+title_url: https://www.youtube.com/pythondiscord
+tags:
+  topics:
+    - general
+    - software design
+  payment_tiers:
+    - free
+  difficulty:
+    - beginner
+    - intermediate
+  type:
+    - video

@@ -6,17 +6,12 @@ pydis_site/apps/api/viewsets/bot/infraction.py  @MarkKoz
 pydis_site/apps/home/**                         @ks129
 
 # Django ORM
-**/migrations/**                                @Akarys42
-**/models/**                                    @Akarys42 @Den4200
+**/models/**                                    @Den4200
 
 # CI & Docker
-.github/workflows/**                            @MarkKoz @Akarys42 @SebastiaanZ @Den4200 @ks129
-Dockerfile                                      @MarkKoz @Akarys42 @Den4200
-docker-compose.yml                              @MarkKoz @Akarys42 @Den4200
-
-# Tools
-poetry.lock                                     @Akarys42
-pyproject.toml                                  @Akarys42
+.github/workflows/**                            @MarkKoz @SebastiaanZ @Den4200 @ks129
+Dockerfile                                      @MarkKoz @Den4200
+docker-compose.yml                              @MarkKoz @Den4200
 
 # Metricity
 pydis_site/apps/api/models/bot/metricity.py     @jb3

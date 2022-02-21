@@ -1,4 +1,3 @@
-from django.contrib.postgres import fields as pgfields
 from django.core.exceptions import ValidationError
 from django.db import models
 
@@ -24,6 +23,6 @@ class BotSetting(ModelReprMixin, models.Model):
         max_length=50,
         validators=(validate_bot_setting_name,)
     )
-    data = pgfields.JSONField(
+    data = models.JSONField(
         help_text="The actual settings of this setting."
     )

@@ -83,13 +83,54 @@ good_questions_redirect_alt:
     redirect_arguments: ["guides/pydis-guides/asking-good-questions"]
 
 # Resources
+resources_old_communities_redirect:
+  original_path: pages/resources/communities/
+  redirect_route: "resources:index"
+  redirect_arguments: ["community"]
+
 resources_index_redirect:
   original_path: pages/resources/
   redirect_route: "resources:index"
 
-resources_resources_redirect:
-  original_path: pages/resources/<str:category>/
-  redirect_route: "resources:resources"
+resources_reading_redirect:
+  original_path: resources/reading/
+  redirect_route: "resources:index"
+  redirect_arguments: ["book"]
+
+resources_books_redirect:
+  original_path: resources/books/
+  redirect_route: "resources:index"
+  redirect_arguments: ["book"]
+
+resources_videos_redirect:
+  original_path: resources/videos/
+  redirect_route: "resources:index"
+  redirect_arguments: ["video"]
+
+resources_courses_redirect:
+  original_path: resources/courses/
+  redirect_route: "resources:index"
+  redirect_arguments: ["course"]
+
+resources_communities_redirect:
+  original_path: resources/communities/
+  redirect_route: "resources:index"
+  redirect_arguments: ["community"]
+
+resources_podcasts_redirect:
+  original_path: resources/podcasts/
+  redirect_route: "resources:index"
+  redirect_arguments: ["podcast"]
+
+resources_tutorials_redirect:
+  original_path: resources/tutorials/
+  redirect_route: "resources:index"
+  redirect_arguments: ["tutorial"]
+
+resources_tools_redirect:
+  original_path: resources/tools/
+  redirect_route: "resources:index"
+  redirect_arguments: ["tool"]
 
 # Events
 events_index_redirect:
@@ -182,7 +223,7 @@ events_game_jams_twenty_twenty_rules_redirect:
   redirect_arguments: ["game-jams/2020/rules"]
 
 events_game_jams_twenty_twenty_technical_requirements_redirect:
-  original_path: pages/events/game-jam-2020/technical-requirements
+  original_path: pages/events/game-jam-2020/technical-requirements/
   redirect_route: "events:page"
   redirect_arguments: ["game-jams/2020/technical-requirements"]
 

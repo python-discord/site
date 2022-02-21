@@ -67,9 +67,6 @@
           <a class="navbar-item" href="{% url "resources:index" %}">
             Resources
           </a>
-          <a class="navbar-item" href="{% url "resources:resources" category="tools" %}">
-            Tools
-          </a>
           <a class="navbar-item" href="{% url "events:index" %}">
             Events
           </a>
@@ -78,6 +75,9 @@
           </a>
           <a class="navbar-item" href="{% url "content:page_category" location="frequently-asked-questions" %}">
             FAQ
+          </a>
+          <a class="navbar-item" href="{% url "content:page_category" location="guides" %}">
+            Guides
           </a>
           <a class="navbar-item" href="{% url 'home:timeline' %}">
             Timeline

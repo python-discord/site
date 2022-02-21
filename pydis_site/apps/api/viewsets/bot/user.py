@@ -1,7 +1,8 @@
 import typing
 from collections import OrderedDict
 
-from django.core.exceptions import ObjectDoesNotExist
+from django.db.models import Q
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.pagination import PageNumberPagination
@@ -77,6 +78,8 @@ class UserViewSet(ModelViewSet):
     ... }
 
     #### Optional Query Parameters
+    - username: username to search for
+    - discriminator: discriminator to search for
     - page_size: number of Users in one page, defaults to 10,000
     - page: page number
 
@@ -233,6 +236,8 @@ class UserViewSet(ModelViewSet):
     serializer_class = UserSerializer
     queryset = User.objects.all().order_by("id")
     pagination_class = UserListPagination
+    filter_backends = (DjangoFilterBackend,)
+    filter_fields = ('name', 'discriminator')
 
     def get_serializer(self, *args, **kwargs) -> ModelSerializer:
         """Set Serializer many attribute to True if request body contains a list."""
@@ -261,19 +266,19 @@ class UserViewSet(ModelViewSet):
         """Request handler for metricity_data endpoint."""
         user = self.get_object()
 
-        try:
-            Infraction.objects.get(user__id=user.id, active=True, type="voice_ban")
-        except ObjectDoesNotExist:
-            voice_banned = False
-        else:
-            voice_banned = True
+        has_voice_infraction = Infraction.objects.filter(
+            Q(user__id=user.id, active=True),
+            Q(type="voice_ban") | Q(type="voice_mute")
+        ).exists()
 
         with Metricity() as metricity:
             try:
                 data = metricity.user(user.id)
+
                 data["total_messages"] = metricity.total_messages(user.id)
-                data["voice_banned"] = voice_banned
                 data["activity_blocks"] = metricity.total_message_blocks(user.id)
+
+                data["voice_gate_blocked"] = has_voice_infraction
                 return Response(data, status=status.HTTP_200_OK)
             except NotFoundError:
                 return Response(dict(detail="User not found in metricity"),
