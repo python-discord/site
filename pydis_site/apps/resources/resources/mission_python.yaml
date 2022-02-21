@@ -1,0 +1,20 @@
+description: Learn programming and Python while building a complete and awesome space-themed
+  game using cutting-edge Python 3.6 and Pygame Zero. Extensive use of code examples,
+  images, and walk-throughs make this a pleasure to both read and follow along. Excellent
+  book for beginners.
+name: Mission Python
+title_url: https://www.sean.co.uk/books/mission-python/index.shtm
+urls:
+- icon: branding/goodreads
+  url: https://www.goodreads.com/book/show/35545850-mission-python
+  color: black
+tags:
+  topics:
+    - general
+    - game development
+  payment_tiers:
+    - paid
+  difficulty:
+    - beginner
+  type:
+    - book

@@ -1,0 +1,13 @@
+description: The interactive course version of Al Sweigart's excellent book for beginners, taught by the author himself.
+name: Automate the Boring Stuff with Python Udemy Course
+title_url: https://www.udemy.com/automate/
+tags:
+  topics:
+    - general
+  payment_tiers:
+    - paid
+  difficulty:
+    - beginner
+  type:
+    - course
+    - interactive

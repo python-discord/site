@@ -1,0 +1,22 @@
+description: 'JimShapedCoding contains a set of YouTube tutorials covering things from Flask to GUI development in Python:
+  <ul>
+    <li><a href="https://www.youtube.com/playlist?list=PLOkVupluCIjuPtTkhO6jmA76uQR994Wvi">Flask tutorials</a></li>
+    <li><a href="https://www.youtube.com/watch?v=0tqZ6rMcqGE&list=PLOkVupluCIjuAzAmDNUXcD-0Fsb8sbv9F">GUI tutorials</a></li>
+    <li><a href="https://www.youtube.com/watch?v=qMrAFscMBBc&list=PLOkVupluCIjvORWaF4kG-sXLgbVemYpEi">Django tutorials</a></li>
+  </ul>
+  Check out his channel for more videos!'
+name: JimShapedCoding
+title_image: https://i.imgur.com/DlovZPf.png
+title_url: https://www.youtube.com/channel/UCU8d7rcShA7MGuDyYH1aWGg
+tags:
+  topics:
+    - general
+    - user interface
+    - web development
+  payment_tiers:
+    - free
+  difficulty:
+    - beginner
+    - intermediate
+  type:
+    - video

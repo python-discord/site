@@ -1,0 +1,14 @@
+description: A repository of project ideas to help one apply what they're learning, maintained by Python
+  community member Ned Batchelder, known on Python Discord as nedbat.
+name: Ned Batchelder's Kindling Projects
+title_url: https://nedbatchelder.com/text/kindling.html
+tags:
+  topics:
+    - general
+  payment_tiers:
+    - free
+  difficulty:
+    - beginner
+    - intermediate
+  type:
+    - project ideas

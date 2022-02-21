@@ -1,6 +1,8 @@
 {% load as_icon %}
+{% load to_kebabcase %}
+{% load get_category_icon %}
 
-<div class="box" style="max-width: 800px;">
+<div class="box resource-box {{ resource.css_classes }}" data-resource-name="{{ resource.name }}">
     {% if 'title_url' in resource %}
         <a href="{{ resource.title_url }}">
             {% include "resources/resource_box_header.html" %}
@@ -9,14 +11,69 @@
         {% include "resources/resource_box_header.html" %}
     {% endif %}
 
-    <p class="is-italic">{{ resource.description|safe }}</p>
+    <p>{{ resource.description|safe }}</p>
 
-    {# Icons #}
-    {% for icon in resource.urls %}
-        <span class="icon is-size-4 is-medium" style="margin: 5px;">
-            <a href="{{ icon.url }}">
-                <i class="{{ icon.icon|as_icon }} is-size-3 resource-icon is-{{ icon.color }}"></i>
-            </a>
-        </span>
-    {% endfor %}
+    <div class="is-flex is-align-items-center">
+        {# Add primary link #}
+        {% if "title_url" in resource %}
+            <span class="icon is-size-4" style="margin: 5px;">
+                <a href="{{ resource.title_url }}">
+                    <i class="fas fa-external-link-alt fa-fw is-size-4 resource-icon is-hoverable is-primary"></i>
+                </a>
+            </span>
+        {% endif %}
+
+        {# Add all additional icon #}
+        {% for icon in resource.urls %}
+            <span class="icon is-size-4" style="margin: 5px;">
+                <a href="{{ icon.url }}">
+                    <i class="{{ icon.icon|as_icon }} fa-fw is-size-4 resource-icon is-hoverable is-{{ icon.color }}"></i>
+                </a>
+            </span>
+        {% endfor %}
+
+        {#  Tags #}
+        <div class="resource-tag-container is-flex ml-auto is-flex-wrap-wrap is-justify-content-end">
+            {% for tag in resource.tags.topics %}
+            <span
+                class="tag resource-tag is-primary is-light ml-2 mt-2"
+                data-filter-name="topics"
+                data-filter-item="{{ tag|to_kebabcase }}"
+            >
+                <i class="{{ tag|title|get_category_icon }} mr-1"></i>
+                {{ tag|title }}
+            </span>
+            {% endfor %}
+            {% for tag in resource.tags.type %}
+            <span
+                class="tag resource-tag has-background-success-light has-text-success-dark ml-2 mt-2"
+                data-filter-name="type"
+                data-filter-item="{{ tag|to_kebabcase }}"
+            >
+                <i class="{{ tag|title|get_category_icon }} mr-1"></i>
+                {{ tag|title }}
+            </span>
+            {% endfor %}
+            {% for tag in resource.tags.payment_tiers %}
+            <span
+                class="tag resource-tag has-background-danger-light has-text-danger-dark ml-2 mt-2"
+                data-filter-name="payment-tiers"
+                data-filter-item="{{ tag|to_kebabcase }}"
+            >
+                <i class="{{ tag|title|get_category_icon }} mr-1"></i>
+                {{ tag|title }}
+            </span>
+            {% endfor %}
+            {% for tag in resource.tags.difficulty %}
+            <span
+                class="tag resource-tag has-background-info-light has-text-info-dark ml-2 mt-2"
+                data-filter-name="difficulty"
+                data-filter-item="{{ tag|to_kebabcase }}"
+            >
+                <i class="{{ tag|title|get_category_icon }} mr-1"></i>
+                {{ tag|title }}
+            </span>
+            {% endfor %}
+        </div>
+    </div>
 </div>

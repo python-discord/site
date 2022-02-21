@@ -1,0 +1,20 @@
+description: Learn Python while gaming - an open-source project with thousands of
+  contributors, which teaches you Python through a deep, top-down RPG.
+name: Code Combat
+title_url: https://codecombat.com/
+urls:
+- icon: branding/github
+  url: https://github.com/codecombat/codecombat
+  color: black
+tags:
+  topics:
+    - general
+    - algorithms and data structures
+  payment_tiers:
+    - free
+    - subscription
+  difficulty:
+    - beginner
+    - intermediate
+  type:
+    - interactive
