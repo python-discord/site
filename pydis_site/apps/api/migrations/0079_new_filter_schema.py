@@ -9,7 +9,7 @@ from django.db.backends.base.schema import BaseDatabaseSchemaEditor
 
 import pydis_site.apps.api.models.bot.filters
 
-OLD_LIST_NAMES = (('GUILD_INVITE', 'ALLOW'), ('FILE_FORMAT', 'DENY'), ('DOMAIN_NAME', 'DENY'), ('FILTER_TOKEN', 'DENY'), ('REDIRECT', 'DENY'))
+OLD_LIST_NAMES = (('GUILD_INVITE', 'ALLOW'), ('FILE_FORMAT', 'ALLOW'), ('DOMAIN_NAME', 'DENY'), ('FILTER_TOKEN', 'DENY'), ('REDIRECT', 'DENY'))
 change_map = {
     "FILTER_TOKEN": "token",
     "DOMAIN_NAME": "domain",
