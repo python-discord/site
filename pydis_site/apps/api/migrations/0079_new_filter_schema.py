@@ -44,7 +44,7 @@ def forward(apps: Apps, schema_editor: BaseDatabaseSchemaEditor) -> None:
             bypass_roles=["Helpers"],
             enabled=True,
             dm_content=dm_content,
-            dm_embed="",
+            dm_embed="" if name != "FILE_FORMAT" else "*Defined at runtime.*",
             infraction_type="",
             infraction_reason="",
             infraction_duration=timedelta(seconds=0),
