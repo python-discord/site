@@ -9,7 +9,7 @@ from django.db.backends.base.schema import BaseDatabaseSchemaEditor
 
 import pydis_site.apps.api.models.bot.filters
 
-OLD_LIST_NAMES = (('GUILD_INVITE', 'ALLOW'), ('FILE_FORMAT', 'ALLOW'), ('DOMAIN_NAME', 'DENY'), ('FILTER_TOKEN', 'DENY'), ('REDIRECT', 'DENY'))
+OLD_LIST_NAMES = (('GUILD_INVITE', True), ('GUILD_INVITE', False), ('FILE_FORMAT', True), ('DOMAIN_NAME', False), ('FILTER_TOKEN', False), ('REDIRECT', False))
 change_map = {
     "FILTER_TOKEN": "token",
     "DOMAIN_NAME": "domain",
@@ -25,7 +25,7 @@ def forward(apps: Apps, schema_editor: BaseDatabaseSchemaEditor) -> None:
     filter_list_old = apps.get_model("api", "FilterListOld")
 
     for name, type_ in OLD_LIST_NAMES:
-        objects = filter_list_old.objects.filter(type=name)
+        objects = filter_list_old.objects.filter(type=name, allowed=type_)
         if name == "DOMAIN_NAME":
             dm_content = "Your URL has been removed because it matched a blacklisted domain: {match}"
         elif name == "GUILD_INVITE":
@@ -36,7 +36,7 @@ def forward(apps: Apps, schema_editor: BaseDatabaseSchemaEditor) -> None:
 
         list_ = filter_list.objects.create(
             name=change_map[name],
-            list_type=1 if type_ == "ALLOW" else 0,
+            list_type=int(type_),
             ping_type=(["Moderators"] if name != "FILE_FORMAT" else []),
             filter_dm=True,
             dm_ping_type=[],
