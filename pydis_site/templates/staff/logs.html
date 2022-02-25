@@ -18,8 +18,12 @@
         <div class="discord-message">
             <div class="discord-message-header">
                 <span class="discord-username"
-                      style="color: {{ message.author.top_role.colour | hex_colour }}">{{ message.author }}</span><span
-                    class="discord-message-metadata has-text-grey">{{ message.timestamp }} | User ID: {{ message.author.id }}</span>
+                      style="color: {{ message.author.top_role.colour | hex_colour }}">{{ message.author }}
+                </span>
+                <span class="discord-message-metadata has-text-grey">
+                    User ID: {{ message.author.id }}<br>
+                    {{ message.timestamp }} (Channel ID: {{ message.channel_id }})
+                </span>
             </div>
             <div class="discord-message-content">
                 {{ message.content | escape | visible_newlines | safe }}
