@@ -28,7 +28,6 @@ for all logic powering our website. Let's go over the directories in detail:
     that we encounter an internal server error.
 
 
-
 Note that for both `static` and `templates`, we are not using the default Django
 directory structure which puts these directories in a directory per app (in our
 case, this would for example be ``pydis_site/apps/content/static/``).
