@@ -18,9 +18,11 @@ for all logic powering our website. Let's go over the directories in detail:
   files relevant for a specific application are put into subdirectories named
   after the application.
 
-- [`templates`](./templates) contains our **[Django templates](https://docs.djangoproject.com/en/dev/topics/templates/)**. Like with static
-  files, templates specific to a single application are stored in a subdirectory
-  named after that application. We also have two special templates here:
+- [`templates`](./templates) contains our **[Django
+  templates](https://docs.djangoproject.com/en/dev/topics/templates/)**. Like
+  with static files, templates specific to a single application are stored in a
+  subdirectory named after that application. We also have two special templates
+  here:
 
   - `404.html`, which is our error page shown when a site was not found.
 
@@ -40,11 +42,16 @@ the website:
   read more, see the [`RequestContext` documentation from
   Django](https://docs.djangoproject.com/en/dev/ref/templates/api/#django.template.RequestContext)
 
-- [`settings.py`](./settings.py), our Django settings file. This mostly just
-  parses configuration out of your environment variables, so you shouldn't need
-  to edit it directly unless you want to add new settings.
+- [`settings.py`](./settings.py), our Django settings file. This controls all
+  manner of crucial things, for instance, we use it to configure logging, our
+  connection to the database, which applications are run by the project, which
+  middleware we are using, and variables for `django-simple-bulma` (which
+  determines frontend colours & extensions for our pages).
 
-- [`urls.py`](./urls.py), the URL configuration for the project itself. Here we can forward certain URL paths to our different apps, which have their own `urls.py` files to configure where their subpaths will lead. These files determine _which URLs will lead to which Django views_.
+- [`urls.py`](./urls.py), the URL configuration for the project itself. Here we
+  can forward certain URL paths to our different apps, which have their own
+  `urls.py` files to configure where their subpaths will lead. These files
+  determine _which URLs will lead to which Django views_.
 
 - [`wsgi.py`](./wsgi.py), which serves as an adapter for
   [`gunicorn`](https://github.com/benoitc/gunicorn),
