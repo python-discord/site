@@ -44,8 +44,7 @@ the website:
   parses configuration out of your environment variables, so you shouldn't need
   to edit it directly unless you want to add new settings.
 
-- [`urls.py`](./urls.py), which configures our Django URL routing by installing
-  our apps into the routing tree.
+- [`urls.py`](./urls.py), the URL configuration for the project itself. Here we can forward certain URL paths to our different apps, which have their own `urls.py` files to configure where their subpaths will lead. These files determine _which URLs will lead to which Django views_.
 
 - [`wsgi.py`](./wsgi.py), which serves as an adapter for
   [`gunicorn`](https://github.com/benoitc/gunicorn),
