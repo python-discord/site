@@ -3,10 +3,15 @@
 This directory hosts the root of our **Django project**[^1], and is responsible
 for all logic powering our website. Let's go over the directories in detail:
 
-- [`apps`](./apps) contains our **Django apps**. If you want to add your own
-  API endpoint or new functionality to our homepage, that's the place to go.
-  Each individual application also has its own README.md that you can click
-  through.
+- [`apps`](./apps) contains our **Django apps**, which are the building blocks
+  that make up our Django project. A Django project must always consist of one
+  or more apps, and these apps can be made completely modular and reusable
+  across any Django project. In our project, each app controls a distinct part
+  of our website, such as the API or our resources system.  For more
+  information on reusable apps, see the official Django tutorial, [which has a
+  section on reusable
+  apps](https://docs.djangoproject.com/en/dev/intro/reusable-apps/). To learn
+  more about our specific apps, see the README inside the app folder itself.
 
 - [`static`](./static) contains our **static files**, such as CSS, JavaScript,
   images, and anything else that isn't either content or Python code. Static
