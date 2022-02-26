@@ -18,7 +18,7 @@ for all logic powering our website. Let's go over the directories in detail:
   files relevant for a specific application are put into subdirectories named
   after the application.
 
-- [`templates`](./templates) contains our **Django templates**. Like with static
+- [`templates`](./templates) contains our **[Django templates](https://docs.djangoproject.com/en/dev/topics/templates/)**. Like with static
   files, templates specific to a single application are stored in a subdirectory
   named after that application. We also have two special templates here:
 
