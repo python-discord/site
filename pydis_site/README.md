@@ -7,9 +7,10 @@ for all logic powering our website. Let's go over the directories in detail:
   that make up our Django project. A Django project must always consist of one
   or more apps, and these apps can be made completely modular and reusable
   across any Django project. In our project, each app controls a distinct part
-  of our website, such as the API or our resources system.  For more
-  information on reusable apps, see the official Django tutorial, [which has a
-  section on reusable
+  of our website, such as the API or our resources system.
+
+  For more information on reusable apps, see the official Django tutorial,
+  [which has a section on reusable
   apps](https://docs.djangoproject.com/en/dev/intro/reusable-apps/). To learn
   more about our specific apps, see the README inside the app folder itself.
 
