@@ -122,7 +122,10 @@ class TestRepositoryMetadataHelpers(TestCase):
         """Tests that fallback to the database is performed when we get garbage back."""
         mock_get.return_value.json.return_value = ['garbage']
 
-        metadata = self.home_view._get_repo_data()
+        # Capture logs and ensure the problematic response is logged
+        with self.assertLogs():
+            metadata = self.home_view._get_repo_data()
+
         self.assertEquals(len(metadata), 0)
 
     def test_cleans_up_stale_metadata(self):
