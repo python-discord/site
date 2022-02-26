@@ -23,6 +23,11 @@ for all logic powering our website. Let's go over the directories in detail:
     that we encounter an internal server error.
 
 
+
+Note that for both `static` and `templates`, we are not using the default Django
+directory structure which puts these directories in a directory per app (in our
+case, this would for example be ``pydis_site/apps/content/static/``).
+
 We also have a few files in here that are relevant or useful in large parts of
 the website:
 
@@ -43,10 +48,6 @@ the website:
   [`uwsgi`](https://github.com/unbit/uwsgi) or other application servers to run
   our application in production. Unless you want to test an interaction between
   our application and those servers, you probably won't need to touch this.
-
-Note that for both `static` and `templates`, we are not using the default Django
-directory structure which puts these directories in a directory per app (in our
-case, this would for example be ``pydis_site/apps/content/static/``).
 
 
 [^1]: See [Django Glossary: project](https://docs.djangoproject.com/en/dev/glossary/#term-project)
