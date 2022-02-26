@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 import os
 import secrets
 import sys
+import warnings
 from pathlib import Path
 from socket import gethostbyname, gethostname
 
@@ -53,9 +54,25 @@ if DEBUG:
     ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['*'])
     SECRET_KEY = "yellow polkadot bikini"  # noqa: S105
 
+    # Prevent verbose warnings emitted when passing a non-timezone aware
+    # datetime object to the database, whilst we have time zone support
+    # active. See the Django documentation for more details:
+    # https://docs.djangoproject.com/en/dev/topics/i18n/timezones/
+    warnings.filterwarnings(
+        'error', r"DateTimeField .* received a naive datetime",
+        RuntimeWarning, r'django\.db\.models\.fields',
+    )
+
 elif 'CI' in os.environ:
     ALLOWED_HOSTS = ['*']
     SECRET_KEY = secrets.token_urlsafe(32)
+
+    # See above. We run with `CI=true`, but debug unset in GitHub Actions,
+    # so we also want to filter it there.
+    warnings.filterwarnings(
+        'error', r"DateTimeField .* received a naive datetime",
+        RuntimeWarning, r'django\.db\.models\.fields',
+    )
 
 else:
     ALLOWED_HOSTS = env.list(

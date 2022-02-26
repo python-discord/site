@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timezone
 
 from django.forms.models import model_to_dict
 from django.urls import reverse
@@ -91,7 +91,7 @@ class ReminderDeletionTests(AuthenticatedAPITestCase):
         cls.reminder = Reminder.objects.create(
             author=cls.author,
             content="Don't forget to set yourself a reminder",
-            expiration=datetime.utcnow().isoformat(),
+            expiration=datetime.now(timezone.utc),
             jump_url="https://www.decliningmentalfaculties.com",
             channel_id=123
         )
@@ -122,7 +122,7 @@ class ReminderListTests(AuthenticatedAPITestCase):
         cls.reminder_one = Reminder.objects.create(
             author=cls.author,
             content="We should take Bikini Bottom, and push it somewhere else!",
-            expiration=datetime.utcnow().isoformat(),
+            expiration=datetime.now(timezone.utc),
             jump_url="https://www.icantseemyforehead.com",
             channel_id=123
         )
@@ -130,16 +130,17 @@ class ReminderListTests(AuthenticatedAPITestCase):
         cls.reminder_two = Reminder.objects.create(
             author=cls.author,
             content="Gahhh-I love being purple!",
-            expiration=datetime.utcnow().isoformat(),
+            expiration=datetime.now(timezone.utc),
             jump_url="https://www.goofygoobersicecreampartyboat.com",
             channel_id=123,
             active=False
         )
 
+        drf_format = '%Y-%m-%dT%H:%M:%S.%fZ'
         cls.rem_dict_one = model_to_dict(cls.reminder_one)
-        cls.rem_dict_one['expiration'] += 'Z'  # Massaging a quirk of the response time format
+        cls.rem_dict_one['expiration'] = cls.rem_dict_one['expiration'].strftime(drf_format)
         cls.rem_dict_two = model_to_dict(cls.reminder_two)
-        cls.rem_dict_two['expiration'] += 'Z'  # Massaging a quirk of the response time format
+        cls.rem_dict_two['expiration'] = cls.rem_dict_two['expiration'].strftime(drf_format)
 
     def test_reminders_in_full_list(self):
         url = reverse('api:bot:reminder-list')
@@ -175,7 +176,7 @@ class ReminderRetrieveTests(AuthenticatedAPITestCase):
         cls.reminder = Reminder.objects.create(
             author=cls.author,
             content="Reminder content",
-            expiration=datetime.utcnow().isoformat(),
+            expiration=datetime.now(timezone.utc),
             jump_url="http://example.com/",
             channel_id=123
         )
@@ -203,7 +204,7 @@ class ReminderUpdateTests(AuthenticatedAPITestCase):
         cls.reminder = Reminder.objects.create(
             author=cls.author,
             content="Squash those do-gooders",
-            expiration=datetime.utcnow().isoformat(),
+            expiration=datetime.now(timezone.utc),
             jump_url="https://www.decliningmentalfaculties.com",
             channel_id=123
         )

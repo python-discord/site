@@ -1,8 +1,7 @@
-from datetime import datetime as dt
+from datetime import datetime as dt, timezone
 
 from django.core.exceptions import ValidationError
 from django.test import SimpleTestCase, TestCase
-from django.utils import timezone
 
 from pydis_site.apps.api.models import (
     DeletedMessage,
@@ -41,7 +40,7 @@ class NitroMessageLengthTest(TestCase):
         self.context = MessageDeletionContext.objects.create(
             id=50,
             actor=self.user,
-            creation=dt.utcnow()
+            creation=dt.now(timezone.utc)
         )
 
     def test_create(self):
@@ -99,7 +98,7 @@ class StringDunderMethodTests(SimpleTestCase):
                         name='shawn',
                         discriminator=555,
                     ),
-                    creation=dt.utcnow()
+                    creation=dt.now(timezone.utc)
                 ),
                 embeds=[]
             ),

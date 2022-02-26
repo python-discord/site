@@ -80,7 +80,7 @@ class InfractionTests(AuthenticatedAPITestCase):
             type='superstar',
             reason='This one doesn\'t matter anymore.',
             active=True,
-            expires_at=datetime.datetime.utcnow() + datetime.timedelta(hours=5)
+            expires_at=dt.now(timezone.utc) + datetime.timedelta(hours=5)
         )
         cls.voiceban_expires_later = Infraction.objects.create(
             user_id=cls.user.id,
@@ -88,7 +88,7 @@ class InfractionTests(AuthenticatedAPITestCase):
             type='voice_ban',
             reason='Jet engine mic',
             active=True,
-            expires_at=datetime.datetime.utcnow() + datetime.timedelta(days=5)
+            expires_at=dt.now(timezone.utc) + datetime.timedelta(days=5)
         )
 
     def test_list_all(self):
