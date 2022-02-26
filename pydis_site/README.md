@@ -3,10 +3,10 @@
 This directory hosts the root of our **Django project**[^1], and is responsible
 for all logic powering our website. Let's go over the directories in detail:
 
-- [`apps`](./apps) contains our **Django apps**. If you want to add your own API
-  endpoint or new functionality to our homepage, that's the place to go.
-  <!-- Each individual application also has its own README.md that you can click
-  through. -->
+- [`apps`](./apps) contains our **Django apps**. If you want to add your own
+  API endpoint or new functionality to our homepage, that's the place to go.
+  Each individual application also has its own README.md that you can click
+  through.
 
 - [`static`](./static) contains our **static files**, such as CSS, JavaScript,
   images, and anything else that isn't either content or Python code. Static
