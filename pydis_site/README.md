@@ -17,7 +17,7 @@ for all logic powering our website. Let's go over the directories in detail:
 - [`static`](./static) contains our **static files**, such as CSS, JavaScript,
   images, and anything else that isn't either content or Python code. Static
   files relevant for a specific application are put into subdirectories named
-  after the application.
+  after the application. For example, static files used by the `resources` app go in `static/resources`.
 
 - [`templates`](./templates) contains our **[Django
   templates](https://docs.djangoproject.com/en/dev/topics/templates/)**. Like
