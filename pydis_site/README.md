@@ -56,7 +56,7 @@ the website:
 
 - [`wsgi.py`](./wsgi.py), which serves as an adapter for
   [`gunicorn`](https://github.com/benoitc/gunicorn),
-  [`uwsgi`](https://github.com/unbit/uwsgi) or other application servers to run
+  [`uwsgi`](https://github.com/unbit/uwsgi), or other application servers to run
   our application in production. Unless you want to test an interaction between
   our application and those servers, you probably won't need to touch this.
 
