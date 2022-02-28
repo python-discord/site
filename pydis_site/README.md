@@ -61,4 +61,8 @@ the website:
   our application and those servers, you probably won't need to touch this.
 
 
+For more information about contributing to our projects, please see our
+[Contributing
+page](https://www.pythondiscord.com/pages/guides/pydis-guides/contributing/).
+
 [^1]: See [Django Glossary: project](https://docs.djangoproject.com/en/dev/glossary/#term-project)
