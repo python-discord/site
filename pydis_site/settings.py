@@ -20,14 +20,19 @@ import environ
 import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
 
-from pydis_site.constants import GIT_SHA
 
 env = environ.Env(
     DEBUG=(bool, False),
     SITE_DSN=(str, ""),
     BUILDING_DOCKER=(bool, False),
     STATIC_BUILD=(bool, False),
+    GIT_SHA=(str, 'development'),
+    TIMEOUT_PERIOD=(int, 5),
+    GITHUB_TOKEN=(str, None),
 )
+
+GIT_SHA = env("GIT_SHA")
+GITHUB_TOKEN = env("GITHUB_TOKEN")
 
 sentry_sdk.init(
     dsn=env('SITE_DSN'),
@@ -288,3 +293,6 @@ CONTENT_PAGES_PATH = Path(BASE_DIR, "pydis_site", "apps", "content", "resources"
 
 # Path for redirection links
 REDIRECTIONS_PATH = Path(BASE_DIR, "pydis_site", "apps", "redirect", "redirects.yaml")
+
+# How long to wait for synchronous requests before timing out
+TIMEOUT_PERIOD = env("TIMEOUT_PERIOD")
