@@ -27,7 +27,7 @@ def forward(apps: Apps, schema_editor: BaseDatabaseSchemaEditor) -> None:
     for name, type_ in OLD_LIST_NAMES:
         objects = filter_list_old.objects.filter(type=name, allowed=type_)
         if name == "DOMAIN_NAME":
-            dm_content = "Your URL has been removed because it matched a blacklisted domain: {match}"
+            dm_content = "Your message has been removed because it contained a blocked domain: `{domain}`."
         elif name == "GUILD_INVITE":
             dm_content = "Per Rule 6, your invite link has been removed. " \
                          "Our server rules can be found here: https://pythondiscord.com/pages/rules"
