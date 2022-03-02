@@ -188,7 +188,10 @@ class InfractionViewSet(
                 expires_after_parsed = datetime.fromisoformat(filter_expires_after)
             except ValueError:
                 raise ValidationError({'expires_after': ['failed to convert to datetime']})
-            additional_filters['expires_at__gte'] = timezone.make_aware(expires_after_parsed)
+            additional_filters['expires_at__gte'] = timezone.make_aware(
+                expires_after_parsed,
+                timezone=timezone.utc,
+            )
 
         filter_expires_before = self.request.query_params.get('expires_before')
         if filter_expires_before:
@@ -196,7 +199,10 @@ class InfractionViewSet(
                 expires_before_parsed = datetime.fromisoformat(filter_expires_before)
             except ValueError:
                 raise ValidationError({'expires_before': ['failed to convert to datetime']})
-            additional_filters['expires_at__lte'] = timezone.make_aware(expires_before_parsed)
+            additional_filters['expires_at__lte'] = timezone.make_aware(
+                expires_before_parsed,
+                timezone=timezone.utc,
+            )
 
         if 'expires_at__lte' in additional_filters and 'expires_at__gte' in additional_filters:
             if additional_filters['expires_at__gte'] > additional_filters['expires_at__lte']:
