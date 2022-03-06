@@ -19,7 +19,9 @@ Let's look over each of the subdirectories here:
 
 - `migrations` is the standard Django migrations folder. You usually won't need
   to edit this manually, as `python manage.py makemigrations` handles this for
-  you in case you change our models.
+  you in case you change our models. (Note that when generating migrations and
+  Django doesn't generate a human-readable name for you, please supply one
+  manually using `-n add_this_field`.)
 
 - `models` contains our Django model definitions. We put models into subfolders
   relevant as to where they are used - in our case, the `bot` folder contains
