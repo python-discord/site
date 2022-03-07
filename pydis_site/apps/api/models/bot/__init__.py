@@ -5,6 +5,8 @@ from .deleted_message import DeletedMessage
 from .documentation_link import DocumentationLink
 from .infraction import Infraction
 from .message import Message
+from .aoc_completionist_block import AocCompletionistBlock
+from .aoc_link import AocAccountLink
 from .message_deletion_context import MessageDeletionContext
 from .nomination import Nomination, NominationEntry
 from .off_topic_channel_name import OffTopicChannelName

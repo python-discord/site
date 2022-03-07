@@ -3,6 +3,8 @@ from rest_framework.routers import DefaultRouter
 
 from .views import HealthcheckView, RulesView
 from .viewsets import (
+    AocAccountLinkViewSet,
+    AocCompletionistBlockViewSet,
     BotSettingViewSet,
     DeletedMessageViewSet,
     DocumentationLinkViewSet,
@@ -33,6 +35,14 @@ bot_router.register(
 bot_router.register(
     'documentation-links',
     DocumentationLinkViewSet
+)
+bot_router.register(
+    "aoc-account-links",
+    AocAccountLinkViewSet
+)
+bot_router.register(
+    "aoc-completionist-blocks",
+    AocCompletionistBlockViewSet
 )
 bot_router.register(
     'infractions',

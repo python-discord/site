@@ -7,6 +7,8 @@ from .bot import (
     InfractionViewSet,
     NominationViewSet,
     OffensiveMessageViewSet,
+    AocAccountLinkViewSet,
+    AocCompletionistBlockViewSet,
     OffTopicChannelNameViewSet,
     ReminderViewSet,
     RoleViewSet,
