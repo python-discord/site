@@ -17,7 +17,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('is_blocked', models.BooleanField(default=True, help_text='Whether this user is actively being blocked from getting the AoC Completionist Role', verbose_name='Blocked')),
-                ('user', models.ForeignKey(help_text='The user that is blocked from getting the AoC Completionist Role', on_delete=django.db.models.deletion.CASCADE, to='api.user')),
+                ('user', models.OneToOneField(help_text='The user that is blocked from getting the AoC Completionist Role', on_delete=django.db.models.deletion.CASCADE, to='api.user')),
             ],
             bases=(pydis_site.apps.api.models.mixins.ModelReprMixin, models.Model),
         ),
@@ -26,7 +26,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('aoc_username', models.CharField(help_text='The AoC username associated with the Discord User.', max_length=120)),
-                ('user', models.ForeignKey(help_text='The user that is blocked from getting the AoC Completionist Role', on_delete=django.db.models.deletion.CASCADE, to='api.user')),
+                ('user', models.OneToOneField(help_text='The user that is blocked from getting the AoC Completionist Role', on_delete=django.db.models.deletion.CASCADE, to='api.user')),
             ],
             bases=(pydis_site.apps.api.models.mixins.ModelReprMixin, models.Model),
         ),

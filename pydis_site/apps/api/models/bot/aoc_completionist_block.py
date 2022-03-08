@@ -7,7 +7,7 @@ from pydis_site.apps.api.models.mixins import ModelReprMixin
 class AocCompletionistBlock(ModelReprMixin, models.Model):
     """A Discord user blocked from getting the AoC completionist Role."""
 
-    user = models.ForeignKey(
+    user = models.OneToOneField(
         User,
         on_delete=models.CASCADE,
         help_text="The user that is blocked from getting the AoC Completionist Role"

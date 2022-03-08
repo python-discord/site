@@ -7,7 +7,7 @@ from pydis_site.apps.api.models.mixins import ModelReprMixin
 class AocAccountLink(ModelReprMixin, models.Model):
     """An AoC account link for a Discord User."""
 
-    user = models.ForeignKey(
+    user = models.OneToOneField(
         User,
         on_delete=models.CASCADE,
         help_text="The user that is blocked from getting the AoC Completionist Role"

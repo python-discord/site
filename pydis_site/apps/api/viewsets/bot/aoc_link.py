@@ -47,8 +47,8 @@ class AocAccountLinkViewSet(
 
     #### Request body
     >>> {
-    ... 'user': int,
-    ... 'aoc_username': str
+    ...     'user': int,
+    ...     'aoc_username': str
     ... }
 
     #### Status codes

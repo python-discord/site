@@ -47,8 +47,8 @@ class AocCompletionistBlockViewSet(
 
     #### Request body
     >>> {
-    ... 'user': int,
-    ... 'is_blocked': bool
+    ...     'user': int,
+    ...     'is_blocked': bool
     ... }
 
     #### Status codes
