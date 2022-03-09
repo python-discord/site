@@ -259,7 +259,7 @@ class AocCompletionistBlockSerializer(ModelSerializer):
         """Metadata defined for the Django REST Framework."""
 
         model = AocCompletionistBlock
-        fields = ("user", "is_blocked")
+        fields = ("user", "is_blocked", "reason")
 
 
 class AocAccountLinkSerializer(ModelSerializer):

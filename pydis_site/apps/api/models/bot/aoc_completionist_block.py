@@ -19,3 +19,7 @@ class AocCompletionistBlock(ModelReprMixin, models.Model):
                   "from getting the AoC Completionist Role",
         verbose_name="Blocked"
     )
+    reason = models.TextField(
+        null=True,
+        help_text="The reason for the AoC Completionist Role Block."
+    )

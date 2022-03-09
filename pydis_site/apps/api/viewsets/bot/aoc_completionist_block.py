@@ -24,6 +24,7 @@ class AocCompletionistBlockViewSet(
     ...     {
     ...         "user": 2,
     ...         "is_blocked": False
+    ...         "reason": "Too good to be true"
     ...     }
     ... ]
 
@@ -36,6 +37,7 @@ class AocCompletionistBlockViewSet(
     ...     {
     ...         "user": 2,
     ...         "is_blocked": False
+    ...         "reason": "Too good to be true"
     ...     }
 
     #### Status codes
@@ -47,8 +49,9 @@ class AocCompletionistBlockViewSet(
 
     #### Request body
     >>> {
-    ...     'user': int,
-    ...     'is_blocked': bool
+    ...     "user": int,
+    ...     "is_blocked": bool
+    ...     "reason": string
     ... }
 
     #### Status codes
