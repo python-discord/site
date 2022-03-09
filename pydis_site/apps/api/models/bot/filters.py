@@ -84,14 +84,14 @@ class FilterList(FilterSettingsMixin):
         choices=FilterListType.choices,
         help_text="Whether this list is an allowlist or denylist"
     )
-    ping_type = ArrayField(
+    guild_pings = ArrayField(
         models.CharField(max_length=20),
         validators=(validate_ping_field,),
         help_text="Who to ping when this filter triggers.",
         null=False
     )
     filter_dm = models.BooleanField(help_text="Whether DMs should be filtered.", null=False)
-    dm_ping_type = ArrayField(
+    dm_pings = ArrayField(
         models.CharField(max_length=20),
         validators=(validate_ping_field,),
         help_text="Who to ping when this filter triggers on a DM.",
@@ -147,14 +147,14 @@ class Filter(FilterSettingsMixin):
         FilterList, models.CASCADE, related_name="filters",
         help_text="The filter list containing this filter."
     )
-    ping_type = ArrayField(
+    guild_pings = ArrayField(
         models.CharField(max_length=20),
         validators=(validate_ping_field,),
         help_text="Who to ping when this filter triggers.",
         null=True
     )
     filter_dm = models.BooleanField(help_text="Whether DMs should be filtered.", null=True)
-    dm_ping_type = ArrayField(
+    dm_pings = ArrayField(
         models.CharField(max_length=20),
         validators=(validate_ping_field,),
         help_text="Who to ping when this filter triggers on a DM.",

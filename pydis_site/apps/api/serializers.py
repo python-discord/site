@@ -121,9 +121,9 @@ ALWAYS_OPTIONAL_SETTINGS = (
 )
 
 REQUIRED_FOR_FILTER_LIST_SETTINGS = (
-    'ping_type',
+    'guild_pings',
     'filter_dm',
-    'dm_ping_type',
+    'dm_pings',
     'delete_messages',
     'bypass_roles',
     'enabled',
@@ -154,7 +154,7 @@ CHANNEL_SCOPE_FIELDS = (
     "disabled_categories",
     "enabled_channels",
 )
-MENTIONS_FIELDS = ("ping_type", "dm_ping_type")
+MENTIONS_FIELDS = ("guild_pings", "dm_pings")
 
 SETTINGS_FIELDS = ALWAYS_OPTIONAL_SETTINGS + REQUIRED_FOR_FILTER_LIST_SETTINGS
 
