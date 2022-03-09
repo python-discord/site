@@ -24,7 +24,8 @@ class AocAccountLinkViewSet(
     ...     {
     ...         "user": 2,
     ...         "aoc_username": "AoCUser1"
-    ...     }
+    ...     },
+    ...     ...
     ... ]
 
 
@@ -32,11 +33,12 @@ class AocAccountLinkViewSet(
     Retrieve a AoC account link by User ID
 
     #### Response format
-    >>>
+    >>> [
     ...     {
     ...         "user": 2,
     ...         "aoc_username": "AoCUser1"
-    ...     }
+    ...     },
+    ... ]
 
     #### Status codes
     - 200: returned on success

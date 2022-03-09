@@ -10,7 +10,8 @@ class AocCompletionistBlock(ModelReprMixin, models.Model):
     user = models.OneToOneField(
         User,
         on_delete=models.CASCADE,
-        help_text="The user that is blocked from getting the AoC Completionist Role"
+        help_text="The user that is blocked from getting the AoC Completionist Role",
+        primary_key=True
     )
 
     is_blocked = models.BooleanField(
