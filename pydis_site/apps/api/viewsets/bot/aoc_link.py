@@ -59,6 +59,7 @@ class AocAccountLinkViewSet(
 
     ### DELETE /bot/aoc-account-links/<user__id:int>
     Deletes the AoC account link item with the given `user__id`.
+
     #### Status codes
     - 204: returned on success
     - 404: if the AoC account link with the given user__id does not exist

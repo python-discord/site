@@ -23,7 +23,7 @@ class AocCompletionistBlockViewSet(
     >>> [
     ...     {
     ...         "user": 2,
-    ...         "is_blocked": False
+    ...         "is_blocked": False,
     ...         "reason": "Too good to be true"
     ...     }
     ... ]
@@ -36,7 +36,7 @@ class AocCompletionistBlockViewSet(
     >>>
     ...     {
     ...         "user": 2,
-    ...         "is_blocked": False
+    ...         "is_blocked": False,
     ...         "reason": "Too good to be true"
     ...     }
 
@@ -50,7 +50,7 @@ class AocCompletionistBlockViewSet(
     #### Request body
     >>> {
     ...     "user": int,
-    ...     "is_blocked": bool
+    ...     "is_blocked": bool,
     ...     "reason": string
     ... }
 
@@ -60,6 +60,7 @@ class AocCompletionistBlockViewSet(
 
     ### DELETE /bot/aoc-completionist-blocks/<user__id:int>
     Deletes the AoC Completionist block item with the given `user__id`.
+
     #### Status codes
     - 204: returned on success
     - 404: if the AoC Completionist block with the given user__id does not exist
