@@ -29,20 +29,19 @@ class AocAccountLinkViewSet(
     ... ]
 
 
-    ### GET /bot/aoc-account-links<user__id:int>
+    ### GET /bot/aoc-account-links/<user__id:int>
     Retrieve a AoC account link by User ID
 
     #### Response format
-    >>> [
-    ...     {
-    ...         "user": 2,
-    ...         "aoc_username": "AoCUser1"
-    ...     },
-    ... ]
+    >>>
+    ... {
+    ...     "user": 2,
+    ...     "aoc_username": "AoCUser1"
+    ... }
 
     #### Status codes
     - 200: returned on success
-    - 404: returned if an AoC account link with the given user__id was not found.
+    - 404: returned if an AoC account link with the given `user__id` was not found.
 
     ### POST /bot/aoc-account-links
     Adds a single AoC account link block
@@ -55,14 +54,14 @@ class AocAccountLinkViewSet(
 
     #### Status codes
     - 204: returned on success
-    - 400: if one of the given fields is invalid
+    - 400: if one of the given fields was invalid
 
     ### DELETE /bot/aoc-account-links/<user__id:int>
     Deletes the AoC account link item with the given `user__id`.
 
     #### Status codes
     - 204: returned on success
-    - 404: if the AoC account link with the given user__id does not exist
+    - 404: returned if the AoC account link with the given `user__id` was not found
 
     """
 

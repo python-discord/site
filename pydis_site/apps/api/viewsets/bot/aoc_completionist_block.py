@@ -42,7 +42,7 @@ class AocCompletionistBlockViewSet(
 
     #### Status codes
     - 200: returned on success
-    - 404: returned if an AoC completionist block with the given user__id was not found.
+    - 404: returned if an AoC completionist block with the given `user__id` was not found.
 
     ### POST /bot/aoc-completionist-blocks
     Adds a single AoC completionist block
@@ -63,11 +63,11 @@ class AocCompletionistBlockViewSet(
 
     #### Status codes
     - 204: returned on success
-    - 404: if the AoC Completionist block with the given user__id does not exist
+    - 404: returned if the AoC Completionist block with the given `user__id` was not found
 
     """
 
     serializer_class = AocCompletionistBlockSerializer
     queryset = AocCompletionistBlock.objects.all()
     filter_backends = (DjangoFilterBackend,)
-    filter_fields = ("user__id",)
+    filter_fields = ("user__id", "is_blocked")
