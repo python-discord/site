@@ -16,32 +16,6 @@ class FilterListType(models.IntegerChoices):
     DENY = 0
 
 
-# Valid special values in ping related fields
-VALID_PINGS = ("everyone", "here", "moderators", "onduty", "admins")
-VALID_BYPASS_ROLES = ("staff",)
-
-
-def validate_ping_field(value_list: List[str]) -> None:
-    """Validate that the values are either a special value or a UID."""
-    for value in value_list:
-        # Check if it is a special value
-        if value in VALID_PINGS:
-            continue
-        # Check if it is a UID
-        if value.isnumeric():
-            continue
-
-        raise ValidationError(f"{value!r} isn't a valid ping type.")
-
-
-def validate_bypass_roles_field(value_list: List[str]) -> None:
-    """Validate that the vclues are either a special value or a Role ID."""
-    for value in value_list:
-        if value.isnumeric() or value in VALID_BYPASS_ROLES:
-            continue
-        raise ValidationError(f"{value!r} isn't a valid (bypass) role.")
-
-
 class FilterSettingsMixin(models.Model):
     """Mixin for common settings of a filters and filter lists."""
 
@@ -86,14 +60,12 @@ class FilterList(FilterSettingsMixin):
     )
     guild_pings = ArrayField(
         models.CharField(max_length=20),
-        validators=(validate_ping_field,),
         help_text="Who to ping when this filter triggers.",
         null=False
     )
     filter_dm = models.BooleanField(help_text="Whether DMs should be filtered.", null=False)
     dm_pings = ArrayField(
         models.CharField(max_length=20),
-        validators=(validate_ping_field,),
         help_text="Who to ping when this filter triggers on a DM.",
         null=False
     )
@@ -104,7 +76,6 @@ class FilterList(FilterSettingsMixin):
     bypass_roles = ArrayField(
         models.CharField(max_length=100),
         help_text="Roles and users who can bypass this filter.",
-        validators=(validate_bypass_roles_field,),
         null=False
     )
     enabled = models.BooleanField(
@@ -149,14 +120,12 @@ class Filter(FilterSettingsMixin):
     )
     guild_pings = ArrayField(
         models.CharField(max_length=20),
-        validators=(validate_ping_field,),
         help_text="Who to ping when this filter triggers.",
         null=True
     )
     filter_dm = models.BooleanField(help_text="Whether DMs should be filtered.", null=True)
     dm_pings = ArrayField(
         models.CharField(max_length=20),
-        validators=(validate_ping_field,),
         help_text="Who to ping when this filter triggers on a DM.",
         null=True
     )
@@ -167,7 +136,6 @@ class Filter(FilterSettingsMixin):
     bypass_roles = ArrayField(
         models.CharField(max_length=100),
         help_text="Roles and users who can bypass this filter.",
-        validators=(validate_bypass_roles_field,),
         null=True
     )
     enabled = models.BooleanField(

@@ -296,14 +296,3 @@ class GenericFilterTest(APISubdomainTestCase):
 
                 response = self.client.delete(f"{sequence.url()}/42")
                 self.assertEqual(response.status_code, 404)
-
-    def test_reject_invalid_ping(self) -> None:
-        url = reverse('bot:filteroverride-list', host='api')
-        data = {
-            "ping_type": ["invalid"]
-        }
-
-        response = self.client.post(url, data=data)
-
-        self.assertEqual(response.status_code, 400)
-        self.assertDictEqual(response.json(), {'ping_type': ["'invalid' isn't a valid ping type."]})
