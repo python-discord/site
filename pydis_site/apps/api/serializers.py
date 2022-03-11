@@ -13,6 +13,8 @@ from rest_framework.settings import api_settings
 from rest_framework.validators import UniqueTogetherValidator
 
 from .models import (
+    AocAccountLink,
+    AocCompletionistBlock,
     BotSetting,
     DeletedMessage,
     DocumentationLink,
@@ -248,6 +250,26 @@ class ReminderSerializer(ModelSerializer):
             'mentions',
             'failures'
         )
+
+
+class AocCompletionistBlockSerializer(ModelSerializer):
+    """A class providing (de-)serialization of `AocCompletionistBlock` instances."""
+
+    class Meta:
+        """Metadata defined for the Django REST Framework."""
+
+        model = AocCompletionistBlock
+        fields = ("user", "is_blocked", "reason")
+
+
+class AocAccountLinkSerializer(ModelSerializer):
+    """A class providing (de-)serialization of `AocAccountLink` instances."""
+
+    class Meta:
+        """Metadata defined for the Django REST Framework."""
+
+        model = AocAccountLink
+        fields = ("user", "aoc_username")
 
 
 class RoleSerializer(ModelSerializer):
