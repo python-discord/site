@@ -22,9 +22,6 @@ Let's look at the structure in here:
 - `resources` contains the static Markdown files that make up our site's
   [pages](https://www.pythondiscord.com/pages/)
 
-- `migrations` contains standard Django migrations. As the `content` app
-  contains purely static Markdown files, no migrations are present here.
-
 - `tests` contains unit tests for verifying that the app works properly.
 
 - `views` contains Django views which generating and serve the pages from the
