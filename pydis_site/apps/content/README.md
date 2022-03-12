@@ -1,19 +1,17 @@
 # The "content" app
 
-This application serves static, markdown-based content. Django-wise there is
-relatively little code in there, most of it is concerned with serving our
+This application serves static, Markdown-based content. Django-wise there is
+relatively little code in there; most of it is concerned with serving our
 content.
-
-The markdown files hosting our content can be found in the
-[`resources/`](./resources) directory, and contain
 
 
 ## Contributing pages
 
-Contributing pages is covered extensively in our online guide, which you can
-find
-[here](https://www.pythondiscord.com/pages/guides/pydis-guides/how-to-contribute-a-page/)
-or alternatively read it directly at
+The Markdown files hosting our content can be found in the
+[`resources/`](./resources) directory. The process of contributing to pages is
+covered extensively in our online guide which you can find
+[here](https://www.pythondiscord.com/pages/guides/pydis-guides/how-to-contribute-a-page/).
+Alternatively, read it directly at
 [`resources/guides/pydis-guides/how-to-contribute-a-page.md`](./resources/guides/pydis-guides/how-to-contribute-a-page.md).
 
 
@@ -25,13 +23,13 @@ Let's look at the structure in here:
   [pages](https://www.pythondiscord.com/pages/)
 
 - `migrations` contains standard Django migrations. As the `content` app
-  contains purely static markdown files, no migrations are present here.
+  contains purely static Markdown files, no migrations are present here.
 
 - `tests` contains unit tests for verifying that the app works properly.
 
-- `views` contains our Django views generating and serving the pages from the
-  input markdown.
+- `views` contains Django views which generating and serve the pages from the
+  input Markdown.
 
 As for the modules, apart from the standard Django modules in here, the
-`utils.py` module contains utility functions for discovering markdown files to
-serve on the filesystem.
+`utils.py` module contains utility functions for discovering Markdown files to
+serve.
