@@ -129,7 +129,7 @@ class Migration(migrations.Migration):
                 ('dm_content', models.CharField(help_text='The DM to send to a user triggering this filter.', max_length=1000, null=True)),
                 ('dm_embed', models.CharField(help_text='The content of the DM embed', max_length=2000, null=True)),
                 ('infraction_type', models.CharField(choices=[('note', 'Note'), ('warning', 'Warning'), ('watch', 'Watch'), ('mute', 'Mute'), ('kick', 'Kick'), ('ban', 'Ban'), ('superstar', 'Superstar'), ('voice_ban', 'Voice Ban')], help_text='The infraction to apply to this user.', max_length=9, null=True)),
-                ('infraction_reason', models.CharField(help_text='The reason to give for the infraction.', max_length=1000)),
+                ('infraction_reason', models.CharField(help_text='The reason to give for the infraction.', max_length=1000, null=True)),
                 ('infraction_duration', models.DurationField(help_text='The duration of the infraction. Null if permanent.', null=True)),
                 ('disabled_channels', django.contrib.postgres.fields.ArrayField(base_field=models.CharField(max_length=100), help_text="Channels in which to not run the filter.", size=None)),
                 ('disabled_categories', django.contrib.postgres.fields.ArrayField(base_field=models.CharField(max_length=100), help_text="Categories in which to not run the filter.", size=None)),
