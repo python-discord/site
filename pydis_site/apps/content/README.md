@@ -24,7 +24,7 @@ Let's look at the structure in here:
 
 - `tests` contains unit tests for verifying that the app works properly.
 
-- `views` contains Django views which generating and serve the pages from the
+- `views` contains Django views which generate and serve the pages from the
   input Markdown.
 
 As for the modules, apart from the standard Django modules in here, the
