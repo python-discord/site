@@ -91,23 +91,6 @@ Our projects on Python Discord are open source and [available on GitHub](https:/
   </div>
 </div>
 
-## Contributors Community
-We are very happy to have many members in our community that contribute to [our open source projects](https://github.com/python-discord/).
-Whether it's writing code, reviewing pull requests, or contributing graphics for our events, it’s great to see so many people being motivated to help out.
-As a token of our appreciation, those who have made significant contributions to our projects will receive a special **@Contributors** role on our server that makes them stand out from other members.
-That way, they can also serve as guides to others who are looking to start contributing to our open source projects or open source in general.
-
-#### Guidelines for the @Contributors Role
-
-One question we get a lot is what the requirements for the **@Contributors** role are.
-As it’s difficult to precisely quantify contributions, we’ve come up with the following guidelines for the role:
-
-- The member has made several significant contributions to our projects.
-- The member has a positive influence in our contributors subcommunity.
-
-The role will be assigned at the discretion of the Admin Team in consultation with the Core Developers Team.
-
-
 # How do I start contributing?
   Completing these steps will have you ready to make your first contribution. If you've already been using Git or GitHub feel free to skip those steps, but please make sure to read about the PyDis contributing process and ettiquette. If you are here looking for the answer to a specific question, check out the sub-articles in the top right of the page to see a list of our guides.
 
