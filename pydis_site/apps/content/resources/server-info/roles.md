@@ -68,7 +68,7 @@ In addition to the informal descriptions below, we've also written down a more f
 ### <span class="fas fa-circle" style="color:#1abc9c"></span> Domain Leads
 **Description:** Staff in charge of a certain domain such as moderation, events, and outreach. A lead will have a second role specifying their domain.
 
-### <span class="fas fa-circle" style="color:#8dc2ba"></span> Project Leads
+### <span class="fas fa-circle" style="color:#00aeb4"></span> Project Leads
 **Description:** Staff in charge of a certain project that require special attention, such as a YouTube video series or our new forms page.
 
 ### <span class="fas fa-circle" style="color:#ff9f1b"></span> Moderators
