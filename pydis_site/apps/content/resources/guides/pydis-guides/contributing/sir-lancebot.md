@@ -41,16 +41,6 @@ The requirements for Docker are:
     * This is only a required step for linux. Docker comes bundled with docker-compose on Mac OS and Windows.
 
 ---
-
-# Fork the Project
-You will need your own remote (online) copy of the project repository, known as a *fork*.
-
-- [**Learn how to create a fork of the repository here.**](../forking-repository)
-
-You will do all your work in the fork rather than directly in the main repository.
-
----
-
 # Development Environment
 1. Once you have your fork, you will need to [**clone the repository to your computer**](../cloning-repository).
 2. After cloning, proceed to [**install the project's dependencies**](../installing-project-dependencies). (This is not required if using Docker)
@@ -120,14 +110,5 @@ After installing project dependencies use the poetry command `poetry run task st
 ```shell
 $ poetry run task start
 ```
-
----
-
-# Working with Git
-Now that you have everything setup, it is finally time to make changes to the bot! If you have not yet [read the contributing guidelines](https://github.com/python-discord/sir-lancebot/blob/main/CONTRIBUTING.md), now is a good time. Contributions that do not adhere to the guidelines may be rejected.
-
-Notably, version control of our projects is done using Git and Github. It can be intimidating at first, so feel free to ask for any help in the server.
-
-[**Click here to see the basic Git workflow when contributing to one of our projects.**](../working-with-git/)
 
 Have fun!

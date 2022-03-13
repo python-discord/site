@@ -27,18 +27,6 @@ Without Docker:
     - Note that if you wish, the webserver can run on the host and still use Docker for PostgreSQL.
 
 ---
-# Fork the project
-
-You will need access to a copy of the git repository of your own that will allow you to edit the code and push your commits to.
-Creating a copy of a repository under your own account is called a _fork_.
-
-- [Learn how to create a fork of the repository here.](../forking-repository/)
-
-This is where all your changes and commits will be pushed to, and from where your PRs will originate from.
-
-For any Core Developers, since you have write permissions already to the original repository, you can just create a feature branch to push your commits to instead.
-
----
 # Development environment
 
 1. [Clone your fork to a local project directory](../cloning-repository/)

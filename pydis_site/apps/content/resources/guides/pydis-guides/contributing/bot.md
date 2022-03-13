@@ -7,33 +7,6 @@ toc: 3
 The purpose of this guide is to get you a running local version of [the Python bot](https://github.com/python-discord/bot).
 This page will focus on the quickest steps one can take, with mentions of alternatives afterwards.
 
-### Clone The Repository
-First things first, to run the bot's code and make changes to it, you need a local version of it (on your computer).
-
-<div class="card">
-    <button type="button" class="card-header collapsible">
-        <span class="card-header-title subtitle is-6 my-2 ml-2">Getting started with Git and GitHub</span>
-        <span class="card-header-icon">
-            <i class="fas fa-fw fa-angle-down title is-5" aria-hidden="true"></i>
-        </span>
-    </button>
-    <div class="collapsible-content collapsed">
-        <div class="card-content">
-              <p>If you don't have Git on your computer already, <a href="https://git-scm.com/downloads">install it</a>. You can additionally install a Git GUI such as <a href="https://www.gitkraken.com/download">GitKraken</a>, or the <a href="https://cli.github.com/manual/installation">GitHub CLI</a>.</p>
-              <p>To learn more about Git, you can look into <a href="../working-with-git">our guides</a>, as well as <a href="https://education.github.com/git-cheat-sheet-education.pdf">this cheatsheet</a>, <a href="https://learngitbranching.js.org">Learn Git Branching</a>, and otherwise any guide you can find on the internet. Once you got the basic idea though, the best way to learn Git is to use it.</p>
-              <p>Creating a copy of a repository under your own account is called a <em>fork</em>. This is where all your changes and commits will be pushed to, and from where your pull requests will originate from.</p>
-              <p><strong><a href="../forking-repository">Learn about forking a project</a></strong>.</p>
-        </div>
-    </div>
-</div>
-<br>
-
-You will need to create a fork of [the project](https://github.com/python-discord/bot), and clone the fork.
-Once this is done, you will have completed the first step towards having a running version of the bot.
-
-#### Working on the Repository Directly
-If you are a member of the organisation (a member of [this list](https://github.com/orgs/python-discord/people), or in our particular case, server staff), you can clone the project repository without creating a fork, and work on a feature branch instead.
-
 ---
 
 ### Set Up a Test Server
