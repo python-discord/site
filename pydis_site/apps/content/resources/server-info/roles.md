@@ -80,8 +80,8 @@ In addition to the informal descriptions below, we've also written down a more f
 ### <span class="fas fa-circle" style="color:#a1d1ff"></span> DevOps
 **Description:** A role for staff involved with the DevOps toolchain of our core projects.
 
-### <span class="fas fa-circle" style="color:#f8d188"></span> Project Teams
-**Description:** Staff can join teams which work on specific projects in the organisation, such as our code jams, media projects, and more.
+### <span class="fas fa-circle" style="color:#7de29c"></span> Events Team
+**Description:** The events team are staff members who help plan and execute Python Discord events. This can range from the Code Jam, to Pixels, to our survey, specific workshops we want to run, and more.
 
 ### <span class="fas fa-circle" style="color:#eecd36"></span> Helpers
 **Description:** This is the core staff role in our organization: All staff members have the Helpers role.
