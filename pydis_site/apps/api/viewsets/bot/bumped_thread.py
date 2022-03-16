@@ -18,12 +18,7 @@ class BumpedThreadViewSet(
     Returns all BumpedThread items in the database.
 
     #### Response format
-    >>> [
-    ...     {
-    ...         'thread_id': "941705627405811793",
-    ...     },
-    ...     ...
-    ... ]
+    >>> list[int]
 
     #### Status codes
     - 200: returned on success
