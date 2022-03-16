@@ -1,6 +1,8 @@
 from rest_framework.mixins import (
-    CreateModelMixin, DestroyModelMixin, ListModelMixin, RetrieveModelMixin
+    CreateModelMixin, DestroyModelMixin, ListModelMixin
 )
+from rest_framework.request import Request
+from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
 
 from pydis_site.apps.api.models.bot import BumpedThread
@@ -8,7 +10,7 @@ from pydis_site.apps.api.serializers import BumpedThreadSerializer
 
 
 class BumpedThreadViewSet(
-    GenericViewSet, CreateModelMixin, DestroyModelMixin, RetrieveModelMixin, ListModelMixin
+    GenericViewSet, CreateModelMixin, DestroyModelMixin, ListModelMixin
 ):
     """
     View providing CRUD (Minus the U) operations on threads to be bumped.
@@ -25,15 +27,10 @@ class BumpedThreadViewSet(
     - 401: returned if unauthenticated
 
     ### GET /bot/bumped-threads/<thread_id:int>
-    Returns a specific BumpedThread item from the database.
-
-    #### Response format
-    >>> {
-    ...     'thread_id': "941705627405811793",
-    ... }
+    Returns whether a specific BumpedThread exists in the database.
 
     #### Status codes
-    - 200: returned on success
+    - 204: returned on success
     - 404: returned if a BumpedThread with the given thread_id was not found.
 
     ### POST /bot/bumped-threads
@@ -58,3 +55,12 @@ class BumpedThreadViewSet(
 
     serializer_class = BumpedThreadSerializer
     queryset = BumpedThread.objects.all()
+
+    def retrieve(self, request: Request, *args, **kwargs) -> Response:
+        """
+        DRF method for checking if the given BumpedThread exists.
+
+        Called by the Django Rest Framework in response to the corresponding HTTP request.
+        """
+        self.get_object()
+        return Response(status=204)
