@@ -49,8 +49,7 @@ class ListBumpedThreadSerializer(ListSerializer):
         """
         Used by the `ListModelMixin` to return just the list of bumped thread ids.
 
-        We want to only return the thread_id attribute, hence it is unnecessary
-        to create a nested dictionary.
+        Only the thread_id field is useful, hence it is unnecessary to create a nested dictionary.
 
         Additionally, this allows bumped thread routes to simply return an
         array of thread_id ints instead of objects, saving on bandwidth.
