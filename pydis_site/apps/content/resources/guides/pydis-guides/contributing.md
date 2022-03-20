@@ -92,45 +92,57 @@ Our projects on Python Discord are open source and [available on GitHub](https:/
 </div>
 
 # How do I start contributing?
-  Completing these steps will have you ready to make your first contribution. If you've already been using Git or GitHub feel free to skip those steps, but please make sure to read about the PyDis contributing process and ettiquette. If you are here looking for the answer to a specific question, check out the sub-articles in the top right of the page to see a list of our guides.
+  Unsure of what contributing to open source projects involves? Have questions about how to use GitHub? Just need to know about our contribution etiquette? Completing these steps will have you ready to make your first contribution.
 
+  Feel free to skip any steps you're already familiar with, but please make sure not to miss the  [Contributing Guidelines](#5-read-our-contributing-guidelines).
 
+  If you are here looking for the answer to a specific question, check out the sub-articles in the top right of the page to see a list of our guides.
 
-### Fork the repo
-   GitHub is a website based on the Git version control system that stores project files in the cloud. The people working on the project can use GitHub as a central place for sending their changes, getting their teammates' changes, and communicating with each other. Forking the repository that you want to work on will create a copy under your own GitHub account. You'll make your changes to this copy, then later we can bring them back to the PyDis repository.
+### 1. Learn the basics of Git
+  Git is a _Version Control System_, software for carefully tracking changes to the files in a project. Git allows the same project to be worked on by people in different places. You can make changes to your local code and then distribute those changes to the other people working on the project.
 
-   [Check out our guide on forking a GitHub repo](./forking-repository/)
+  Check out these [**resources to get started using Git**](./working-with-git/).
 
-### Clone the repo
-  Now that you have your own fork you could make changes to it directly on GitHub, but that's not a convenient way to write code. Instead you can use Git to clone the repo to your local machine, commit changes to it there, then push those changes to GitHub.
+### 2. Fork the repo
+  GitHub is a website based on the Git version control system that stores project files in the cloud. The people working on the project can use GitHub as a central place for sending their changes, getting their teammates' changes, and communicating with each other. Forking the repository that you want to work on will create a copy under your own GitHub account. You'll make your changes to this copy, then later we can bring them back to the PyDis repository.
 
-  [Check out our guide on forking a GitHub repo](./forking-repository/)
+  Check out our [**guide on forking a GitHub repo**](./forking-repository/).
 
-### Set up the project
-  You have the source code on your local computer, but how do you actually run it?
+### 3. Clone the repo
+  Now that you have your own fork you need to be able to make changes to the code. You can clone the repo to your local machine, commit changes to it there, then push those changes to GitHub.
 
-  [Sir Lancebot](./sir-lancebot/)
+  Check out our [**guide on cloning a GitHub repo**](./cloning-repository/).
 
-  [Python Bot](./bot/)
+### 4. Set up the project
+  You have the source code on your local computer, now how do you actually run it? We have detailed guides on setting up the environment for each of our projects:
 
-  [Site](./site/)
+  * [**Sir Lancebot**](./sir-lancebot/)
 
-### Ettiquette
-  [Guidelines](./contributing-guidelines/)
-### Read the style guide
-  [Style Guide](./style-guide/)
+  * [**Python Bot**](./bot/)
 
-### Open a pull request
+  * [**Site**](./site/)
 
-### The review process
-  [Review Guide](../code-reviews-primer/)
-### Create an issue
+### 5. Read our Contributing Guidelines
+  We have a few short rules that all contributors must follow. Make sure you read and follow them while working on our projects.
 
+  [**Contributing Guidelines**](./contributing-guidelines/).
 
-### Learn the basics of Git
-  Git is a *Version Control System*, software for carefully tracking changes to the files in a project. Git allows the same project to be worked on by people in different places. You can make changes to your local code and then distribute those changes to the other people working on the project.
+  As mentioned in the Contributing Guidelines, we have a simple style guide for our projects based on PEP 8. Give it a read to keep your code consistent with the rest of the codebase.
 
-  [Check out these resources to get started using Git](./working-with-git/)
+  [**Style Guide**](./style-guide/)
 
+### 6. Create an issue
+  The first step to any new contribution is an issue describing a problem with the current codebase or proposing a new feature. All the open issues are viewable on the GitHub repositories, for instance here is the [issues page for Sir Lancebot](https://github.com/python-discord/sir-lancebot/issues). If you have an idea that you want to implement, open a new issue (and check out our [**guide on writing an issue**](./issues/)). Otherwise you can browse the unassigned issues and ask to be assigned to one that you're interested in, either in the comments on the issue or in the`#dev-contrib`channel on Discord.
 
-If you don't understand anything or need clarification, feel free to ask any staff member with the  **@PyDis Core Developers** role in the server. We're always happy to help!
+  Don't move forward until your issue is approved by a Core Developer. Issues are not guaranteed to be approved so your work may be wasted.
+  {: .notification .is-warning }
+
+### 7. Open a pull request
+  After your issue has been approved and you've written your code and tested it, it's time to open a pull request. Pull requests are a feature in GitHub; you can think of them as asking the project maintainers to accept your changes. This gives other contributors a chance to review your code and make any needed changes before it's merged into the main branch of the project.
+
+  Check out our [**Pull Request Guide**](./contributing/pull-requests/) for help with opening a pull request and going through the review process.
+
+  Check out our [**Code Review Guide**](../code-reviews-primer/) to learn how to be a star reviewer. Reviewing PRs is a vital part of open source development, and we always need more reviewers!
+
+### That's it!
+Thank you for contributing to our community projects. If you don't understand anything or need clarification, feel free to ask a question in the`dev-contrib`channel and keep an eye out for staff members with the **@PyDis Core Developers** role in the server. We're always happy to help!
