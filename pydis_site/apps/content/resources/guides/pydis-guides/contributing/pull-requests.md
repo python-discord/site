@@ -10,7 +10,7 @@ As stated in our [Contributing Guidelines](../contributing-guidelines/), do not 
 Before opening a pull request you should have:
 
 1. Committed your changes to your local repository
-2. [Linted](../contributing-guidelines/#linting-and-pre-commit) your code
+2. [Linted](../linting/) your code
 3. Tested your changes
 4. Pushed the branch to your fork of the project on GitHub
 

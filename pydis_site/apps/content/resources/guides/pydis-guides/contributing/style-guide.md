@@ -191,21 +191,17 @@ Present tense defines that the work being done is now, in the present, rather th
 **Use:** "Build an information embed."<br>
 **Don't use:** "Built an information embed." or "Will build an information embed."
 
-# Type Annotations
-Functions are required to have type annotations as per the style defined in [PEP 484](https://www.python.org/dev/peps/pep-0484/).
+# Type Hinting
+Functions are required to have type annotations as per the style defined in [PEP 484](https://www.python.org/dev/peps/pep-0484/). Type hints are recognized by most modern code editing tools and provide useful insight into both the input and output types of a function, preventing the user from having to go through the codebase to determine these types.
 
-A function without annotations might look like:
-```py
-def divide(a, b):
-    """Divide the two given arguments."""
-    return a / b
+A function with type hints looks like:
+```python
+def foo(input_1: int, input_2: dict[str, int]) -> bool:
+    ...
 ```
-
-With annotations, the arguments and the function are annotated with their respective types:
-```py
-def divide(a: int, b: int) -> float:
-    """Divide the two given arguments."""
-    return a / b
-```
+This tells us that `foo` accepts an `int` and a `dict`, with `str` keys and `int` values, and returns a `bool`.
 
 In previous examples, we have purposely omitted annotations to keep focus on the specific points they represent.
+
+> **Note:** if the project is running Python 3.8 or below you have to use `typing.Dict` instead of `dict`, but our three main projects are all >=3.9.
+> See [PEP 585](https://www.python.org/dev/peps/pep-0585/) for more information.
