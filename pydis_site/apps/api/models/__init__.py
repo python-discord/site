@@ -10,6 +10,8 @@ from .bot import (
     Nomination,
     NominationEntry,
     OffensiveMessage,
+    AocAccountLink,
+    AocCompletionistBlock,
     OffTopicChannelName,
     Reminder,
     Role,

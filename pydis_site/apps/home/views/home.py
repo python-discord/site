@@ -10,7 +10,6 @@ from django.views import View
 
 from pydis_site import settings
 from pydis_site.apps.home.models import RepositoryMetadata
-from pydis_site.constants import GITHUB_TOKEN, TIMEOUT_PERIOD
 
 log = logging.getLogger(__name__)
 
@@ -43,8 +42,8 @@ class HomeView(View):
         # specifically, GitHub will reject any requests from us due to the
         # invalid header. We can make a limited number of anonymous requests
         # though, which is useful for testing.
-        if GITHUB_TOKEN:
-            self.headers = {"Authorization": f"token {GITHUB_TOKEN}"}
+        if settings.GITHUB_TOKEN:
+            self.headers = {"Authorization": f"token {settings.GITHUB_TOKEN}"}
         else:
             self.headers = {}
 
@@ -60,7 +59,7 @@ class HomeView(View):
             api_data: List[dict] = requests.get(
                 self.github_api,
                 headers=self.headers,
-                timeout=TIMEOUT_PERIOD
+                timeout=settings.TIMEOUT_PERIOD
             ).json()
         except requests.exceptions.Timeout:
             log.error("Request to fetch GitHub repository metadata for timed out!")
