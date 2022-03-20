@@ -140,7 +140,7 @@ Our projects on Python Discord are open source and [available on GitHub](https:/
 ### 7. Open a pull request
   After your issue has been approved and you've written your code and tested it, it's time to open a pull request. Pull requests are a feature in GitHub; you can think of them as asking the project maintainers to accept your changes. This gives other contributors a chance to review your code and make any needed changes before it's merged into the main branch of the project.
 
-  Check out our [**Pull Request Guide**](./contributing/pull-requests/) for help with opening a pull request and going through the review process.
+  Check out our [**Pull Request Guide**](./pull-requests/) for help with opening a pull request and going through the review process.
 
   Check out our [**Code Review Guide**](../code-reviews-primer/) to learn how to be a star reviewer. Reviewing PRs is a vital part of open source development, and we always need more reviewers!
 
