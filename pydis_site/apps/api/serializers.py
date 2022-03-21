@@ -16,6 +16,7 @@ from .models import (
     AocAccountLink,
     AocCompletionistBlock,
     BotSetting,
+    BumpedThread,
     DeletedMessage,
     DocumentationLink,
     FilterList,
@@ -39,6 +40,32 @@ class BotSettingSerializer(ModelSerializer):
 
         model = BotSetting
         fields = ('name', 'data')
+
+
+class ListBumpedThreadSerializer(ListSerializer):
+    """Custom ListSerializer to override to_representation() when list views are triggered."""
+
+    def to_representation(self, objects: list[BumpedThread]) -> int:
+        """
+        Used by the `ListModelMixin` to return just the list of bumped thread ids.
+
+        Only the thread_id field is useful, hence it is unnecessary to create a nested dictionary.
+
+        Additionally, this allows bumped thread routes to simply return an
+        array of thread_id ints instead of objects, saving on bandwidth.
+        """
+        return [obj.thread_id for obj in objects]
+
+
+class BumpedThreadSerializer(ModelSerializer):
+    """A class providing (de-)serialization of `BumpedThread` instances."""
+
+    class Meta:
+        """Metadata defined for the Django REST Framework."""
+
+        list_serializer_class = ListBumpedThreadSerializer
+        model = BumpedThread
+        fields = ('thread_id',)
 
 
 class DeletedMessageSerializer(ModelSerializer):

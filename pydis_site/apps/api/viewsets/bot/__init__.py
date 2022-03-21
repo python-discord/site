@@ -1,6 +1,7 @@
 # flake8: noqa
 from .filter_list import FilterListViewSet
 from .bot_setting import BotSettingViewSet
+from .bumped_thread import BumpedThreadViewSet
 from .deleted_message import DeletedMessageViewSet
 from .documentation_link import DocumentationLinkViewSet
 from .infraction import InfractionViewSet
