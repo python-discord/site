@@ -13,7 +13,8 @@ If for whatever reason your token gets leaked, you should immediately follow the
 - Go to the list of [Discord Bot Applications](https://discord.com/developers/applications) you have and select the bot application that had the token leaked.
 - Select the Bot (1) tab on the left-hand side, next to a small image of a puzzle piece. After doing so you should see a small section named TOKEN (under your bot USERNAME and next to his avatar image)
 - Press the Regenerate (2) option to regen your bot token.
-![token_reset.png](token-reset.png)
+
+![Steps to Take to Reset your Discord Bot](https://cdn.discordapp.com/attachments/343944376055103488/845290595793764392/regen_token.png)
 
 Following these steps will create a new token for your bot, making it secure again and terminating any connections from the leaked token.
 
