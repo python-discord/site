@@ -3,9 +3,6 @@ title: Custom Help Command
 description: "Overwrite discord.py's help command to implement custom functionality"
 ---
 
-# Custom Help Command
-
-
  First,  a [basic walkthrough](https://gist.github.com/InterStella0/b78488fb28cadf279dfd3164b9f0cf96) by Stella#2000 on subclassing the HelpCommand will provide some foundational knowledge required before attempting a more customizable help command.
 
 ---
@@ -23,7 +20,7 @@ class MyHelpCommand(commands.HelpCommand):
 bot.help_command = MyHelpCommand()
 ```
 ---
-You can handle when there is no command and make a fancy embed;  a page that describes the bot and shows a list of commands is usually ideal here, however if a command is passed in, you can get display detailed information of the command with reference from the following documentations below:
+You can handle when a user does not pass a command name when invoking the help command and make a fancy and customized embed; here a page that describes the bot and shows a list of commands is generally used, however if a command is passed in, you can display detailed information of the command. Below are references from the documentation below that can be utilised:
 
 * [Get the command object](https://discordpy.readthedocs.io/en/latest/ext/commands/api.html#discord.ext.commands.Bot.get_command)
 
@@ -35,4 +32,4 @@ You can handle when there is no command and make a fancy embed;  a page that des
 
 * [Get the command usage](https://discordpy.readthedocs.io/en/latest/ext/commands/api.html#discord.ext.commands.Command.usage)
 
-* Get the command cooldown - `command_object._buckets._cooldown.per.`
+* Get the command cooldown - `command_object._buckets._cooldown.per`
