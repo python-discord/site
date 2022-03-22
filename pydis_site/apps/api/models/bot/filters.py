@@ -113,7 +113,7 @@ class FilterList(FilterSettingsMixin):
         return f"Filter {FilterListType(self.list_type).label}list {self.name!r}"
 
 
-class Filter(FilterSettingsMixin):
+class FilterBase(FilterSettingsMixin):
     """One specific trigger of a list."""
 
     content = models.CharField(max_length=100, help_text="The definition of this filter.")
@@ -173,3 +173,29 @@ class Filter(FilterSettingsMixin):
 
     def __str__(self) -> str:
         return f"Filter {self.content!r}"
+
+    class Meta:
+        """Metaclass for FilterBase to make it abstract model."""
+
+        abstract = True
+
+
+class Filter(FilterBase):
+    """
+    The main Filter models based on `FilterBase`.
+
+    The purpose to have this model is to have access to the Fields of the Filter model
+    and set the unique constraint based on those fields.
+    """
+
+    class Meta:
+        """Metaclass Filter to set the unique constraint."""
+
+        constraints = (
+            UniqueConstraint(
+                fields=tuple(
+                    [field.name for field in FilterBase._meta.fields
+                     if field.name != "id" and field.name != "description"]
+                ),
+                name="unique_filters"),
+        )
