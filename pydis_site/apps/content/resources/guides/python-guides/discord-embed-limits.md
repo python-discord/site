@@ -16,6 +16,6 @@ If you plan on using embed responses for your bot you should know the limits of 
 Now if you need to get over this limit (for example for a help command), you would need to use pagination.
 There are several ways to do that:
 
-- A library called `disputils` -> <https://pypi.org/project/disputils>
-- An experimental library made by the discord.py developer called `discord-ext-menus` -> <https://github.com/Rapptz/discord-ext-menus>
-- Make your own setup using the `wait_for()` and wait for a reaction to be added -> <https://discordpy.readthedocs.io/en/stable/ext/commands/api.html#discord.ext.commands.Bot.wait_for>
+- A library called **[disputils](https://pypi.org/project/disputils)**
+- An experimental library made by the discord.py developer called **[discord-ext-menus](https://github.com/Rapptz/discord-ext-menus)**
+- Make your own setup using **[wait_for()](https://discordpy.readthedocs.io/en/stable/ext/commands/api.html#discord.ext.commands.Bot.wait_for)** and wait for a reaction to be added
