@@ -14,11 +14,11 @@ There are two ways to subclass `commands.Bot`, as shown below:
 class CustomBot(commands.Bot):
     def __init__(self):
         super().__init__(
-            command_prefix = #your prefix here as a string
-            intents = #your intents here
-            #other kwargs can be put here
+            command_prefix = # your prefix here as a string
+            intents = # your intents here
+            # other kwargs can be put here
         )
-        #custom bot attributes can be set here, for example:
+        # custom bot attributes can be set here, for example:
         self.db = self.loop.run_until_complete(aiosqlite.connect("Your database file name"))
         self.launch_time = datetime.datetime.utcnow()
         self.example_integer = 5
@@ -28,17 +28,17 @@ bot = CustomBot()
 Or
 ```py
 class CustomBot(commands.Bot):
-    def __init__(self, *args, **kwargs): #the key-word arguments are not specified here, unlike the example above
+    def __init__(self, *args, **kwargs): # the key-word arguments are not specified here, unlike the example above
 
         super().__init__(*args, **kwargs)
-        #custom bot attributes can be set here, for example:
+        # custom bot attributes can be set here, for example:
         self.example_string = 'This is an example!'
 
-    #You can add a custom bot method, anyhting can be done in this function. This is an example:
+    # You can add a custom bot method, anything can be done in this function. This is an example:
     def hello(self):
             return 'Hello World'
 
-#Here you set the *args and **kwargs
+# Here you set the *args and **kwargs
 bot = CustomBot(command_prefix="!", intents=discord.Intents.default())
 
 @bot.command()
