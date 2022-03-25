@@ -12,7 +12,8 @@ Subclassing Context can be very beneficial as it allows you to set custom Contex
 In order to subclass Context, you are required to subclass `commands.Bot` as well. More on subclassing Bot can be read here [link placeholder] but here is a short example.
 
 ```py
-# This View is for the prompt function below in the Context subclass. This is compeltely optional and it's purpose is demonstrating applications of subclassing Context.
+# This View is for the prompt function below in the Context subclass.
+# This is completely optional and its purpose is demonstrating applications of subclassing Context.
 
 class PromptView(discord.ui.View):
     def __init__(self, *, timeout: float, author_id: int, ctx: commands.Context, delete_after: bool) -> None:
