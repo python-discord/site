@@ -130,9 +130,9 @@ async def embed(ctx):
 async def massban(ctx, members : commands.Greedy[discord.Member]):
 
     request_confirm = await ctx.prompt(f'Are you sure you want to ban {len(members)}?')
-    if request_confirm is False:
-        #the user cancelled so we can return
+    if request_confirm:
+        # The user confirmed so we can continue with the command
 
-    elife request_confirm is True:
-        #the user confirmed so we can continue with the command
+    else:
+        # The user cancelled so we can return 
 ```
