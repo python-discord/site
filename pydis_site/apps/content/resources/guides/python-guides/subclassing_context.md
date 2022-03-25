@@ -4,7 +4,7 @@ description: "Subclassing the default commands.Context to add more functionabili
 ---
 
 ## Basic Subclassing
-First,  a [basic article](https://www.codesdope.com/course/python-subclass-of-a-class/) on subclassing will provide some fundamental knowledge, which is highly suggested before moving on to this topic, as subclassing [Context](https://discordpy.readthedocs.io/en/latest/ext/commands/api.html#discord.ext.commands.Context) can ultimately be a complicated task.
+First, the [documentation on inheritance](https://docs.python.org/3/tutorial/classes.html#inheritance) on subclassing will provide some fundamental knowledge, which is highly suggested before moving on to this topic, as subclassing [Context](https://discordpy.readthedocs.io/en/latest/ext/commands/api.html#discord.ext.commands.Context) can ultimately be a complicated task.
 
 ## The benefits of subclassing Context
 Subclassing Context can be very beneficial as it allows you to set custom Context methods that can be used in your code. Some applications and examples are provided below.
