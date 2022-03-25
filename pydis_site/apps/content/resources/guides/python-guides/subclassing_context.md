@@ -67,7 +67,7 @@ class CustomContext(commands.Context):
         # embed with pre-set color of red
 
 
-    async def send_sucess_embed(self, message, **kwargs):
+    async def send_success_embed(self, message, **kwargs):
         return await self.send(embed=discord.Embed(description=message, colour=discord.Color.green(), **kwargs))
         # embed with pre-set color of green
 
