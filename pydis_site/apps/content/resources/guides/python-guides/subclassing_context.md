@@ -75,21 +75,21 @@ class CustomContext(commands.Context):
     async def prompt(self,message: str, *, timeout: float = 60.0, delete_after: bool = True, author_id: Optional[int] = None,) -> Optional[bool]:
         """
         Parameters
+        ----------
         message: str
             The message to show along with the prompt.
-
         timeout: float (Defaults to 60 seconds)
             How long to wait before stopping the view
         delete_after: bool (Defaults to True)
             Whether to delete the confirmation message after we're done.
-
         author_id: Optional[int] (Defaults to ctx.author)
             The member who should respond to the prompt.
-        -------
+
         Returns  
-            True if the confirm button is pressed,
-            False if cancel button is pressed,
-            None if automatically denied due to no response
+        -------
+        True if the confirm button is pressed,
+        False if cancel button is pressed,
+        None if automatically denied due to no response
         """
 
         author_id = author_id or self.author.id
