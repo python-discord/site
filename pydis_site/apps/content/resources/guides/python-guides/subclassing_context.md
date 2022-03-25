@@ -123,7 +123,7 @@ async def embed(ctx):
     await ctx.send_embed('This is a subclassed embed!')
     # This would send an embed with the description of the specified string and the embed color wold be Blurple, even though you have not specified it in making the embed, is was set as the pre-set value. You can add more kwargs in sending the embed. For example:
 
-    await ctx.send_success_embed('This is another example of a subclassed embed!', title='Subclassing Embed', timestamp = datetime.datetime.utcnow())
+    await ctx.send_success_embed('This is another example of a subclassed embed!', title='Subclassing Embed', timestamp=datetime.datetime.utcnow())
 
 # example of the prompt function. It can be used before carrying out big or dangerous operations. For example a massban command where multiple members can be passed in to the member argument
 @bot.command()
