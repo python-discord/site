@@ -31,7 +31,9 @@ class PromptView(discord.ui.View):
         self.author_id: int = author_id
         self.ctx: Context = ctx
         self.message: typing.Optional[discord.Message] = None
-    '''ensure that other members do not confirm or deny'''
+        
+        
+    '''Ensure that other members do not confirm or deny'''
     async def interaction_check(self, interaction: discord.Interaction) -> bool:
         if interaction.user and interaction.user.id == self.author_id:
             return True
