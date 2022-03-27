@@ -92,7 +92,7 @@ Our projects on Python Discord are open source and [available on GitHub](https:/
 </div>
 
 # How do I start contributing?
-  Unsure of what contributing to open source projects involves? Have questions about how to use GitHub? Just need to know about our contribution etiquette? Completing these steps will have you ready to make your first contribution.
+  Unsure of what contributing to open source projects involves? Have questions about how to use GitHub? Just need to know about our contribution etiquette? Completing these steps will have you ready to make your first contribution no matter your starting point.
 
   Feel free to skip any steps you're already familiar with, but please make sure not to miss the  [Contributing Guidelines](#5-read-our-contributing-guidelines).
 
@@ -107,7 +107,6 @@ Our projects on Python Discord are open source and [available on GitHub](https:/
   GitHub is a website based on the Git version control system that stores project files in the cloud. The people working on the project can use GitHub as a central place for sending their changes, getting their teammates' changes, and communicating with each other. Forking the repository that you want to work on will create a copy under your own GitHub account. You'll make your changes to this copy, then later we can bring them back to the PyDis repository.
 
   Check out our [**guide on forking a GitHub repo**](./forking-repository/).
-
 ### 3. Clone the repo
   Now that you have your own fork you need to be able to make changes to the code. You can clone the repo to your local machine, commit changes to it there, then push those changes to GitHub.
 
@@ -145,4 +144,4 @@ Our projects on Python Discord are open source and [available on GitHub](https:/
   Check out our [**Code Review Guide**](../code-reviews-primer/) to learn how to be a star reviewer. Reviewing PRs is a vital part of open source development, and we always need more reviewers!
 
 ### That's it!
-Thank you for contributing to our community projects. If you don't understand anything or need clarification, feel free to ask a question in the`dev-contrib`channel and keep an eye out for staff members with the **@PyDis Core Developers** role in the server. We're always happy to help!
+Thank you for contributing to our community projects. If there's anything you don't understand or you just want to discuss with other contributors, come visit the`dev-contrib`channel to ask questions. Keep an eye out for staff members with the **@PyDis Core Developers** role in the server; we're always happy to help!
