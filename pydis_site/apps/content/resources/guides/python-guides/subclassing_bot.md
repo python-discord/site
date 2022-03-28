@@ -47,7 +47,7 @@ class CustomBot(commands.Bot):
     def hello(self):
             return 'Hello World'
 
-#Here you set the *args and **kwargs
+# Here you set the *args and **kwargs
 bot = CustomBot(command_prefix="!", intents=discord.Intents.default())
 
 @bot.command()
