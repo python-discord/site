@@ -25,7 +25,7 @@ class CustomBot(commands.Bot):
 
     async def start(self, *args, **kwargs):
     # here you are overriding the default start method. You can do some code here for example establish a database connection
-    #as shown in this example below
+    # as shown in this example below
     self.db = await aiosqlite.connect('database file name.db')
         await super().start(*args, **kwargs)
 
