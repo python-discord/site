@@ -40,7 +40,7 @@ class CustomBot(commands.Bot):
     def __init__(self, *args, **kwargs): # the key-word arguments are not specified here, unlike the example above
 
         super().__init__(*args, **kwargs)
-        #custom bot attributes can be set here, for example:
+        # custom bot attributes can be set here, for example:
         self.example_string = 'This is an example!'
 
     # You can add a custom bot method, anyhting can be done in this function. This is an example:
