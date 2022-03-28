@@ -14,9 +14,9 @@ There are two ways to subclass `commands.Bot`, as shown below:
 class CustomBot(commands.Bot):
     def __init__(self):
         super().__init__(
-            command_prefix=#your prefix here as a string
-            intents=#your intents here
-            #other kwargs can be put here
+            command_prefix= # Your prefix here as a string
+            intents= # Your intents here
+            # Other kwargs can be put here
         )
         # custom bot attributes can be set here, for example:
         self.launch_time = datetime.datetime.utcnow()
