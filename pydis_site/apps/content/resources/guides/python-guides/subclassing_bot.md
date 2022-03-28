@@ -43,7 +43,7 @@ class CustomBot(commands.Bot):
         #custom bot attributes can be set here, for example:
         self.example_string = 'This is an example!'
 
-    #You can add a custom bot method, anyhting can be done in this function. This is an example:
+    # You can add a custom bot method, anyhting can be done in this function. This is an example:
     def hello(self):
             return 'Hello World'
 
