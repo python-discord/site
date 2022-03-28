@@ -18,7 +18,7 @@ class CustomBot(commands.Bot):
             intents=#your intents here
             #other kwargs can be put here
         )
-        #custom bot attributes can be set here, for example:
+        # custom bot attributes can be set here, for example:
         self.launch_time = datetime.datetime.utcnow()
         self.example_integer = 5
 
