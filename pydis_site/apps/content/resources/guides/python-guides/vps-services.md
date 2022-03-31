@@ -30,6 +30,6 @@ If you need to run your bot 24/7 (with no downtime), you should consider using a
         * Global data centre options.
 
 ---
-Free hosts
+# Free hosts
 There are no reliable free options for VPS hosting. If you would rather not pay for a hosting service, you can consider self-hosting.
 Any modern hardware should be sufficient for running a bot. An old computer with a few GB of ram could be suitable, or a Raspberry Pi.
