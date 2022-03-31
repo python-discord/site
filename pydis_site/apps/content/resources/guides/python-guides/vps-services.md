@@ -21,13 +21,9 @@ If you need to run your bot 24/7 (with no downtime), you should consider using a
         * Great affiliate program.
 * Global
     * [Linode](https://www.linode.com/)
-        * Global data centre options.
     * [Digital Ocean](https://www.digitalocean.com/)
-        * Global data centre options.
     * [OVHcloud](https://www.ovhcloud.com/)
-        * Global data centre options.
     * [Vultr](https://www.vultr.com/)
-        * Global data centre options.
 
 ---
 # Free hosts
