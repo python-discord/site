@@ -3,7 +3,7 @@ title: VPS Services
 description: On different VPS services
 ---
 
-If you need to run your bot 24/7 (with no downtime), you should consider using a virtual private server (VPS).This is a list of VPS services that are sufficient for running Discord bots.
+If you need to run your bot 24/7 (with no downtime), you should consider using a virtual private server (VPS). This is a list of VPS services that are sufficient for running Discord bots.
 
 * Europe
     * [netcup](https://www.netcup.eu/)
