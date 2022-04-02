@@ -6,8 +6,7 @@ description: A guide about how to fix the SSL certificate error.
 
 Firstly, try updating your OS, wouldn't hurt to try.
 Now, if you're still having an issue, you would need to download the certificate for the SSL.
-The SSL Certificate, Sectigo (cert vendor) provides a download link of certificate:
-**https://crt.sh/?id=2835394**
+The SSL Certificate, Sectigo (cert vendor) provides a download link of certificate: **https://crt.sh/?id=2835394**
 You should find it at the bottom left corner, where its saying Download Certificate: __PEM__
 Here's a picture of that if you can't find it:
 https://media.discordapp.net/attachments/336642776609456130/776070065694048276/s6ONfwUye1.png
@@ -22,4 +21,4 @@ That's it!
 Happy coding!
 
 For those curious, it was caused by this:
-https://support.sectigo.com/Com_KnowledgeDetailPage?Id=kA03l00000117LT 
+https://support.sectigo.com/Com_KnowledgeDetailPage?Id=kA03l00000117LT
