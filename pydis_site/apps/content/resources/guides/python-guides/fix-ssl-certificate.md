@@ -9,7 +9,7 @@ Now, if you're still having an issue, you would need to download the certificate
 The SSL Certificate, Sectigo (cert vendor) provides a download link of certificate:
 **https://crt.sh/?id=2835394**
 You should find it at the bottom left corner, where its saying Download Certificate: __PEM__
-Here's a picture of that if you can't find it: 
+Here's a picture of that if you can't find it:
 https://media.discordapp.net/attachments/336642776609456130/776070065694048276/s6ONfwUye1.png
 
 You have to setup certificate yourself, you can just click on it, or if that doesn't work, refer here:
