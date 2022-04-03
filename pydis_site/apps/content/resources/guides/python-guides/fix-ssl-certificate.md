@@ -2,7 +2,7 @@
 title: Fixing an SSL Certificate Error.
 description: A guide on fixing an SSL certificate error.
 ---
-#### How to fix SSL Certificate issue on Windows**
+#### How to fix SSL Certificate issue on Windows
 
 Firstly, try updating your OS, wouldn't hurt to try.
 Now, if you're still having an issue, you would need to download the certificate for the SSL.
@@ -14,6 +14,6 @@ A picture where to find the certificate in the website is:
 You have to setup certificate yourself, you can just click on it, or if that doesn't work, refer [here]
 (https://portal.threatpulse.com/docs/sol/Solutions/ManagePolicy/SSL/ssl_chrome_cert_ta.htm).
 
-#### How to fix SSL Certificate issue on Mac**
+#### How to fix SSL Certificate issue on Mac
 
 Navigate to your `Applications/Python 3.x/` folder and double click the `Install Certificates.command` to fix this.
