@@ -14,9 +14,7 @@ https://media.discordapp.net/attachments/336642776609456130/776070065694048276/s
 You have to setup certificate yourself, you can just click on it, or if that doesn't work, refer here:
 https://portal.threatpulse.com/docs/sol/Solutions/ManagePolicy/SSL/ssl_chrome_cert_ta.htm
 
-**How to fix SSL Certificate issue on Mac**
+#### How to fix SSL Certificate issue on Mac**
 
-Navigate to your Applications/Python 3.x/ folder and double click the Install Certificates.command to fix this.
+Navigate to your `Applications/Python 3.x/` folder and double click the `Install Certificates.command` to fix this.
 
-For those curious, it was caused by this:
-https://support.sectigo.com/Com_KnowledgeDetailPage?Id=kA03l00000117LT
