@@ -2,7 +2,7 @@
 title: Fix SSL certificate error.
 description: A guide about how to fix the SSL certificate error.
 ---
-**How to fix SSL Certificate issue on Windows**
+#### How to fix SSL Certificate issue on Windows**
 
 Firstly, try updating your OS, wouldn't hurt to try.
 Now, if you're still having an issue, you would need to download the certificate for the SSL.
