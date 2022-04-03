@@ -17,8 +17,6 @@ https://portal.threatpulse.com/docs/sol/Solutions/ManagePolicy/SSL/ssl_chrome_ce
 **How to fix SSL Certificate issue on Mac**
 
 Navigate to your Applications/Python 3.x/ folder and double click the Install Certificates.command to fix this.
-That's it!
-Happy coding!
 
 For those curious, it was caused by this:
 https://support.sectigo.com/Com_KnowledgeDetailPage?Id=kA03l00000117LT
