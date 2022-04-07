@@ -156,12 +156,12 @@ bot = Bot()
 # A command example using subclassed Context:
 @bot.command()
 async def embed(ctx):
-    await ctx.send_embed("This is a subclassed embed!")
+    await ctx.send_embed("This is a custom Context function!")
     # This would send an embed with the description of the specified string and the embed color wold be Blurple, even though you have not specified it in making the embed, is was set as the pre-set value. You can add more kwargs in sending the embed. For example:
 
     await ctx.send_success_embed(
-        "This is another example of a subclassed embed!",
-        title="Subclassing Embed",
+        "This is another example of a custom Context function!",
+        title="Subclassing Context",
         timestamp=datetime.datetime.utcnow(),
     )
 
