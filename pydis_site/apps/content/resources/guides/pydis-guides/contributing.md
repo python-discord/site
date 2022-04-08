@@ -19,11 +19,7 @@ Our projects on Python Discord are open source and [available on GitHub](https:/
       </div>
       <div class="card-content">
         <div class="content">
-          Our community-driven Discord bot.
-        </div>
-        <div class="tags has-addons">
-          <span class="tag is-dark">Difficulty</span>
-          <span class="tag is-primary">Beginner</span>
+          Sir Lancebot has a collection of self-contained, for-fun features. If you're new to Discord bots or contributing, this is a great place to start!
         </div>
       </div>
       <div class="card-footer">
@@ -46,11 +42,7 @@ Our projects on Python Discord are open source and [available on GitHub](https:/
       </div>
       <div class="card-content">
         <div class="content">
-          The community and moderation Discord bot.
-        </div>
-        <div class="tags has-addons">
-          <span class="tag is-dark">Difficulty</span>
-          <span class="tag is-warning">Intermediate</span>
+          Called @Python on the server, this bot handles moderation tools, help channels, and other critical features for our community.
         </div>
       </div>
       <div class="card-footer">
@@ -73,11 +65,7 @@ Our projects on Python Discord are open source and [available on GitHub](https:/
       </div>
       <div class="card-content">
         <div class="content">
-          The website, subdomains and API.
-        </div>
-        <div class="tags has-addons">
-          <span class="tag is-dark">Difficulty</span>
-          <span class="tag is-danger">Advanced</span>
+          This website itself! This project is built with Django and includes our API, which is used by various services such as @Python.
         </div>
       </div>
       <div class="card-footer">
