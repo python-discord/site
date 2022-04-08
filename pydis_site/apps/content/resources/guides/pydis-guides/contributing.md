@@ -101,7 +101,7 @@ Our projects on Python Discord are open source and [available on GitHub](https:/
   Check out our [**guide on cloning a GitHub repo**](./cloning-repository/).
 
 ### 4. Set up the project
-  You have the source code on your local computer, now how do you actually run it? We have detailed guides on setting up the environment for each of our projects:
+  You have the source code on your local computer, now how do you actually run it? We have detailed guides on setting up the environment for each of our main projects:
 
   * [**Sir Lancebot**](./sir-lancebot/)
 
