@@ -19,7 +19,7 @@ toc: 1
 ## Using Gitpod
 Sir Lancebot can be edited and tested on Gitpod. Gitpod will automatically install the correct dependencies and Python version, so you can get straight to coding.
 
-To do this, you will need a Gitpod account, which you can get [here](https://www.gitpod.io/#get-started), and a fork of Sir Lancebot. This guide covers forking the repository [here](#fork-the-project).
+To do this, you will need a Gitpod account, which you can get [here](https://www.gitpod.io/#get-started), and a fork of Sir Lancebot. This guide covers forking the repository [here](../forking-repository).
 
 Afterwards, click on [this link](https://gitpod.io/#/github.com/python-discord/sir-lancebot) to spin up a new workspace for Sir Lancebot. Then run the following commands in the terminal after the existing tasks have finished running:
 ```sh
