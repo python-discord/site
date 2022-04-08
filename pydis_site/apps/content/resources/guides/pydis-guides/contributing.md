@@ -86,21 +86,19 @@ Our projects on Python Discord are open source and [available on GitHub](https:/
 
   If you are here looking for the answer to a specific question, check out the sub-articles in the top right of the page to see a list of our guides.
 
-### 1. Learn the basics of Git
-  Git is a _Version Control System_, software for carefully tracking changes to the files in a project. Git allows the same project to be worked on by people in different places. You can make changes to your local code and then distribute those changes to the other people working on the project.
+  **Note:** We use Git to keep track of changes to the files in our projects. Git allows you to make changes to your local code and then distribute those changes to the other people working on the project. You'll use Git in a couple steps of the contributing process. You can refer to this [**guide on using Git**](./working-with-git/).
+  {: .notification }
 
-  Check out these [**resources to get started using Git**](./working-with-git/).
-
-### 2. Fork the repo
-  GitHub is a website based on the Git version control system that stores project files in the cloud. The people working on the project can use GitHub as a central place for sending their changes, getting their teammates' changes, and communicating with each other. Forking the repository that you want to work on will create a copy under your own GitHub account. You'll make your changes to this copy, then later we can bring them back to the PyDis repository.
+### 1. Fork and clone the repo
+  GitHub is a website based on Git that stores project files in the cloud. We use GitHub as a central place for sending changes, reviewing others' changes, and communicating with each other. You'll need to fork the repository to create a copy under your own GitHub account. You'll make your changes to this copy, which can then later be merged into the PyDis repository.
 
   Check out our [**guide on forking a GitHub repo**](./forking-repository/).
-### 3. Clone the repo
+
   Now that you have your own fork you need to be able to make changes to the code. You can clone the repo to your local machine, commit changes to it there, then push those changes to GitHub.
 
   Check out our [**guide on cloning a GitHub repo**](./cloning-repository/).
 
-### 4. Set up the project
+### 2. Set up the project
   You have the source code on your local computer, now how do you actually run it? We have detailed guides on setting up the environment for each of our main projects:
 
   * [**Sir Lancebot**](./sir-lancebot/)
@@ -109,7 +107,7 @@ Our projects on Python Discord are open source and [available on GitHub](https:/
 
   * [**Site**](./site/)
 
-### 5. Read our Contributing Guidelines
+### 3. Read our Contributing Guidelines
   We have a few short rules that all contributors must follow. Make sure you read and follow them while working on our projects.
 
   [**Contributing Guidelines**](./contributing-guidelines/).
@@ -118,13 +116,13 @@ Our projects on Python Discord are open source and [available on GitHub](https:/
 
   [**Style Guide**](./style-guide/)
 
-### 6. Create an issue
+### 4. Create an issue
   The first step to any new contribution is an issue describing a problem with the current codebase or proposing a new feature. All the open issues are viewable on the GitHub repositories, for instance here is the [issues page for Sir Lancebot](https://github.com/python-discord/sir-lancebot/issues). If you have an idea that you want to implement, open a new issue (and check out our [**guide on writing an issue**](./issues/)). Otherwise you can browse the unassigned issues and ask to be assigned to one that you're interested in, either in the comments on the issue or in the[`#dev-contrib`](https://discord.gg/2h3qBv8Xaa)channel on Discord.
 
   Don't move forward until your issue is approved by a Core Developer. Issues are not guaranteed to be approved so your work may be wasted.
   {: .notification .is-warning }
 
-### 7. Open a pull request
+### 5. Open a pull request
   After your issue has been approved and you've written your code and tested it, it's time to open a pull request. Pull requests are a feature in GitHub; you can think of them as asking the project maintainers to accept your changes. This gives other contributors a chance to review your code and make any needed changes before it's merged into the main branch of the project.
 
   Check out our [**Pull Request Guide**](./pull-requests/) for help with opening a pull request and going through the review process.
