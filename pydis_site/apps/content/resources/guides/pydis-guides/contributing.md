@@ -119,7 +119,7 @@ Our projects on Python Discord are open source and [available on GitHub](https:/
   [**Style Guide**](./style-guide/)
 
 ### 6. Create an issue
-  The first step to any new contribution is an issue describing a problem with the current codebase or proposing a new feature. All the open issues are viewable on the GitHub repositories, for instance here is the [issues page for Sir Lancebot](https://github.com/python-discord/sir-lancebot/issues). If you have an idea that you want to implement, open a new issue (and check out our [**guide on writing an issue**](./issues/)). Otherwise you can browse the unassigned issues and ask to be assigned to one that you're interested in, either in the comments on the issue or in the`#dev-contrib`channel on Discord.
+  The first step to any new contribution is an issue describing a problem with the current codebase or proposing a new feature. All the open issues are viewable on the GitHub repositories, for instance here is the [issues page for Sir Lancebot](https://github.com/python-discord/sir-lancebot/issues). If you have an idea that you want to implement, open a new issue (and check out our [**guide on writing an issue**](./issues/)). Otherwise you can browse the unassigned issues and ask to be assigned to one that you're interested in, either in the comments on the issue or in the[`#dev-contrib`](https://discord.gg/2h3qBv8Xaa)channel on Discord.
 
   Don't move forward until your issue is approved by a Core Developer. Issues are not guaranteed to be approved so your work may be wasted.
   {: .notification .is-warning }
@@ -132,4 +132,4 @@ Our projects on Python Discord are open source and [available on GitHub](https:/
   Check out our [**Code Review Guide**](../code-reviews-primer/) to learn how to be a star reviewer. Reviewing PRs is a vital part of open source development, and we always need more reviewers!
 
 ### That's it!
-Thank you for contributing to our community projects. If there's anything you don't understand or you just want to discuss with other contributors, come visit the`dev-contrib`channel to ask questions. Keep an eye out for staff members with the **@PyDis Core Developers** role in the server; we're always happy to help!
+Thank you for contributing to our community projects. If there's anything you don't understand or you just want to discuss with other contributors, come visit the[`#dev-contrib`](https://discord.gg/2h3qBv8Xaa)channel to ask questions. Keep an eye out for staff members with the **@PyDis Core Developers** role in the server; we're always happy to help!
