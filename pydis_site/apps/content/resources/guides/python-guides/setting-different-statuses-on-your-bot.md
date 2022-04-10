@@ -2,6 +2,12 @@
 title: Setting Different Statuses to Set Your Bot
 description: How to personalize your Discord bot status
 ---
+**Please note:**
+
+If you want to change the bot status, it is suggested to not do it during the on_ready event, since it would be called
+many times and making an API call on that event has a chance to disconnect the bot.
+Instead, set the desired status using the  activity / status kwarg of commands.Bot, for example
+`bot = commands.Bot(command_prefix="!", activity=..., status=...)`
 
 #### Setting 'Playing' Status
 ```python
