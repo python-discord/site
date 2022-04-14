@@ -68,7 +68,7 @@ In addition to the informal descriptions below, we've also written down a more f
 ### <span class="fas fa-circle" style="color:#1abc9c"></span> Domain Leads
 **Description:** Staff in charge of a certain domain such as moderation, events, and outreach. A lead will have a second role specifying their domain.
 
-### <span class="fas fa-circle" style="color:#8dc2ba"></span> Project Leads
+### <span class="fas fa-circle" style="color:#00aeb4"></span> Project Leads
 **Description:** Staff in charge of a certain project that require special attention, such as a YouTube video series or our new forms page.
 
 ### <span class="fas fa-circle" style="color:#ff9f1b"></span> Moderators
@@ -80,8 +80,8 @@ In addition to the informal descriptions below, we've also written down a more f
 ### <span class="fas fa-circle" style="color:#a1d1ff"></span> DevOps
 **Description:** A role for staff involved with the DevOps toolchain of our core projects.
 
-### <span class="fas fa-circle" style="color:#f8d188"></span> Project Teams
-**Description:** Staff can join teams which work on specific projects in the organisation, such as our code jams, media projects, and more.
+### <span class="fas fa-circle" style="color:#7de29c"></span> Events Team
+**Description:** The events team are staff members who help plan and execute Python Discord events. This can range from the Code Jam, to Pixels, to our survey, specific workshops we want to run, and more.
 
 ### <span class="fas fa-circle" style="color:#eecd36"></span> Helpers
 **Description:** This is the core staff role in our organization: All staff members have the Helpers role.
