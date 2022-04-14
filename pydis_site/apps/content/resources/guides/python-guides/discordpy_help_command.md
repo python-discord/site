@@ -53,7 +53,6 @@ class MyHelp(commands.HelpCommand):
 bot.help_command = MyHelp()
 ```
 
-
 You can handle when a user does not pass a command name when invoking the help command and make a fancy and customized embed; here a page that describes the bot and shows a list of commands is generally used. However if a command is passed in, you can display detailed information of the command. Below are references from the documentation below that can be utilised:
 
 - [Get the command object](https://discordpy.readthedocs.io/en/latest/ext/commands/api.html#discord.ext.commands.Bot.get_command)
