@@ -7,7 +7,7 @@ description: "Overwrite discord.py's help command to implement custom functional
 
 
 ## Custom Subclass of Help Command
-If the types of classes of the HelpCommand do not fit your needs, you can subclass HelpCommand and use the class mehods to customize the output. Below is a basic demonstration using the following methods that can also be found on the documenation:
+If the types of classes of the HelpCommand do not fit your needs, you can subclass HelpCommand and use the class mehods to customize the output. Below is a simple demonstration using the following methods that can also be found on the documenation:
 
 - [filter_commands](https://discordpy.readthedocs.io/en/stable/ext/commands/api.html#discord.ext.commands.HelpCommand.filter_commands)
 
