@@ -3,7 +3,7 @@ title: Custom Help Command
 description: "Overwrite discord.py's help command to implement custom functionality"
 ---
 
- First,  a basic walkthrough can be found [here](https://gist.github.com/InterStella0/b78488fb28cadf279dfd3164b9f0cf96) by Stella#2000 on subclassing the HelpCommand. It  will provide some foundational knowledge that is required before attempting a more customizable help command.
+First, a basic walkthrough can be found [here](https://gist.github.com/InterStella0/b78488fb28cadf279dfd3164b9f0cf96) by Stella#2000 on subclassing the HelpCommand. It will provide some foundational knowledge that is required before attempting a more customizable help command.
 
 
 ## Custom Subclass of Help Command
