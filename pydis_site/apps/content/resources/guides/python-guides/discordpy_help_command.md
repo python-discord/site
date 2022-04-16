@@ -24,8 +24,8 @@ If the types of classes of the HelpCommand do not fit your needs, you can subcla
 ```python
 class MyHelp(commands.HelpCommand):
 
-    '''This is triggered when !help is invoked.
-    This example demonstrates how to list the commands that the member invoking the help command can run.'''
+    """This is triggered when !help is invoked.
+    This example demonstrates how to list the commands that the member invoking the help command can run."""
     async def send_bot_help(self, mapping):
         filtered = await self.filter_commands(self.context.bot.commands, sort=True) # returns a list of command objects
         names = [command.name for command in filtered] # iterating through the commands objects getting names
@@ -33,19 +33,19 @@ class MyHelp(commands.HelpCommand):
         embed  = disnake.Embed(description=available_commands)
         await self.context.send(embed=embed)
 
-    '''This is triggered when !help <command> is invoked.'''
+    """This is triggered when !help <command> is invoked."""
     async def send_command_help(self, command):
         await self.context.send("This is the help page for a command")
 
-    '''this is triggered when !help <group> is invoked.'''
+    """This is triggered when !help <group> is invoked."""
     async def send_group_help(self, group):
         await self.context.send("This is the help page for a group command")
 
-    '''this is triggered when !help <cog> is invoked.'''
+    """This is triggered when !help <cog> is invoked."""
     async def send_cog_help(self, cog):
         await self.context.send("This is the help page for a cog")
 
-    '''if there is an error, send a embed containing the error.'''
+    """If there is an error, send a embed containing the error."""
     async def send_error_message(self, error):
         channel = self.get_destination() # this defaults to the command context channel
         await channel.send(error)
