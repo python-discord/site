@@ -5,7 +5,6 @@ description: "Overwrite discord.py's help command to implement custom functional
 
 First, a basic walkthrough can be found [here](https://gist.github.com/InterStella0/b78488fb28cadf279dfd3164b9f0cf96) by Stella#2000 on subclassing the HelpCommand. It will provide some foundational knowledge that is required before attempting a more customizable help command.
 
-
 ## Custom Subclass of Help Command
 If the types of classes of the HelpCommand do not fit your needs, you can subclass HelpCommand and use the class mehods to customize the output. Below is a simple demonstration using the following methods that can also be found on the documenation:
 
@@ -18,8 +17,6 @@ If the types of classes of the HelpCommand do not fit your needs, you can subcla
 - [send_group_help](https://discordpy.readthedocs.io/en/stable/ext/commands/api.html#discord.ext.commands.HelpCommand.send_group_help)
 
 - [send_error_message](https://discordpy.readthedocs.io/en/stable/ext/commands/api.html#discord.ext.commands.HelpCommand.send_error_message)
-
-
 
 ```python
 class MyHelp(commands.HelpCommand):
@@ -39,8 +36,7 @@ class MyHelp(commands.HelpCommand):
     async def send_command_help(self, command):
         """This is triggered when !help <command> is invoked."""
         await self.context.send("This is the help page for a command")
-
-
+        
     async def send_group_help(self, group):
         """This is triggered when !help <group> is invoked."""
         await self.context.send("This is the help page for a group command")
