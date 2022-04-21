@@ -11,7 +11,7 @@ You should find it at the bottom left corner, where it's saying Download Certifi
 A picture where to find the certificate in the website is:
 ![location of certificate](https://media.discordapp.net/attachments/336642776609456130/776070065694048276/s6ONfwUye1.png)
 
-You have to setup certificate yourself, you can just click on it, or if that doesn't work, refer [here]
+You have to setup the certificate yourself. To do that you can just click on it, or if that doesn't work, refer [here]
 (https://portal.threatpulse.com/docs/sol/Solutions/ManagePolicy/SSL/ssl_chrome_cert_ta.htm).
 
 #### How to fix SSL Certificate issue on Mac
