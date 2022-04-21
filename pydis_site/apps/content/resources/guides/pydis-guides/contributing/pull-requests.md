@@ -16,7 +16,7 @@ Before opening a pull request you should have:
 
 ## Opening a Pull Request
 
-Navigate to your fork on GitHub and make sure you're on the branch with your changes. Click on `Contribute` and then `Open pull request`.
+Navigate to your fork on GitHub and make sure you're on the branch with your changes. Click on `Contribute` and then `Open pull request`:
 
 ![Pull Request UI](/static/images/content/contributing/pull_request.png)
 
