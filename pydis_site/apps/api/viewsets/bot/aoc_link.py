@@ -68,4 +68,4 @@ class AocAccountLinkViewSet(
     serializer_class = AocAccountLinkSerializer
     queryset = AocAccountLink.objects.all()
     filter_backends = (DjangoFilterBackend,)
-    filter_fields = ("user__id",)
+    filter_fields = ("user__id", "aoc_username")
