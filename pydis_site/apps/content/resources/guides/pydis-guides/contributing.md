@@ -82,7 +82,7 @@ Our projects on Python Discord are open source and [available on GitHub](https:/
 # How do I start contributing?
   Unsure of what contributing to open source projects involves? Have questions about how to use GitHub? Just need to know about our contribution etiquette? Completing these steps will have you ready to make your first contribution no matter your starting point.
 
-  Feel free to skip any steps you're already familiar with, but please make sure not to miss the  [Contributing Guidelines](#5-read-our-contributing-guidelines).
+  Feel free to skip any steps you're already familiar with, but please make sure not to miss the [Contributing Guidelines](#5-read-our-contributing-guidelines).
 
   If you are here looking for the answer to a specific question, check out the sub-articles in the top right of the page to see a list of our guides.
 
