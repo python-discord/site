@@ -1,12 +1,12 @@
 ---
 title: Free Hosting Services for Discord Bots
-description: "This article covers the disadvantages of utilising a free hosting service to run a discord bot. Two commonly used services are discussed below. "
+description: "This article covers the disasdvantages of utilising a free hosting service to run a discord bot."
 toc: 2
 ---
 
 ## Recommended VPS services
 
-If you need to run your bot 24/7 (with no downtime), you should consider using a virtual private server (VPS). This is a list of VPS services that are sufficient for running Discord bots.
+If you need to run your bot 24/7 (with no downtime), you should consider using a virtual private server (VPS). Here is a list of VPS services that are sufficient for running Discord bots.
 
 * Europe
     * [netcup](https://www.netcup.eu/)
@@ -29,8 +29,8 @@ If you need to run your bot 24/7 (with no downtime), you should consider using a
     * [Vultr](https://www.vultr.com/)
 
 
-## Why not to use free hosting services for bots
-While these may seem like nice and free services, it has a lot more caveats than you may think. For example, the drawbacks of using common free hosting services to host a discord bot are listed down below.
+## Why not to use free hosting services for bots?
+While these may seem like nice and free services, it has a lot more caveats than you may think. For example, below discusses the drawbacks of using common free hosting services to host a discord bot.
 
 ### Replit
 
