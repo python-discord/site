@@ -90,44 +90,44 @@ Our projects on Python Discord are open source and [available on GitHub](https:/
   {: .notification }
 
 ### 1. Fork and clone the repo
-  GitHub is a website based on Git that stores project files in the cloud. We use GitHub as a central place for sending changes, reviewing others' changes, and communicating with each other. You'll need to fork the repository to create a copy under your own GitHub account. You'll make your changes to this copy, which can then later be merged into the PyDis repository.
+GitHub is a website based on Git that stores project files in the cloud. We use GitHub as a central place for sending changes, reviewing others' changes, and communicating with each other. You'll need to fork the repository to create a copy under your own GitHub account. You'll make your changes to this copy, which can then later be merged into the PyDis repository.
 
-  Check out our [**guide on forking a GitHub repo**](./forking-repository/).
+Check out our [**guide on forking a GitHub repo**](./forking-repository/).
 
-  Now that you have your own fork you need to be able to make changes to the code. You can clone the repo to your local machine, commit changes to it there, then push those changes to GitHub.
+Now that you have your own fork you need to be able to make changes to the code. You can clone the repo to your local machine, commit changes to it there, then push those changes to GitHub.
 
-  Check out our [**guide on cloning a GitHub repo**](./cloning-repository/).
+Check out our [**guide on cloning a GitHub repo**](./cloning-repository/).
 
 ### 2. Set up the project
-  You have the source code on your local computer, now how do you actually run it? We have detailed guides on setting up the environment for each of our main projects:
+You have the source code on your local computer, now how do you actually run it? We have detailed guides on setting up the environment for each of our main projects:
 
-  * [**Sir Lancebot**](./sir-lancebot/)
+* [**Sir Lancebot**](./sir-lancebot/)
 
-  * [**Python Bot**](./bot/)
+* [**Python Bot**](./bot/)
 
-  * [**Site**](./site/)
+* [**Site**](./site/)
 
 ### 3. Read our Contributing Guidelines
-  We have a few short rules that all contributors must follow. Make sure you read and follow them while working on our projects.
+We have a few short rules that all contributors must follow. Make sure you read and follow them while working on our projects.
 
-  [**Contributing Guidelines**](./contributing-guidelines/).
+[**Contributing Guidelines**](./contributing-guidelines/).
 
-  As mentioned in the Contributing Guidelines, we have a simple style guide for our projects based on PEP 8. Give it a read to keep your code consistent with the rest of the codebase.
+As mentioned in the Contributing Guidelines, we have a simple style guide for our projects based on PEP 8. Give it a read to keep your code consistent with the rest of the codebase.
 
-  [**Style Guide**](./style-guide/)
+[**Style Guide**](./style-guide/)
 
 ### 4. Create an issue
-  The first step to any new contribution is an issue describing a problem with the current codebase or proposing a new feature. All the open issues are viewable on the GitHub repositories, for instance here is the [issues page for Sir Lancebot](https://github.com/python-discord/sir-lancebot/issues). If you have an idea that you want to implement, open a new issue (and check out our [**guide on writing an issue**](./issues/)). Otherwise you can browse the unassigned issues and ask to be assigned to one that you're interested in, either in the comments on the issue or in the[`#dev-contrib`](https://discord.gg/2h3qBv8Xaa)channel on Discord.
+The first step to any new contribution is an issue describing a problem with the current codebase or proposing a new feature. All the open issues are viewable on the GitHub repositories, for instance here is the [issues page for Sir Lancebot](https://github.com/python-discord/sir-lancebot/issues). If you have an idea that you want to implement, open a new issue (and check out our [**guide on writing an issue**](./issues/)). Otherwise you can browse the unassigned issues and ask to be assigned to one that you're interested in, either in the comments on the issue or in the[`#dev-contrib`](https://discord.gg/2h3qBv8Xaa)channel on Discord.
 
-  Don't move forward until your issue is approved by a Core Developer. Issues are not guaranteed to be approved so your work may be wasted.
-  {: .notification .is-warning }
+Don't move forward until your issue is approved by a Core Developer. Issues are not guaranteed to be approved so your work may be wasted.
+{: .notification .is-warning }
 
 ### 5. Open a pull request
-  After your issue has been approved and you've written your code and tested it, it's time to open a pull request. Pull requests are a feature in GitHub; you can think of them as asking the project maintainers to accept your changes. This gives other contributors a chance to review your code and make any needed changes before it's merged into the main branch of the project.
+After your issue has been approved and you've written your code and tested it, it's time to open a pull request. Pull requests are a feature in GitHub; you can think of them as asking the project maintainers to accept your changes. This gives other contributors a chance to review your code and make any needed changes before it's merged into the main branch of the project.
 
-  Check out our [**Pull Request Guide**](./pull-requests/) for help with opening a pull request and going through the review process.
+Check out our [**Pull Request Guide**](./pull-requests/) for help with opening a pull request and going through the review process.
 
-  Check out our [**Code Review Guide**](../code-reviews-primer/) to learn how to be a star reviewer. Reviewing PRs is a vital part of open source development, and we always need more reviewers!
+Check out our [**Code Review Guide**](../code-reviews-primer/) to learn how to be a star reviewer. Reviewing PRs is a vital part of open source development, and we always need more reviewers!
 
 ### That's it!
 Thank you for contributing to our community projects. If there's anything you don't understand or you just want to discuss with other contributors, come visit the[`#dev-contrib`](https://discord.gg/2h3qBv8Xaa)channel to ask questions. Keep an eye out for staff members with the **@PyDis Core Developers** role in the server; we're always happy to help!
