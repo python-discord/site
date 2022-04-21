@@ -6,7 +6,6 @@ description: A guide for opening pull requests.
 As stated in our [Contributing Guidelines](../contributing-guidelines/), do not open a pull request if you aren't assigned to an approved issue. You can check out our [Issues Guide](../issues/) for help with opening an issue or getting assigned to an existing one.
 {: .notification .is-warning }
 
-
 Before opening a pull request you should have:
 
 1. Committed your changes to your local repository
