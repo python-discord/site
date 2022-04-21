@@ -1,6 +1,6 @@
 ---
 title: Free Hosting Services for Discord Bots
-description: "This article covers the disasdvantages of utilising a free hosting service to run a discord bot. Two commonly used services are discussed below. "
+description: "This article covers the disasdvantages of utilising a free hosting service to run a discord bot."
 toc: 2
 ---
 
