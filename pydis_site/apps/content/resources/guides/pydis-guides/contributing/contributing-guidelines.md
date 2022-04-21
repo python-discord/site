@@ -24,5 +24,5 @@ We take violations of our Code of Conduct very seriously, and may respond with m
 <br/>
 
 Failing to comply with our guidelines may lead to a rejection of the contribution.
-If you have questions about any of the rules, feel free to ask us in the[`#dev-contrib`](https://discord.gg/2h3qBv8Xaa)channel in our [Discord server](https://discord.gg/python).
+If you have questions about any of the rules, feel free to ask us in the [`#dev-contrib`](https://discord.gg/2h3qBv8Xaa) channel in our [Discord server](https://discord.gg/python).
 {: .notification .is-warning }
