@@ -95,12 +95,22 @@ class TestLogsView(TestCase):
             "description": "This embed is way too cool to be seen in public channels.",
         }
 
+        cls.embed_three = {
+            "description": "This embed is way too cool to be seen in public channels.",
+            "color": "#e74c3c",
+        }
+
+        cls.embed_four = {
+            "description": "This embed is way too cool to be seen in public channels.",
+            "color": "e74c3c",
+        }
+
         cls.deleted_message_two = DeletedMessage.objects.create(
             author=cls.author,
             id=614444836291870750,
             channel_id=1984,
             content='Does that mean this thing will halt?',
-            embeds=[cls.embed_one, cls.embed_two],
+            embeds=[cls.embed_one, cls.embed_two, cls.embed_three, cls.embed_four],
             attachments=['https://http.cat/100', 'https://http.cat/402'],
             deletion_context=cls.deletion_context,
         )
