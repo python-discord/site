@@ -36,7 +36,7 @@ class MyHelp(commands.HelpCommand):
     async def send_command_help(self, command):
         """This is triggered when !help <command> is invoked."""
         await self.context.send("This is the help page for a command")
-        
+
     async def send_group_help(self, group):
         """This is triggered when !help <group> is invoked."""
         await self.context.send("This is the help page for a group command")
