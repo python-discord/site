@@ -90,7 +90,7 @@ Our projects on Python Discord are open source and [available on GitHub](https:/
   {: .notification }
 
 ### 1. Fork and clone the repo
-GitHub is a website based on Git that stores project files in the cloud. We use GitHub as a central place for sending changes, reviewing others' changes, and communicating with each other. You'll need to fork the repository to create a copy under your own GitHub account. You'll make your changes to this copy, which can then later be merged into the PyDis repository.
+GitHub is a website based on Git that stores project files in the cloud. We use GitHub as a central place for sending changes, reviewing others' changes, and communicating with each other. You'll need to fork the repository to create a copy under your own GitHub account. You'll make your changes to this copy, which can then later be merged into the Python Discord repository.
 
 Check out our [**guide on forking a GitHub repo**](./forking-repository/).
 
