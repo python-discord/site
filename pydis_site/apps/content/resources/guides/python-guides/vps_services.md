@@ -1,6 +1,6 @@
 ---
-title: Free Hosting Services for Discord Bots
-description: "This article covers the disasdvantages of utilising a free hosting service to run a discord bot."
+title: VPS and Free Hosting Service for Discord bots
+description: "This article lists recommended VPS services and covers the disasdvantages of utilising a free hosting service to run a discord bot."
 toc: 2
 ---
 
@@ -35,7 +35,9 @@ While these may seem like nice and free services, it has a lot more caveats than
 ### Replit
 
 - The machines are super underpowered, resulting in your bot lagging a lot as it gets bigger.
+
 - You need to run a webserver alongside your bot to prevent it from being shut off. This uses extra machine power.
+
 - Repl.it uses an ephemeral file system. This means any file you saved through your bot will be overwritten when you next launch.
 
 - They use a shared IP for everything running on the service.
@@ -48,6 +50,9 @@ This one is important - if someone is running a user bot on their service and ge
 
 - Heroku's environment is volatile. In order to handle the insane amount of users trying to use it for their own applications, Heroku will dispose your environment every time your application dies unless you pay.
 
-- Heroku has minimal system dependency control. If any of your Python requirements need C bindings (such as PyNaCl binding to libsodium, or lxml binding to libxml), they are unlikely to function properly, if at all, in a native environment. As such, you often need to resort to adding third-party buildpacks to facilitate otherwise normal CPython extension functionality. (This is the reason why voice doesn't work natively on heroku)
+- Heroku has minimal system dependency control. If any of your Python requirements need C bindings (such as PyNaCl
+  binding to libsodium, or lxml binding to libxml), they are unlikely to function properly, if at all, in a native
+  environment. As such, you often need to resort to adding third-party buildpacks to facilitate otherwise normal
+  CPython extension functionality. (This is the reason why voice doesn't work natively on heroku)
 
 - Heroku only offers a limited amount of time on their free programme for your applications. If you exceed this limit, which you probably will, they'll shut down your application until your free credit resets.
