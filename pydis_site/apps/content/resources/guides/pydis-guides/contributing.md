@@ -117,7 +117,9 @@ As mentioned in the Contributing Guidelines, we have a simple style guide for ou
 [**Style Guide**](./style-guide/)
 
 ### 4. Create an issue
-The first step to any new contribution is an issue describing a problem with the current codebase or proposing a new feature. All the open issues are viewable on the GitHub repositories, for instance here is the [issues page for Sir Lancebot](https://github.com/python-discord/sir-lancebot/issues). If you have an idea that you want to implement, open a new issue (and check out our [**guide on writing an issue**](./issues/)). Otherwise you can browse the unassigned issues and ask to be assigned to one that you're interested in, either in the comments on the issue or in the [`#dev-contrib`](https://discord.gg/2h3qBv8Xaa) channel on Discord.
+The first step to any new contribution is an issue describing a problem with the current codebase or proposing a new feature. All the open issues are viewable on the GitHub repositories, for instance here is the [issues page for Sir Lancebot](https://github.com/python-discord/sir-lancebot/issues). If you have something that you want to implement open a new issue to present your idea. Otherwise you can browse the unassigned issues and ask to be assigned to one that you're interested in, either in the comments on the issue or in the [`#dev-contrib`](https://discord.gg/2h3qBv8Xaa) channel on Discord.
+
+[**How to write a good issue**](./issues/)
 
 Don't move forward until your issue is approved by a Core Developer. Issues are not guaranteed to be approved so your work may be wasted.
 {: .notification .is-warning }
