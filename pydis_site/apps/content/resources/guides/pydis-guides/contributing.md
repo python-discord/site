@@ -80,14 +80,14 @@ Our projects on Python Discord are open source and [available on GitHub](https:/
 </div>
 
 # How do I start contributing?
-  Unsure of what contributing to open source projects involves? Have questions about how to use GitHub? Just need to know about our contribution etiquette? Completing these steps will have you ready to make your first contribution no matter your starting point.
+Unsure of what contributing to open source projects involves? Have questions about how to use GitHub? Just need to know about our contribution etiquette? Completing these steps will have you ready to make your first contribution no matter your starting point.
 
-  Feel free to skip any steps you're already familiar with, but please make sure not to miss the [Contributing Guidelines](#5-read-our-contributing-guidelines).
+Feel free to skip any steps you're already familiar with, but please make sure not to miss the [Contributing Guidelines](#5-read-our-contributing-guidelines).
 
-  If you are here looking for the answer to a specific question, check out the sub-articles in the top right of the page to see a list of our guides.
+If you are here looking for the answer to a specific question, check out the sub-articles in the top right of the page to see a list of our guides.
 
-  **Note:** We use Git to keep track of changes to the files in our projects. Git allows you to make changes to your local code and then distribute those changes to the other people working on the project. You'll use Git in a couple steps of the contributing process. You can refer to this [**guide on using Git**](./working-with-git/).
-  {: .notification }
+**Note:** We use Git to keep track of changes to the files in our projects. Git allows you to make changes to your local code and then distribute those changes to the other people working on the project. You'll use Git in a couple steps of the contributing process. You can refer to this [**guide on using Git**](./working-with-git/).
+{: .notification }
 
 ### 1. Fork and clone the repo
 GitHub is a website based on Git that stores project files in the cloud. We use GitHub as a central place for sending changes, reviewing others' changes, and communicating with each other. You'll need to create a copy of the repository under your own GitHub account, aka "fork" it. You'll make your changes to this copy, which can then later be merged into the Python Discord repository.
