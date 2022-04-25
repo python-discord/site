@@ -1,6 +1,6 @@
 ---
 title: VPS and Free Hosting Service for Discord bots
-description: "This article lists recommended VPS services and covers the disasdvantages of utilising a free hosting service to run a discord bot."
+description: This article lists recommended VPS services and covers the disasdvantages of utilising a free hosting service to run a discord bot.
 toc: 2
 ---
 
