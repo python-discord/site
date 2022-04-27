@@ -3,177 +3,114 @@ title: Subclassing Context
 description: "Subclassing the default commands.Context to add more functionability and customisability."
 ---
 
-## Basic Subclassing
-First, the [documentation on inheritance](https://docs.python.org/3/tutorial/classes.html#inheritance) on subclassing will provide some fundamental knowledge, which is highly suggested before moving on to this topic, as subclassing [Context](https://discordpy.readthedocs.io/en/latest/ext/commands/api.html#discord.ext.commands.Context) can ultimately be a complicated task.
+Start by reading the guide on [subclassing the Bot class](./subclassing_bot.md). A subclass of Bot has to be used to
+inject your custom context subclass into discord.py.
 
-## The benefits of subclassing Context
-Subclassing Context can be very beneficial as it allows you to set custom Context methods that can be used in your code. Some applications and examples are provided below.
+## Overview
 
-In order to subclass Context, you are required to subclass `commands.Bot` as well. More on subclassing Bot can be read here [link placeholder] but here is a short example.
+The way this works is by creating a subclass of discord.py's [Context class](https://discordpy.readthedocs.io/en/latest/ext/commands/api.html#discord.ext.commands.Context)
+adding whatever functionality you wish. Usually this is adding custom methods or properties, so that you don't need to
+copy it around or awkwardly import it elsewhere.
 
-```py
-# This View is for the prompt function below in the Context subclass.
-# This is completely optional and its purpose is demonstrating applications of subclassing Context.
+This guide will show you how to add a `prompt()` method to the context and how to use it in a command.
 
+## Example subclass and code
 
-class PromptView(discord.ui.View):
-    def __init__(
-        self,
-        *,
-        timeout: float,
-        author_id: int,
-        ctx: commands.Context,
-        delete_after: bool,
-    ) -> None:
-        super().__init__(timeout=timeout)
-        self.value: typing.Optional[bool] = None
-        self.delete_after: bool = delete_after
-        self.author_id: int = author_id
-        self.ctx: Context = ctx
-        self.message: typing.Optional[discord.Message] = None
-        
-        
-    '''Ensure that other members do not confirm or deny'''
-    async def interaction_check(self, interaction: discord.Interaction) -> bool:
-        if interaction.user and interaction.user.id == self.author_id:
-            return True
-        else:
-            await interaction.response.send_message(
-                "This confirmation dialog is not for you.", ephemeral=True
-            )
-            return False
+The first part - of course - is creating the actual context subclass. This is done similarly to creating a bot
+subclass, it will look like this:
 
-    async def on_timeout(self) -> None:
-        if self.delete_after and self.message:
-            await self.message.delete()
-        # delete the message if there is no response
+```python
+from typing import Optional
 
-    @discord.ui.button(label="Confirm", style=discord.ButtonStyle.green)
-    async def confirm(
-        self, button: discord.ui.Button, interaction: discord.Interaction
-    ):
-        self.value = True  # returns True if the confirm button is pressed
-        await interaction.response.defer()
-        if self.delete_after:
-            await interaction.delete_original_message()
-        self.stop()  # stops the view and deletes the confirmation message
-
-    @discord.ui.button(label="Cancel", style=discord.ButtonStyle.red)
-    async def cancel(self, button: discord.ui.Button, interaction: discord.Interaction):
-        self.value = False  # returns False if the cancel button is pressed
-        await interaction.response.defer()
-        if self.delete_after:
-            await interaction.delete_original_message()
-        self.stop()  # stops the view and deletes the confirmation
-
-
-# We have made two buttons, one for Confirm and one for Cancel.
+from discord import RawReactionActionEvent
+from discord.ext import commands
 
 
 class CustomContext(commands.Context):
-    # create new Context methods here. For example:
-
-    async def send_embed(self, message, **kwargs):
-        return await self.send(
-            embed=discord.Embed(
-                description=message, colour=discord.Color.blurple(), **kwargs
-            )
-        )
-        # This is a shortcut method to sending a custom embed. Pre-set values can be put here, for example the color kwarg in the example above means it has a pre-set color of blurple
-
-    async def send_error_embed(self, message, **kwargs):
-        return await self.send(
-            embed=discord.Embed(
-                description=message, colour=discord.Color.red(), **kwargs
-            )
-        )
-        # embed with pre-set color of red
-
-    async def send_sucess_embed(self, message, **kwargs):
-        return await self.send(
-            embed=discord.Embed(
-                description=message, colour=discord.Color.green(), **kwargs
-            )
-        )
-        # embed with pre-set color of green
-
-    # our custom prompt function using buttons
     async def prompt(
-        self,
-        message: str,
-        *,
-        timeout: float = 60.0,
-        delete_after: bool = True,
-        author_id: Optional[int] = None,
+            self,
+            message: str,
+            *,
+            timeout=30.0,
+            delete_after=True
     ) -> Optional[bool]:
+        """Prompt the author with an interactive confirmation message.
+
+        This method will send the `message` content, and wait for max `timeout` seconds
+        (default is `30`) for the author to react to the message.
+
+        If `delete_after` is `True`, the message will be deleted before returning a
+        boolean or None (if the author didn't respond) indicating whether the author
+        confirmed or denied.
         """
-        Parameters
-        message: str
-            The message to show along with the prompt.
+        msg = await self.send(message)
 
-        timeout: float (Defaults to 60 seconds)
-            How long to wait before stopping the view
-        delete_after: bool (Defaults to True)
-            Whether to delete the confirmation message after we're done.
+        for reaction in ('\N{WHITE HEAVY CHECK MARK}', '\N{CROSS MARK}'):
+            await msg.add_reaction(reaction)
 
-        author_id: Optional[int] (Defaults to ctx.author)
-            The member who should respond to the prompt.
-        -------
-        Returns
-            True if the confirm button is pressed,
-            False if cancel button is pressed,
-            None if automatically denied due to no response
-        """
+        confirmation = None
 
-        author_id = author_id or self.author.id
-        # use the View we have made above and set the arguments
-        view = PromptView(
-            timeout=timeout,
-            delete_after=delete_after,
-            ctx=self,
-            author_id=author_id,
-        )
+        def check(payload: RawReactionActionEvent):
+            # 'nonlocal' works almost like 'global' except for functions inside of
+            # functions. This means that when 'confirmation' is changed, that will
+            # apply to the variable above
+            nonlocal confirmation
 
-        view.message = await self.send(message, view=view)
-        await view.wait()
-        return view.value  # Can return True, False or None
+            if payload.message_id != msg.id or payload.user_id != self.author.id:
+                return False
+
+            emoji = str(payload.emoji)
+
+            if emoji == '\N{WHITE HEAVY CHECK MARK}':
+                confirmation = True
+                return True
+
+            elif emoji == '\N{CROSS MARK}':
+                confirmation = False
+                return True
+
+            # This means that it was neither of the two emojis added, so the author
+            # added some other unrelated reaction.
+            return False
+
+        try:
+            await self.bot.wait_for('raw_reaction_add', check=check, timeout=timeout)
+        except asyncio.TimeoutError:
+            # The 'confirmation' variable is still None in this case
+            pass
+
+        if delete_after:
+            await msg.delete()
+
+        return confirmation
+```
+
+After creating your context subclass, you need to override the `get_context()` method on your
+Bot class and change the default of the `cls` parameter to this subclass:
+
+```python
+from discord.ext import commands
 
 
-class Bot(commands.Bot):
-    def __init__(self):
-        super().__init__(
-            # key word arguments
-        )
-
-    async def get_context(
-        self, message, *, cls=CustomContext
-    ):  # When overriding this method, you pass your new Context class to the super() method indicating that there is a new Context class the bot will use.
+class CustomBot(commands.Bot):
+    async def get_context(self, message, *, cls=CustomContext):  # From the above codeblock
         return await super().get_context(message, cls=cls)
+```
+
+Now that discord.py is using your custom context, you can use it in a command. For example:
+
+```python
+from discord.ext import commands
 
 
-bot = Bot()
+bot = CustomBot(...)  # Replace with the arguments for the bot
 
-# A command example using subclassed Context:
+
 @bot.command()
-async def embed(ctx):
-    await ctx.send_embed("This is a custom Context function!")
-    # This would send an embed with the description of the specified string and the embed color wold be Blurple, even though you have not specified it in making the embed, is was set as the pre-set value. You can add more kwargs in sending the embed. For example:
+async def massban(ctx: CustomContext, members: commands.Greedy[discord.Member]):
+    if not await ctx.prompt(f"Are you sure you want to ban {len(members)}?"):
+        # Return if the author cancelled, or didn't react
+        return
 
-    await ctx.send_success_embed(
-        "This is another example of a custom Context function!",
-        title="Subclassing Context",
-        timestamp=datetime.datetime.utcnow(),
-    )
-
-
-# example of the prompt function. It can be used before carrying out big or dangerous operations. For example a massban command where multiple members can be passed in to the member argument
-@bot.command()
-async def massban(ctx, members: commands.Greedy[discord.Member]):
-
-    request_confirm = await ctx.prompt(f"Are you sure you want to ban {len(members)}?")
-    if request_confirm is False:
-        # the user cancelled so we can return
-    elif request_confirm is True:
-        # the user confirmed so we can continue with the command
-
+    ...  # Perform the mass-ban, knowing the author has confirmed this action
 ```
