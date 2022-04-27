@@ -14,7 +14,7 @@
         <li>Date: {{ deletion_context.creation }}</li>
     </ul>
     <div class="is-divider has-small-margin"></div>
-    {% for message in deletion_context.deletedmessage_set.all %}
+    {% for message in deletion_context.deletedmessage_set.all reversed %}
         <div class="discord-message">
             <div class="discord-message-header">
                 <span class="discord-username"
