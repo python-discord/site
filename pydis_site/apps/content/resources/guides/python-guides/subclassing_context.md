@@ -1,14 +1,14 @@
 ---
 title: Subclassing Context
-description: "Subclassing the default commands.Context to add more functionability and customisability."
+description: "Subclassing the default `commands.Context` class to add more functionability and customisability."
 ---
 
-Start by reading the guide on [subclassing the Bot class](./subclassing_bot.md). A subclass of Bot has to be used to
+Start by reading the guide on [subclassing the `Bot` class](./subclassing_bot.md). A subclass of Bot has to be used to
 inject your custom context subclass into discord.py.
 
 ## Overview
 
-The way this works is by creating a subclass of discord.py's [Context class](https://discordpy.readthedocs.io/en/latest/ext/commands/api.html#discord.ext.commands.Context)
+The way this works is by creating a subclass of discord.py's [`Context` class](https://discordpy.readthedocs.io/en/latest/ext/commands/api.html#discord.ext.commands.Context)
 adding whatever functionality you wish. Usually this is adding custom methods or properties, so that you don't need to
 copy it around or awkwardly import it elsewhere.
 
