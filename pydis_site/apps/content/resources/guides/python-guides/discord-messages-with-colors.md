@@ -44,15 +44,18 @@ Here is the list of values you can use to replace `{color}`:
 * 47: White
 
 Let's take an example, I want a bold green colored text with the very dark blue background.
-I simply use `\u001b[0;40m` (background color) and `\u001b[1;32m` (text color) as prefix. Note that the order is **important**, first you give the background color and then the text color.<br>
+I simply use `\u001b[0;40m` (background color) and `\u001b[1;32m` (text color) as prefix. Note that the order is **important**, first you give the background color and then the text color.
+
 Alternatively you can also directly combine them into a single prefix like the following: `\u001b[1;40;32m` and you can also use multiple values. Something like `\u001b[1;40;4;32m` would underline the text, make it bold, make it green and have a dark blue background.
 
-Raw message:<br>
-\`\`\`ansi
-\u001b[0;40m\u001b[1;32mThat's some cool formatted text right?<br>
+Raw message:
+````nohighlight
+```ansi
+\u001b[0;40m\u001b[1;32mThat's some cool formatted text right?
 or
-\u001b[1;40;32mThat's some cool formatted text right?<br>
-\`\`\`
+\u001b[1;40;32mThat's some cool formatted text right?
+```
+````
 
 Result:
 
