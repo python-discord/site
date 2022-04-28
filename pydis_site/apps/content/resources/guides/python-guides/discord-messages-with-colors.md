@@ -62,6 +62,7 @@ Result:
 ![Background and text color result](/static/images/content/discord_colored_messages/result.png)
 
 The way the colors look like on Discord is shown in the image below:
+
 ![ANSI Colors](/static/images/content/discord_colored_messages/ansi-colors.png)
 
 Note: If the change as not been brought to you yet, or other users, then you can use other code blocks in the meantime to get colored text. See this gist: <https://gist.github.com/matthewzring/9f7bbfd102003963f9be7dbcf7d40e51>
