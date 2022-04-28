@@ -48,17 +48,17 @@ I simply use `\u001b[0;40m` (background color) and `\u001b[1;32m` (text color) a
 Alternatively you can also directly combine them into a single prefix like the following: `\u001b[1;40;32m` and you can also use multiple values. Something like `\u001b[1;40;4;32m` would underline the text, make it bold, make it green and have a dark blue background.
 
 Raw message:<br>
-\`\`\`ansi<br>
+\`\`\`ansi
 \u001b[0;40m\u001b[1;32mThat's some cool formatted text right?<br>
-or<br>
+or
 \u001b[1;40;32mThat's some cool formatted text right?<br>
 \`\`\`
 
 Result:
 
-![Background and text color](https://media.discordapp.net/attachments/739937507768270939/930460020603224084/Background-Text-Color.png)
+![Background and text color result](/static/images/content/discord_colored_messages/result.png)
 
 The way the colors look like on Discord is shown in the image below:
-![ANSI Colors](https://media.discordapp.net/attachments/739937507768270939/930825555803263016/ANSI-Colors.png)
+![ANSI Colors](/static/images/content/discord_colored_messages/ansi-colors.png)
 
 Note: If the change as not been brought to you yet, or other users, then you can use other code blocks in the meantime to get colored text. See this gist: <https://gist.github.com/matthewzring/9f7bbfd102003963f9be7dbcf7d40e51>
