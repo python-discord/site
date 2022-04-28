@@ -11,7 +11,7 @@ To send colored text in a code block you need to first specify the `ansi` langua
 ```
 *`\u001b` is the unicode escape for ESCAPE/ESC, meant to be used in the source of your bot (see <http://www.unicode-symbol.com/u/001B.html>).* ***If you wish to send colored text without using your bot you need to copy the character from the website.***
 
-After you've written this, you can type and text you wish, and if you want to reset the color back to normal, then you need to use `\u001b[0m` as prefix.
+After you've written this, you can now type the text you wish to color. If you want to reset the color back to normal, then you need to use the `\u001b[0m` prefix again.
 
 Here is the list of values you can use to replace `{format}`:
 
