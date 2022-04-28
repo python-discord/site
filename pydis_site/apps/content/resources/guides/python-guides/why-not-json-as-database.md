@@ -1,6 +1,8 @@
 ---
 title: Why JSON is unsuitable as a database
 description: The many reasons why you shouldn't use JSON as a database, and instead opt for SQL.
+relevant_links:
+    Tips on Storing Data: https://tutorial.vcokltfre.dev/tips/storage/
 ---
 
 JSON, quite simply, is not a database. It's not designed to be a data storage format,
