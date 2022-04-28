@@ -30,7 +30,7 @@ If you need to run your bot 24/7 (with no downtime), you should consider using a
 
 
 ## Why not to use free hosting services for bots?
-While these may seem like nice and free services, it has a lot more caveats than you may think. For example, below discusses the drawbacks of using common free hosting services to host a discord bot.
+While these may seem like nice and free services, it has a lot more caveats than you may think. For example, the drawbacks of using common free hosting services to host a discord bot are discussed below.
 
 ### Replit
 
