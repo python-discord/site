@@ -25,7 +25,10 @@ main.site-content {
 
 .discord-message:first-child {
     border-top: 1px;
+}
 
+.discord-message-content {
+    overflow-wrap: break-word;
 }
 
 .discord-message-header {
