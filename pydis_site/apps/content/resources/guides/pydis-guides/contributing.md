@@ -92,6 +92,8 @@ If you are here looking for the answer to a specific question, check out the sub
 ### 1. Fork and clone the repo
 GitHub is a website based on Git that stores project files in the cloud. We use GitHub as a central place for sending changes, reviewing others' changes, and communicating with each other. You'll need to create a copy under your own GitHub account, a.k.a. "fork" it. You'll make your changes to this copy, which can then later be merged into the Python Discord repository.
 
+*Note: Members of the Python Discord staff can create feature branches directly on the repo without forking it.*
+
 Check out our [**guide on forking a GitHub repo**](./forking-repository/).
 
 Now that you have your own fork you need to be able to make changes to the code. You can clone the repo to your local machine, commit changes to it there, then push those changes to GitHub.
