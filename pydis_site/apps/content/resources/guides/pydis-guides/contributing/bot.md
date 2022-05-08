@@ -543,10 +543,7 @@ Now that you have everything setup, it is finally time to make changes to the bo
 
 #### Working with Git
 
-If you have not yet [read the contributing guidelines](../contributing-guidelines), now is a good time.
-Contributions that do not adhere to the guidelines may be rejected.
-
-Notably, version control of our projects is done using Git and Github.
+Version control of our projects is done using Git and Github.
 It can be intimidating at first, so feel free to ask for any help in the server.
 
 [**Click here to see the basic Git workflow when contributing to one of our projects.**](../working-with-git/)
@@ -636,5 +633,12 @@ The following is a list of all available environment variables used by the bot:
 | `GITHUB_API_KEY` | When you wish to interact with GitHub | The API key to interact with GitHub, for example to download files for the branding manager.
 | `METABASE_USERNAME` | When you wish to interact with Metabase | The username for a Metabase admin account.
 | `METABASE_PASSWORD` | When you wish to interact with Metabase | The password for a Metabase admin account.
+
+---
+
+# Next steps
+Now that you have everything setup, it is finally time to make changes to the bot! If you have not yet read the [contributing guidelines](../contributing-guidelines.md), now is a good time. Contributions that do not adhere to the guidelines may be rejected.
+
+If you're not sure where to go from here, our [detailed walkthrough](../#2-set-up-the-project) is for you.
 
 Have fun!
