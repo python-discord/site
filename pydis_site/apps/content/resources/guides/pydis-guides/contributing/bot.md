@@ -5,6 +5,8 @@ icon: fab fa-github
 toc: 3
 ---
 The purpose of this guide is to get you a running local version of [the Python bot](https://github.com/python-discord/bot).
+You should have already forked the repository and cloned it to your local machine. If not, check out our [detailed walkthrough](../#1-fork-and-clone-the-repo).
+
 This page will focus on the quickest steps one can take, with mentions of alternatives afterwards.
 
 ---

@@ -5,7 +5,9 @@ icon: fab fa-github
 toc: 1
 ---
 
-# Requirements
+You should have already forked the [`site`](https://github.com/python-discord/site) repository and cloned it to your local machine. If not, check out our [detailed walkthrough](../#1-fork-and-clone-the-repo).
+
+### Requirements
 
 - [Python 3.9](https://www.python.org/downloads/)
 - [Poetry](https://python-poetry.org/docs/#installation)
@@ -29,8 +31,7 @@ Without Docker:
 ---
 # Development environment
 
-1. [Clone your fork to a local project directory](../cloning-repository/)
-2. [Install the project's dependencies](../installing-project-dependencies/)
+[Install the project's dependencies](../installing-project-dependencies/)
 
 ## Without Docker
 

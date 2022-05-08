@@ -5,16 +5,19 @@ icon: fab fa-github
 toc: 1
 ---
 
-> Before contributing, please ensure you read the [contributing guidelines](../contributing-guidelines) in full.
+You should have already forked the [`sir-lancebot`](https://github.com/python-discord/sir-lancebot) repository and cloned it to your local machine. If not, check out our [detailed walkthrough](../#1-fork-and-clone-the-repo).
 
----
-# Requirements
+Remember to ensure that you have read the [contributing guidelines](../contributing-guidelines) in full before you start contributing.
+
+### Requirements
 - [Python 3.9](https://www.python.org/downloads/)
 - [Poetry](https://github.com/python-poetry/poetry#installation)
 - [Git](https://git-scm.com/downloads)
     - [Windows Installer](https://git-scm.com/download/win)
     - [MacOS Installer](https://git-scm.com/download/mac) or `brew install git`
     - [Linux](https://git-scm.com/download/linux)
+
+---
 
 ## Using Gitpod
 Sir Lancebot can be edited and tested on Gitpod. Gitpod will automatically install the correct dependencies and Python version, so you can get straight to coding.
@@ -42,8 +45,7 @@ The requirements for Docker are:
 
 ---
 # Development Environment
-1. Once you have your fork, you will need to [**clone the repository to your computer**](../cloning-repository).
-2. After cloning, proceed to [**install the project's dependencies**](../installing-project-dependencies). (This is not required if using Docker)
+If you aren't using Docker, you will need to [install the project's dependencies](../installing-project-dependencies) yourself.
 
 ---
 # Test Server and Bot Account
