@@ -126,7 +126,12 @@ The first step to any new contribution is an issue describing a problem with the
 Don't move forward until your issue is approved by a Core Developer. Issues are not guaranteed to be approved so your work may be wasted.
 {: .notification .is-warning }
 
-### 5. Open a pull request
+### 5. Make changes
+Now it is time to make the changes to fulfill your approved issue. You should create a new Git branch for your feature; that way you can keep your main branch up to date with ours and even work on multiple features at once in separate branches.
+
+This is a good time to review [how to write good commit messages](./contributing-guidelines/commit-messages) if you haven't already.
+
+### 6. Open a pull request
 After your issue has been approved and you've written your code and tested it, it's time to open a pull request. Pull requests are a feature in GitHub; you can think of them as asking the project maintainers to accept your changes. This gives other contributors a chance to review your code and make any needed changes before it's merged into the main branch of the project.
 
 Check out our [**Pull Request Guide**](./pull-requests/) for help with opening a pull request and going through the review process.
