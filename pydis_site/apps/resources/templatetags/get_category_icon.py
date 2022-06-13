@@ -21,6 +21,7 @@ _ICONS = {
     "Paid": "fa-dollar-sign",
     "Podcast": "fa-microphone-alt",
     "Project Ideas": "fa-lightbulb-o",
+    "Security": "lock-alt",
     "Software Design": "fa-paint-brush",
     "Subscription": "fa-credit-card",
     "Testing": "fa-vial",
