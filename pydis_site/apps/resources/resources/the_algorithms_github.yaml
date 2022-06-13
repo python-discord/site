@@ -1,0 +1,18 @@
+description: A git repository of Python implementations of many of the algorithms taught in algorithm
+   and data structure courses, as well as algorithms for neural networks, block chains, and compression. This is
+   a great resource for students wanting to see algorithms implemented in a familiar language.
+name: The Algorithms
+title_url: https://github.com/TheAlgorithms/Python
+tags:
+  topics:
+    - algorithms and data structures
+    - data science
+    - security
+  payment_tiers:
+    - free
+  difficulty:
+    - beginner
+    - intermediate
+  type:
+    - tutorial
+
