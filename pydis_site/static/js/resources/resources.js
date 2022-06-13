@@ -8,6 +8,13 @@ var activeFilters = {
     difficulty: []
 };
 
+// Options for fuzzysort
+const fuzzysortOptions = {
+  allowTypo: true,             // Allow our users to make typos
+  titleThreshold: -10000,      // The threshold for the fuzziness on title matches. Closer to 0 is stricter.
+  descriptionThreshold: -500,  // The threshold for the fuzziness on description matches.
+};
+
 /* Add a filter, and update the UI */
 function addFilter(filterName, filterItem) {
     var filterIndex = activeFilters[filterName].indexOf(filterItem);
@@ -25,6 +32,7 @@ function removeAllFilters() {
         "payment-tiers": [],
         difficulty: []
     };
+    $("#resource-search input").val("");
     updateUI();
 }
 
@@ -51,6 +59,13 @@ function noFilters() {
 function deserializeURLParams() {
     let searchParams = new window.URLSearchParams(window.location.search);
 
+    // Add the search query to the search bar.
+    if (searchParams.has("search")) {
+        let searchQuery = searchParams.get("search");
+        $("#resource-search input").val(searchQuery);
+        $(".close-filters-button").show();
+    }
+
     // Work through the parameters and add them to the filter object
     $.each(Object.keys(activeFilters), function(_, filterType) {
         let paramFilterContent = searchParams.get(filterType);
@@ -62,11 +77,13 @@ function deserializeURLParams() {
             // Update the corresponding filter UI, so it reflects the internal state.
             let filterAdded = false;
             $(paramFilterArray).each(function(_, filter) {
-                // Make sure the filter is valid before we do anything.
+                // Catch special cases.
                 if (String(filter) === "rickroll" && filterType === "type") {
                     window.location.href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
                 } else if (String(filter) === "sneakers" && filterType === "topics") {
                     window.location.href = "https://www.youtube.com/watch?v=NNZscmNE9QI";
+
+                // If the filter is valid, mirror it to the UI.
                 } else if (validFilters.hasOwnProperty(filterType) && validFilters[filterType].includes(String(filter))) {
                     let checkbox = $(`.filter-checkbox[data-filter-name='${filterType}'][data-filter-item='${filter}']`);
                     let filterTag = $(`.filter-box-tag[data-filter-name='${filterType}'][data-filter-item='${filter}']`);
@@ -91,10 +108,23 @@ function deserializeURLParams() {
     });
 }
 
+/* Show or hide the duckies, depending on whether or not there are any resources visible. */
+function updateDuckies() {
+    let visibleResources = Boolean($(".resource-box:visible").length);
+    if (!visibleResources) {
+        $(".no-resources-found").show();
+    } else {
+        $(".no-resources-found").hide();
+    }
+}
+
+
 /* Update the URL with new parameters */
 function updateURL() {
-    // If there's nothing in the filters, we don't want anything in the URL.
-    if (noFilters()) {
+    let searchQuery = $("#resource-search input").val();
+
+    // If there's no active filtering parameters, we can return early.
+    if (noFilters() && searchQuery.length === 0) {
         window.history.replaceState(null, document.title, './');
         return;
     }
@@ -107,8 +137,42 @@ function updateURL() {
         }
     });
 
+    // Add the search query, if necessary.
+    if (searchQuery.length > 0) {
+        searchParams.set("search", searchQuery);
+    }
+
     // Now update the URL
     window.history.replaceState(null, document.title, `?${searchParams.toString()}`);
+}
+
+/* Apply search terms */
+function filterBySearch(resourceItems) {
+    let searchQuery = $("#resource-search input").val();
+
+    /* Show and update the tag if there's a search query */
+    if (searchQuery) {
+        let tag = $(".tag.search-query");
+        let tagText = $(".tag.search-query span");
+        tagText.text(`Search: ${searchQuery}`);
+        tag.show();
+        $(".close-filters-button").show();
+    }
+
+    resourceItems.filter(function() {
+        // Get the resource title and description
+        let title = $(this).attr("data-resource-name");
+        let description = $(this).find("p").text();
+
+        // Run a fuzzy search. Does the title or description match the query?
+        let titleMatch = fuzzysort.single(searchQuery, title, fuzzysortOptions);
+        titleMatch = Boolean(titleMatch) && titleMatch.score > fuzzysortOptions.titleThreshold;
+
+        let descriptionMatch = fuzzysort.single(searchQuery, description, fuzzysortOptions);
+        descriptionMatch = Boolean(descriptionMatch) && descriptionMatch.score > fuzzysortOptions.descriptionThreshold;
+
+        return titleMatch || descriptionMatch;
+    }).show();
 }
 
 /* Update the resources to match 'active_filters' */
@@ -118,19 +182,31 @@ function updateUI() {
     let resourceTags = $('.resource-tag');
     let noTagsSelected = $(".no-tags-selected.tag");
     let closeFiltersButton = $(".close-filters-button");
+    let searchQuery = $("#resource-search input").val();
+    let searchTag = $(".tag.search-query");
 
     // Update the URL to match the new filters.
     updateURL();
 
     // If there's nothing in the filters, we can return early.
     if (noFilters()) {
-        resources.show();
+        // If we have a searchQuery, we need to run all resources through a search.
+        if (searchQuery.length > 0) {
+            resources.hide();
+            noTagsSelected.hide();
+            filterBySearch(resources);
+        } else {
+            resources.show();
+            noTagsSelected.show();
+            closeFiltersButton.hide();
+            $(".tag.search-query").hide();
+        }
+
         filterTags.hide();
-        noTagsSelected.show();
-        closeFiltersButton.hide();
         resourceTags.removeClass("active");
         $(`.filter-checkbox:checked`).prop("checked", false);
-        $(".no-resources-found").hide();
+        updateDuckies();
+
         return;
     } else {
         // Hide everything
@@ -158,9 +234,8 @@ function updateUI() {
     }
 
     // Otherwise, hide everything and then filter the resources to decide what to show.
-    let hasMatches = false;
     resources.hide();
-    resources.filter(function() {
+    let filteredResources = resources.filter(function() {
         let validation = {
             topics: false,
             type: false,
@@ -187,20 +262,22 @@ function updateUI() {
 
         // If validation passes, show the resource.
         if (Object.values(validation).every(Boolean)) {
-            hasMatches = true;
             return true;
         } else {
             return false;
         }
-    }).show();
+    });
 
-
-    // If there are no matches, show the no matches message
-    if (!hasMatches) {
-        $(".no-resources-found").show();
+    // Run the items we've found through the search filter, if necessary.
+    if (searchQuery.length > 0) {
+        filterBySearch(filteredResources);
     } else {
-        $(".no-resources-found").hide();
+        filteredResources.show();
+        searchTag.hide();
     }
+
+    // Gotta update those duckies!
+    updateDuckies();
 }
 
 // Executed when the page has finished loading.
@@ -229,6 +306,11 @@ document.addEventListener("DOMContentLoaded", function () {
         // Wait 10ms before removing this class, or else the transition will animate due to a race condition.
         setTimeout(() => { categoryHeaders.removeClass("no-transition"); }, 10);
     }
+
+    // When you type into the search bar, trigger an UI update.
+    $("#resource-search input").on("input", function() {
+        updateUI();
+    });
 
     // If you click on the div surrounding the filter checkbox, it clicks the corresponding checkbox.
     $('.filter-panel').on("click",function(event) {

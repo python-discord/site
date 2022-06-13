@@ -1,7 +1,9 @@
 from datetime import datetime
 
+from django.db import IntegrityError
 from django.db.models import QuerySet
 from django.http.request import HttpRequest
+from django.utils import timezone
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.decorators import action
 from rest_framework.exceptions import ValidationError
@@ -183,20 +185,24 @@ class InfractionViewSet(
         filter_expires_after = self.request.query_params.get('expires_after')
         if filter_expires_after:
             try:
-                additional_filters['expires_at__gte'] = datetime.fromisoformat(
-                    filter_expires_after
-                )
+                expires_after_parsed = datetime.fromisoformat(filter_expires_after)
             except ValueError:
                 raise ValidationError({'expires_after': ['failed to convert to datetime']})
+            additional_filters['expires_at__gte'] = timezone.make_aware(
+                expires_after_parsed,
+                timezone=timezone.utc,
+            )
 
         filter_expires_before = self.request.query_params.get('expires_before')
         if filter_expires_before:
             try:
-                additional_filters['expires_at__lte'] = datetime.fromisoformat(
-                    filter_expires_before
-                )
+                expires_before_parsed = datetime.fromisoformat(filter_expires_before)
             except ValueError:
                 raise ValidationError({'expires_before': ['failed to convert to datetime']})
+            additional_filters['expires_at__lte'] = timezone.make_aware(
+                expires_before_parsed,
+                timezone=timezone.utc,
+            )
 
         if 'expires_at__lte' in additional_filters and 'expires_at__gte' in additional_filters:
             if additional_filters['expires_at__gte'] > additional_filters['expires_at__lte']:
@@ -271,3 +277,28 @@ class InfractionViewSet(
         """
         self.serializer_class = ExpandedInfractionSerializer
         return self.partial_update(*args, **kwargs)
+
+    def create(self, request: HttpRequest, *args, **kwargs) -> Response:
+        """
+        Create an infraction for a target user.
+
+        Called by the Django Rest Framework in response to the corresponding HTTP request.
+        """
+        try:
+            return super().create(request, *args, **kwargs)
+        except IntegrityError as err:
+            # We need to use `__cause__` here, as Django reraises the internal
+            # UniqueViolation emitted by psycopg2 (which contains the attribute
+            # that we actually need)
+            #
+            # _meta is documented and mainly named that way to prevent
+            # name clashes: https://docs.djangoproject.com/en/dev/ref/models/meta/
+            if err.__cause__.diag.constraint_name == Infraction._meta.constraints[0].name:
+                raise ValidationError(
+                    {
+                        'non_field_errors': [
+                            'This user already has an active infraction of this type.',
+                        ]
+                    }
+                )
+            raise  # pragma: no cover - no other constraint to test with

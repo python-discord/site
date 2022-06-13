@@ -83,6 +83,11 @@ good_questions_redirect_alt:
     redirect_arguments: ["guides/pydis-guides/asking-good-questions"]
 
 # Resources
+resources_old_communities_redirect:
+  original_path: pages/resources/communities/
+  redirect_route: "resources:index"
+  redirect_arguments: ["community"]
+
 resources_index_redirect:
   original_path: pages/resources/
   redirect_route: "resources:index"
