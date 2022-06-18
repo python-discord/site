@@ -1,0 +1,20 @@
+{% load static %}
+<div class="panel">
+    <p class="panel-heading">Important Links</p>
+        <a class="panel-block has-text-link" href="{% url "events:page" path="code-jams/9/rules" %}">Rules</a>
+        <a class="panel-block has-text-link" href="{% url "events:page" path="code-jams/code-style-guide" %}">The Code Style Guide</a>
+    </ul>
+</div>
+<div class="box">
+    <img src="{% static "images/events/summer_code_jam_2022/site_banner.png" %}" alt="Summer Code Jam 2022">
+    <h4 class="menu-label">Our Sponsors</h4>
+    <a href="https://www.digitalocean.com/" target="_blank">
+        <img src="{% static "images/events/DO_Logo_Vertical_Blue.png" %}" alt="Digital Ocean">
+    </a>
+    <a href="https://jetbrains.com" target="_blank">
+        <img src="{% static "images/sponsors/jetbrains.png" %}" alt="JetBrains">
+    </a>
+    <a href="https://replit.com/" target="_blank">
+        <img src="{% static "images/events/Replit.png" %}" alt="Replit">
+    </a>
+</div>

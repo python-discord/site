@@ -1,0 +1,40 @@
+{% extends "events/base_sidebar.html" %}
+
+{% block title %}Summer Code Jam 2022{% endblock %}
+
+{% block breadcrumb %}
+    <li><a href="{% url "events:index" %}">Events</a></li>
+    <li><a href="{% url "events:page" path="code-jams" %}">Code Jams</a></li>
+    <li class="is-active"><a href="#">Summer Code Jam 2022</a></li>
+{% endblock %}
+
+{% block event_content %}
+    <p>Once a year we host a code jam for members of our server to participate in. The code jam is an event where we place you
+        in a team with 5 other random server members. You then have 11 days to code some sort of application or program in Python.
+        Your program must use the specified technology/framework and incorporate the theme chosen by the server.
+    </p>
+    <p>
+        After the 11 days are complete, your team has 4 days to finish documentation and create a video presentation showcasing
+        and walking through the program that your team has created. More details and specifics of this will be released within the next 2 weeks.
+    </p>
+
+    <h3 id="important-dates"><a href="#important-dates">Important Dates</a></h3>
+    <ul>
+        <li>Saturday, June 18 - Form to submit theme suggestions opens</li>
+        <li>Wednesday, June 29 - The Qualifier is released</li>
+        <li>Wednesday, July 6 - Voting for the theme opens</li>
+        <li>Wednesday, July 13 - The Qualifier closes</li>
+        <li>Thursday, July 21 - Code Jam Begins</li>
+        <li>Sunday, July 31 - Coding portion of the jam ends</li>
+        <li>Sunday, August 4 - Code Jam submissions are closed</li>
+    </ul>
+    <h3 id="how-to-join"><a href="#how-to-join">How to Join</a></h3>
+    <p>The Qualifier isn't released yet, but to receive the most up-to-date information and to get notified
+        when the Qualifier is released you can join the server: <a href="https://discord.gg/python">discord.gg/python</a>.</p>
+{% endblock %}
+
+{% block sidebar %}
+
+    {% include "events/sidebar/code-jams/9.html" %}
+
+{% endblock %}
