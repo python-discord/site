@@ -56,5 +56,3 @@ async def example(ctx):
     # In this case, this will print Hello World!
 ```
 With either of the above examples, you are not required to change any of the existing or future code, it is identical to code done without subclassing bot.
-
-To access the custom bot attributes set in the subclass, in the main bot file (in the context of the above example), `bot.variable_name` would be used, and as for cogs, it would be `self.bot.variable_name`. For the custom methods set, in the main file it would be `bot.custom_method()` in the main file and `self.bot.custom_method()` in a cog file.
