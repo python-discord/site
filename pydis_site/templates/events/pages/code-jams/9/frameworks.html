@@ -1,0 +1,109 @@
+{% extends "events/base_sidebar.html" %}
+
+{% load static %}
+
+{% block title %}Summer Code Jam 2022{% endblock %}
+
+{% block breadcrumb %}
+    <li><a href="{% url "events:index" %}">Events</a></li>
+    <li><a href="{% url "events:page" path="code-jams" %}">Code Jams</a></li>
+    <li><a href="{% url "events:page" path="code-jams/9" %}">Summer Code Jam 2022</a></li>
+    <li class="is-active"><a href="#">Approved Frameworks</a></li>
+{% endblock %}
+
+{% block event_content %}
+    <p>Below is the list of approved frameworks that you can use for the code jam.
+        Please work with your team to choose a library that everyone can and want to develop with.
+        If there is a library not listed below that you think should be here, you're welcome to discuss it with the Events Team over at <a href="https://discord.gg/HnGd3znxhJ">the server</a>.
+    </p>
+    <div class="card mb-4">
+        <div class="card-content">
+            <div class="content">
+                <p class="subtitle">websockets</p>
+                <p class="is-italic">websockets is a library for building WebSocket servers and clients in Python with a focus on correctness, simplicity, robustness, and performance.
+                    Built on top of asyncio, Python’s standard asynchronous I/O framework, it provides an elegant coroutine-based API.
+                </p>
+            </div>
+        </div>
+        <div class="card-footer">
+            <a href="https://websockets.readthedocs.io/en/stable" class="card-footer-item"><i class="fas fa-book"></i>&ensp;Documentation</a>
+            <a href="https://github.com/aaugustin/websockets" class="card-footer-item"><i class="fab fa-github"></i>&ensp;GitHub</a>
+        </div>
+    </div>
+    <div class="card mb-4">
+        <div class="card-content">
+            <div class="content">
+                <p class="subtitle">Flask-SocketIO</p>
+                <p class="is-italic">Flask-SocketIO gives Flask applications access to low latency bi-directional communications between the clients and the server.
+                </p>
+            </div>
+        </div>
+        <div class="card-footer">
+            <a href="https://flask-socketio.readthedocs.io/en/latest" class="card-footer-item"><i class="fas fa-book"></i>&ensp;Documentation</a>
+            <a href="https://github.com/miguelgrinberg/flask-socketio" class="card-footer-item"><i class="fab fa-github"></i>&ensp;GitHub</a>
+        </div>
+    </div>
+    <div class="card mb-4">
+        <div class="card-content">
+            <div class="content">
+                <p class="subtitle">Django Channels</p>
+                <p class="is-italic">Channels is a project that takes Django and extends its abilities beyond HTTP - to handle WebSockets, chat protocols, IoT protocols, and more.
+                    It’s built on a Python specification called ASGI.
+                </p>
+            </div>
+        </div>
+        <div class="card-footer">
+            <a href="https://channels.readthedocs.io/en/stable" class="card-footer-item"><i class="fas fa-book"></i>&ensp;Documentation</a>
+            <a href="https://github.com/django/channels" class="card-footer-item"><i class="fab fa-github"></i>&ensp;GitHub</a>
+        </div>
+    </div>
+    <div class="card mb-4">
+        <div class="card-content">
+            <div class="content">
+                <p class="subtitle">wsproto</p>
+                <p class="is-italic">wsproto is a WebSocket protocol stack written to be as flexible as possible.
+                    To that end it is written in pure Python and performs no I/O of its own.
+                    Instead it relies on the user to provide a bridge between it and whichever I/O mechanism is in use, allowing it to be used in single-threaded, multi-threaded or event-driven code.
+                </p>
+            </div>
+        </div>
+        <div class="card-footer">
+            <a href="https://python-hyper.org/projects/wsproto/en/stable" class="card-footer-item"><i class="fas fa-book"></i>&ensp;Documentation</a>
+            <a href="https://github.com/python-hyper/wsproto" class="card-footer-item"><i class="fab fa-github"></i>&ensp;GitHub</a>
+        </div>
+    </div>
+    <div class="card mb-4">
+        <div class="card-content">
+            <div class="content">
+                <p class="subtitle">Starlette</p>
+                <p class="is-italic">Starlette is a lightweight ASGI framework/toolkit, which is ideal for building async web services in Python.
+                </p>
+            </div>
+        </div>
+        <div class="card-footer">
+            <a href="https://www.starlette.io/websockets" class="card-footer-item"><i class="fas fa-book"></i>&ensp;Documentation</a>
+            <a href="https://github.com/encode/starlette" class="card-footer-item"><i class="fab fa-github"></i>&ensp;GitHub</a>
+        </div>
+    </div>
+    <div class="card mb">
+        <div class="card-content">
+            <div class="content">
+                <p class="subtitle">FastAPI</p>
+                <p class="is-italic">FastAPI is a modern, fast (high-performance), web framework for building APIs with Python 3.6+ based on standard Python type hints.
+                </p>
+            </div>
+        </div>
+        <div class="card-footer">
+            <a href="https://fastapi.tiangolo.com/advanced/websockets" class="card-footer-item"><i class="fas fa-book"></i>&ensp;Documentation</a>
+            <a href="https://github.com/tiangolo/fastapi" class="card-footer-item"><i class="fab fa-github"></i>&ensp;GitHub</a>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+{% block sidebar %}
+
+    {% include "events/sidebar/code-jams/9.html" %}
+
+{% endblock %}
