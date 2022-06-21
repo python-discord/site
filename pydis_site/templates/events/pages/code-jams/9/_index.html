@@ -1,5 +1,7 @@
 {% extends "events/base_sidebar.html" %}
 
+{% load static %}
+
 {% block title %}Summer Code Jam 2022{% endblock %}
 
 {% block breadcrumb %}
@@ -31,6 +33,72 @@
     <h3 id="how-to-join"><a href="#how-to-join">How to Join</a></h3>
     <p>The Qualifier isn't released yet, but to receive the most up-to-date information and to get notified
         when the Qualifier is released you can join the server: <a href="https://discord.gg/python">discord.gg/python</a>.</p>
+
+    <h3 id="prizes"><a href="#prizes">Prizes</a></h3>
+    <p>
+        Our Code Jam Sponsors have provided prizes for the winners of the code jam.
+        Also, thanks to our Patreon patrons supporting this server, we are able to send members of the winning teams
+        Python Discord t-shirts and possibly other goodies.
+    </p>
+
+    <div class="card mb-4">
+        <div class="card-content">
+            <div class="media">
+                <div class="media-left" style="max-width:150px">
+                    <img src="{% static "images/events/DO_Logo_Vertical_Blue.png" %}" alt="Digital Ocean">
+                </div>
+                <div class="media-content">
+                    <p class="subtitle has-link"><a href="https://www.digitalocean.com/" target="_blank" rel="noopener">DigitalOcean</a></p>
+                    <p class="is-italic">
+                        Scalable compute platform with add-on storage, security, and monitoring capabilities.
+                        We make it simple to launch in the cloud and scale up as you grow—whether you’re running one virtual machine or ten thousand.
+                    </p>
+                    <p><strong>Prizes</strong><br>
+                    DigitalOcean credits to the members of a winning team.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-content">
+            <div class="media">
+                <div class="media-left" style="max-width:150px">
+                    <img src="{% static "images/sponsors/jetbrains.png" %}" alt="JetBrains">
+                </div>
+                <div class="media-content">
+                    <p class="subtitle has-link"><a href="https://www.jetbrains.com/" target="_blank" rel="noopener">JetBrains</a></p>
+                    <p class="is-italic">
+                        Whatever platform or language you work with, JetBrains has a development tool for you.
+                        We help developers work faster by automating common, repetitive tasks to enable them to stay focused on code design and the big picture.
+                        We provide tools to explore and familiarize with code bases faster. Our products make it easy for you to take care of quality during all stages of development and spend less time on maintenance tasks.
+                    </p>
+                    <p><strong>Prizes</strong><br>
+                    1-year JetBrain licenses to the members of a winning team.</p>
+                </div>
+             </div>
+        </div>
+    </div>
+
+    <div class="card mb">
+        <div class="card-content">
+            <div class="media">
+                <div class="media-left" style="max-width:150px">
+                    <img src="{% static "images/events/Replit.png" %}" alt="Replit">
+                </div>
+                <div class="media-content">
+                    <p class="subtitle has-link"><a href="https://www.replit.com" target="_blank" rel="noopener">Replit</a></p>
+                    <p class="is-italic">Start coding instantly, right from your browser.
+                        With GitHub integration and support for nearly every major programming language, Replit is the best place to code.
+                        Our mission is to bring the next billion software creators online.
+                        We build powerful, simple tools and platforms for learners, educators, and developers.
+                    </p>
+                    <p><strong>Prizes</strong><br>
+                    Three months of the Replit hacker plan to the members of a winning team.</p>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
 {% block sidebar %}
