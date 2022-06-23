@@ -8,11 +8,11 @@
 
 {% block event_content %}
     <div class="box">
-        <h2 class="title is-4">Code Jams</h2>
+        <h2 class="title is-4"><a href="{% url "events:page" path="code-jams" %}">Code Jams</a></h2>
         <div class="notification is-success">
           The <b>2022 Summer Code Jam</b> qualifier will open June 29th. Check out the details <a href="{% url "events:page" path="code-jams/9" %}">here</a>.
         </div>
-        <p>Each year, we organize at least one code jam, one during the summer and sometimes one during the winter. During these events, members of our community will work together in teams to create something amazing using a technology we picked for them. One such technology that was picked for the Summer 2021 Code Jam was text user interfaces (TUIS), where teams could pick from a pre-approved list of frameworks.</p>
+        <p>Every year we hold a community-wide Summer Code Jam. For this event, members of our community are assigned to teams to collaborate and create something amazing using a technology we picked for them. One such technology that was picked for the Summer 2021 Code Jam was text user interfaces (TUIs), where teams could pick from a pre-approved list of frameworks.</p>
         <p>To help fuel the creative process, we provide a specific theme, like <strong>Think Inside the Box</strong> or <strong>Early Internet</strong>. At the end of the Code Jam, the projects are judged by Python Discord server staff members and guest judges from the larger Python community. The judges will consider creativity, code quality, teamwork, and adherence to the theme.</p>
         <p>If you want to read more about Code Jams, visit our <a href="{% url "events:page" path="code-jams" %}">Code Jam info page</a> or watch this video showcasing the best projects created during the <strong>Winter Code Jam 2020: Ancient Technology</strong>:</p>
         <iframe width="560" height="315" src="https://www.youtube.com/embed/8fbZsGrqBzo" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
