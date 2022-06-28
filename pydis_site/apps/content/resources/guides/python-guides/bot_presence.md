@@ -18,7 +18,7 @@ Activities
 
 
 
-# Where should I change my bots presence and when? 
+# Where should I change my bots presence and when?
 
 ---
 
