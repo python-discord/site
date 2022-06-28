@@ -1,5 +1,10 @@
+---
+title: All available discord statuses for bots
+description: In depth tutorial on how to set a presence to your bot!
+---
 All available discord statuses for bots
 =======
+
 
 ![image](https://cdn.discordapp.com/attachments/847979818444521582/989739880449994772/unknown.png)
 
