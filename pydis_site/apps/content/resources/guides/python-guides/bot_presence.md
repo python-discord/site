@@ -33,79 +33,111 @@ All discord.py **status** types can be found [here](https://discordpy.readthedoc
     import discord
     from discord.ext import commands
 
-    bot = commands.Bot(command_prefix="<Your prefix>", status=discord.Status.online)
+    bot = commands.Bot(
+        command_prefix="<Your prefix>",
+        status=discord.Status.online,
+    )
     ```
 
-Invisible/offline
------
-```py
-import discord
-from discord.ext import commands
+- Invisible/offline
+    ```py
+    import discord
+    from discord.ext import commands
 
-bot = commands.Bot(command_prefix="<Your prefix>", status=discord.Status.invisible)
-```
+    bot = commands.Bot(
+        command_prefix="<Your prefix>",
+        status=discord.Status.invisible,
+    )
+    ```
 
-Do not disturb
------
-```py
-import discord
-from discord.ext import commands
+- Do not disturb
+    ```py
+    import discord
+    from discord.ext import commands
+    
+    bot = commands.Bot(
+        command_prefix="<Your prefix>",
+        status=discord.Status.dnd,
+    )
+    ```
+- Idle
+    ```py
+    import discord
+    from discord.ext import commands
 
-bot = commands.Bot(command_prefix="<Your prefix>", status=discord.Status.dnd)
-```
-Idle
------
-```py
-import discord
-from discord.ext import commands
+    bot = commands.Bot(
+        command_prefix="<Your prefix>",
+        status=discord.Status.idle,
+    )
+    ```
+- Playing activity
+    ```py
+    import discord
+    from discord.ext import commands
 
-bot = commands.Bot(command_prefix="<Your prefix>", status=discord.Status.idle)
-```
-Playing activity
------
-```py
-import discord
-from discord.ext import commands
+    bot = commands.Bot(
+    command_prefix="<Your prefix>",
+    status=discord.Status.online,
+    activity=discord.Game(name="with wumpus"),
+    )
 
-bot = commands.Bot(command_prefix="<Your prefix>", status=discord.Status.online, activity=discord.Game(name="with wumpus"))
-```
-Streaming activity
------
-```py
-import discord
-from discord.ext import commands
+    ```
+- Streaming activity
+    ```py
+    import discord
+    from discord.ext import commands
 
-bot = commands.Bot(command_prefix="<Your prefix>", status=discord.Status.online, activity=discord.Streaming(name="Wumpus Stream", url="the streams url"))
-```
+    bot = commands.Bot(
+        command_prefix="<Your prefix>",
+        status=discord.Status.online,
+        activity=discord.Streaming(name="Wumpus Stream", url="the streams url"),
+    )
+    ```
 
-Listening activity
------
-```py
-import discord
-from discord.ext import commands
+- Listening activity
+    ```py
+    import discord
+    from discord.ext import commands
 
-bot = commands.Bot(command_prefix="<Your prefix>", status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.listening, name="The wumpus song"))
-```
+    bot = commands.Bot(
+        command_prefix="<Your prefix>",
+        status=discord.Status.online,
+        activity=discord.Activity(
+            type=discord.ActivityType.listening, name="The wumpus  song"
+        ),
+    )
+    ```
 
-Watching activity
------
-```py
-import discord
-from discord.ext import commands
+- Watching activity
+    ```py
+    import discord
+    from discord.ext import commands
 
-bot = commands.Bot(command_prefix="<Your prefix>", status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.watching, name="The wumpus movie"))
-```
+    bot = commands.Bot(
+        command_prefix="<Your prefix>",
+        status=discord.Status.online,
+        activity=discord.Activity(
+            type=discord.ActivityType.watching, name="The wumpus movie"
+        ),
+    )
 
-Competing activity
------
-```py
-import discord
-from discord.ext import commands
+    ```
 
-bot = commands.Bot(command_prefix="<Your prefix>", status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.competing, name="The wumpus competition"))
-```
+- Competing activity
+    ```py
+    import discord
+    from discord.ext import commands
 
-You can also change your bots presence after logging.
+    bot = commands.Bot(
+        command_prefix="<Your prefix>",
+        status=discord.Status.online,
+        activity=discord.Activity(
+            type=discord.ActivityType.competing, name="The wumpus competition"
+        ),
+    )
+    ```
+
+You can also change your bots presence after logging in.
 -----
 You can also use the [`change_presence()`](https://discordpy.readthedocs.io/en/latest/ext/commands/api.html?highlight=bot#discord.ext.commands.Bot.change_presence) method.
 
@@ -119,14 +151,23 @@ A large number of bots have presences that change by themselves after a certain 
 
 ## An example to using changing activity!
 
-```python
+```py
 import discord
 from discord.ext import commands, tasks
 import random
 
 bot = commands.Bot(command_prefix="<Your prefix>")
 
-bot.changeable_activites = ("Call of Duty: Warzone", "Fall Guys", "Fortnite", "Call of Duty: Black Ops IV", "Sea of Thieves", "League of Legends", "Valorant")
+bot.changeable_activites = (
+    "Call of Duty: Warzone",
+    "Fall Guys",
+    "Fortnite",
+    "Call of Duty: Black Ops IV",
+    "Sea of Thieves",
+    "League of Legends",
+    "Valorant",
+)
+
 
 @tasks.loop(minutes=2)
 async def change_activity():
@@ -134,7 +175,9 @@ async def change_activity():
     new_activity = random.choice(bot.changeable_activites)
     await bot.change_presence(activity=discord.Game(new_activity))
 
+
 change_activity.start()
+
 ```
 
 # FAQ
