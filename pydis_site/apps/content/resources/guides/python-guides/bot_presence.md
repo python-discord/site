@@ -110,7 +110,7 @@ bot = commands.Bot(command_prefix="<Your prefix>", status=discord.Status.online,
 
 You can also change your bots presence after logging.
 -----
-You can also use the [change_presence](https://discordpy.readthedocs.io/en/latest/ext/commands/api.html?highlight=bot#discord.ext.commands.Bot.change_presence). method
+You can also use the [`change_presence()`](https://discordpy.readthedocs.io/en/latest/ext/commands/api.html?highlight=bot#discord.ext.commands.Bot.change_presence) method.
 
 > **_NOTE:_** The method should not be used inside of **on_ready()** as this event can be triggered multiple times after logging in. Resulting in sending multiple of the same `PRESENCE` gateway event payload to the gateway.
 
