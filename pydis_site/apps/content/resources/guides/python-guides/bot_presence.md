@@ -49,7 +49,7 @@ All discord.py **status** types can be found [here](https://discordpy.readthedoc
     ```py
     import discord
     from discord.ext import commands
-    
+
     bot = commands.Bot(
         command_prefix="<Your prefix>",
         status=discord.Status.dnd,
@@ -60,7 +60,7 @@ All discord.py **status** types can be found [here](https://discordpy.readthedoc
     ```py
     import discord
     from discord.ext import commands
-    
+
     bot = commands.Bot(
         command_prefix="<Your prefix>",
         status=discord.Status.idle,
