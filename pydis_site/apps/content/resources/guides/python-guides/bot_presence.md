@@ -17,7 +17,7 @@ description: In depth tutorial on how to set all available presence to your bot!
 
 
 
-# Where should I change my bots presence and when?
+# Where should I change my bot's presence and when?
 
 ---
 
