@@ -21,7 +21,7 @@ description: In depth tutorial on how to set all available presence to your bot!
 
 ---
 
-The presence can be changed only when the bot is connected to discord gateway, so it can successfully send a `PRESENCE` gateway event payload to the gateway in order change the bot's presence. Most libraries allow to set the application's presence within the bot constructor!
+The presence can only be changed when your bot is connected to the Discord gateway. This is because it needs to send a `PRESENCE` gateway event but most libraries allow you to set the application's presence within the bot constructor!
 
 # How do I get these statuses and activities for my bot?
 
