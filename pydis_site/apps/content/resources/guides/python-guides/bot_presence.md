@@ -15,15 +15,10 @@ description: In depth tutorial on how to set all available presence to your bot!
 
 5. Competing in ...
 
-
-
 # Where should I change my bot's presence and when?
-
-
 The presence can only be changed when your bot is connected to the Discord gateway. This is because it needs to send a `PRESENCE` gateway event but most libraries allow you to set the application's presence within the bot constructor!
 
 ## How do I get these statuses and activities for my bot?
-
 Discord.py examples
 =======
 All discord.py **status** types can be found [here](https://discordpy.readthedocs.io/en/stable/api.html?highlight=status#discord.Status). All discord.py **activity** types can be found [here](https://discordpy.readthedocs.io/en/stable/api.html?highlight=discord%20activity#discord.ActivityType).
@@ -60,16 +55,18 @@ All discord.py **status** types can be found [here](https://discordpy.readthedoc
         status=discord.Status.dnd,
     )
     ```
+ 
 - Idle
     ```py
     import discord
     from discord.ext import commands
-
+    
     bot = commands.Bot(
         command_prefix="<Your prefix>",
         status=discord.Status.idle,
     )
     ```
+
 - Playing activity
     ```py
     import discord
@@ -80,8 +77,8 @@ All discord.py **status** types can be found [here](https://discordpy.readthedoc
     status=discord.Status.online,
     activity=discord.Game(name="with wumpus"),
     )
-
     ```
+
 - Streaming activity
     ```py
     import discord
@@ -120,7 +117,6 @@ All discord.py **status** types can be found [here](https://discordpy.readthedoc
             type=discord.ActivityType.watching, name="The wumpus movie"
         ),
     )
-
     ```
 
 - Competing activity
@@ -144,9 +140,6 @@ You can also use the [`change_presence()`](https://discordpy.readthedocs.io/en/l
 > **_NOTE:_** The method should not be used inside of **on_ready()** as this event can be triggered multiple times after logging in. Resulting in sending multiple of the same `PRESENCE` gateway event payload to the gateway.
 
 # Changing activity after a certain period of time!
-
----
-
 A large number of bots have presences that change by themselves after a certain period. In discord.py this can be done using a task loop. You can read more about tasks [in the documentation](https://discordpy.readthedocs.io/en/latest/ext/tasks/index.html).
 
 ## An example to using changing activity!
@@ -168,16 +161,13 @@ bot.changeable_activites = (
     "Valorant",
 )
 
-
 @tasks.loop(minutes=2)
 async def change_activity():
     await bot.wait_until_ready()
     new_activity = random.choice(bot.changeable_activites)
     await bot.change_presence(activity=discord.Game(new_activity))
 
-
 change_activity.start()
-
 ```
 
 # FAQ
