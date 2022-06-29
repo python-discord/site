@@ -31,14 +31,13 @@ Discord.py examples
 =======
 All discord.py **status** types can be found [here](https://discordpy.readthedocs.io/en/stable/api.html?highlight=status#discord.Status). All discord.py **activity** types can be found [here](https://discordpy.readthedocs.io/en/stable/api.html?highlight=discord%20activity#discord.ActivityType).
 
-Online
------
-```py
-import discord
-from discord.ext import commands
+- Online
+    ```py
+    import discord
+    from discord.ext import commands
 
-bot = commands.Bot(command_prefix="<Your prefix>", status=discord.Status.online)
-```
+    bot = commands.Bot(command_prefix="<Your prefix>", status=discord.Status.online)
+    ```
 
 Invisible/offline
 -----
