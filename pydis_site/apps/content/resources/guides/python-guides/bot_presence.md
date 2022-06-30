@@ -139,7 +139,7 @@ You can also use the [`change_presence()`](https://discordpy.readthedocs.io/en/l
 
 > **_NOTE:_** The method should not be used inside of **on_ready()** as this event can be triggered multiple times after logging in. Resulting in sending multiple of the same `PRESENCE` gateway event payload to the gateway.
 
-# Changing activity after a certain period of time!
+## Changing activity after a certain period of time
 A large number of bots have presences that change by themselves after a certain period. In discord.py this can be done using a task loop. You can read more about tasks [in the documentation](https://discordpy.readthedocs.io/en/latest/ext/tasks/index.html).
 
 ## An example to using changing activity!
