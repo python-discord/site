@@ -181,7 +181,6 @@ change_activity.start()
 #### Can I change my presence after every 5 seconds or so?
 - The simple answer is **yes**. The better answer is **no** as spamming gateway event payloads to the gateway can result your bot in getting rate-limited from the discord API.
 
-Credits
------
+## Credits
 [okimii#0434](https://discord.com/users/637458038915203127)
 [Ashley V#0871](https://discord.com/users/925079016174682213)
