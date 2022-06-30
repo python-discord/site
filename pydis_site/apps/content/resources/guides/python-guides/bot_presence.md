@@ -139,8 +139,6 @@ You can also use the [`change_presence()`](https://discordpy.readthedocs.io/en/l
 ## Changing activity after a certain period of time
 A large number of bots have presences that change by themselves after a certain period. In discord.py this can be done using a task loop. You can read more about tasks [in the documentation](https://discordpy.readthedocs.io/en/latest/ext/tasks/index.html).
 
-## An example to using changing activity!
-
 ```py
 import discord
 from discord.ext import commands, tasks
