@@ -170,7 +170,7 @@ async def change_activity():
 change_activity.start()
 ```
 
-# FAQ
+## FAQ
 
 #### Do discord.py forks also follow the same structure for changing presences?
 - Yes, popular discord.py forks such as `disnake`, `nextcord` and `py-cord` also follow the same structure!
