@@ -133,8 +133,7 @@ All discord.py **status** types can be found [here](https://discordpy.readthedoc
     )
     ```
 
-You can also change your bots presence after logging in.
------
+## Changing presence after logging in
 You can also use the [`change_presence()`](https://discordpy.readthedocs.io/en/latest/ext/commands/api.html?highlight=bot#discord.ext.commands.Bot.change_presence) method.
 
 > **_NOTE:_** The method should not be used inside of **on_ready()** as this event can be triggered multiple times after logging in. Resulting in sending multiple of the same `PRESENCE` gateway event payload to the gateway.
