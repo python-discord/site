@@ -436,7 +436,7 @@ bot = commands.Bot(command_prefix="!", intents=discord.Intents.default())
 #sync commands
 
 @bot.tree.command(name="ping")
-app_commands.checks.cooldown(1, 30)
+@app_commands.checks.cooldown(1, 30)
 async def ping(interaction: discord.Interaction):
     await interaction.response.send_message("pong!")
 
