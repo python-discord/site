@@ -133,7 +133,7 @@ class SlashBot(commands.Bot):
 bot = SlashBot()
 
 @bot.tree.command(name="ping", description="...")
-async def _ping(interaction: discord.Interaction) -> None:
+async def ping(interaction: discord.Interaction) -> None:
     await interaction.response.send_message("pong")
 
 bot.run("token")
