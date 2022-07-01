@@ -166,7 +166,7 @@ class MySlashCog(commands.Cog):
         self.bot = bot
 
     @app_commands.command(name="ping", description="...")
-    async def _ping(self, interaction: discord.Interaction):
+    async def ping(self, interaction: discord.Interaction):
         await interaction.response.send_message("pong!")
 
 class MySlashBot(commands.Bot):
