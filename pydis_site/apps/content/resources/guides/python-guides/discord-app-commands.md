@@ -102,7 +102,7 @@ __**EXPLANATION**__
 
 - `import discord` imports the **discord.py** package.
 - `class SlashClient(discord.Client)` is a class subclassing **Client**. Though there is no particular reason except readability to subclass the **Client** class, using the `Client.setup_hook = my_func` is equally valid.
-- Next up `super().__init__(...)` runs the `__init__` function of the **Client** class, this is equivalent to `discord.Client(...)`. Then, `self.tree = discord.app_commands.CommandTree(self)` creates a CommandTree which acts as the container for slash commaands.
+- Next up `super().__init__(...)` runs the `__init__` function of the **Client** class, this is equivalent to `discord.Client(...)`. Then, `self.tree = discord.app_commands.CommandTree(self)` creates a CommandTree which acts as the container for slash commands, and binds it to the `discord.Client` subclass instance, so wherever you have access to it, you will also have access to the command tree.
 - Then in the `setup_hook`, `self.tree.copy_global_to(...)` adds the slash command to the guild of which the ID is provided as a `discord.Object` object. Further up, `self.tree.sync()` updates the API with any changes to the slash commands.
 - Finishing up with the **Client** subclass, we create an instance of the subclassed Client class which here has been named as `SlashClient` with `client = SlashClient()`.
 - Then using the `command` method of the `CommandTree` we decorate a function with it as `client.tree` is an instance of `CommandTree` for the current application. The command function takes a default argument as said, which acts as the interaction that took place. Catching up is `await interaction.response.send_message("pong")` which sends back a message to the slash command invoker.
