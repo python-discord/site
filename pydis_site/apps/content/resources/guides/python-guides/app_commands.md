@@ -411,7 +411,7 @@ bot.run("token")
 
 __**EXPLANATION**__
 
-First we create a simple function named as `on_tree_error` here. To which the first two required arguments are passed, `Interaction` which is named as `interaction` here and `AppCommandError` which is named as `error` here. Then using simple functions and keywords, we make an error handler like above. Here I have used the `isinstance` function which takes in an object and a base class as the second argument, this function returns a bool value. The `raise error` is just for displayed unhandled errors, i.e. the ones which have not been specificed manually. If this is **removed**, you will not be able to see any exceptions raised due to slash commands and makes debugging the code harder. 
+First we create a simple function named as `on_tree_error` here. To which the first two required arguments are passed, `Interaction` which is named as `interaction` here and `AppCommandError` which is named as `error` here. Then using simple functions and keywords, we make an error handler like above. Here I have used the `isinstance` function which takes in an object and a base class as the second argument, this function returns a bool value. The `raise error` is just for displaying unhandled errors, i.e. the ones which have not been handled manually. If this is **removed**, you will not be able to see any exceptions raised by slash commands and makes debugging the code harder.
 After creating the error handler function, we set the function as the error handler for the slash commands. Here, `bot.tree.on_error = on_tree_error` overwrites the default `on_error` method of the **CommandTree** class with our custom error handler which has been named as `on_tree_error` here. 
 
 ### Creating an error handler for a specific error!
