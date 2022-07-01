@@ -1,20 +1,8 @@
----
-title: Slash Commands with discord.py!
-description: A simple guide to creating slash commands within discord.py!
----
-# DISCORD.PY RESUMPTION CHANGES
+# DISCORD.PY RESUMATION CHANGES
 
 ---
 
-Upon resumption of the most popular discord API wrapper library for python, `discord.py`, while catching on to the latest features of the discord API, there have been numerous changes with addition of features to the library. Some additions to the library include: 
-
-- Buttons support
-- Select Menus support
-- Forms (AKA Modals)
-- Slash commands (AKA Application Commands)
-...and a bunch more handy features!
-
-All the changes can be found [here](https://discordpy.readthedocs.io/en/latest/migrating.html). Original discord.py gist regarding resumption can be found [here](https://gist.github.com/Rapptz/c4324f17a80c94776832430007ad40e6).
+Upon resumation of the most popular discord API wrapper library for python, `discord.py`, while catching on to the latest features of the discord API, there have been numerous changes with addition of features to the library. Some additions to the library are -> Buttons support, Select Menus Support, Forms (AKA Modals), Slash Commands (AKA Application Commands) and a bunch of more handy features! All the changes can be found [here](https://discordpy.readthedocs.io/en/latest/migrating.html). Original discord.py gist regarding resumation can be found [here](https://gist.github.com/Rapptz/c4324f17a80c94776832430007ad40e6).
 
 # Why this gist?
 
@@ -64,12 +52,12 @@ import discord
 class SlashClient(discord.Client):
     def __init__(self) -> None:
         super().__init__(intents=discord.Intents.default())
-
+    
     async def setup_hook(self) -> None:
         #perform tasks
 
 '''Another way of creating a "setup_hook" is as follows'''
-
+ 
 client = discord.Client(intents=discord.Intents.default())
 async def my_setup_hook() -> None:
     #perform tasks
@@ -91,7 +79,7 @@ class SlashClient(discord.Client):
     def __init__(self) -> None:
         super().__init__(intents=discord.Intents.default())
         self.tree = discord.app_commands.CommandTree(self)
-
+    
     async def setup_hook(self) -> None:
         self.tree.copy_global_to(guild=discord.Object(id=12345678900987654))
         await self.tree.sync()
@@ -108,11 +96,11 @@ client.run("token")
 
 __**EXPLANATION**__
 
-- `import discord` imports the **discord.py** package.
-- `class SlashClient(discord.Client)` is a class subclassing **Client**. Though there is no particular reason except readability to subclass the **Client** class, using the `Client.setup_hook = my_func` is equally valid.
-- Next up `super().__init__(...)` runs the `__init__` function of the **Client** class, this is equivalent to `discord.Client(...)`. Then, `self.tree = discord.app_commands.CommandTree(self)` creates a CommandTree which acts as the container for slash commands, and binds it to the `discord.Client` subclass instance, so wherever you have access to it, you will also have access to the command tree.
-- Then in the `setup_hook`, `self.tree.copy_global_to(...)` adds the slash command to the guild of which the ID is provided as a `discord.Object` object. Further up, `self.tree.sync()` updates the API with any changes to the slash commands. **Without calling this method, your changes will only be saved locally and will NOT show up on Discord!**
-- Finishing up with the **Client** subclass, we create an instance of the subclassed Client class which here has been named as `SlashClient` with `client = SlashClient()`.
+- `import discord` imports the **discord.py** package. 
+- `class SlashClient(discord.Client)` is a class subclassing **Client**. Though there is no particular reason except readability to subclass the **Client** class, using the `Client.setup_hook = my_func` is equally valid. 
+- Next up `super().__init__(...)` runs the `__init__` function of the **Client** class, this is equivalent to `discord.Client(...)`. Then, `self.tree = discord.app_commands.CommandTree(self)` creates a CommandTree which acts as the container for slash commaands. 
+- Then in the `setup_hook`, `self.tree.copy_global_to(...)` adds the slash command to the guild of which the ID is provided as a `discord.Object` object. Further up, `self.tree.sync()` updates the API with any changes to the slash commands. 
+- Finishing up with the **Client** subclass, we create an instance of the subclassed Client class which here has been named as `SlashClient` with `client = SlashClient()`. 
 - Then using the `command` method of the `CommandTree` we decorate a function with it as `client.tree` is an instance of `CommandTree` for the current application. The command function takes a default argument as said, which acts as the interaction that took place. Catching up is `await interaction.response.send_message("pong")` which sends back a message to the slash command invoker.
 - And the classic old `client.run("token")` is used to connect the client to the discord gateway.
 - Note that the `send_message` is a method of the `InteractionResponse` class and `interaction.response` in this case is an instance of the `InteractionResponse` object. The `send_message` method will not function if the response is not sent within 3 seconds of command invocation. I will discuss about how to handle this issue later following the gist.
@@ -125,7 +113,7 @@ import discord
 class SlashBot(commands.Bot):
     def __init__(self) -> None:
         super().__init__(command_prefix=".", intents=discord.Intents.default())
-
+        
     async def setup_hook(self) -> None:
         self.tree.copy_global_to(guild=discord.Object(id=12345678900987654))
         await self.tree.sync()
@@ -133,7 +121,7 @@ class SlashBot(commands.Bot):
 bot = SlashBot()
 
 @bot.tree.command(name="ping", description="...")
-async def ping(interaction: discord.Interaction) -> None:
+async def _ping(interaction: discord.Interaction) -> None:
     await interaction.response.send_message("pong")
 
 bot.run("token")
@@ -164,20 +152,20 @@ from discord import app_commands
 class MySlashCog(commands.Cog):
     def __init__(self, bot: commands.Bot) -> None:
         self.bot = bot
-
+    
     @app_commands.command(name="ping", description="...")
-    async def ping(self, interaction: discord.Interaction):
+    async def _ping(self, interaction: discord.Interaction):
         await interaction.response.send_message("pong!")
-
+    
 class MySlashBot(commands.Bot):
     def __init__(self) -> None:
         super().__init__(command_prefix="!", intents=discord.Intents.default())
-
+    
     async def setup_hook(self) -> None:
         await self.add_cog(MySlashCog(self))
         await self.tree.copy_global_to(discord.Object(id=123456789098765432))
         await self.tree.sync()
-
+        
 bot = MySlashBot()
 
 bot.run("token")
@@ -215,20 +203,20 @@ class MySlashGroupCog(commands.Cog):
     @app_commands.command(name="ping", description="...")
     async def _ping(self, interaction: discord.) -> None:
         await interaction.response.send_message("pong!")
-
+    
     @group.command(name="command", description="...")
     async def _cmd(self, interaction: discord.Interaction) -> None:
         await interaction.response.send_message("uwu")
-
+    
 class MySlashBot(commands.Bot):
     def __init__(self) -> None:
         super().__init__(command_prefix="!", intents=discord.Intents.default())
-
+    
     async def setup_hook(self) -> None:
         await self.add_cog(MySlashGroupCog(self))
         await self.tree.copy_global_to(discord.Object(id=123456789098765432))
         await self.tree.sync()
-
+        
 bot = MySlashBot()
 
 bot.run("token")
@@ -246,7 +234,7 @@ import discord
 from discord.ext import commands
 from discord import app_commands
 
-class MySlashGroup(commands.GroupCog, name="uwu"):
+class MySlashGroup(app_commands.Group, name="uwu"):
     def __init__(self, bot: commands.Bot) -> None:
         self.bot = bot
         super().__init__()
@@ -254,32 +242,32 @@ class MySlashGroup(commands.GroupCog, name="uwu"):
     @app_commands.command(name="ping", description="...")
     async def _ping(self, interaction: discord.) -> None:
         await interaction.response.send_message("pong!")
-
+    
     @app_commands.command(name="command", description="...")
     async def _cmd(self, interaction: discord.Interaction) -> None:
         await interaction.response.send_message("uwu")
-
+    
 class MySlashBot(commands.Bot):
     def __init__(self) -> None:
         super().__init__(command_prefix="!", intents=discord.Intents.default())
-
+    
     async def setup_hook(self) -> None:
         await self.add_cog(MySlashGroup(self))
         await self.tree.copy_global_to(discord.Object(id=123456789098765432))
         await self.tree.sync()
-
+        
 bot = MySlashBot()
 
 bot.run("token")
 ```
 
 __**EXPLANATION**__
-- The only difference here too is that the `MySlashGroup` class directly subclasses the **GroupCog** class from discord.ext.commands which automatically registers all the methods within the group class to be commands of that specific group. So now, the commands such as `ping` can be run using **/uwu ping** and `command` using **/uwu command**.
+- The only difference here too is that the `MySlashGroup` class directly subclasses the **Group** class from discord.app_commands which automatically registers all the methods within the group class to be commands of that specific group. So now, the commands such as `ping` can be run using **/uwu ping** and `command` using **/uwu command**.
 
 
 # Some common methods and features used for slash commands.
 
----
+--- 
 
 ### A common function used for slash commands is the `describe` function. This is used to add descriptions to the arguments of a slash command. The command function can decorated with this function. It goes by the following syntax as shown below.
 
@@ -361,13 +349,13 @@ import discord
 class Bot(commands.Bot):
     def __init__(self):
         super().__init__(command_prefix="uwu", intents=discord.Intents.all())
-
-
+        
+    
     async def setup_hook(self):
-        self.tree.copy_global_to(guild=discord.Object(id=12345678909876543))
+        self.tree.copy_global_to(guild=discord.Object(id=12345678909876543)) 
         await self.tree.sync()
-
-
+        
+    
 bot = Bot()
 
 @bot.tree.command(name="ping")
@@ -382,7 +370,7 @@ bot.run("token")
 
 __**EXPLANATION**__
 - The first argument the `cooldown` method takes is the amount of times the command can be run in a specific period of time.
-- The second argument it takes is the period of time in which the command can be run the specified number of times.
+- The second argument it takes is the period of time in which the command can be run the specified number of times. 
 - The `CommandOnCooldown` exception can be handled using an error handler. I will discuss about making an error handler for slash commands later in the gist.
 
 
@@ -402,7 +390,7 @@ bot = commands.Bot(command_prefix="!", intents=discord.Intents.default())
 #sync commands
 
 @bot.tree.command(name="ping")
-app_commands.checks.cooldown(1, 30)
+@app_commands.checks.cooldown(1, 30)
 async def ping(interaction: discord.Interaction):
     await interaction.response.send_message("pong!")
 
@@ -410,7 +398,7 @@ async def on_tree_error(interaction: discord.Interaction, error: app_commands.Ap
     if isinstance(error, app_commands.CommandOnCooldown):
         return await interaction.response.send_message(f"Command is currently on cooldown! Try again in **{error.retry_after:.2f}** seconds!")
 
-    elif isinstance(error, ...):
+    elif isinstance(..., ...):
         ...
 
     else:
@@ -423,7 +411,8 @@ bot.run("token")
 
 __**EXPLANATION**__
 
-First we create a simple function named as `on_tree_error` here. To which the first two required arguments are passed, `Interaction` which is named as `interaction` here and `AppCommandError` which is named as `error` here. Then using simple functions and keywords, we make an error handler like above. Here I have used the `isinstance` function which takes in an object and a base class as the second argument, this function returns a bool value. After creating the error handler function, we set the function as the error handler for the slash commands. Here, `bot.tree.on_error = on_tree_error` overwrites the default `on_error` method of the **CommandTree** class with our custom error handler which has been named as `on_tree_error` here.
+First we create a simple function named as `on_tree_error` here. To which the first two required arguments are passed, `Interaction` which is named as `interaction` here and `AppCommandError` which is named as `error` here. Then using simple functions and keywords, we make an error handler like above. Here I have used the `isinstance` function which takes in an object and a base class as the second argument, this function returns a bool value. The `raise error` is just for displayed unhandled errors, i.e. the ones which have not been specificed manually. If this is **removed**, you will not be able to see any exceptions raised due to slash commands and makes debugging the code harder. 
+After creating the error handler function, we set the function as the error handler for the slash commands. Here, `bot.tree.on_error = on_tree_error` overwrites the default `on_error` method of the **CommandTree** class with our custom error handler which has been named as `on_tree_error` here. 
 
 ### Creating an error handler for a specific error!
 
@@ -436,7 +425,7 @@ bot = commands.Bot(command_prefix="!", intents=discord.Intents.default())
 #sync commands
 
 @bot.tree.command(name="ping")
-@app_commands.checks.cooldown(1, 30)
+app_commands.checks.cooldown(1, 30)
 async def ping(interaction: discord.Interaction):
     await interaction.response.send_message("pong!")
 
