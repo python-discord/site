@@ -445,7 +445,7 @@ async def ping_error(interaction: discord.Interaction, error: app_commands.AppCo
     if isinstance(error, app_commands.CommandOnCooldown):
         return await interaction.response.send_message(f"Command is currently on cooldown! Try again in **{error.retry_after:.2f}** seconds!")
 
-    elif isinstance(..., ...):
+    elif isinstance(error, ...):
         ...
 
     else:
