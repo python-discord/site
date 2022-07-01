@@ -6,7 +6,15 @@ description: A simple guide to creating slash commands within discord.py!
 
 ---
 
-Upon resumption of the most popular discord API wrapper library for python, `discord.py`, while catching on to the latest features of the discord API, there have been numerous changes with addition of features to the library. Some additions to the library are -> Buttons support, Select Menus Support, Forms (AKA Modals), Slash Commands (AKA Application Commands) and a bunch of more handy features! All the changes can be found [here](https://discordpy.readthedocs.io/en/latest/migrating.html). Original discord.py gist regarding resumption can be found [here](https://gist.github.com/Rapptz/c4324f17a80c94776832430007ad40e6).
+Upon resumption of the most popular discord API wrapper library for python, `discord.py`, while catching on to the latest features of the discord API, there have been numerous changes with addition of features to the library. Some additions to the library include: 
+
+- Buttons support
+- Select Menus support
+- Forms (AKA Modals)
+- Slash commands (AKA Application Commands)
+...and a bunch more handy features!
+
+All the changes can be found [here](https://discordpy.readthedocs.io/en/latest/migrating.html). Original discord.py gist regarding resumption can be found [here](https://gist.github.com/Rapptz/c4324f17a80c94776832430007ad40e6).
 
 # Why this gist?
 
