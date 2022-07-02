@@ -174,32 +174,6 @@ intents = hikari.Intents(
 bot = hikari.GatewayBot("token", intents=intents)
 ```
 
-<details><summary><b>Intents Table</b></summary>
-
-| Intents                 | Value | Gateway Events                                                                                                                                                                           |
-| ----------------------- | ----- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| DM_MESSAGES             | 4096  | MESSAGE_CREATE<br>MESSAGE_UPDATE<br>MESSAGE_DELETE (DMs only.)                                                                                                                           |
-| DM_MESSAGE_REACTIONS    | 8192  | MESSAGE_REACTION_ADD<br>MESSAGE_REACTION_REMOVE<br>MESSAGE_REACTION_REMOVE_ALL<br>MESSAGE_REACTION_REMOVE_EMOJI (DMs only.)                                                              |
-| DM_MESSAGE_TYPING       | 16384 | TYPING_START (DMs only.)                                                                                                                                                                 |
-| GUILDS                  | 1     | GUILD_CREATE<br>GUILD_UPDATE<br>GUILD_DELETE<br>GUILD_ROLE_CREATE<br>GUILD_ROLE_UPDATE<br>GUILD_ROLE_DELETE<br>CHANNEL_CREATE<br>CHANNEL_UPDATE<br>CHANNEL_DELETE<br>CHANNEL_PINS_UPDATE |
-| GUILD_BANS              | 4     | GUILD_BAN_ADD<br>GUILD_BAN_REMOVE                                                                                                                                                        |
-| GUILD_EMOJIS            | 8     | GUILD_EMOJIS_UPDATE                                                                                                                                                                      |
-| GUILD_INTEGRATIONS      | 16    | INTEGRATION_CREATE<br>INTEGRATION_DELETE<br>INTEGRATION_UPDATE                                                                                                                           |
-| GUILD_INVITES           | 64    | INVITE_CREATE<br>INVITE_DELETE                                                                                                                                                           |
-| GUILD_MEMBERS\*         | 2     | GUILD_MEMBER_ADD<br>GUILD_MEMBER_UPDATE<br>GUILD_MEMBER_REMOVE                                                                                                                           |
-| GUILD_MESSAGES          | 512   | MESSAGE_CREATE (in guilds only)<br>MESSAGE_UPDATE (in guilds only)<br>MESSAGE_DELETE (in guilds only)<br>MESSAGE_BULK_DELETE (in guilds only)<br>                                        |
-| GUILD_MESSAGE_REACTIONS | 1024  | MESSAGE_REACTION_ADD (in guilds only)<br>MESSAGE_REACTION_REMOVE (in guilds only)<br>MESSAGE_REACTION_REMOVE_ALL (in guilds only)<br>MESSAGE_REACTION_REMOVE_EMOJI (in guilds only)<br>  |
-| GUILD_MESSAGE_TYPING    | 2048  | TYPING_START (in guilds only)                                                                                                                                                            |
-| GUILD_PRESENCES\*       | 256   | PRESENCE_UPDATE                                                                                                                                                                          |
-| GUILD_SCHEDULED_EVENTS  | 65536 | GUILD_SCHEDULED_EVENT_CREATE<br>GUILD_SCHEDULED_EVENT_UPDATE<br>GUILD_SCHEDULED_EVENT_DELETE<br>GUILD_SCHEDULED_EVENT_USER_ADD<br>GUILD_SCHEDULED_EVENT_USER_REMOVE                      |
-| GUILD_VOICE_STATES      | 128   | VOICE_STATE_UPDATE                                                                                                                                                                       |
-| GUILD_WEBHOOKS          | 32    | WEBHOOKS_UPDATE                                                                                                                                                                          |
-| MESSAGE_CONTENT\*       | 32768 | -                                                                                                                                                                                        |
-| NONE                    | 0     | -                                                                                                                                                                                        |
-
-- Intents marked with `*` are privilaged intents.
-</details>
-
 ### Privileged Intents
 
 Some intents need to be explicitly enabled from the Discord Developer portal to use them, which include:
@@ -224,9 +198,118 @@ Read more about privileged intents [here](https://support.discord.com/hc/en-us/a
 
 </details>
 
+<details><summary><b>Intents Table</b></summary>
+
+<table>
+<thead>
+<tr>
+<th>Intents</th>
+<th>Value</th>
+<th>Gateway Events</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DM_MESSAGES</td>
+<td>4096</td>
+<td>MESSAGE_CREATE<br>MESSAGE_UPDATE<br>MESSAGE_DELETE (DMs only.)</td>
+</tr>
+<tr>
+<td>DM_MESSAGE_REACTIONS</td>
+<td>8192</td>
+<td>MESSAGE_REACTION_ADD<br>MESSAGE_REACTION_REMOVE<br>MESSAGE_REACTION_REMOVE_ALL<br>MESSAGE_REACTION_REMOVE_EMOJI (DMs only.)</td>
+</tr>
+<tr>
+<td>DM_MESSAGE_TYPING</td>
+<td>16384</td>
+<td>TYPING_START (DMs only.)</td>
+</tr>
+<tr>
+<td>GUILDS</td>
+<td>1</td>
+<td>GUILD_CREATE<br>GUILD_UPDATE<br>GUILD_DELETE<br>GUILD_ROLE_CREATE<br>GUILD_ROLE_UPDATE<br>GUILD_ROLE_DELETE<br>CHANNEL_CREATE<br>CHANNEL_UPDATE<br>CHANNEL_DELETE<br>CHANNEL_PINS_UPDATE</td>
+</tr>
+<tr>
+<td>GUILD_BANS</td>
+<td>4</td>
+<td>GUILD_BAN_ADD<br>GUILD_BAN_REMOVE</td>
+</tr>
+<tr>
+<td>GUILD_EMOJIS</td>
+<td>8</td>
+<td>GUILD_EMOJIS_UPDATE</td>
+</tr>
+<tr>
+<td>GUILD_INTEGRATIONS</td>
+<td>16</td>
+<td>INTEGRATION_CREATE<br>INTEGRATION_DELETE<br>INTEGRATION_UPDATE</td>
+</tr>
+<tr>
+<td>GUILD_INVITES</td>
+<td>64</td>
+<td>INVITE_CREATE<br>INVITE_DELETE</td>
+</tr>
+<tr>
+<td>GUILD_MEMBERS*</td>
+<td>2</td>
+<td>GUILD_MEMBER_ADD<br>GUILD_MEMBER_UPDATE<br>GUILD_MEMBER_REMOVE</td>
+</tr>
+<tr>
+<td>GUILD_MESSAGES</td>
+<td>512</td>
+<td>MESSAGE_CREATE (in guilds only)<br>MESSAGE_UPDATE (in guilds only)<br>MESSAGE_DELETE (in guilds only)<br>MESSAGE_BULK_DELETE (in guilds only)<br></td>
+</tr>
+<tr>
+<td>GUILD_MESSAGE_REACTIONS</td>
+<td>1024</td>
+<td>MESSAGE_REACTION_ADD (in guilds only)<br>MESSAGE_REACTION_REMOVE (in guilds only)<br>MESSAGE_REACTION_REMOVE_ALL (in guilds only)<br>MESSAGE_REACTION_REMOVE_EMOJI (in guilds only)<br></td>
+</tr>
+<tr>
+<td>GUILD_MESSAGE_TYPING</td>
+<td>2048</td>
+<td>TYPING_START (in guilds only)</td>
+</tr>
+<tr>
+<td>GUILD_PRESENCES*</td>
+<td>256</td>
+<td>PRESENCE_UPDATE</td>
+</tr>
+<tr>
+<td>GUILD_SCHEDULED_EVENTS</td>
+<td>65536</td>
+<td>GUILD_SCHEDULED_EVENT_CREATE<br>GUILD_SCHEDULED_EVENT_UPDATE<br>GUILD_SCHEDULED_EVENT_DELETE<br>GUILD_SCHEDULED_EVENT_USER_ADD<br>GUILD_SCHEDULED_EVENT_USER_REMOVE</td>
+</tr>
+<tr>
+<td>GUILD_VOICE_STATES</td>
+<td>128</td>
+<td>VOICE_STATE_UPDATE</td>
+</tr>
+<tr>
+<td>GUILD_WEBHOOKS</td>
+<td>32</td>
+<td>WEBHOOKS_UPDATE</td>
+</tr>
+<tr>
+<td>MESSAGE_CONTENT*</td>
+<td>32768</td>
+<td>-</td>
+</tr>
+<tr>
+<td>NONE</td>
+<td>0</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Intents marked with <code>*</code> are privilaged intents.</li>
+</ul>
+
+</details>
+
 ---
 
-## The RESTApi and Hikari's Cache state
+## REST and Cache implementation.
 
 ### What is REST?
 
@@ -309,7 +392,7 @@ bot.run()
 
 **Explanation**
 
-- 1: MESSAGE_CONTENT intent is required to get the content of a message, else `None` is returned. GUILD_MEMBERS intents is required for cache-ing guild members.
+- 1: `MESSAGE_CONTENT` intent is required to get the content of a message, else `None` is returned. `GUILD_MEMBERS` intents is required for cache-ing guild members.
 - 2: Checking if the message content starts with the string we want as the command.
 - 3: Getting all the members in the server as a dictionary as { member_id: hikari.Member } mapping.
 
@@ -480,6 +563,7 @@ async def send_buttons(event: hikari.MessageCreateEvent) -> None:
 ```
 
 **Explanation**
+
 * `bot.rest.build_action_row()` returns an `hikari.impl.special_endpoints.ActionRowBuilder` class.
 * `action_row.add_button()` adds a button to the action-row, the first argument is the ButtonStyle, the second one is the custom id of the button.
 * `set_label()` adds the label to the button i.e. the text that appears on the button interface.
@@ -511,6 +595,7 @@ bot.run()
 ```
 
 **Explanation**
+
 * The `check` function makes sure that only the button we sent is getting clicked.
 * `GatewayBot.wait_for` is used to wait for an event to get dispatched, it takes the event class as the first argument, along with timeout as a required argument and predicate which is our check function as an optional argument.
 * An asyncio.TimeoutError is raised if the event mentioned is not dispatched with the conditions in the predicate within the time mentioned in the timeout
@@ -568,7 +653,7 @@ bot.run()
 
 ---
 
-## OTHER IMPORTANT INFO
+## Other Important Info
 
 ### uvloop
 
@@ -640,9 +725,7 @@ embed.author = hikari.EmbedAuthor(name="this way too")
 embed.colour = 0x000000  # color is an alias of colour.
 ```
 <details><summary><b>Embed visualization</b></summary>
-
-
-![embed structure](https://raw.githubusercontent.com/sarthhh/hikari_guide/main/assets/embed.png)
+<img src="https://raw.githubusercontent.com/sarthhh/hikari_guide/main/assets/embed.png" alt="embed structure">
 </details>
 
 ---
