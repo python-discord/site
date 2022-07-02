@@ -1,3 +1,11 @@
+---
+title: Getting Started with Hikari
+description: A guide for Discord bot development using hikari library.
+icon: fas fa-info
+---
+
+Pages, which include guides, articles, and other static content,...
+
 # Getting Started with Hikari
 
 ## What is Hikari?
@@ -26,15 +34,15 @@ Support Server: [https://discord.com/invite/Jx4cNGG](https://discord.com/invite/
 
 - Go to the [Discord Developer Portal]() and click on "New Application" to create a new app.
 
-![](https://raw.githubusercontent.com/sarthhh/hikari_guide/main/assets/portal1.png)
+![creating an application](https://raw.githubusercontent.com/sarthhh/hikari_guide/main/assets/portal1.png)
 
 - Go to the "Bot" menu and click on "Add bot"
 
-![](https://raw.githubusercontent.com/sarthhh/hikari_guide/main/assets/portal2.png)
+![creating a bot](https://raw.githubusercontent.com/sarthhh/hikari_guide/main/assets/portal2.png)
 
 - You can then click on "Reset Token" to create a new bot token and copy it.
 
-![](https://raw.githubusercontent.com/sarthhh/hikari_guide/main/assets/portal3.png)
+![generating token](https://raw.githubusercontent.com/sarthhh/hikari_guide/main/assets/portal3.png)
 
 </details>
 
@@ -140,7 +148,7 @@ bot.run()
 
 **Explanation**
 
-- `bot.event_manager.subscribe()` is the method the @listen decorator above used to add a listener to the bot.
+- `bot.event_manager.subscribe()` calls the same method as the @listen decorator above used to add a listener to the bot.
 - This method takes the event class as the first argument and the event function as the second one.
 
 ---
@@ -221,15 +229,15 @@ Read more about privileged intents [here](https://support.discord.com/hc/en-us/a
 
 - Select the "Bot" menu in the sidebar.
 
-![](https://raw.githubusercontent.com/sarthhh/hikari_guide/main/assets/intents.png)
+![selecting menu](https://raw.githubusercontent.com/sarthhh/hikari_guide/main/assets/intents.png)
 
 - Enable the intents you need.
 
-![](https://raw.githubusercontent.com/sarthhh/hikari_guide/main/assets/intents2.png)
+![toggle intents](https://raw.githubusercontent.com/sarthhh/hikari_guide/main/assets/intents2.png)
 
 - Save changes.
 
-![](https://raw.githubusercontent.com/sarthhh/hikari_guide/main/assets/intents3.png)
+![saving changes](https://raw.githubusercontent.com/sarthhh/hikari_guide/main/assets/intents3.png)
 
 </details>
 
@@ -651,7 +659,7 @@ embed.colour = 0x000000  # color is an alias of colour.
 <details><summary><b>Embed visualization</b></summary>
 
 
-![](https://raw.githubusercontent.com/sarthhh/hikari_guide/main/assets/embed.png)
+![embed structure](https://raw.githubusercontent.com/sarthhh/hikari_guide/main/assets/embed.png)
 </details>
 
 ---
