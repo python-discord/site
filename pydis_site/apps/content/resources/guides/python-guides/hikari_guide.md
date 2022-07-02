@@ -1,12 +1,8 @@
 ---
 title: Getting Started with Hikari
 description: A guide for Discord bot development using hikari library.
-icon: fas fa-info
+toc: 2
 ---
-
-Pages, which include guides, articles, and other static content,...
-
-# Getting Started with Hikari
 
 ## What is Hikari?
 
@@ -30,20 +26,13 @@ Support Server: [https://discord.com/invite/Jx4cNGG](https://discord.com/invite/
   - Flow control ( if/else/elif , match/case )
 - A bot application
 
-<details><summary><b>Creating a bot application and getting the token.</b></summary>
-
-- Go to the [Discord Developer Portal]() and click on "New Application" to create a new app.
-
-![creating an application](https://raw.githubusercontent.com/sarthhh/hikari_guide/main/assets/portal1.png)
-
-- Go to the "Bot" menu and click on "Add bot"
-
-![creating a bot](https://raw.githubusercontent.com/sarthhh/hikari_guide/main/assets/portal2.png)
-
-- You can then click on "Reset Token" to create a new bot token and copy it.
-
-![generating token](https://raw.githubusercontent.com/sarthhh/hikari_guide/main/assets/portal3.png)
-
+<details><summary><b>Creating a bot application and getting the token.</b></summary><br>
+Go to the <a href="https://discord.com/developers/applications">Discord Developer Portal</a> and click on "New Application" to create a new app. <br><br>
+<img src="https://raw.githubusercontent.com/sarthhh/hikari_guide/main/assets/portal1.png" alt="create application"> <br><br>
+Go to the "Bot" menu and click on "Add bot" <br><br>
+<img src="https://raw.githubusercontent.com/sarthhh/hikari_guide/main/assets/portal2.png" alt="create bot"><br><br>
+You can then click on "Reset Token" to create a new bot token and copy it.<br><br>
+<img src="https://raw.githubusercontent.com/sarthhh/hikari_guide/main/assets/portal3.png" alt="regen token">
 </details>
 
 ---
@@ -225,19 +214,13 @@ Read more about privileged intents [here](https://support.discord.com/hc/en-us/a
 
 <details><summary><b> Enabling Privileged Intents</b></summary>
 
-- Go to [Discord Developer Portal](https://discord.com/developers/applications) and select the bot application you want to enable the intents for.
-
-- Select the "Bot" menu in the sidebar.
-
-![selecting menu](https://raw.githubusercontent.com/sarthhh/hikari_guide/main/assets/intents.png)
-
-- Enable the intents you need.
-
-![toggle intents](https://raw.githubusercontent.com/sarthhh/hikari_guide/main/assets/intents2.png)
-
-- Save changes.
-
-![saving changes](https://raw.githubusercontent.com/sarthhh/hikari_guide/main/assets/intents3.png)
+<p>Go to <a href="https://discord.com/developers/applications">Discord Developer Portal</a> and select the bot application you want to enable the intents for.</p>
+<p>Select the &quot;Bot&quot; menu in the sidebar.</p>
+<p><img src="https://raw.githubusercontent.com/sarthhh/hikari_guide/main/assets/intents.png" alt="selecting menu"></p>
+<p>Enable the intents you need.</p>
+<p><img src="https://raw.githubusercontent.com/sarthhh/hikari_guide/main/assets/intents2.png" alt="toggle intents"></p>
+<p>Save changes.</p>
+<p><img src="https://raw.githubusercontent.com/sarthhh/hikari_guide/main/assets/intents3.png" alt="saving changes"></p>
 
 </details>
 
@@ -326,9 +309,9 @@ bot.run()
 
 **Explanation**
 
-- #1: MESSAGE_CONTENT intent is required to get the content of a message, else `None` is returned. GUILD_MEMBERS intents is required for cache-ing guild members.
-- #2: Checking if the message content starts with the string we want as the command.
-- #3: Getting all the members in the server as a dictionary as { member_id: hikari.Member } mapping.
+- 1: MESSAGE_CONTENT intent is required to get the content of a message, else `None` is returned. GUILD_MEMBERS intents is required for cache-ing guild members.
+- 2: Checking if the message content starts with the string we want as the command.
+- 3: Getting all the members in the server as a dictionary as { member_id: hikari.Member } mapping.
 
 ---
 
@@ -579,8 +562,8 @@ bot.run()
 
 * `miru.load(bot)` loads the bot into the miru module which is utilized later for other functionalities
 * Creating a `View` class, just like it is done with discord.py
-* #1: While sending the view, it is important to call the `.build()` method, it converts the view to a list of `ActionRowBuilder`s.
-* #2: For the view to listen to messages, it's important to pass the message in `view.start()` method.
+* 1: While sending the view, it is important to call the `.build()` method, it converts the view to a list of `ActionRowBuilder`s.
+* 2: For the view to listen to messages, it's important to pass the message in `view.start()` method.
 
 
 ---
