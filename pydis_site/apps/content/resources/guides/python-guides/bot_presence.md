@@ -165,6 +165,24 @@ async def change_activity():
 change_activity.start()
 ```
 
+## Changing presence in a command
+Here we make a command named `change_bots_presence` to change your bots presence with [`change_presence()`](https://discordpy.readthedocs.io/en/latest/ext/commands/api.html?highlight=bot#discord.ext.commands.Bot.change_presence), which is only accessible by the owner of the application and/or ids in the [owner_ids](https://discordpy.readthedocs.io/en/stable/ext/commands/api.html?highlight=bot%20owner_ids#discord.ext.commands.Bot.owner_ids) kwarg in the bot constructor that will be/should be satisfied by a `list` object due to the usage of the [@commands.is_owner()](https://discordpy.readthedocs.io/en/stable/ext/commands/api.html?highlight=is_owner#discord.ext.commands.is_owner) decorator. For safety a command cooldown has been set per user with a usage of 1 time per 2 minutes with the [@commands.cooldown(1, 120, commands.BucketType.user)](https://discordpy.readthedocs.io/en/stable/ext/commands/api.html?highlight=commands%20cooldown#discord.ext.commands.cooldown) decorator.
+```py
+import discord
+from discord.ext import commands
+
+bot = commands.Bot(command_prefix="<Your prefix>")
+
+@bot.command()
+@commands.is_owner()
+@commands.cooldown(1,  120, commands.BucketType.user)
+async def change_bots_presence(ctx: commands.Context, game: str = "The wumpus game") -> None:
+	await bot.change_presence(activity=discord.Game(game))
+	await ctx.send("My presence has been changed!")
+
+``` 
+
+
 ## FAQ
 
 #### Do discord.py forks also follow the same structure for changing presences?
