@@ -1,7 +1,7 @@
 import logging
 from typing import Dict, List
 
-import requests
+import httpx
 from django.core.handlers.wsgi import WSGIRequest
 from django.http import HttpResponse
 from django.shortcuts import render
@@ -56,12 +56,12 @@ class HomeView(View):
         repo_dict = {}
         try:
             # Fetch the data from the GitHub API
-            api_data: List[dict] = requests.get(
+            api_data: List[dict] = httpx.get(
                 self.github_api,
                 headers=self.headers,
                 timeout=settings.TIMEOUT_PERIOD
             ).json()
-        except requests.exceptions.Timeout:
+        except httpx.TimeoutException:
             log.error("Request to fetch GitHub repository metadata for timed out!")
             return repo_dict
 
