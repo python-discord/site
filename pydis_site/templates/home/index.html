@@ -9,6 +9,13 @@
 {% block content %}
   {% include "base/navbar.html" %}
 
+  <!-- Mobile-only Code Jam Banner -->
+  <section id="mobile-notice" class="is-primary is-hidden-tablet">
+    <a href="/events/code-jams/9/">
+      <img src="{% static "images/events/summer_code_jam_2022/front_page_banners/sign_up.png" %}" alt="Summer Code Jam 2022">
+    </a>
+  </section>
+
   <!-- Wave Hero -->
   <section id="wave-hero" class="section is-hidden-mobile">
 
@@ -37,7 +44,15 @@
               ></iframe>
             </div>
           </div>
+
+          {# Code Jam Banner #}
+          <div id="wave-hero-right" class="column is-half">
+            <a href="/events/code-jams/9/">
+              <img src="{% static "images/events/summer_code_jam_2022/front_page_banners/sign_up.png" %}" alt="Summer Code Jam 2022">
+            </a>
+          </div>
         </div>
+
       </div>
 
     {# Animated wave elements #}
@@ -84,9 +99,9 @@
             <div class="mini-timeline">
               <i class="fa fa-asterisk"></i>
               <i class="fa fa-code"></i>
-              <i class="fab fa-python"></i>
-              <i class="fa fa-alien-monster"></i>
-              <i class="fa fa-duck"></i>
+              <i class="fab fa-lg fa-python"></i>
+              <i class="fab fa-discord"></i>
+              <i class="fa fa-sm fa-terminal"></i>
               <i class="fa fa-bug"></i>
             </div>
 
