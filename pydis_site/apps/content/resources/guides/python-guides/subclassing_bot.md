@@ -1,6 +1,6 @@
 ---
 title: Subclassing Bot
-description: "Subclassing the Bot to add more functionality and customisability."
+description: "Subclassing the discord.py Bot class to add more functionality and customisability."
 ---
 
 ## Basic Subclassing
