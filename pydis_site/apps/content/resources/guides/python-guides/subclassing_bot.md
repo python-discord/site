@@ -10,7 +10,7 @@ First,  a [basic article](https://www.codesdope.com/course/python-subclass-of-a-
 Subclassing Bot can be very beneficial as it provides you with more control and customisability of how your bot functions, also allowing you to add extra features, such as custom bot attributes or methods. For example, the default [Context](https://discordpy.readthedocs.io/en/latest/ext/commands/api.html#discord.ext.commands.Context) can be overriden to add more functionality.
 
 There are two ways to subclass `commands.Bot`, as shown below:
-```py
+```python
 class CustomBot(commands.Bot):
     def __init__(self):
         super().__init__(
@@ -35,7 +35,7 @@ token = YOUR_TOKEN_HERE
 bot.run(token)
 ```
 Or
-```py
+```python
 class CustomBot(commands.Bot):
     def __init__(self, *args, **kwargs): # the key-word arguments are not specified here, unlike the example above
 
