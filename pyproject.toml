@@ -7,10 +7,10 @@ license = "MIT"
 
 [tool.poetry.dependencies]
 python = "3.9.*"
-django = "~=3.2.14"
+django = "~=4.0"
 django-environ = "~=0.4.5"
 django-filter = "~=21.1"
-djangorestframework = "~=3.12.0"
+djangorestframework = "~=3.13"
 psycopg2-binary = "~=2.8.0"
 django-simple-bulma = "~=2.4"
 whitenoise = "~=5.0"
