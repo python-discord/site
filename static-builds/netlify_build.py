@@ -8,6 +8,7 @@
 
 import json
 import os
+import time
 import zipfile
 from pathlib import Path
 from urllib import parse
@@ -29,13 +30,19 @@ if __name__ == "__main__":
     print(f"Fetching download URL from {download_url}")
     response = httpx.get(download_url, follow_redirects=True)
 
-    if response.status_code != 200:
+    if response.status_code // 100 != 2:
         try:
             print(response.json())
         except json.JSONDecodeError:
             pass
 
         response.raise_for_status()
+
+    # The workflow is still pending, retry in a bit
+    while response.status_code == 202:
+        print(f"{response.json()['error']}. Retrying in 10 seconds.")
+        time.sleep(10)
+        response = httpx.get(download_url, follow_redirects=True)
 
     url = response.json()["url"]
     print(f"Downloading build from {url}")

@@ -1,6 +1,4 @@
-import asyncio
 import datetime
-import random
 import unittest
 from unittest import mock
 
@@ -12,16 +10,6 @@ import rest_framework.test
 from django.urls import reverse
 
 from .. import github_utils
-
-
-def patched_raise_for_status(response: httpx.Response):
-    """Fake implementation of raise_for_status which does not need a request to be set."""
-    if response.status_code // 100 != 2:  # pragma: no cover
-        raise httpx.HTTPStatusError(
-            f"Non 2xx response code: {response.status_code}",
-            request=getattr(response, "_request", httpx.Request("GET", "")),
-            response=response
-        )
 
 
 class GeneralUtilityTests(unittest.TestCase):
@@ -51,53 +39,50 @@ class GeneralUtilityTests(unittest.TestCase):
         self.assertLess(decoded["exp"], (datetime.datetime.now() + delta).timestamp())
 
 
-@mock.patch("httpx.AsyncClient", autospec=True)
-@mock.patch("asyncio.sleep", new=mock.AsyncMock(return_value=asyncio.Future))
-@mock.patch("httpx.Response.raise_for_status", new=patched_raise_for_status)
-class WaitForTests(unittest.IsolatedAsyncioTestCase):
-    """Tests the wait_for utility."""
+class WaitForTests(unittest.TestCase):
+    """Tests the check_run_status utility."""
 
-    async def test_wait_for_successful_run(self, client_mock: mock.Mock):
-        """Test that the wait_for method handles successfully runs."""
-        final_url = "some_url" + str(random.randint(0, 10))
+    def test_completed_run(self):
+        final_url = "some_url_string_1234"
 
-        client_mock.get.side_effect = responses = [
-            httpx.Response(200, json={"status": "queued", "url": ""}),
-            httpx.Response(200, json={"status": "pending", "url": ""}),
-            httpx.Response(200, json={
-                "status": "completed",
-                "conclusion": "success",
-                "url": "",
-                "artifacts_url": final_url
-            })
-        ]
-
-        result = await github_utils.wait_for_run(client_mock, responses[0].json())
+        result = github_utils.check_run_status({
+            "status": "completed",
+            "conclusion": "success",
+            "created_at": datetime.datetime.now().strftime(github_utils.ISO_FORMAT_STRING),
+            "artifacts_url": final_url,
+        })
         self.assertEqual(final_url, result)
 
-    async def test_wait_for_failed_run(self, client_mock: mock.Mock):
-        """Test that the wait_for method handles failed runs."""
-        client_mock.get.return_value = httpx.Response(200, json={
-            "status": "completed",
-            "conclusion": "failed",
-        })
+    def test_pending_run(self):
+        """Test that a pending run raises the proper exception."""
+        with self.assertRaises(github_utils.RunPendingError):
+            github_utils.check_run_status({
+                "status": "pending",
+                "created_at": datetime.datetime.now().strftime(github_utils.ISO_FORMAT_STRING),
+            })
 
-        with self.assertRaises(github_utils.ActionFailedError):
-            await github_utils.wait_for_run(client_mock, {"status": "pending", "url": ""})
-
-    async def test_wait_for_timeout(self, client_mock: mock.Mock):
-        """Test that the wait_for method quits after a few attempts."""
-        client_mock.get.side_effect = responses = [
-            httpx.Response(200, json={"status": "pending", "url": ""})
-        ] * (github_utils.MAX_POLLS + 5)
+    def test_timeout_error(self):
+        """Test that a timeout is declared after a certain duration."""
+        # Set the creation time to well before the MAX_RUN_TIME
+        # to guarantee the right conclusion
+        created = (
+            datetime.datetime.now() - github_utils.MAX_RUN_TIME - datetime.timedelta(minutes=10)
+        ).strftime(github_utils.ISO_FORMAT_STRING)
 
         with self.assertRaises(github_utils.RunTimeoutError):
-            await github_utils.wait_for_run(client_mock, responses[0].json())
+            github_utils.check_run_status({"status": "pending", "created_at": created})
+
+    def test_failed_run(self):
+        """Test that a failed run raises the proper exception."""
+        with self.assertRaises(github_utils.ActionFailedError):
+            github_utils.check_run_status({
+                "status": "completed",
+                "conclusion": "failed",
+                "created_at": datetime.datetime.now().strftime(github_utils.ISO_FORMAT_STRING),
+            })
 
 
-async def get_response_authorize(
-    _: httpx.AsyncClient, request: httpx.Request, **__
-) -> httpx.Response:
+def get_response_authorize(_: httpx.Client, request: httpx.Request, **__) -> httpx.Response:
     """
     Helper method for the authorize tests.
 
@@ -141,76 +126,83 @@ async def get_response_authorize(
     return httpx.Response(500, request=request)  # pragma: no cover
 
 
-@mock.patch("httpx.AsyncClient.send", new=get_response_authorize)
+@mock.patch("httpx.Client.send", new=get_response_authorize)
 @mock.patch.object(github_utils, "generate_token", new=mock.Mock(return_value="JWT initial token"))
-class AuthorizeTests(unittest.IsolatedAsyncioTestCase):
+class AuthorizeTests(unittest.TestCase):
     """Test the authorize utility."""
 
-    async def test_invalid_apps_auth(self):
+    def test_invalid_apps_auth(self):
         """Test that an exception is raised if authorization was attempted with an invalid token."""
         with mock.patch.object(github_utils, "generate_token", return_value="Invalid token"):
             with self.assertRaises(httpx.HTTPStatusError) as error:
-                await github_utils.authorize("VALID_OWNER", "VALID_REPO")
+                github_utils.authorize("VALID_OWNER", "VALID_REPO")
 
         exception: httpx.HTTPStatusError = error.exception
         self.assertEqual(401, exception.response.status_code)
         self.assertEqual("auth app/installations", exception.response.json()["error"])
 
-    async def test_missing_repo(self):
+    def test_missing_repo(self):
         """Test that an exception is raised when the selected owner or repo are not available."""
         with self.assertRaises(github_utils.NotFoundError):
-            await github_utils.authorize("INVALID_OWNER", "VALID_REPO")
+            github_utils.authorize("INVALID_OWNER", "VALID_REPO")
         with self.assertRaises(github_utils.NotFoundError):
-            await github_utils.authorize("VALID_OWNER", "INVALID_REPO")
+            github_utils.authorize("VALID_OWNER", "INVALID_REPO")
 
-    async def test_valid_authorization(self):
+    def test_valid_authorization(self):
         """Test that an accessible repository can be accessed."""
-        client = await github_utils.authorize("VALID_OWNER", "VALID_REPO")
+        client = github_utils.authorize("VALID_OWNER", "VALID_REPO")
         self.assertEqual("bearer app access token", client.headers.get("Authorization"))
 
 
-async def get_response_get_artifact(request: httpx.Request, **_) -> httpx.Response:
-    """
-    Helper method for the get_artifact tests.
-
-    Requests are intercepted before being sent out, and the appropriate responses are returned.
-    """
-    path = request.url.path
-
-    if "force_error" in path:
-        return httpx.Response(404, request=request)
-
-    if request.method == "GET":
-        if path == "/repos/owner/repo/actions/runs":
-            return httpx.Response(200, request=request, json={"workflow_runs": [{
-                "name": "action_name",
-                "head_sha": "action_sha"
-            }]})
-        elif path == "/artifact_url":
-            return httpx.Response(200, request=request, json={"artifacts": [{
-                "name": "artifact_name",
-                "archive_download_url": "artifact_download_url"
-            }]})
-        elif path == "/artifact_download_url":
-            response = httpx.Response(302, request=request)
-            response.next_request = httpx.Request("GET", httpx.URL("https://final_download.url"))
-            return response
-
-    # Reaching this point means something has gone wrong
-    return httpx.Response(500, request=request)  # pragma: no cover
-
-
-class ArtifactFetcherTests(unittest.IsolatedAsyncioTestCase):
+class ArtifactFetcherTests(unittest.TestCase):
     """Test the get_artifact utility."""
+
+    @staticmethod
+    def get_response_get_artifact(request: httpx.Request, **_) -> httpx.Response:
+        """
+        Helper method for the get_artifact tests.
+
+        Requests are intercepted before being sent out, and the appropriate responses are returned.
+        """
+        path = request.url.path
+
+        if "force_error" in path:
+            return httpx.Response(404, request=request)
+
+        if request.method == "GET":
+            if path == "/repos/owner/repo/actions/runs":
+                return httpx.Response(
+                    200, request=request, json={"workflow_runs": [{
+                        "name": "action_name",
+                        "head_sha": "action_sha"
+                    }]}
+                )
+            elif path == "/artifact_url":
+                return httpx.Response(
+                    200, request=request, json={"artifacts": [{
+                        "name": "artifact_name",
+                        "archive_download_url": "artifact_download_url"
+                    }]}
+                )
+            elif path == "/artifact_download_url":
+                response = httpx.Response(302, request=request)
+                response.next_request = httpx.Request(
+                    "GET",
+                    httpx.URL("https://final_download.url")
+                )
+                return response
+
+        # Reaching this point means something has gone wrong
+        return httpx.Response(500, request=request)  # pragma: no cover
 
     def setUp(self) -> None:
         self.call_args = ["owner", "repo", "action_sha", "action_name", "artifact_name"]
-        self.client = httpx.AsyncClient(base_url="https://example.com")
+        self.client = httpx.Client(base_url="https://example.com")
 
         self.patchers = [
-            mock.patch.object(self.client, "send", new=get_response_get_artifact),
+            mock.patch.object(self.client, "send", new=self.get_response_get_artifact),
             mock.patch.object(github_utils, "authorize", return_value=self.client),
-            mock.patch.object(github_utils, "wait_for_run", return_value="artifact_url"),
+            mock.patch.object(github_utils, "check_run_status", return_value="artifact_url"),
         ]
 
         for patcher in self.patchers:
@@ -266,7 +258,7 @@ class GitHubArtifactViewTests(django.test.TestCase):
         }
         cls.url = reverse("api:github-artifacts", kwargs=cls.kwargs)
 
-    async def test_successful(self, artifact_mock: mock.Mock):
+    def test_successful(self, artifact_mock: mock.Mock):
         """Test a proper response is returned with proper input."""
         artifact_mock.return_value = "final download url"
         result = self.client.get(self.url)
@@ -274,7 +266,7 @@ class GitHubArtifactViewTests(django.test.TestCase):
         self.assertIsInstance(result, rest_framework.response.Response)
         self.assertEqual({"url": artifact_mock.return_value}, result.data)
 
-    async def test_failed_fetch(self, artifact_mock: mock.Mock):
+    def test_failed_fetch(self, artifact_mock: mock.Mock):
         """Test that a proper error is returned when the request fails."""
         artifact_mock.side_effect = github_utils.NotFoundError("Test error message")
         result = self.client.get(self.url)

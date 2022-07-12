@@ -1,17 +1,17 @@
 """Utilities for working with the GitHub API."""
 
-import asyncio
 import datetime
 import math
 
 import httpx
 import jwt
-from asgiref.sync import async_to_sync
 
 from pydis_site import settings
 
-MAX_POLLS = 20
-"""The maximum number of attempts at fetching a workflow run."""
+MAX_RUN_TIME = datetime.timedelta(minutes=3)
+"""The maximum time allowed before an action is declared timed out."""
+ISO_FORMAT_STRING = "%Y-%m-%dT%H:%M:%SZ"
+"""The datetime string format GitHub uses."""
 
 
 class ArtifactProcessingError(Exception):
@@ -44,6 +44,12 @@ class RunTimeoutError(ArtifactProcessingError):
     status = 408
 
 
+class RunPendingError(ArtifactProcessingError):
+    """The requested workflow run is still pending, try again later."""
+
+    status = 202
+
+
 def generate_token() -> str:
     """
     Generate a JWT token to access the GitHub API.
@@ -66,7 +72,7 @@ def generate_token() -> str:
     )
 
 
-async def authorize(owner: str, repo: str) -> httpx.AsyncClient:
+def authorize(owner: str, repo: str) -> httpx.Client:
     """
     Get an access token for the requested repository.
 
@@ -75,7 +81,7 @@ async def authorize(owner: str, repo: str) -> httpx.AsyncClient:
         - POST <app_access_token> to get a token to access the given app
         - GET installation/repositories and check if the requested one is part of those
     """
-    client = httpx.AsyncClient(
+    client = httpx.Client(
         base_url=settings.GITHUB_API,
         headers={"Authorization": f"bearer {generate_token()}"},
         timeout=settings.TIMEOUT_PERIOD,
@@ -83,7 +89,7 @@ async def authorize(owner: str, repo: str) -> httpx.AsyncClient:
 
     try:
         # Get a list of app installations we have access to
-        apps = await client.get("app/installations")
+        apps = client.get("app/installations")
         apps.raise_for_status()
 
         for app in apps.json():
@@ -92,11 +98,11 @@ async def authorize(owner: str, repo: str) -> httpx.AsyncClient:
                 continue
 
             # Get the repositories of the specified owner
-            app_token = await client.post(app["access_tokens_url"])
+            app_token = client.post(app["access_tokens_url"])
             app_token.raise_for_status()
             client.headers["Authorization"] = f"bearer {app_token.json()['token']}"
 
-            repos = await client.get("installation/repositories")
+            repos = client.get("installation/repositories")
             repos.raise_for_status()
 
             # Search for the request repository
@@ -111,44 +117,39 @@ async def authorize(owner: str, repo: str) -> httpx.AsyncClient:
 
     except BaseException as e:
         # Close the client if we encountered an unexpected exception
-        await client.aclose()
+        client.close()
         raise e
 
 
-async def wait_for_run(client: httpx.AsyncClient, run: dict) -> str:
-    """Wait for the provided `run` to finish, and return the URL to its artifacts."""
-    polls = 0
-    while polls <= MAX_POLLS:
-        if run["status"] != "completed":
-            # The action is still processing, wait a bit longer
-            polls += 1
-            await asyncio.sleep(10)
+def check_run_status(run: dict) -> str:
+    """Check if the provided run has been completed, otherwise raise an exception."""
+    created_at = datetime.datetime.strptime(run["created_at"], ISO_FORMAT_STRING)
+    run_time = datetime.datetime.now() - created_at
 
-        elif run["conclusion"] != "success":
-            # The action failed, or did not run
-            raise ActionFailedError(f"The requested workflow ended with: {run['conclusion']}")
-
+    if run["status"] != "completed":
+        if run_time <= MAX_RUN_TIME:
+            raise RunPendingError(
+                f"The requested run is still pending. It was created "
+                f"{run_time.seconds // 60}:{run_time.seconds % 60 :>02} minutes ago."
+            )
         else:
-            # The desired action was found, and it ended successfully
-            return run["artifacts_url"]
+            raise RunTimeoutError("The requested workflow was not ready in time.")
 
-        run = await client.get(run["url"])
-        run.raise_for_status()
-        run = run.json()
+    if run["conclusion"] != "success":
+        # The action failed, or did not run
+        raise ActionFailedError(f"The requested workflow ended with: {run['conclusion']}")
 
-    raise RunTimeoutError("The requested workflow was not ready in time.")
+    # The requested action is ready
+    return run["artifacts_url"]
 
 
-@async_to_sync
-async def get_artifact(
-    owner: str, repo: str, sha: str, action_name: str, artifact_name: str
-) -> str:
+def get_artifact(owner: str, repo: str, sha: str, action_name: str, artifact_name: str) -> str:
     """Get a download URL for a build artifact."""
-    client = await authorize(owner, repo)
+    client = authorize(owner, repo)
 
     try:
         # Get the workflow runs for this repository
-        runs = await client.get(f"/repos/{owner}/{repo}/actions/runs", params={"per_page": 100})
+        runs = client.get(f"/repos/{owner}/{repo}/actions/runs", params={"per_page": 100})
         runs.raise_for_status()
         runs = runs.json()
 
@@ -161,16 +162,16 @@ async def get_artifact(
                 "Could not find a run matching the provided settings in the previous hundred runs."
             )
 
-        # Wait for the workflow to finish
-        url = await wait_for_run(client, run)
+        # Check the workflow status
+        url = check_run_status(run)
 
         # Filter the artifacts, and return the download URL
-        artifacts = await client.get(url)
+        artifacts = client.get(url)
         artifacts.raise_for_status()
 
         for artifact in artifacts.json()["artifacts"]:
             if artifact["name"] == artifact_name:
-                data = await client.get(artifact["archive_download_url"])
+                data = client.get(artifact["archive_download_url"])
                 if data.status_code == 302:
                     return str(data.next_request.url)
 
@@ -180,4 +181,4 @@ async def get_artifact(
         raise NotFoundError("Could not find an artifact matching the provided name.")
 
     finally:
-        await client.aclose()
+        client.close()
