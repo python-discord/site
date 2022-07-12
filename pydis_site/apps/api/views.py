@@ -1,6 +1,9 @@
 from rest_framework.exceptions import ParseError
+from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
+
+from . import github_utils
 
 
 class HealthcheckView(APIView):
@@ -152,3 +155,53 @@ class RulesView(APIView):
                 "Do not offer or ask for paid work of any kind."
             ),
         ])
+
+
+class GitHubArtifactsView(APIView):
+    """
+    Provides utilities for interacting with the GitHub API and obtaining action artifacts.
+
+    ## Routes
+    ### GET /github/artifacts
+    Returns a download URL for the artifact requested.
+
+        {
+            'url': 'https://pipelines.actions.githubusercontent.com/...'
+        }
+
+    ### Exceptions
+    In case of an error, the following body will be returned:
+
+        {
+            "error_type": "<error class name>",
+            "error": "<error description>",
+            "requested_resource": "<owner>/<repo>/<sha>/<artifact_name>"
+        }
+
+    ## Authentication
+    Does not require any authentication nor permissions.
+    """
+
+    authentication_classes = ()
+    permission_classes = ()
+
+    def get(
+        self,
+        request: Request,
+        *,
+        owner: str,
+        repo: str,
+        sha: str,
+        action_name: str,
+        artifact_name: str
+    ) -> Response:
+        """Return a download URL for the requested artifact."""
+        try:
+            url = github_utils.get_artifact(owner, repo, sha, action_name, artifact_name)
+            return Response({"url": url})
+        except github_utils.ArtifactProcessingError as e:
+            return Response({
+                "error_type": e.__class__.__name__,
+                "error": str(e),
+                "requested_resource": f"{owner}/{repo}/{sha}/{action_name}/{artifact_name}"
+            }, status=e.status)
