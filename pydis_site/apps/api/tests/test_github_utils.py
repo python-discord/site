@@ -21,7 +21,7 @@ class GeneralUtilityTests(unittest.TestCase):
             """
             Intercept the encode method.
 
-            It is performed with an algorithm which does not require a PEM key, as it may
+            The result is encoded with an algorithm which does not require a PEM key, as it may
             not be available in testing environments.
             """
             self.assertEqual("RS256", algorithm, "The GitHub App JWT must be signed using RS256.")
@@ -39,10 +39,11 @@ class GeneralUtilityTests(unittest.TestCase):
         self.assertLess(decoded["exp"], (datetime.datetime.now() + delta).timestamp())
 
 
-class WaitForTests(unittest.TestCase):
+class CheckRunTests(unittest.TestCase):
     """Tests the check_run_status utility."""
 
     def test_completed_run(self):
+        """Test that an already completed run returns the correct URL."""
         final_url = "some_url_string_1234"
 
         result = github_utils.check_run_status({
@@ -245,20 +246,17 @@ class ArtifactFetcherTests(unittest.TestCase):
 class GitHubArtifactViewTests(django.test.TestCase):
     """Test the GitHub artifact fetch API view."""
 
-    @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
-
-        cls.kwargs = {
+    def setUp(self):
+        self.kwargs = {
             "owner": "test_owner",
             "repo": "test_repo",
             "sha": "test_sha",
             "action_name": "test_action",
             "artifact_name": "test_artifact",
         }
-        cls.url = reverse("api:github-artifacts", kwargs=cls.kwargs)
+        self.url = reverse("api:github-artifacts", kwargs=self.kwargs)
 
-    def test_successful(self, artifact_mock: mock.Mock):
+    def test_correct_artifact(self, artifact_mock: mock.Mock):
         """Test a proper response is returned with proper input."""
         artifact_mock.return_value = "final download url"
         result = self.client.get(self.url)
