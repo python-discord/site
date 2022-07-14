@@ -16,9 +16,9 @@
         <p><strong>Your solution must only communicate through WebSockets</strong>. Any communication between the client and server (or any two server workers), must utilize WebSockets.</p>
 
         <p>
-            Exceptions to this rule are made for resources such as databases and files, albeit excluding usage other than for storage.
+            An exception to this rule is that communication with databases and files is allowed for accessing resources or for storage purposes. 
             For example, you may use PostgreSQL as a database but not its `NOTIFY` command.
-            Lastly, working with subprocesses (through stdin/stdout or <code>multiprocessing.Pool()</code>/<code>concurrent.futures.ProcessPoolExecutor()</code>) is also exempted from this rule.
+            Working with subprocesses (through stdin/stdout or <code>multiprocessing.Pool()</code>/<code>concurrent.futures.ProcessPoolExecutor()</code>) is also allowed.
         </p>
     </li>
     <li><p>Your solution should be platform agnostic. For example, if you use filepaths in your submission, use <code>pathlib</code> to create platform agnostic Path objects instead of hardcoding the paths.</p></li>
