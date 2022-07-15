@@ -10,21 +10,21 @@ We have a small but strict set of rules on our server. Please read over them and
 > 3. Respect staff members and listen to their instructions.
 > 4. Use English to the best of your ability. Be polite if someone speaks English imperfectly.
 > 5. Do not provide or request help on projects that may break laws, breach terms of services, or are malicious or inappropriate.
-> 6.  Do not post unapproved advertising.
-> 7.  Keep discussions relevant to the channel topic. Each channel's description tells you the topic.
+> 6. Do not post unapproved advertising.
+> 7. Keep discussions relevant to the channel topic. Each channel's description tells you the topic.
 > 8. Do not help with ongoing exams. When helping with homework, help people learn how to do the assignment without doing it for them.
 > 9. Do not offer or ask for paid work of any kind.
 
-# Nickname Policy
+# Name & Profile Policy
 
-In order to keep things pleasant and workable for both users and staff members, we enforce the following requirements regarding your nickname.
+In order to keep things pleasant and workable for both users and staff members, we enforce the following requirements regarding your name, avatar, and profile. Staff reserve the right to change any nickname we judge to be violating these requirements.
 
-1. No blank or "invisible" names
-2. No slurs or other offensive sentiments
-3. No noisy unicode characters - for example, z̯̯͡a̧͎̺̻̝͕̠l̡͓̫̣g̹̲o̡̼̘ or byte order marks
-4. No nicknames designed to annoy other users
+We also reserve the right to enforce compliance of hateful or otherwise inappropriate usernames and profiles regardless of the server-specific nickname or profile.
+​
 
-Staff reserves the right to change the nickname of any user for any reason. Failure to comply with these requirements may result in you losing the right to change your nickname. We also reserve the right to discipline users with offensive usernames, regardless of the nickname they're using.
+1. No blank or "invisible" names.
+2. No slurs or other offensive sentiments or imagery.
+3. No noisy unicode characters (for example z̯̯͡a̧͎̺̻̝͕̠l̡͓̫̣g̹̲o̡̼̘) or rapidly flashing avatars.
 
 
 # Infractions

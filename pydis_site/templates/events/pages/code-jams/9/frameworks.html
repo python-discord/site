@@ -1,0 +1,148 @@
+{% extends "events/base_sidebar.html" %}
+
+{% load static %}
+
+{% block title %}Summer Code Jam 2022{% endblock %}
+
+{% block breadcrumb %}
+    <li><a href="{% url "events:index" %}">Events</a></li>
+    <li><a href="{% url "events:page" path="code-jams" %}">Code Jams</a></li>
+    <li><a href="{% url "events:page" path="code-jams/9" %}">Summer Code Jam 2022</a></li>
+    <li class="is-active"><a href="#">Approved Frameworks</a></li>
+{% endblock %}
+
+{% block event_content %}
+    <p>Below is the list of approved frameworks that you can use for the code jam.
+        Please work with your team to choose a library that everyone can and want to develop with.
+        If there is a library not listed below that you think should be here, you're welcome to discuss it with the Events Team over at <a href="https://discord.gg/HnGd3znxhJ">the server</a>.
+    </p>
+
+    <div class="notification is-info is-light">
+        <p>Most of the below frameworks implement what is called the ASGI Specification.
+            This specification documents how the frameworks should interact with ASGI servers.
+            You are also allowed to <strong>work with the ASGI specification directly</strong> without a framework, if your team so chooses to.
+            Refer to the <a href="https://asgi.readthedocs.io/en/latest/">specification online</a>.
+        </p>
+    </div>
+
+    <h3 id="approved-frameworks"><a href="#approved-frameworks">Approved Frameworks</a></h3>
+
+    <div class="card mb-4">
+        <div class="card-content">
+            <div class="content">
+                <p class="subtitle">FastAPI</p>
+                <p>FastAPI is a modern web framework great for WebSockets based on standard Python type hints which provides great editor support.</p>
+            </div>
+        </div>
+        <div class="card-footer">
+            <a href="https://fastapi.tiangolo.com/advanced/websockets" class="card-footer-item"><i class="fas fa-book"></i>&ensp;Documentation</a>
+            <a href="https://github.com/tiangolo/fastapi" class="card-footer-item"><i class="fab fa-github"></i>&ensp;GitHub</a>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-content">
+            <div class="content">
+                <p class="subtitle">Starlette</p>
+                <p>Starlette is a lightweight ASGI framework/toolkit, which is ideal for building async web services in Python.
+                </p>
+            </div>
+        </div>
+        <div class="card-footer">
+            <a href="https://www.starlette.io/websockets" class="card-footer-item"><i class="fas fa-book"></i>&ensp;Documentation</a>
+            <a href="https://github.com/encode/starlette" class="card-footer-item"><i class="fab fa-github"></i>&ensp;GitHub</a>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-content">
+            <div class="content">
+                <p class="subtitle">websockets</p>
+                <p>websockets is a library for building both WebSocket clients and servers with focus on simplicity and performance.
+                </p>
+            </div>
+        </div>
+        <div class="card-footer">
+            <a href="https://websockets.readthedocs.io/en/stable" class="card-footer-item"><i class="fas fa-book"></i>&ensp;Documentation</a>
+            <a href="https://github.com/aaugustin/websockets" class="card-footer-item"><i class="fab fa-github"></i>&ensp;GitHub</a>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-content">
+            <div class="content">
+                <p class="subtitle">Django Channels</p>
+                <p>Django Channels adds WebSocket-support to Django - built on ASGI like other web frameworks.
+                </p>
+            </div>
+        </div>
+        <div class="card-footer">
+            <a href="https://channels.readthedocs.io/en/stable" class="card-footer-item"><i class="fas fa-book"></i>&ensp;Documentation</a>
+            <a href="https://github.com/django/channels" class="card-footer-item"><i class="fab fa-github"></i>&ensp;GitHub</a>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-content">
+            <div class="content">
+                <p class="subtitle">Flask-SocketIO</p>
+                <p>Flask-SocketIO gives Flask applications access to low latency bi-directional communications between the clients and the server.
+                </p>
+            </div>
+        </div>
+        <div class="card-footer">
+            <a href="https://flask-socketio.readthedocs.io/en/latest" class="card-footer-item"><i class="fas fa-book"></i>&ensp;Documentation</a>
+            <a href="https://github.com/miguelgrinberg/flask-socketio" class="card-footer-item"><i class="fab fa-github"></i>&ensp;GitHub</a>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-content">
+            <div class="content">
+                <p class="subtitle">wsproto</p>
+                <p>wsproto is a pure-Python WebSocket protocol stack written to be as flexible as possible by having the user build the bridge to the I/O.
+                </p>
+            </div>
+        </div>
+        <div class="card-footer">
+            <a href="https://python-hyper.org/projects/wsproto/en/stable" class="card-footer-item"><i class="fas fa-book"></i>&ensp;Documentation</a>
+            <a href="https://github.com/python-hyper/wsproto" class="card-footer-item"><i class="fab fa-github"></i>&ensp;GitHub</a>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-content">
+            <div class="content">
+                <p class="subtitle">Starlite</p>
+                <p>Starlite is a light and flexible ASGI API framework, using Starlette and Pydantic as foundations.
+                </p>
+            </div>
+        </div>
+        <div class="card-footer">
+            <a href="https://starlite-api.github.io/starlite" class="card-footer-item"><i class="fas fa-book"></i>&ensp;Documentation</a>
+            <a href="https://github.com/starlite-api/starlite" class="card-footer-item"><i class="fab fa-github"></i>&ensp;GitHub</a>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-content">
+            <div class="content">
+                <p class="subtitle">Sanic</p>
+                <p>Sanic is an ASGI compliant web framework designed for speed and simplicity.
+                </p>
+            </div>
+        </div>
+        <div class="card-footer">
+            <a href="https://sanic.dev/en/guide/advanced/websockets.html" class="card-footer-item"><i class="fas fa-book"></i>&ensp;Documentation</a>
+            <a href="https://github.com/sanic-org/sanic" class="card-footer-item"><i class="fab fa-github"></i>&ensp;GitHub</a>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+{% block sidebar %}
+
+    {% include "events/sidebar/code-jams/9.html" %}
+
+{% endblock %}

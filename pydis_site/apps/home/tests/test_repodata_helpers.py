@@ -36,7 +36,7 @@ class TestRepositoryMetadataHelpers(TestCase):
         """Executed before each test method."""
         self.home_view = HomeView()
 
-    @mock.patch('requests.get', side_effect=mocked_requests_get)
+    @mock.patch('httpx.get', side_effect=mocked_requests_get)
     def test_returns_metadata(self, _: mock.MagicMock):
         """Test if the _get_repo_data helper actually returns what it should."""
         metadata = self.home_view._get_repo_data()
@@ -59,7 +59,7 @@ class TestRepositoryMetadataHelpers(TestCase):
         self.assertIsInstance(metadata[0], RepositoryMetadata)
         self.assertIsInstance(str(metadata[0]), str)
 
-    @mock.patch('requests.get', side_effect=mocked_requests_get)
+    @mock.patch('httpx.get', side_effect=mocked_requests_get)
     def test_refresh_stale_metadata(self, _: mock.MagicMock):
         """Test if the _get_repo_data helper will refresh when the data is stale."""
         repo_data = RepositoryMetadata(
@@ -75,7 +75,7 @@ class TestRepositoryMetadataHelpers(TestCase):
 
         self.assertIsInstance(metadata[0], RepositoryMetadata)
 
-    @mock.patch('requests.get', side_effect=mocked_requests_get)
+    @mock.patch('httpx.get', side_effect=mocked_requests_get)
     def test_returns_api_data(self, _: mock.MagicMock):
         """Tests if the _get_api_data helper returns what it should."""
         api_data = self.home_view._get_api_data()
@@ -86,7 +86,7 @@ class TestRepositoryMetadataHelpers(TestCase):
         self.assertIn(repo, api_data.keys())
         self.assertIn("stargazers_count", api_data[repo])
 
-    @mock.patch('requests.get', side_effect=mocked_requests_get)
+    @mock.patch('httpx.get', side_effect=mocked_requests_get)
     def test_mocked_requests_get(self, mock_get: mock.MagicMock):
         """Tests if our mocked_requests_get is returning what it should."""
         success_data = mock_get(HomeView.github_api)
@@ -98,7 +98,7 @@ class TestRepositoryMetadataHelpers(TestCase):
         self.assertIsNotNone(success_data.json_data)
         self.assertIsNone(fail_data.json_data)
 
-    @mock.patch('requests.get')
+    @mock.patch('httpx.get')
     def test_falls_back_to_database_on_error(self, mock_get: mock.MagicMock):
         """Tests that fallback to the database is performed when we get garbage back."""
         repo_data = RepositoryMetadata(
@@ -117,12 +117,15 @@ class TestRepositoryMetadataHelpers(TestCase):
         [item] = metadata
         self.assertEqual(item, repo_data)
 
-    @mock.patch('requests.get')
+    @mock.patch('httpx.get')
     def test_falls_back_to_database_on_error_without_entries(self, mock_get: mock.MagicMock):
         """Tests that fallback to the database is performed when we get garbage back."""
         mock_get.return_value.json.return_value = ['garbage']
 
-        metadata = self.home_view._get_repo_data()
+        # Capture logs and ensure the problematic response is logged
+        with self.assertLogs():
+            metadata = self.home_view._get_repo_data()
+
         self.assertEquals(len(metadata), 0)
 
     def test_cleans_up_stale_metadata(self):

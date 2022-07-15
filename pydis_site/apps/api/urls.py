@@ -2,8 +2,11 @@ from django.urls import include, path
 from rest_framework.routers import DefaultRouter
 
 from .views import HealthcheckView, RulesView
-from .viewsets import (  # noqa: I101 - Preserving the filter order
+from .viewsets import (
+    AocAccountLinkViewSet,
+    AocCompletionistBlockViewSet,
     BotSettingViewSet,
+    BumpedThreadViewSet,
     DeletedMessageViewSet,
     DocumentationLinkViewSet,
     FilterListViewSet,
@@ -24,6 +27,14 @@ bot_router.register(
     FilterListViewSet
 )
 bot_router.register(
+    "aoc-account-links",
+    AocAccountLinkViewSet
+)
+bot_router.register(
+    "aoc-completionist-blocks",
+    AocCompletionistBlockViewSet
+)
+bot_router.register(
     'filter/filters',
     FilterViewSet
 )
@@ -32,12 +43,20 @@ bot_router.register(
     BotSettingViewSet
 )
 bot_router.register(
+    'bumped-threads',
+    BumpedThreadViewSet
+)
+bot_router.register(
     'deleted-messages',
     DeletedMessageViewSet
 )
 bot_router.register(
     'documentation-links',
     DocumentationLinkViewSet
+)
+bot_router.register(
+    'filter-lists',
+    FilterListViewSet
 )
 bot_router.register(
     'infractions',

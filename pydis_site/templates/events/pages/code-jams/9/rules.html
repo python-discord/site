@@ -1,0 +1,69 @@
+{% extends "events/base_sidebar.html" %}
+
+{% block title %}Summer Code Jam 2022{% endblock %}
+
+{% block breadcrumb %}
+    <li><a href="{% url "events:index" %}">Events</a></li>
+    <li><a href="{% url "events:page" path="code-jams" %}">Code Jams</a></li>
+    <li><a href="{% url "events:page" path="code-jams/9" %}">Summer Code Jam 2022</a></li>
+    <li class="is-active"><a href="#">Rules</a></li>
+{% endblock %}
+
+{% block event_content %}
+<ol>
+    <li><p>Your solution must use one of the approved frameworks (a list will be released soon). It is not permitted to circumvent this rule by e.g. using the approved framework as a wrapper for another framework.</p></li>
+    <li><p>Your solution should be platform agnostic. For example, if you use filepaths in your submission, use <code>pathlib</code> to create platform agnostic Path objects instead of hardcoding the paths.</p></li>
+    <li>
+        <p>
+            You must document precisely how to install and run your project.
+            This should be as easy as possible, which means you should consider using dependency managers like <code>pipenv</code> or <code>poetry</code>.
+            We would also encourage you to use <code>docker</code> and <code>docker-compose</code> to containerize your project, but this isn't a requirement.
+        </p>
+    </li>
+    <li>
+        You must get contributions from every member of your team, if you have an issue with someone on your team please contact a member of the administration team.
+        These contributions do not necessarily have to be code, for example it's absolutely fine for someone to contribute management, documentation, graphics or audio.
+        <strong>
+            Team members that do not contribute will be removed from the Code Jam, and will not receive their share of any prizes the team may win.
+            They may also be barred from entering future events.
+        </strong>
+    </li>
+    <li><p>You must use GitHub as source control.</p></li>
+    <li>
+        <p>
+            All code and assets must be compatible with the <a href="https://en.wikipedia.org/wiki/MIT_License">MIT license</a>.
+            This is because we will be merging your submission into our <code>summer-code-jam-2022</code> repo at the end of the jam,
+            and this repo is licensed with the MIT license.
+            <strong>Projects that include assets that are incompatible with this license may be disqualified.</strong>
+        </p>
+    </li>
+    <li><p>All code must be written and committed within the time constrictions of the jam. Late commits may be reverted, so make sure you leave enough time to bug test your program.</p></li>
+    <li>
+        <p>
+            Use English as the main language for your project, including names, comments, documentation, and commit messages.
+            Any text displayed in your application should also be in English,
+            although you are allowed to provide the user with options for internationalisation and translation.
+        </p>
+    </li>
+    <li>
+        <p>
+            Your team, once the coding portion of the code jam is complete, must create a video presentation that showcases and explains your final product.
+            This must be in a video format and must be uploaded somewhere for the judges to view (i.e. unlisted Youtube video, Vimeo, etc.)
+            The video can be as simple as a screen recording with annotated text.
+            Teams who do not submit a final video presentation may be disqualified.
+        </p>
+    </li>
+</ol>
+
+<blockquote>
+    Please note that our regular
+    <a href="/pages/rules">community rules</a> and <a href="/pages/code-of-conduct">code of conduct</a>
+    also apply during the event and that we reserve the right to make changes to these rules at any time.
+</blockquote>
+{% endblock %}
+
+{% block sidebar %}
+
+    {% include "events/sidebar/code-jams/9.html" %}
+
+{% endblock %}

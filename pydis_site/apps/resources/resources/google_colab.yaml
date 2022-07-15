@@ -1,0 +1,17 @@
+description: Google Colab is a custom version of Jupyter Notebook that runs code in the cloud, allowing you to
+  share your Colab notebooks with other people and work collaboratively.
+  Colab offers a generous amount of memory and computation time for free, and allows you to run programs on GPUs,
+  making it a great deep learning sandbox for beginners.
+name: Google Colab
+title_url: https://colab.research.google.com/notebooks/intro.ipynb
+tags:
+  topics:
+    - general
+    - data science
+  payment_tiers:
+    - free
+  difficulty:
+    - beginner
+    - intermediate
+  type:
+    - tool

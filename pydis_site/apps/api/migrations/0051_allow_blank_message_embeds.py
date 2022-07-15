@@ -3,7 +3,6 @@
 import django.contrib.postgres.fields
 import django.contrib.postgres.fields.jsonb
 from django.db import migrations
-import pydis_site.apps.api.models.utils
 
 
 class Migration(migrations.Migration):
@@ -16,6 +15,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='deletedmessage',
             name='embeds',
-            field=django.contrib.postgres.fields.ArrayField(base_field=django.contrib.postgres.fields.jsonb.JSONField(validators=[pydis_site.apps.api.models.utils.validate_embed]), blank=True, help_text='Embeds attached to this message.', size=None),
+            field=django.contrib.postgres.fields.ArrayField(base_field=django.contrib.postgres.fields.jsonb.JSONField(validators=[]), blank=True, help_text='Embeds attached to this message.', size=None),
         ),
     ]

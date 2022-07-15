@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 import os
 import secrets
 import sys
+import warnings
 from pathlib import Path
 from socket import gethostbyname, gethostname
 
@@ -20,14 +21,19 @@ import environ
 import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
 
-from pydis_site.constants import GIT_SHA
 
 env = environ.Env(
     DEBUG=(bool, False),
     SITE_DSN=(str, ""),
     BUILDING_DOCKER=(bool, False),
     STATIC_BUILD=(bool, False),
+    GIT_SHA=(str, 'development'),
+    TIMEOUT_PERIOD=(int, 5),
+    GITHUB_TOKEN=(str, None),
 )
+
+GIT_SHA = env("GIT_SHA")
+GITHUB_TOKEN = env("GITHUB_TOKEN")
 
 sentry_sdk.init(
     dsn=env('SITE_DSN'),
@@ -48,9 +54,25 @@ if DEBUG:
     ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['*'])
     SECRET_KEY = "yellow polkadot bikini"  # noqa: S105
 
+    # Prevent verbose warnings emitted when passing a non-timezone aware
+    # datetime object to the database, whilst we have time zone support
+    # active. See the Django documentation for more details:
+    # https://docs.djangoproject.com/en/dev/topics/i18n/timezones/
+    warnings.filterwarnings(
+        'error', r"DateTimeField .* received a naive datetime",
+        RuntimeWarning, r'django\.db\.models\.fields',
+    )
+
 elif 'CI' in os.environ:
     ALLOWED_HOSTS = ['*']
     SECRET_KEY = secrets.token_urlsafe(32)
+
+    # See above. We run with `CI=true`, but debug unset in GitHub Actions,
+    # so we also want to filter it there.
+    warnings.filterwarnings(
+        'error', r"DateTimeField .* received a naive datetime",
+        RuntimeWarning, r'django\.db\.models\.fields',
+    )
 
 else:
     ALLOWED_HOSTS = env.list(
@@ -197,6 +219,9 @@ if DEBUG:
 else:
     PARENT_HOST = env('PARENT_HOST', default='pythondiscord.com')
 
+# Django Model Configuration
+DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
+
 # Django REST framework
 # https://www.django-rest-framework.org
 REST_FRAMEWORK = {
@@ -272,6 +297,7 @@ BULMA_SETTINGS = {
         "bulma-dropdown",
         "bulma-navbar-burger",
     ],
+    "fontawesome_token": "ff22cb6f41",
 }
 
 # Information about site repository
@@ -287,3 +313,6 @@ CONTENT_PAGES_PATH = Path(BASE_DIR, "pydis_site", "apps", "content", "resources"
 
 # Path for redirection links
 REDIRECTIONS_PATH = Path(BASE_DIR, "pydis_site", "apps", "redirect", "redirects.yaml")
+
+# How long to wait for synchronous requests before timing out
+TIMEOUT_PERIOD = env("TIMEOUT_PERIOD")

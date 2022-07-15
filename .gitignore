@@ -129,3 +129,6 @@ log.*
 
 # Local Netlify folder
 .netlify
+
+# Mac/OSX
+.DS_Store

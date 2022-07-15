@@ -1,0 +1,13 @@
+description: Miguel Grinberg's fully featured mega-tutorial for learning how to create web applications with the Flask framework.
+name: The Flask Mega-Tutorial
+title_url: https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world
+tags:
+  topics:
+    - web development
+  payment_tiers:
+    - free
+  difficulty:
+    - beginner
+    - intermediate
+  type:
+    - tutorial

@@ -1,0 +1,14 @@
+description: The essential weekly Python podcast. Michael Kennedy and a prominent
+  name within the Python community dive into a topic that relates to their experience.
+name: Talk Python To Me
+title_url: https://talkpython.fm/
+tags:
+  topics:
+    - general
+  payment_tiers:
+    - free
+  difficulty:
+    - beginner
+    - intermediate
+  type:
+    - podcast
