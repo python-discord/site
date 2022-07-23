@@ -11,19 +11,17 @@
 
 {% block event_content %}
 <ol>
-    <li><p>Your solution must use one of the approved frameworks (a list will be released soon). It is not permitted to circumvent this rule by e.g. using the approved framework as a wrapper for another framework.</p></li>
+    <li><p>Your solution must use one of the approved frameworks. It is not permitted to circumvent this rule by e.g. using the approved framework as a wrapper for another framework.</p></li>
     <li>
-        <p><strong>Your solution must only communicate through WebSockets</strong>. Any communication between the client and server (or any two server workers), must utilize WebSockets.</p>
-
         <p>
-            An exception to this rule is that communication with databases and files is allowed for accessing resources or for storage purposes.
-            For example, you may use PostgreSQL as a database but not its <code>NOTIFY</code> command.
-            Working with subprocesses (through stdin/stdout or <code>multiprocessing.Pool()</code>/<code>concurrent.futures.ProcessPoolExecutor()</code>) is also allowed.
+            <strong>The core of your project must use WebSockets as its communication protocol.</strong>.
+            This means that you are allowed to use other methods of communication where WebSockets cannot be implemented, however, that should be a non-significant portion of your project.
+            For example, serving static files for a website cannot be done over WebSockets and it does not pose as a significant portion of a project, therefore it is allowed.
         </p>
 
-        <p>Another exception is made for serving static files, which normally uses HTTP. You are allowed to serve a JavaScript-implemented client for your WebSocket server.</p>
+        <p>This rule does not apply to databases and files when used for <i>storage purposes</i> even though that may be a significant portion of your project. Working with subprocesses (through stdin/stdout or <code>multiprocessing.Pool()</code>/<code>concurrent.futures.ProcessPoolExecutor()</code>) is also exempt from this rule.</p>
 
-        <p>If you're interested in utilizing a particular non-WebSocket method of communication, reach out to the Events Team for discussion and approval</p>
+        <p>If you're unsure about your use of non-WebSocket communication, please reach out to the events team.</p>
     </li>
     <li><p>Your solution should be platform agnostic. For example, if you use filepaths in your submission, use <code>pathlib</code> to create platform agnostic Path objects instead of hardcoding the paths.</p></li>
     <li>
