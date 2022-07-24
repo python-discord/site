@@ -1,7 +1,8 @@
 """Utilities for working with the GitHub API."""
-
+import dataclasses
 import datetime
 import math
+import typing
 
 import httpx
 import jwt
@@ -48,6 +49,29 @@ class RunPendingError(ArtifactProcessingError):
     """The requested workflow run is still pending, try again later."""
 
     status = 202
+
+
+@dataclasses.dataclass(frozen=True)
+class WorkflowRun:
+    """
+    A workflow run from the GitHub API.
+
+    https://docs.github.com/en/rest/actions/workflow-runs#get-a-workflow-run
+    """
+
+    name: str
+    head_sha: str
+    created_at: str
+    status: str
+    conclusion: str
+    artifacts_url: str
+
+    @classmethod
+    def from_raw(cls, data: dict[str, typing.Any]):
+        """Create an instance using the raw data from the API, discarding unused fields."""
+        return cls(**{
+            key.name: data[key.name] for key in dataclasses.fields(cls)
+        })
 
 
 def generate_token() -> str:
@@ -121,12 +145,12 @@ def authorize(owner: str, repo: str) -> httpx.Client:
         raise e
 
 
-def check_run_status(run: dict) -> str:
+def check_run_status(run: WorkflowRun) -> str:
     """Check if the provided run has been completed, otherwise raise an exception."""
-    created_at = datetime.datetime.strptime(run["created_at"], ISO_FORMAT_STRING)
+    created_at = datetime.datetime.strptime(run.created_at, ISO_FORMAT_STRING)
     run_time = datetime.datetime.now() - created_at
 
-    if run["status"] != "completed":
+    if run.status != "completed":
         if run_time <= MAX_RUN_TIME:
             raise RunPendingError(
                 f"The requested run is still pending. It was created "
@@ -135,12 +159,12 @@ def check_run_status(run: dict) -> str:
         else:
             raise RunTimeoutError("The requested workflow was not ready in time.")
 
-    if run["conclusion"] != "success":
+    if run.conclusion != "success":
         # The action failed, or did not run
-        raise ActionFailedError(f"The requested workflow ended with: {run['conclusion']}")
+        raise ActionFailedError(f"The requested workflow ended with: {run.conclusion}")
 
     # The requested action is ready
-    return run["artifacts_url"]
+    return run.artifacts_url
 
 
 def get_artifact(owner: str, repo: str, sha: str, action_name: str, artifact_name: str) -> str:
@@ -155,7 +179,8 @@ def get_artifact(owner: str, repo: str, sha: str, action_name: str, artifact_nam
 
         # Filter the runs for the one associated with the given SHA
         for run in runs["workflow_runs"]:
-            if run["name"] == action_name and sha == run["head_sha"]:
+            run = WorkflowRun.from_raw(run)
+            if run.name == action_name and sha == run.head_sha:
                 break
         else:
             raise NotFoundError(

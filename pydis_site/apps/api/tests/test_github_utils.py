@@ -1,4 +1,6 @@
+import dataclasses
 import datetime
+import typing
 import unittest
 from unittest import mock
 
@@ -42,45 +44,46 @@ class GeneralUtilityTests(unittest.TestCase):
 class CheckRunTests(unittest.TestCase):
     """Tests the check_run_status utility."""
 
+    run_kwargs: typing.Mapping = {
+        "name": "run_name",
+        "head_sha": "sha",
+        "status": "completed",
+        "conclusion": "success",
+        "created_at": datetime.datetime.now().strftime(github_utils.ISO_FORMAT_STRING),
+        "artifacts_url": "url",
+    }
+
     def test_completed_run(self):
         """Test that an already completed run returns the correct URL."""
         final_url = "some_url_string_1234"
 
-        result = github_utils.check_run_status({
-            "status": "completed",
-            "conclusion": "success",
-            "created_at": datetime.datetime.now().strftime(github_utils.ISO_FORMAT_STRING),
-            "artifacts_url": final_url,
-        })
+        kwargs = dict(self.run_kwargs, artifacts_url=final_url)
+        result = github_utils.check_run_status(github_utils.WorkflowRun(**kwargs))
         self.assertEqual(final_url, result)
 
     def test_pending_run(self):
         """Test that a pending run raises the proper exception."""
+        kwargs = dict(self.run_kwargs, status="pending")
         with self.assertRaises(github_utils.RunPendingError):
-            github_utils.check_run_status({
-                "status": "pending",
-                "created_at": datetime.datetime.now().strftime(github_utils.ISO_FORMAT_STRING),
-            })
+            github_utils.check_run_status(github_utils.WorkflowRun(**kwargs))
 
     def test_timeout_error(self):
         """Test that a timeout is declared after a certain duration."""
+        kwargs = dict(self.run_kwargs, status="pending")
         # Set the creation time to well before the MAX_RUN_TIME
         # to guarantee the right conclusion
-        created = (
+        kwargs["created_at"] = (
             datetime.datetime.now() - github_utils.MAX_RUN_TIME - datetime.timedelta(minutes=10)
         ).strftime(github_utils.ISO_FORMAT_STRING)
 
         with self.assertRaises(github_utils.RunTimeoutError):
-            github_utils.check_run_status({"status": "pending", "created_at": created})
+            github_utils.check_run_status(github_utils.WorkflowRun(**kwargs))
 
     def test_failed_run(self):
         """Test that a failed run raises the proper exception."""
+        kwargs = dict(self.run_kwargs, conclusion="failed")
         with self.assertRaises(github_utils.ActionFailedError):
-            github_utils.check_run_status({
-                "status": "completed",
-                "conclusion": "failed",
-                "created_at": datetime.datetime.now().strftime(github_utils.ISO_FORMAT_STRING),
-            })
+            github_utils.check_run_status(github_utils.WorkflowRun(**kwargs))
 
 
 def get_response_authorize(_: httpx.Client, request: httpx.Request, **__) -> httpx.Response:
@@ -172,11 +175,16 @@ class ArtifactFetcherTests(unittest.TestCase):
 
         if request.method == "GET":
             if path == "/repos/owner/repo/actions/runs":
+                run = github_utils.WorkflowRun(
+                    name="action_name",
+                    head_sha="action_sha",
+                    created_at=datetime.datetime.now().strftime(github_utils.ISO_FORMAT_STRING),
+                    status="completed",
+                    conclusion="success",
+                    artifacts_url="artifacts_url"
+                )
                 return httpx.Response(
-                    200, request=request, json={"workflow_runs": [{
-                        "name": "action_name",
-                        "head_sha": "action_sha"
-                    }]}
+                    200, request=request, json={"workflow_runs": [dataclasses.asdict(run)]}
                 )
             elif path == "/artifact_url":
                 return httpx.Response(
