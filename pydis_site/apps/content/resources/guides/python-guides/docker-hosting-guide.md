@@ -102,17 +102,28 @@ Now update the project on your VPS and we can run the bot with Docker.
 $ docker build -t mybot .
 ```
 
+- the `-t` flag specifies a **tag** that will be assigned to the image. With it, we can easily run the image that the tag was assigned to.
+- the dot at the end is basically the path to search for Dockerfile. The dot means current directory (`./`)
+
 2. Run the container
 
 ```shell
 $ docker run -d --name mybot mybot:latest
 ```
 
+- `-d` flag tells Docker to run the container in detached mode, meaning it will run the container but will not give us any output from it. If we don't 
+provide it, the `run` will be giving us the output until the application exits. Discord bots aren't supposed to exit after certain time, so we do need this flag
+- `--name` assigns a name to the container. By default, container is identified by id that is not human-readable. To conveniently refer to container when needed,
+we can assign it a name
+- `mybot:latest` means "latest version of `mybot` image"
+
 3. Read bot logs (keep in mind that this utility only allows to read STDERR)
 
 ```shell
 $ docker logs -f mybot
 ```
+
+- `-f` flag tells the docker to keep reading logs as they appear in container and is called "follow mode". To exit press `CTRL + C`.
 
 If everything went successfully, your bot will go online and will keep running!
 
@@ -129,6 +140,12 @@ services:
     container_name: mybot
 ```
 
+- `version` tells Docker what version of `docker-compose` to use. You may check all the versions [here](https://docs.docker.com/compose/compose-file/compose-versioning/)
+- `services` contains services to build and run. Read more about services [here](https://docs.docker.com/compose/compose-file/#services-top-level-element)
+- `main` is a service. We can call it whatever we would like to, not necessarily `main`
+- `build: .` is a path to search from Dockerfile, just like `docker build` command's dot
+- `container_name: mybot` is a container name to use for a bot, just like `docker run --name mybot`
+
 Update the project on VPS, remove the previous container with `docker rm -f mybot` and run this command
 
 ```shell
@@ -136,6 +153,16 @@ docker-compose up -d --build
 ```
 
 Now the docker will automatically build the image for you and run the container.
+
+### Why docker-compose
+The main purpose of `docker-compose` is mostly to allow running several images at once within one container. Mostly we don't need this in discord bots.
+For us, it has the following benefits:
+- we can build and run the container just with one command
+- if we need to parse some environment variables or volumes (more about them further in tutorial) our run command would look like this
+```shell
+$ docker run -d --name mybot -e TOKEN=... -e WEATHER_API_APIKEY=... -e SOME_USEFUL_ENVIRONMENT_VARIABLE=... --net=host -v /home/exenifix/bot-data/data:/app/data -v /home/exenifix/bot-data/images:/app/data/images
+```
+This is pretty long and unreadable. `docker-compose` allows us to transfer those flags into single config file and still use just one short command to run the container.
 
 ## Creating Volumes
 
@@ -149,7 +176,7 @@ $ mkdir mybot-data
 $ echo $(pwd)/mybot-data
 ```
 
-My path is `/home/exenifix/mybot-data`, yours is most likely different.
+My path is `/home/exenifix/mybot-data`, yours is most likely **different**!
 
 2. In your project, store the files that need to be persistant in a separate directory (eg. `data`)
 3. Add the `volumes` construction to `docker-compose` so it looks like this:
@@ -164,7 +191,7 @@ services:
       - /home/exenifix/mybot-data:/app/data
 ```
 
-The path before the colon `:` is the directory *on drive* and the second path is the directory *inside of container*.
+The path before the colon `:` is the directory *on server's drive, outside of container*, and the second path is the directory *inside of container*.
 All the files saved in container in that directory will be saved on drive's directory as well and Docker will be
 accessing them *from drive*.
 
@@ -177,11 +204,11 @@ about them [here](https://docs.github.com/en/actions/using-workflows).
 ### Create repository secret
 
 We will not have the ability to use `.env` files with the workflow, so it's better to store the environment variables
-as **actions secrets**.
+as **actions secrets**. Let's add your discord bot's token as a secret
 
 1. Head to your repository page -> Settings -> Secrets -> Actions
 2. Press `New repository secret`
-3. Give it a name like `TOKEN` and paste the value
+3. Give it a name like `TOKEN` and paste the token
    Now we will be able to access its value in workflow like `${{ secrets.TOKEN }}`. However, we also need to parse the
    variable into container now. Edit `docker-compose` so it looks like this:
 
