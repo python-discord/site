@@ -61,7 +61,7 @@ root.
 FROM python:3.10-bullseye
 ```
 
-2. Next, we need to copy our requirements to some directory *inside the container*. Let's call it `/app`
+2. Next, we need to copy our Python project's external dependencies to some directory *inside the container*. Let's call it `/app`
 
 ```dockerfile
 COPY requirements.txt /app/
