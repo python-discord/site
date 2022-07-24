@@ -49,7 +49,7 @@ class CheckRunTests(unittest.TestCase):
         "head_sha": "sha",
         "status": "completed",
         "conclusion": "success",
-        "created_at": datetime.datetime.now().strftime(github_utils.ISO_FORMAT_STRING),
+        "created_at": datetime.datetime.utcnow().strftime(github_utils.ISO_FORMAT_STRING),
         "artifacts_url": "url",
     }
 
@@ -73,7 +73,7 @@ class CheckRunTests(unittest.TestCase):
         # Set the creation time to well before the MAX_RUN_TIME
         # to guarantee the right conclusion
         kwargs["created_at"] = (
-            datetime.datetime.now() - github_utils.MAX_RUN_TIME - datetime.timedelta(minutes=10)
+            datetime.datetime.utcnow() - github_utils.MAX_RUN_TIME - datetime.timedelta(minutes=10)
         ).strftime(github_utils.ISO_FORMAT_STRING)
 
         with self.assertRaises(github_utils.RunTimeoutError):

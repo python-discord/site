@@ -148,7 +148,7 @@ def authorize(owner: str, repo: str) -> httpx.Client:
 def check_run_status(run: WorkflowRun) -> str:
     """Check if the provided run has been completed, otherwise raise an exception."""
     created_at = datetime.datetime.strptime(run.created_at, ISO_FORMAT_STRING)
-    run_time = datetime.datetime.now() - created_at
+    run_time = datetime.datetime.utcnow() - created_at
 
     if run.status != "completed":
         if run_time <= MAX_RUN_TIME:
