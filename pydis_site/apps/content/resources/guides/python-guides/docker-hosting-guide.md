@@ -54,7 +54,7 @@ $ sudo sh get-docker.sh
 To tell Docker what it has to do to run the application, we need to create a file named `Dockerfile` in our project's
 root.
 
-1. First we need to specify the *base image*. Doing that will make Docker install some apps we need to run our bot, for
+1. First we need to specify the *base image*, which is the OS that the docker container will be running. Doing that will make Docker install some apps we need to run our bot, for
    example the Python interpreter
 
 ```dockerfile
