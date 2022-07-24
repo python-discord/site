@@ -145,7 +145,8 @@ destroyed, we need to use *volumes* that basically save the files from directory
 1. Create a new directory somewhere and copy path to it
 
 ```shell
-$ mkdir mybot-data && echo $(pwd)/mybot-data
+$ mkdir mybot-data
+$ echo $(pwd)/mybot-data
 ```
 
 My path is `/home/exenifix/mybot-data`, yours is most likely different.
