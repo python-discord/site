@@ -23,6 +23,12 @@ class Infraction(ModelReprMixin, models.Model):
         default=timezone.now,
         help_text="The date and time of the creation of this infraction."
     )
+    last_applied = models.DateTimeField(
+        # This default is for backwards compatibility with bot versions
+        # that don't explicitly give a value.
+        default=timezone.now,
+        help_text="The date and time of when this infraction was last applied."
+    )
     expires_at = models.DateTimeField(
         null=True,
         help_text=(
