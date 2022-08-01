@@ -21,7 +21,7 @@ description: This guide shows how to host a bot with Docker and GitHub Actions o
 - how to make docker keep the files throughout the container's runs
 - how to parse environment variables into container
 - how to use GitHub Actions for automation
-- how to setup self-hosted runner
+- how to set up self-hosted runner
 - how to use runner secrets
 
 ## Introduction
@@ -96,7 +96,7 @@ CMD ["python3", "main.py"]
 
 ## Building Image and Running Container
 
-Now update the project on your VPS and we can run the bot with Docker.
+Now update the project on your VPS, so we can run the bot with Docker.
 
 1. Build the image (dot at the end is very important)
 
@@ -136,7 +136,7 @@ If everything went successfully, your bot will go online and will keep running!
 
 ## Using docker-compose
 
-Just 2 commands to run a container is cool but we can shorten it down to just 1 simple command. For that, create
+Just 2 commands to run a container is cool, but we can shorten it down to just 1 simple command. For that, create
 a `docker-compose.yml` file in project's root and fill it with the following contents:
 
 ```yml
@@ -194,7 +194,7 @@ $ echo $(pwd)/mybot-data
 
 My path is `/home/exenifix/mybot-data`, yours is most likely **different**!
 
-2. In your project, store the files that need to be persistant in a separate directory (eg. `data`)
+2. In your project, store the files that need to be persistent in a separate directory (eg. `data`)
 3. Add the `volumes` construction to `docker-compose` so it looks like this:
 
 ```yml
@@ -243,7 +243,7 @@ services:
 
 ### Setup self-hosted runner
 
-To run the workflow on our VPS, we will need to register it as *self hosted runner*.
+To run the workflow on our VPS, we will need to register it as *self-hosted runner*.
 
 1. Head to Settings -> Actions -> Runners
 2. Press `New self-hosted runner`
@@ -314,6 +314,6 @@ Now you should see the logs of your bot until the stop phrase is met.
 
 **WARNING**
 > The utility only reads from STDERR and redirects to STDERR, if you are using STDOUT for logs, it will not work and
-> will be waiting for stop phrase forever. The utility automatically exits if bot's container is stopped (eg. error
-> occured during starting) or if a log line contains a stop phrase. Make sure that your bot 100% displays a stop phrase
+> will be waiting for stop phrase forever. The utility automatically exits if bot's container is stopped (e.g. error
+> occurred during starting) or if a log line contains a stop phrase. Make sure that your bot 100% displays a stop phrase
 > when it's ready otherwise your workflow will get stuck.
