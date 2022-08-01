@@ -260,15 +260,16 @@ Now we have registered our VPS as a self-hosted runner and we can run the workfl
 
 ### Write a workflow
 
-Create a new file `.github/workflows/runner.yml` and paste the following content into it (it is easy to understand so I
-am not going to give many comments)
+Create a new file `.github/workflows/runner.yml` and paste the following content into it. Please pay attention to the `branches` instruction.
+The GitHub's standard main branch name is `main`, however it may be named `master` or something else if you edited its name. Make sure to put
+the correct branch name, otherwise it won't work. More about GitHub workflows syntax [here](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions)
 
 ```yml
 name: Docker Runner
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
 
 jobs:
   run:
