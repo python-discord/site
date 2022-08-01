@@ -114,7 +114,8 @@ $ docker build -t mybot .
 $ docker run -d --name mybot mybot:latest
 ```
 
-- `-d` flag tells Docker to run the container in detached mode, meaning it will run the container in the background of your terminal and not give us
+- `-d` flag tells Docker to run the container in detached mode, meaning it will run the container in the background of
+  your terminal and not give us
   any output from it. If we don't
   provide it, the `run` will be giving us the output until the application exits. Discord bots aren't supposed to exit
   after certain time, so we do need this flag
@@ -260,9 +261,12 @@ Now we have registered our VPS as a self-hosted runner and we can run the workfl
 
 ### Write a workflow
 
-Create a new file `.github/workflows/runner.yml` and paste the following content into it. Please pay attention to the `branches` instruction.
-The GitHub's standard main branch name is `main`, however it may be named `master` or something else if you edited its name. Make sure to put
-the correct branch name, otherwise it won't work. More about GitHub workflows syntax [here](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions)
+Create a new file `.github/workflows/runner.yml` and paste the following content into it. Please pay attention to
+the `branches` instruction.
+The GitHub's standard main branch name is `main`, however it may be named `master` or something else if you edited its
+name. Make sure to put
+the correct branch name, otherwise it won't work. More about GitHub workflows
+syntax [here](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions)
 
 ```yml
 name: Docker Runner
