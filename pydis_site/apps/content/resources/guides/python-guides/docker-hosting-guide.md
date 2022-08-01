@@ -114,7 +114,7 @@ $ docker build -t mybot .
 $ docker run -d --name mybot mybot:latest
 ```
 
-- `-d` flag tells Docker to run the container in detached mode, meaning it will run the container but will not give us
+- `-d` flag tells Docker to run the container in detached mode, meaning it will run the container in the background of your terminal and not give us
   any output from it. If we don't
   provide it, the `run` will be giving us the output until the application exits. Discord bots aren't supposed to exit
   after certain time, so we do need this flag
