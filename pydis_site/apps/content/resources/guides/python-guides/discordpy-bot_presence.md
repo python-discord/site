@@ -53,7 +53,7 @@ All discord.py **status** types can be found [here](https://discordpy.readthedoc
         status=discord.Status.dnd,
     )
     ```
- 
+
 - Idle
     ```py
     import discord
@@ -180,7 +180,7 @@ async def change_bots_presence(ctx: commands.Context, game: str = "The wumpus ga
 	await bot.change_presence(activity=discord.Game(game))
 	await ctx.send("My presence has been changed!")
 
-``` 
+```
 
 
 ## FAQ
