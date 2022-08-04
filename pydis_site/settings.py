@@ -219,6 +219,9 @@ if DEBUG:
 else:
     PARENT_HOST = env('PARENT_HOST', default='pythondiscord.com')
 
+# Django Model Configuration
+DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
+
 # Django REST framework
 # https://www.django-rest-framework.org
 REST_FRAMEWORK = {
