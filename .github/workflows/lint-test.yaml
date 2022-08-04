@@ -97,7 +97,6 @@ jobs:
       - name: Migrations and run tests with coverage.py
         run: |
           python manage.py makemigrations --check
-          python manage.py migrate
           coverage run manage.py test --no-input
           coverage report -m
         env:
