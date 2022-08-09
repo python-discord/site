@@ -95,13 +95,15 @@ class SiteManager:
                 name="pythondiscord.local:8000"
             )
 
-    def prepare_server(self) -> None:
-        """Perform preparation tasks before running the server."""
+    def prepare_environment(self) -> None:
+        """Perform common preparation tasks."""
         django.setup()
 
         print("Applying migrations.")
         call_command("migrate", verbosity=self.verbosity)
 
+    def prepare_server(self) -> None:
+        """Preform runserver-specific preparation tasks."""
         if self.debug:
             # In Production, collectstatic is ran in the Docker image
             print("Collecting static files.")
@@ -121,6 +123,7 @@ class SiteManager:
 
         # Prevent preparing twice when in dev mode due to reloader
         if not self.debug or in_reloader:
+            self.prepare_environment()
             self.prepare_server()
 
         print("Starting server.")
@@ -148,6 +151,11 @@ class SiteManager:
         # Run gunicorn for the production server.
         gunicorn.app.wsgiapp.run()
 
+    def run_tests(self) -> None:
+        """Prepare and run the test suite."""
+        self.prepare_environment()
+        call_command(*sys.argv[1:])
+
 
 def clean_up_static_files(build_folder: Path) -> None:
     """Recursively loop over the build directory and fix links."""
@@ -168,8 +176,12 @@ def clean_up_static_files(build_folder: Path) -> None:
 def main() -> None:
     """Entry point for Django management script."""
     # Use the custom site manager for launching the server
-    if len(sys.argv) > 1 and sys.argv[1] == "run":
-        SiteManager(sys.argv).run_server()
+    if len(sys.argv) > 1 and sys.argv[1] in ("run", "test"):
+        manager = SiteManager(sys.argv)
+        if sys.argv[1] == "run":
+            manager.run_server()
+        elif sys.argv[1] == "test":
+            manager.run_tests()
 
     # Pass any others directly to standard management commands
     else:
