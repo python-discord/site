@@ -95,11 +95,13 @@ else:
     )
     SECRET_KEY = env('SECRET_KEY')
 
+STATIC_BUILD: bool = env("STATIC_BUILD")
+
 # Application definition
 NON_STATIC_APPS = [
     'pydis_site.apps.api',
     'pydis_site.apps.staff',
-] if not env("STATIC_BUILD") else []
+] if not STATIC_BUILD else []
 
 INSTALLED_APPS = [
     *NON_STATIC_APPS,
@@ -130,7 +132,7 @@ if not env("BUILDING_DOCKER"):
 
 NON_STATIC_MIDDLEWARE = [
     'django_prometheus.middleware.PrometheusBeforeMiddleware',
-] if not env("STATIC_BUILD") else []
+] if not STATIC_BUILD else []
 
 # Ensure that Prometheus middlewares are first and last here.
 MIDDLEWARE = [
@@ -175,7 +177,7 @@ WSGI_APPLICATION = 'pydis_site.wsgi.application'
 DATABASES = {
     'default': env.db(),
     'metricity': env.db('METRICITY_DB_URL'),
-} if not env("STATIC_BUILD") else {}
+} if not STATIC_BUILD else {}
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators

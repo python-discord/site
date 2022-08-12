@@ -31,7 +31,7 @@ class Redirect:
 
 def map_redirect(name: str, data: Redirect) -> list[URLPattern]:
     """Return a pattern using the Redirects app, or a static HTML redirect for static builds."""
-    if not settings.env("STATIC_BUILD"):
+    if not settings.STATIC_BUILD:
         # Normal dynamic redirect
         return [path(
             data.original_path,
