@@ -89,9 +89,9 @@ def generate_token() -> str:
         {
             "iat": math.floor((now - datetime.timedelta(seconds=60)).timestamp()),  # Issued at
             "exp": math.floor((now + datetime.timedelta(minutes=9)).timestamp()),  # Expires at
-            "iss": settings.GITHUB_OAUTH_APP_ID,
+            "iss": settings.GITHUB_APP_ID,
         },
-        settings.GITHUB_OAUTH_KEY,
+        settings.GITHUB_APP_KEY,
         algorithm="RS256"
     )
 
