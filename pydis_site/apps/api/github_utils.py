@@ -9,7 +9,7 @@ import jwt
 
 from pydis_site import settings
 
-MAX_RUN_TIME = datetime.timedelta(minutes=3)
+MAX_RUN_TIME = datetime.timedelta(minutes=10)
 """The maximum time allowed before an action is declared timed out."""
 ISO_FORMAT_STRING = "%Y-%m-%dT%H:%M:%SZ"
 """The datetime string format GitHub uses."""
