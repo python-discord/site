@@ -15,6 +15,18 @@ from urllib import parse
 
 import httpx
 
+
+def raise_response(response: httpx.Response) -> None:
+    """Raise an exception from a response if necessary."""
+    if response.status_code // 100 != 2:
+        try:
+            print(response.json())
+        except json.JSONDecodeError:
+            pass
+
+    response.raise_for_status()
+
+
 if __name__ == "__main__":
     owner, repo = parse.urlparse(os.getenv("REPOSITORY_URL")).path.lstrip("/").split("/")[0:2]
 
@@ -29,14 +41,7 @@ if __name__ == "__main__":
     ])
     print(f"Fetching download URL from {download_url}")
     response = httpx.get(download_url, follow_redirects=True)
-
-    if response.status_code // 100 != 2:
-        try:
-            print(response.json())
-        except json.JSONDecodeError:
-            pass
-
-        response.raise_for_status()
+    raise_response(response)
 
     # The workflow is still pending, retry in a bit
     while response.status_code == 202:
@@ -44,6 +49,7 @@ if __name__ == "__main__":
         time.sleep(10)
         response = httpx.get(download_url, follow_redirects=True)
 
+    raise_response(response)
     url = response.json()["url"]
     print(f"Downloading build from {url}")
     zipped_content = httpx.get(url, follow_redirects=True)
