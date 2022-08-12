@@ -52,7 +52,7 @@ if __name__ == "__main__":
     raise_response(response)
     url = response.json()["url"]
     print(f"Downloading build from {url}")
-    zipped_content = httpx.get(url, follow_redirects=True)
+    zipped_content = httpx.get(url, follow_redirects=True, timeout=3 * 60)
     zipped_content.raise_for_status()
 
     zip_file = Path("temp.zip")
