@@ -5,3 +5,9 @@ h1.title a {
 h1.title a:hover {
     color: #7289DA;
 }
+
+.content a * {
+    /* This is the original color, but propagated down the chain */
+    /* which allows for elements inside links, such as codeblocks */
+    color: #7289DA;
+}
