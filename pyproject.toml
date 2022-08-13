@@ -23,6 +23,7 @@ python-frontmatter = "~=1.0"
 django-prometheus = "~=2.1"
 django-distill = "~=2.9.0"
 PyJWT = {version = "~=2.4.0", extras = ["crypto"]}
+pymdown-extensions = "9.5"
 
 [tool.poetry.dev-dependencies]
 coverage = "~=5.0"
