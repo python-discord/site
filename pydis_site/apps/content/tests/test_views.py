@@ -1,9 +1,14 @@
+import textwrap
 from pathlib import Path
 from unittest import TestCase
 
+import django.test
+import markdown
 from django.http import Http404
 from django.test import RequestFactory, SimpleTestCase, override_settings
+from django.urls import reverse
 
+from pydis_site.apps.content.models import Tag
 from pydis_site.apps.content.tests.helpers import (
     BASE_PATH, MockPagesTestCase, PARSED_CATEGORY_INFO, PARSED_HTML, PARSED_METADATA
 )
@@ -180,3 +185,126 @@ class PageOrCategoryViewTests(MockPagesTestCase, SimpleTestCase, TestCase):
                 {"name": PARSED_CATEGORY_INFO["title"], "path": Path("category/subcategory")},
             ]
         )
+
+
+class TagViewTests(django.test.TestCase):
+    """Tests for the TagView class."""
+
+    def setUp(self):
+        """Set test helpers, then set up fake filesystem."""
+        super().setUp()
+
+    def test_valid_tag_returns_200(self):
+        """Test that a page is returned for a valid tag."""
+        Tag.objects.create(name="example", body="This is the tag body.", url="URL")
+        response = self.client.get("/pages/tags/example/")
+        self.assertEqual(200, response.status_code)
+        self.assertIn("This is the tag body", response.content.decode("utf-8"))
+        self.assertTemplateUsed(response, "content/tag.html")
+
+    def test_invalid_tag_404(self):
+        """Test that a tag which doesn't exist raises a 404."""
+        response = self.client.get("/pages/tags/non-existent/")
+        self.assertEqual(404, response.status_code)
+
+    def test_context(self):
+        """Check that the context contains all the necessary data."""
+        body = textwrap.dedent("""
+        ---
+        unused: frontmatter
+        ----
+        Tag content here.
+        """)
+
+        tag = Tag.objects.create(name="example", body=body, url="URL")
+        response = self.client.get("/pages/tags/example/")
+        expected = {
+            "page_title": "example",
+            "page": markdown.markdown("Tag content here."),
+            "tag": tag,
+        }
+        for key in expected:
+            self.assertEqual(
+                expected[key], response.context.get(key), f"context.{key} did not match"
+            )
+
+    def test_markdown(self):
+        """Test that markdown content is rendered properly."""
+        body = textwrap.dedent("""
+        ```py
+        Hello world!
+        ```
+
+        **This text is in bold**
+        """)
+
+        Tag.objects.create(name="example", body=body, url="URL")
+        response = self.client.get("/pages/tags/example/")
+        content = response.content.decode("utf-8")
+
+        self.assertInHTML('<code class="language-py">Hello world!</code>', content)
+        self.assertInHTML("<strong>This text is in bold</strong>", content)
+
+    def test_embed(self):
+        """Test that an embed from the frontmatter is treated correctly."""
+        body = textwrap.dedent("""
+        ---
+        embed:
+            title: Embed title
+            image:
+                url: https://google.com
+        ---
+        Tag body.
+        """)
+
+        Tag.objects.create(name="example", body=body, url="URL")
+        response = self.client.get("/pages/tags/example/")
+        content = response.content.decode("utf-8")
+
+        self.assertInHTML('<img alt="Embed title" src="https://google.com"/>', content)
+        self.assertInHTML("<p>Tag body.</p>", content)
+
+    def test_embed_title(self):
+        """Test that the page title gets set to the embed title."""
+        body = textwrap.dedent("""
+        ---
+        embed:
+            title: Embed title
+        ---
+        """)
+
+        Tag.objects.create(name="example", body=body, url="URL")
+        response = self.client.get("/pages/tags/example/")
+        self.assertEqual(
+            "Embed title",
+            response.context.get("page_title"),
+            "The page title must match the embed title."
+        )
+
+    def test_hyperlinked_item(self):
+        """Test hyperlinking of tags works as intended."""
+        filler_before, filler_after = "empty filler text\n\n", "more\nfiller"
+        body = filler_before + "`!tags return`" + filler_after
+        Tag.objects.create(name="example", body=body, url="URL")
+
+        other_url = reverse("content:tag", kwargs={"name": "return"})
+        response = self.client.get("/pages/tags/example/")
+        self.assertEqual(
+            markdown.markdown(filler_before + f"[`!tags return`]({other_url})" + filler_after),
+            response.context.get("page")
+        )
+
+    def test_tag_root_page(self):
+        """Test the root tag page which lists all tags."""
+        Tag.objects.create(name="tag-1")
+        Tag.objects.create(name="tag-2")
+        Tag.objects.create(name="tag-3")
+
+        response = self.client.get("/pages/tags/")
+        content = response.content.decode("utf-8")
+
+        self.assertTemplateUsed(response, "content/listing.html")
+        self.assertInHTML('<h1 class="title">Tags</h1>', content)
+
+        for tag_number in range(1, 4):
+            self.assertIn(f"tag-{tag_number}</span>", content)

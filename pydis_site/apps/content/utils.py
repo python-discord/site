@@ -56,7 +56,7 @@ def fetch_tags() -> list[Tag]:
     The entire repository is downloaded and extracted locally because
     getting file content would require one request per file, and can get rate-limited.
     """
-    if settings.GITHUB_TOKEN:
+    if settings.GITHUB_TOKEN:  # pragma: no cover
         headers = {"Authorization": f"token {settings.GITHUB_TOKEN}"}
     else:
         headers = {}
@@ -90,7 +90,7 @@ def fetch_tags() -> list[Tag]:
 
 def get_tags() -> list[Tag]:
     """Return a list of all tags visible to the application, from the cache or API."""
-    if settings.STATIC_BUILD:
+    if settings.STATIC_BUILD:  # pragma: no cover
         last_update = None
     else:
         last_update = (
@@ -100,7 +100,7 @@ def get_tags() -> list[Tag]:
 
     if last_update is None or timezone.now() >= (last_update + TAG_CACHE_TTL):
         # Stale or empty cache
-        if settings.STATIC_BUILD:
+        if settings.STATIC_BUILD:  # pragma: no cover
             tags = get_tags_static()
         else:
             tags = fetch_tags()
