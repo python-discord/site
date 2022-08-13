@@ -1,5 +1,6 @@
 {# Base navigation screen for resources #}
 {% extends 'content/base.html' %}
+{% load static %}
 
 {% block page_content %}
     {# Nested Categories #}
@@ -26,10 +27,11 @@
                 <span class="is-size-4 has-text-weight-bold">{{ data.title }}</span>
             </a>
             {% if "tags" in location %}
-                <p class="is-italic">{{ data.description | safe }}</p>
+                <div class="tag-container">{{ data.description | safe }}</div>
             {% else %}
                 <p class="is-italic">{{ data.description }}</p>
             {% endif %}
         </div>
     {% endfor %}
+    <script src="{% static 'js/content/listing.js' %}"></script>
 {% endblock %}

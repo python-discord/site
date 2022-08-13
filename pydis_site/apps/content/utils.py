@@ -131,14 +131,10 @@ def get_category_pages(path: Path) -> dict[str, dict]:
         tags = {}
         for tag in get_tags():
             content = frontmatter.parse(tag.body)[1]
-            if len(content) > 100:
-                # Trim the preview to a maximum of 100 visible characters
-                # This causes some markdown to break, but we ignore that
-                content = content[:100] + "..."
 
             tags[tag.name] = {
                 "title": tag.name,
-                "description": markdown.markdown(content),
+                "description": markdown.markdown(content, extensions=["pymdownx.superfences"]),
                 "icon": "fas fa-tag"
             }
 
