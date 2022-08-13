@@ -31,11 +31,10 @@ class TagView(TemplateView):
         content = body[1]
 
         # Check for tags which can be hyperlinked
-        start = 0
-        while match := COMMAND_REGEX.search(content, start):
+        def sub(match: re.Match) -> str:
             link = reverse("content:tag", kwargs={"name": match.group("name")})
-            content = content[:match.start()] + f"[{match.group()}]({link})" + content[match.end():]
-            start = match.end()
+            return f"[{match.group()}]({link})"
+        content = COMMAND_REGEX.sub(sub, content)
 
         # Add support for some embed elements
         if embed := body[0].get("embed"):
