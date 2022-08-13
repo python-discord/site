@@ -1,13 +1,5 @@
 {% extends 'content/base.html' %}
 
-{% block head %}
-    {{ block.super }}
-    <link rel="stylesheet"
-      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/styles/atom-one-dark.min.css">
-    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/highlight.min.js"></script>
-    <script>hljs.highlightAll();</script>
-{% endblock %}
-
 {% block page_content %}
     {% if relevant_links or toc %}
         <div class="columns is-variable is-8">
