@@ -1,6 +1,8 @@
+{# Base navigation screen for resources #}
 {% extends 'content/base.html' %}
 
 {% block page_content %}
+    {# Nested Categories #}
     {% for category, data in categories.items %}
         <div class="box" style="max-width: 800px;">
             <span class="icon is-size-4 is-medium">
@@ -13,6 +15,8 @@
             <p class="is-italic">{{ data.description }}</p>
         </div>
     {% endfor %}
+
+    {# Single Pages #}
     {% for page, data in pages.items %}
         <div class="box" style="max-width: 800px;">
             <span class="icon is-size-4 is-medium">
@@ -21,7 +25,11 @@
             <a href="{% url "content:page_category" location=path|add:page %}">
                 <span class="is-size-4 has-text-weight-bold">{{ data.title }}</span>
             </a>
-            <p class="is-italic">{{ data.description }}</p>
+            {% if "tags" in location %}
+                <p class="is-italic">{{ data.description | safe }}</p>
+            {% else %}
+                <p class="is-italic">{{ data.description }}</p>
+            {% endif %}
         </div>
     {% endfor %}
 {% endblock %}

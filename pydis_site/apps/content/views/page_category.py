@@ -1,4 +1,3 @@
-import typing as t
 from pathlib import Path
 
 import frontmatter
@@ -25,7 +24,7 @@ class PageOrCategoryView(TemplateView):
 
         return super().dispatch(request, *args, **kwargs)
 
-    def get_template_names(self) -> t.List[str]:
+    def get_template_names(self) -> list[str]:
         """Checks if the view uses the page template or listing template."""
         if self.page_path.is_file():
             template_name = "content/page.html"
@@ -36,7 +35,7 @@ class PageOrCategoryView(TemplateView):
 
         return [template_name]
 
-    def get_context_data(self, **kwargs) -> t.Dict[str, t.Any]:
+    def get_context_data(self, **kwargs) -> dict[str, any]:
         """Assign proper context variables based on what resource user requests."""
         context = super().get_context_data(**kwargs)
 
@@ -73,7 +72,7 @@ class PageOrCategoryView(TemplateView):
         return context
 
     @staticmethod
-    def _get_page_context(path: Path) -> t.Dict[str, t.Any]:
+    def _get_page_context(path: Path) -> dict[str, any]:
         page, metadata = utils.get_page(path)
         return {
             "page": page,
@@ -84,7 +83,7 @@ class PageOrCategoryView(TemplateView):
         }
 
     @staticmethod
-    def _get_category_context(path: Path) -> t.Dict[str, t.Any]:
+    def _get_category_context(path: Path) -> dict[str, any]:
         category = utils.get_category(path)
         return {
             "categories": utils.get_categories(path),
