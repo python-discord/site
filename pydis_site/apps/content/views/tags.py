@@ -8,7 +8,7 @@ from django.urls import reverse
 from django.views.generic import TemplateView
 
 from pydis_site.apps.content import utils
-from pydis_site.apps.content.models.tag import Tag
+from pydis_site.apps.content.models import Tag
 
 COMMAND_REGEX = re.compile(r"`*!tags? (?P<name>[\w\d-]+)`*")
 

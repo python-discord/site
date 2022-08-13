@@ -14,7 +14,7 @@ from django.utils import timezone
 from markdown.extensions.toc import TocExtension
 
 from pydis_site import settings
-from .models.tag import Tag
+from .models import Tag
 
 TAG_URL_BASE = "https://github.com/python-discord/bot/tree/main/bot/resources/tags"
 TAG_CACHE_TTL = datetime.timedelta(hours=1)
