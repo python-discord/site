@@ -1,0 +1,7 @@
+h1.title a {
+    color: black;
+}
+
+h1.title a:hover {
+    color: #7289DA;
+}

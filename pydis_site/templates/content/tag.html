@@ -1,0 +1,21 @@
+{% extends "content/page.html" %}
+{% load static %}
+
+{% block head %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'css/content/tag.css' %}"/>
+    <title>{{ tag.name }}</title>
+{% endblock %}
+
+{% block title_element %}
+    <div class="level">
+        <div class="level-left">{{ block.super }}</div>
+        <div class="level-right">
+            <a class="level-item fab fa-github" href="{{ tag.url }}"></a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block page_content %}
+    {{ block.super }}
+{% endblock %}
