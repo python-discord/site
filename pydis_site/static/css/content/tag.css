@@ -3,3 +3,7 @@
     /* which allows for elements inside links, such as codeblocks */
     color: #7289DA;
 }
+
+.content a *:hover {
+    color: black;
+}
