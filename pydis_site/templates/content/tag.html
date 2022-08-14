@@ -3,6 +3,7 @@
 
 {% block head %}
     {{ block.super }}
+    <link rel="stylesheet" href="{% static 'css/content/color.css' %}"/>
     <link rel="stylesheet" href="{% static 'css/content/tag.css' %}"/>
     <title>{{ tag.name }}</title>
 {% endblock %}
@@ -14,8 +15,4 @@
             <a class="level-item fab fa-github" href="{{ tag.url }}"></a>
         </div>
     </div>
-{% endblock %}
-
-{% block page_content %}
-    {{ block.super }}
 {% endblock %}

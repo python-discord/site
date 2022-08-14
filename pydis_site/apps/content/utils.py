@@ -2,6 +2,7 @@ import datetime
 import functools
 import tarfile
 import tempfile
+import typing
 from io import BytesIO
 from pathlib import Path
 
@@ -16,7 +17,6 @@ from markdown.extensions.toc import TocExtension
 from pydis_site import settings
 from .models import Tag
 
-TAG_URL_BASE = "https://github.com/python-discord/bot/tree/main/bot/resources/tags"
 TAG_CACHE_TTL = datetime.timedelta(hours=1)
 
 
@@ -44,9 +44,13 @@ def get_tags_static() -> list[Tag]:
     """
     Fetch tag information in static builds.
 
+    This also includes some fake tags to preview the tag groups feature.
     This will return a cached value, so it should only be used for static builds.
     """
-    return fetch_tags()
+    tags = fetch_tags()
+    for tag in tags[3:5]:
+        tag.group = "very-cool-group"
+    return tags
 
 
 def fetch_tags() -> list[Tag]:
@@ -79,10 +83,15 @@ def fetch_tags() -> list[Tag]:
             repo.extractall(folder, included)
 
         for tag_file in Path(folder).rglob("*.md"):
+            group = None
+            if tag_file.parent.name != "tags":
+                # Tags in sub-folders are considered part of a group
+                group = tag_file.parent.name
+
             tags.append(Tag(
                 name=tag_file.name.removesuffix(".md"),
+                group=group,
                 body=tag_file.read_text(encoding="utf-8"),
-                url=f"{TAG_URL_BASE}/{tag_file.name}"
             ))
 
     return tags
@@ -114,31 +123,85 @@ def get_tags() -> list[Tag]:
         return Tag.objects.all()
 
 
-def get_tag(name: str) -> Tag:
-    """Return a tag by name."""
-    tags = get_tags()
-    for tag in tags:
-        if tag.name == name:
+def get_tag(path: str) -> typing.Union[Tag, list[Tag]]:
+    """
+    Return a tag based on the search location.
+
+    The tag name and group must match. If only one argument is provided in the path,
+    it's assumed to either be a group name, or a no-group tag name.
+
+    If it's a group name, a list of tags which belong to it is returned.
+    """
+    path = path.split("/")
+    if len(path) == 2:
+        group, name = path[0], path[1]
+    else:
+        name = path[0]
+        group = None
+
+    matches = []
+    for tag in get_tags():
+        if tag.name == name and tag.group == group:
             return tag
+        elif tag.group == name and group is None:
+            matches.append(tag)
+
+    if matches:
+        return matches
 
     raise Tag.DoesNotExist()
+
+
+def get_tag_category(
+    tags: typing.Optional[list[Tag]] = None, *, collapse_groups: bool
+) -> dict[str, dict]:
+    """
+    Generate context data for `tags`, or all tags if None.
+
+    If `tags` is None, `get_tag` is used to populate the data.
+    If `collapse_groups` is True, tags with parent groups are not included in the list,
+    and instead the parent itself is included as a single entry with it's sub-tags
+    in the description.
+    """
+    if not tags:
+        tags = get_tags()
+
+    data = []
+    groups = {}
+
+    # Create all the metadata for the tags
+    for tag in tags:
+        if tag.group is None or not collapse_groups:
+            content = frontmatter.parse(tag.body)[1]
+            data.append({
+                "title": tag.name,
+                "description": markdown.markdown(content, extensions=["pymdownx.superfences"]),
+                "icon": "fas fa-tag",
+            })
+        else:
+            if tag.group not in groups:
+                groups[tag.group] = {
+                    "title": tag.group,
+                    "description": [tag.name],
+                    "icon": "fas fa-tags",
+                }
+            else:
+                groups[tag.group]["description"].append(tag.name)
+
+    # Flatten group description into a single string
+    for group in groups.values():
+        group["description"] = "Contains the following tags: " + ", ".join(group["description"])
+        data.append(group)
+
+    # Sort the tags, and return them in the proper format
+    return {tag["title"]: tag for tag in sorted(data, key=lambda tag: tag["title"].lower())}
 
 
 def get_category_pages(path: Path) -> dict[str, dict]:
     """Get all page names and their metadata at a category path."""
     # Special handling for tags
     if path == Path(__file__).parent / "resources/tags":
-        tags = {}
-        for tag in get_tags():
-            content = frontmatter.parse(tag.body)[1]
-
-            tags[tag.name] = {
-                "title": tag.name,
-                "description": markdown.markdown(content, extensions=["pymdownx.superfences"]),
-                "icon": "fas fa-tag"
-            }
-
-        return {name: tags[name] for name in sorted(tags)}
+        return get_tag_category(collapse_groups=True)
 
     pages = {}
 

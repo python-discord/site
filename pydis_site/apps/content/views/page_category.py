@@ -5,7 +5,7 @@ from django.conf import settings
 from django.http import Http404, HttpRequest, HttpResponse
 from django.views.generic import TemplateView
 
-from pydis_site.apps.content import utils
+from pydis_site.apps.content import models, utils
 
 
 class PageOrCategoryView(TemplateView):
@@ -91,4 +91,7 @@ class PageOrCategoryView(TemplateView):
             "page_title": category["title"],
             "page_description": category["description"],
             "icon": category.get("icon"),
+            "app_name": "content:page_category",
+            "is_tag_listing": "/resources/tags" in path.as_posix(),
+            "tag_url": models.Tag.URL_BASE,
         }

@@ -39,15 +39,21 @@ def get_all_pages() -> DISTILL_RETURN:
 
 
 def get_all_tags() -> DISTILL_RETURN:
-    """Return all tag names in the repository in static builds."""
+    """Return all tag names and groups in static builds."""
+    groups = {None}
     for tag in utils.get_tags_static():
-        yield {"name": tag.name}
+        groups.add(tag.group)
+        yield {"location": (f"{tag.group}/" if tag.group else "") + tag.name}
+
+    groups.remove(None)
+    for group in groups:
+        yield {"location": group}
 
 
 urlpatterns = [
     distill_path("", views.PageOrCategoryView.as_view(), name='pages'),
     distill_path(
-        "tags/<str:name>/",
+        "tags/<path:location>/",
         views.TagView.as_view(),
         name="tag",
         distill_func=get_all_tags

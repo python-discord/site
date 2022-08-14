@@ -2,6 +2,19 @@
 {% extends 'content/base.html' %}
 {% load static %}
 
+{# Show a GitHub button on tag pages #}
+{% block title_element %}
+{% if is_tag_listing %}
+    <link rel="stylesheet" href="{% static "css/content/color.css" %}">
+    <div class="level">
+        <div class="level-left">{{ block.super }}</div>
+        <div class="level-right">
+            <a class="level-item fab fa-github" href="{{ tag_url }}"></a>
+        </div>
+    </div>
+{% endif %}
+{% endblock %}
+
 {% block page_content %}
     {# Nested Categories #}
     {% for category, data in categories.items %}
@@ -23,10 +36,10 @@
             <span class="icon is-size-4 is-medium">
                 <i class="{{ data.icon|default:"fab fa-python" }} is-size-3 is-black has-icon-padding" aria-hidden="true"></i>
             </span>
-            <a href="{% url "content:page_category" location=path|add:page %}">
+            <a href="{% url app_name location=path|add:page %}">
                 <span class="is-size-4 has-text-weight-bold">{{ data.title }}</span>
             </a>
-            {% if "tags" in location %}
+            {% if is_tag_listing %}
                 <div class="tag-container">{{ data.description | safe }}</div>
             {% else %}
                 <p class="is-italic">{{ data.description }}</p>

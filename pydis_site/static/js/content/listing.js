@@ -4,6 +4,11 @@
 function trimTag() {
     const containers = document.getElementsByClassName("tag-container");
     for (const container of containers) {
+        if (container.textContent.startsWith("Contains the following tags:")) {
+            // Tag group, no need to trim
+            continue;
+        }
+
         // Remove every element after the first two paragraphs
         while (container.children.length > 2) {
             container.removeChild(container.lastChild);
