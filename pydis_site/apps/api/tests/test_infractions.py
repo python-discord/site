@@ -56,15 +56,17 @@ class InfractionTests(AuthenticatedAPITestCase):
             type='ban',
             reason='He terk my jerb!',
             hidden=True,
+            inserted_at=dt(2020, 10, 10, 0, 0, 0, tzinfo=timezone.utc),
             expires_at=dt(5018, 11, 20, 15, 52, tzinfo=timezone.utc),
-            active=True
+            active=True,
         )
         cls.ban_inactive = Infraction.objects.create(
             user_id=cls.user.id,
             actor_id=cls.user.id,
             type='ban',
             reason='James is an ass, and we won\'t be working with him again.',
-            active=False
+            active=False,
+            inserted_at=dt(2020, 10, 10, 0, 1, 0, tzinfo=timezone.utc),
         )
         cls.mute_permanent = Infraction.objects.create(
             user_id=cls.user.id,
@@ -72,7 +74,8 @@ class InfractionTests(AuthenticatedAPITestCase):
             type='mute',
             reason='He has a filthy mouth and I am his soap.',
             active=True,
-            expires_at=None
+            inserted_at=dt(2020, 10, 10, 0, 2, 0, tzinfo=timezone.utc),
+            expires_at=None,
         )
         cls.superstar_expires_soon = Infraction.objects.create(
             user_id=cls.user.id,
@@ -80,7 +83,8 @@ class InfractionTests(AuthenticatedAPITestCase):
             type='superstar',
             reason='This one doesn\'t matter anymore.',
             active=True,
-            expires_at=dt.now(timezone.utc) + datetime.timedelta(hours=5)
+            inserted_at=dt(2020, 10, 10, 0, 3, 0, tzinfo=timezone.utc),
+            expires_at=dt.now(timezone.utc) + datetime.timedelta(hours=5),
         )
         cls.voiceban_expires_later = Infraction.objects.create(
             user_id=cls.user.id,
@@ -88,7 +92,8 @@ class InfractionTests(AuthenticatedAPITestCase):
             type='voice_ban',
             reason='Jet engine mic',
             active=True,
-            expires_at=dt.now(timezone.utc) + datetime.timedelta(days=5)
+            inserted_at=dt(2020, 10, 10, 0, 4, 0, tzinfo=timezone.utc),
+            expires_at=dt.now(timezone.utc) + datetime.timedelta(days=5),
         )
 
     def test_list_all(self):
