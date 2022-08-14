@@ -132,6 +132,7 @@ class TagUtilsTests(TestCase):
                 ---
                 This tag has frontmatter!
             """),
+            "This is a grouped tag!",
         )
 
         # Generate a tar archive with a few tags
@@ -146,6 +147,10 @@ class TagUtilsTests(TestCase):
                 (tags_folder / "first_tag.md").write_text(bodies[0])
                 (tags_folder / "second_tag.md").write_text(bodies[1])
 
+                group_folder = tags_folder / "some_group"
+                group_folder.mkdir()
+                (group_folder / "grouped_tag.md").write_text(bodies[2])
+
                 with tarfile.open(tar_folder / "temp.tar", "w") as file:
                     file.add(folder, recursive=True)
 
@@ -158,10 +163,15 @@ class TagUtilsTests(TestCase):
         )
 
         result = utils.fetch_tags()
-        self.assertEqual([
+
+        def sort(_tag: models.Tag) -> str:
+            return _tag.name
+
+        self.assertEqual(sorted([
             models.Tag(name="first_tag", body=bodies[0]),
             models.Tag(name="second_tag", body=bodies[1]),
-        ], sorted(result, key=lambda tag: tag.name))
+            models.Tag(name="grouped_tag", body=bodies[2], group=group_folder.name),
+        ], key=sort), sorted(result, key=sort))
 
     def test_get_real_tag(self):
         """Test that a single tag is returned if it exists."""
@@ -170,30 +180,92 @@ class TagUtilsTests(TestCase):
 
         self.assertEqual(tag, result)
 
+    def test_get_grouped_tag(self):
+        """Test fetching a tag from a group."""
+        tag = models.Tag.objects.create(name="real-tag", group="real-group")
+        result = utils.get_tag("real-group/real-tag")
+
+        self.assertEqual(tag, result)
+
+    def test_get_group(self):
+        """Test fetching a group of tags."""
+        included = [
+            models.Tag.objects.create(name="tag-1", group="real-group"),
+            models.Tag.objects.create(name="tag-2", group="real-group"),
+            models.Tag.objects.create(name="tag-3", group="real-group"),
+        ]
+
+        models.Tag.objects.create(name="not-included-1")
+        models.Tag.objects.create(name="not-included-2", group="other-group")
+
+        result = utils.get_tag("real-group")
+        self.assertListEqual(included, result)
+
     def test_get_tag_404(self):
         """Test that an error is raised when we fetch a non-existing tag."""
         models.Tag.objects.create(name="real-tag")
         with self.assertRaises(models.Tag.DoesNotExist):
             utils.get_tag("fake")
 
-    def test_category_pages(self):
-        """Test that the category pages function returns the correct records for tags."""
-        models.Tag.objects.create(name="second-tag", body="Normal body")
-        models.Tag.objects.create(name="first-tag", body="Normal body")
-        tag_body = {"description": markdown.markdown("Normal body"), "icon": "fas fa-tag"}
-
+    @mock.patch.object(utils, "get_tag_category")
+    def test_category_pages(self, get_mock: mock.Mock):
+        """Test that the category pages function calls the correct method for tags."""
+        tag = models.Tag.objects.create(name="tag")
+        get_mock.return_value = tag
         result = utils.get_category_pages(settings.CONTENT_PAGES_PATH / "tags")
+        self.assertEqual(tag, result)
+        get_mock.assert_called_once_with(collapse_groups=True)
+
+    def test_get_category_root(self):
+        """Test that all tags are returned and formatted properly for the tag root page."""
+        body = "normal body"
+        base = {"description": markdown.markdown(body), "icon": "fas fa-tag"}
+
+        models.Tag.objects.create(name="tag-1", body=body),
+        models.Tag.objects.create(name="tag-2", body=body),
+        models.Tag.objects.create(name="tag-3", body=body),
+
+        models.Tag.objects.create(name="tag-4", body=body, group="tag-group")
+        models.Tag.objects.create(name="tag-5", body=body, group="tag-group")
+
+        result = utils.get_tag_category(collapse_groups=True)
+
         self.assertDictEqual({
-            "first-tag": {**tag_body, "title": "first-tag"},
-            "second-tag": {**tag_body, "title": "second-tag"},
+            "tag-1": {**base, "title": "tag-1"},
+            "tag-2": {**base, "title": "tag-2"},
+            "tag-3": {**base, "title": "tag-3"},
+            "tag-group": {
+                "title": "tag-group",
+                "description": "Contains the following tags: tag-4, tag-5",
+                "icon": "fas fa-tags"
+            }
         }, result)
 
-    def test_trimmed_tag_content(self):
-        """Test a tag with a long body that requires trimming."""
-        tag = models.Tag.objects.create(name="long-tag", body="E" * 300)
-        result = utils.get_category_pages(settings.CONTENT_PAGES_PATH / "tags")
-        self.assertDictEqual({"long-tag": {
-            "title": "long-tag",
-            "description": markdown.markdown(tag.body[:100] + "..."),
-            "icon": "fas fa-tag",
-        }}, result)
+    def test_get_category_group(self):
+        """Test the function for a group root page."""
+        body = "normal body"
+        base = {"description": markdown.markdown(body), "icon": "fas fa-tag"}
+
+        included = [
+            models.Tag.objects.create(name="tag-1", body=body, group="group"),
+            models.Tag.objects.create(name="tag-2", body=body, group="group"),
+        ]
+        models.Tag.objects.create(name="not-included", body=body)
+
+        result = utils.get_tag_category(included, collapse_groups=False)
+        self.assertDictEqual({
+            "tag-1": {**base, "title": "tag-1"},
+            "tag-2": {**base, "title": "tag-2"},
+        }, result)
+
+    def test_tag_url(self):
+        """Test that tag URLs are generated correctly."""
+        cases = [
+            ({"name": "tag"}, f"{models.Tag.URL_BASE}/tag.md"),
+            ({"name": "grouped", "group": "abc"}, f"{models.Tag.URL_BASE}/abc/grouped.md"),
+        ]
+
+        for options, url in cases:
+            tag = models.Tag(**options)
+            with self.subTest(tag=tag):
+                self.assertEqual(url, tag.url)

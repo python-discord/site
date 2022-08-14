@@ -194,6 +194,23 @@ class TagViewTests(django.test.TestCase):
         """Set test helpers, then set up fake filesystem."""
         super().setUp()
 
+    def test_routing(self):
+        """Test that the correct template is returned for each route."""
+        Tag.objects.create(name="example")
+        Tag.objects.create(name="grouped-tag", group="group-name")
+
+        cases = [
+            ("/pages/tags/example/", "content/tag.html"),
+            ("/pages/tags/group-name/", "content/listing.html"),
+            ("/pages/tags/group-name/grouped-tag/", "content/tag.html"),
+        ]
+
+        for url, template in cases:
+            with self.subTest(url=url):
+                response = self.client.get(url)
+                self.assertEqual(200, response.status_code)
+                self.assertTemplateUsed(response, template)
+
     def test_valid_tag_returns_200(self):
         """Test that a page is returned for a valid tag."""
         Tag.objects.create(name="example", body="This is the tag body.")
@@ -207,8 +224,8 @@ class TagViewTests(django.test.TestCase):
         response = self.client.get("/pages/tags/non-existent/")
         self.assertEqual(404, response.status_code)
 
-    def test_context(self):
-        """Check that the context contains all the necessary data."""
+    def test_context_tag(self):
+        """Test that the context contains the required data for a tag."""
         body = textwrap.dedent("""
         ---
         unused: frontmatter
@@ -222,11 +239,54 @@ class TagViewTests(django.test.TestCase):
             "page_title": "example",
             "page": markdown.markdown("Tag content here."),
             "tag": tag,
+            "breadcrumb_items": [
+                {"name": "Pages", "path": "."},
+                {"name": "Tags", "path": "tags"},
+            ]
         }
         for key in expected:
             self.assertEqual(
                 expected[key], response.context.get(key), f"context.{key} did not match"
             )
+
+    def test_context_grouped_tag(self):
+        """
+        Test the context for a tag in a group.
+
+        The only difference between this and a regular tag are the breadcrumbs,
+        so only those are checked.
+        """
+        Tag.objects.create(name="example", body="Body text", group="group-name")
+        response = self.client.get("/pages/tags/group-name/example/")
+        self.assertListEqual([
+            {"name": "Pages", "path": "."},
+            {"name": "Tags", "path": "tags"},
+            {"name": "group-name", "path": "tags/group-name"},
+        ], response.context.get("breadcrumb_items"))
+
+    def test_group_page(self):
+        """Test rendering of a group's root page."""
+        Tag.objects.create(name="tag-1", body="Body 1", group="group-name")
+        Tag.objects.create(name="tag-2", body="Body 2", group="group-name")
+        Tag.objects.create(name="not-included")
+
+        response = self.client.get("/pages/tags/group-name/")
+        content = response.content.decode("utf-8")
+
+        self.assertInHTML("<div class='level-left'>group-name</div>", content)
+        self.assertInHTML(
+            f"<a class='level-item fab fa-github' href='{Tag.URL_BASE}/group-name'>",
+            content
+        )
+        self.assertIn(">tag-1</span>", content)
+        self.assertIn(">tag-2</span>", content)
+        self.assertNotIn(
+            ">not-included</span>",
+            content,
+            "Tags not in this group shouldn't be rendered."
+        )
+
+        self.assertInHTML("<p>Body 1</p>", content)
 
     def test_markdown(self):
         """Test that markdown content is rendered properly."""
@@ -287,7 +347,7 @@ class TagViewTests(django.test.TestCase):
         body = filler_before + "`!tags return`" + filler_after
         Tag.objects.create(name="example", body=body)
 
-        other_url = reverse("content:tag", kwargs={"name": "return"})
+        other_url = reverse("content:tag", kwargs={"location": "return"})
         response = self.client.get("/pages/tags/example/")
         self.assertEqual(
             markdown.markdown(filler_before + f"[`!tags return`]({other_url})" + filler_after),
@@ -304,7 +364,7 @@ class TagViewTests(django.test.TestCase):
         content = response.content.decode("utf-8")
 
         self.assertTemplateUsed(response, "content/listing.html")
-        self.assertInHTML('<h1 class="title">Tags</h1>', content)
+        self.assertInHTML('<div class="level-left">Tags</div>', content)
 
         for tag_number in range(1, 4):
             self.assertIn(f"tag-{tag_number}</span>", content)

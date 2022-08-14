@@ -48,7 +48,7 @@ def get_tags_static() -> list[Tag]:
     This will return a cached value, so it should only be used for static builds.
     """
     tags = fetch_tags()
-    for tag in tags[3:5]:
+    for tag in tags[3:5]:  # pragma: no cover
         tag.group = "very-cool-group"
     return tags
 
@@ -190,6 +190,7 @@ def get_tag_category(
 
     # Flatten group description into a single string
     for group in groups.values():
+        # If the following string is updated, make sure to update it in the frontend JS as well
         group["description"] = "Contains the following tags: " + ", ".join(group["description"])
         data.append(group)
 
