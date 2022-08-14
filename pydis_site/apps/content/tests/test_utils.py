@@ -112,7 +112,7 @@ class TagUtilsTests(TestCase):
     @mock.patch.object(utils, "fetch_tags")
     def test_static_fetch(self, fetch_mock: mock.Mock):
         """Test that the static fetch function is only called at most once during static builds."""
-        tags = [models.Tag(name="Name", body="body", url="url")]
+        tags = [models.Tag(name="Name", body="body")]
         fetch_mock.return_value = tags
         result = utils.get_tags_static()
         second_result = utils.get_tags_static()
@@ -159,8 +159,8 @@ class TagUtilsTests(TestCase):
 
         result = utils.fetch_tags()
         self.assertEqual([
-            models.Tag(name="first_tag", body=bodies[0], url=f"{utils.TAG_URL_BASE}/first_tag.md"),
-            models.Tag(name="second_tag", body=bodies[1], url=f"{utils.TAG_URL_BASE}/first_tag.md"),
+            models.Tag(name="first_tag", body=bodies[0]),
+            models.Tag(name="second_tag", body=bodies[1]),
         ], sorted(result, key=lambda tag: tag.name))
 
     def test_get_real_tag(self):

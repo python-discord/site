@@ -196,7 +196,7 @@ class TagViewTests(django.test.TestCase):
 
     def test_valid_tag_returns_200(self):
         """Test that a page is returned for a valid tag."""
-        Tag.objects.create(name="example", body="This is the tag body.", url="URL")
+        Tag.objects.create(name="example", body="This is the tag body.")
         response = self.client.get("/pages/tags/example/")
         self.assertEqual(200, response.status_code)
         self.assertIn("This is the tag body", response.content.decode("utf-8"))
@@ -216,7 +216,7 @@ class TagViewTests(django.test.TestCase):
         Tag content here.
         """)
 
-        tag = Tag.objects.create(name="example", body=body, url="URL")
+        tag = Tag.objects.create(name="example", body=body)
         response = self.client.get("/pages/tags/example/")
         expected = {
             "page_title": "example",
@@ -238,7 +238,7 @@ class TagViewTests(django.test.TestCase):
         **This text is in bold**
         """)
 
-        Tag.objects.create(name="example", body=body, url="URL")
+        Tag.objects.create(name="example", body=body)
         response = self.client.get("/pages/tags/example/")
         content = response.content.decode("utf-8")
 
@@ -257,7 +257,7 @@ class TagViewTests(django.test.TestCase):
         Tag body.
         """)
 
-        Tag.objects.create(name="example", body=body, url="URL")
+        Tag.objects.create(name="example", body=body)
         response = self.client.get("/pages/tags/example/")
         content = response.content.decode("utf-8")
 
@@ -273,7 +273,7 @@ class TagViewTests(django.test.TestCase):
         ---
         """)
 
-        Tag.objects.create(name="example", body=body, url="URL")
+        Tag.objects.create(name="example", body=body)
         response = self.client.get("/pages/tags/example/")
         self.assertEqual(
             "Embed title",
@@ -285,7 +285,7 @@ class TagViewTests(django.test.TestCase):
         """Test hyperlinking of tags works as intended."""
         filler_before, filler_after = "empty filler text\n\n", "more\nfiller"
         body = filler_before + "`!tags return`" + filler_after
-        Tag.objects.create(name="example", body=body, url="URL")
+        Tag.objects.create(name="example", body=body)
 
         other_url = reverse("content:tag", kwargs={"name": "return"})
         response = self.client.get("/pages/tags/example/")
