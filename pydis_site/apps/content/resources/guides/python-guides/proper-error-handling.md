@@ -16,7 +16,7 @@ class MyBot(commands.Bot):
 
   def __init__(self, *args, **kwargs):
     super().__init__(*args, **kwargs)
-    
+
   async def on_command_error(self, ctx: commands.Context, error):
     # Handle your errors here
     if isinstance(error, commands.MemberNotFound):
@@ -28,7 +28,7 @@ class MyBot(commands.Bot):
       # All unhandled errors will print their original traceback
       print(f'Ignoring exception in command {ctx.command}:', file=sys.stderr)
       traceback.print_exception(type(error), error, error.__traceback__, file=sys.stderr)
-      
+
 bot = MyBot(command_prefix="!", intents=discord.Intents.default())
 
 bot.run("token")
@@ -65,6 +65,6 @@ Make sure to import `traceback` and `sys`!
 
 -------------------------------------------------------------------------------------------------------------
 
-Useful Links: 
+Useful Links:
 - [FAQ](https://discordpy.readthedocs.io/en/latest/faq.html)
 - [Simple Error Handling](https://gist.github.com/EvieePy/7822af90858ef65012ea500bcecf1612)
