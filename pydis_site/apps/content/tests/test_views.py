@@ -8,10 +8,11 @@ from django.http import Http404
 from django.test import RequestFactory, SimpleTestCase, override_settings
 from django.urls import reverse
 
-from pydis_site.apps.content.models import Tag
+from pydis_site.apps.content.models import Commit, Tag
 from pydis_site.apps.content.tests.helpers import (
     BASE_PATH, MockPagesTestCase, PARSED_CATEGORY_INFO, PARSED_HTML, PARSED_METADATA
 )
+from pydis_site.apps.content.tests.test_utils import TEST_COMMIT_KWARGS
 from pydis_site.apps.content.views import PageOrCategoryView
 
 
@@ -193,11 +194,12 @@ class TagViewTests(django.test.TestCase):
     def setUp(self):
         """Set test helpers, then set up fake filesystem."""
         super().setUp()
+        self.commit = Commit.objects.create(**TEST_COMMIT_KWARGS)
 
     def test_routing(self):
         """Test that the correct template is returned for each route."""
-        Tag.objects.create(name="example")
-        Tag.objects.create(name="grouped-tag", group="group-name")
+        Tag.objects.create(name="example", last_commit=self.commit)
+        Tag.objects.create(name="grouped-tag", group="group-name", last_commit=self.commit)
 
         cases = [
             ("/pages/tags/example/", "content/tag.html"),
@@ -213,7 +215,7 @@ class TagViewTests(django.test.TestCase):
 
     def test_valid_tag_returns_200(self):
         """Test that a page is returned for a valid tag."""
-        Tag.objects.create(name="example", body="This is the tag body.")
+        Tag.objects.create(name="example", body="This is the tag body.", last_commit=self.commit)
         response = self.client.get("/pages/tags/example/")
         self.assertEqual(200, response.status_code)
         self.assertIn("This is the tag body", response.content.decode("utf-8"))
@@ -233,7 +235,7 @@ class TagViewTests(django.test.TestCase):
         Tag content here.
         """)
 
-        tag = Tag.objects.create(name="example", body=body)
+        tag = Tag.objects.create(name="example", body=body, last_commit=self.commit)
         response = self.client.get("/pages/tags/example/")
         expected = {
             "page_title": "example",
@@ -256,7 +258,9 @@ class TagViewTests(django.test.TestCase):
         The only difference between this and a regular tag are the breadcrumbs,
         so only those are checked.
         """
-        Tag.objects.create(name="example", body="Body text", group="group-name")
+        Tag.objects.create(
+            name="example", body="Body text", group="group-name", last_commit=self.commit
+        )
         response = self.client.get("/pages/tags/group-name/example/")
         self.assertListEqual([
             {"name": "Pages", "path": "."},
@@ -266,9 +270,9 @@ class TagViewTests(django.test.TestCase):
 
     def test_group_page(self):
         """Test rendering of a group's root page."""
-        Tag.objects.create(name="tag-1", body="Body 1", group="group-name")
-        Tag.objects.create(name="tag-2", body="Body 2", group="group-name")
-        Tag.objects.create(name="not-included")
+        Tag.objects.create(name="tag-1", body="Body 1", group="group-name", last_commit=self.commit)
+        Tag.objects.create(name="tag-2", body="Body 2", group="group-name", last_commit=self.commit)
+        Tag.objects.create(name="not-included", last_commit=self.commit)
 
         response = self.client.get("/pages/tags/group-name/")
         content = response.content.decode("utf-8")
@@ -298,7 +302,7 @@ class TagViewTests(django.test.TestCase):
         **This text is in bold**
         """)
 
-        Tag.objects.create(name="example", body=body)
+        Tag.objects.create(name="example", body=body, last_commit=self.commit)
         response = self.client.get("/pages/tags/example/")
         content = response.content.decode("utf-8")
 
@@ -317,7 +321,7 @@ class TagViewTests(django.test.TestCase):
         Tag body.
         """)
 
-        Tag.objects.create(name="example", body=body)
+        Tag.objects.create(name="example", body=body, last_commit=self.commit)
         response = self.client.get("/pages/tags/example/")
         content = response.content.decode("utf-8")
 
@@ -333,7 +337,7 @@ class TagViewTests(django.test.TestCase):
         ---
         """)
 
-        Tag.objects.create(name="example", body=body)
+        Tag.objects.create(name="example", body=body, last_commit=self.commit)
         response = self.client.get("/pages/tags/example/")
         self.assertEqual(
             "Embed title",
@@ -345,7 +349,7 @@ class TagViewTests(django.test.TestCase):
         """Test hyperlinking of tags works as intended."""
         filler_before, filler_after = "empty filler text\n\n", "more\nfiller"
         body = filler_before + "`!tags return`" + filler_after
-        Tag.objects.create(name="example", body=body)
+        Tag.objects.create(name="example", body=body, last_commit=self.commit)
 
         other_url = reverse("content:tag", kwargs={"location": "return"})
         response = self.client.get("/pages/tags/example/")
@@ -356,9 +360,9 @@ class TagViewTests(django.test.TestCase):
 
     def test_tag_root_page(self):
         """Test the root tag page which lists all tags."""
-        Tag.objects.create(name="tag-1")
-        Tag.objects.create(name="tag-2")
-        Tag.objects.create(name="tag-3")
+        Tag.objects.create(name="tag-1", last_commit=self.commit)
+        Tag.objects.create(name="tag-2", last_commit=self.commit)
+        Tag.objects.create(name="tag-3", last_commit=self.commit)
 
         response = self.client.get("/pages/tags/")
         content = response.content.decode("utf-8")

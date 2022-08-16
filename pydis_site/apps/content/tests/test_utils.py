@@ -1,3 +1,5 @@
+import datetime
+import json
 import tarfile
 import tempfile
 import textwrap
@@ -14,6 +16,18 @@ from pydis_site.apps.content import models, utils
 from pydis_site.apps.content.tests.helpers import (
     BASE_PATH, MockPagesTestCase, PARSED_CATEGORY_INFO, PARSED_HTML, PARSED_METADATA
 )
+
+_time = datetime.datetime(2022, 10, 10, 10, 10, 10, tzinfo=datetime.timezone.utc)
+_time_str = _time.strftime(settings.GITHUB_TIMESTAMP_FORMAT)
+TEST_COMMIT_KWARGS = {
+    "sha": "123",
+    "message": "Hello world\n\nThis is a commit message",
+    "date": _time,
+    "author": json.dumps([
+        {"name": "Author 1", "email": "mail1@example.com", "date": _time_str},
+        {"name": "Author 2", "email": "mail2@example.com", "date": _time_str},
+    ]),
+}
 
 
 class GetCategoryTests(MockPagesTestCase):
@@ -109,6 +123,10 @@ class GetPageTests(MockPagesTestCase):
 class TagUtilsTests(TestCase):
     """Tests for the tag-related utilities."""
 
+    def setUp(self) -> None:
+        super().setUp()
+        self.commit = models.Commit.objects.create(**TEST_COMMIT_KWARGS)
+
     @mock.patch.object(utils, "fetch_tags")
     def test_static_fetch(self, fetch_mock: mock.Mock):
         """Test that the static fetch function is only called at most once during static builds."""
@@ -121,9 +139,27 @@ class TagUtilsTests(TestCase):
         self.assertEqual(tags, result)
         self.assertEqual(tags, second_result)
 
-    @mock.patch("httpx.get")
+    @mock.patch("httpx.Client.get")
     def test_mocked_fetch(self, get_mock: mock.Mock):
         """Test that proper data is returned from fetch, but with a mocked API response."""
+        fake_request = httpx.Request("GET", "https://google.com")
+
+        # Metadata requests
+        returns = [httpx.Response(
+            request=fake_request,
+            status_code=200,
+            json=[
+                {"type": "file", "name": "first_tag.md", "sha": "123"},
+                {"type": "file", "name": "second_tag.md", "sha": "456"},
+                {"type": "dir", "name": "some_group", "sha": "789", "url": "/some_group"},
+            ]
+        ), httpx.Response(
+            request=fake_request,
+            status_code=200,
+            json=[{"type": "file", "name": "grouped_tag.md", "sha": "789123"}]
+        )]
+
+        # Main content request
         bodies = (
             "This is the first tag!",
             textwrap.dedent("""
@@ -156,33 +192,36 @@ class TagUtilsTests(TestCase):
 
                 body = (tar_folder / "temp.tar").read_bytes()
 
-        get_mock.return_value = httpx.Response(
+        returns.append(httpx.Response(
             status_code=200,
             content=body,
-            request=httpx.Request("GET", "https://google.com"),
-        )
+            request=fake_request,
+        ))
 
+        get_mock.side_effect = returns
         result = utils.fetch_tags()
 
         def sort(_tag: models.Tag) -> str:
             return _tag.name
 
         self.assertEqual(sorted([
-            models.Tag(name="first_tag", body=bodies[0]),
-            models.Tag(name="second_tag", body=bodies[1]),
-            models.Tag(name="grouped_tag", body=bodies[2], group=group_folder.name),
+            models.Tag(name="first_tag", body=bodies[0], sha="123"),
+            models.Tag(name="second_tag", body=bodies[1], sha="245"),
+            models.Tag(name="grouped_tag", body=bodies[2], group=group_folder.name, sha="789123"),
         ], key=sort), sorted(result, key=sort))
 
     def test_get_real_tag(self):
         """Test that a single tag is returned if it exists."""
-        tag = models.Tag.objects.create(name="real-tag")
+        tag = models.Tag.objects.create(name="real-tag", last_commit=self.commit)
         result = utils.get_tag("real-tag")
 
         self.assertEqual(tag, result)
 
     def test_get_grouped_tag(self):
         """Test fetching a tag from a group."""
-        tag = models.Tag.objects.create(name="real-tag", group="real-group")
+        tag = models.Tag.objects.create(
+            name="real-tag", group="real-group", last_commit=self.commit
+        )
         result = utils.get_tag("real-group/real-tag")
 
         self.assertEqual(tag, result)
@@ -269,3 +308,78 @@ class TagUtilsTests(TestCase):
             tag = models.Tag(**options)
             with self.subTest(tag=tag):
                 self.assertEqual(url, tag.url)
+
+    @mock.patch("httpx.Client.get")
+    def test_get_tag_commit(self, get_mock: mock.Mock):
+        """Test the get commit function with a normal tag."""
+        tag = models.Tag.objects.create(name="example")
+
+        authors = json.loads(self.commit.author)
+
+        get_mock.return_value = httpx.Response(
+            request=httpx.Request("GET", "https://google.com"),
+            status_code=200,
+            json=[{
+                "sha": self.commit.sha,
+                "commit": {
+                    "message": self.commit.message,
+                    "author": authors[0],
+                    "committer": authors[1],
+                }
+            }]
+        )
+
+        result = utils.get_tag(tag.name)
+        self.assertEqual(tag, result)
+
+        get_mock.assert_called_once()
+        call_params = get_mock.call_args[1]["params"]
+
+        self.assertEqual({"path": "/bot/resources/tags/example.md"}, call_params)
+        self.assertEqual(self.commit, models.Tag.objects.get(name=tag.name).last_commit)
+
+    @mock.patch("httpx.Client.get")
+    def test_get_group_tag_commit(self, get_mock: mock.Mock):
+        """Test the get commit function with a group tag."""
+        tag = models.Tag.objects.create(name="example", group="group-name")
+
+        authors = json.loads(self.commit.author)
+        authors.pop()
+        self.commit.author = json.dumps(authors)
+        self.commit.save()
+
+        get_mock.return_value = httpx.Response(
+            request=httpx.Request("GET", "https://google.com"),
+            status_code=200,
+            json=[{
+                "sha": self.commit.sha,
+                "commit": {
+                    "message": self.commit.message,
+                    "author": authors[0],
+                    "committer": authors[0],
+                }
+            }]
+        )
+
+        utils.set_tag_commit(tag)
+
+        get_mock.assert_called_once()
+        call_params = get_mock.call_args[1]["params"]
+
+        self.assertEqual({"path": "/bot/resources/tags/group-name/example.md"}, call_params)
+        self.assertEqual(self.commit, models.Tag.objects.get(name=tag.name).last_commit)
+
+    @mock.patch.object(utils, "set_tag_commit")
+    def test_exiting_commit(self, set_commit_mock: mock.Mock):
+        """Test that a commit is saved when the data has not changed."""
+        tag = models.Tag.objects.create(name="tag-name", body="old body", last_commit=self.commit)
+
+        # This is only applied to the object, not to the database
+        tag.last_commit = None
+
+        utils.record_tags([tag])
+        self.assertEqual(self.commit, tag.last_commit)
+
+        result = utils.get_tag("tag-name")
+        self.assertEqual(tag, result)
+        set_commit_mock.assert_not_called()

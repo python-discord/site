@@ -130,7 +130,7 @@ def fetch_tags() -> list[Tag]:
 
 def set_tag_commit(tag: Tag) -> None:
     """Fetch commit information from the API, and save it for the tag."""
-    if settings.STATIC_BUILD:
+    if settings.STATIC_BUILD:  # pragma: no cover
         # Static builds request every page during build, which can ratelimit it.
         # Instead, we return some fake data.
         tag.last_commit = Commit(
