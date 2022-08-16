@@ -1,5 +1,6 @@
 import datetime
 import functools
+import json
 import tarfile
 import tempfile
 import typing
@@ -15,9 +16,24 @@ from django.utils import timezone
 from markdown.extensions.toc import TocExtension
 
 from pydis_site import settings
-from .models import Tag
+from .models import Commit, Tag
 
 TAG_CACHE_TTL = datetime.timedelta(hours=1)
+
+
+def github_client(**kwargs) -> httpx.Client:
+    """Get a client to access the GitHub API with important settings pre-configured."""
+    client = httpx.Client(
+        base_url=settings.GITHUB_API,
+        follow_redirects=True,
+        timeout=settings.TIMEOUT_PERIOD,
+        **kwargs
+    )
+    if settings.GITHUB_TOKEN:  # pragma: no cover
+        if not client.headers.get("Authorization"):
+            client.headers = {"Authorization": f"token {settings.GITHUB_TOKEN}"}
+
+    return client
 
 
 def get_category(path: Path) -> dict[str, str]:
@@ -60,18 +76,30 @@ def fetch_tags() -> list[Tag]:
     The entire repository is downloaded and extracted locally because
     getting file content would require one request per file, and can get rate-limited.
     """
-    if settings.GITHUB_TOKEN:  # pragma: no cover
-        headers = {"Authorization": f"token {settings.GITHUB_TOKEN}"}
-    else:
-        headers = {}
+    client = github_client()
 
-    tar_file = httpx.get(
-        f"{settings.GITHUB_API}/repos/python-discord/bot/tarball",
-        follow_redirects=True,
-        timeout=settings.TIMEOUT_PERIOD,
-        headers=headers,
-    )
+    # Grab metadata
+    metadata = client.get("/repos/python-discord/bot/contents/bot/resources")
+    metadata.raise_for_status()
+
+    hashes = {}
+    for entry in metadata.json():
+        if entry["type"] == "dir":
+            # Tag group
+            files = client.get(entry["url"])
+            files.raise_for_status()
+            files = files.json()
+        else:
+            files = [entry]
+
+        for file in files:
+            hashes[file["name"]] = file["sha"]
+
+    # Download the files
+    tar_file = client.get("/repos/python-discord/bot/tarball")
     tar_file.raise_for_status()
+
+    client.close()
 
     tags = []
     with tempfile.TemporaryDirectory() as folder:
@@ -83,18 +111,81 @@ def fetch_tags() -> list[Tag]:
             repo.extractall(folder, included)
 
         for tag_file in Path(folder).rglob("*.md"):
+            name = tag_file.name
             group = None
             if tag_file.parent.name != "tags":
                 # Tags in sub-folders are considered part of a group
                 group = tag_file.parent.name
 
             tags.append(Tag(
-                name=tag_file.name.removesuffix(".md"),
+                name=name.removesuffix(".md"),
+                sha=hashes[name],
                 group=group,
                 body=tag_file.read_text(encoding="utf-8"),
+                last_commit=None,
             ))
 
     return tags
+
+
+def set_tag_commit(tag: Tag) -> Tag:
+    """Fetch commit information from the API, and save it for the tag."""
+    path = "/bot/resources/tags"
+    if tag.group:
+        path += f"/{tag.group}"
+    path += f"/{tag.name}.md"
+
+    # Fetch and set the commit
+    with github_client() as client:
+        data = client.get("/repos/python-discord/bot/commits", params={"path": path})
+        data.raise_for_status()
+        data = data.json()[0]
+
+    commit = data["commit"]
+    author, committer = commit["author"], commit["committer"]
+
+    date = datetime.datetime.strptime(committer["date"], settings.GITHUB_TIMESTAMP_FORMAT)
+    date = date.replace(tzinfo=datetime.timezone.utc)
+
+    if author["email"] == committer["email"]:
+        commit_author = [author]
+    else:
+        commit_author = [author, committer]
+
+    commit_obj, _ = Commit.objects.get_or_create(
+        sha=data["sha"],
+        message=commit["message"],
+        date=date,
+        author=json.dumps(commit_author),
+    )
+    tag.last_commit = commit_obj
+    tag.save()
+
+    return tag
+
+
+def record_tags(tags: list[Tag]) -> None:
+    """Sync the database with an updated set of tags."""
+    # Remove entries which no longer exist
+    Tag.objects.exclude(name__in=[tag.name for tag in tags]).delete()
+
+    # Insert/update the tags
+    for tag in tags:
+        try:
+            old_tag = Tag.objects.get(name=tag.name)
+        except Tag.DoesNotExist:
+            # The tag is not in the database yet,
+            # pretend it's previous state is the current state
+            old_tag = tag
+
+        if old_tag.sha == tag.sha and old_tag.last_commit is not None:
+            # We still have an up-to-date commit entry
+            tag.last_commit = old_tag.last_commit
+
+        tag.save()
+
+    # Drop old, unused commits
+    Commit.objects.filter(tag__isnull=True).delete()
 
 
 def get_tags() -> list[Tag]:
@@ -113,9 +204,7 @@ def get_tags() -> list[Tag]:
             tags = get_tags_static()
         else:
             tags = fetch_tags()
-            Tag.objects.exclude(name__in=[tag.name for tag in tags]).delete()
-            for tag in tags:
-                tag.save()
+            record_tags(tags)
 
         return tags
     else:
@@ -126,6 +215,9 @@ def get_tags() -> list[Tag]:
 def get_tag(path: str) -> typing.Union[Tag, list[Tag]]:
     """
     Return a tag based on the search location.
+
+    If certain tag data is out of sync (for instance a commit date is missing),
+    an extra request will be made to sync the information.
 
     The tag name and group must match. If only one argument is provided in the path,
     it's assumed to either be a group name, or a no-group tag name.
@@ -142,6 +234,8 @@ def get_tag(path: str) -> typing.Union[Tag, list[Tag]]:
     matches = []
     for tag in get_tags():
         if tag.name == name and tag.group == group:
+            if tag.last_commit is None:
+                set_tag_commit(tag)
             return tag
         elif tag.group == name and group is None:
             matches.append(tag)

@@ -9,10 +9,30 @@
 {% endblock %}
 
 {% block title_element %}
-    <div class="level">
+    <div class="level mb-2">
         <div class="level-left">{{ block.super }}</div>
         <div class="level-right">
             <a class="level-item fab fa-github" href="{{ tag.url }}"></a>
+        </div>
+    </div>
+
+    <div class="dropdown is-size-6 is-hoverable">
+        <div class="dropdown-trigger ">
+            <a aria-haspopup="menu" href="{{ tag.last_commit.url }}">
+                <span class="update-time">
+                    Last Updated: {{ tag.last_commit.date | date:"F j, Y g:i A e" }}
+                </span>
+            </a>
+        </div>
+        <div class="dropdown-menu">
+            <div class="dropdown-content">
+                <div class="dropdown-item">Last edited by:</div>
+                {% for user in tag.last_commit.format_users %}
+                    <div class="dropdown-item">{{ user }}</div>
+                {% endfor %}
+                <div class="dropdown-divider"></div>
+                <div class="dropdown-item">{{ tag.last_commit.message }}</div>
+            </div>
         </div>
     </div>
 {% endblock %}

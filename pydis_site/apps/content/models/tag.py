@@ -1,3 +1,4 @@
+import collections.abc
 import json
 
 from django.db import models
@@ -22,13 +23,10 @@ class Commit(models.Model):
         """The URL to the commit on GitHub."""
         return self.URL_BASE + self.sha
 
-    @property
-    def format_users(self) -> str:
+    def format_users(self) -> collections.abc.Iterable[str]:
         """Return a nice representation of the user(s)' name and email."""
-        authors = []
         for author in json.loads(self.author):
-            authors.append(f"{author['name']} <{author['email']}>")
-        return ", ".join(authors)
+            yield f"{author['name']} <{author['email']}>"
 
 
 class Tag(models.Model):
@@ -40,7 +38,11 @@ class Tag(models.Model):
         help_text="The date and time this data was last fetched.",
         auto_now=True,
     )
-    last_commit = models.OneToOneField(
+    sha = models.CharField(
+        help_text="The tag's hash, as calculated by GitHub.",
+        max_length=40,
+    )
+    last_commit = models.ForeignKey(
         Commit,
         help_text="The commit this file was last touched in.",
         null=True,
