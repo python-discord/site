@@ -1,4 +1,34 @@
+import json
+
 from django.db import models
+
+
+class Commit(models.Model):
+    """A git commit."""
+
+    URL_BASE = "https://github.com/python-discord/bot/commit/"
+
+    sha = models.CharField(
+        help_text="The SHA hash of this commit.",
+        primary_key=True,
+        max_length=40,
+    )
+    message = models.TextField(help_text="The commit message.")
+    date = models.DateTimeField(help_text="The date and time the commit was created.")
+    author = models.TextField(help_text="The person(s) who created the commit.")
+
+    @property
+    def url(self) -> str:
+        """The URL to the commit on GitHub."""
+        return self.URL_BASE + self.sha
+
+    @property
+    def format_users(self) -> str:
+        """Return a nice representation of the user(s)' name and email."""
+        authors = []
+        for author in json.loads(self.author):
+            authors.append(f"{author['name']} <{author['email']}>")
+        return ", ".join(authors)
 
 
 class Tag(models.Model):
@@ -9,6 +39,12 @@ class Tag(models.Model):
     last_updated = models.DateTimeField(
         help_text="The date and time this data was last fetched.",
         auto_now=True,
+    )
+    last_commit = models.OneToOneField(
+        Commit,
+        help_text="The commit this file was last touched in.",
+        null=True,
+        on_delete=models.CASCADE,
     )
     name = models.CharField(
         help_text="The tag's name.",

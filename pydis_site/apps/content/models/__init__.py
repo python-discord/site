@@ -1,3 +1,3 @@
-from .tag import Tag
+from .tag import Commit, Tag
 
-__all__ = ["Tag"]
+__all__ = ["Commit", "Tag"]
