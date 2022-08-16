@@ -38,6 +38,8 @@ GITHUB_API = "https://api.github.com"
 GITHUB_TOKEN = env("GITHUB_TOKEN")
 GITHUB_APP_ID = env("GITHUB_APP_ID")
 GITHUB_APP_KEY = env("GITHUB_APP_KEY")
+GITHUB_TIMESTAMP_FORMAT = "%Y-%m-%dT%H:%M:%SZ"
+"""The datetime string format GitHub uses."""
 
 if GITHUB_APP_KEY and (key_file := Path(GITHUB_APP_KEY)).is_file():
     # Allow the OAuth key to be loaded from a file
