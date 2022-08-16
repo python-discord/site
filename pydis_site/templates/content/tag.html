@@ -31,7 +31,9 @@
                     <div class="dropdown-item">{{ user }}</div>
                 {% endfor %}
                 <div class="dropdown-divider"></div>
-                <div class="dropdown-item">{{ tag.last_commit.message }}</div>
+                {% for line in tag.last_commit.lines %}
+                    <div class="dropdown-item">{{ line }}</div>
+                {% endfor %}
             </div>
         </div>
     </div>
