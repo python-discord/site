@@ -128,8 +128,19 @@ def fetch_tags() -> list[Tag]:
     return tags
 
 
-def set_tag_commit(tag: Tag) -> Tag:
+def set_tag_commit(tag: Tag) -> None:
     """Fetch commit information from the API, and save it for the tag."""
+    if settings.STATIC_BUILD:
+        # Static builds request every page during build, which can ratelimit it.
+        # Instead, we return some fake data.
+        tag.last_commit = Commit(
+            sha="68da80efc00d9932a209d5cccd8d344cec0f09ea",
+            message="Initial Commit\n\nTHIS IS FAKE DEMO DATA",
+            date=datetime.datetime(2018, 2, 3, 12, 20, 26, tzinfo=datetime.timezone.utc),
+            author=json.dumps([{"name": "Joseph", "email": "joseph@josephbanks.me"}]),
+        )
+        return
+
     path = "/bot/resources/tags"
     if tag.group:
         path += f"/{tag.group}"
@@ -160,8 +171,6 @@ def set_tag_commit(tag: Tag) -> Tag:
     )
     tag.last_commit = commit_obj
     tag.save()
-
-    return tag
 
 
 def record_tags(tags: list[Tag]) -> None:
