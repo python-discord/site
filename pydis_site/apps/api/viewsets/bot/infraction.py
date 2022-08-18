@@ -154,7 +154,7 @@ class InfractionViewSet(
     queryset = Infraction.objects.all()
     pagination_class = LimitOffsetPaginationExtended
     filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
-    filter_fields = ('user__id', 'actor__id', 'active', 'hidden', 'type')
+    filterset_fields = ('user__id', 'actor__id', 'active', 'hidden', 'type')
     search_fields = ('$reason',)
     frozen_fields = ('id', 'inserted_at', 'type', 'user', 'actor', 'hidden')
 
