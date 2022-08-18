@@ -25,7 +25,7 @@ django-distill = "3.0.1"
 PyJWT = {version = "2.4.0", extras = ["crypto"]}
 
 [tool.poetry.dev-dependencies]
-coverage = "~=5.0"
+coverage = "6.4.4"
 flake8 = "~=3.7"
 flake8-annotations = "~=2.0"
 flake8-bandit = "~=3.0"
@@ -39,7 +39,7 @@ mccabe = "~=0.6.1"
 pep8-naming = "~=0.9"
 pre-commit = "~=2.1"
 pyfakefs = "~=4.5"
-coveralls = "~=2.1"
+coveralls = "3.3.1"
 taskipy = "~=1.7.0"
 python-dotenv = "~=0.17.1"
 
