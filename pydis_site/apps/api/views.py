@@ -124,35 +124,44 @@ class RulesView(APIView):
 
         return Response([
             (
-                f"Follow the {pydis_coc}."
+                f"Follow the {pydis_coc}.",
+                {"coc", "conduct", "code"}
             ),
             (
-                f"Follow the {discord_community_guidelines} and {discord_tos}."
+                f"Follow the {discord_community_guidelines} and {discord_tos}.",
+                {"guidelines", "discord_tos"}
             ),
             (
-                "Respect staff members and listen to their instructions."
+                "Respect staff members and listen to their instructions.",
+                {"staff", "instructions"}
             ),
             (
                 "Use English to the best of your ability. "
-                "Be polite if someone speaks English imperfectly."
+                "Be polite if someone speaks English imperfectly.",
+                {"english", "language"}
             ),
             (
                 "Do not provide or request help on projects that may break laws, "
-                "breach terms of services, or are malicious or inappropriate."
+                "breach terms of services, or are malicious or inappropriate.",
+                {"infraction", "tos", "breach", "malicious", "inappropriate"}
             ),
             (
-                "Do not post unapproved advertising."
+                "Do not post unapproved advertising.",
+                {"ads", "advertising"}
             ),
             (
                 "Keep discussions relevant to the channel topic. "
-                "Each channel's description tells you the topic."
+                "Each channel's description tells you the topic.",
+                {"off-topic", "topic", "relevance"}
             ),
             (
                 "Do not help with ongoing exams. When helping with homework, "
-                "help people learn how to do the assignment without doing it for them."
+                "help people learn how to do the assignment without doing it for them.",
+                {"exams", "assignment", "assignments", "homework"}
             ),
             (
-                "Do not offer or ask for paid work of any kind."
+                "Do not offer or ask for paid work of any kind.",
+                {"work", "money"}
             ),
         ])
 
