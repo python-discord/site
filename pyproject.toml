@@ -39,7 +39,6 @@ flake8-todo = "0.7"
 pep8-naming = "0.13.1"
 pre-commit = "2.20.0"
 pyfakefs = "4.6.3"
-coveralls = "3.3.1"
 taskipy = "1.10.2"
 python-dotenv = "0.20.0"
 
