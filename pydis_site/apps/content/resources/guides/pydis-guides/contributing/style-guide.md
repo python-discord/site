@@ -202,6 +202,3 @@ def foo(input_1: int, input_2: dict[str, int]) -> bool:
 This tells us that `foo` accepts an `int` and a `dict`, with `str` keys and `int` values, and returns a `bool`.
 
 In previous examples, we have purposely omitted annotations to keep focus on the specific points they represent.
-
-> **Note:** if the project is running Python 3.8 or below you have to use `typing.Dict` instead of `dict`, but our three main projects are all >=3.9.
-> See [PEP 585](https://www.python.org/dev/peps/pep-0585/) for more information.

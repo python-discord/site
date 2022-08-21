@@ -6,7 +6,7 @@ authors = ["Python Discord <info@pythondiscord.com>"]
 license = "MIT"
 
 [tool.poetry.dependencies]
-python = "3.9.*"
+python = "3.10.*"
 django = "4.0"  # 4.1 blocked by upstream bug, wait for 4.1.1: https://code.djangoproject.com/ticket/33919
 django-environ = "0.9.0"
 django-filter = "22.1"

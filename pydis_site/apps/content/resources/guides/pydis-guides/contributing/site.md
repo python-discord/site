@@ -9,7 +9,7 @@ You should have already forked the [`site`](https://github.com/python-discord/si
 
 ### Requirements
 
-- [Python 3.9](https://www.python.org/downloads/)
+- [Python 3.10](https://www.python.org/downloads/)
 - [Poetry](https://python-poetry.org/docs/#installation)
     - `pip install poetry`
 - [Git](https://git-scm.com/downloads)
