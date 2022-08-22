@@ -35,7 +35,7 @@ class Commit(models.Model):
 
 
 class Tag(models.Model):
-    """A tag from the python-discord server."""
+    """A tag from the python-discord bot repository."""
 
     URL_BASE = "https://github.com/python-discord/bot/tree/main/bot/resources/tags"
 
