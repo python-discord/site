@@ -5,7 +5,7 @@ from django.db import models
 
 
 class Commit(models.Model):
-    """A git commit."""
+    """A git commit from the Python Discord Bot project."""
 
     URL_BASE = "https://github.com/python-discord/bot/commit/"
 
@@ -28,8 +28,8 @@ class Commit(models.Model):
         for line in self.message.split("\n"):
             yield line
 
-    def format_users(self) -> collections.abc.Iterable[str]:
-        """Return a nice representation of the user(s)' name and email."""
+    def format_authors(self) -> collections.abc.Iterable[str]:
+        """Return a nice representation of the author(s)' name and email."""
         for author in json.loads(self.author):
             yield f"{author['name']} <{author['email']}>"
 

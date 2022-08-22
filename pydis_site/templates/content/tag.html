@@ -27,7 +27,7 @@
         <div class="dropdown-menu">
             <div class="dropdown-content">
                 <div class="dropdown-item">Last edited by:</div>
-                {% for user in tag.last_commit.format_users %}
+                {% for user in tag.last_commit.format_authors %}
                     <div class="dropdown-item">{{ user }}</div>
                 {% endfor %}
                 <div class="dropdown-divider"></div>

@@ -63,5 +63,5 @@ urlpatterns = [
         views.PageOrCategoryView.as_view(),
         name='page_category',
         distill_func=get_all_pages
-    )
+    ),
 ]
