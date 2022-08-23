@@ -221,7 +221,7 @@ def get_tags() -> list[Tag]:
         return Tag.objects.all()
 
 
-def get_tag(path: str) -> typing.Union[Tag, list[Tag]]:
+def get_tag(path: str, *, skip_sync: bool = False) -> typing.Union[Tag, list[Tag]]:
     """
     Return a tag based on the search location.
 
@@ -243,7 +243,7 @@ def get_tag(path: str) -> typing.Union[Tag, list[Tag]]:
     matches = []
     for tag in get_tags():
         if tag.name == name and tag.group == group:
-            if tag.last_commit is None:
+            if tag.last_commit is None and not skip_sync:
                 set_tag_commit(tag)
             return tag
         elif tag.group == name and group is None:

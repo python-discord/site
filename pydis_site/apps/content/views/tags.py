@@ -11,7 +11,12 @@ from django.views.generic import TemplateView
 from pydis_site.apps.content import utils
 from pydis_site.apps.content.models import Tag
 
-COMMAND_REGEX = re.compile(r"`*!tags? (?P<name>[\w\d-]+)`*")
+# The following regex tries to parse a tag command
+# It'll read up to two words seperated by spaces
+# If the command does not include a group, the tag name will be in the `first` group
+# If there's a second word after the command, or if there's a tag group, extra logic
+# is necessary to determine whether it's a tag with a group, or a tag with text after it
+COMMAND_REGEX = re.compile(r"`*!tags? (?P<first>[\w-]+)(?P<second> [\w-]+)?`*")
 
 
 class TagView(TemplateView):
@@ -75,8 +80,23 @@ class TagView(TemplateView):
 
         # Check for tags which can be hyperlinked
         def sub(match: re.Match) -> str:
-            link = reverse("content:tag", kwargs={"location": match.group("name")})
-            return f"[{match.group()}]({link})"
+            first, second = match.groups()
+            location = first
+            text, extra = match.group(), ""
+
+            if second is not None:
+                # Possibly a tag group
+                try:
+                    new_location = f"{first}/{second.strip()}"
+                    utils.get_tag(new_location, skip_sync=True)
+                    location = new_location
+                except Tag.DoesNotExist:
+                    # Not a group, remove the second argument from the link
+                    extra = text[text.find(second):]
+                    text = text[:text.find(second)]
+
+            link = reverse("content:tag", kwargs={"location": location})
+            return f"[{text}]({link}){extra}"
         content = COMMAND_REGEX.sub(sub, content)
 
         # Add support for some embed elements

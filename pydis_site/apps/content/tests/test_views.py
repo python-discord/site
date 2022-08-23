@@ -358,6 +358,34 @@ class TagViewTests(django.test.TestCase):
             response.context.get("page")
         )
 
+    def test_hyperlinked_group(self):
+        """Test hyperlinking with a group works as intended."""
+        Tag.objects.create(
+            name="example", body="!tags group-name grouped-tag", last_commit=self.commit
+        )
+        Tag.objects.create(name="grouped-tag", group="group-name")
+
+        other_url = reverse("content:tag", kwargs={"location": "group-name/grouped-tag"})
+        response = self.client.get("/pages/tags/example/")
+        self.assertEqual(
+            markdown.markdown(f"[!tags group-name grouped-tag]({other_url})"),
+            response.context.get("page")
+        )
+
+    def test_hyperlinked_extra_text(self):
+        """Test hyperlinking when a tag is followed by extra, unrelated text."""
+        Tag.objects.create(
+            name="example", body="!tags other unrelated text", last_commit=self.commit
+        )
+        Tag.objects.create(name="other")
+
+        other_url = reverse("content:tag", kwargs={"location": "other"})
+        response = self.client.get("/pages/tags/example/")
+        self.assertEqual(
+            markdown.markdown(f"[!tags other]({other_url}) unrelated text"),
+            response.context.get("page")
+        )
+
     def test_tag_root_page(self):
         """Test the root tag page which lists all tags."""
         Tag.objects.create(name="tag-1", last_commit=self.commit)
