@@ -23,7 +23,7 @@ TEST_COMMIT_KWARGS = {
     "sha": "123",
     "message": "Hello world\n\nThis is a commit message",
     "date": _time,
-    "author": json.dumps([
+    "authors": json.dumps([
         {"name": "Author 1", "email": "mail1@example.com", "date": _time_str},
         {"name": "Author 2", "email": "mail2@example.com", "date": _time_str},
     ]),
@@ -314,7 +314,7 @@ class TagUtilsTests(TestCase):
         """Test the get commit function with a normal tag."""
         tag = models.Tag.objects.create(name="example")
 
-        authors = json.loads(self.commit.author)
+        authors = json.loads(self.commit.authors)
 
         get_mock.return_value = httpx.Response(
             request=httpx.Request("GET", "https://google.com"),
@@ -343,9 +343,9 @@ class TagUtilsTests(TestCase):
         """Test the get commit function with a group tag."""
         tag = models.Tag.objects.create(name="example", group="group-name")
 
-        authors = json.loads(self.commit.author)
+        authors = json.loads(self.commit.authors)
         authors.pop()
-        self.commit.author = json.dumps(authors)
+        self.commit.authors = json.dumps(authors)
         self.commit.save()
 
         get_mock.return_value = httpx.Response(

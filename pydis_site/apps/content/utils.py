@@ -137,7 +137,7 @@ def set_tag_commit(tag: Tag) -> None:
             sha="68da80efc00d9932a209d5cccd8d344cec0f09ea",
             message="Initial Commit\n\nTHIS IS FAKE DEMO DATA",
             date=datetime.datetime(2018, 2, 3, 12, 20, 26, tzinfo=datetime.timezone.utc),
-            author=json.dumps([{"name": "Joseph", "email": "joseph@josephbanks.me"}]),
+            authors=json.dumps([{"name": "Joseph", "email": "joseph@josephbanks.me"}]),
         )
         return
 
@@ -159,15 +159,15 @@ def set_tag_commit(tag: Tag) -> None:
     date = date.replace(tzinfo=datetime.timezone.utc)
 
     if author["email"] == committer["email"]:
-        commit_author = [author]
+        authors = [author]
     else:
-        commit_author = [author, committer]
+        authors = [author, committer]
 
     commit_obj, _ = Commit.objects.get_or_create(
         sha=data["sha"],
         message=commit["message"],
         date=date,
-        author=json.dumps(commit_author),
+        authors=json.dumps(authors),
     )
     tag.last_commit = commit_obj
     tag.save()

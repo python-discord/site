@@ -16,7 +16,12 @@ class Commit(models.Model):
     )
     message = models.TextField(help_text="The commit message.")
     date = models.DateTimeField(help_text="The date and time the commit was created.")
-    author = models.TextField(help_text="The person(s) who created the commit.")
+    authors = models.TextField(help_text=(
+        "The person(s) who created the commit. This is a serialized JSON object. "
+        "Refer to the GitHub documentation on the commit endpoint "
+        "(schema/commit.author & schema/commit.committer) for more info. "
+        "https://docs.github.com/en/rest/commits/commits#get-a-commit"
+    ))
 
     @property
     def url(self) -> str:
@@ -30,7 +35,7 @@ class Commit(models.Model):
 
     def format_authors(self) -> collections.abc.Iterable[str]:
         """Return a nice representation of the author(s)' name and email."""
-        for author in json.loads(self.author):
+        for author in json.loads(self.authors):
             yield f"{author['name']} <{author['email']}>"
 
 
