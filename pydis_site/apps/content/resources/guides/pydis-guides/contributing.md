@@ -80,13 +80,13 @@ Our projects on Python Discord are open source and [available on GitHub](https:/
 </div>
 
 # How do I start contributing?
-Unsure of what contributing to open source projects involves? Have questions about how to use GitHub? Just need to know about our contribution etiquette? Completing these steps will have you ready to make your first contribution no matter your starting point.
+Unsure of what contributing to open source projects involve? Have questions about how to use GitHub? Just need to know about our contribution etiquette? Completing these steps will have you ready to make your first contribution no matter your starting point.
 
 Feel free to skip any steps you're already familiar with, but please make sure not to miss the [Contributing Guidelines](#5-read-our-contributing-guidelines).
 
 If you are here looking for the answer to a specific question, check out the sub-articles in the top right of the page to see a list of our guides.
 
-**Note:** We use Git to keep track of changes to the files in our projects. Git allows you to make changes to your local code and then distribute those changes to the other people working on the project. You'll use Git in a couple steps of the contributing process. You can refer to this [**guide on using Git**](./working-with-git/).
+**Note:** We use Git to keep track of changes to the files in our projects. Git allows you to make changes to your local code and then distribute those changes to the other people working on the project. You'll use Git in a couple of steps of the contributing process. You can refer to this [**guide on using Git**](./working-with-git/).
 {: .notification }
 
 ### 1. Fork and clone the repo
@@ -119,7 +119,7 @@ As mentioned in the Contributing Guidelines, we have a simple style guide for ou
 [**Style Guide**](./style-guide/)
 
 ### 4. Create an issue
-The first step to any new contribution is an issue describing a problem with the current codebase or proposing a new feature. All the open issues are viewable on the GitHub repositories, for instance here is the [issues page for Sir Lancebot](https://github.com/python-discord/sir-lancebot/issues). If you have something that you want to implement open a new issue to present your idea. Otherwise you can browse the unassigned issues and ask to be assigned to one that you're interested in, either in the comments on the issue or in the [`#dev-contrib`](https://discord.gg/2h3qBv8Xaa) channel on Discord.
+The first step to any new contribution is an issue describing a problem with the current codebase or proposing a new feature. All the open issues are viewable on the GitHub repositories, for instance here is the [issues page for Sir Lancebot](https://github.com/python-discord/sir-lancebot/issues). If you have something that you want to implement open a new issue to present your idea. Otherwise, you can browse the unassigned issues and ask to be assigned to one that you're interested in, either in the comments on the issue or in the [`#dev-contrib`](https://discord.gg/2h3qBv8Xaa) channel on Discord.
 
 [**How to write a good issue**](./issues/)
 
