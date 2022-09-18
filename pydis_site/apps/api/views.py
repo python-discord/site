@@ -100,6 +100,7 @@ class RulesView(APIView):
 
     # `format` here is the result format, we have a link format here instead.
     def get(self, request, format=None):  # noqa: D102,ANN001,ANN201
+        """Returns a list of our community rules coupled with their keywords."""
         link_format = request.query_params.get('link_format', 'md')
         if link_format not in ('html', 'md'):
             raise ParseError(
