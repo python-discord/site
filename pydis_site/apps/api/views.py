@@ -37,12 +37,15 @@ class RulesView(APIView):
 
     ## Routes
     ### GET /rules
-    Returns a JSON array containing the server's rules:
+    Returns a JSON array containing the server's rules
+    coupled with a list of keywords that will be used
+    when searching for particular rules upon using the
+    bot's `!rule` command
 
     >>> [
-    ...     "Eat candy.",
-    ...     "Wake up at 4 AM.",
-    ...     "Take your medicine."
+    ...     ("Eat candy.", ["candy", "sweet"]),
+    ...     ("Wake up at 4 AM.", ["wake_up", "early", "early_bird"]),
+    ...     ("Take your medicine.", ["medicine", "health"])
     ... ]
 
     Since some of the the rules require links, this view
