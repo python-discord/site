@@ -42,9 +42,9 @@ class RulesView(APIView):
     Example response:
 
     >>> [
-    ...     ("Eat candy.", ["candy", "sweets"]),
-    ...     ("Wake up at 4 AM.", ["wake_up", "early", "early_bird"]),
-    ...     ("Take your medicine.", ["medicine", "health"])
+    ...     ["Eat candy.", ["candy", "sweets"]],
+    ...     ["Wake up at 4 AM.", ["wake_up", "early", "early_bird"]],
+    ...     ["Take your medicine.", ["medicine", "health"]]
     ... ]
 
     Since some of the the rules require links, this view
