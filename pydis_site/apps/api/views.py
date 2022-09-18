@@ -43,7 +43,7 @@ class RulesView(APIView):
     bot's `!rule` command
 
     >>> [
-    ...     ("Eat candy.", ["candy", "sweet"]),
+    ...     ("Eat candy.", ["candy", "sweets"]),
     ...     ("Wake up at 4 AM.", ["wake_up", "early", "early_bird"]),
     ...     ("Take your medicine.", ["medicine", "health"])
     ... ]
