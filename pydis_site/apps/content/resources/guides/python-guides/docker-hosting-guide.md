@@ -13,16 +13,16 @@ description: This guide shows how to host a bot with Docker and GitHub Actions o
 6. [Creating Volumes](#creating-volumes)
 7. [Using GitHub Actions for full automation](#using-github-actions-for-full-automation)
 
-## You will learn
+## You will learn how to
 
-- how to write Dockerfile
-- how to build Docker image and run the container
-- how to use docker-compose
-- how to make docker keep the files throughout the container's runs
-- how to parse environment variables into container
-- how to use GitHub Actions for automation
-- how to set up self-hosted runner
-- how to use runner secrets
+- write Dockerfile
+- build Docker image and run the container
+- use docker-compose
+- make docker keep the files throughout the container's runs
+- parse environment variables into container
+- use GitHub Actions for automation
+- set up self-hosted runner
+- use runner secrets
 
 ## Introduction
 
@@ -40,7 +40,7 @@ some stuff like dependencies update and running the application in the backgroun
 
 ## Installing Docker
 
-The best way to install the docker is to use
+The best way to install Docker is to use
 the [convenience script](https://docs.docker.com/engine/install/ubuntu/#install-using-the-convenience-script) provided
 by Docker developers themselves. You just need 2 lines:
 
