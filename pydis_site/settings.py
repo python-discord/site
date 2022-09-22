@@ -21,7 +21,6 @@ import environ
 import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
 
-
 env = environ.Env(
     DEBUG=(bool, False),
     SITE_DSN=(str, ""),
@@ -30,10 +29,19 @@ env = environ.Env(
     GIT_SHA=(str, 'development'),
     TIMEOUT_PERIOD=(int, 5),
     GITHUB_TOKEN=(str, None),
+    GITHUB_APP_ID=(str, None),
+    GITHUB_APP_KEY=(str, None),
 )
 
 GIT_SHA = env("GIT_SHA")
+GITHUB_API = "https://api.github.com"
 GITHUB_TOKEN = env("GITHUB_TOKEN")
+GITHUB_APP_ID = env("GITHUB_APP_ID")
+GITHUB_APP_KEY = env("GITHUB_APP_KEY")
+
+if GITHUB_APP_KEY and (key_file := Path(GITHUB_APP_KEY)).is_file():
+    # Allow the OAuth key to be loaded from a file
+    GITHUB_APP_KEY = key_file.read_text(encoding="utf-8")
 
 sentry_sdk.init(
     dsn=env('SITE_DSN'),

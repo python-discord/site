@@ -22,6 +22,7 @@ markdown = "~=3.3.4"
 python-frontmatter = "~=1.0"
 django-prometheus = "~=2.1"
 django-distill = "~=2.9.0"
+PyJWT = {version = "~=2.4.0", extras = ["crypto"]}
 
 [tool.poetry.dev-dependencies]
 coverage = "~=5.0"
@@ -51,7 +52,7 @@ start = "python manage.py run --debug"
 makemigrations = "python manage.py makemigrations"
 django_shell = "python manage.py shell"
 test = "coverage run manage.py test"
-coverage = "coverage run manage.py test --no-input; coverage report -m"
+coverage = "coverage run manage.py test --no-input && coverage report -m"
 report = "coverage report -m"
 lint = "pre-commit run --all-files"
 precommit = "pre-commit install"

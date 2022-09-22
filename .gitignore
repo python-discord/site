@@ -132,3 +132,6 @@ log.*
 
 # Mac/OSX
 .DS_Store
+
+# Private keys
+*.pem
