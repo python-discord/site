@@ -96,7 +96,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('content', models.CharField(help_text='The definition of this filter.', max_length=100)),
                 ('description', models.CharField(help_text='Why this filter has been added.', max_length=200, null=True)),
-                ('additional_field', django.contrib.postgres.fields.jsonb.JSONField(help_text='Implementation specific field.', null=True)),
+                ('additional_field', models.JSONField(help_text='Implementation specific field.', null=True)),
                 ('guild_pings', django.contrib.postgres.fields.ArrayField(base_field=models.CharField(max_length=100), help_text='Who to ping when this filter triggers.', size=None, null=True)),
                 ('filter_dm', models.BooleanField(help_text='Whether DMs should be filtered.', null=True)),
                 ('dm_pings', django.contrib.postgres.fields.ArrayField(base_field=models.CharField(max_length=100), help_text='Who to ping when this filter triggers on a DM.', size=None, null=True)),

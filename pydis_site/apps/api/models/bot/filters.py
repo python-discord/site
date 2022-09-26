@@ -1,4 +1,4 @@
-from django.contrib.postgres.fields import ArrayField, JSONField
+from django.contrib.postgres.fields import ArrayField
 from django.db import models
 from django.db.models import UniqueConstraint
 
@@ -121,7 +121,7 @@ class FilterBase(FilterSettingsMixin):
         max_length=200,
         help_text="Why this filter has been added.", null=True
     )
-    additional_field = JSONField(null=True, help_text="Implementation specific field.")
+    additional_field = models.JSONField(null=True, help_text="Implementation specific field.")
     filter_list = models.ForeignKey(
         FilterList, models.CASCADE, related_name="filters",
         help_text="The filter list containing this filter."
