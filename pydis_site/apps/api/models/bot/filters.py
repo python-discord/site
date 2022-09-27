@@ -27,7 +27,7 @@ class FilterSettingsMixin(models.Model):
         null=True
     )
     infraction_type = models.CharField(
-        choices=Infraction.TYPE_CHOICES,
+        choices=[(choices[0].upper(), choices[1]) for choices in Infraction.TYPE_CHOICES],
         max_length=10,
         null=True,
         help_text="The infraction to apply to this user."
