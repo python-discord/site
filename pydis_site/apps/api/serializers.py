@@ -154,6 +154,7 @@ REQUIRED_FOR_FILTER_LIST_SETTINGS = (
     'filter_dm',
     'dm_pings',
     'delete_messages',
+    'send_alert',
     'bypass_roles',
     'enabled',
     'enabled_channels',
