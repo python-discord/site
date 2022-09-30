@@ -108,7 +108,7 @@ def authorize(owner: str, repo: str) -> httpx.Client:
     client = httpx.Client(
         base_url=settings.GITHUB_API,
         headers={"Authorization": f"bearer {generate_token()}"},
-        timeout=settings.TIMEOUT_PERIOD,
+        timeout=10,
     )
 
     try:

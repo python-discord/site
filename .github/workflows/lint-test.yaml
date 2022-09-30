@@ -19,7 +19,7 @@ jobs:
         uses: HassanAbouelela/actions/setup-python@setup-python_v1.3.1
         with:
           dev: true
-          python_version: '3.9'
+          python_version: '3.10'
 
       # Start the database early to give it a chance to get ready before
       # we start running tests.
@@ -49,6 +49,7 @@ jobs:
           python manage.py makemigrations --check
           coverage run manage.py test --no-input
           coverage report -m
+          coverage lcov
         env:
           CI: True
           DATABASE_URL: postgres://pysite:pysite@localhost:7777/pysite
@@ -56,11 +57,12 @@ jobs:
           PYTHONWARNINGS: error
 
       # This step will publish the coverage reports coveralls.io and
-      # print a "job" link in the output of the GitHub Action
-      - name: Publish coverage report to coveralls.io
-        env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: coveralls
+      # link the report to the commit
+      - name: Publish Coverage Report
+        uses: coverallsapp/github-action@1.1.3
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path-to-lcov: ./coverage.lcov
 
       - name: Tear down docker-compose containers
         run: docker-compose stop
