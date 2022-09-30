@@ -64,8 +64,8 @@ class FetchTests(AuthenticatedAPITestCase):
 
         self.assertEqual(response.status_code, 200)
         for api_type, model_type in zip(response.json(), FilterList.FilterListType.choices):
-            self.assertEquals(api_type[0], model_type[0])
-            self.assertEquals(api_type[1], model_type[1])
+            self.assertEqual(api_type[0], model_type[0])
+            self.assertEqual(api_type[1], model_type[1])
 
 
 class CreationTests(AuthenticatedAPITestCase):

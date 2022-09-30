@@ -125,4 +125,4 @@ class ReminderViewSet(
     serializer_class = ReminderSerializer
     queryset = Reminder.objects.prefetch_related('author')
     filter_backends = (DjangoFilterBackend, SearchFilter)
-    filter_fields = ('active', 'author__id')
+    filterset_fields = ('active', 'author__id')

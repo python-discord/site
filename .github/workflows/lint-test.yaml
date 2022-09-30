@@ -53,6 +53,7 @@ jobs:
           CI: True
           DATABASE_URL: postgres://pysite:pysite@localhost:7777/pysite
           METRICITY_DB_URL: postgres://pysite:pysite@localhost:7777/metricity
+          PYTHONWARNINGS: error
 
       # This step will publish the coverage reports coveralls.io and
       # print a "job" link in the output of the GitHub Action
