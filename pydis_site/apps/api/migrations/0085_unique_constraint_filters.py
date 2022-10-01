@@ -30,6 +30,7 @@ class Migration(migrations.Migration):
                 'send_alert',
                 'enabled_channels',
                 'disabled_channels',
+                'enabled_categories',
                 'disabled_categories'
             ), name='unique_filters'),
         ),

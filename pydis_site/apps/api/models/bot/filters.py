@@ -84,11 +84,6 @@ class FilterList(FilterSettingsMixin):
         help_text="Whether an alert should be sent.",
     )
     # Where a filter should apply.
-    #
-    # The resolution is done in the following order:
-    #   - enabled_channels
-    #   - disabled_categories
-    #   - disabled_channels
     enabled_channels = ArrayField(
         models.CharField(max_length=100),
         help_text="Channels in which to run the filter even if it's disabled in the category."
@@ -96,6 +91,10 @@ class FilterList(FilterSettingsMixin):
     disabled_channels = ArrayField(
         models.CharField(max_length=100),
         help_text="Channels in which to not run the filter."
+    )
+    enabled_categories = ArrayField(
+        models.CharField(max_length=100),
+        help_text="The only categories in which to run the filter."
     )
     disabled_categories = ArrayField(
         models.CharField(max_length=100),
@@ -164,6 +163,11 @@ class FilterBase(FilterSettingsMixin):
     disabled_channels = ArrayField(
         models.CharField(max_length=100),
         help_text="Channels in which to not run the filter.", null=True
+    )
+    enabled_categories = ArrayField(
+        models.CharField(max_length=100),
+        help_text="The only categories in which to run the filter.",
+        null=True
     )
     disabled_categories = ArrayField(
         models.CharField(max_length=100),

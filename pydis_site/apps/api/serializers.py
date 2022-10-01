@@ -159,6 +159,7 @@ REQUIRED_FOR_FILTER_LIST_SETTINGS = (
     'enabled',
     'enabled_channels',
     'disabled_channels',
+    'enabled_categories',
     'disabled_categories',
 )
 
@@ -183,6 +184,7 @@ CHANNEL_SCOPE_FIELDS = (
     "disabled_channels",
     "disabled_categories",
     "enabled_channels",
+    "enabled_categories"
 )
 MENTIONS_FIELDS = ("guild_pings", "dm_pings")
 
@@ -208,9 +210,9 @@ class FilterSerializer(ModelSerializer):
                 raise ValidationError("Enabled and Disabled channels lists contain duplicates.")
 
         if data.get('disabled_categories') is not None:
-            categories_collection = data['disabled_categories']
+            categories_collection = data['disabled_categories'] + data['enabled_categories']
             if len(categories_collection) != len(set(categories_collection)):
-                raise ValidationError("Disabled categories lists contain duplicates.")
+                raise ValidationError("Enabled and Disabled categories lists contain duplicates.")
 
         return data
 

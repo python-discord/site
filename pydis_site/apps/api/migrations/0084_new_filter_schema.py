@@ -51,6 +51,7 @@ def forward(apps: Apps, schema_editor: BaseDatabaseSchemaEditor) -> None:
             disabled_channels=[],
             disabled_categories=(["CODE JAM"] if name in ("FILE_FORMAT", "GUILD_INVITE") else []),
             enabled_channels=[],
+            enabled_categories=[],
             send_alert=(name in ('GUILD_INVITE', 'DOMAIN_NAME', 'FILTER_TOKEN'))
         )
 
@@ -74,6 +75,7 @@ def forward(apps: Apps, schema_editor: BaseDatabaseSchemaEditor) -> None:
                 disabled_channels=None,
                 disabled_categories=None,
                 enabled_channels=None,
+                enabled_categories=None,
                 send_alert=None,
             )
             new_object.save()
@@ -111,6 +113,7 @@ class Migration(migrations.Migration):
                 ('disabled_channels', django.contrib.postgres.fields.ArrayField(base_field=models.CharField(max_length=100), help_text="Channels in which to not run the filter.", null=True, size=None)),
                 ('disabled_categories', django.contrib.postgres.fields.ArrayField(base_field=models.CharField(max_length=100), help_text="Categories in which to not run the filter.", null=True, size=None)),
                 ('enabled_channels', django.contrib.postgres.fields.ArrayField(base_field=models.CharField(max_length=100), help_text="Channels in which to run the filter even if it's disabled in the category.", null=True, size=None)),
+                ('enabled_categories', django.contrib.postgres.fields.ArrayField(base_field=models.CharField(max_length=100), help_text="The only categories in which to run the filter.", null=True, size=None)),
                 ('send_alert', models.BooleanField(help_text='Whether an alert should be sent.', null=True)),
             ],
         ),
@@ -134,6 +137,7 @@ class Migration(migrations.Migration):
                 ('disabled_channels', django.contrib.postgres.fields.ArrayField(base_field=models.CharField(max_length=100), help_text="Channels in which to not run the filter.", size=None)),
                 ('disabled_categories', django.contrib.postgres.fields.ArrayField(base_field=models.CharField(max_length=100), help_text="Categories in which to not run the filter.", size=None)),
                 ('enabled_channels', django.contrib.postgres.fields.ArrayField(base_field=models.CharField(max_length=100), help_text="Channels in which to run the filter even if it's disabled in the category.", size=None)),
+                ('enabled_categories', django.contrib.postgres.fields.ArrayField(base_field=models.CharField(max_length=100), help_text="The only categories in which to run the filter.", size=None)),
                 ('send_alert', models.BooleanField(help_text='Whether an alert should be sent.')),
             ],
         ),
