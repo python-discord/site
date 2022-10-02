@@ -26,7 +26,7 @@ If none of the above steps help you or you're not sure how to do some of the abo
 
 # A Good Question
 
-When you're ready to ask a question, there's a few things you should have to hand before forming a query.
+When you're ready to ask a question, there are a few things you should have to hand before forming a query.
 
 * A code example that illustrates your problem
 * If possible, make this a minimal example rather than an entire application
@@ -35,7 +35,7 @@ When you're ready to ask a question, there's a few things you should have to han
 * The full traceback if your code raises an exception
 * Do not curate the traceback as you may inadvertently exclude information crucial to solving your issue
 
-Your question should be informative, but to the point.
+Your question should be informative but to the point.
 More importantly, how you phrase your question and how you address those that may help you is crucial.
 Courtesy never hurts, and please type using correctly-spelled and grammatical language as far as you possibly can.
 
@@ -47,7 +47,7 @@ Describe the problem's symptoms in chronological order - not your guesses as to 
 | ------------- | -------------- |
 | Where can I find information on discord.py? | I used Google to try to find more information about "discord.py 1.0.0a", but I couldn't really find anything useful. Does anyone know where I might find a guide to writing commands using this library? |
 | Pillow puts my text at the bottom of the image instead of where I wanted it. Why is it broken? | Pillow appears to insert text at the bottom of the image if the given X coordinate is negative. I had a look at the documentation and searched Stack Overflow, but I couldn't find any information on using negative coordinates to position text. Has anyone attempted this? |
-| I'm having some trouble writing a YouTube random URL generator - can anyone help? | My YouTube random URL generator appears to be returning false positives for tested URLs, stating that a URL points to a real video when that video doesn't actually exist. Obviously there's some issue with how this is checked, but I can't put my finger on it. Is there anything I can check? |
+| I'm having some trouble writing a YouTube random URL generator - can anyone help? | My YouTube random URL generator appears to be returning false positives for tested URLs, stating that a URL points to a real video when that video doesn't actually exist. Obviously, there's some issue with how this is checked, but I can't put my finger on it. Is there anything I can check? |
 | I was given this assignment by my teacher, but I'm not sure how to approach it. Does anyone have any ideas? | I have a list of numbers - how do I calculate how many of them are even? Is there a way to remove all the odd numbers from my list? Are there quick ways to find the average of a list of numbers, or add them all together? |
 
 

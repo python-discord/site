@@ -11,7 +11,7 @@ toc: 4
 Pages, which include guides, articles, and other static content, are stored in markdown files in the `site` repository on Github.
 If you are interested in writing or modifying pages seen here on the site, follow the steps below.
 
-For further assistance and help with contributing pages, send a message to the `#dev-contrib` channel in the Discord server!
+For further assistance and help with contributing pages, send a message to the `#dev-contrib` channel on the Discord server!
 
 ## Prerequisites
 Before working on a new page, you have to [setup the site project locally](https://pythondiscord.com/pages/contributing/site/).
@@ -59,7 +59,7 @@ Therefore, `www.pythondiscord.com/guides/contributing/bot` will then render `bot
 Files representing pages are in `.md` (Markdown) format, with all-lowercase filenames and spaces replaced with `-` characters.
 
 Each page must include required metadata, and optionally additional metadata to modify the appearance of the page.
-The metadata is written in YAML, and should be enclosed in triple dashes `---` *at the top of the markdown file*.
+The metadata is written in YAML and should be enclosed in triple dashes `---` *at the top of the markdown file*.
 
 **Example:**
 ```yaml
@@ -76,7 +76,7 @@ Pages, which include guides, articles, and other static content,...
 ```
 
 ### Required Fields
-- **title:** Easily-readable title for your article.
+- **title:** Easily readable title for your article.
 - **description:** Short, 1-2 line description of the page's content.
 
 ### Optional Fields
@@ -170,7 +170,7 @@ path = os.path.join("foo", "bar")
 To add HTML attributes to certain lines/paragraphs, [see this page](https://python-markdown.github.io/extensions/attr_list/#the-list) for the format and where to put it.
 
 This can be useful for setting the image size when adding an image using markdown (see the [Image Captions](#image-captions) section for an example), or for adding bulma styles to certain elements (like the warning notification [here](/pages/guides/pydis-guides/contributing/sir-lancebot#setup-instructions)).<br>
-**This should be used sparingly, as it reduces readability and simplicity of the article.**
+**This should be used sparingly, as it reduces the readability and simplicity of the article.**
 
 ---
 
@@ -180,7 +180,7 @@ To add an image caption, place a sentence with italics *right below* the image l
 **Markdown:**
 ```nohighlight
 ![Summer Code Jam 2020](/static/images/events/summer_code_jam_2020.png){: width="400" }
-*Summmer Code Jam 2020 banner with event information.*
+*Summer Code Jam 2020 banner with event information.*
 ```
 
 **Output:**
@@ -195,7 +195,7 @@ To add an image caption, place a sentence with italics *right below* the image l
 ### Table of Contents
 In order to show the table of contents on a page, simply define the `toc` key in the page metadata.
 
-The value of the `toc` key corresponds to the smallest heading to list in the table of contents.
+The value of the `toc` key corresponds to the smallest heading to the list in the table of contents.
 For example, with markdown content like this:
 
 ```markdown

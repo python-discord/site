@@ -15,11 +15,11 @@ Whether you're working professionally or on an open-source project on GitHub, yo
 So what exactly is a code review? The closest thing to compare it to is proofreading.
 In proofreading, you look at an essay someone wrote and give suggestions on how things could be written better or point out mistakes that the writer may have missed.
 Code reviewing is the same way.
-You're given some code that someone wrote and see if you can find ways to improve it or point mistakes that the coder may have missed.
+You're given some code that someone wrote and see if you can find ways to improve it or point out mistakes that the coder may have missed.
 
 "Hemlock", you might say, "Why should I care? Why would this be important?" The thing to remember is that coding is a team effort.
 Code reviews help the programs we write to be the very best they can be.
-We're all human, and mistakes are made, but through working together, we can correct those mistakes (as best we can) before they get merged into production.
+We're all human, and mistakes are made, but by working together, we can correct those mistakes (as best we can) before they get merged into production.
 Even if you're not the best coder in the world, you may spot things that even a professional programmer might miss!
 
 ##### The How
@@ -58,7 +58,7 @@ Reading the issue(s) and their comments will allow you to know why certain decis
 This will be invaluable when you review the implementation.
 The author of the issue may suggest the code be written one way but the PR ends up writing it another.
 This happens during the development process: New ideas are thought of, optimizations are found, other ideas are removed, etc.
-Even if there are changes, functionality or fix that the issue covers should be covered by the PR.
+Even if there are changes, functionality, or fixes that the issue covers should be covered by the PR.
 
 ### Analyzing the PR
 

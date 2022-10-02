@@ -10,7 +10,7 @@ To facilitate the best experience for everyone, here are some guidelines on conv
 
 ## Three things you shouldn't do
 1. Don't interrupt active conversations
-    * There's three off-topic channels which can support three simultaneous conversations.
+    * There are three off-topic channels that can support three simultaneous conversations.
     If one is active and you have something you'd like to discuss, try a different channel.
 2. Don't post memes unless they're relevant to a conversation
     * There are better places to share memes; if you have a meme you think is worth sharing, try to find a relevant subreddit, like [/r/ProgrammerHumor](https://www.reddit.com/r/ProgrammerHumor/).
@@ -20,8 +20,8 @@ To facilitate the best experience for everyone, here are some guidelines on conv
 ## Three things you should do
 1. Ask away
     * If you have a question that isn't about Python, just ask it in an inactive off-topic channel.
-    If someone sees your question who knows the answer, they will answer you.
-    "Why is my wifi not working?", "how do I tune a guitar?", "is there a server for C#?", are all fair game for questions to ask.
+    If someone sees your question and knows the answer, they will answer you.
+    "Why is my wifi not working?", "how do I tune a guitar?", "Is there a server for C#?", are all fair game for questions to ask.
     If your question relates to Python, try to find the most suitable channel to ask your question, or open a help session.
 2. When in doubt, ask someone to clarify what they mean
     * If you're not sure you properly understand someone, ask them to clarify.

@@ -27,9 +27,9 @@ If you feel like there's a gap in your understanding of the problem, it's often 
 *  The way in which the code doesn't work (if that is the issue), be it an exception message with traceback, undesired output, etc.
 *  You can sometimes infer what the problem is yourself by requesting short examples of the desired output for specific input.
 
-At this point, it's probably better being safe than sorry.
+At this point, it's probably better to be safe than sorry.
 You don't want to accidentally pursue a direction that isn't even related to the real issue, as it could lead to frustration on both sides.
-Beginners especially can be prone to asking a question which presents their attempt at solving the problem, instead of presenting the problem itself.
+Beginners especially can be prone to asking a question that presents their attempt at solving the problem, instead of presenting the problem itself.
 This is often called an [XY problem](https://xyproblem.info/).
 
 Even if eventually you can't help, simply clarifying what the problem is can help others join in, and give their input.
@@ -64,7 +64,7 @@ At other times, it might not be as obvious, and it might be a good idea to kindl
 The path is often more important than the answer.
 Your goal should primarily be to allow the helpee to apply, at least to a degree, the concepts you introduce in your answer.
 Otherwise, they might keep struggling with the same problem over and over again.
-That means that simply showing your answer might close the help channel for the moment, but won't be very helpful in the long-term.
+That means that simply showing your answer might close the help channel for the moment, but won't be very helpful in the long term.
 
 A common approach is to walk the helpee through to an answer:
 
@@ -86,7 +86,7 @@ A common approach is to walk the helpee through to an answer:
 > This is also an example of gauging the level of the person you're talking to.
 > You can't properly help if you don't know what they already learned.
 > If they don't know recursion, it's going to take a slower, more detailed approach if you try to explain backtracking to them.
-> Likewise if they're not familiar with lists.
+> Likewise, if they're not familiar with lists.
 >
 > The same applies to presenting external resources.
 > If they only just started programming, pasting a link to the Python documentation is going to be of little help.
@@ -112,7 +112,7 @@ Presenting a solution that is considered a bad practice might be useful in certa
 >     for i in range(len(your_list)):
 >         print(your_list[i])
 >
-> The second replier gave a valid solution, but it's important that he clarifies that it is considered a bad practice in Python, and that the first solution should usually be used in this case.
+> The second replier gave a valid solution, but it's important that he clarifies that it is considered a bad practice in Python and that the first solution should usually be used in this case.
 
 
 ## It's OK to Step Away
@@ -122,10 +122,10 @@ Maybe there's a language barrier you don't manage to overcome.
 In other cases, you might find yourself getting impatient or sarcastic, maybe because you already answered the question being asked three times in the past hour.
 
 That's OK- remember you can step away at any time and let others take over.
-You're here helping others on your own free time (and we really appreciate it!), and have no quotas to fill.
+You're here helping others in your own free time (and we really appreciate it!), and have no quotas to fill.
 
 At other times, you might start talking with someone and realize you're not experienced in the topic they need help with.
-There's nothing wrong with admitting you lack the specific knowledge required in this case, and wishing them good luck.
+There's nothing wrong with admitting you lack the specific knowledge required in this case and wishing them good luck.
 We can't know everything.
 
 Remember that helping means thinking of what's best for them, and we also wouldn't want to see you become agitated.
@@ -135,6 +135,6 @@ We're all here because we enjoy doing this.
 ## Respect Others Giving Help
 
 You might sometimes see others giving help and guiding others to an answer.
-Throwing in additional ideas is great, but please remember both teaching and learning takes concentration, and you stepping in might break it.
-You might have another idea to suggest, but you see that there's already a person helping, and that they're handling the situation.
+Throwing in additional ideas is great, but please remember both teaching and learning takes concentration, and you interrupting might break it.
+You might have another idea to suggest, but you see that there's already a person helping and that they're handling the situation.
 In that case, it might be a good idea to patiently observe, and wait for a good opportunity to join in so as to not be disruptive.
