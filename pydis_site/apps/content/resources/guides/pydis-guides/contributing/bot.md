@@ -507,7 +507,7 @@ You can start several services together: `docker-compose up web snekbox redis`.
 ##### Setting Up a Development Environment
 The bot's code is Python code like any other. To run it locally, you will need the right version of Python with the necessary packages installed:
 
-1. Make sure you have [Python 3.9](https://www.python.org/downloads/) installed. It helps if it is your system's default Python version.
+1. Make sure you have [Python 3.10](https://www.python.org/downloads/) installed. It helps if it is your system's default Python version.
 2. [Install Poetry](https://github.com/python-poetry/poetry#installation).
 3. [Install the dependencies](../installing-project-dependencies).
 

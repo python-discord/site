@@ -42,7 +42,7 @@ class TestRepositoryMetadataHelpers(TestCase):
         metadata = self.home_view._get_repo_data()
 
         self.assertIsInstance(metadata[0], RepositoryMetadata)
-        self.assertEquals(len(metadata), len(self.home_view.repos))
+        self.assertEqual(len(metadata), len(self.home_view.repos))
 
     def test_returns_cached_metadata(self):
         """Test if the _get_repo_data helper returns cached data when available."""
@@ -82,7 +82,7 @@ class TestRepositoryMetadataHelpers(TestCase):
         repo = self.home_view.repos[0]
 
         self.assertIsInstance(api_data, dict)
-        self.assertEquals(len(api_data), len(self.home_view.repos))
+        self.assertEqual(len(api_data), len(self.home_view.repos))
         self.assertIn(repo, api_data.keys())
         self.assertIn("stargazers_count", api_data[repo])
 
@@ -126,7 +126,7 @@ class TestRepositoryMetadataHelpers(TestCase):
         with self.assertLogs():
             metadata = self.home_view._get_repo_data()
 
-        self.assertEquals(len(metadata), 0)
+        self.assertEqual(len(metadata), 0)
 
     def test_cleans_up_stale_metadata(self):
         """Tests that we clean up stale metadata when we start the HomeView."""

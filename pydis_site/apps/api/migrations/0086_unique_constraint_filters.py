@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('api', '0084_new_filter_schema'),
+        ('api', '0085_new_filter_schema'),
     ]
 
     operations = [

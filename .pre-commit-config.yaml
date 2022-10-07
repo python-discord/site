@@ -22,4 +22,3 @@ repos:
         entry: poetry run flake8
         language: system
         types: [python]
-        require_serial: true

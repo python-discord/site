@@ -84,7 +84,7 @@ def forward(apps: Apps, schema_editor: BaseDatabaseSchemaEditor) -> None:
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('api', '0083_remove_embed_validation'),
+        ('api', '0084_infraction_last_applied'),
     ]
 
     operations = [

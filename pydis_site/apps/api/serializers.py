@@ -363,6 +363,7 @@ class InfractionSerializer(ModelSerializer):
         fields = (
             'id',
             'inserted_at',
+            'last_applied',
             'expires_at',
             'active',
             'user',
