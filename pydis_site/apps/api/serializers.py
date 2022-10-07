@@ -144,6 +144,7 @@ class DocumentationLinkSerializer(ModelSerializer):
 
 ALWAYS_OPTIONAL_SETTINGS = (
     'dm_content',
+    'dm_embed',
     'infraction_type',
     'infraction_reason',
     'infraction_duration',
