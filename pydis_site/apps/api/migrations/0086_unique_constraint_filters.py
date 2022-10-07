@@ -18,6 +18,7 @@ class Migration(migrations.Migration):
                 'infraction_type',
                 'infraction_reason',
                 'infraction_duration',
+                'infraction_channel',
                 'content',
                 'additional_field',
                 'filter_list',

@@ -3,6 +3,7 @@ from datetime import timedelta
 
 import django.contrib.postgres.fields
 from django.apps.registry import Apps
+from django.core.validators import MinValueValidator
 from django.db import migrations, models
 import django.db.models.deletion
 from django.db.backends.base.schema import BaseDatabaseSchemaEditor
@@ -48,6 +49,7 @@ def forward(apps: Apps, schema_editor: BaseDatabaseSchemaEditor) -> None:
             infraction_type="",
             infraction_reason="",
             infraction_duration=timedelta(seconds=0),
+            infraction_channel=None,
             disabled_channels=[],
             disabled_categories=(["CODE JAM"] if name in ("FILE_FORMAT", "GUILD_INVITE") else []),
             enabled_channels=[],
@@ -72,6 +74,7 @@ def forward(apps: Apps, schema_editor: BaseDatabaseSchemaEditor) -> None:
                 infraction_type=None,
                 infraction_reason=None,
                 infraction_duration=None,
+                infraction_channel=None,
                 disabled_channels=None,
                 disabled_categories=None,
                 enabled_channels=None,
@@ -110,6 +113,7 @@ class Migration(migrations.Migration):
                 ('infraction_type', models.CharField(choices=[('NOTE', 'Note'), ('WARNING', 'Warning'), ('WATCH', 'Watch'), ('MUTE', 'Mute'), ('KICK', 'Kick'), ('BAN', 'Ban'), ('SUPERSTAR', 'Superstar'), ('VOICE_BAN', 'Voice Ban'), ('VOICE_MUTE', 'Voice Mute')], help_text='The infraction to apply to this user.', max_length=10, null=True)),
                 ('infraction_reason', models.CharField(help_text='The reason to give for the infraction.', max_length=1000, null=True)),
                 ('infraction_duration', models.DurationField(help_text='The duration of the infraction. Null if permanent.', null=True)),
+                ('infraction_channel', models.BigIntegerField(validators=(MinValueValidator(limit_value=0, message="Channel IDs cannot be negative."),), help_text="Channel in which to send the infraction.", null=True)),
                 ('disabled_channels', django.contrib.postgres.fields.ArrayField(base_field=models.CharField(max_length=100), help_text="Channels in which to not run the filter.", null=True, size=None)),
                 ('disabled_categories', django.contrib.postgres.fields.ArrayField(base_field=models.CharField(max_length=100), help_text="Categories in which to not run the filter.", null=True, size=None)),
                 ('enabled_channels', django.contrib.postgres.fields.ArrayField(base_field=models.CharField(max_length=100), help_text="Channels in which to run the filter even if it's disabled in the category.", null=True, size=None)),
@@ -134,6 +138,7 @@ class Migration(migrations.Migration):
                 ('infraction_type', models.CharField(choices=[('NOTE', 'Note'), ('WARNING', 'Warning'), ('WATCH', 'Watch'), ('MUTE', 'Mute'), ('KICK', 'Kick'), ('BAN', 'Ban'), ('SUPERSTAR', 'Superstar'), ('VOICE_BAN', 'Voice Ban'), ('VOICE_MUTE', 'Voice Mute')], help_text='The infraction to apply to this user.', max_length=10, null=True)),
                 ('infraction_reason', models.CharField(help_text='The reason to give for the infraction.', max_length=1000, null=True)),
                 ('infraction_duration', models.DurationField(help_text='The duration of the infraction. Null if permanent.', null=True)),
+                ('infraction_channel', models.BigIntegerField(validators=(MinValueValidator(limit_value=0, message="Channel IDs cannot be negative."),), help_text="Channel in which to send the infraction.", null=True)),
                 ('disabled_channels', django.contrib.postgres.fields.ArrayField(base_field=models.CharField(max_length=100), help_text="Channels in which to not run the filter.", size=None)),
                 ('disabled_categories', django.contrib.postgres.fields.ArrayField(base_field=models.CharField(max_length=100), help_text="Categories in which to not run the filter.", size=None)),
                 ('enabled_channels', django.contrib.postgres.fields.ArrayField(base_field=models.CharField(max_length=100), help_text="Channels in which to run the filter even if it's disabled in the category.", size=None)),

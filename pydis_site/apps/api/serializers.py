@@ -148,6 +148,7 @@ ALWAYS_OPTIONAL_SETTINGS = (
     'infraction_type',
     'infraction_reason',
     'infraction_duration',
+    'infraction_channel',
 )
 
 REQUIRED_FOR_FILTER_LIST_SETTINGS = (
@@ -178,6 +179,7 @@ INFRACTION_AND_NOTIFICATION_FIELDS = (
     "infraction_type",
     "infraction_reason",
     "infraction_duration",
+    "infraction_channel",
     "dm_content",
     "dm_embed"
 )
@@ -230,6 +232,7 @@ class FilterSerializer(ModelSerializer):
             'infraction_reason': {'allow_blank': True, 'allow_null': True, 'required': False},
             'enabled_channels': {'allow_empty': True, 'allow_null': True, 'required': False},
             'disabled_channels': {'allow_empty': True, 'allow_null': True, 'required': False},
+            'enabled_categories': {'allow_empty': True, 'allow_null': True, 'required': False},
             'disabled_categories': {'allow_empty': True, 'allow_null': True, 'required': False},
         }
 
@@ -305,6 +308,7 @@ class FilterListSerializer(ModelSerializer):
             'infraction_reason': {'allow_blank': True, 'allow_null': True, 'required': False},
             'enabled_channels': {'allow_empty': True},
             'disabled_channels': {'allow_empty': True},
+            'enabled_categories': {'allow_empty': True},
             'disabled_categories': {'allow_empty': True},
         }
 
@@ -314,7 +318,7 @@ class FilterListSerializer(ModelSerializer):
                 queryset=FilterList.objects.all(),
                 fields=('name', 'list_type'),
                 message=(
-                    "A filterlist with the same name and type already exist."
+                    "A filterlist with the same name and type already exists."
                 )
             ),
         ]

@@ -1,4 +1,5 @@
 from django.contrib.postgres.fields import ArrayField
+from django.core.validators import MinValueValidator
 from django.db import models
 from django.db.models import UniqueConstraint
 
@@ -40,6 +41,16 @@ class FilterSettingsMixin(models.Model):
     infraction_duration = models.DurationField(
         null=True,
         help_text="The duration of the infraction. Null if permanent."
+    )
+    infraction_channel = models.BigIntegerField(
+        validators=(
+            MinValueValidator(
+                limit_value=0,
+                message="Channel IDs cannot be negative."
+            ),
+        ),
+        help_text="Channel in which to send the infraction.",
+        null=True
     )
 
     class Meta:
