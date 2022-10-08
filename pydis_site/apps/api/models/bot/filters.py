@@ -20,12 +20,14 @@ class FilterSettingsMixin(models.Model):
     dm_content = models.CharField(
         max_length=1000,
         null=True,
+        blank=True,
         help_text="The DM to send to a user triggering this filter."
     )
     dm_embed = models.CharField(
         max_length=2000,
         help_text="The content of the DM embed",
-        null=True
+        null=True,
+        blank=True
     )
     infraction_type = models.CharField(
         choices=[(choices[0].upper(), choices[1]) for choices in Infraction.TYPE_CHOICES],
@@ -36,6 +38,7 @@ class FilterSettingsMixin(models.Model):
     infraction_reason = models.CharField(
         max_length=1000,
         help_text="The reason to give for the infraction.",
+        blank=True,
         null=True
     )
     infraction_duration = models.DurationField(

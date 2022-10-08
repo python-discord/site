@@ -151,6 +151,13 @@ ALWAYS_OPTIONAL_SETTINGS = (
     'infraction_channel',
 )
 
+ALWAYS_BLANKABLE_SETTINGS = (
+    'dm_content',
+    'dm_embed',
+    'infraction_type',
+    'infraction_reason',
+)
+
 REQUIRED_FOR_FILTER_LIST_SETTINGS = (
     'guild_pings',
     'filter_dm',
@@ -310,7 +317,10 @@ class FilterListSerializer(ModelSerializer):
         extra_kwargs = {
             field: {'required': False, 'allow_null': True} for field in ALWAYS_OPTIONAL_SETTINGS
         } | {
-            'infraction_reason': {'allow_blank': True, 'allow_null': True, 'required': False},
+            field: {'allow_blank': True, 'allow_null': True, 'required': False}
+            for field in ALWAYS_BLANKABLE_SETTINGS
+        } | {
+            'bypass_roles': {'allow_empty': True},
             'enabled_channels': {'allow_empty': True},
             'disabled_channels': {'allow_empty': True},
             'enabled_categories': {'allow_empty': True},
