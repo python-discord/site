@@ -237,6 +237,8 @@ class FilterSerializer(ModelSerializer):
             'disabled_channels': {'allow_empty': True, 'allow_null': True, 'required': False},
             'enabled_categories': {'allow_empty': True, 'allow_null': True, 'required': False},
             'disabled_categories': {'allow_empty': True, 'allow_null': True, 'required': False},
+            'guild_pings': {'allow_empty': True, 'allow_null': True, 'required': False},
+            'dm_pings': {'allow_empty': True, 'allow_null': True, 'required': False},
         }
 
     def to_representation(self, instance: Filter) -> dict:
@@ -313,6 +315,8 @@ class FilterListSerializer(ModelSerializer):
             'disabled_channels': {'allow_empty': True},
             'enabled_categories': {'allow_empty': True},
             'disabled_categories': {'allow_empty': True},
+            'guild_pings': {'allow_empty': True},
+            'dm_pings': {'allow_empty': True},
         }
 
         # Ensure that we can only have one filter list with the same name and field
