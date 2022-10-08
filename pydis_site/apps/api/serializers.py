@@ -212,7 +212,10 @@ class FilterSerializer(ModelSerializer):
             if len(channels_collection) != len(set(channels_collection)):
                 raise ValidationError("Enabled and Disabled channels lists contain duplicates.")
 
-        if data.get('disabled_categories') is not None:
+        if (
+            data.get('disabled_categories') is not None
+            and data.get('enabled_categories') is not None
+        ):
             categories_collection = data['disabled_categories'] + data['enabled_categories']
             if len(categories_collection) != len(set(categories_collection)):
                 raise ValidationError("Enabled and Disabled categories lists contain duplicates.")
