@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 import os
 import secrets
 import sys
+import warnings
 from pathlib import Path
 from socket import gethostbyname, gethostname
 
@@ -20,21 +21,35 @@ import environ
 import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
 
-from pydis_site.constants import GIT_SHA
-
 env = environ.Env(
     DEBUG=(bool, False),
     SITE_DSN=(str, ""),
     BUILDING_DOCKER=(bool, False),
     STATIC_BUILD=(bool, False),
+    GIT_SHA=(str, 'development'),
+    TIMEOUT_PERIOD=(int, 5),
+    GITHUB_TOKEN=(str, None),
+    GITHUB_APP_ID=(str, None),
+    GITHUB_APP_KEY=(str, None),
 )
 
-sentry_sdk.init(
-    dsn=env('SITE_DSN'),
-    integrations=[DjangoIntegration()],
-    send_default_pii=True,
-    release=f"site@{GIT_SHA}"
-)
+GIT_SHA = env("GIT_SHA")
+GITHUB_API = "https://api.github.com"
+GITHUB_TOKEN = env("GITHUB_TOKEN")
+GITHUB_APP_ID = env("GITHUB_APP_ID")
+GITHUB_APP_KEY = env("GITHUB_APP_KEY")
+
+if GITHUB_APP_KEY and (key_file := Path(GITHUB_APP_KEY)).is_file():
+    # Allow the OAuth key to be loaded from a file
+    GITHUB_APP_KEY = key_file.read_text(encoding="utf-8")
+
+if not env("STATIC_BUILD"):
+    sentry_sdk.init(
+        dsn=env('SITE_DSN'),
+        integrations=[DjangoIntegration()],
+        send_default_pii=True,
+        release=f"site@{GIT_SHA}"
+    )
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -48,9 +63,25 @@ if DEBUG:
     ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['*'])
     SECRET_KEY = "yellow polkadot bikini"  # noqa: S105
 
+    # Prevent verbose warnings emitted when passing a non-timezone aware
+    # datetime object to the database, whilst we have time zone support
+    # active. See the Django documentation for more details:
+    # https://docs.djangoproject.com/en/dev/topics/i18n/timezones/
+    warnings.filterwarnings(
+        'error', r"DateTimeField .* received a naive datetime",
+        RuntimeWarning, r'django\.db\.models\.fields',
+    )
+
 elif 'CI' in os.environ:
     ALLOWED_HOSTS = ['*']
     SECRET_KEY = secrets.token_urlsafe(32)
+
+    # See above. We run with `CI=true`, but debug unset in GitHub Actions,
+    # so we also want to filter it there.
+    warnings.filterwarnings(
+        'error', r"DateTimeField .* received a naive datetime",
+        RuntimeWarning, r'django\.db\.models\.fields',
+    )
 
 else:
     ALLOWED_HOSTS = env.list(
@@ -98,25 +129,29 @@ INSTALLED_APPS = [
 if not env("BUILDING_DOCKER"):
     INSTALLED_APPS.append("django_prometheus")
 
-NON_STATIC_MIDDLEWARE = [
-    'django_prometheus.middleware.PrometheusBeforeMiddleware',
-] if not env("STATIC_BUILD") else []
+if env("STATIC_BUILD"):
+    # The only middleware required during static builds
+    MIDDLEWARE = [
+        'django.contrib.sessions.middleware.SessionMiddleware',
+        'django.contrib.auth.middleware.AuthenticationMiddleware',
+        'django.contrib.messages.middleware.MessageMiddleware',
+    ]
+else:
+    # Ensure that Prometheus middlewares are first and last here.
+    MIDDLEWARE = [
+        'django_prometheus.middleware.PrometheusBeforeMiddleware',
 
-# Ensure that Prometheus middlewares are first and last here.
-MIDDLEWARE = [
-    *NON_STATIC_MIDDLEWARE,
+        'django.middleware.security.SecurityMiddleware',
+        'whitenoise.middleware.WhiteNoiseMiddleware',
+        'django.contrib.sessions.middleware.SessionMiddleware',
+        'django.middleware.common.CommonMiddleware',
+        'django.middleware.csrf.CsrfViewMiddleware',
+        'django.contrib.auth.middleware.AuthenticationMiddleware',
+        'django.contrib.messages.middleware.MessageMiddleware',
+        'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
-    'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-
-    'django_prometheus.middleware.PrometheusAfterMiddleware'
-]
+        'django_prometheus.middleware.PrometheusAfterMiddleware'
+    ]
 
 ROOT_URLCONF = 'pydis_site.urls'
 
@@ -170,7 +205,6 @@ AUTH_PASSWORD_VALIDATORS = [
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
-USE_L10N = True
 USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
@@ -196,6 +230,9 @@ if DEBUG:
         ALLOWED_HOSTS.append(PARENT_HOST)
 else:
     PARENT_HOST = env('PARENT_HOST', default='pythondiscord.com')
+
+# Django Model Configuration
+DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 
 # Django REST framework
 # https://www.django-rest-framework.org
@@ -272,6 +309,7 @@ BULMA_SETTINGS = {
         "bulma-dropdown",
         "bulma-navbar-burger",
     ],
+    "fontawesome_token": "ff22cb6f41",
 }
 
 # Information about site repository
@@ -287,3 +325,6 @@ CONTENT_PAGES_PATH = Path(BASE_DIR, "pydis_site", "apps", "content", "resources"
 
 # Path for redirection links
 REDIRECTIONS_PATH = Path(BASE_DIR, "pydis_site", "apps", "redirect", "redirects.yaml")
+
+# How long to wait for synchronous requests before timing out
+TIMEOUT_PERIOD = env("TIMEOUT_PERIOD")

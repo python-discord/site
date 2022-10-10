@@ -1,9 +1,0 @@
-description: Inferential Thinking is the textbook for the <a href="http://data8.org/">Foundations of Data Science</a> course at UC Berkley.
-  It introduces you the fundamentals of both Data Science and Python at a level accessible to all.
-  It is available both through your browser and in PDF form.
-name: Inferential Thinking
-position: 13
-urls:
-  - icon: regular/link
-    url: https://www.inferentialthinking.com/chapters/intro
-    color: teal

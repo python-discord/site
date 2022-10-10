@@ -13,7 +13,10 @@ from rest_framework.settings import api_settings
 from rest_framework.validators import UniqueTogetherValidator
 
 from .models import (
+    AocAccountLink,
+    AocCompletionistBlock,
     BotSetting,
+    BumpedThread,
     DeletedMessage,
     DocumentationLink,
     FilterList,
@@ -37,6 +40,32 @@ class BotSettingSerializer(ModelSerializer):
 
         model = BotSetting
         fields = ('name', 'data')
+
+
+class ListBumpedThreadSerializer(ListSerializer):
+    """Custom ListSerializer to override to_representation() when list views are triggered."""
+
+    def to_representation(self, objects: list[BumpedThread]) -> int:
+        """
+        Used by the `ListModelMixin` to return just the list of bumped thread ids.
+
+        Only the thread_id field is useful, hence it is unnecessary to create a nested dictionary.
+
+        Additionally, this allows bumped thread routes to simply return an
+        array of thread_id ints instead of objects, saving on bandwidth.
+        """
+        return [obj.thread_id for obj in objects]
+
+
+class BumpedThreadSerializer(ModelSerializer):
+    """A class providing (de-)serialization of `BumpedThread` instances."""
+
+    class Meta:
+        """Metadata defined for the Django REST Framework."""
+
+        list_serializer_class = ListBumpedThreadSerializer
+        model = BumpedThread
+        fields = ('thread_id',)
 
 
 class DeletedMessageSerializer(ModelSerializer):
@@ -145,15 +174,18 @@ class InfractionSerializer(ModelSerializer):
 
         model = Infraction
         fields = (
-            'id', 'inserted_at', 'expires_at', 'active', 'user', 'actor', 'type', 'reason', 'hidden'
+            'id',
+            'inserted_at',
+            'last_applied',
+            'expires_at',
+            'active',
+            'user',
+            'actor',
+            'type',
+            'reason',
+            'hidden',
+            'dm_sent'
         )
-        validators = [
-            UniqueTogetherValidator(
-                queryset=Infraction.objects.filter(active=True),
-                fields=['user', 'type', 'active'],
-                message='This user already has an active infraction of this type.',
-            )
-        ]
 
     def validate(self, attrs: dict) -> dict:
         """Validate data constraints for the given data and abort if it is invalid."""
@@ -168,7 +200,7 @@ class InfractionSerializer(ModelSerializer):
             raise ValidationError({'expires_at': [f'{infr_type} infractions cannot expire.']})
 
         hidden = attrs.get('hidden')
-        if hidden and infr_type in ('superstar', 'warning', 'voice_ban'):
+        if hidden and infr_type in ('superstar', 'warning', 'voice_ban', 'voice_mute'):
             raise ValidationError({'hidden': [f'{infr_type} infractions cannot be hidden.']})
 
         if not hidden and infr_type in ('note', ):
@@ -200,25 +232,30 @@ class ExpandedInfractionSerializer(InfractionSerializer):
         return ret
 
 
+class OffTopicChannelNameListSerializer(ListSerializer):
+    """Custom ListSerializer to override to_representation() when list views are triggered."""
+
+    def to_representation(self, objects: list[OffTopicChannelName]) -> list[str]:
+        """
+        Return a list with all `OffTopicChannelName`s in the database.
+
+        This returns the list of off topic channel names. We want to only return
+        the name attribute, hence it is unnecessary to create a nested dictionary.
+        Additionally, this allows off topic channel name routes to simply return an
+        array of names instead of objects, saving on bandwidth.
+        """
+        return [obj.name for obj in objects]
+
+
 class OffTopicChannelNameSerializer(ModelSerializer):
     """A class providing (de-)serialization of `OffTopicChannelName` instances."""
 
     class Meta:
         """Metadata defined for the Django REST Framework."""
 
+        list_serializer_class = OffTopicChannelNameListSerializer
         model = OffTopicChannelName
-        fields = ('name',)
-
-    def to_representation(self, obj: OffTopicChannelName) -> str:
-        """
-        Return the representation of this `OffTopicChannelName`.
-
-        This only returns the name of the off topic channel name. As the model
-        only has a single attribute, it is unnecessary to create a nested dictionary.
-        Additionally, this allows off topic channel name routes to simply return an
-        array of names instead of objects, saving on bandwidth.
-        """
-        return obj.name
+        fields = ('name', 'used', 'active')
 
 
 class ReminderSerializer(ModelSerializer):
@@ -231,8 +268,36 @@ class ReminderSerializer(ModelSerializer):
 
         model = Reminder
         fields = (
-            'active', 'author', 'jump_url', 'channel_id', 'content', 'expiration', 'id', 'mentions'
+            'active',
+            'author',
+            'jump_url',
+            'channel_id',
+            'content',
+            'expiration',
+            'id',
+            'mentions',
+            'failures'
         )
+
+
+class AocCompletionistBlockSerializer(ModelSerializer):
+    """A class providing (de-)serialization of `AocCompletionistBlock` instances."""
+
+    class Meta:
+        """Metadata defined for the Django REST Framework."""
+
+        model = AocCompletionistBlock
+        fields = ("user", "is_blocked", "reason")
+
+
+class AocAccountLinkSerializer(ModelSerializer):
+    """A class providing (de-)serialization of `AocAccountLink` instances."""
+
+    class Meta:
+        """Metadata defined for the Django REST Framework."""
+
+        model = AocAccountLink
+        fields = ("user", "aoc_username")
 
 
 class RoleSerializer(ModelSerializer):

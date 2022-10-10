@@ -1,5 +1,4 @@
 from pathlib import Path
-from unittest.mock import patch
 
 from django.conf import settings
 from django.test import TestCase
@@ -17,18 +16,14 @@ class TestResourcesView(TestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
 
-
-class TestResourcesListView(TestCase):
-    @patch("pydis_site.apps.resources.views.resources_list.RESOURCES_PATH", TESTING_RESOURCES_PATH)
-    def test_valid_resource_list_200(self):
-        """Check does site return code 200 when visiting valid resource list."""
-        url = reverse("resources:resources", args=("testing",))
+    def test_resources_with_valid_argument(self):
+        """Check that you can resolve the resources when passing a valid argument."""
+        url = reverse("resources:index", kwargs={"resource_type": "book"})
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
 
-    @patch("pydis_site.apps.resources.views.resources_list.RESOURCES_PATH", TESTING_RESOURCES_PATH)
-    def test_invalid_resource_list_404(self):
-        """Check does site return code 404 when trying to visit invalid resource list."""
-        url = reverse("resources:resources", args=("invalid",))
+    def test_resources_with_invalid_argument(self):
+        """Check that you can resolve the resources when passing an invalid argument."""
+        url = reverse("resources:index", kwargs={"resource_type": "urinal-cake"})
         response = self.client.get(url)
         self.assertEqual(response.status_code, 404)

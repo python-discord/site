@@ -36,6 +36,7 @@ pip-log.txt
 pip-delete-this-directory.txt
 
 # Unit test / coverage reports
+*.lcov
 htmlcov/
 .tox/
 .coverage
@@ -129,3 +130,9 @@ log.*
 
 # Local Netlify folder
 .netlify
+
+# Mac/OSX
+.DS_Store
+
+# Private keys
+*.pem

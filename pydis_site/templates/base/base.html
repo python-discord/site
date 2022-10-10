@@ -24,10 +24,7 @@
   <title>Python Discord | {% block title %}Website{% endblock %}</title>
 
   {% bulma %}
-
-  {# Font-awesome here is defined explicitly so that we can have Pro #}
-  <script src="https://kit.fontawesome.com/ae6a3152d8.js"></script>
-
+  {% font_awesome %}
   <link rel="stylesheet" href="{% static "css/base/base.css" %}">
   {% block head %}{% endblock %}
 

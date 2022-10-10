@@ -3,7 +3,7 @@ from pathlib import Path
 
 import frontmatter
 from django.conf import settings
-from django.http import Http404
+from django.http import Http404, HttpRequest, HttpResponse
 from django.views.generic import TemplateView
 
 from pydis_site.apps.content import utils
@@ -12,7 +12,7 @@ from pydis_site.apps.content import utils
 class PageOrCategoryView(TemplateView):
     """Handles pages and page categories."""
 
-    def dispatch(self, request: t.Any, *args, **kwargs) -> t.Any:
+    def dispatch(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
         """Conform URL path location to the filesystem path."""
         self.location = Path(kwargs.get("location", ""))
 

@@ -1,0 +1,17 @@
+description: Screen readers are software programs that allow blind
+  or visually impaired users to read the text displayed on a computer screen with a speech synthesizer or braille display.
+  There are many different screen reader program options,
+  with this link describing many of them and their capabilities.
+name: Screen Readers - American Foundation for the Blind
+title_url: https://www.afb.org/blindness-and-low-vision/using-technology/assistive-technology-products/screen-readers
+tags:
+  topics:
+    - other
+  payment_tiers:
+    - free
+    - paid
+  difficulty:
+    - beginner
+    - intermediate
+  type:
+    - tool

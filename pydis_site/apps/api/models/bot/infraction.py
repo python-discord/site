@@ -17,10 +17,17 @@ class Infraction(ModelReprMixin, models.Model):
         ("ban", "Ban"),
         ("superstar", "Superstar"),
         ("voice_ban", "Voice Ban"),
+        ("voice_mute", "Voice Mute"),
     )
     inserted_at = models.DateTimeField(
         default=timezone.now,
         help_text="The date and time of the creation of this infraction."
+    )
+    last_applied = models.DateTimeField(
+        # This default is for backwards compatibility with bot versions
+        # that don't explicitly give a value.
+        default=timezone.now,
+        help_text="The date and time of when this infraction was last applied."
     )
     expires_at = models.DateTimeField(
         null=True,
@@ -45,7 +52,7 @@ class Infraction(ModelReprMixin, models.Model):
         help_text="The user which applied the infraction."
     )
     type = models.CharField(
-        max_length=9,
+        max_length=10,
         choices=TYPE_CHOICES,
         help_text="The type of the infraction."
     )
@@ -56,6 +63,10 @@ class Infraction(ModelReprMixin, models.Model):
     hidden = models.BooleanField(
         default=False,
         help_text="Whether the infraction is a shadow infraction."
+    )
+    dm_sent = models.BooleanField(
+        null=True,
+        help_text="Whether a DM was sent to the user when infraction was applied."
     )
 
     def __str__(self):

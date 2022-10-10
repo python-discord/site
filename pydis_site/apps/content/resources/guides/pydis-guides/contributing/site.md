@@ -5,9 +5,11 @@ icon: fab fa-github
 toc: 1
 ---
 
-# Requirements
+You should have already forked the [`site`](https://github.com/python-discord/site) repository and cloned it to your local machine. If not, check out our [detailed walkthrough](../#1-fork-and-clone-the-repo).
 
-- [Python 3.9](https://www.python.org/downloads/)
+### Requirements
+
+- [Python 3.10](https://www.python.org/downloads/)
 - [Poetry](https://python-poetry.org/docs/#installation)
     - `pip install poetry`
 - [Git](https://git-scm.com/downloads)
@@ -27,22 +29,9 @@ Without Docker:
     - Note that if you wish, the webserver can run on the host and still use Docker for PostgreSQL.
 
 ---
-# Fork the project
-
-You will need access to a copy of the git repository of your own that will allow you to edit the code and push your commits to.
-Creating a copy of a repository under your own account is called a _fork_.
-
-- [Learn how to create a fork of the repository here.](../forking-repository/)
-
-This is where all your changes and commits will be pushed to, and from where your PRs will originate from.
-
-For any Core Developers, since you have write permissions already to the original repository, you can just create a feature branch to push your commits to instead.
-
----
 # Development environment
 
-1. [Clone your fork to a local project directory](../cloning-repository/)
-2. [Install the project's dependencies](../installing-project-dependencies/)
+[Install the project's dependencies](../installing-project-dependencies/)
 
 ## Without Docker
 
@@ -178,3 +167,12 @@ The website is configured through the following environment variables:
 - **`STATIC_ROOT`**: The root in which `python manage.py collectstatic`
   collects static files. Optional, defaults to `/app/staticfiles` for the
   standard Docker deployment.
+
+---
+
+# Next steps
+Now that you have everything setup, it is finally time to make changes to the site! If you have not yet read the [contributing guidelines](../contributing-guidelines.md), now is a good time. Contributions that do not adhere to the guidelines may be rejected.
+
+If you're not sure where to go from here, our [detailed walkthrough](../#2-set-up-the-project) is for you.
+
+Have fun!

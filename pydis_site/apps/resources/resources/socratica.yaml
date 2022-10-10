@@ -1,0 +1,23 @@
+name: Socratica
+description: 'Socratica is a small studio focused on producing high quality STEM-related educational content,
+including a series about Python. Their videos star actress Ulka Simone Mohanty, who plays an android-like
+instructor explaining fundamental concepts in a concise and entertaining way.'
+title_image: https://i.imgur.com/4SoHeLz.png
+title_url: https://www.youtube.com/playlist?list=PLi01XoE8jYohWFPpC17Z-wWhPOSuh8Er-
+urls:
+  - icon: solid/database
+    url: https://www.youtube.com/playlist?list=PLi01XoE8jYojRqM4qGBF1U90Ee1Ecb5tt
+    color: teal
+  - icon: branding/youtube
+    url: https://www.youtube.com/channel/UCW6TXMZ5Pq6yL6_k5NZ2e0Q
+    color: youtube-red
+tags:
+  topics:
+    - general
+    - databases
+  payment_tiers:
+    - free
+  difficulty:
+    - beginner
+  type:
+    - video
