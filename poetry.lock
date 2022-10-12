@@ -144,8 +144,8 @@ optional = false
 python-versions = "*"
 
 [[package]]
-name = "Django"
-version = "4.1.1"
+name = "django"
+version = "4.1.2"
 description = "A high-level Python web framework that encourages rapid development and clean, pragmatic design."
 category = "main"
 optional = false
@@ -909,7 +909,7 @@ brotli = ["Brotli"]
 [metadata]
 lock-version = "1.1"
 python-versions = "3.10.*"
-content-hash = "1f303b5e4075e6a9f4667a666d40702fc9efbe4d726c0f0e880ef53853004c7c"
+content-hash = "34d02f4c1b50a7fd657a5cc139c6c73011d3765915d52e9ba715e34b7a007c9a"
 
 [metadata.files]
 anyio = [
@@ -1094,9 +1094,9 @@ distlib = [
     {file = "distlib-0.3.6-py2.py3-none-any.whl", hash = "sha256:f35c4b692542ca110de7ef0bea44d73981caeb34ca0b9b6b2e6d7790dda8f80e"},
     {file = "distlib-0.3.6.tar.gz", hash = "sha256:14bad2d9b04d3a36127ac97f30b12a19268f211063d8f8ee4f47108896e11b46"},
 ]
-Django = [
-    {file = "Django-4.1.1-py3-none-any.whl", hash = "sha256:acb21fac9275f9972d81c7caf5761a89ec3ea25fe74545dd26b8a48cb3a0203e"},
-    {file = "Django-4.1.1.tar.gz", hash = "sha256:a153ffd5143bf26a877bfae2f4ec736ebd8924a46600ca089ad96b54a1d4e28e"},
+django = [
+    {file = "Django-4.1.2-py3-none-any.whl", hash = "sha256:26dc24f99c8956374a054bcbf58aab8dc0cad2e6ac82b0fe036b752c00eee793"},
+    {file = "Django-4.1.2.tar.gz", hash = "sha256:b8d843714810ab88d59344507d4447be8b2cf12a49031363b6eed9f1b9b2280f"},
 ]
 django-distill = [
     {file = "django-distill-3.0.1.tar.gz", hash = "sha256:8bbac5e45d2afc61cc718d587c6026267c985305f5e599465f2ebc4b0cba9ebf"},
