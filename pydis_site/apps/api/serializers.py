@@ -142,21 +142,8 @@ class DocumentationLinkSerializer(ModelSerializer):
         fields = ('package', 'base_url', 'inventory_url')
 
 
-ALWAYS_OPTIONAL_SETTINGS = (
-    'dm_content',
-    'dm_embed',
-    'infraction_type',
-    'infraction_reason',
-    'infraction_duration',
-    'infraction_channel',
-)
+#  region: filters serializers
 
-ALWAYS_BLANKABLE_SETTINGS = (
-    'dm_content',
-    'dm_embed',
-    'infraction_type',
-    'infraction_reason',
-)
 
 REQUIRED_FOR_FILTER_LIST_SETTINGS = (
     'guild_pings',
@@ -170,6 +157,32 @@ REQUIRED_FOR_FILTER_LIST_SETTINGS = (
     'disabled_channels',
     'enabled_categories',
     'disabled_categories',
+)
+
+OPTIONAL_FOR_FILTER_LIST_SETTINGS = (
+    'dm_content',
+    'dm_embed',
+    'infraction_type',
+    'infraction_reason',
+    'infraction_duration',
+    'infraction_channel',
+)
+
+ALLOW_BLANK_SETTINGS = (
+    'dm_content',
+    'dm_embed',
+    'infraction_type',
+    'infraction_reason',
+)
+
+ALLOW_EMPTY_SETTINGS = (
+    'enabled_channels',
+    'disabled_channels',
+    'enabled_categories',
+    'disabled_categories',
+    'guild_pings',
+    'dm_pings',
+    'bypass_roles',
 )
 
 # Required fields for custom JSON representation purposes
@@ -198,7 +211,20 @@ CHANNEL_SCOPE_FIELDS = (
 )
 MENTIONS_FIELDS = ("guild_pings", "dm_pings")
 
-SETTINGS_FIELDS = ALWAYS_OPTIONAL_SETTINGS + REQUIRED_FOR_FILTER_LIST_SETTINGS
+SETTINGS_FIELDS = REQUIRED_FOR_FILTER_LIST_SETTINGS + OPTIONAL_FOR_FILTER_LIST_SETTINGS
+
+
+def _create_filter_meta_extra_kwargs() -> dict[str, dict[str, bool]]:
+    """Create the extra kwargs of the Filter serializer's Meta class."""
+    extra_kwargs = {}
+    for field in SETTINGS_FIELDS:
+        field_args = {'required': False, 'allow_null': True}
+        if field in ALLOW_BLANK_SETTINGS:
+            field_args['allow_blank'] = True
+        if field in ALLOW_EMPTY_SETTINGS:
+            field_args['allow_empty'] = True
+        extra_kwargs[field] = field_args
+    return extra_kwargs
 
 
 class FilterSerializer(ModelSerializer):
@@ -236,17 +262,7 @@ class FilterSerializer(ModelSerializer):
         fields = (
             'id', 'content', 'description', 'additional_field', 'filter_list'
         ) + SETTINGS_FIELDS
-        extra_kwargs = {
-            field: {'required': False, 'allow_null': True} for field in SETTINGS_FIELDS
-        } | {
-            'infraction_reason': {'allow_blank': True, 'allow_null': True, 'required': False},
-            'enabled_channels': {'allow_empty': True, 'allow_null': True, 'required': False},
-            'disabled_channels': {'allow_empty': True, 'allow_null': True, 'required': False},
-            'enabled_categories': {'allow_empty': True, 'allow_null': True, 'required': False},
-            'disabled_categories': {'allow_empty': True, 'allow_null': True, 'required': False},
-            'guild_pings': {'allow_empty': True, 'allow_null': True, 'required': False},
-            'dm_pings': {'allow_empty': True, 'allow_null': True, 'required': False},
-        }
+        extra_kwargs = _create_filter_meta_extra_kwargs()
 
     def to_representation(self, instance: Filter) -> dict:
         """
@@ -258,28 +274,36 @@ class FilterSerializer(ModelSerializer):
         Furthermore, it puts the fields that meant to represent Filter settings,
         into a sub-field called `settings`.
         """
-        schema_settings = {
-            "settings":
-                {name: getattr(instance, name) for name in BASE_SETTINGS_FIELDS}
-                | {
-                    "infraction_and_notification":
-                        {name: getattr(instance, name)
-                         for name in INFRACTION_AND_NOTIFICATION_FIELDS}
-                } | {
-                    "channel_scope":
-                        {name: getattr(instance, name) for name in CHANNEL_SCOPE_FIELDS}
-                } | {
-                    "mentions":
-                        {
-                            schema_field_name: getattr(instance, schema_field_name)
-                            for schema_field_name in MENTIONS_FIELDS
-                        }
-                }
+        settings = {name: getattr(instance, name) for name in BASE_SETTINGS_FIELDS}
+        settings["infraction_and_notification"] = {
+            name: getattr(instance, name) for name in INFRACTION_AND_NOTIFICATION_FIELDS
         }
-        schema_base = {name: getattr(instance, name) for name in BASE_FILTER_FIELDS} | \
-                      {"filter_list": instance.filter_list.id}
+        settings["channel_scope"] = {
+            name: getattr(instance, name) for name in CHANNEL_SCOPE_FIELDS
+        }
+        settings["mentions"] = {
+            name: getattr(instance, name) for name in MENTIONS_FIELDS
+        }
 
-        return schema_base | schema_settings
+        schema = {name: getattr(instance, name) for name in BASE_FILTER_FIELDS}
+        schema["filter_list"] = instance.filter_list.id
+        schema["settings"] = settings
+        return schema
+
+
+def _create_filter_list_meta_extra_kwargs() -> dict[str, dict[str, bool]]:
+    """Create the extra kwargs of the FilterList serializer's Meta class."""
+    extra_kwargs = {}
+    for field in SETTINGS_FIELDS:
+        field_args = {}
+        if field in OPTIONAL_FOR_FILTER_LIST_SETTINGS:
+            field_args = {'required': False, 'allow_null': True}
+        if field in ALLOW_BLANK_SETTINGS:
+            field_args['allow_blank'] = True
+        if field in ALLOW_EMPTY_SETTINGS:
+            field_args['allow_empty'] = True
+        extra_kwargs[field] = field_args
+    return extra_kwargs
 
 
 class FilterListSerializer(ModelSerializer):
@@ -302,10 +326,13 @@ class FilterListSerializer(ModelSerializer):
             if len(channels_collection) != len(set(channels_collection)):
                 raise ValidationError("Enabled and Disabled channels lists contain duplicates.")
 
-        if data.get('disabled_categories') is not None:
-            categories_collection = data['disabled_categories']
+        if (
+                data.get('disabled_categories') is not None
+                and data.get('enabled_categories') is not None
+        ):
+            categories_collection = data['disabled_categories'] + data['enabled_categories']
             if len(categories_collection) != len(set(categories_collection)):
-                raise ValidationError("Disabled categories lists contain duplicates.")
+                raise ValidationError("Enabled and Disabled categories lists contain duplicates.")
 
         return data
 
@@ -314,22 +341,9 @@ class FilterListSerializer(ModelSerializer):
 
         model = FilterList
         fields = ('id', 'name', 'list_type', 'filters') + SETTINGS_FIELDS
-        extra_kwargs = {
-            field: {'required': False, 'allow_null': True} for field in ALWAYS_OPTIONAL_SETTINGS
-        } | {
-            field: {'allow_blank': True, 'allow_null': True, 'required': False}
-            for field in ALWAYS_BLANKABLE_SETTINGS
-        } | {
-            'bypass_roles': {'allow_empty': True},
-            'enabled_channels': {'allow_empty': True},
-            'disabled_channels': {'allow_empty': True},
-            'enabled_categories': {'allow_empty': True},
-            'disabled_categories': {'allow_empty': True},
-            'guild_pings': {'allow_empty': True},
-            'dm_pings': {'allow_empty': True},
-        }
+        extra_kwargs = _create_filter_list_meta_extra_kwargs()
 
-        # Ensure that we can only have one filter list with the same name and field
+        # Ensure there can only be one filter list with the same name and type.
         validators = [
             UniqueTogetherValidator(
                 queryset=FilterList.objects.all(),
@@ -350,29 +364,23 @@ class FilterListSerializer(ModelSerializer):
         Furthermore, it puts the fields that meant to represent FilterList settings,
         into a sub-field called `settings`.
         """
-        # Fetches the relating filters
-        filters = [
-            FilterSerializer(many=False).to_representation(
-                instance=item
-            ) for item in Filter.objects.filter(
-                filter_list=instance.id
-            )
+        schema = {name: getattr(instance, name) for name in BASE_FILTERLIST_FIELDS}
+        schema["filters"] = [
+            FilterSerializer(many=False).to_representation(instance=item)
+            for item in Filter.objects.filter(filter_list=instance.id)
         ]
-        schema_base = {name: getattr(instance, name) for name in BASE_FILTERLIST_FIELDS} \
-            | {"filters": filters}
-        schema_settings_base = {name: getattr(instance, name) for name in BASE_SETTINGS_FIELDS}
-        schema_settings_categories = {
-            "infraction_and_notification":
-            {name: getattr(instance, name) for name in INFRACTION_AND_NOTIFICATION_FIELDS}} \
-            | {
-            "channel_scope":
-            {name: getattr(instance, name) for name in CHANNEL_SCOPE_FIELDS}} | {
-            "mentions": {
-                schema_field_name: getattr(instance, schema_field_name)
-                for schema_field_name in MENTIONS_FIELDS
-            }
+
+        settings = {name: getattr(instance, name) for name in BASE_SETTINGS_FIELDS}
+        settings["infraction_and_notification"] = {
+            name: getattr(instance, name) for name in INFRACTION_AND_NOTIFICATION_FIELDS
         }
-        return schema_base | {"settings": schema_settings_base | schema_settings_categories}
+        settings["channel_scope"] = {name: getattr(instance, name) for name in CHANNEL_SCOPE_FIELDS}
+        settings["mentions"] = {name: getattr(instance, name) for name in MENTIONS_FIELDS}
+
+        schema["settings"] = settings
+        return schema
+
+#  endregion
 
 
 class InfractionSerializer(ModelSerializer):
