@@ -6,10 +6,10 @@ description: This guide explains how manage your Python installation(s) on Windo
 ## The py launcher
 By default, Python installed on Windows using the online Python installer comes
 with the "py launcher". It is a command line tool you invoke using the `py`
-command.
+command, and helps you invoke a specific python version.
 
-It provides the very useful `py -0p` command. This lists the python versions you
-have installed, the output will look like this:
+It provides the `py -0p` command. This lists the python versions you have
+installed, the output will look like this:
 
     C:\Users\username>py -0p
     Installed Pythons found by py Launcher for Windows
@@ -21,23 +21,23 @@ The versions will be ordered from newest to oldest, and the `*` will indicate
 which version running `py` will call by default. This depends on the following
 requirements, and may not be the same version you get from running `python` (if
 you get any):
-
-    If an exact version is not given, using the latest version can be overridden by
-    any of the following, (in priority order):
-    • An active virtual environment
-    • A shebang line in the script (if present)
-    • With -2 or -3 flag a matching PY_PYTHON2 or PY_PYTHON3 Environment variable
-    • A PY_PYTHON Environment variable
-    • From [defaults] in py.ini in your %LOCALAPPDATA%\py.ini
-    • From [defaults] in py.ini beside py.exe (use `where py` to locate)
-
+```text
+If an exact version is not given, using the latest version can be overridden by
+any of the following, (in priority order):
+• An active virtual environment
+• A shebang line in the script (if present)
+• With -2 or -3 flag a matching PY_PYTHON2 or PY_PYTHON3 Environment variable
+• A PY_PYTHON Environment variable
+• From [defaults] in py.ini in your %LOCALAPPDATA%\py.ini
+• From [defaults] in py.ini beside py.exe (use `where py` to locate)
+```
 You can override which version is called by specifying the major and minor
 versions to used. For example, to invoke python 3.7, you could run `py -3.7`.
-You can then pass any arguments to `python` on top of that, for example `py -3.7
-myscript.py` to run `myscript.py`, or `py -3.7 -m pip install numpy` to invoke
-`pip` to install numpy into that version.
+You can then pass any arguments to `python` on top of that, for example
+`py -3.7 myscript.py` to run `myscript.py`, or `py -3.7 -m pip install numpy`
+to invoke `pip` to install numpy into that version.
 
-You can use `py` instead of `python` and not have any python versions on path at
+You can use `py` instead of `python` and not have any python versions on PATH at
 all. I would recommend having your "main" python version on path so you can
 invoke it with `python` if you want to, and then use `py` whenever you want a
 different version. The full documentation of the `py launcher` can be found
@@ -46,7 +46,7 @@ different version. The full documentation of the `py launcher` can be found
 ## Virtual Environments
 
 Virtual environments, (aka `venvs`), are a way of letting each of your projects
-run in it's own python environment, different projects can have different
+run in it's own python environment so different projects can have different
 versions of the same dependencies. This means that a `pip install` to your main
 Python will not affect a project where you're using a virtual environment.
 
@@ -66,12 +66,12 @@ the command line. Whenever you type a command name in your terminal, for example
 `python` or `pip`, the terminal will look it up in the PATH to try and find out
 what executable that command refers to, so it can be run.
 
-The Python installer does not add `python` to your PATH by default, but even if
-you forgot to add it when installing, it is easy to change.
-
+The Python installer provides an option to add `python` to your PATH, although it
+is not checked by default so many people miss it. Don't worry if you forgot to select
+this though, you can add it after installing:
 ### The safe method: through the installer
 
-The easiest and and safest way to add Python to PATH is through the installer.
+The easiest and and safest way to add Python to PATH is by rerunning the installer.
 Here is how to do that:
 
 1. Search for "Apps and features" in the Windows Search Bar.
@@ -91,8 +91,8 @@ terminals/editors you have open before they detect the change.
 
 ### The advanced method: editing environment variables
 
-If you no longer have the installer, or want more control over variables in
-PATH, you can edit the environment variables manually.
+If you want more control over the entries in your PATH, you can edit the PATH
+environment variables manually.
 
 First, search "environment variables" in Windows search and click on "Edit the
 system environment variables".  Then click the "Environment Variables" button
@@ -129,3 +129,12 @@ To add a folder, click "Add New", and enter the folder name. You can then move
 it up above any other Python versions you have installed if necessary. Watch out
 for `C:\Users\username\AppData\Local\Microsoft\WindowsApps` as if you have Python
 on the Windows Store it will be installed there.
+
+#### Verifying your changes
+
+You can check that `python` was added to PATH correctly by running
+`python -c "import sys;print(sys.executable)"` and checking the executable
+returned is the one you want.
+
+You can check that `pip` was added to PATH correctly by running `pip -V`
+and checking the executable matches the one returned by `python`

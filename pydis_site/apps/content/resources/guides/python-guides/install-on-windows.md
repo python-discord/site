@@ -3,10 +3,10 @@ title: Installing Python on Windows
 description: How to properly install python on windows
 ---
 
-The recommended way to install Python on windows is directly from the [Python
-website's Downloads page](https://www.python.org/downloads/windows/). Installing
-Python from the Microsoft Store is not recommended as it can [cause
-issues](../microsoft-store.md).
+The recommended way to install Python on windows is directly from the
+[Python website's Downloads page](https://www.python.org/downloads/windows/).
+Installing Python from the Microsoft Store is not recommended as it can
+[cause issues](../microsoft-store.md).
 
 ## Selecting an Installer
 There are many different installer options available from the downloads page.
@@ -51,7 +51,7 @@ Python installation on your PATH and don't want this one to override it, don't
 tick this.
 
 If you installed Python without adding to PATH and now want to add it, see
-(#changing-path)[#changing-path].
+[our guide on adding Python to PATH](../python-on-windows.md#adding-python-to-your-path).
 
 Then simply click install, and wait for the install to finish!
 

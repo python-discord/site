@@ -6,7 +6,7 @@ description: This guide describes common issues you may run into when using Pyth
 ### When I run `python` in the terminal I get no result, or the Windows Store opens!
 
 By default Windows has an alias for `python` in the terminal to guide you to
-install it from the Windows Store. We would not recommend that you install
+install it from the Microsoft Store. I would not recommend that you install
 Python from the Microsoft Store, see why [here](../microsoft-store.md).
 To disable this alias, search "App execution aliases" in windows search and
 click on "Manage app execution aliases". In the list you should see two options
@@ -24,12 +24,13 @@ detected, see the below question.
 
 If you have not installed Python, you will need to do that. Follow our guide [here](../install-on-windows.md).
 
-If you have installed python and are still getting the error, it is likely that
+If you have installed python and are still having the issue, it is likely that
 you forgot to add to PATH when doing so. See [our guide on adding Python to
 PATH](../python-on-windows.md#changing-path) for how to fix this.
 You can also use the `py` launcher instead of `python` by just replacing
 `python` in your command with `py`. See
-[this guide](../python-on-windows.md#the-py-launcher) for more information.
+[this guide](../python-on-windows.md#the-py-launcher) for more information
+on that.
 
 ### I `pip` installed a package but when running my code get a `ModuleNotFoundError`
 
@@ -37,13 +38,15 @@ You can also use the `py` launcher instead of `python` by just replacing
 
     If you are using a code editor such as VSCode or Pycharm you may get a
     squiggly line under your import saying the module couldn't be found, it is
-    possible that this is just an mistake by the editor, so try running your
-    code with to ensure if it actually errors.
+    possible that this is just an mistake by the editor, so try actually running
+    your code with to ensure if it actually errors.
 
-    If your code runs fine, you could try restarting your editor - if you have
+    If your code runs fine, you could try restarting your editor. If you have
     newly installed a module it may just not have detected it yet. If that
-    doesn't help, you may need to configure it to ensure it is looking for the
-    module in the correct Python environment.
+    doesn't help, you may need to configure your editor to ensure it is looking
+    for the module in the correct Python environment. See
+    [our guide on virtual environments](./python-on-windows.md#virtual-environments)
+    for more information.
 
 * #### Was the install successful?
 
@@ -54,12 +57,12 @@ You can also use the `py` launcher instead of `python` by just replacing
 * #### Did you use the correct module name?
 
     Double check that you haven't made a typo in the name you are importing, or
-    in what you installed from PyPI, you need to make sure you get the name
+    in what you installed from PyPI, you need to make sure you type the name
     exactly as it should be.
 
-    Also **the name you should `import` may not be the same as the name you `pip
-    install`**. Check the module's docs or PyPI page if you are unsure. Examples
-    of this are:
+    Also, **the name you should `import` may not be the same as the name you `pip
+    install`**. Check the module's documentation or PyPI page if you are unsure.
+    Examples of this are:
 
     * [**opencv-python**](https://pypi.org/project/opencv-python/): You need to
       `pip install opencv-python`, but the import has to be `import cv2`
@@ -71,12 +74,23 @@ You can also use the `py` launcher instead of `python` by just replacing
 * #### Are you installing to the same environment you're running your code from?
 
     This is a very common issue. When you install a module from PyPI, you will
-    install it into a single python executable, the one that the `pip` you
-    invoked is referring to. This could be different to the one you are running
-    the script from, usually because it's using a different python version, or a
-    virtual environment.
+    install it into a single Python environment, the one that the `pip` you
+    invoked is part of. This could be different to the one you are running
+    the script from if it's using a different Python installation,
+    or a virtual environment.
 
-    * ###### I installed the module using pip
+    ###### I'm using Pycharm
+
+    PyCharm creates a virtual environment for each project by default, so if
+    you're installing a module using Pycharm you need to make sure you also run
+    your code through PyCharm. This also applies the other way round, if you
+    want to use a module in PyCharm you need to install it through PyCharm.
+
+    It's also possible to change PyCharm to use your system environment, see
+    [their guide on configuring your interpreter](https://www.jetbrains.com/help/pycharm/configuring-python-interpreter.html)
+    for more information.
+
+    ###### I installed the module using pip from the command line
 
         Run `pip -V` and look at the path returned it should be in the form
         `<PATH_TO_PYTHON>\Lib\site-packages\pip`.
@@ -86,47 +100,33 @@ You can also use the `py` launcher instead of `python` by just replacing
         in the form `<PATH_TO_PYTHON>\python.exe`.
 
         Now compare that `PATH_TO_PYTHON` to the one from `pip -V`. If they're
-        different, this is the cause of the `ModuleNotFoundError`. See the
-        relevant "I'm running with ..." sections below for how to resolve this.
+        different, this is the cause of the `ModuleNotFoundError`. Follow the
+        relevant "I'm running my code with ..." section below for how to fix
+        this.
 
-    * ###### I installed the module using PyCharm
+    ###### I'm running my code with `python` from the terminal.
 
-        PyCharm creates a virtual environment by default, so if you're
-        installing the module using Pycharm you need to make sure you also run
-        your code from Pycharm.
+        If you are using a virtual environment, ensure you have activated it before
+        running `pip install`. You can test this by running `pip -V` and checking
+        the path is the one of your virtual environment.
 
-    How to fix it depends on how you're running your code
+        Alternatively, you can use the `py` command to specify the python version
+        you want to pip install into, e.g. `py -3.9 -m pip install numpy`, and to
+        specify the executable you want to run your code with, e.g. `py -3.9
+        my_script.py`.
 
-    * ###### I'm running my code with `python` from the terminal.
+        If your `pip` and `python` commands are referring to different python
+        environments at the same time, it's possible your PATH is configured
+        incorrectly. See our
+        [guide for adding Python to PATH](../python-on-windows.md#adding-python-to-your-path)
+        for how to fix this.
 
-        If you are using a virtual environment, ensure you have activated your
-        venv before running `pip install`
-
-        * If you are running your code through your editor, make sure you have
-          it set up to use the same editor you are `pip install`ing into.
-        * Use the `py` command to specify the python version you want to pip
-        install into, e.g. `py -3.9 -m pip install numpy`, or to specify. If
-        you're still getting an error, the chances are you installed the module
-        to a different environment to the one you're running python with. This
-        is very common, and how best to fix it depends on what editor you're
-        using.
-
-    * ###### I'm running my code with PyCharm
-
-        PyCharm creates a virtual environment for each project by default, so
-        you need to make sure that virtual environment is activated before
-        installing modules. The easiest way to do this is by `pip install`ing
-        directly from the PyCharm editor terminal, where it will be activated by
-        default.
-
-        You can also use PyCharm's GUI to install modules.
-
-    * ###### I'm running my code with VSCode
+    ###### I'm running my code with the button in VSCode
 
         To run your code from the same environment you installed Python to, set
         the interpreter to the one at the path you found when running `pip -V`
-        by following [this
-        guide](https://code.visualstudio.com/docs/python/environments#_select-and-activate-an-environment).
+        by following
+        [this guide](https://code.visualstudio.com/docs/python/environments#_select-and-activate-an-environment).
         The path should be in the form `PATH_TO_PYTHON\python.exe`
 
         Alternatively, you can pip install to the currently activated

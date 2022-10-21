@@ -5,13 +5,14 @@ description: This guide explains the issues with using Python installed from the
 
 Microsoft provides a Python app on the Microsoft Store as an alternative to
 using the [Standard Installer](https://www.python.org/downloads/). We would
-recommend that you use the standard installer wherever possible.
+recommend that you use the standard installer instead wherever possible.
 
 Here are some common issues with using Python from the Microsoft Store:
 
 * ##### Command line tools won't work
-  Any command line tools like `black` or `pyinstaller` won't work directly. This
-  happens because they work by adding an executable to the `Scripts/` directory,
+  Most command line tools, like `black` or `pyinstaller`, won't work directly
+  (without specifying the full path, or invoking them as a module if they allow
+  it). This happens because they work by adding an executable to the `Scripts/` directory,
   which isn't added to PATH on the Microsoft Store version of Python.
 
 * ##### It can cause issues with permissions
@@ -23,8 +24,8 @@ Here are some common issues with using Python from the Microsoft Store:
   `python.exe` isn't added to PATH, but `pip.exe` is. This makes it easy to have
   an inconsistent `pip` and `python`. The `pip` is under the
   `C:\Users\username\AppData\Local\Microsoft\WindowsApps` entry, which wouldn't
-  obviously have anything python related in it. If you add your normal python
-  install path below this one the `pip` will be overridden by the `WindowsApps`
+  obviously have anything Python related in it. If you add your normal Python
+  install path below this one, it's `pip` will be overridden by the `WindowsApps`
   one but the `python` one wont as it's overwriting the app execution alias.
 
 * ##### Confusing App Execution Alias Behaviour
