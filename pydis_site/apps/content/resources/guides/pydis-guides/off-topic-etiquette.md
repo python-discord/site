@@ -5,7 +5,7 @@ icon: fab fa-discord
 ---
 
 ## Why do we need off-topic etiquette?
-Everyone wants to have good conversations in our off-topic channels, but with tens of thousands of members, this might mean different things to different people.
+Everyone wants to have good conversations in our off-topic channels, but with hundreds of thousands of members, this might mean different things to different people.
 To facilitate the best experience for everyone, here are some guidelines on conversation etiquette.
 
 ## Three things you shouldn't do
