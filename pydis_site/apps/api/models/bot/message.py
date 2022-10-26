@@ -1,13 +1,11 @@
-from datetime import datetime
+import datetime
 
 from django.contrib.postgres import fields as pgfields
 from django.core.validators import MinValueValidator
 from django.db import models
-from django.utils import timezone
 
 from pydis_site.apps.api.models.bot.user import User
 from pydis_site.apps.api.models.mixins import ModelReprMixin
-from pydis_site.apps.api.models.utils import validate_embed
 
 
 class Message(ModelReprMixin, models.Model):
@@ -48,9 +46,7 @@ class Message(ModelReprMixin, models.Model):
         blank=True
     )
     embeds = pgfields.ArrayField(
-        models.JSONField(
-            validators=(validate_embed,)
-        ),
+        models.JSONField(),
         blank=True,
         help_text="Embeds attached to this message."
     )
@@ -63,11 +59,11 @@ class Message(ModelReprMixin, models.Model):
     )
 
     @property
-    def timestamp(self) -> datetime:
+    def timestamp(self) -> datetime.datetime:
         """Attribute that represents the message timestamp as derived from the snowflake id."""
-        tz_naive_datetime = datetime.utcfromtimestamp(((self.id >> 22) + 1420070400000) / 1000)
-        tz_aware_datetime = timezone.make_aware(tz_naive_datetime, timezone=timezone.utc)
-        return tz_aware_datetime
+        return datetime.datetime.utcfromtimestamp(
+            ((self.id >> 22) + 1420070400000) / 1000
+        ).replace(tzinfo=datetime.timezone.utc)
 
     class Meta:
         """Metadata provided for Django's ORM."""

@@ -21,7 +21,6 @@ import environ
 import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
 
-
 env = environ.Env(
     DEBUG=(bool, False),
     SITE_DSN=(str, ""),
@@ -30,17 +29,27 @@ env = environ.Env(
     GIT_SHA=(str, 'development'),
     TIMEOUT_PERIOD=(int, 5),
     GITHUB_TOKEN=(str, None),
+    GITHUB_APP_ID=(str, None),
+    GITHUB_APP_KEY=(str, None),
 )
 
 GIT_SHA = env("GIT_SHA")
+GITHUB_API = "https://api.github.com"
 GITHUB_TOKEN = env("GITHUB_TOKEN")
+GITHUB_APP_ID = env("GITHUB_APP_ID")
+GITHUB_APP_KEY = env("GITHUB_APP_KEY")
 
-sentry_sdk.init(
-    dsn=env('SITE_DSN'),
-    integrations=[DjangoIntegration()],
-    send_default_pii=True,
-    release=f"site@{GIT_SHA}"
-)
+if GITHUB_APP_KEY and (key_file := Path(GITHUB_APP_KEY)).is_file():
+    # Allow the OAuth key to be loaded from a file
+    GITHUB_APP_KEY = key_file.read_text(encoding="utf-8")
+
+if not env("STATIC_BUILD"):
+    sentry_sdk.init(
+        dsn=env('SITE_DSN'),
+        integrations=[DjangoIntegration()],
+        send_default_pii=True,
+        release=f"site@{GIT_SHA}"
+    )
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -120,25 +129,29 @@ INSTALLED_APPS = [
 if not env("BUILDING_DOCKER"):
     INSTALLED_APPS.append("django_prometheus")
 
-NON_STATIC_MIDDLEWARE = [
-    'django_prometheus.middleware.PrometheusBeforeMiddleware',
-] if not env("STATIC_BUILD") else []
+if env("STATIC_BUILD"):
+    # The only middleware required during static builds
+    MIDDLEWARE = [
+        'django.contrib.sessions.middleware.SessionMiddleware',
+        'django.contrib.auth.middleware.AuthenticationMiddleware',
+        'django.contrib.messages.middleware.MessageMiddleware',
+    ]
+else:
+    # Ensure that Prometheus middlewares are first and last here.
+    MIDDLEWARE = [
+        'django_prometheus.middleware.PrometheusBeforeMiddleware',
 
-# Ensure that Prometheus middlewares are first and last here.
-MIDDLEWARE = [
-    *NON_STATIC_MIDDLEWARE,
+        'django.middleware.security.SecurityMiddleware',
+        'whitenoise.middleware.WhiteNoiseMiddleware',
+        'django.contrib.sessions.middleware.SessionMiddleware',
+        'django.middleware.common.CommonMiddleware',
+        'django.middleware.csrf.CsrfViewMiddleware',
+        'django.contrib.auth.middleware.AuthenticationMiddleware',
+        'django.contrib.messages.middleware.MessageMiddleware',
+        'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
-    'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-
-    'django_prometheus.middleware.PrometheusAfterMiddleware'
-]
+        'django_prometheus.middleware.PrometheusAfterMiddleware'
+    ]
 
 ROOT_URLCONF = 'pydis_site.urls'
 
@@ -192,7 +205,6 @@ AUTH_PASSWORD_VALIDATORS = [
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
-USE_L10N = True
 USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
@@ -218,6 +230,9 @@ if DEBUG:
         ALLOWED_HOSTS.append(PARENT_HOST)
 else:
     PARENT_HOST = env('PARENT_HOST', default='pythondiscord.com')
+
+# Django Model Configuration
+DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 
 # Django REST framework
 # https://www.django-rest-framework.org

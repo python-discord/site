@@ -10,3 +10,11 @@ pre {
      */
     background-color: #282c34;
 }
+
+.panel .panel-heading {
+  /*
+   * Remove whitespace between the panel heading and the first item in a panel,
+   * since it makes the first panel item taller than the others.
+   */
+  margin-bottom: 0 !important
+}
