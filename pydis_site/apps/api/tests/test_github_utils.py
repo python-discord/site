@@ -29,7 +29,7 @@ class GeneralUtilityTests(unittest.TestCase):
             """
             self.assertEqual("RS256", algorithm, "The GitHub App JWT must be signed using RS256.")
             return original_encode(
-                payload, "secret-encoding-key", algorithm="HS256", *args, **kwargs
+                payload, "secret-encoding-key", *args, algorithm="HS256", **kwargs
             )
 
         original_encode = jwt.encode

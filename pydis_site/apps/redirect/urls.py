@@ -3,6 +3,7 @@ import re
 
 import yaml
 from django import conf
+from django.http import HttpResponse
 from django.urls import URLPattern, path
 from django_distill import distill_path
 
@@ -53,7 +54,7 @@ def map_redirect(name: str, data: Redirect) -> list[URLPattern]:
 
         class RedirectFunc:
             def __init__(self, new_url: str, _name: str):
-                self.result = REDIRECT_TEMPLATE.format(url=new_url)
+                self.result = HttpResponse(REDIRECT_TEMPLATE.format(url=new_url))
                 self.__qualname__ = _name
 
             def __call__(self, *args, **kwargs):
@@ -95,7 +96,7 @@ def map_redirect(name: str, data: Redirect) -> list[URLPattern]:
 
         return [distill_path(
             data.original_path,
-            lambda *args: REDIRECT_TEMPLATE.format(url=new_redirect),
+            lambda *args: HttpResponse(REDIRECT_TEMPLATE.format(url=new_redirect)),
             name=name,
         )]
 

@@ -178,7 +178,7 @@ class PageOrCategoryViewTests(MockPagesTestCase, SimpleTestCase, TestCase):
         for item in context["breadcrumb_items"]:
             item["path"] = Path(item["path"])
 
-        self.assertEquals(
+        self.assertEqual(
             context["breadcrumb_items"],
             [
                 {"name": PARSED_CATEGORY_INFO["title"], "path": Path(".")},

@@ -70,4 +70,4 @@ class AocCompletionistBlockViewSet(
     serializer_class = AocCompletionistBlockSerializer
     queryset = AocCompletionistBlock.objects.all()
     filter_backends = (DjangoFilterBackend,)
-    filter_fields = ("user__id", "is_blocked")
+    filterset_fields = ("user__id", "is_blocked")

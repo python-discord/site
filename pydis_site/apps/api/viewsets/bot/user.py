@@ -237,7 +237,7 @@ class UserViewSet(ModelViewSet):
     queryset = User.objects.all().order_by("id")
     pagination_class = UserListPagination
     filter_backends = (DjangoFilterBackend,)
-    filter_fields = ('name', 'discriminator')
+    filterset_fields = ('name', 'discriminator')
 
     def get_serializer(self, *args, **kwargs) -> ModelSerializer:
         """Set Serializer many attribute to True if request body contains a list."""
