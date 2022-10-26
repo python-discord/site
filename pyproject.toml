@@ -22,7 +22,7 @@ markdown = "3.4.1"
 python-frontmatter = "1.0.0"
 django-prometheus = "2.2.0"
 django-distill = "3.0.1"
-PyJWT = {version = "2.5.0", extras = ["crypto"]}
+PyJWT = {version = "2.6.0", extras = ["crypto"]}
 
 [tool.poetry.dev-dependencies]
 coverage = "6.5.0"
