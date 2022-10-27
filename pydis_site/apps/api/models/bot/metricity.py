@@ -130,3 +130,31 @@ class Metricity:
             raise NotFoundError()
 
         return values
+
+    def total_messages_in_past_n_days(
+        self,
+        user_ids: list[str],
+        days: int
+    ) -> list[tuple[int, int]]:
+        """
+        Query activity by a list of users in the past `days` days.
+
+        Returns a list of (user_id, message_count) tuples.
+        """
+        self.cursor.execute(
+            """
+            SELECT
+                author_id, COUNT(*)
+            FROM messages
+            WHERE
+                author_id IN %s
+                AND NOT is_deleted
+                AND channel_id NOT IN %s
+                AND created_at > now() - interval '%s days'
+            GROUP BY author_id
+            """,
+            [tuple(user_ids), EXCLUDE_CHANNELS, days]
+        )
+        values = self.cursor.fetchall()
+
+        return values
