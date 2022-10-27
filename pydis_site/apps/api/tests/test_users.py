@@ -1,3 +1,4 @@
+import json
 import random
 from unittest.mock import Mock, patch
 
@@ -501,6 +502,105 @@ class UserMetricityTests(AuthenticatedAPITestCase):
             "top_channel_activity": channel_activity,
             "total_messages": total_messages
         })
+
+    def test_metricity_activity_data(self):
+        # Given
+        self.mock_no_metricity_user()  # Other functions shouldn't be used.
+        self.metricity.total_messages_in_past_n_days.return_value = [[0, 10]]
+
+        # When
+        url = reverse("api:bot:user-metricity-activity-data")
+        # Can't send data in body with normal GET request so use generic request.
+        response = self.client.generic(
+            "GET",
+            url,
+            data=json.dumps([0, 1]),
+            QUERY_STRING="days=10",
+            content_type="application/json"
+        )
+
+        # Then
+        self.assertEqual(response.status_code, 200)
+        self.metricity.total_messages_in_past_n_days.assert_called_once_with(["0", "1"], 10)
+        self.assertEqual(response.json(), [{"id": 0, "message_count": 10}])
+
+    def test_metricity_activity_data_invalid_days(self):
+        # Given
+        self.mock_no_metricity_user()  # Other functions shouldn't be used.
+
+        # When
+        url = reverse("api:bot:user-metricity-activity-data")
+        # Can't send data in body with normal GET request so use generic request.
+        response = self.client.generic(
+            "GET",
+            url,
+            data=json.dumps([0, 1]),
+            QUERY_STRING="days=fifty",
+            content_type="application/json"
+        )
+
+        # Then
+        self.assertEqual(response.status_code, 400)
+        self.metricity.total_messages_in_past_n_days.assert_not_called()
+        self.assertEqual(response.json(), {"days": ["This query parameter must be an integer."]})
+
+    def test_metricity_activity_data_no_days(self):
+        # Given
+        self.mock_no_metricity_user()  # Other functions shouldn't be used.
+
+        # When
+        url = reverse('api:bot:user-metricity-activity-data')
+        # Can't send data in body with normal GET request so use generic request.
+        response = self.client.generic(
+            "GET",
+            url,
+            data=json.dumps([0, 1]),
+            content_type="application/json"
+        )
+
+        # Then
+        self.assertEqual(response.status_code, 400)
+        self.metricity.total_messages_in_past_n_days.assert_not_called()
+        self.assertEqual(response.json(), {'days': ["This query parameter is required."]})
+
+    def test_metricity_activity_data_no_users(self):
+        # Given
+        self.mock_no_metricity_user()  # Other functions shouldn't be used.
+
+        # When
+        url = reverse('api:bot:user-metricity-activity-data')
+        # Can't send data in body with normal GET request so use generic request.
+        response = self.client.generic(
+            "GET",
+            url,
+            QUERY_STRING="days=10",
+            content_type="application/json"
+        )
+
+        # Then
+        self.assertEqual(response.status_code, 400)
+        self.metricity.total_messages_in_past_n_days.assert_not_called()
+        self.assertEqual(response.json(), ['Expected a list of items but got type "dict".'])
+
+    def test_metricity_activity_data_invalid_users(self):
+        # Given
+        self.mock_no_metricity_user()  # Other functions shouldn't be used.
+
+        # When
+        url = reverse('api:bot:user-metricity-activity-data')
+        # Can't send data in body with normal GET request so use generic request.
+        response = self.client.generic(
+            "GET",
+            url,
+            data=json.dumps([123, 'username']),
+            QUERY_STRING="days=10",
+            content_type="application/json"
+        )
+
+        # Then
+        self.assertEqual(response.status_code, 400)
+        self.metricity.total_messages_in_past_n_days.assert_not_called()
+        self.assertEqual(response.json(), {'1': ['A valid integer is required.']})
 
     def mock_metricity_user(self, joined_at, total_messages, total_blocks, top_channel_activity):
         patcher = patch("pydis_site.apps.api.viewsets.bot.user.Metricity")
