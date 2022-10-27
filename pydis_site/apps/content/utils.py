@@ -3,7 +3,6 @@ import functools
 import json
 import tarfile
 import tempfile
-import typing
 from io import BytesIO
 from pathlib import Path
 
@@ -218,10 +217,10 @@ def get_tags() -> list[Tag]:
         return tags
     else:
         # Get tags from database
-        return Tag.objects.all()
+        return list(Tag.objects.all())
 
 
-def get_tag(path: str, *, skip_sync: bool = False) -> typing.Union[Tag, list[Tag]]:
+def get_tag(path: str, *, skip_sync: bool = False) -> Tag | list[Tag]:
     """
     Return a tag based on the search location.
 
@@ -255,9 +254,7 @@ def get_tag(path: str, *, skip_sync: bool = False) -> typing.Union[Tag, list[Tag
     raise Tag.DoesNotExist()
 
 
-def get_tag_category(
-    tags: typing.Optional[list[Tag]] = None, *, collapse_groups: bool
-) -> dict[str, dict]:
+def get_tag_category(tags: list[Tag] | None = None, *, collapse_groups: bool) -> dict[str, dict]:
     """
     Generate context data for `tags`, or all tags if None.
 
