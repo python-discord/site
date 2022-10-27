@@ -40,6 +40,8 @@ def get_all_pages() -> DISTILL_RETURN:
 
 def get_all_tags() -> DISTILL_RETURN:
     """Return all tag names and groups in static builds."""
+    # We instantiate the set with None here to make filtering it out later easier
+    # whether it was added in the loop or not
     groups = {None}
     for tag in utils.get_tags_static():
         groups.add(tag.group)

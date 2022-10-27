@@ -175,19 +175,19 @@ def record_tags(tags: list[Tag]) -> None:
     Tag.objects.exclude(name__in=[tag.name for tag in tags]).delete()
 
     # Insert/update the tags
-    for tag in tags:
+    for new_tag in tags:
         try:
-            old_tag = Tag.objects.get(name=tag.name)
+            old_tag = Tag.objects.get(name=new_tag.name)
         except Tag.DoesNotExist:
             # The tag is not in the database yet,
             # pretend it's previous state is the current state
-            old_tag = tag
+            old_tag = new_tag
 
-        if old_tag.sha == tag.sha and old_tag.last_commit is not None:
+        if old_tag.sha == new_tag.sha and old_tag.last_commit is not None:
             # We still have an up-to-date commit entry
-            tag.last_commit = old_tag.last_commit
+            new_tag.last_commit = old_tag.last_commit
 
-        tag.save()
+        new_tag.save()
 
     # Drop old, unused commits
     Commit.objects.filter(tag__isnull=True).delete()
