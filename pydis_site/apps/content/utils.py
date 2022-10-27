@@ -75,30 +75,27 @@ def fetch_tags() -> list[Tag]:
     The entire repository is downloaded and extracted locally because
     getting file content would require one request per file, and can get rate-limited.
     """
-    client = github_client()
+    with github_client() as client:
+        # Grab metadata
+        metadata = client.get("/repos/python-discord/bot/contents/bot/resources")
+        metadata.raise_for_status()
 
-    # Grab metadata
-    metadata = client.get("/repos/python-discord/bot/contents/bot/resources")
-    metadata.raise_for_status()
+        hashes = {}
+        for entry in metadata.json():
+            if entry["type"] == "dir":
+                # Tag group
+                files = client.get(entry["url"])
+                files.raise_for_status()
+                files = files.json()
+            else:
+                files = [entry]
 
-    hashes = {}
-    for entry in metadata.json():
-        if entry["type"] == "dir":
-            # Tag group
-            files = client.get(entry["url"])
-            files.raise_for_status()
-            files = files.json()
-        else:
-            files = [entry]
+            for file in files:
+                hashes[file["name"]] = file["sha"]
 
-        for file in files:
-            hashes[file["name"]] = file["sha"]
-
-    # Download the files
-    tar_file = client.get("/repos/python-discord/bot/tarball")
-    tar_file.raise_for_status()
-
-    client.close()
+        # Download the files
+        tar_file = client.get("/repos/python-discord/bot/tarball")
+        tar_file.raise_for_status()
 
     tags = []
     with tempfile.TemporaryDirectory() as folder:
