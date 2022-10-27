@@ -295,7 +295,7 @@ def get_tag_category(tags: list[Tag] | None = None, *, collapse_groups: bool) ->
         data.append(group)
 
     # Sort the tags, and return them in the proper format
-    return {tag["title"]: tag for tag in sorted(data, key=lambda tag: tag["title"].lower())}
+    return {tag["title"]: tag for tag in sorted(data, key=lambda tag: tag["title"].casefold())}
 
 
 def get_category_pages(path: Path) -> dict[str, dict]:
