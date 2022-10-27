@@ -235,7 +235,7 @@ def get_tag(path: str, *, skip_sync: bool = False) -> typing.Union[Tag, list[Tag
     """
     path = path.split("/")
     if len(path) == 2:
-        group, name = path[0], path[1]
+        group, name = path
     else:
         name = path[0]
         group = None
