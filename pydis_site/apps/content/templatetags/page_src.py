@@ -1,4 +1,5 @@
 from django import template
+from django.conf import settings
 
 
 register = template.Library()
@@ -16,7 +17,7 @@ def page_src_url(request_path: str) -> str:
     """
     src_url = request_path.replace(
         "/pages/",
-        "https://github.com/python-discord/site/tree/main/pydis_site/apps/content/resources/",
+        settings.CONTENT_SRC_URL,
     )
     src_url = src_url[:-1] + ".md"
     return src_url
