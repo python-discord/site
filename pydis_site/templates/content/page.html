@@ -1,5 +1,4 @@
 {% extends 'content/base.html' %}
-{% load page_src %}
 
 {% block head %}
     {{ block.super }}
@@ -10,11 +9,6 @@
 {% endblock %}
 
 {% block page_content %}
-    <p><a href="{{ request.path | page_src_url }}">
-        <i class="fa-solid fa-pencil"></i>
-        <b>Edit on GitHub</b>
-    </a></p>
-    <h1 class="title is-flex">{{ page_title }}</h1>
     {% if relevant_links or toc %}
         <div class="columns is-variable is-8">
             <div class="column is-two-thirds">

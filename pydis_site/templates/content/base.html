@@ -1,5 +1,6 @@
 {% extends 'base/base.html' %}
 {% load static %}
+{% load page_src %}
 
 {% block title %}{{ page_title }}{% endblock %}
 {% block head %}
@@ -25,16 +26,28 @@
                     <li class="is-active"><a href="#">{{ page_title }}</a></li>
                 </ul>
             </nav>
+            <div class="is-flex is-justify-content-flex-end">
             {# Sub-Article dropdown for category pages #}
             {% if subarticles %}
                 {% include "content/dropdown.html" %}
             {% endif %}
+            {# Edit on GitHub for content articles #}
+            {% if page %}
+                <div id="edit-on-github">
+                    <a href="{{ request.path | page_src_url }}">
+                        <i class="fa-solid fa-pencil"></i>
+                        Edit on GitHub
+                    </a>
+                </div>
+            {% endif %}
+            </div>
         </div>
     </section>
 
     <section class="section">
         <div class="container">
             <div class="content">
+                <h1 class="title is-flex">{{ page_title }}</h1>
                 {% block page_content %}{% endblock %}
             </div>
         </div>
