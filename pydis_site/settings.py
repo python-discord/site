@@ -328,3 +328,8 @@ REDIRECTIONS_PATH = Path(BASE_DIR, "pydis_site", "apps", "redirect", "redirects.
 
 # How long to wait for synchronous requests before timing out
 TIMEOUT_PERIOD = env("TIMEOUT_PERIOD")
+
+# Source files url for 'Edit on GitHub' link on content articles
+CONTENT_SRC_URL = (
+    "https://github.com/python-discord/site/tree/main/pydis_site/apps/content/resources/"
+)
