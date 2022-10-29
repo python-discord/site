@@ -2,6 +2,10 @@
     padding: 1rem;
 }
 
+#edit-on-github {
+    margin-left: 1rem;
+}
+
 i.has-icon-padding {
     padding: 0 10px 25px 0;
 }
