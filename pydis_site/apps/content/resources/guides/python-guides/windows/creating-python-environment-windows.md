@@ -1,28 +1,16 @@
 ---
 title: Creating a Unix-style Python Environment on Windows
-description: How to setup Python for Windows.
+description: How to setup a Unix style Python Environment ready to start coding in
 ---
 
 Many programmers use Linux or macOS operating systems for their work, though newcomers to programming will likely want to get started on the computer they already own, which will often be running Windows.
-This guide will help you install Python on Windows.
 
-Programmers also need to become comfortable using a command prompt (also known as a terminal), and many guides for both beginning and advanced programming will often tell you certain commands to run.
+Programmers need to become comfortable using a command prompt (also known as a terminal), and many guides for both beginning and advanced programming will often tell you certain commands to run.
 The Windows command prompt has different names for similar commands that are available on Linux and macOS.
 This guide will also help you set up a command prompt called Git Bash, which will support many of the commands available on Linux and macOS.
 
 ## Installing Python
-Python can be downloaded from the Python website on the [downloads page](https://www.python.org/downloads/).
-The website will automatically present you with a download button for the latest release of the Windows version when you access the site from a Windows machine.
-
-Once the download is complete, you can begin the installation.
-Select "Customize Installation".
-The default settings for "Optional Features" are sufficient and you can click "Next".
-
-The next step is to decide on a location where the Python executable can be stored on your computer.
-This should be a location that's easy for you to remember.
-One possibility is to create a folder called "Python" at the root of your hard drive.
-Once you have selected a location, you can click "Install", as no other settings on this screen need to be adjusted.
-This will complete the installation.
+First you'll need to install Python. We recommend installing from the Python website, you can follow our guide on how to do this [here](../install-on-windows.md).
 
 ## Installing a text editor
 You will also need a text editor for writing Python programs, and for subsequent steps of this guide.
