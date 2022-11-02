@@ -94,9 +94,11 @@ terminals/editors you have open before they detect the change.
 If you want more control over the entries in your PATH, you can edit the PATH
 environment variables manually.
 
-First, search "environment variables" in Windows search and click on "Edit the
-system environment variables".  Then click the "Environment Variables" button
-near the bottom of the window.
+### Modifying PATH
+
+First, to access the PATH variable, search "environment variables" in Windows
+search and click on "Edit the system environment variables". Then click the
+"Environment Variables" button near the bottom of the window.
 
 Now there should be two boxes, one for user environment variables and one for
 system environment variables. There should be a "Path" entry under both. If you
@@ -125,10 +127,10 @@ be:
 It is important that both paths are added, otherwise `pip` and other commands
 will not work correctly.
 
-To add a folder, click "Add New", and enter the folder name. You can then move
+To add the paths, click "Add New", and enter the folder name. You can then move
 it up above any other Python versions you have installed if necessary. Watch out
 for `C:\Users\username\AppData\Local\Microsoft\WindowsApps` as if you have Python
-on the Windows Store it will be installed there.
+from the Microsoft Store it will be installed there.
 
 #### Verifying your changes
 
