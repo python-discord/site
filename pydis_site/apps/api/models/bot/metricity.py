@@ -135,7 +135,7 @@ class Metricity:
         self,
         user_ids: list[str],
         days: int
-    ) -> list[tuple[int, int]]:
+    ) -> list[tuple[str, int]]:
         """
         Query activity by a list of users in the past `days` days.
 

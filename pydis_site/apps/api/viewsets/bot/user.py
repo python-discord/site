@@ -139,7 +139,7 @@ class UserViewSet(ModelViewSet):
     - 200: returned on success
     - 404: if a user with the given `snowflake` could not be found
 
-    ### GET /bot/users/metricity_activity_data
+    ### POST /bot/users/metricity_activity_data
     Gets the number of messages sent on the server in a given period.
 
     Users with no messages in the specified period or who do not
@@ -324,7 +324,7 @@ class UserViewSet(ModelViewSet):
                 return Response(dict(detail="User not found in metricity"),
                                 status=status.HTTP_404_NOT_FOUND)
 
-    @action(detail=False)
+    @action(detail=False, methods=["POST"])
     def metricity_activity_data(self, request: Request) -> Response:
         """Request handler for metricity_activity_data endpoint."""
         if "days" in request.query_params:
@@ -352,7 +352,7 @@ class UserViewSet(ModelViewSet):
             data = metricity.total_messages_in_past_n_days(user_ids, days)
 
         response_data = [
-            {"id": d[0], "message_count": d[1]}
+            {"id": int(d[0]), "message_count": d[1]}
             for d in data
         ]
         return Response(response_data, status=status.HTTP_200_OK)

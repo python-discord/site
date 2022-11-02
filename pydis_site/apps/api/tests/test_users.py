@@ -1,4 +1,3 @@
-import json
 import random
 from unittest.mock import Mock, patch
 
@@ -510,13 +509,10 @@ class UserMetricityTests(AuthenticatedAPITestCase):
 
         # When
         url = reverse("api:bot:user-metricity-activity-data")
-        # Can't send data in body with normal GET request so use generic request.
-        response = self.client.generic(
-            "GET",
+        response = self.client.post(
             url,
-            data=json.dumps([0, 1]),
+            data=[0, 1],
             QUERY_STRING="days=10",
-            content_type="application/json"
         )
 
         # Then
@@ -530,13 +526,10 @@ class UserMetricityTests(AuthenticatedAPITestCase):
 
         # When
         url = reverse("api:bot:user-metricity-activity-data")
-        # Can't send data in body with normal GET request so use generic request.
-        response = self.client.generic(
-            "GET",
+        response = self.client.post(
             url,
-            data=json.dumps([0, 1]),
+            data=[0, 1],
             QUERY_STRING="days=fifty",
-            content_type="application/json"
         )
 
         # Then
@@ -550,12 +543,9 @@ class UserMetricityTests(AuthenticatedAPITestCase):
 
         # When
         url = reverse('api:bot:user-metricity-activity-data')
-        # Can't send data in body with normal GET request so use generic request.
-        response = self.client.generic(
-            "GET",
+        response = self.client.post(
             url,
-            data=json.dumps([0, 1]),
-            content_type="application/json"
+            data=[0, 1],
         )
 
         # Then
@@ -569,12 +559,9 @@ class UserMetricityTests(AuthenticatedAPITestCase):
 
         # When
         url = reverse('api:bot:user-metricity-activity-data')
-        # Can't send data in body with normal GET request so use generic request.
-        response = self.client.generic(
-            "GET",
+        response = self.client.post(
             url,
             QUERY_STRING="days=10",
-            content_type="application/json"
         )
 
         # Then
@@ -588,13 +575,10 @@ class UserMetricityTests(AuthenticatedAPITestCase):
 
         # When
         url = reverse('api:bot:user-metricity-activity-data')
-        # Can't send data in body with normal GET request so use generic request.
-        response = self.client.generic(
-            "GET",
+        response = self.client.post(
             url,
-            data=json.dumps([123, 'username']),
+            data=[123, 'username'],
             QUERY_STRING="days=10",
-            content_type="application/json"
         )
 
         # Then
