@@ -13,15 +13,15 @@ class Migration(migrations.Migration):
         migrations.AddConstraint(
             model_name='filter',
             constraint=models.UniqueConstraint(fields=(
+                'content',
+                'additional_field',
+                'filter_list',
                 'dm_content',
                 'dm_embed',
                 'infraction_type',
                 'infraction_reason',
                 'infraction_duration',
                 'infraction_channel',
-                'content',
-                'additional_field',
-                'filter_list',
                 'guild_pings',
                 'filter_dm',
                 'dm_pings',

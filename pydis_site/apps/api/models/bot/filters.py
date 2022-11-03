@@ -14,35 +14,43 @@ class FilterListType(models.IntegerChoices):
     DENY = 0
 
 
-class FilterSettingsMixin(models.Model):
-    """Mixin for common settings of a filters and filter lists."""
+class FilterList(models.Model):
+    """Represent a list in its allow or deny form."""
 
+    name = models.CharField(max_length=50, help_text="The unique name of this list.")
+    list_type = models.IntegerField(
+        choices=FilterListType.choices,
+        help_text="Whether this list is an allowlist or denylist"
+    )
     dm_content = models.CharField(
         max_length=1000,
-        null=True,
+        null=False,
         blank=True,
         help_text="The DM to send to a user triggering this filter."
     )
     dm_embed = models.CharField(
         max_length=2000,
         help_text="The content of the DM embed",
-        null=True,
+        null=False,
         blank=True
     )
     infraction_type = models.CharField(
-        choices=[(choices[0].upper(), choices[1]) for choices in Infraction.TYPE_CHOICES],
+        choices=[
+            (choices[0].upper(), choices[1])
+            for choices in [("NONE", "None"), *Infraction.TYPE_CHOICES]
+        ],
         max_length=10,
-        null=True,
+        null=False,
         help_text="The infraction to apply to this user."
     )
     infraction_reason = models.CharField(
         max_length=1000,
         help_text="The reason to give for the infraction.",
         blank=True,
-        null=True
+        null=False
     )
     infraction_duration = models.DurationField(
-        null=True,
+        null=False,
         help_text="The duration of the infraction. Null if permanent."
     )
     infraction_channel = models.BigIntegerField(
@@ -53,22 +61,7 @@ class FilterSettingsMixin(models.Model):
             ),
         ),
         help_text="Channel in which to send the infraction.",
-        null=True
-    )
-
-    class Meta:
-        """Metaclass for settings mixin."""
-
-        abstract = True
-
-
-class FilterList(FilterSettingsMixin):
-    """Represent a list in its allow or deny form."""
-
-    name = models.CharField(max_length=50, help_text="The unique name of this list.")
-    list_type = models.IntegerField(
-        choices=FilterListType.choices,
-        help_text="Whether this list is an allowlist or denylist"
+        null=False
     )
     guild_pings = ArrayField(
         models.CharField(max_length=100),
@@ -126,7 +119,7 @@ class FilterList(FilterSettingsMixin):
         return f"Filter {FilterListType(self.list_type).label}list {self.name!r}"
 
 
-class FilterBase(FilterSettingsMixin):
+class FilterBase(models.Model):
     """One specific trigger of a list."""
 
     content = models.CharField(max_length=100, help_text="The definition of this filter.")
@@ -138,6 +131,47 @@ class FilterBase(FilterSettingsMixin):
     filter_list = models.ForeignKey(
         FilterList, models.CASCADE, related_name="filters",
         help_text="The filter list containing this filter."
+    )
+    dm_content = models.CharField(
+        max_length=1000,
+        null=True,
+        blank=True,
+        help_text="The DM to send to a user triggering this filter."
+    )
+    dm_embed = models.CharField(
+        max_length=2000,
+        help_text="The content of the DM embed",
+        null=True,
+        blank=True
+    )
+    infraction_type = models.CharField(
+        choices=[
+            (choices[0].upper(), choices[1])
+            for choices in [("NONE", "None"), *Infraction.TYPE_CHOICES]
+        ],
+        max_length=10,
+        null=True,
+        help_text="The infraction to apply to this user."
+    )
+    infraction_reason = models.CharField(
+        max_length=1000,
+        help_text="The reason to give for the infraction.",
+        blank=True,
+        null=True
+    )
+    infraction_duration = models.DurationField(
+        null=True,
+        help_text="The duration of the infraction. Null if permanent."
+    )
+    infraction_channel = models.BigIntegerField(
+        validators=(
+            MinValueValidator(
+                limit_value=0,
+                message="Channel IDs cannot be negative."
+            ),
+        ),
+        help_text="Channel in which to send the infraction.",
+        null=True
     )
     guild_pings = ArrayField(
         models.CharField(max_length=100),

@@ -144,8 +144,13 @@ class DocumentationLinkSerializer(ModelSerializer):
 
 #  region: filters serializers
 
-
-REQUIRED_FOR_FILTER_LIST_SETTINGS = (
+SETTINGS_FIELDS = (
+    'dm_content',
+    'dm_embed',
+    'infraction_type',
+    'infraction_reason',
+    'infraction_duration',
+    'infraction_channel',
     'guild_pings',
     'filter_dm',
     'dm_pings',
@@ -159,19 +164,9 @@ REQUIRED_FOR_FILTER_LIST_SETTINGS = (
     'disabled_categories',
 )
 
-OPTIONAL_FOR_FILTER_LIST_SETTINGS = (
-    'dm_content',
-    'dm_embed',
-    'infraction_type',
-    'infraction_reason',
-    'infraction_duration',
-    'infraction_channel',
-)
-
 ALLOW_BLANK_SETTINGS = (
     'dm_content',
     'dm_embed',
-    'infraction_type',
     'infraction_reason',
 )
 
@@ -210,8 +205,6 @@ CHANNEL_SCOPE_FIELDS = (
     "enabled_categories"
 )
 MENTIONS_FIELDS = ("guild_pings", "dm_pings")
-
-SETTINGS_FIELDS = REQUIRED_FOR_FILTER_LIST_SETTINGS + OPTIONAL_FOR_FILTER_LIST_SETTINGS
 
 
 def _create_filter_meta_extra_kwargs() -> dict[str, dict[str, bool]]:
@@ -296,8 +289,6 @@ def _create_filter_list_meta_extra_kwargs() -> dict[str, dict[str, bool]]:
     extra_kwargs = {}
     for field in SETTINGS_FIELDS:
         field_args = {}
-        if field in OPTIONAL_FOR_FILTER_LIST_SETTINGS:
-            field_args = {'required': False, 'allow_null': True}
         if field in ALLOW_BLANK_SETTINGS:
             field_args['allow_blank'] = True
         if field in ALLOW_EMPTY_SETTINGS:
