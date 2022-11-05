@@ -1,0 +1,13 @@
+.content a * {
+    /* This is the original color, but propagated down the chain */
+    /* which allows for elements inside links, such as codeblocks */
+    color: #7289DA;
+}
+
+.content a *:hover {
+    color: dimgray;
+}
+
+span.update-time {
+    text-decoration: black underline dotted;
+}
