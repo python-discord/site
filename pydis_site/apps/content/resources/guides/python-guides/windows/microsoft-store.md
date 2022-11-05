@@ -1,7 +1,9 @@
 ---
-title: Why NOT to install Python from the Microsoft Store
+title: Why not to install Python from the Microsoft Store
 description: This guide explains the issues with using Python installed from the Microsoft Store
 ---
+
+[<img style="margin:1rem;" align="right" width="480px" src="/static/images/content/python-on-windows/ms_store_drake.png">](/static/images/content/python-on-windows/ms_store_drake.png)
 
 Microsoft provides versions of Python for Windows
 [on the Microsoft Store](https://apps.microsoft.com/store/search/python) as an alternative to using the
@@ -39,6 +41,8 @@ Here are some common issues with using Python from the Microsoft Store:
     `C:\Users\<user>\AppData\Local\Programs\Python\Python311\Scripts` (for Python 3.11). If for some reason you want
     both installed, put the ones you want the commands for higher up in Path.
 
+    You can find the path of the executable for a version of Python by running `import sys; print(sys.executable)` in it.
+
 -   ##### Confusing app execution alias behaviour
 
     Typing `python` into a terminal when it is not already installed or not properly on Path may open up the Microsoft
@@ -46,7 +50,7 @@ Here are some common issues with using Python from the Microsoft Store:
     normally happen.
 
     You can change this behavior by searching "Manage app execution aliases" in the Start menu and toggling off "App
-    Installer" for python.exe and python3.exe.
+    Installer" for python.exe (and for python3.exe do do the same for the `python3` command).
 
 -   #### You can't specify or easily see the patch version
 
