@@ -5,6 +5,7 @@ from django.db.models import UniqueConstraint
 
 # Must be imported that way to avoid circular imports
 from .infraction import Infraction
+from pydis_site.apps.api.models.mixins import ModelTimestampMixin, ModelReprMixin
 
 
 class FilterListType(models.IntegerChoices):
@@ -14,7 +15,7 @@ class FilterListType(models.IntegerChoices):
     DENY = 0
 
 
-class FilterList(models.Model):
+class FilterList(ModelTimestampMixin, ModelReprMixin, models.Model):
     """Represent a list in its allow or deny form."""
 
     name = models.CharField(max_length=50, help_text="The unique name of this list.")
@@ -119,7 +120,7 @@ class FilterList(models.Model):
         return f"Filter {FilterListType(self.list_type).label}list {self.name!r}"
 
 
-class FilterBase(models.Model):
+class FilterBase(ModelTimestampMixin, ModelReprMixin, models.Model):
     """One specific trigger of a list."""
 
     content = models.CharField(max_length=100, help_text="The definition of this filter.")
@@ -247,7 +248,7 @@ class Filter(FilterBase):
             UniqueConstraint(
                 fields=tuple(
                     [field.name for field in FilterBase._meta.fields
-                     if field.name != "id" and field.name != "description"]
+                     if field.name not in ("id", "description", "created_at", "updated_at")]
                 ),
                 name="unique_filters"),
         )

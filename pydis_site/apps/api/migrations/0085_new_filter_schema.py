@@ -60,6 +60,8 @@ def forward(apps: Apps, schema_editor: BaseDatabaseSchemaEditor) -> None:
         for object_ in objects:
             new_object = filter_.objects.create(
                 content=object_.content,
+                created_at=object_.created_at,
+                updated_at=object_.updated_at,
                 filter_list=list_,
                 description=object_.comment,
                 additional_field=None,
@@ -99,6 +101,8 @@ class Migration(migrations.Migration):
             name='Filter',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('created_at', models.DateTimeField(auto_now_add=True)),
+                ('updated_at', models.DateTimeField(auto_now=True)),
                 ('content', models.CharField(help_text='The definition of this filter.', max_length=100)),
                 ('description', models.CharField(help_text='Why this filter has been added.', max_length=200, null=True)),
                 ('additional_field', models.JSONField(help_text='Implementation specific field.', null=True)),
@@ -125,6 +129,8 @@ class Migration(migrations.Migration):
             name='FilterList',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('created_at', models.DateTimeField(auto_now_add=True)),
+                ('updated_at', models.DateTimeField(auto_now=True)),
                 ('name', models.CharField(help_text='The unique name of this list.', max_length=50)),
                 ('list_type', models.IntegerField(choices=[(1, 'Allow'), (0, 'Deny')], help_text='Whether this list is an allowlist or denylist')),
                 ('guild_pings', django.contrib.postgres.fields.ArrayField(base_field=models.CharField(max_length=100), help_text='Who to ping when this filter triggers.', size=None)),

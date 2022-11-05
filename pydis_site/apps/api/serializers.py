@@ -181,8 +181,8 @@ ALLOW_EMPTY_SETTINGS = (
 )
 
 # Required fields for custom JSON representation purposes
-BASE_FILTER_FIELDS = ('id', 'content', 'description', 'additional_field')
-BASE_FILTERLIST_FIELDS = ('id', 'name', 'list_type')
+BASE_FILTER_FIELDS = ('id', 'created_at', 'updated_at', 'content', 'description', 'additional_field')
+BASE_FILTERLIST_FIELDS = ('id', 'created_at', 'updated_at', 'name', 'list_type')
 BASE_SETTINGS_FIELDS = (
     "bypass_roles",
     "filter_dm",
@@ -253,7 +253,7 @@ class FilterSerializer(ModelSerializer):
 
         model = Filter
         fields = (
-            'id', 'content', 'description', 'additional_field', 'filter_list'
+            'id', 'created_at', 'updated_at', 'content', 'description', 'additional_field', 'filter_list'
         ) + SETTINGS_FIELDS
         extra_kwargs = _create_filter_meta_extra_kwargs()
 
@@ -331,7 +331,7 @@ class FilterListSerializer(ModelSerializer):
         """Metadata defined for the Django REST Framework."""
 
         model = FilterList
-        fields = ('id', 'name', 'list_type', 'filters') + SETTINGS_FIELDS
+        fields = ('id', 'created_at', 'updated_at', 'name', 'list_type', 'filters') + SETTINGS_FIELDS
         extra_kwargs = _create_filter_list_meta_extra_kwargs()
 
         # Ensure there can only be one filter list with the same name and type.
