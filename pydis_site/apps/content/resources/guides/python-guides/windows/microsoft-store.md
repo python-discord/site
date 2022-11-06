@@ -1,9 +1,10 @@
 ---
 title: Why not to install Python from the Microsoft Store
-description: This guide explains the issues with using Python installed from the Microsoft Store
+description: The drawbacks of installing the Microsoft Store versions of Python
 ---
 
-[<img style="margin:1rem;" align="right" width="480px" src="/static/images/content/python-on-windows/ms_store_drake.png">](/static/images/content/python-on-windows/ms_store_drake.png)
+[<img style="margin:1rem;" align="right" width="480px"
+src="/static/images/content/python-on-windows/ms_store_drake.png">](/static/images/content/python-on-windows/ms_store_drake.png)
 
 Microsoft provides versions of Python for Windows
 [on the Microsoft Store](https://apps.microsoft.com/store/search/python) as an alternative to using the
@@ -52,12 +53,16 @@ Here are some common issues with using Python from the Microsoft Store:
     You can change this behavior by searching "Manage app execution aliases" in the Start menu and toggling off "App
     Installer" for python.exe (and for python3.exe do do the same for the `python3` command).
 
--   #### You can't specify or easily see the patch version
+-   #### You can only get certain versions
 
-    The Microsoft Store Python versions are listed simply like 3.10 rather than 3.10.8 even though it may be 3.10.8
-    under the hood. It's uncommon, but if you know you need a different patch version ([aka micro
-    version](https://peps.python.org/pep-0440/#final-releases)), e.g. 3.10.7, you'll need to [install from
-    python.org](https://www.python.org/downloads/windows/).
+    The Microsoft Store Python versions are listed simply like 3.10 rather than 3.10.8 (though it may be 3.10.8
+    under the hood). If you know you need a different [micro version](https://peps.python.org/pep-0440/#final-releases),
+    e.g. 3.10.7, you'll need to [install from python.org](https://www.python.org/downloads/windows/).
+
+    Additionally, Python 3.7 is the earliest version of Python on the Microsoft Store ([and the description mentions it
+    may be unstable](https://apps.microsoft.com/store/detail/python-37/9NJ46SX7X90P)). Generally you should be using the
+    latest Python version you can but if you ever need earlier than 3.7 for testing or for working on older code, the
+    store can't help.
 
 If you have the Microsoft Store version of Python and want to uninstall it, you can search "uninstall" in the Start menu
 to open up the "Apps & features" settings and filter by "python". The Python app that has a console in the icon and
