@@ -1,7 +1,9 @@
 ---
 title: Common issues using Python on Windows
-description: This guide describes common issues you may run into when using Python on Windows and how to fix them.
+description: A list of common issues with Python on Windows and how to fix them
 ---
+
+TODO!!! rewrite/rearrange in list form with lots of links to other resources
 
 ### When I run `python` in the terminal I get no result, or the Windows Store opens!
 
@@ -34,7 +36,7 @@ on that.
 
 ### I `pip` installed a package but when running my code get a `ModuleNotFoundError`
 
-* #### Are you actually getting a `ModuleNotFoundError`?
+-   #### Are you actually getting a `ModuleNotFoundError`?
 
     If you are using a code editor such as VSCode or Pycharm you may get a
     squiggly line under your import saying the module couldn't be found, it is
@@ -48,30 +50,28 @@ on that.
     [our guide on virtual environments](./python-on-windows.md#virtual-environments)
     for more information.
 
-* #### Was the install successful?
+-   #### Was the install successful?
 
     Look out for errors when installing the module you want. If you get an
     error, that's probably why the import isn't working, so you should look
     into it. Often a google search will help with this.
 
-* #### Did you use the correct module name?
+-   #### Did you use the correct module name?
 
     Double check that you haven't made a typo in the name you are importing, or
     in what you installed from PyPI, you need to make sure you type the name
     exactly as it should be.
 
-    Also, **the name you should `import` may not be the same as the name you `pip
-    install`**. Check the module's documentation or PyPI page if you are unsure.
+    Also, **the name you should `import` may not be the same as the name you `pip install`**. Check the module's documentation or PyPI page if you are unsure.
     Examples of this are:
 
-    * [**opencv-python**](https://pypi.org/project/opencv-python/): You need to
-      `pip install opencv-python`, but the import has to be `import cv2`
-    * [**discord.py**](https://pypi.org/project/discord.py/): You need to `pip
-      install discord.py`, but the import has to be `import discord`
-    * [**python-dotenv**](https://pypi.org/project/python-dotenv/): You need to
-      `pip install python-dotenv`, but the import has to be `import dotenv`
+    -   [**opencv-python**](https://pypi.org/project/opencv-python/): You need to
+        `pip install opencv-python`, but the import has to be `import cv2`
+    -   [**discord.py**](https://pypi.org/project/discord.py/): You need to `pip install discord.py`, but the import has to be `import discord`
+    -   [**python-dotenv**](https://pypi.org/project/python-dotenv/): You need to
+        `pip install python-dotenv`, but the import has to be `import dotenv`
 
-* #### Are you installing to the same environment you're running your code from?
+-   #### Are you installing to the same environment you're running your code from?
 
     This is a very common issue. When you install a module from PyPI, you will
     install it into a single Python environment, the one that the `pip` you
@@ -92,49 +92,49 @@ on that.
 
     ###### I installed the module using pip from the command line
 
-        Run `pip -V` and look at the path returned it should be in the form
-        `<PATH_TO_PYTHON>\Lib\site-packages\pip`.
+          Run `pip -V` and look at the path returned it should be in the form
+          `<PATH_TO_PYTHON>\Lib\site-packages\pip`.
 
-        Then put `import sys;print(sys.executable);sys.exit(0)` at the top
-        (above imports!) of your python file, and run it. The result should be
-        in the form `<PATH_TO_PYTHON>\python.exe`.
+          Then put `import sys;print(sys.executable);sys.exit(0)` at the top
+          (above imports!) of your python file, and run it. The result should be
+          in the form `<PATH_TO_PYTHON>\python.exe`.
 
-        Now compare that `PATH_TO_PYTHON` to the one from `pip -V`. If they're
-        different, this is the cause of the `ModuleNotFoundError`. Follow the
-        relevant "I'm running my code with ..." section below for how to fix
-        this.
+          Now compare that `PATH_TO_PYTHON` to the one from `pip -V`. If they're
+          different, this is the cause of the `ModuleNotFoundError`. Follow the
+          relevant "I'm running my code with ..." section below for how to fix
+          this.
 
     ###### I'm running my code with `python` from the terminal.
 
-        If you are using a virtual environment, ensure you have activated it before
-        running `pip install`. You can test this by running `pip -V` and checking
-        the path is the one of your virtual environment.
+          If you are using a virtual environment, ensure you have activated it before
+          running `pip install`. You can test this by running `pip -V` and checking
+          the path is the one of your virtual environment.
 
-        Alternatively, you can use the `py` command to specify the python version
-        you want to pip install into, e.g. `py -3.9 -m pip install numpy`, and to
-        specify the executable you want to run your code with, e.g. `py -3.9
-        my_script.py`.
+          Alternatively, you can use the `py` command to specify the python version
+          you want to pip install into, e.g. `py -3.9 -m pip install numpy`, and to
+          specify the executable you want to run your code with, e.g. `py -3.9
+          my_script.py`.
 
-        If your `pip` and `python` commands are referring to different python
-        environments at the same time, it's possible your PATH is configured
-        incorrectly. See our
-        [guide for adding Python to PATH](../python-on-windows.md#adding-python-to-your-path)
-        for how to fix this.
+          If your `pip` and `python` commands are referring to different python
+          environments at the same time, it's possible your PATH is configured
+          incorrectly. See our
+          [guide for adding Python to PATH](../python-on-windows.md#adding-python-to-your-path)
+          for how to fix this.
 
     ###### I'm running my code with the button in VSCode
 
-        To run your code from the same environment you installed Python to, set
-        the interpreter to the one at the path you found when running `pip -V`
-        by following
-        [this guide](https://code.visualstudio.com/docs/python/environments#_select-and-activate-an-environment).
-        The path should be in the form `PATH_TO_PYTHON\python.exe`
+          To run your code from the same environment you installed Python to, set
+          the interpreter to the one at the path you found when running `pip -V`
+          by following
+          [this guide](https://code.visualstudio.com/docs/python/environments#_select-and-activate-an-environment).
+          The path should be in the form `PATH_TO_PYTHON\python.exe`
 
-        Alternatively, you can pip install to the currently activated
-        environment. If you have configured VSCode to use a virtual environment,
-        it should automatically activate it when you open a new terminal, so
-        running the `pip install` command in the VSCode terminal should work. If
-        you are not using a virtual environment, you can use the `py` launcher
-        to specify the installation you want to install to.
+          Alternatively, you can pip install to the currently activated
+          environment. If you have configured VSCode to use a virtual environment,
+          it should automatically activate it when you open a new terminal, so
+          running the `pip install` command in the VSCode terminal should work. If
+          you are not using a virtual environment, you can use the `py` launcher
+          to specify the installation you want to install to.
 
 ### I `pip` installed a command line program but it isn't recognised
 
@@ -142,7 +142,7 @@ You pip installed a command line program like `PyInstaller` or `black` that is
 intended to be run from the command line, but it does not work. Two common causes
 for this are:
 
-* You are using Python from the Microsoft Store
+-   You are using Python from the Microsoft Store
 
     To check if this is the case, type `pip -V`. If the path output includes
     something like
@@ -152,7 +152,7 @@ for this are:
     Microsoft Store Python and install Python properly with the online
     installer.
 
-* You manually modified your PATH Environment Variable incorrectly
+-   You manually modified your PATH Environment Variable incorrectly
 
     If you added `Python` to PATH manually through environment variables, it is
     possible that you only added the executable but not the `/Scripts` folder.

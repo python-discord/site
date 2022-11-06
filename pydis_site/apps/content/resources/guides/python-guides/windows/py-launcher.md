@@ -1,9 +1,12 @@
 ---
-title: Python on Windows
-description: This guide explains how manage your Python installation(s) on Windows
+title: The py Launcher on Windows
+description: Common commands and usage of the 'py' Python launcher
 ---
 
+TODO!!! rewrite/rearrange to be all about the py command
+
 ## The py launcher
+
 By default, Python installed on Windows using the online Python installer comes
 with the "py launcher". It is a command line tool you invoke using the `py`
 command, and helps you invoke a specific python version.
@@ -21,6 +24,7 @@ The versions will be ordered from newest to oldest, and the `*` will indicate
 which version running `py` will call by default. This depends on the following
 requirements, and may not be the same version you get from running `python` (if
 you get any):
+
 ```text
 If an exact version is not given, using the latest version can be overridden by
 any of the following, (in priority order):
@@ -31,6 +35,7 @@ any of the following, (in priority order):
 • From [defaults] in py.ini in your %LOCALAPPDATA%\py.ini
 • From [defaults] in py.ini beside py.exe (use `where py` to locate)
 ```
+
 You can override which version is called by specifying the major and minor
 versions to used. For example, to invoke python 3.7, you could run `py -3.7`.
 You can then pass any arguments to `python` on top of that, for example
@@ -61,6 +66,7 @@ Here's a [VSCode tutorial](https://code.visualstudio.com/docs/python/environment
 dependencies and virtual environments.
 
 ## Changing PATH
+
 PATH is the system variable that Windows uses to locate executables needed on
 the command line. Whenever you type a command name in your terminal, for example
 `python` or `pip`, the terminal will look it up in the PATH to try and find out
@@ -69,6 +75,7 @@ what executable that command refers to, so it can be run.
 The Python installer provides an option to add `python` to your PATH, although it
 is not checked by default so many people miss it. Don't worry if you forgot to select
 this though, you can add it after installing:
+
 ### The safe method: through the installer
 
 The easiest and and safest way to add Python to PATH is by rerunning the installer.
@@ -121,8 +128,9 @@ For a standard Python install the file path should look something like
 this two the path you should add two folders, the one containing `python.exe`,
 and the `Scripts/` directory in that directory. In this case the two paths would
 be:
-- C:\Users\username\AppData\Local\Programs\Python\Python3xx\
-- C:\Users\username\AppData\Local\Programs\Python\Python3xx\Scripts
+
+-   C:\Users\username\AppData\Local\Programs\Python\Python3xx\
+-   C:\Users\username\AppData\Local\Programs\Python\Python3xx\Scripts
 
 It is important that both paths are added, otherwise `pip` and other commands
 will not work correctly.
