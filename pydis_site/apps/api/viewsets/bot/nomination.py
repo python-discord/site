@@ -286,7 +286,6 @@ class NominationViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
                 {'active': ['This field can only be used to end a nomination']}
             )
 
-        # This is actually covered, but for some reason coverage don't think so.
         elif not instance.active and 'reviewed' in request.data:
             raise ValidationError(
                 {'reviewed': ['This field cannot be set if the nomination is inactive.']}
