@@ -5,10 +5,8 @@ icon: fab fa-windows
 toc: 2
 ---
 
-<!-- TODO Test the guide if you have no admin privileges and mention the differences. -->
-
 If you're on Windows and know you have [Python installed from python.org](https://www.python.org/downloads/) ([our
-recommended way](../installing-python.md)) but you're still getting errors like
+recommended way](../installing-python)) but you're still getting errors like
 
 ```text
 pip : The term 'pip' is not recognized as the name of a cmdlet, function, script file, or operable program.
@@ -16,7 +14,7 @@ pip : The term 'pip' is not recognized as the name of a cmdlet, function, script
 
 when trying to run a [pip](https://pip.pypa.io/en/stable/) or [pyinstaller](https://pypi.org/project/pyinstaller/)
 command, or running `python` [unexpectedly opens up the Microsoft
-Store](../microsoft-store.mdconfusing-app-execution-alias-behaviour), the issue is likely that your Windows Path
+Store](../microsoft-store#confusing-app-execution-alias-behaviour), the issue is likely that your Windows Path
 environment variable is improperly configured for Python. This just means Windows doesn't know how to find your Python
 installation.
 
@@ -72,7 +70,7 @@ still need to locate the installer exe at step 5 if it's not already in Download
 
 ### Verifying your changes
 
-To check that it worked, open a fresh terminal &mdash; Command Prompt, Powershell, an IDE-integrated terminal, [Windows
+To check that it worked, open a fresh terminal &mdash; Command Prompt, PowerShell, an IDE-integrated terminal, [Windows
 Terminal](https://apps.microsoft.com/store/detail/windows-terminal/9N0DX20HK701), whichever you prefer, just _not_ the
 Python terminal with the `>>>` prompt &mdash; and run
 
@@ -90,19 +88,24 @@ and you should see the versions of Python and pip that you just added to Path:
 
 ![Checking Python and pip versions.](/static/images/content/python-on-windows/testing_path_worked_1.png)
 
-You can also run Python with `python`, and then after `>>>` in the Python REPL, run
+Running `Get-Command python` in PowerShell, or `where python` in Command Prompt, you
+can see where that terminal is finding the `python.exe` it would run when a `python` command is given:
+
+![Get-Command/where Python.](/static/images/content/python-on-windows/testing_path_worked_2.png)
+
+(`where` in fact lists all the Pythons it finds, even the dummy [app execution
+alias](../microsoft-store#confusing-app-execution-alias-behaviour) one that opens the Microsoft Store.)
+
+You can also run Python with `python` (not `py` as that may start a different version, see more
+[here](.../py-launcher)), and then after `>>>` in the Python REPL, run
 
 ```py
-import sys; print(sys.executable)
+import sys; print(sys.executable); exit();
 ```
 
 to see that the exact executable that is currently running Python is what you expect:
 
-![Checking Python executable.](/static/images/content/python-on-windows/testing_path_worked_2.png)
-
-Type `exit()` from here to go back to the normal terminal.
-
-<!-- TODO mention that py may open a different version and link to py launcher guide. -->
+![Checking Python executable.](/static/images/content/python-on-windows/testing_path_worked_3.png)
 
 Of course your username will probably not be "r", and your executable path may differ from
 `C:\Users\<user>\AppData\Local\Programs\Python\Python311` depending on where you chose to install Python and what
@@ -142,7 +145,7 @@ foobar: The term 'foobar' is not recognized as the name of a cmdlet, function, s
 ```
 
 Or, in the case of not finding `python`, it may [open up the Microsoft
-store](../microsoft-store.md#confusing-app-execution-alias-behaviour).
+store](../microsoft-store#confusing-app-execution-alias-behaviour).
 
 Again, the Path lookup order is:
 
@@ -220,8 +223,9 @@ Follow these steps to add Python to the Path:
 
     This step may not be strictly necessary, but remember that command lookup happens in order from top to bottom.
     Python is often bundled with other software that may end up on the Path, so there's there could be another
-    `python.exe` in one of of the other folders on the path that gets in the way. (This exact thing has happened to me when
-    I put `C:\Program Files\Inkscape\bin` on my Path, as [Inkscape](https://inkscape.org/) comes with a copy of Python.)
+    `python.exe` in one of of the other folders on the path that gets in the way. (This exact thing has happened to me
+    when I put `C:\Program Files\Inkscape\bin` on my Path, as [Inkscape](https://inkscape.org/) comes with a copy of
+    Python.)
 
     Also, the System Path comes first in command lookup, so to be certain you to may want to go back and check the
     System Path (see step 5) and _carefully_ delete any entry that is a Python executable path blocking the one you just
@@ -232,10 +236,13 @@ Follow these steps to add Python to the Path:
 9.  Finish by making sure to hit "OK" on each of the thee "Edit environment variable", "Environment Variable", and
     "System Properties" windows, and then you're done!
 
-    Python and Python Scripts should not be on your Path! **You will need to restart any terminals or editors you have open before they detect the change.**
+    Python and Python Scripts should not be on your Path! **You will need to restart any terminals or editors you have
+    open before they detect the change.**
 
 At this point you can [verify your changes in the same way as detailed above](#verifying-your-changes). Hopefully it
 works!
 
 (These steps were written with Windows 10 and Python 3.11 in mind, but they should be identical or similar for Windows
 11 and other recent versions of Python.)
+
+<!-- dg:TODO? Test the guide if you have no admin privileges and mention the differences. -->

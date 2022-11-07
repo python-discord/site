@@ -4,10 +4,13 @@ description: How we recommend installing Python on Windows
 icon: fab fa-windows
 ---
 
-The recommended way to install Python on windows is directly from the
-[Python website's Downloads page](https://www.python.org/downloads/windows/).
-Installing Python from the Microsoft Store is not recommended as it can
-[cause issues](../microsoft-store.md).
+Our recommended way of installing Python on Windows is using a full installer from the official [python.org Downloads
+page](https://www.python.org/downloads/). Installing Python from the [Microsoft
+Store](https://apps.microsoft.com/store/search/python) is _not_ recommended as [it can cause various
+issues](../microsoft-store).
+
+On [python.org/downloads](https://python.org/downloads), click the big yellow "Download Python 3.x.x" button near the top of the page and it should automatically start a download of the installer for the latest stable version of Python
+that best suits your computer.
 
 ## Selecting an Installer
 
@@ -56,7 +59,7 @@ Python installation on your PATH and don't want this one to override it, don't
 tick this.
 
 If you installed Python without adding to PATH and now want to add it, see
-[our guide on adding Python to PATH](../python-on-windows.md#adding-python-to-your-path).
+[our guide on adding Python to PATH](../putting-python-on-path).
 
 Then simply click install, and wait for the install to finish!
 
@@ -64,5 +67,5 @@ To test your installation, type "cmd" in the windows search bar and select
 "Command Prompt" to open a terminal (make sure it's opened _after_ installation
 has finished) type `python -V`, and press enter. If it outputs your python
 version, you've successfully installed Python. (if you didn't add to PATH, you
-can use [the py launcher](../python-on-windows.md#the-py-launcher) to test
+can use [the py launcher](../py-launcher) to test
 instead).

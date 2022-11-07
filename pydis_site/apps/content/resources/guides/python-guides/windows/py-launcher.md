@@ -1,12 +1,10 @@
 ---
-title: The py Launcher on Windows
-description: Common commands and usage of the Windows "py" Python launcher
+title: The py Launcher
+description: Common commands and usage of the "py" Python launcher on Windows
 icon: fab fa-windows
 ---
 
-When you install Python on Windows fron
-
-TODO!!! rewrite/rearrange to be all about the py command
+<!-- dg:TODO rewrite/rearrange to be all about the py command -->
 
 ## The py launcher
 

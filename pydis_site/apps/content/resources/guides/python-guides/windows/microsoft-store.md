@@ -7,13 +7,12 @@ icon: fab fa-windows
 [<img style="margin:1rem;" align="right" width="480px"
 src="/static/images/content/python-on-windows/ms_store_drake.png">](/static/images/content/python-on-windows/ms_store_drake.png)
 
-Microsoft provides versions of Python for Windows
-[on the Microsoft Store](https://apps.microsoft.com/store/search/python) as an alternative to using the
-[full installer from python.org](https://www.python.org/downloads). **We recommend you install Python on Windows using the
-[full installer from python.org](https://www.python.org/downloads),
-and not from the Microsoft store wherever possible!**
+Microsoft provides versions of Python for Windows [on the Microsoft
+Store](https://apps.microsoft.com/store/search/python) as an alternative to using the [full installer from
+python.org](https://www.python.org/downloads). **We recommend you install Python on Windows using the [full installer
+from python.org](https://www.python.org/downloads), and not from the Microsoft store wherever possible!**
 
-You can follow [this guide to install Python from python.org](../install-on-windows.md) and more Python Windows releases
+You can follow [this guide to install Python from python.org](../installing-python) and more Python Windows releases
 can be found [here](https://www.python.org/downloads/windows).
 
 Here are some common issues with using Python from the Microsoft Store:
@@ -27,9 +26,8 @@ Here are some common issues with using Python from the Microsoft Store:
 
 -   ##### It can cause issues with permissions
 
-    Some modules and scripts wont work with it because of restricted permissions.
-    This is explained
-    [in the Python documentation](https://docs.python.org/3/using/windows.html#redirection-of-local-data-registry-and-temporary-paths)
+    Some modules and scripts wont work with it because of restricted permissions. This is explained [in the Python
+    documentation](https://docs.python.org/3/using/windows.html#redirection-of-local-data-registry-and-temporary-paths)
 
 -   ##### It can cause Path confusion
 
@@ -43,7 +41,8 @@ Here are some common issues with using Python from the Microsoft Store:
     `C:\Users\<user>\AppData\Local\Programs\Python\Python311\Scripts` (for Python 3.11). If for some reason you want
     both installed, put the ones you want the commands for higher up in Path.
 
-    You can find the path of the executable for a version of Python by running `import sys; print(sys.executable)` in it.
+    You can find the path of the executable for a version of Python by running `import sys; print(sys.executable)` in
+    it.
 
 -   ##### Confusing app execution alias behaviour
 
@@ -67,6 +66,6 @@ Here are some common issues with using Python from the Microsoft Store:
 
 If you have the Microsoft Store version of Python and want to uninstall it, you can search "uninstall" in the Start menu
 to open up the "Apps & features" settings and filter by "python". The Python app that has a console in the icon and
-"Python Software Foundation" under the name is the Microsoft Store one (see image below). Click it and hit Uninstall.
+"Python Software Foundation" under the name is the Microsoft Store one. Click it and hit Uninstall.
 
 ![Which version is which when uninstalling Python](/static/images/content/python-on-windows/ms_store_uninstall.png)

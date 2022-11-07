@@ -4,8 +4,6 @@ description: How to setup a Unix-style Python environment ready to start coding 
 icon: fab fa-windows
 ---
 
-<!-- TODO? Mention WSL2? -->
-
 Many programmers use Linux or macOS operating systems for their work, though newcomers to programming will likely want
 to get started on the computer they already own, which will often be running Windows.
 
@@ -17,7 +15,7 @@ command prompt called Git Bash, which will support many of the commands availabl
 ## Installing Python
 
 First you'll need to install Python. We recommend installing from the Python website, you can follow our guide on how to
-do this [here](../install-on-windows.md).
+do this [here](../installing-python).
 
 ## Installing a text editor
 
@@ -70,3 +68,5 @@ location, you can use the `cd` command ("cd" stands for "change directory") to n
 desktop, `cd /c/Users/YourUsername/Desktop` will take you there. Otherwise if you have the directory open in your file
 explorer, you can right click anywhere in the white space of the file explorer window (not on top of a file) and select
 "Git Bash Here". Once you're there, type `python hello.py`, and the program will run.
+
+<!-- dg:TODO? Mention WSL2? -->
