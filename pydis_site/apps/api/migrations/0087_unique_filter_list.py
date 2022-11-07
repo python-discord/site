@@ -43,6 +43,7 @@ def create_unique_list(apps: Apps, _):
             "Please don't try to ping `@everyone` or `@here`. Your message has been removed. "
             "If you believe this was a mistake, please let staff know!"
         ),
+        disabled_categories=["CODE JAM"]
     )
     everyone.save()
 
