@@ -36,7 +36,7 @@ class Nomination(ModelReprMixin, models.Model):
         help_text="Whether a review was made."
     )
     thread_id = models.BigIntegerField(
-        help_text="The nomination vote thread's id.",
+        help_text="The nomination vote's thread id.",
         null=True,
         blank=True
     )
