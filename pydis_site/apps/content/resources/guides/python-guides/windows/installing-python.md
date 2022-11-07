@@ -1,6 +1,7 @@
 ---
 title: Installing Python on Windows
 description: How we recommend installing Python on Windows
+icon: fab fa-windows
 ---
 
 The recommended way to install Python on windows is directly from the

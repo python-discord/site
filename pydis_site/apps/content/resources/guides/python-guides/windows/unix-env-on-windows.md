@@ -1,6 +1,7 @@
 ---
 title: Setting up a Unix-style Python Environment on Windows
 description: How to setup a Unix-style Python environment ready to start coding in
+icon: fab fa-windows
 ---
 
 <!-- TODO? Mention WSL2? -->

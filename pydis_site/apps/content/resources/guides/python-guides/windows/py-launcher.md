@@ -1,6 +1,7 @@
 ---
 title: The py Launcher on Windows
 description: Common commands and usage of the Windows "py" Python launcher
+icon: fab fa-windows
 ---
 
 When you install Python on Windows fron

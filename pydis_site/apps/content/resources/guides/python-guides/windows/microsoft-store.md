@@ -1,6 +1,7 @@
 ---
 title: Why not to install Python from the Microsoft Store
 description: The drawbacks of installing the Microsoft Store versions of Python
+icon: fab fa-windows
 ---
 
 [<img style="margin:1rem;" align="right" width="480px"

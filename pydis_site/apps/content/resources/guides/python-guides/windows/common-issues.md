@@ -1,6 +1,7 @@
 ---
 title: Common issues using Python on Windows
 description: A list of common issues with Python on Windows and how to fix them
+icon: fab fa-windows
 ---
 
 TODO!!! rewrite/rearrange in list form with lots of links to other resources
