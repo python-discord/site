@@ -138,11 +138,12 @@ Python 4 is [not happening anytime soon](https://builtin.com/software-engineerin
 
 ### 32-bit vs 64-bit?
 
-Install 64-bit python unless you have reason not to, such as having an old 32-bit computer. Modern PCs ([and all
-Windows 11 PCs](https://answers.microsoft.com/en-us/windows/forum/all/does-microsoft-has-32-bit-version-of-windows-11/3bd76840-4e84-4573-8252-71380ef41bf1)) are 64-bit. With 32-bit you may run into memory limits if doing intensive operations (Python will be
-limited to using 4GB of memory), and some installed modules may not offer prebuilt
-[wheels](https://realpython.com/python-wheels/) for 32 -it, potentially making installs slower or meaning you have to
-install build dependencies.
+Install 64-bit python unless you have reason not to, such as having an old 32-bit computer. Modern PCs ([and all Windows
+11
+PCs](https://answers.microsoft.com/en-us/windows/forum/all/does-microsoft-has-32-bit-version-of-windows-11/3bd76840-4e84-4573-8252-71380ef41bf1))
+are 64-bit. With 32-bit you may run into memory limits if doing intensive operations (Python will be limited to using
+4GB of memory), and some installed modules may not offer prebuilt [wheels](https://realpython.com/python-wheels/) for 32
+-it, potentially making installs slower or meaning you have to install build dependencies.
 
 If you get an error when installing 64-bit Python, your computer may not support it. To find out if this is the case,
 search "About your PC" in the Start Menu and open the Settings page. Then look for the "System Type" option under
@@ -155,4 +156,32 @@ dg:TODO
 
 ## Virtual Environments
 
-dg:TODO
+Virtual environments ("venvs") are a way of giving each of your Python projects their own space to install dependencies
+in, so different projects can have different versions of the same dependencies. For example, suppose you are working on
+two websites that both use the Python web-framework [Django](https://www.djangoproject.com/download/). One site is older and
+requires Django 3.2, and the other is newer and requires Django 4.1. If you install Django globally, no matter if you
+install 3.2 or 4.1, one or the or the other of the projects will have the wrong version. But if you make a virtual
+environment for each project you can install the required Django version for each separately.
+
+Virtual environments are not exclusive to Windows, but the commands to use them can differ a bit across operating
+systems. Check out the [official docs](https://docs.python.org/3/tutorial/venv.html#creating-virtual-environments) for
+more details but there are basically 3 important commands. Run them once `cd`ed into your project folder.
+
+1. Create a virtual environment: `python -m venv .venv`
+2. Activate a virtual environment: `.venv\Scripts\activate`
+3. Deactivate a virtual environment: `deactivate`
+
+(".venv" is a common name for the folder to put virtual environment files in but other names are allowed too.)
+
+Once you activate a virtual environment, anything you `pip install` will be installed only to that environment. You
+should be able to tell when a venv is active because `(.venv)` or similar will appear at the start of terminal
+prompts.
+
+If your editor/IDE has handling for virtual environments, it's worth looking into how it works.
+Here's a [VSCode tutorial](https://code.visualstudio.com/docs/python/environments), and here's
+[one for Pycharm](https://www.jetbrains.com/help/pycharm/creating-virtual-environment.html).
+
+The `venv` module used above is built into Python, but [Poetry](https://python-poetry.org/),
+[Pipenv](https://pipenv.pypa.io/en/latest/), and [Virtualenv](https://virtualenv.pypa.io/en/latest/) are other popular
+tools for managing dependencies and virtual environments. Answers to [this Stack Overflow
+question](https://stackoverflow.com/questions/41573587) explain all the confusingly similar names and much more.
