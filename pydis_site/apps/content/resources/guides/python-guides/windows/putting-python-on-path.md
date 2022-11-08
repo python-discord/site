@@ -1,5 +1,5 @@
 ---
-title: Putting Python on Path
+title: Adding Python to the Path
 description: How to make sure Python is properly on the Windows Path environment variable
 icon: fab fa-windows
 toc: 2

@@ -5,25 +5,94 @@ icon: fab fa-windows
 toc: 2
 ---
 
-<!-- dg:TODO reorg with
-
-- intro
-- basic install
-- advanced install
-- py launcher info
-- venvs
-
- -->
-
-Our recommended way of installing Python on Windows is using a full installer from the official [python.org Downloads
-page](https://www.python.org/downloads/). Installing Python from the [Microsoft
+Our recommended way of installing Python on a Windows operating system is using the full installer from the official
+[python.org Downloads page](https://www.python.org/downloads/) (the main yellow button) using the default options, except
+making sure to check the "Add python.exe to PATH" checkbox. Getting Python from the [Microsoft
 Store](https://apps.microsoft.com/store/search/python) is _not_ recommended as [it can cause various
 issues](../microsoft-store).
 
-On [python.org/downloads](https://python.org/downloads), click the big yellow "Download Python 3.x.x" button near the top of the page and it should automatically start a download of the installer for the latest stable version of Python
-that best suits your computer.
+This guide gives detailed instructions on that [recommended way to install Python on Windows](#recommended-install),
+then goes on to discuss [more information about installing Python on Windows](#more-installation-information), and
+finally wraps up by explaining some common Windows-specific Python usage, namely the [py launcher](#the-py-launcher),
+and how to work with [virtual environments](#virtual-environments).
 
-## Selecting an Installer
+You may also want to check out our guides on [Common Issues Using Python on Windows](../common-issues), [Adding Python
+to the Windows Path](../putting-python-on-path.md), and Setting up a [Unix-Style Environment on
+Windows](../unix-env-on-windows.md).
+
+## Recommended Install
+
+Follow the steps below to install the latest version of Python on Windows.
+
+(The instructions were written with Windows 10 and Python 3.11.0 in mind, but should be nearly or fully identical on
+Windows 11 and other modern versions of Python.)
+
+> If you want a fresh start, you may want to first uninstall any other versions of Python on your PC, including those from
+> the Microsoft Store, if you have any. This can be done in the ["Apps & features" Windows
+> settings](/static/images/content/python-on-windows/ms_store_uninstall.png) (type "apps and features" into the Start Menu
+> to find it). Though it's fine to have multiple versions of Python installed at once. It can be useful for testing
+> version compatibility or for working on projects made in a certain version. Only uninstall things if you want to.
+
+1.  Go to [python.org/downloads](https://www.python.org/downloads) and click the big yellow "Download Python 3.x.x"
+    button near the top of the page. That should start the download of the latest Windows Python installer that best
+    suits your computer.
+
+    If you want a different version or it doesn't work for some reason, you can download the
+    Windows installer you want from [python.org/downloads/windows](https://www.python.org/downloads/windows).
+
+    [![Step 1](/static/images/content/python-on-windows/recommended_install_1.png)](/static/images/content/python-on-windows/recommended_install_1.png)
+
+2.  When it finishes downloading, click the file in your browser or find it in your Downloads folder and double-click it to start the installer.
+
+    [![Step 2](/static/images/content/python-on-windows/recommended_install_2.png)](/static/images/content/python-on-windows/recommended_install_2.png)
+
+3.  Check the "Add python.exe to PATH" checkbox (the text may differ slightly depending on your installer). This will
+    make it so the command line can recognize commands like `python` and `pip`. (Read [this
+    guide](../putting-python-on-path) to learn more.)
+
+    [![Step 3](/static/images/content/python-on-windows/recommended_install_3.png)](/static/images/content/python-on-windows/recommended_install_3.png)
+
+4.  Then click the big "Install Now" button. Aside from adding Python to PATH, the rest of the installer defaults are
+    usually fine, so there's no need to customize the installation unless you want to.
+
+    [![Step 4](/static/images/content/python-on-windows/recommended_install_4.png)](/static/images/content/python-on-windows/recommended_install_4.png)
+
+5.  It will take a minute to install and then (hopefully) say "Setup was successful". Congrats, you just installed
+    Python! You can close the installer.
+
+    [![Step 5 A](/static/images/content/python-on-windows/recommended_install_5.png)](/static/images/content/python-on-windows/recommended_install_5.png)
+    [![Step 5 B](/static/images/content/python-on-windows/recommended_install_6.png)](/static/images/content/python-on-windows/recommended_install_6.png)
+
+### Checking that it Worked
+
+To test that installing Python worked, you can do what it suggests and search "python" on the Start Menu to find the Python console app
+and run some code like `print("Hello, World!")`.
+
+[![Testing Python console](/static/images/content/python-on-windows/recommended_install_7.png)](/static/images/content/python-on-windows/recommended_install_7.png)
+
+Or try the more usual way of running Python by typing `py` or `python` in a new terminal window to open up the Python
+[REPL](https://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop), or use `python somefile.py` to run some
+Python file (if `py` runs the wrong version of Python, [see below](#the-py-launcher) for how to change the default). Use
+whichever terminal you prefer: Command Prompt, PowerShell, an IDE-integrated terminal, [Windows
+Terminal](https://apps.microsoft.com/store/detail/windows-terminal/9N0DX20HK701). It just has to be a freshly opened
+terminal or the commands may not be recognized.
+
+[![Testing py and python](/static/images/content/python-on-windows/recommended_install_8.png)](/static/images/content/python-on-windows/recommended_install_8.png)
+
+You can double check what versions of Python and [pip](https://pip.pypa.io/en/stable/) were installed by running `python -V` or `pip -V` in a terminal:
+
+[![Checking python and pip versions](/static/images/content/python-on-windows/testing_path_worked_1.png)](/static/images/content/python-on-windows/testing_path_worked_1.png)
+
+And finally, it's worth searching and opening "IDLE" on the Start Menu, which is the the basic
+[IDE](https://en.wikipedia.org/wiki/Integrated_development_environment) that comes with Python. Most people end up using
+[PyCharm](https://www.jetbrains.com/pycharm/) or [VSCode](https://code.visualstudio.com/) to program in Python but IDLE
+is a great starting point.
+
+[![Testing IDLE](/static/images/content/python-on-windows/recommended_install_9.png)](/static/images/content/python-on-windows/recommended_install_9.png)
+
+## More Installation Information
+
+### Selecting an Installer
 
 There are many different installer options available from the downloads page.
 You should usually select the "Windows installer" option instead of the "Windows
@@ -58,7 +127,7 @@ and open the settings page. Then look for the "System Type" option under "Device
 Specifications". It should say "64-bit operating system, x64-based processor" if
 you have support. You need a 64 bit processor and OS to install 64 bit programs.
 
-## Running the installer
+### Running the installer
 
 When you run the installer you should see a screen like this:
 
