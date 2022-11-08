@@ -2,6 +2,7 @@
 title: Common Issues Using Python on Windows
 description: A list of common issues with Python on Windows and how to fix them
 icon: fab fa-windows
+toc: 3
 ---
 
 ### When I run `python` in the terminal I get no result, or the Windows Store opens!

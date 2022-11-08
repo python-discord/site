@@ -2,6 +2,7 @@
 title: Installing and Using Python on Windows
 description: How we recommend installing Python on Windows, and how to use Python Windows features
 icon: fab fa-windows
+toc: 2
 ---
 
 <!-- dg:TODO reorg with
