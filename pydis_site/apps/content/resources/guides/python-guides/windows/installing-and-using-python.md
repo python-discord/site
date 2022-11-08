@@ -2,7 +2,7 @@
 title: Installing and Using Python on Windows
 description: How we recommend installing Python on Windows, and how to use Python Windows features
 icon: fab fa-windows
-toc: 2
+toc: 3
 ---
 
 Our recommended way of installing Python on a Windows operating system is using the full installer from the official
@@ -24,8 +24,8 @@ Windows](../unix-env-on-windows.md).
 
 Follow the steps below to install the latest version of Python on Windows.
 
-(The instructions were written with Windows 10 and Python 3.11.0 in mind, but should be nearly or fully identical on
-Windows 11 and other modern versions of Python.)
+(The instructions were written with Windows 10 and Python 3.11.0 in mind, but should be nearly or fully identical with
+Windows 11 or other modern versions of Python.)
 
 > If you want a fresh start, you may want to first uninstall any other versions of Python on your PC, including those from
 > the Microsoft Store, if you have any. This can be done in the ["Apps & features" Windows
@@ -94,59 +94,60 @@ is a great starting point.
 
 ### Selecting an Installer
 
-There are many different installer options available from the downloads page.
-You should usually select the "Windows installer" option instead of the "Windows
-embeddable package". Some minor versions may not
+At [python.org/downloads/windows](https://www.python.org/downloads/windows/) there are many different Windows Python
+installer options available. A link to the latest release page is listed at the top, for example [the Python 3.11.0
+release page](https://www.python.org/downloads/release/python-3110/) has info about new features with downloads at the
+bottom. Back on the list of all Windows releases, pre-releases are on the right if you want to try cutting-edge (and
+possibly unstable) versions of Python, and stables releases are on the left, all the way back to Python 2.0.1 from 2001.
+Some minor versions may not have installers available.
 
-### Which version?
+You should usually select the "Windows installer" option instead of the "Windows embeddable package". Check out [the
+official docs on Using Python on Windows](https://docs.python.org/3/using/windows.html) for more details on other ways
+to install Python on Windows.
 
-Current Python versions follow the form `3.minor.micro`. Major releases happen
-yearly and provide new features and breaking changes, whilst minor releases are
-more common and only include bug/security fixes.
+### Which Version?
 
-Installing the latest major version will give you access to Python's newest
-features. However, some modules may not support the newest versions straight
-away, so installing the second latest will help you avoid those issues. If you
-find you want some newer features or your module does not support your current
-version, you can always install another version as well.
+Current Python versions follow [the form `3.minor.micro`](https://peps.python.org/pep-0440/#final-releases) (similar to
+[semantic versioning](https://semver.org/)), for example
+[3.11.0](https://www.python.org/downloads/release/python-3110/). "3" is the major number and not about to change. Minor
+releases happen yearly and provide new features and breaking changes, whilst micro releases are more common and only
+include bug/security fixes. When people say "Python 3" they aren't necessarily specifying a minor or micro version, but
+you can assume they mean the latest ones.
 
-You should generally always install the newest minor version, although some may
-not provide an installer in which case you should find the newest that does.
+Installing the latest minor version will give you access to Python's newest features. However, some packages may not
+support the newest versions straight away, so installing the second latest (for example, installing 3.10 when 3.11 is
+the latest) will help you avoid those issues. If you find you want some newer features or your module does not support
+your current version, you can always install another version as well.
+
+You should generally always install the newest micro version, although some may not provide an installer, in which case
+you should find the newest that does.
+
+### What about Python 2 and 4?
+
+Python 2 should not be used unless you are absolutely required to use it for legacy code or school. [It was officially
+sunset January 1, 2020:](https://www.python.org/doc/sunset-python-2)
+
+> As of January 1st, 2020 no new bug reports, fixes, or changes will be made to Python 2, and Python 2 is no longer
+> supported.
+
+Python 2 code is not _that_ different from Python 3 code, notable differences being that `print` was a statement rather
+than a function so it didn't need parentheses, and `input` evaluated the things inputted (unsafe!). Still, it's best
+to try to not use learning resources written in Python 2, and definitely don't start new projects in Python 2.
+
+Python 4 is [not happening anytime soon](https://builtin.com/software-engineering-perspectives/python-4), if ever.
 
 ### 32-bit vs 64-bit?
 
-Install 64-bit python unless you have reason not to. With 32 bit you may run
-into memory limits if doing intensive operations (Python will be limited to
-using 4GB of memory), and some installed modules may not offer prebuilt wheels
-for 32 bit, potentially making installs slower or meaning you have to install
-build dependencies.
+Install 64-bit python unless you have reason not to, such as having an old 32-bit computer. Modern PCs ([and all
+Windows 11 PCs](https://answers.microsoft.com/en-us/windows/forum/all/does-microsoft-has-32-bit-version-of-windows-11/3bd76840-4e84-4573-8252-71380ef41bf1)) are 64-bit. With 32-bit you may run into memory limits if doing intensive operations (Python will be
+limited to using 4GB of memory), and some installed modules may not offer prebuilt
+[wheels](https://realpython.com/python-wheels/) for 32 -it, potentially making installs slower or meaning you have to
+install build dependencies.
 
-If you get an error when installing 64-bit Python, your computer may not support
-it. To find out if this is the case, search "About your PC" in windows search
-and open the settings page. Then look for the "System Type" option under "Device
-Specifications". It should say "64-bit operating system, x64-based processor" if
-you have support. You need a 64 bit processor and OS to install 64 bit programs.
-
-### Running the installer
-
-When you run the installer you should see a screen like this:
-
-![python_installer_screen](https://user-images.githubusercontent.com/22353562/126144479-cfe6bd98-6d2e-47c3-b6b3-5de9f2656e9a.png)
-
-Make sure you tick "Add Python 3.x to Path". This allows you to use the `python`
-and `pip` commands in your terminal to invoke Python. If you already have a
-Python installation on your PATH and don't want this one to override it, don't
-tick this.
-
-If you installed Python without adding to PATH and now want to add it, see
-[our guide on adding Python to PATH](../putting-python-on-path).
-
-Then simply click install, and wait for the install to finish!
-
-To test your installation, type "cmd" in the windows search bar and select "Command Prompt" to open a terminal (make
-sure it's opened _after_ installation has finished) type `python -V`, and press enter. If it outputs your python
-version, you've successfully installed Python. (if you didn't add to PATH, you can use [the py
-launcher](../installing-and-using-python/#the-py-launcher) to test instead).
+If you get an error when installing 64-bit Python, your computer may not support it. To find out if this is the case,
+search "About your PC" in the Start Menu and open the Settings page. Then look for the "System Type" option under
+"Device Specifications". It should say "64-bit operating system, x64-based processor" if you have support. You need a
+64-bit processor and operating system to install 64-bit programs.
 
 ## The py Launcher
 
