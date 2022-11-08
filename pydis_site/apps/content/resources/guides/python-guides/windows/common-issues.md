@@ -1,5 +1,5 @@
 ---
-title: Common issues using Python on Windows
+title: Common Issues Using Python on Windows
 description: A list of common issues with Python on Windows and how to fix them
 icon: fab fa-windows
 ---
@@ -19,12 +19,12 @@ If after doing this you have an issue with the Python command not being detected
 
 ### When I try and run my code with `python` in the terminal I get an error saying the command was not recognized
 
-If you have not installed Python, you will need to do that. Follow our guide [here](../installing-python).
+If you have not installed Python, you will need to do that. Follow our guide [here](../installing-and-using-python).
 
 If you have installed python and are still having the issue, it is likely that you didn't check the "Add python.exe to
-PATH" checkbox on the first page of the installer. See [our guide on adding Python to
-PATH](../putting-python-on-path) for how to fix this. You can also use the `py` launcher instead of `python` by just
-replacing `python` in your command with `py`. See [this guide](../py-launcher) for more information on that.
+PATH" checkbox on the first page of the installer. See [our guide on adding Python to PATH](../putting-python-on-path)
+for how to fix this. You can also use the `py` launcher instead of `python` by just replacing `python` in your command
+with `py`. See [this guide](../installing-and-using-python/#the-py-launcher) for more information on that.
 
 ### I `pip` installed a package but when running my code get a `ModuleNotFoundError`
 
@@ -36,7 +36,8 @@ replacing `python` in your command with `py`. See [this guide](../py-launcher) f
 
     If your code runs fine, you could try restarting your editor. If you have newly installed a module it may just not
     have detected it yet. If that doesn't help, you may need to configure your editor to ensure it is looking for the
-    module in the correct Python environment. See [our guide on virtual environments](dg:TODO) for more information.
+    module in the correct Python environment. See [our guide on virtual
+    environments](../installing-and-using-python/#virtual-environments) for more information.
 
 -   #### Was the install successful?
 
@@ -126,7 +127,7 @@ common causes for this are:
     `PythonSoftwareFoundation.Python.3.10_3.10.2288.0_x64__qbz5n2kfra8p0`, you are using Python from the Microsoft
     Store. To fix this you will either have to use the full path to the scripts you want to use, or [uninstall the
     Microsoft Store Python](/static/images/content/python-on-windows/ms_store_uninstall.png) and [install Python
-    properly](../installing-python) with a [python.org installer](https://www.python.org/downloads).
+    properly](../installing-and-using-python) with a [python.org installer](https://www.python.org/downloads).
 
 -   You manually modified your PATH Environment Variable incorrectly
 

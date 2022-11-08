@@ -6,7 +6,7 @@ toc: 2
 ---
 
 If you're on Windows and know you have [Python installed from python.org](https://www.python.org/downloads/) ([our
-recommended way](../installing-python)) but you're still getting errors like
+recommended way](../installing-and-using-python)) but you're still getting errors like
 
 ```text
 pip : The term 'pip' is not recognized as the name of a cmdlet, function, script file, or operable program.
@@ -97,7 +97,7 @@ can see where that terminal is finding the `python.exe` it would run when a `pyt
 alias](../microsoft-store#confusing-app-execution-alias-behaviour) one that opens the Microsoft Store.)
 
 You can also run Python with `python` (not `py` as that may start a different version, see more
-[here](.../py-launcher)), and then after `>>>` in the Python REPL, run
+[here](../installing-and-using-python/#the-py-launcher)), and then after `>>>` in the Python REPL, run
 
 ```py
 import sys; print(sys.executable); exit();

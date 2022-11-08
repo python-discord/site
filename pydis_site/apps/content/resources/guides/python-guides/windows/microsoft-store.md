@@ -1,5 +1,5 @@
 ---
-title: Why not to install Python from the Microsoft Store
+title: Why Not to Install Python from the Microsoft Store
 description: The drawbacks of installing the Microsoft Store versions of Python
 icon: fab fa-windows
 ---
@@ -12,7 +12,7 @@ Store](https://apps.microsoft.com/store/search/python) as an alternative to usin
 python.org](https://www.python.org/downloads). **We recommend you install Python on Windows using the [full installer
 from python.org](https://www.python.org/downloads), and not from the Microsoft store wherever possible!**
 
-You can follow [this guide to install Python from python.org](../installing-python) and more Python Windows releases
+You can follow [this guide to install Python from python.org](../installing-and-using-python) and more Python Windows releases
 can be found [here](https://www.python.org/downloads/windows).
 
 Here are some common issues with using Python from the Microsoft Store:

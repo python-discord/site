@@ -1,5 +1,5 @@
 ---
-title: Setting up a Unix-style Python Environment on Windows
+title: Setting up a Unix-Style Python Environment on Windows
 description: How to setup a Unix-style Python environment ready to start coding in
 icon: fab fa-windows
 ---
@@ -15,7 +15,7 @@ command prompt called Git Bash, which will support many of the commands availabl
 ## Installing Python
 
 First you'll need to install Python. We recommend installing from the Python website, you can follow our guide on how to
-do this [here](../installing-python).
+do this [here](../installing-and-using-python).
 
 ## Installing a text editor
 

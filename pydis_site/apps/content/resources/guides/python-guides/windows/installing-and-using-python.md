@@ -1,8 +1,18 @@
 ---
-title: Installing Python on Windows
-description: How we recommend installing Python on Windows
+title: Installing and Using Python on Windows
+description: How we recommend installing Python on Windows, and how to use Python Windows features
 icon: fab fa-windows
 ---
+
+<!-- dg:TODO reorg with
+
+- intro
+- basic install
+- advanced install
+- py launcher info
+- venvs
+
+ -->
 
 Our recommended way of installing Python on Windows is using a full installer from the official [python.org Downloads
 page](https://www.python.org/downloads/). Installing Python from the [Microsoft
@@ -63,9 +73,15 @@ If you installed Python without adding to PATH and now want to add it, see
 
 Then simply click install, and wait for the install to finish!
 
-To test your installation, type "cmd" in the windows search bar and select
-"Command Prompt" to open a terminal (make sure it's opened _after_ installation
-has finished) type `python -V`, and press enter. If it outputs your python
-version, you've successfully installed Python. (if you didn't add to PATH, you
-can use [the py launcher](../py-launcher) to test
-instead).
+To test your installation, type "cmd" in the windows search bar and select "Command Prompt" to open a terminal (make
+sure it's opened _after_ installation has finished) type `python -V`, and press enter. If it outputs your python
+version, you've successfully installed Python. (if you didn't add to PATH, you can use [the py
+launcher](../installing-and-using-python/#the-py-launcher) to test instead).
+
+## The py Launcher
+
+dg:TODO
+
+## Virtual Environments
+
+dg:TODO
