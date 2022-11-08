@@ -4,15 +4,15 @@ description: The drawbacks of installing the Microsoft Store versions of Python
 icon: fab fa-windows
 ---
 
-[<img style="margin:1rem;" align="right" width="480px"
+[<img style="margin:1rem;" align="right" width="500px"
 src="/static/images/content/python-on-windows/ms_store_drake.png">](/static/images/content/python-on-windows/ms_store_drake.png)
 
 Microsoft provides versions of Python for Windows [on the Microsoft
-Store](https://apps.microsoft.com/store/search/python) as an alternative to using the [full installer from
-python.org](https://www.python.org/downloads). **We recommend you install Python on Windows using the [full installer
+Store](https://apps.microsoft.com/store/search/python) as an alternative to using the installer from
+[python.org](https://www.python.org). **We recommend you install Python on Windows using the [full installer
 from python.org](https://www.python.org/downloads), and not from the Microsoft store wherever possible!**
 
-You can follow [this guide to install Python from python.org](../installing-and-using-python) and more Python Windows
+You can follow [this guide](../installing-and-using-python) to install Python from python.org and more Python Windows
 releases can be found [here](https://www.python.org/downloads/windows).
 
 Here are some common issues with using Python from the Microsoft Store:
@@ -44,6 +44,8 @@ Here are some common issues with using Python from the Microsoft Store:
     You can find the path of the executable for a version of Python by running `import sys; print(sys.executable)` in
     it.
 
+    You can learn more about the Windows Path in [this guide](../putting-python-on-path).
+
 -   ##### Confusing app execution alias behaviour
 
     Typing `python` into a terminal when it is not already installed or not properly on Path may open up the Microsoft
@@ -68,4 +70,4 @@ If you have the Microsoft Store version of Python and want to uninstall it, you 
 to open up the "Apps & features" settings and filter by "python". The Python app that has a console in the icon and
 "Python Software Foundation" under the name is the Microsoft Store one. Click it and hit Uninstall.
 
-![Which version is which when uninstalling Python](/static/images/content/python-on-windows/ms_store_uninstall.png)
+[![Which version is which when uninstalling Python](/static/images/content/python-on-windows/ms_store_uninstall.png)](/static/images/content/python-on-windows/ms_store_uninstall.png)

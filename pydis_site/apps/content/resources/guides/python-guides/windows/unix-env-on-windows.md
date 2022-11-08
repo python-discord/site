@@ -78,7 +78,7 @@ complete with command line utilities, that you can use alongside your normal Win
 
 To set up WSL, check out [this installation guide from
 Microsoft](https://learn.microsoft.com/en-us/windows/wsl/install). They also have an
-[FAQ](https://learn.microsoft.com/en-us/windows/wsl/faq) and a [best practices for using WSL in a development
+[FAQ](https://learn.microsoft.com/en-us/windows/wsl/faq) and a [best practices guide for using WSL in a development
 environment](https://learn.microsoft.com/en-us/windows/wsl/setup/environment). The
 [part](https://learn.microsoft.com/en-us/windows/wsl/setup/environment#set-up-windows-terminal) about getting [Windows
 Terminal](https://apps.microsoft.com/store/detail/windows-terminal/9N0DX20HK701) is particularly good advice as it lets
