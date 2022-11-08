@@ -65,8 +65,8 @@ Windows 11 or other modern versions of Python.)
 
 ### Checking that it Worked
 
-To test that installing Python worked, you can do what it suggests and search "python" on the Start Menu to find the Python console app
-and run some code like `print("Hello, World!")`.
+To test that installing Python worked, you can do what it suggests and search "python" on the Start Menu to find the
+Python console app and run some code like `print("Hello, World!")`.
 
 [![Testing Python console](/static/images/content/python-on-windows/recommended_install_7.png)](/static/images/content/python-on-windows/recommended_install_7.png)
 
@@ -189,13 +189,14 @@ install [NumPy](https://numpy.org/) into Python 3.7.
 If you want can always use `py` instead of `python` and not have any Python versions on the Windows Path at all (check
 out [this guide](<(../putting-python-on-path)>) to learn about the Windows Path). Though, once in a while third party
 software may want to invoke `python`, so keeping it on the Path is handy. We recommend having your "main" Python version
-on the Path so you can invoke it with `python`, and then using `py -X.Y` whenever you want a different version, e.g. `py -3.10`.
+on the Path so you can invoke it with `python`, and then using `py -X.Y` whenever you want a different version, e.g.
+`py -3.7`.
 
 The official documentation of the `py launcher` can be found
 [here](https://docs.python.org/3/using/windows.html#python-launcher-for-windows).
 
-The py launcher is not available on Unix-based platforms such as macOS, but there is [an unofficial version by Brett
-Cannon](https://github.com/brettcannon/python-launcher).
+The py launcher is not available on GNU/Linux-based platforms such as macOS, but there is [an unofficial version by
+Brett Cannon](https://github.com/brettcannon/python-launcher).
 
 ## Virtual Environments
 

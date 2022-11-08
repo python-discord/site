@@ -1,6 +1,6 @@
 ---
-title: Setting up a Unix-Style Python Environment on Windows
-description: How to setup a Unix-style Python environment ready to start coding in
+title: Setting up a Unix-Style Python Environment
+description: How to setup a Unix-style Python environment on Windows ready to start coding in
 icon: fab fa-windows
 ---
 
@@ -28,11 +28,11 @@ simpler interface. Other editors we recommend can be found [here](https://python
 
 ## Installing Git Bash
 
-Git is a command line program that helps you keep track of changes to your code, among other things. Many developers use
-it, and while you may not need it right away, it is useful to install it because it comes with Git Bash. On the "Select
-Components" screen, no settings need to be changed. The next screen will ask what text editor you want to use with Git.
-Vim is the default choice, though Vim is widely considered difficult to learn, so you may choose to select Notepad++ or
-whichever text editor you may have installed previously.
+[Git](https://git-scm.com/downloads) is a command line program that helps you keep track of changes to your code, among
+other things. Many developers use it, and while you may not need it right away, it is useful to install it because it
+comes with Git Bash. On the "Select Components" screen, no settings need to be changed. The next screen will ask what
+text editor you want to use with Git. Vim is the default choice, though Vim is widely considered difficult to learn, so
+you may choose to select Notepad++ or whichever text editor you may have installed previously.
 
 For all remaining screens in the installation, the default selections are fine.
 
@@ -69,4 +69,24 @@ desktop, `cd /c/Users/YourUsername/Desktop` will take you there. Otherwise if yo
 explorer, you can right click anywhere in the white space of the file explorer window (not on top of a file) and select
 "Git Bash Here". Once you're there, type `python hello.py`, and the program will run.
 
-<!-- dg:TODO? Mention WSL2? -->
+## WSL
+
+[WSL (Windows Subsystem for Linux)](https://learn.microsoft.com/en-us/windows/wsl/about) is another increasingly common
+way to set up a GNU/Linux-style environment on Windows. It effectively emulates a Linux distribution on Windows,
+complete with command line utilities, that you can use alongside your normal Windows programs. (Technically WSL is a
+[compatibility layer](https://en.wikipedia.org/wiki/Compatibility_layer), not en emulator.)
+
+To set up WSL, check out [this installation guide from
+Microsoft](https://learn.microsoft.com/en-us/windows/wsl/install). They also have an
+[FAQ](https://learn.microsoft.com/en-us/windows/wsl/faq) and a [best practices for using WSL in a development
+environment](https://learn.microsoft.com/en-us/windows/wsl/setup/environment). The
+[part](https://learn.microsoft.com/en-us/windows/wsl/setup/environment#set-up-windows-terminal) about getting [Windows
+Terminal](https://apps.microsoft.com/store/detail/windows-terminal/9N0DX20HK701) is particularly good advice as it lets
+you use one app for all your terminals.
+
+Also check out these guide for using WSL [with VSCode](https://code.visualstudio.com/docs/remote/wsl) and [with
+PyCharm](https://www.jetbrains.com/help/pycharm/using-wsl-as-a-remote-interpreter.html).
+
+(You may have heard of WSL2 specifically. That is now the default and
+[recommended](https://learn.microsoft.com/en-us/windows/wsl/compare-versions) version. If someone says "WSL" they're
+probably talking about WSL2.)
