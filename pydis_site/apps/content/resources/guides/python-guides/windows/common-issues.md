@@ -27,13 +27,13 @@ PATH" checkbox on the first page of the installer. See [our guide on adding Pyth
 for how to fix this. You can also use the `py` launcher instead of `python` by just replacing `python` in your command
 with `py`. See [this guide](../installing-and-using-python/#the-py-launcher) for more information on that.
 
-### I `pip` installed a package but when running my code get a `ModuleNotFoundError`
+### I `pip` installed a package but when running my code I get a `ModuleNotFoundError`
 
 -   #### Are you actually getting a `ModuleNotFoundError`?
 
     If you are using a code editor such as VSCode or PyCharm you may get a squiggly line under your import saying the
     module couldn't be found, it is possible that this is just an mistake by the editor, so try actually running your
-    code with to ensure if it actually errors.
+so try to actually run your code the way it is to ensure that it actually errors.
 
     If your code runs fine, you could try restarting your editor. If you have newly installed a module it may just not
     have detected it yet. If that doesn't help, you may need to configure your editor to ensure it is looking for the
@@ -82,7 +82,7 @@ with `py`. See [this guide](../installing-and-using-python/#the-py-launcher) for
 
     ##### I installed the module using pip from the command line
 
-    > Run `pip -V` and look at the path returned it should be in the form `<PATH_TO_PYTHON>\Lib\site-packages\pip`.
+    > Run `pip -V` and look at the path it returned, which should be in the form `<PATH_TO_PYTHON>\Lib\site-packages\pip`.
     >
     > Then put `import sys;print(sys.executable);sys.exit(0);` at the top (above imports!) of your python file, and run
     > it. The result should be in the form `<PATH_TO_PYTHON>\python.exe`.
