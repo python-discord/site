@@ -82,7 +82,7 @@ so try to actually run your code the way it is to ensure that it actually errors
 
     ##### I installed the module using pip from the command line
 
-    > Run `pip -V` and look at the path returned it should be in the form `<PATH_TO_PYTHON>\Lib\site-packages\pip`.
+    > Run `pip -V` and look at the path it returned, which should be in the form `<PATH_TO_PYTHON>\Lib\site-packages\pip`.
     >
     > Then put `import sys;print(sys.executable);sys.exit(0);` at the top (above imports!) of your python file, and run
     > it. The result should be in the form `<PATH_TO_PYTHON>\python.exe`.
