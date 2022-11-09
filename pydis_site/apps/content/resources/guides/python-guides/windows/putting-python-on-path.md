@@ -120,6 +120,8 @@ will hopefully be able to help.)
 
 ## Advanced Method: Manually edit the Path
 
+### About the Path
+
 As mentioned above, the Path (often called "PATH", though it shows up as "Path") is what Windows uses to locate
 executables needed on the command line. If it's misconfigured, `python` and `pip` commands may not work as
 expected.
@@ -158,7 +160,7 @@ how to manually modify the Path is handy beyond just Python for whenever you nee
 on the command line in Windows. (The less customizable but [safer method is
 above](#safe-method-let-the-installer-add-python-to-path) if you missed it.)
 
-Follow these steps to add Python to the Path:
+Follow these steps to add Python to the Path. **You will need administrator privileges on your computer.**
 
 1.  First, find the folder path your Python executable is in. There are a few ways to do this:
 
@@ -250,5 +252,3 @@ works!
 
 (These steps were written with Windows 10 and Python 3.11 in mind, but they should be identical or similar for Windows
 11 and other recent versions of Python.)
-
-<!-- dg:TODO? Test the guide if you have no admin privileges and mention the differences. -->
