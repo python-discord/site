@@ -27,7 +27,7 @@ PATH" checkbox on the first page of the installer. See [our guide on adding Pyth
 for how to fix this. You can also use the `py` launcher instead of `python` by just replacing `python` in your command
 with `py`. See [this guide](../installing-and-using-python/#the-py-launcher) for more information on that.
 
-### I `pip` installed a package but when running my code get a `ModuleNotFoundError`
+### I `pip` installed a package but when running my code I get a `ModuleNotFoundError`
 
 -   #### Are you actually getting a `ModuleNotFoundError`?
 
