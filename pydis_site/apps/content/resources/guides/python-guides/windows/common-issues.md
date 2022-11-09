@@ -33,7 +33,7 @@ with `py`. See [this guide](../installing-and-using-python/#the-py-launcher) for
 
     If you are using a code editor such as VSCode or PyCharm you may get a squiggly line under your import saying the
     module couldn't be found, it is possible that this is just an mistake by the editor, so try actually running your
-    code with to ensure if it actually errors.
+so try to actually run your code the way it is to ensure that it actually errors.
 
     If your code runs fine, you could try restarting your editor. If you have newly installed a module it may just not
     have detected it yet. If that doesn't help, you may need to configure your editor to ensure it is looking for the
