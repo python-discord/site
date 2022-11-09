@@ -32,8 +32,8 @@ with `py`. See [this guide](../installing-and-using-python/#the-py-launcher) for
 -   #### Are you actually getting a `ModuleNotFoundError`?
 
     If you are using a code editor such as VSCode or PyCharm you may get a squiggly line under your import saying the
-    module couldn't be found, it is possible that this is just an mistake by the editor, so try actually running your
-so try to actually run your code the way it is to ensure that it actually errors.
+    module couldn't be found, it is possible that this is just an mistake by the editor, so try to actually run your
+    code the way it is to ensure that it actually errors.
 
     If your code runs fine, you could try restarting your editor. If you have newly installed a module it may just not
     have detected it yet. If that doesn't help, you may need to configure your editor to ensure it is looking for the
@@ -69,13 +69,21 @@ so try to actually run your code the way it is to ensure that it actually errors
 
     This is a very common issue. When you install a module from PyPI, you will install it into a single Python
     environment, the one that the `pip` you invoked is part of. This could be different to the one you are running the
-    script from if it's using a different Python installation, or a virtual environment.
+    script from if it's using a different Python installation, or a [virtual environment](../installing-and-using-python/#virtual-environments).
+
+    You can tell when you're in a virtual environment because the name of the venv folder will usually be shown in
+    parentheses at the start of terminal prompts. You can type `deactivate` to get out of it.
+    [![Venv terminal prompt.](/static/images/content/python-on-windows/venv_prompt.png)](/static/images/content/python-on-windows/venv_prompt.png)
 
     ##### I'm using PyCharm
 
     > PyCharm creates a virtual environment for each project by default, so if you're installing a module using Pycharm
     > you need to make sure you also run your code through PyCharm. This also applies the other way round, if you want
     > to use a module in PyCharm you need to install it through PyCharm.
+    >
+    > You can see the exact path of the current Python interpreter, and thus virtual environment, in PyCharm by hovering
+    > your mouse over the interpreter info menu on the bottom right:
+    > [![PyCharm python.exe info.](/static/images/content/python-on-windows/pycharm_python_path.png)](/static/images/content/python-on-windows/pycharm_python_path.png)
     >
     > It's also possible to change PyCharm to use your system environment, see [their guide on configuring your
     > interpreter](https://www.jetbrains.com/help/pycharm/configuring-python-interpreter.html) for more information.
@@ -150,10 +158,11 @@ loop](https://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop)), also
 you run `Python` code line by line without having to create a file. You also may have opened a Python REPL by clicking
 on the Python App in your Start Menu.
 
-General commands like `pip` and `python` should be run in the normal terminal, not in the Python REPL. It usually has
-`>>>` at the start of each line. To exit the REPL, type `exit()` and press enter. You should then be able to run your
-commands normally, unless it was the Python App, in which case it will close completely and you'll need to open a
-terminal like PowerShell or Command Prompt separately.
+General commands like `pip` and `python` should be run in your computer's normal terminal, that is, directly in
+something like Command Prompt or PowerShell. _Not_ in the Python REPL, which usually has `>>>` at the start of each
+line. To exit the Python REPL, type `exit()` and press enter. You should then be able to run your commands normally,
+unless it was the Python App, in which case it will close completely and you'll need to open a normal terminal
+separately.
 
 ### I tried to uninstall Python by deleting the folder, now it doesn't work and I can't reinstall it!
 
