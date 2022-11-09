@@ -49,7 +49,7 @@ def get_test_sequences() -> Dict[str, TestSequence]:
                     ping_type=[],
                     filter_dm=False,
                     dm_ping_type=[],
-                    delete_messages=False,
+                    remove_context=False,
                     bypass_roles=[],
                     enabled=False,
                     default_action=FilterAction(
@@ -76,7 +76,7 @@ def get_test_sequences() -> Dict[str, TestSequence]:
                 "ping_type": ["onduty"],
                 "filter_dm": True,
                 "dm_ping_type": ["123456"],
-                "delete_messages": True,
+                "remove_context": True,
                 "bypass_roles": [123456],
                 "enabled": True,
                 "default_action": FilterAction(
@@ -130,7 +130,7 @@ def get_test_sequences() -> Dict[str, TestSequence]:
                         ping_type=[],
                         filter_dm=False,
                         dm_ping_type=[],
-                        delete_messages=False,
+                        remove_context=False,
                         bypass_roles=[],
                         enabled=False,
                         default_action=FilterAction(
@@ -157,7 +157,7 @@ def get_test_sequences() -> Dict[str, TestSequence]:
                 "ping_type": ["everyone"],
                 "filter_dm": False,
                 "dm_ping_type": ["here"],
-                "delete_messages": False,
+                "remove_context": False,
                 "bypass_roles": [9876],
                 "enabled": True,
                 "filter_action": None,

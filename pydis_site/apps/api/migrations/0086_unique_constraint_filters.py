@@ -25,7 +25,7 @@ class Migration(migrations.Migration):
                 'guild_pings',
                 'filter_dm',
                 'dm_pings',
-                'delete_messages',
+                'remove_context',
                 'bypass_roles',
                 'enabled',
                 'send_alert',

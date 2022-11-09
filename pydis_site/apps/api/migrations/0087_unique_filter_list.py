@@ -17,7 +17,7 @@ def create_unique_list(apps: Apps, _):
         guild_pings=[],
         filter_dm=True,
         dm_pings=[],
-        delete_messages=False,
+        remove_context=False,
         bypass_roles=[],
         enabled=True,
         dm_content="",
@@ -37,7 +37,7 @@ def create_unique_list(apps: Apps, _):
         content="everyone",
         filter_list=list_,
         description="",
-        delete_messages=True,
+        remove_context=True,
         bypass_roles=["Helpers"],
         dm_content=(
             "Please don't try to ping `@everyone` or `@here`. Your message has been removed. "
@@ -51,7 +51,7 @@ def create_unique_list(apps: Apps, _):
         content="webhook",
         filter_list=list_,
         description="",
-        delete_messages=True,
+        remove_context=True,
         dm_content=(
             "Looks like you posted a Discord webhook URL. "
             "Therefore, your message has been removed, and your webhook has been deleted. "
@@ -74,7 +74,7 @@ def create_unique_list(apps: Apps, _):
         content="discord_token",
         filter_list=list_,
         filter_dm=False,
-        delete_messages=True,
+        remove_context=True,
         dm_content=(
             "I noticed you posted a seemingly valid Discord API "
             "token in your message and have removed your message. "

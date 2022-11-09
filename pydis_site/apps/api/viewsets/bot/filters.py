@@ -36,7 +36,7 @@ class FilterListViewSet(ModelViewSet):
     ...                        "filter_dm": None,
     ...                        "enabled": None
     ...                        "send_alert": True,
-    ...                        "delete_messages": None
+    ...                        "remove_context": None
     ...                        "infraction_and_notification": {
     ...                            "infraction_type": None,
     ...                            "infraction_reason": "",
@@ -64,7 +64,7 @@ class FilterListViewSet(ModelViewSet):
     ...              ],
     ...              "filter_dm": True,
     ...              "enabled": True
-    ...              "delete_messages": True,
+    ...              "remove_context": True,
     ...              "send_alert": True
     ...              "infraction_and_notification": {
     ...                   "infraction_type": "",
@@ -111,7 +111,7 @@ class FilterListViewSet(ModelViewSet):
     ...                        "bypass_roles": None
     ...                        "filter_dm": None,
     ...                        "enabled": None
-    ...                        "delete_messages": None,
+    ...                        "remove_context": None,
     ...                        "send_alert": None
     ...                        "infraction_and_notification": {
     ...                            "infraction_type": None,
@@ -140,7 +140,7 @@ class FilterListViewSet(ModelViewSet):
     ...              ],
     ...              "filter_dm": True,
     ...              "enabled": True
-    ...              "delete_messages": True
+    ...              "remove_context": True
     ...              "send_alert": True
     ...              "infraction_and_notification": {
     ...                   "infraction_type": "",
@@ -198,7 +198,7 @@ class FilterViewSet(ModelViewSet):
     ...                        "bypass_roles": None
     ...                        "filter_dm": None,
     ...                        "enabled": None
-    ...                        "delete_messages": True,
+    ...                        "remove_context": True,
     ...                        "send_alert": True
     ...                        "infraction": {
     ...                            "infraction_type": None,
@@ -237,7 +237,7 @@ class FilterViewSet(ModelViewSet):
     ...                        "bypass_roles": None
     ...                        "filter_dm": None,
     ...                        "enabled": None
-    ...                        "delete_messages": True,
+    ...                        "remove_context": True,
     ...                        "send_alert": True
     ...                        "infraction": {
     ...                            "infraction_type": None,

@@ -75,8 +75,8 @@ class FilterList(ModelTimestampMixin, ModelReprMixin, models.Model):
         help_text="Who to ping when this filter triggers on a DM.",
         null=False
     )
-    delete_messages = models.BooleanField(
-        help_text="Whether this filter should delete messages triggering it.",
+    remove_context = models.BooleanField(
+        help_text="Whether this filter should remove the context (such as a message) triggering it.",
         null=False
     )
     bypass_roles = ArrayField(
@@ -185,8 +185,8 @@ class FilterBase(ModelTimestampMixin, ModelReprMixin, models.Model):
         help_text="Who to ping when this filter triggers on a DM.",
         null=True
     )
-    delete_messages = models.BooleanField(
-        help_text="Whether this filter should delete messages triggering it.",
+    remove_context = models.BooleanField(
+        help_text="Whether this filter should remove the context (such as a message) triggering it.",
         null=True
     )
     bypass_roles = ArrayField(

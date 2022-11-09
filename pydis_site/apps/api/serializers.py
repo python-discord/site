@@ -154,7 +154,7 @@ SETTINGS_FIELDS = (
     'guild_pings',
     'filter_dm',
     'dm_pings',
-    'delete_messages',
+    'remove_context',
     'send_alert',
     'bypass_roles',
     'enabled',
@@ -187,7 +187,7 @@ BASE_SETTINGS_FIELDS = (
     "bypass_roles",
     "filter_dm",
     "enabled",
-    "delete_messages",
+    "remove_context",
     "send_alert"
 )
 INFRACTION_AND_NOTIFICATION_FIELDS = (

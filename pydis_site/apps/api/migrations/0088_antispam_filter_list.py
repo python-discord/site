@@ -17,7 +17,7 @@ def create_antispam_list(apps: Apps, _):
         guild_pings=["Moderators"],
         filter_dm=False,
         dm_pings=[],
-        delete_messages=True,
+        remove_context=True,
         bypass_roles=["Helpers"],
         enabled=True,
         dm_content="",
