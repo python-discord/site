@@ -38,7 +38,6 @@ class Nomination(ModelReprMixin, models.Model):
     thread_id = models.BigIntegerField(
         help_text="The nomination vote's thread id.",
         null=True,
-        blank=True
     )
 
     def __str__(self):
