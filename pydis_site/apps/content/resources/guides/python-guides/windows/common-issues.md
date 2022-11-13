@@ -62,8 +62,8 @@ with `py`. See [this guide](../installing-and-using-python/#the-py-launcher) for
     -   [**Pillow**](https://pypi.org/project/Pillow/): You need to `pip install Pillow`, but the import is
         usually `from PIL import Image`.
 
-    Normal imports in Python can't have dashes (`-`) in them as it would be interpreted as subtraction. Though [there
-    are workarounds](https://stackoverflow.com/questions/7583652/python-module-with-a-dash-or-hyphen-in-its-name).
+    Normal imports in Python can't have hyphens (`-`) in them as it would be interpreted as subtraction. So if the
+    package name has a `-` in it the import will definitely be different.
 
 -   #### Are you installing to the same environment you're running your code from?
 
