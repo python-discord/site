@@ -2,14 +2,14 @@
 title: Keeping Discord Bot Tokens Safe
 description: How to keep your bot tokens safe and safety measures you can take.
 ---
-It's **very** important to keep a bot token safe, 
-primarily because anyone who has the bot token can do whatever they want with the bot -- 
+It's **very** important to keep a bot token safe,
+primarily because anyone who has the bot token can do whatever they want with the bot --
 such as destroying servers your bot has been added to and getting your bot banned from the API.
 
 # How to Avoid Leaking your Token
-To help prevent leaking your token, 
-you should ensure that you don't upload it to an open source program/website, 
-such as replit and github, as they show your code publicly. 
+To help prevent leaking your token,
+you should ensure that you don't upload it to an open source program/website,
+such as replit and github, as they show your code publicly.
 The best practice for storing tokens is generally utilising .env files
 ([click here](https://vcokltfre.dev/tips/tokens/.) for more information on storing tokens safely).
 
