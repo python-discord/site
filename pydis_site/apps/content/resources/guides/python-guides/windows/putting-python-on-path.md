@@ -115,8 +115,8 @@ installed](https://pypi.org/project/pyinstaller/) it) now work for you!
 
 Hopefully things are indeed working, however, it is possible that, due to having multiple Python versions, or other
 mixups, the commands are still not behaving how you expect. If so, read on to learn how to manually edit the Path. (If
-you already did that, open a help channel on the [Python Discord server](https://discord.com/invite/python) explaining everything you've tried so far, and someone
-will hopefully be able to help.)
+you already did that, open a help channel on the [Python Discord server](https://discord.com/invite/python) explaining
+everything you've tried so far, and someone will hopefully be able to help.)
 
 ## Advanced Method: Manually edit the Path
 
@@ -155,9 +155,9 @@ Again, the Path lookup order is:
 
 ### Adding Python to your Path
 
-Here only the common case of adding Python and the Python Scripts directory to the Windows Path is detailed. However, knowing
-how to manually modify the Path is handy beyond just Python for whenever you need to change or debug which programs run
-on the command line in Windows. (The less customizable but [safer method is
+Here only the common case of adding Python and the Python Scripts directory to the Windows Path is detailed. However,
+knowing how to manually modify the Path is handy beyond just Python for whenever you need to change or debug which
+programs run on the command line in Windows. (The less customizable but [safer method is
 above](#safe-method-let-the-installer-add-python-to-path) if you missed it.)
 
 Follow these steps to add Python to the Path. **You will need administrator privileges on your computer.**
@@ -209,9 +209,9 @@ Follow these steps to add Python to the Path. **You will need administrator priv
 
     (Don't worry if your variables or Path contents differ a bit from those shown.)
 
-6.  Now a third window opens and this is where the Path is actually edited. It shows the ordered list of the folders on the
-    Path and you can select the entries, edit them, reorder them, make new ones, delete them and so on. (Don't delete
-    any unless you know what you're doing!)
+6.  Now a third window opens and this is where the Path is actually edited. It shows the ordered list of the folders on
+    the Path and you can select the entries, edit them, reorder them, make new ones, delete them and so on. (Don't
+    delete any unless you know what you're doing!)
 
     We want to add the Python executable path we found in step 1 as a new entry, so click "New" and paste in the path.
 
