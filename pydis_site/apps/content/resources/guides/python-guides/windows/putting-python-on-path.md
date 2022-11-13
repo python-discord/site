@@ -202,7 +202,7 @@ Follow these steps to add Python to the Path. **You will need administrator priv
 
     [![Step 5](/static/images/content/python-on-windows/edit_path_3.png)](/static/images/content/python-on-windows/edit_path_3.png)
 
-    I suggest using the User Path (what the screenshots show) for the default installation of Python. In general, only
+    You should use the User Path (what the screenshots show) for the default installation of Python. In general, only
     put things on the System Path if they are installed for all users (e.g. in `C:\Program Files` or `C:\`) and you're
     certain they won't overshadow anything in User Paths. **Remember, the System Path takes precedence over the User
     Path when commands are looked up.**
