@@ -115,7 +115,7 @@ installed](https://pypi.org/project/pyinstaller/) it) now work for you!
 
 Hopefully things are indeed working, however, it is possible that, due to having multiple Python versions, or other
 mixups, the commands are still not behaving how you expect. If so, read on to learn how to manually edit the Path. (If
-you already did that, open a help channel on the [Python Discord server](https://discord.com/invite/python) and someone
+you already did that, open a help channel on the [Python Discord server](https://discord.com/invite/python) explaining everything you've tried so far, and someone
 will hopefully be able to help.)
 
 ## Advanced Method: Manually edit the Path
