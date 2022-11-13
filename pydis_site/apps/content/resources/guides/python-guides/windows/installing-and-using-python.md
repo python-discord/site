@@ -6,7 +6,7 @@ toc: 3
 ---
 
 Our recommended way of installing Python on a Windows operating system is using the full installer from the official
-[python.org Downloads page](https://www.python.org/downloads/) (hit the big yellow button) using the default options,
+[python.org Downloads page](https://www.python.org/downloads/) (from the big yellow button) using the default options,
 except making sure to check the "Add python.exe to PATH" checkbox. Getting Python from the [Microsoft
 Store](https://apps.microsoft.com/store/search/python) is _not_ recommended as [it can cause various
 issues](../microsoft-store).
@@ -27,8 +27,8 @@ Follow the five steps below to install the latest version of Python on Windows.
 (The instructions were written with Windows 10 and Python 3.11.0 in mind, but should be nearly or fully identical with
 Windows 11 or other modern versions of Python.)
 
-> If you want a fresh start, you may want to first uninstall any other versions of Python on your PC, including those
-> from the Microsoft Store, if you have any. This can be done in the ["Apps & features" Windows
+> If you want a fresh start, you should check for and uninstall any versions of Python already on your PC, including
+> those from the Microsoft Store. This can be done in the ["Apps & features" Windows
 > settings](/static/images/content/python-on-windows/ms_store_uninstall.png) (type "apps and features" into the Start
 > Menu to find it). Though it's fine to have multiple versions of Python installed at once. It can be useful for testing
 > version compatibility or for working on projects made in a certain version. Only uninstall things if you want to.
@@ -208,8 +208,8 @@ Virtual environments ("venvs") are a way of giving each of your Python projects 
 in, so different projects can have different versions of the same dependencies. For example, suppose you are working on
 two websites that both use the Python web-framework [Django](https://www.djangoproject.com/download/). One site is older
 and requires Django 3.2, and the other is newer and requires Django 4.1. If you install Django globally, no matter if
-you install 3.2 or 4.1, one or the or the other of the projects will have the wrong version. But if you make a virtual
-environment for each project you can install the required Django version for each separately.
+you install 3.2 or 4.1, one or the or the other of the projects will have the wrong version. If instead you make a
+virtual environment for each project, you can install the required Django version for each separately.
 
 Virtual environments are not exclusive to Windows, but the commands to use them can differ a bit across operating
 systems. Check out the [official docs](https://docs.python.org/3/tutorial/venv.html#creating-virtual-environments) and

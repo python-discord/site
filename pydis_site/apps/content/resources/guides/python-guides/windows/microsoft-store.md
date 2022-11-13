@@ -12,6 +12,10 @@ Store](https://apps.microsoft.com/store/search/python) as an alternative to usin
 [python.org](https://www.python.org). **We recommend you install Python on Windows using the [full installer
 from python.org](https://www.python.org/downloads), and not from the Microsoft store wherever possible!**
 
+Installing Python from [python.org](https://www.python.org) does not normally require administrator privileges, but if
+for whatever reason don't have permission to install it, don't feel bad if you get the Microsoft Store version instead.
+Better some Python than no Python.
+
 You can follow [this guide](../installing-and-using-python) to install Python from python.org and more Python Windows
 releases can be found [here](https://www.python.org/downloads/windows).
 
@@ -65,6 +69,8 @@ Here are some common issues with using Python from the Microsoft Store:
     may be unstable](https://apps.microsoft.com/store/detail/python-37/9NJ46SX7X90P)). Generally you should be using the
     latest Python version you can but if you ever need earlier than 3.7 for testing or for working on older code, the
     store can't help.
+
+## Uninstalling
 
 If you have the Microsoft Store version of Python and want to uninstall it, you can search "uninstall" in the Start menu
 to open up the "Apps & features" settings and filter by "python". The Python app that has a console in the icon and
