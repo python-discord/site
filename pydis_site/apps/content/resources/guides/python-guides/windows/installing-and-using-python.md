@@ -34,7 +34,7 @@ Windows 11 or other modern versions of Python.)
 > version compatibility or for working on projects made in a certain version. Only uninstall things if you want to.
 
 1.  Go to [python.org/downloads](https://www.python.org/downloads) and click the big yellow "Download Python 3.x.x"
-    button near the top of the page. That should start the download of the latest Windows Python installer that best
+    button near the top of the page. That should start the download of the installer for the latest version that best
     suits your computer.
 
     If you want a different version or it doesn't work for some reason, you can download the
