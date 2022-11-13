@@ -54,7 +54,7 @@ Windows 11 or other modern versions of Python.)
     [![Step 3](/static/images/content/python-on-windows/recommended_install_3.png)](/static/images/content/python-on-windows/recommended_install_3.png)
 
 4.  Then click the big "Install Now" button. Aside from adding Python to PATH, the rest of the installer defaults are
-    usually fine, so there's no need to customize the installation unless you want to.
+    usually fine, so there's no need to customize the installation unless you have a specific reason to.
 
     [![Step 4](/static/images/content/python-on-windows/recommended_install_4.png)](/static/images/content/python-on-windows/recommended_install_4.png)
 
