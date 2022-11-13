@@ -155,7 +155,7 @@ Again, the Path lookup order is:
 
 ### Adding Python to your Path
 
-Here the common case of adding Python and the Python Scripts directory to the Windows Path is detailed. Though knowing
+Here only the common case of adding Python and the Python Scripts directory to the Windows Path is detailed. However, knowing
 how to manually modify the Path is handy beyond just Python for whenever you need to change or debug which programs run
 on the command line in Windows. (The less customizable but [safer method is
 above](#safe-method-let-the-installer-add-python-to-path) if you missed it.)
