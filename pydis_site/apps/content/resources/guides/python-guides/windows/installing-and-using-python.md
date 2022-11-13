@@ -73,7 +73,7 @@ Python console app and run some code like `print("Hello, World!")`.
 [![Testing Python console](/static/images/content/python-on-windows/recommended_install_7.png)](/static/images/content/python-on-windows/recommended_install_7.png)
 
 Or try the more usual way of running Python by typing `python` in a new terminal window to open up the Python
-[REPL](https://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop), or use `python somefile.py` to run some
+[REPL](https://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop), or use `python somefile.py` to run a
 Python file. You can use whichever terminal you prefer: Command Prompt, PowerShell, an IDE-integrated terminal, [Windows
 Terminal](https://apps.microsoft.com/store/detail/windows-terminal/9N0DX20HK701), etc. It just has to be a freshly
 opened terminal or the commands may not be recognized.
