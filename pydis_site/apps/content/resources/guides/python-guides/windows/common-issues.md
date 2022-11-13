@@ -5,7 +5,7 @@ icon: fab fa-windows
 toc: 3
 ---
 
-### When I run `python` in the terminal I get no result, or the Windows Store opens!
+### When I run `python` in the terminal I get no result, or the Microsoft Store opens!
 
 By default Windows has an alias for `python` in the terminal to guide you to install it from the [Microsoft
 Store](https://apps.microsoft.com/store/search/python). We don't recommend installing Python from the Microsoft

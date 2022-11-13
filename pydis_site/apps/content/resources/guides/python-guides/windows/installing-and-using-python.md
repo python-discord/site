@@ -34,7 +34,7 @@ Windows 11 or other modern versions of Python.)
 > version compatibility or for working on projects made in a certain version. Only uninstall things if you want to.
 
 1.  Go to [python.org/downloads](https://www.python.org/downloads) and click the big yellow "Download Python 3.x.x"
-    button near the top of the page. That should start the download of the latest Windows Python installer that best
+    button near the top of the page. That should start the download of the installer for the latest version that best
     suits your computer.
 
     If you want a different version or it doesn't work for some reason, you can download the
@@ -54,7 +54,7 @@ Windows 11 or other modern versions of Python.)
     [![Step 3](/static/images/content/python-on-windows/recommended_install_3.png)](/static/images/content/python-on-windows/recommended_install_3.png)
 
 4.  Then click the big "Install Now" button. Aside from adding Python to PATH, the rest of the installer defaults are
-    usually fine, so there's no need to customize the installation unless you want to.
+    usually fine, so there's no need to customize the installation unless you have a specific reason to.
 
     [![Step 4](/static/images/content/python-on-windows/recommended_install_4.png)](/static/images/content/python-on-windows/recommended_install_4.png)
 
@@ -73,7 +73,7 @@ Python console app and run some code like `print("Hello, World!")`.
 [![Testing Python console](/static/images/content/python-on-windows/recommended_install_7.png)](/static/images/content/python-on-windows/recommended_install_7.png)
 
 Or try the more usual way of running Python by typing `python` in a new terminal window to open up the Python
-[REPL](https://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop), or use `python somefile.py` to run some
+[REPL](https://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop), or use `python somefile.py` to run a
 Python file. You can use whichever terminal you prefer: Command Prompt, PowerShell, an IDE-integrated terminal, [Windows
 Terminal](https://apps.microsoft.com/store/detail/windows-terminal/9N0DX20HK701), etc. It just has to be a freshly
 opened terminal or the commands may not be recognized.
@@ -211,7 +211,7 @@ and requires Django 3.2, and the other is newer and requires Django 4.1. If you 
 you install 3.2 or 4.1, one or the or the other of the projects will have the wrong version. If instead you make a
 virtual environment for each project, you can install the required Django version for each separately.
 
-Virtual environments are not exclusive to Windows, but the commands to use them can differ a bit across operating
+Virtual environments are not exclusive to Windows, but the commands to use them can differ across operating
 systems. Check out the [official docs](https://docs.python.org/3/tutorial/venv.html#creating-virtual-environments) and
 the builtin [venv](https://docs.python.org/3/library/venv.html) module for more details, but there are basically 3
 important venv commands. Run them once you `cd` into your project folder.

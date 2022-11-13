@@ -115,7 +115,7 @@ installed](https://pypi.org/project/pyinstaller/) it) now work for you!
 
 Hopefully things are indeed working, however, it is possible that, due to having multiple Python versions, or other
 mixups, the commands are still not behaving how you expect. If so, read on to learn how to manually edit the Path. (If
-you already did that, open a help channel on the [Python Discord server](https://discord.com/invite/python) and someone
+you already did that, open a help channel on the [Python Discord server](https://discord.com/invite/python) explaining everything you've tried so far, and someone
 will hopefully be able to help.)
 
 ## Advanced Method: Manually edit the Path
@@ -155,7 +155,7 @@ Again, the Path lookup order is:
 
 ### Adding Python to your Path
 
-Here the common case of adding Python and the Python Scripts directory to the Windows Path is detailed. Though knowing
+Here only the common case of adding Python and the Python Scripts directory to the Windows Path is detailed. However, knowing
 how to manually modify the Path is handy beyond just Python for whenever you need to change or debug which programs run
 on the command line in Windows. (The less customizable but [safer method is
 above](#safe-method-let-the-installer-add-python-to-path) if you missed it.)
@@ -202,7 +202,7 @@ Follow these steps to add Python to the Path. **You will need administrator priv
 
     [![Step 5](/static/images/content/python-on-windows/edit_path_3.png)](/static/images/content/python-on-windows/edit_path_3.png)
 
-    I suggest using the User Path (what the screenshots show) for the default installation of Python. In general, only
+    You should use the User Path (what the screenshots show) for the default installation of Python. In general, only
     put things on the System Path if they are installed for all users (e.g. in `C:\Program Files` or `C:\`) and you're
     certain they won't overshadow anything in User Paths. **Remember, the System Path takes precedence over the User
     Path when commands are looked up.**
