@@ -211,7 +211,7 @@ and requires Django 3.2, and the other is newer and requires Django 4.1. If you 
 you install 3.2 or 4.1, one or the or the other of the projects will have the wrong version. But if you make a virtual
 environment for each project you can install the required Django version for each separately.
 
-Virtual environments are not exclusive to Windows, but the commands to use them can differ a bit across operating
+Virtual environments are not exclusive to Windows, but the commands to use them can differ across operating
 systems. Check out the [official docs](https://docs.python.org/3/tutorial/venv.html#creating-virtual-environments) and
 the builtin [venv](https://docs.python.org/3/library/venv.html) module for more details, but there are basically 3
 important venv commands. Run them once you `cd` into your project folder.
