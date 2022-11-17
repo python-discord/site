@@ -505,7 +505,7 @@ class UserMetricityTests(AuthenticatedAPITestCase):
     def test_metricity_activity_data(self):
         # Given
         self.mock_no_metricity_user()  # Other functions shouldn't be used.
-        self.metricity.total_messages_in_past_n_days.return_value = [[0, 10]]
+        self.metricity.total_messages_in_past_n_days.return_value = [(0, 10)]
 
         # When
         url = reverse("api:bot:user-metricity-activity-data")
@@ -518,7 +518,7 @@ class UserMetricityTests(AuthenticatedAPITestCase):
         # Then
         self.assertEqual(response.status_code, 200)
         self.metricity.total_messages_in_past_n_days.assert_called_once_with(["0", "1"], 10)
-        self.assertEqual(response.json(), [{"id": 0, "message_count": 10}])
+        self.assertEqual(response.json(), {"0": 10, "1": 0})
 
     def test_metricity_activity_data_invalid_days(self):
         # Given

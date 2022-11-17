@@ -140,10 +140,8 @@ class UserViewSet(ModelViewSet):
     - 404: if a user with the given `snowflake` could not be found
 
     ### POST /bot/users/metricity_activity_data
-    Gets the number of messages sent on the server in a given period.
-
-    Users with no messages in the specified period or who do not
-    exist are not included in the result.
+    Returns a mapping of user ID to message count in a given period for
+    the given user IDs.
 
     #### Required Query Parameters
     - days: how many days into the past to count message from.
@@ -155,9 +153,10 @@ class UserViewSet(ModelViewSet):
     ... ]
 
     #### Response format
-    >>> [
-    ...     {"id": 409107086526644234, "message_count": 54}
-    ... ]
+    >>> {
+    ...     "409107086526644234": 54,
+    ...     "493839819168808962": 0
+    ... }
 
     #### Status codes
     - 200: returned on success
@@ -351,8 +350,6 @@ class UserViewSet(ModelViewSet):
         with Metricity() as metricity:
             data = metricity.total_messages_in_past_n_days(user_ids, days)
 
-        response_data = [
-            {"id": int(d[0]), "message_count": d[1]}
-            for d in data
-        ]
+        default_data = {user_id: 0 for user_id in user_ids}
+        response_data = default_data | dict(data)
         return Response(response_data, status=status.HTTP_200_OK)
