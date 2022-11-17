@@ -131,12 +131,12 @@ You pip installed a command line program like [`pyinstaller`](https://pypi.org/p
 [`black`](https://pypi.org/project/black/) that is intended to be run from the command line, but it does not work. Two
 common causes for this are:
 
--   You are using Python from the Microsoft Store ([which we don't recommend](../miscrosoft-store)).
+-   You are using Python from the Microsoft Store ([which we don't recommend](../microsoft-store)).
 
     To check if this is the case, type `pip -V`. If the path output includes something like
     `PythonSoftwareFoundation.Python.3.10_3.10.2288.0_x64__qbz5n2kfra8p0`, you are using Python from the Microsoft
     Store. To fix this you will either have to use the full path to the scripts you want to use, or [uninstall the
-    Microsoft Store Python](../miscrosoft-store/#uninstalling) and [install Python
+    Microsoft Store Python](../microsoft-store/#uninstalling) and [install Python
     properly](../installing-and-using-python) with a [python.org installer](https://www.python.org/downloads).
 
 -   You manually modified your PATH Environment Variable incorrectly
