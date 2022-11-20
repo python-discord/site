@@ -1,7 +1,7 @@
 import logging
 from typing import Dict, List
 
-import requests
+import httpx
 from django.core.handlers.wsgi import WSGIRequest
 from django.http import HttpResponse
 from django.shortcuts import render
@@ -32,9 +32,7 @@ class HomeView(View):
 
     def __init__(self):
         """Clean up stale RepositoryMetadata."""
-        self._static_build = settings.env("STATIC_BUILD")
-
-        if not self._static_build:
+        if not settings.STATIC_BUILD:
             RepositoryMetadata.objects.exclude(repo_name__in=self.repos).delete()
 
         # If no token is defined (for example in local development), then
@@ -56,12 +54,12 @@ class HomeView(View):
         repo_dict = {}
         try:
             # Fetch the data from the GitHub API
-            api_data: List[dict] = requests.get(
+            api_data: List[dict] = httpx.get(
                 self.github_api,
                 headers=self.headers,
                 timeout=settings.TIMEOUT_PERIOD
             ).json()
-        except requests.exceptions.Timeout:
+        except httpx.TimeoutException:
             log.error("Request to fetch GitHub repository metadata for timed out!")
             return repo_dict
 
@@ -94,7 +92,7 @@ class HomeView(View):
     def _get_repo_data(self) -> List[RepositoryMetadata]:
         """Build a list of RepositoryMetadata objects that we can use to populate the front page."""
         # First off, load the timestamp of the least recently updated entry.
-        if self._static_build:
+        if settings.STATIC_BUILD:
             last_update = None
         else:
             last_update = (
@@ -121,7 +119,7 @@ class HomeView(View):
                 for api_data in api_repositories.values()
             ]
 
-            if settings.env("STATIC_BUILD"):
+            if settings.STATIC_BUILD:
                 return data
             else:
                 return RepositoryMetadata.objects.bulk_create(data)

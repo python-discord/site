@@ -12,7 +12,7 @@ NON_STATIC_PATTERNS = [
     path('pydis-api/', include('pydis_site.apps.api.urls', namespace='internal_api')),
 
     path('', include('django_prometheus.urls')),
-] if not settings.env("STATIC_BUILD") else []
+] if not settings.STATIC_BUILD else []
 
 
 urlpatterns = (
@@ -29,7 +29,7 @@ urlpatterns = (
 )
 
 
-if not settings.env("STATIC_BUILD"):
+if not settings.STATIC_BUILD:
     urlpatterns += (
         path('staff/', include('pydis_site.apps.staff.urls', namespace='staff')),
     )
