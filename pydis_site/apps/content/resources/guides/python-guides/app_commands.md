@@ -1,44 +1,33 @@
-# DISCORD.PY RESUMATION CHANGES
-
+---
+title: Discord.py 2.0 changes
+description: Changes and new features in version 2.0 of discord.py
 ---
 
-Upon resumption of the most popular discord API wrapper library for python, `discord.py`, while catching on to the latest features of the discord API, there have been numerous changes with addition of features to the library. Some additions to the library are -> Buttons support, Select Menus Support, Forms (AKA Modals), Slash Commands (AKA Application Commands) and a bunch of more handy features! All the changes can be found [here](https://discordpy.readthedocs.io/en/latest/migrating.html). Original discord.py Gist regarding resumption can be found [here](https://gist.github.com/Rapptz/c4324f17a80c94776832430007ad40e6).
+Upon the return of the most popular discord API wrapper library for Python, `discord.py`, while catching on to the latest features of the discord API, there have been numerous changes with additions of features to the library. Additions to the library include support for Buttons, Select Menus, Forms (AKA Modals), Slash Commands (AKA Application Commands) and a bunch more handy features! All the changes can be found [here](https://discordpy.readthedocs.io/en/latest/migrating.html). Original discord.py Gist regarding resumption can be found [here](https://gist.github.com/Rapptz/c4324f17a80c94776832430007ad40e6).
 
-# Why this Gist?
-
----
-
-This Gist is being created as an update to Slash Commands (app commands) with explanation and examples. This Gist mainly focuses on **SLASH COMMANDS** for discord.py 2.0 (and above)!
-
-# What are Slash Commands?
-
----
-
-Slash Commands are the exciting new way to build and interact with bots on Discord. As soon as you type "/", you can easily see all the commands a bot has. It also comes with autocomplete, validation and error handling, which will all help you get the command right the first time.
 
 # Install the latest version of discord.py
 
----
-To use Slash Commands with discord.py. The latest up-to-date version has to be installed. Make sure that the version is 2.0 or above!
-And make sure to uninstall any third party libraries that support Slash Commands for discord.py (if any) as a few of them [monkey patch](https://en.wikipedia.org/wiki/Monkey_patch#:~:text=A%20monkey%20patch%20is%20a,running%20instance%20of%20the%20program) discord.py!
+Before you can make use of any of the new 2.0 features, you need to install the latest version of discord.py. Make sure that the version is 2.0 or above!
+Also, make sure to uninstall any third party libraries intended to add slash-command support to pre-2.0 discord.py, as they are no longer necessary and will likely cause issues.
 
-The latest and up-to-date usable discord.py version can be installed using `pip install -U discord.py`. If you get an error such as: `'git' is not recognized...`, it means that you don't have git installed on your platform. In that case, you will need to do so by going through the required steps for [installing git](https://git-scm.com/downloads) and make sure to enable the `add to path` option while in the installation wizard. After installing git you can run `pip install -U discord.py` again to install discord.py 2.0
+The latest and most up-to-date stable discord.py version can be installed using `pip install -U discord.py`.
 
-**BEFORE MIGRATING TO DISCORD.PY 2.0, PLEASE READ THE CONSEQUENCES OF THE UPDATE [HERE](https://discordpy.readthedocs.io/en/latest/migrating.html)**.
+**Before migrating to discord.py 2.0, make sure you read the migration guide [here](https://discordpy.readthedocs.io/en/latest/migrating.html) as there are lots of breaking changes.**.
+{: .notification .is-warning }
+
+# What are Slash Commands?
+
+Slash Commands are an exciting new way to build and interact with bots on Discord. As soon as you type "/", you can easily see all the commands a bot has. It also comes with autocomplete, validation and error handling, which will all help users of your bot get the command right the first time.
 
 # Basic structure for discord.py Slash Commands!
-
----
 
 ### Note that Slash Commands in discord.py are also referred to as **Application Commmands** and **App Commands** and every *interaction* is a *webhook*.
 Slash commands in discord.py are held by a container, [CommandTree](https://discordpy.readthedocs.io/en/latest/interactions/api.html?highlight=commandtree#discord.app_commands.CommandTree). A command tree is required to create Slash Commands in discord.py. This command tree provides a `command` method which decorates an asynchronous function indicating to discord.py that the decorated function is intended to be a slash command. This asynchronous function expects a default argument which acts as the interaction which took place that invoked the slash command. This default argument is an instance of the **Interaction** class from discord.py. Further up, the command logic takes over the behaviour of the slash command.
 
 # Fundamentals for this Gist!
 
----
-
-
-The fundamental for this Gist will remain to be the `setup_hook`. The `setup_hook` is a special asynchronous method of the Client and Bot classes which can be overwritten to perform numerous tasks. This method is safe to use as it is always triggered before any events are dispatched, i.e. this method is triggered before the *IDENTIFY* payload is sent to the discord gateway.
+One new feature added in discord.py v2 is `setup_hook`. `setup_hook` is a special asynchronous method of the Client and Bot classes which can be overwritten to perform numerous tasks. This method is safe to use as it is always triggered before any events are dispatched, i.e. this method is triggered before the *IDENTIFY* payload is sent to the discord gateway.
 Note that methods of the Bot class such as `change_presence` will not work in setup_hook as the current application does not have an active connection to the gateway at this point.
 
 __**THE FOLLOWING ARE EXAMPLES OF HOW A `SETUP_HOOK` FUNCTION CAN BE DEFINED**__
@@ -48,7 +37,7 @@ Note that the default intents are defined [here](https://discordpy.readthedocs.i
 ```python
 import discord
 
-'''This is one way of creating a "setup_hook" method'''
+# You can create the setup_hook directly in the class definition
 
 class SlashClient(discord.Client):
     def __init__(self) -> None:
@@ -57,7 +46,7 @@ class SlashClient(discord.Client):
     async def setup_hook(self) -> None:
         ...
 
-'''Another way of creating a "setup_hook" is as follows'''
+# Or add it to the client after creating it
 
 client = discord.Client(intents=discord.Intents.default())
 async def my_setup_hook() -> None:
@@ -69,7 +58,6 @@ client.setup_hook = my_setup_hook
 # Basic Slash Command application using discord.py.
 
 #### The `CommandTree` class resides within the `app_commands` of the discord.py package.
----
 
 ## Slash Command Application with a Client
 
@@ -139,8 +127,6 @@ Most of the explanation is the same as the prior example that featured `SlashCli
 
 # Slash Commands within a Cog!
 
----
-
 A cog is a collection of commands, listeners, and optional state to help group commands together. More information on them can be found on the [Cogs](https://discordpy.readthedocs.io/en/latest/ext/commands/cogs.html#ext-commands-cogs) page.
 
 ## An Example to using cogs with discord.py for Slash Commands!
@@ -184,8 +170,6 @@ __**EXPLANATION**__
 
 # An Example to using groups with discord.py for Slash Commands!
 
----
-
 ## An example with optional group!
 
 ```python
@@ -226,8 +210,6 @@ bot.run("token")
 __**EXPLANATION**__
 - The only difference used here is `group = app_commands.Group(name="uwu", description="...")` and `group.command`. `app_commands.Group` is used to initiate a group while `group.command` registers a command under a group. For example, the ping command can be run using **/ping** but this is not the case for group commands. They are registered with the format of `group_name command_name`. So here, the **command** command of the **uwu** group would be run using **/uwu command**. Note that only group commands can have a single space between them.
 
----
-
 ## An example with a **Group** subclass!
 
 ```python
@@ -266,8 +248,6 @@ __**EXPLANATION**__
 - The only difference here too is that the `MySlashGroup` class directly subclasses the **Group** class from discord.app_commands which automatically registers all the methods within the group class to be commands of that specific group. So now, the commands such as `ping` can be run using **/uwu ping** and `command` using **/uwu command**.
 
 # Some common methods and features used for Slash Commands.
-
----
 
 ### A common function used for Slash Commands is the `describe` function. This is used to add descriptions to the arguments of a slash command. The command function can decorated with this function. It goes by the following syntax as shown below.
 
@@ -308,8 +288,6 @@ async def _time(interaction: discord.Interaction, time_to_wait: int):
 
 # Checking for Permissions and Roles!
 
----
-
 To add a permissions check to a command, the methods are imported through `discord.app_commands.checks`. To check for a member's permissions, the function can be decorated with the [discord.app_commands.checks.has_permissions](https://discordpy.readthedocs.io/en/latest/interactions/api.html?highlight=has_permissions#discord.app_commands.checks.has_permissions) method. An example to this as follows.
 
 ```py
@@ -337,8 +315,6 @@ Other methods that you can decorate the commands with are -
 
 # Adding cooldowns to Slash Commands!
 
----
-
 Slash Commands within discord.py can be applied cooldowns to in order to prevent spamming of the commands. This can be done through the `discord.app_commands.checks.cooldown` method which can be used to decorate a slash command function and register a cooldown to the function. This raises a [CommandOnCooldown](https://discordpy.readthedocs.io/en/latest/interactions/api.html?highlight=checks%20cooldown#discord.app_commands.CommandOnCooldown) exception if the command is currently on cooldown.
 An example is as follows.
 
@@ -349,7 +325,6 @@ import discord
 class Bot(commands.Bot):
     def __init__(self):
         super().__init__(command_prefix="uwu", intents=discord.Intents.all())
-
 
     async def setup_hook(self):
         self.tree.copy_global_to(guild=discord.Object(id=12345678909876543))
@@ -376,8 +351,6 @@ __**EXPLANATION**__
 
 # Handling errors for Slash Commands!
 
----
-
 The Slash Commands exceptions can be handled by overwriting the `on_error` method of the `CommandTree`. The error handler takes two arguments. The first argument is the `Interaction` that took place when the error occurred and the second argument is the error that occurred when the Slash Commands was invoked. The error is an instance of [discord.app_commands.AppCommandError](https://discordpy.readthedocs.io/en/latest/interactions/api.html?highlight=appcommanderror#discord.app_commands.AppCommandError) which is a subclass of [DiscordException](https://discordpy.readthedocs.io/en/latest/api.html?highlight=discordexception#discord.DiscordException).
 An example to creating an error handler for Slash Commands is as follows.
 
@@ -397,10 +370,8 @@ async def ping(interaction: discord.Interaction):
 async def on_tree_error(interaction: discord.Interaction, error: app_commands.AppCommandError):
     if isinstance(error, app_commands.CommandOnCooldown):
         return await interaction.response.send_message(f"Command is currently on cooldown! Try again in **{error.retry_after:.2f}** seconds!")
-
-    elif isinstance(..., ...):
+    elif isinstance(error, ...):
         ...
-
     else:
         raise error
 
@@ -433,10 +404,8 @@ async def ping(interaction: discord.Interaction):
 async def ping_error(interaction: discord.Interaction, error: app_commands.AppCommandError):
     if isinstance(error, app_commands.CommandOnCooldown):
         return await interaction.response.send_message(f"Command is currently on cooldown! Try again in **{error.retry_after:.2f}** seconds!")
-
     elif isinstance(error, ...):
         ...
-
     else:
         raise error
 
@@ -445,4 +414,4 @@ bot.run("token")
 
 __**EXPLANATION**__
 
-Here the command name is simply used to access the `error` method to decorate a function which acts as the `on_error` but for a specific command. Please do not call the `error` method.
+Here the command name is simply used to access the `error` method to decorate a function which acts as the `on_error` but for a specific command. You should not need to call the `error` method manually.
