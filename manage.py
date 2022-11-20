@@ -195,7 +195,7 @@ def main() -> None:
 
     # Pass any others directly to standard management commands
     else:
-        _static_build = "distill" in sys.argv[1]
+        _static_build = len(sys.argv) > 1 and "distill" in sys.argv[1]
 
         if _static_build:
             # Build a static version of the site with no databases and API support

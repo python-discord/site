@@ -38,12 +38,16 @@ GITHUB_API = "https://api.github.com"
 GITHUB_TOKEN = env("GITHUB_TOKEN")
 GITHUB_APP_ID = env("GITHUB_APP_ID")
 GITHUB_APP_KEY = env("GITHUB_APP_KEY")
+GITHUB_TIMESTAMP_FORMAT = "%Y-%m-%dT%H:%M:%SZ"
+"""The datetime string format GitHub uses."""
+
+STATIC_BUILD: bool = env("STATIC_BUILD")
 
 if GITHUB_APP_KEY and (key_file := Path(GITHUB_APP_KEY)).is_file():
     # Allow the OAuth key to be loaded from a file
     GITHUB_APP_KEY = key_file.read_text(encoding="utf-8")
 
-if not env("STATIC_BUILD"):
+if not STATIC_BUILD:
     sentry_sdk.init(
         dsn=env('SITE_DSN'),
         integrations=[DjangoIntegration()],
@@ -100,7 +104,7 @@ else:
 NON_STATIC_APPS = [
     'pydis_site.apps.api',
     'pydis_site.apps.staff',
-] if not env("STATIC_BUILD") else []
+] if not STATIC_BUILD else []
 
 INSTALLED_APPS = [
     *NON_STATIC_APPS,
@@ -129,7 +133,7 @@ INSTALLED_APPS = [
 if not env("BUILDING_DOCKER"):
     INSTALLED_APPS.append("django_prometheus")
 
-if env("STATIC_BUILD"):
+if STATIC_BUILD:
     # The only middleware required during static builds
     MIDDLEWARE = [
         'django.contrib.sessions.middleware.SessionMiddleware',
@@ -180,7 +184,7 @@ WSGI_APPLICATION = 'pydis_site.wsgi.application'
 DATABASES = {
     'default': env.db(),
     'metricity': env.db('METRICITY_DB_URL'),
-} if not env("STATIC_BUILD") else {}
+} if not STATIC_BUILD else {}
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators

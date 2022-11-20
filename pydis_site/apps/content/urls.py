@@ -3,7 +3,7 @@ from pathlib import Path
 
 from django_distill import distill_path
 
-from . import views
+from . import utils, views
 
 app_name = "content"
 
@@ -29,14 +29,37 @@ def __get_all_files(root: Path, folder: typing.Optional[Path] = None) -> list[st
     return results
 
 
-def get_all_pages() -> typing.Iterator[dict[str, str]]:
+DISTILL_RETURN = typing.Iterator[dict[str, str]]
+
+
+def get_all_pages() -> DISTILL_RETURN:
     """Yield a dict of all page categories."""
     for location in __get_all_files(Path("pydis_site", "apps", "content", "resources")):
         yield {"location": location}
 
 
+def get_all_tags() -> DISTILL_RETURN:
+    """Return all tag names and groups in static builds."""
+    # We instantiate the set with None here to make filtering it out later easier
+    # whether it was added in the loop or not
+    groups = {None}
+    for tag in utils.get_tags_static():
+        groups.add(tag.group)
+        yield {"location": (f"{tag.group}/" if tag.group else "") + tag.name}
+
+    groups.remove(None)
+    for group in groups:
+        yield {"location": group}
+
+
 urlpatterns = [
     distill_path("", views.PageOrCategoryView.as_view(), name='pages'),
+    distill_path(
+        "tags/<path:location>/",
+        views.TagView.as_view(),
+        name="tag",
+        distill_func=get_all_tags
+    ),
     distill_path(
         "<path:location>/",
         views.PageOrCategoryView.as_view(),
