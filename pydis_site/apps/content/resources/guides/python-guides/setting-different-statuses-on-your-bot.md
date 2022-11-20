@@ -1,13 +1,22 @@
 ---
-title: Setting Different Statuses to Set Your Bot
+title: Setting Different Statuses on Your Bot
 description: How to personalize your Discord bot status
 ---
+
+You've probably seen a bot or two have a status message under their username in the member bar set to something such as `Playing Commands: .help`.
+
+This guide shows how to set such a presence, so your bot can have one as well.
+
 **Please note:**
 
-If you want to change the bot status, it is suggested to not do it during the on_ready event, since it would be called
-many times and making an API call on that event has a chance to disconnect the bot.
-Instead, set the desired status using the  activity / status kwarg of commands.Bot, for example
-`bot = commands.Bot(command_prefix="!", activity=..., status=...)`
+If you want to change the bot status, it is suggested to not do so during the on_ready event, since it would be called many times and making an API call on that event has a chance to disconnect the bot.
+
+Instead, set the desired status using the activity / status kwarg of commands.Bot, for example:
+```python
+bot = commands.Bot(command_prefix="!", activity=..., status=...)
+```
+
+The following are examples of what you can put into the `activity` keyword argument.
 
 #### Setting 'Playing' Status
 ```python
@@ -29,19 +38,9 @@ await client.change_presence(activity=discord.Activity(type=discord.ActivityType
 await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="a movie"))
 ```
 
-#### Add Optional Status as Well:
+### Add Optional Status as Well:
 
-* status=discord.Status.\<status>
-
-####Available Statuses:
-
-* do_not_disturb(red icon)
-
-
-* idle(yellow icon)
-
-
-* online(default, green icon)
-
-
-* offline(gray icon)
+* `discord.Status.online` (default, green icon)
+* `discord.Status.idle` (yellow icon)
+* `discord.Status.do_not_disturb` (red icon)
+* `discord.Status.offline` (gray icon)
