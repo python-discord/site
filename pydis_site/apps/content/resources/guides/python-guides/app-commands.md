@@ -279,9 +279,9 @@ bot = commands.Bot(command_prefix="!", intents=discord.Intents.default())
 @bot.tree.command(name="time", description="...")
 async def _time(interaction: discord.Interaction, time_to_wait: int):
     # -------------------------------------------------------------
-    await interaction.response.defer(ephemeral=True, thinking=True)
+    await interaction.response.defer(ephemeral=True)
     # -------------------------------------------------------------
-    await interaction.edit_original_message(content=f"I will notify you after {time_to_wait} seconds have passed!")
+    await interaction.edit_original_response(content=f"I will notify you after {time_to_wait} seconds have passed!")
     await asyncio.sleep(time_to_wait)
     await interaction.edit_original_message(content=f"{interaction.user.mention}, {time_to_wait} seconds have already passed!")
 ```
@@ -396,7 +396,7 @@ bot = commands.Bot(command_prefix="!", intents=discord.Intents.default())
 #sync commands
 
 @bot.tree.command(name="ping")
-app_commands.checks.cooldown(1, 30)
+@app_commands.checks.cooldown(1, 30)
 async def ping(interaction: discord.Interaction):
     await interaction.response.send_message("pong!")
 
