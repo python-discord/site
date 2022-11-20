@@ -4,7 +4,7 @@ description: A guide to contributing to our open source projects.
 icon: fab fa-github
 ---
 
-Our projects on Python Discord are open source and [available on Github](https://github.com/python-discord).  If you would like to contribute, consider one of the following projects:
+Our projects on Python Discord are open source and [available on GitHub](https://github.com/python-discord).  If you would like to contribute, consider one of the following projects:
 
 <!-- Project cards -->
 <div class="columns is-multiline is-centered is-3 is-variable">
@@ -19,11 +19,7 @@ Our projects on Python Discord are open source and [available on Github](https:/
       </div>
       <div class="card-content">
         <div class="content">
-          Our community-driven Discord bot.
-        </div>
-        <div class="tags has-addons">
-          <span class="tag is-dark">Difficulty</span>
-          <span class="tag is-primary">Beginner</span>
+          Sir Lancebot has a collection of self-contained, for-fun features. If you're new to Discord bots or contributing, this is a great place to start!
         </div>
       </div>
       <div class="card-footer">
@@ -46,11 +42,7 @@ Our projects on Python Discord are open source and [available on Github](https:/
       </div>
       <div class="card-content">
         <div class="content">
-          The community and moderation Discord bot.
-        </div>
-        <div class="tags has-addons">
-          <span class="tag is-dark">Difficulty</span>
-          <span class="tag is-warning">Intermediate</span>
+          Called @Python on the server, this bot handles moderation tools, help channels, and other critical features for our community.
         </div>
       </div>
       <div class="card-footer">
@@ -73,11 +65,7 @@ Our projects on Python Discord are open source and [available on Github](https:/
       </div>
       <div class="card-content">
         <div class="content">
-          The website, subdomains and API.
-        </div>
-        <div class="tags has-addons">
-          <span class="tag is-dark">Difficulty</span>
-          <span class="tag is-danger">Advanced</span>
+          This website itself! This project is built with Django and includes our API, which is used by various services such as @Python.
         </div>
       </div>
       <div class="card-footer">
@@ -91,26 +79,64 @@ Our projects on Python Discord are open source and [available on Github](https:/
   </div>
 </div>
 
-If you don't understand anything or need clarification, feel free to ask any staff member with the  **@PyDis Core Developers** role in the server. We're always happy to help!
+# How do I start contributing?
+Unsure of what contributing to open source projects involves? Have questions about how to use GitHub? Just need to know about our contribution etiquette? Completing these steps will have you ready to make your first contribution no matter your starting point.
 
-### Useful Resources
+Feel free to skip any steps you're already familiar with, but please make sure not to miss the [Contributing Guidelines](#5-read-our-contributing-guidelines).
 
-[Guidelines](./contributing-guidelines/) - General guidelines you should follow when contributing to our projects.<br>
-[Style Guide](./style-guide/) - Information regarding the code styles you should follow when working on our projects.<br>
-[Review Guide](../code-reviews-primer/) - A guide to get you started on doing code reviews.
+If you are here looking for the answer to a specific question, check out the sub-articles in the top right of the page to see a list of our guides.
 
-## Contributors Community
-We are very happy to have many members in our community that contribute to [our open source projects](https://github.com/python-discord/).
-Whether it's writing code, reviewing pull requests, or contributing graphics for our events, it’s great to see so many people being motivated to help out.
-As a token of our appreciation, those who have made significant contributions to our projects will receive a special **@Contributors** role on our server that makes them stand out from other members.
-That way, they can also serve as guides to others who are looking to start contributing to our open source projects or open source in general.
+**Note:** We use Git to keep track of changes to the files in our projects. Git allows you to make changes to your local code and then distribute those changes to the other people working on the project. You'll use Git in a couple steps of the contributing process. You can refer to this [**guide on using Git**](./working-with-git/).
+{: .notification }
 
-#### Guidelines for the @Contributors Role
+### 1. Fork and clone the repo
+GitHub is a website based on Git that stores project files in the cloud. We use GitHub as a central place for sending changes, reviewing others' changes, and communicating with each other. You'll need to create a copy under your own GitHub account, a.k.a. "fork" it. You'll make your changes to this copy, which can then later be merged into the Python Discord repository.
 
-One question we get a lot is what the requirements for the **@Contributors** role are.
-As it’s difficult to precisely quantify contributions, we’ve come up with the following guidelines for the role:
+*Note: Members of the Python Discord staff can create feature branches directly on the repo without forking it.*
 
-- The member has made several significant contributions to our projects.
-- The member has a positive influence in our contributors subcommunity.
+Check out our [**guide on forking a GitHub repo**](./forking-repository/).
 
-The role will be assigned at the discretion of the Admin Team in consultation with the Core Developers Team.
+Now that you have your own fork you need to be able to make changes to the code. You can clone the repo to your local machine, commit changes to it there, then push those changes to GitHub.
+
+Check out our [**guide on cloning a GitHub repo**](./cloning-repository/).
+
+### 2. Set up the project
+You have the source code on your local computer, now how do you actually run it? We have detailed guides on setting up the environment for each of our main projects:
+
+* [**Sir Lancebot**](./sir-lancebot/)
+
+* [**Python Bot**](./bot/)
+
+* [**Site**](./site/)
+
+### 3. Read our Contributing Guidelines
+We have a few short rules that all contributors must follow. Make sure you read and follow them while working on our projects.
+
+[**Contributing Guidelines**](./contributing-guidelines/).
+
+As mentioned in the Contributing Guidelines, we have a simple style guide for our projects based on PEP 8. Give it a read to keep your code consistent with the rest of the codebase.
+
+[**Style Guide**](./style-guide/)
+
+### 4. Create an issue
+The first step to any new contribution is an issue describing a problem with the current codebase or proposing a new feature. All the open issues are viewable on the GitHub repositories, for instance here is the [issues page for Sir Lancebot](https://github.com/python-discord/sir-lancebot/issues). If you have something that you want to implement open a new issue to present your idea. Otherwise, you can browse the unassigned issues and ask to be assigned to one that you're interested in, either in the comments on the issue or in the [`#dev-contrib`](https://discord.gg/2h3qBv8Xaa) channel on Discord.
+
+[**How to write a good issue**](./issues/)
+
+Don't move forward until your issue is approved by a Core Developer. Issues are not guaranteed to be approved so your work may be wasted.
+{: .notification .is-warning }
+
+### 5. Make changes
+Now it is time to make the changes to fulfill your approved issue. You should create a new Git branch for your feature; that way you can keep your main branch up to date with ours and even work on multiple features at once in separate branches.
+
+This is a good time to review [how to write good commit messages](./contributing-guidelines/commit-messages) if you haven't already.
+
+### 6. Open a pull request
+After your issue has been approved and you've written your code and tested it, it's time to open a pull request. Pull requests are a feature in GitHub; you can think of them as asking the project maintainers to accept your changes. This gives other contributors a chance to review your code and make any needed changes before it's merged into the main branch of the project.
+
+Check out our [**Pull Request Guide**](./pull-requests/) for help with opening a pull request and going through the review process.
+
+Check out our [**Code Review Guide**](../code-reviews-primer/) to learn how to be a star reviewer. Reviewing PRs is a vital part of open source development, and we always need more reviewers!
+
+### That's it!
+Thank you for contributing to our community projects. If there's anything you don't understand or you just want to discuss with other contributors, come visit the [`#dev-contrib`](https://discord.gg/2h3qBv8Xaa) channel to ask questions. Keep an eye out for staff members with the **@PyDis Core Developers** role in the server; we're always happy to help!

@@ -5,34 +5,9 @@ icon: fab fa-github
 toc: 3
 ---
 The purpose of this guide is to get you a running local version of [the Python bot](https://github.com/python-discord/bot).
+You should have already forked the repository and cloned it to your local machine. If not, check out our [detailed walkthrough](../#1-fork-and-clone-the-repo).
+
 This page will focus on the quickest steps one can take, with mentions of alternatives afterwards.
-
-### Clone The Repository
-First things first, to run the bot's code and make changes to it, you need a local version of it (on your computer).
-
-<div class="card">
-    <button type="button" class="card-header collapsible">
-        <span class="card-header-title subtitle is-6 my-2 ml-2">Getting started with Git and GitHub</span>
-        <span class="card-header-icon">
-            <i class="fas fa-fw fa-angle-down title is-5" aria-hidden="true"></i>
-        </span>
-    </button>
-    <div class="collapsible-content collapsed">
-        <div class="card-content">
-              <p>If you don't have Git on your computer already, <a href="https://git-scm.com/downloads">install it</a>. You can additionally install a Git GUI such as <a href="https://www.gitkraken.com/download">GitKraken</a>, or the <a href="https://cli.github.com/manual/installation">GitHub CLI</a>.</p>
-              <p>To learn more about Git, you can look into <a href="../working-with-git">our guides</a>, as well as <a href="https://education.github.com/git-cheat-sheet-education.pdf">this cheatsheet</a>, <a href="https://learngitbranching.js.org">Learn Git Branching</a>, and otherwise any guide you can find on the internet. Once you got the basic idea though, the best way to learn Git is to use it.</p>
-              <p>Creating a copy of a repository under your own account is called a <em>fork</em>. This is where all your changes and commits will be pushed to, and from where your pull requests will originate from.</p>
-              <p><strong><a href="../forking-repository">Learn about forking a project</a></strong>.</p>
-        </div>
-    </div>
-</div>
-<br>
-
-You will need to create a fork of [the project](https://github.com/python-discord/bot), and clone the fork.
-Once this is done, you will have completed the first step towards having a running version of the bot.
-
-#### Working on the Repository Directly
-If you are a member of the organisation (a member of [this list](https://github.com/orgs/python-discord/people), or in our particular case, server staff), you can clone the project repository without creating a fork, and work on a feature branch instead.
 
 ---
 
@@ -113,6 +88,7 @@ urls:
 
     # Snekbox
     snekbox_eval_api: "http://localhost:8060/eval"
+    snekbox_311_eval_api: "http://localhost:8065/eval"
 
 ##### <<  Replace the following � characters with the channel IDs in your test server  >> #####
 #  This assumes the template was used: https://discord.new/zmHtscpYN9E3
@@ -506,9 +482,13 @@ You are now almost ready to run the Python bot. The simplest way to do so is wit
 In your `config.yml` file:
 
 * Set `urls.site` to `"web:8000"`.
-* If you wish to work with snekbox set `urls.snekbox_eval_api` to `"http://snekbox:8060/eval"`.
+* If you wish to work with snekbox set the following:
+    * `urls.snekbox_eval_api` to `"http://snekbox:8060/eval"`
+    * `urls.snekbox_311_eval_api` to `"http://snekbox-311:8060/eval"`.
 
 Assuming you have Docker installed **and running**, enter the cloned repo in the command line and type `docker-compose up`.
+
+If working with snekbox you can run `docker-compose --profile 3.10 up` to also start up a 3.10 snekbox container, in addition to the default 3.11 container!
 
 After pulling the images and building the containers, your bot will start. Enter your server and type `!help` (or whatever prefix you chose instead of `!`).
 
@@ -519,12 +499,13 @@ The advantage of this method is that you can run the bot's code in your preferre
 
 * Append the following line to your `.env` file: `BOT_API_KEY=badbot13m0n8f570f942013fc818f234916ca531`.
 * In your `config.yml` file, set `urls.site` to `"localhost:8000"`. If you wish to keep using `web:8000`, then [COMPOSE_PROJECT_NAME](../docker/#compose-project-names) has to be set.
-* To work with snekbox, set `urls.snekbox_eval_api` to `"http://localhost:8060/eval"`
+* To work with snekbox, set `urls.snekbox_eval_api` to `"http://localhost:8060/eval"` and `urls.snekbox_311_eval_api` to `"http://localhost:8065/eval"`
 
 You will need to start the services separately, but if you got the previous section with Docker working, that's pretty simple:
 
 * `docker-compose up web` to start the site container. This is required.
 * `docker-compose up snekbox` to start the snekbox container. You only need this if you're planning on working on the snekbox cog.
+* `docker-compose up snekbox-311` to start the snekbox 3.11 container. You only need this if you're planning on working on the snekbox cog.
 * `docker-compose up redis` to start the Redis container. You only need this if you're not using fakeredis. For more info refer to [Working with Redis](#optional-working-with-redis).
 
 You can start several services together: `docker-compose up web snekbox redis`.
@@ -532,7 +513,7 @@ You can start several services together: `docker-compose up web snekbox redis`.
 ##### Setting Up a Development Environment
 The bot's code is Python code like any other. To run it locally, you will need the right version of Python with the necessary packages installed:
 
-1. Make sure you have [Python 3.9](https://www.python.org/downloads/) installed. It helps if it is your system's default Python version.
+1. Make sure you have [Python 3.10](https://www.python.org/downloads/) installed. It helps if it is your system's default Python version.
 2. [Install Poetry](https://github.com/python-poetry/poetry#installation).
 3. [Install the dependencies](../installing-project-dependencies).
 
@@ -570,10 +551,7 @@ Now that you have everything setup, it is finally time to make changes to the bo
 
 #### Working with Git
 
-If you have not yet [read the contributing guidelines](../contributing-guidelines), now is a good time.
-Contributions that do not adhere to the guidelines may be rejected.
-
-Notably, version control of our projects is done using Git and Github.
+Version control of our projects is done using Git and Github.
 It can be intimidating at first, so feel free to ask for any help in the server.
 
 [**Click here to see the basic Git workflow when contributing to one of our projects.**](../working-with-git/)
@@ -663,5 +641,12 @@ The following is a list of all available environment variables used by the bot:
 | `GITHUB_API_KEY` | When you wish to interact with GitHub | The API key to interact with GitHub, for example to download files for the branding manager.
 | `METABASE_USERNAME` | When you wish to interact with Metabase | The username for a Metabase admin account.
 | `METABASE_PASSWORD` | When you wish to interact with Metabase | The password for a Metabase admin account.
+
+---
+
+# Next steps
+Now that you have everything setup, it is finally time to make changes to the bot! If you have not yet read the [contributing guidelines](../contributing-guidelines.md), now is a good time. Contributions that do not adhere to the guidelines may be rejected.
+
+If you're not sure where to go from here, our [detailed walkthrough](../#2-set-up-the-project) is for you.
 
 Have fun!

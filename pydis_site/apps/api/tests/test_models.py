@@ -7,7 +7,6 @@ from pydis_site.apps.api.models import (
     DeletedMessage,
     DocumentationLink,
     Infraction,
-    Message,
     MessageDeletionContext,
     Nomination,
     NominationEntry,
@@ -115,17 +114,6 @@ class StringDunderMethodTests(SimpleTestCase):
                 id=5, name='test role',
                 colour=0x5, permissions=0,
                 position=10,
-            ),
-            Message(
-                id=45,
-                author=User(
-                    id=444,
-                    name='bill',
-                    discriminator=5,
-                ),
-                channel_id=666,
-                content="wooey",
-                embeds=[]
             ),
             MessageDeletionContext(
                 actor=User(
