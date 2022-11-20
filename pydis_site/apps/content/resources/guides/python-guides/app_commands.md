@@ -2,7 +2,7 @@
 
 ---
 
-Upon resumption of the most popular discord API wrapper library for python, `discord.py`, while catching on to the latest features of the discord API, there have been numerous changes with addition of features to the library. Some additions to the library are -> Buttons support, Select Menus Support, Forms (AKA Modals), Slash Commands (AKA Application Commands) and a bunch of more handy features! All the changes can be found [here](https://discordpy.readthedocs.io/en/latest/migrating.html). Original discord.py Gist regarding resumption can be found [here](https://Gist.github.com/Rapptz/c4324f17a80c94776832430007ad40e6).
+Upon resumption of the most popular discord API wrapper library for python, `discord.py`, while catching on to the latest features of the discord API, there have been numerous changes with addition of features to the library. Some additions to the library are -> Buttons support, Select Menus Support, Forms (AKA Modals), Slash Commands (AKA Application Commands) and a bunch of more handy features! All the changes can be found [here](https://discordpy.readthedocs.io/en/latest/migrating.html). Original discord.py Gist regarding resumption can be found [here](https://gist.github.com/Rapptz/c4324f17a80c94776832430007ad40e6).
 
 # Why this Gist?
 
@@ -22,7 +22,7 @@ Slash Commands are the exciting new way to build and interact with bots on Disco
 To use Slash Commands with discord.py. The latest up-to-date version has to be installed. Make sure that the version is 2.0 or above!
 And make sure to uninstall any third party libraries that support Slash Commands for discord.py (if any) as a few of them [monkey patch](https://en.wikipedia.org/wiki/Monkey_patch#:~:text=A%20monkey%20patch%20is%20a,running%20instance%20of%20the%20program) discord.py!
 
-The latest and up-to-date usable discord.py version can be installed using `pip install -U discord.py`. If you get an error such as: `'git' is not recognized...`, it means that you don't have it installed on your platform. In that case, you will need to do do so by going through the required steps for [installing git](https://git-scm.com/downloads) and make sure to enable the `add to path` option while in the installation wizard. After installing git you can run `pip install -U discord.py` again to install discord.py 2.0.
+The latest and up-to-date usable discord.py version can be installed using `pip install -U discord.py`. If you get an error such as: `'git' is not recognized...`, it means that you don't have git installed on your platform. In that case, you will need to do so by going through the required steps for [installing git](https://git-scm.com/downloads) and make sure to enable the `add to path` option while in the installation wizard. After installing git you can run `pip install -U discord.py` again to install discord.py 2.0
 
 **BEFORE MIGRATING TO DISCORD.PY 2.0, PLEASE READ THE CONSEQUENCES OF THE UPDATE [HERE](https://discordpy.readthedocs.io/en/latest/migrating.html)**.
 
@@ -224,7 +224,7 @@ bot.run("token")
 ```
 
 __**EXPLANATION**__
-- The only difference used here is `group = app_commands.Group(name="uwu", description="...")` and `group.command`. `app_commands.Group` is used to initiate a group while `group.command` reGisters a command under a group. For example, the ping command can be run using **/ping** but this is not the case for group commands. They are reGistered with the format of `group_name command_name`. So here, the **command** command of the **uwu** group would be run using **/uwu command**. Note that only group commands can have a single space between them.
+- The only difference used here is `group = app_commands.Group(name="uwu", description="...")` and `group.command`. `app_commands.Group` is used to initiate a group while `group.command` registers a command under a group. For example, the ping command can be run using **/ping** but this is not the case for group commands. They are registered with the format of `group_name command_name`. So here, the **command** command of the **uwu** group would be run using **/uwu command**. Note that only group commands can have a single space between them.
 
 ---
 
@@ -263,8 +263,7 @@ bot.run("token")
 ```
 
 __**EXPLANATION**__
-- The only difference here too is that the `MySlashGroup` class directly subclasses the **Group** class from discord.app_commands which automatically reGisters all the methods within the group class to be commands of that specific group. So now, the commands such as `ping` can be run using **/uwu ping** and `command` using **/uwu command**.
-
+- The only difference here too is that the `MySlashGroup` class directly subclasses the **Group** class from discord.app_commands which automatically registers all the methods within the group class to be commands of that specific group. So now, the commands such as `ping` can be run using **/uwu ping** and `command` using **/uwu command**.
 
 # Some common methods and features used for Slash Commands.
 
@@ -340,7 +339,7 @@ Other methods that you can decorate the commands with are -
 
 ---
 
-Slash Commands within discord.py can be applied cooldowns to in order to prevent spamming of the commands. This can be done through the `discord.app_commands.checks.cooldown` method which can be used to decorate a slash command function and reGister a cooldown to the function. This raises a [CommandOnCooldown](https://discordpy.readthedocs.io/en/latest/interactions/api.html?highlight=checks%20cooldown#discord.app_commands.CommandOnCooldown) exception if the command is currently on cooldown.
+Slash Commands within discord.py can be applied cooldowns to in order to prevent spamming of the commands. This can be done through the `discord.app_commands.checks.cooldown` method which can be used to decorate a slash command function and register a cooldown to the function. This raises a [CommandOnCooldown](https://discordpy.readthedocs.io/en/latest/interactions/api.html?highlight=checks%20cooldown#discord.app_commands.CommandOnCooldown) exception if the command is currently on cooldown.
 An example is as follows.
 
 ```python
