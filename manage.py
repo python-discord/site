@@ -7,6 +7,7 @@ from pathlib import Path
 import django
 from django.contrib.auth import get_user_model
 from django.core.management import call_command, execute_from_command_line
+from django.test.utils import ignore_warnings
 
 DEFAULT_ENVS = {
     "DJANGO_SETTINGS_MODULE": "pydis_site.settings",
@@ -154,7 +155,16 @@ class SiteManager:
     def run_tests(self) -> None:
         """Prepare and run the test suite."""
         self.prepare_environment()
-        call_command(*sys.argv[1:])
+        # The whitenoise package expects a staticfiles directory to exist during startup,
+        # else it raises a warning. This is fine under normal application, but during
+        # tests, staticfiles are not, and do not need to be generated.
+        # The following line suppresses the warning.
+        # Reference: https://github.com/evansd/whitenoise/issues/215
+        with ignore_warnings(
+            message=r"No directory at: .*staticfiles",
+            module="whitenoise.base",
+        ):
+            call_command(*sys.argv[1:])
 
 
 def clean_up_static_files(build_folder: Path) -> None:
@@ -185,7 +195,7 @@ def main() -> None:
 
     # Pass any others directly to standard management commands
     else:
-        _static_build = "distill" in sys.argv[1]
+        _static_build = len(sys.argv) > 1 and "distill" in sys.argv[1]
 
         if _static_build:
             # Build a static version of the site with no databases and API support

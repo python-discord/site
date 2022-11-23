@@ -38,17 +38,22 @@ GITHUB_API = "https://api.github.com"
 GITHUB_TOKEN = env("GITHUB_TOKEN")
 GITHUB_APP_ID = env("GITHUB_APP_ID")
 GITHUB_APP_KEY = env("GITHUB_APP_KEY")
+GITHUB_TIMESTAMP_FORMAT = "%Y-%m-%dT%H:%M:%SZ"
+"""The datetime string format GitHub uses."""
+
+STATIC_BUILD: bool = env("STATIC_BUILD")
 
 if GITHUB_APP_KEY and (key_file := Path(GITHUB_APP_KEY)).is_file():
     # Allow the OAuth key to be loaded from a file
     GITHUB_APP_KEY = key_file.read_text(encoding="utf-8")
 
-sentry_sdk.init(
-    dsn=env('SITE_DSN'),
-    integrations=[DjangoIntegration()],
-    send_default_pii=True,
-    release=f"site@{GIT_SHA}"
-)
+if not STATIC_BUILD:
+    sentry_sdk.init(
+        dsn=env('SITE_DSN'),
+        integrations=[DjangoIntegration()],
+        send_default_pii=True,
+        release=f"site@{GIT_SHA}"
+    )
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -99,7 +104,7 @@ else:
 NON_STATIC_APPS = [
     'pydis_site.apps.api',
     'pydis_site.apps.staff',
-] if not env("STATIC_BUILD") else []
+] if not STATIC_BUILD else []
 
 INSTALLED_APPS = [
     *NON_STATIC_APPS,
@@ -128,25 +133,29 @@ INSTALLED_APPS = [
 if not env("BUILDING_DOCKER"):
     INSTALLED_APPS.append("django_prometheus")
 
-NON_STATIC_MIDDLEWARE = [
-    'django_prometheus.middleware.PrometheusBeforeMiddleware',
-] if not env("STATIC_BUILD") else []
+if STATIC_BUILD:
+    # The only middleware required during static builds
+    MIDDLEWARE = [
+        'django.contrib.sessions.middleware.SessionMiddleware',
+        'django.contrib.auth.middleware.AuthenticationMiddleware',
+        'django.contrib.messages.middleware.MessageMiddleware',
+    ]
+else:
+    # Ensure that Prometheus middlewares are first and last here.
+    MIDDLEWARE = [
+        'django_prometheus.middleware.PrometheusBeforeMiddleware',
 
-# Ensure that Prometheus middlewares are first and last here.
-MIDDLEWARE = [
-    *NON_STATIC_MIDDLEWARE,
+        'django.middleware.security.SecurityMiddleware',
+        'whitenoise.middleware.WhiteNoiseMiddleware',
+        'django.contrib.sessions.middleware.SessionMiddleware',
+        'django.middleware.common.CommonMiddleware',
+        'django.middleware.csrf.CsrfViewMiddleware',
+        'django.contrib.auth.middleware.AuthenticationMiddleware',
+        'django.contrib.messages.middleware.MessageMiddleware',
+        'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
-    'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-
-    'django_prometheus.middleware.PrometheusAfterMiddleware'
-]
+        'django_prometheus.middleware.PrometheusAfterMiddleware'
+    ]
 
 ROOT_URLCONF = 'pydis_site.urls'
 
@@ -175,7 +184,7 @@ WSGI_APPLICATION = 'pydis_site.wsgi.application'
 DATABASES = {
     'default': env.db(),
     'metricity': env.db('METRICITY_DB_URL'),
-} if not env("STATIC_BUILD") else {}
+} if not STATIC_BUILD else {}
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
@@ -200,7 +209,6 @@ AUTH_PASSWORD_VALIDATORS = [
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
-USE_L10N = True
 USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
