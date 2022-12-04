@@ -153,7 +153,7 @@ services:
 - `services` contains services to build and run. Read more about
   services [here](https://docs.docker.com/compose/compose-file/#services-top-level-element)
 - `main` is a service. We can call it whatever we would like to, not necessarily `main`
-- `build: .` is a path to search from Dockerfile, just like `docker build` command's dot
+- `build: .` is a path to search for Dockerfile, just like `docker build` command's dot
 - `container_name: mybot` is a container name to use for a bot, just like `docker run --name mybot`
 
 Update the project on VPS, remove the previous container with `docker rm -f mybot` and run this command
