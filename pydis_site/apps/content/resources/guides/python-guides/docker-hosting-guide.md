@@ -170,7 +170,7 @@ The main purpose of `docker-compose` is mostly to allow running several images a
 don't need this in discord bots.
 For us, it has the following benefits:
 
-- we can build and run the container just with one command
+- we can build and run the container with just one command
 - if we need to parse some environment variables or volumes (more about them further in tutorial) our run command would
   look like this
 
