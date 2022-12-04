@@ -17,7 +17,7 @@ description: This guide shows how to host a bot with Docker and GitHub Actions o
 
 - write Dockerfile
 - build Docker image and run the container
-- use docker-compose
+- use Docker Compose
 - make docker keep the files throughout the container's runs
 - parse environment variables into container
 - use GitHub Actions for automation
@@ -33,7 +33,7 @@ how to run it 24/7. You might have been suggested to use *screen multiplexer*, b
    run the bot again. You might have good extensions management that allows you to update the bot without restarting it,
    but there are some other cons as well
 2. If you update some dependencies, you have to update them manually
-3. The bot doesn't run in an isolated environment, which is not good for security
+3. The bot doesn't run in an isolated environment, which is not good for security.
 
 But there's a nice and easy solution to these problems - **Docker**! Docker is a containerization utility that automates
 some stuff like dependencies update and running the application in the background. So let's get started.
@@ -135,7 +135,7 @@ $ docker logs -f mybot
 
 If everything went successfully, your bot will go online and will keep running!
 
-## Using docker-compose
+## Using Docker Compose
 
 Just 2 commands to run a container is cool, but we can shorten it down to just 1 simple command. For that, create
 a `docker-compose.yml` file in project's root and fill it with the following contents:
@@ -148,7 +148,7 @@ services:
     container_name: mybot
 ```
 
-- `version` tells Docker what version of `docker-compose` to use. You may check all the
+- `version` tells Docker what version of Compose to use. You may check all the
   versions [here](https://docs.docker.com/compose/compose-file/compose-versioning/)
 - `services` contains services to build and run. Read more about
   services [here](https://docs.docker.com/compose/compose-file/#services-top-level-element)
@@ -159,15 +159,15 @@ services:
 Update the project on VPS, remove the previous container with `docker rm -f mybot` and run this command
 
 ```shell
-docker-compose up -d --build
+docker compose up -d --build
 ```
 
 Now the docker will automatically build the image for you and run the container.
 
 ### Why docker-compose
 
-The main purpose of `docker-compose` is mostly to allow running several images at once within one container. Mostly we
-don't need this in discord bots.
+The main purpose of Compose is to run several services at once. Mostly we
+don't need this in discord bots, however.
 For us, it has the following benefits:
 
 - we can build and run the container with just one command
@@ -178,7 +178,7 @@ For us, it has the following benefits:
 $ docker run -d --name mybot -e TOKEN=... -e WEATHER_API_APIKEY=... -e SOME_USEFUL_ENVIRONMENT_VARIABLE=... --net=host -v /home/exenifix/bot-data/data:/app/data -v /home/exenifix/bot-data/images:/app/data/images
 ```
 
-This is pretty long and unreadable. `docker-compose` allows us to transfer those flags into single config file and still
+This is pretty long and unreadable. Compose allows us to transfer those flags into single config file and still
 use just one short command to run the container.
 
 ## Creating Volumes
@@ -196,7 +196,7 @@ $ echo $(pwd)/mybot-data
 My path is `/home/exenifix/mybot-data`, yours is most likely **different**!
 
 2. In your project, store the files that need to be persistent in a separate directory (eg. `data`)
-3. Add the `volumes` construction to `docker-compose` so it looks like this:
+3. Add `volumes` to `docker-compose.yaml` so it looks like this:
 
 ```yml
 version: "3.8"
@@ -284,7 +284,7 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Run Container
-        run: docker-compose up -d --build
+        run: docker compose up -d --build
         env:
           TOKEN: ${{ secrets.TOKEN }}
 
