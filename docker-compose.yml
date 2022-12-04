@@ -11,7 +11,7 @@
 version: "3.8"
 services:
   postgres:
-    image: postgres:13-alpine
+    image: postgres:15-alpine
     ports:
       - "7777:5432"
     environment:

@@ -3,8 +3,9 @@ from collections import OrderedDict
 
 from django.db.models import Q
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import status
+from rest_framework import fields, status
 from rest_framework.decorators import action
+from rest_framework.exceptions import ParseError
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.request import Request
 from rest_framework.response import Response
@@ -137,6 +138,29 @@ class UserViewSet(ModelViewSet):
     #### Status codes
     - 200: returned on success
     - 404: if a user with the given `snowflake` could not be found
+
+    ### POST /bot/users/metricity_activity_data
+    Returns a mapping of user ID to message count in a given period for
+    the given user IDs.
+
+    #### Required Query Parameters
+    - days: how many days into the past to count message from.
+
+    #### Request Format
+    >>> [
+    ...     409107086526644234,
+    ...     493839819168808962
+    ... ]
+
+    #### Response format
+    >>> {
+    ...     "409107086526644234": 54,
+    ...     "493839819168808962": 0
+    ... }
+
+    #### Status codes
+    - 200: returned on success
+    - 400: if request body or query parameters were missing or invalid
 
     ### POST /bot/users
     Adds a single or multiple new users.
@@ -298,3 +322,34 @@ class UserViewSet(ModelViewSet):
             except NotFoundError:
                 return Response(dict(detail="User not found in metricity"),
                                 status=status.HTTP_404_NOT_FOUND)
+
+    @action(detail=False, methods=["POST"])
+    def metricity_activity_data(self, request: Request) -> Response:
+        """Request handler for metricity_activity_data endpoint."""
+        if "days" in request.query_params:
+            try:
+                days = int(request.query_params["days"])
+            except ValueError:
+                raise ParseError(detail={
+                    "days": ["This query parameter must be an integer."]
+                })
+        else:
+            raise ParseError(detail={
+                "days": ["This query parameter is required."]
+            })
+
+        user_id_list_validator = fields.ListField(
+            child=fields.IntegerField(min_value=0),
+            allow_empty=False
+        )
+        user_ids = [
+            str(user_id) for user_id in
+            user_id_list_validator.run_validation(request.data)
+        ]
+
+        with Metricity() as metricity:
+            data = metricity.total_messages_in_past_n_days(user_ids, days)
+
+        default_data = {user_id: 0 for user_id in user_ids}
+        response_data = default_data | dict(data)
+        return Response(response_data, status=status.HTTP_200_OK)

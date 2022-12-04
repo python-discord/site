@@ -11,6 +11,7 @@ import rest_framework.response
 import rest_framework.test
 from django.urls import reverse
 
+from pydis_site import settings
 from .. import github_utils
 
 
@@ -49,7 +50,7 @@ class CheckRunTests(unittest.TestCase):
         "head_sha": "sha",
         "status": "completed",
         "conclusion": "success",
-        "created_at": datetime.datetime.utcnow().strftime(github_utils.ISO_FORMAT_STRING),
+        "created_at": datetime.datetime.utcnow().strftime(settings.GITHUB_TIMESTAMP_FORMAT),
         "artifacts_url": "url",
     }
 
@@ -74,7 +75,7 @@ class CheckRunTests(unittest.TestCase):
         # to guarantee the right conclusion
         kwargs["created_at"] = (
             datetime.datetime.utcnow() - github_utils.MAX_RUN_TIME - datetime.timedelta(minutes=10)
-        ).strftime(github_utils.ISO_FORMAT_STRING)
+        ).strftime(settings.GITHUB_TIMESTAMP_FORMAT)
 
         with self.assertRaises(github_utils.RunTimeoutError):
             github_utils.check_run_status(github_utils.WorkflowRun(**kwargs))
@@ -178,7 +179,7 @@ class ArtifactFetcherTests(unittest.TestCase):
                 run = github_utils.WorkflowRun(
                     name="action_name",
                     head_sha="action_sha",
-                    created_at=datetime.datetime.now().strftime(github_utils.ISO_FORMAT_STRING),
+                    created_at=datetime.datetime.now().strftime(settings.GITHUB_TIMESTAMP_FORMAT),
                     status="completed",
                     conclusion="success",
                     artifacts_url="artifacts_url"
