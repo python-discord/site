@@ -226,7 +226,7 @@ as **actions secrets**. Let's add your discord bot's token as a secret
 
 1. Head to your repository page -> Settings -> Secrets -> Actions
 2. Press `New repository secret`
-3. Give it a name like `TOKEN` and paste the token
+3. Give it a name like `TOKEN` and paste the token.
    Now we will be able to access its value in workflow like `${{ secrets.TOKEN }}`. However, we also need to parse the
    variable into container now. Edit `docker-compose` so it looks like this:
 
