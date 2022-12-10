@@ -1,6 +1,9 @@
 from rest_framework.exceptions import ParseError
+from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
+
+from . import github_utils
 
 
 class HealthcheckView(APIView):
@@ -34,12 +37,14 @@ class RulesView(APIView):
 
     ## Routes
     ### GET /rules
-    Returns a JSON array containing the server's rules:
+    Returns a JSON array containing the server's rules
+    and keywords relating to each rule.
+    Example response:
 
     >>> [
-    ...     "Eat candy.",
-    ...     "Wake up at 4 AM.",
-    ...     "Take your medicine."
+    ...     ["Eat candy.", ["candy", "sweets"]],
+    ...     ["Wake up at 4 AM.", ["wake_up", "early", "early_bird"]],
+    ...     ["Take your medicine.", ["medicine", "health"]]
     ... ]
 
     Since some of the the rules require links, this view
@@ -97,6 +102,12 @@ class RulesView(APIView):
 
     # `format` here is the result format, we have a link format here instead.
     def get(self, request, format=None):  # noqa: D102,ANN001,ANN201
+        """
+        Returns a list of our community rules coupled with their keywords.
+
+        Each item in the returned list is a tuple with the rule as first item
+        and a list of keywords that match that rules as second item.
+        """
         link_format = request.query_params.get('link_format', 'md')
         if link_format not in ('html', 'md'):
             raise ParseError(
@@ -121,34 +132,93 @@ class RulesView(APIView):
 
         return Response([
             (
-                f"Follow the {pydis_coc}."
+                f"Follow the {pydis_coc}.",
+                ["coc", "conduct", "code"]
             ),
             (
-                f"Follow the {discord_community_guidelines} and {discord_tos}."
+                f"Follow the {discord_community_guidelines} and {discord_tos}.",
+                ["discord", "guidelines", "discord_tos"]
             ),
             (
-                "Respect staff members and listen to their instructions."
+                "Respect staff members and listen to their instructions.",
+                ["respect", "staff", "instructions"]
             ),
             (
                 "Use English to the best of your ability. "
-                "Be polite if someone speaks English imperfectly."
+                "Be polite if someone speaks English imperfectly.",
+                ["english", "language"]
             ),
             (
                 "Do not provide or request help on projects that may break laws, "
-                "breach terms of services, or are malicious or inappropriate."
+                "breach terms of services, or are malicious or inappropriate.",
+                ["infraction", "tos", "breach", "malicious", "inappropriate"]
             ),
             (
-                "Do not post unapproved advertising."
+                "Do not post unapproved advertising.",
+                ["ad", "ads", "advert", "advertising"]
             ),
             (
                 "Keep discussions relevant to the channel topic. "
-                "Each channel's description tells you the topic."
+                "Each channel's description tells you the topic.",
+                ["off-topic", "topic", "relevance"]
             ),
             (
                 "Do not help with ongoing exams. When helping with homework, "
-                "help people learn how to do the assignment without doing it for them."
+                "help people learn how to do the assignment without doing it for them.",
+                ["exam", "exams", "assignment", "assignments", "homework"]
             ),
             (
-                "Do not offer or ask for paid work of any kind."
+                "Do not offer or ask for paid work of any kind.",
+                ["paid", "work", "money"]
             ),
         ])
+
+
+class GitHubArtifactsView(APIView):
+    """
+    Provides utilities for interacting with the GitHub API and obtaining action artifacts.
+
+    ## Routes
+    ### GET /github/artifacts
+    Returns a download URL for the artifact requested.
+
+        {
+            'url': 'https://pipelines.actions.githubusercontent.com/...'
+        }
+
+    ### Exceptions
+    In case of an error, the following body will be returned:
+
+        {
+            "error_type": "<error class name>",
+            "error": "<error description>",
+            "requested_resource": "<owner>/<repo>/<sha>/<artifact_name>"
+        }
+
+    ## Authentication
+    Does not require any authentication nor permissions.
+    """
+
+    authentication_classes = ()
+    permission_classes = ()
+
+    def get(
+        self,
+        request: Request,
+        *,
+        owner: str,
+        repo: str,
+        sha: str,
+        action_name: str,
+        artifact_name: str
+    ) -> Response:
+        """Return a download URL for the requested artifact."""
+        try:
+            url = github_utils.get_artifact(owner, repo, sha, action_name, artifact_name)
+            return Response({"url": url})
+        except github_utils.ArtifactProcessingError as e:
+            return Response({
+                "error_type": e.__class__.__name__,
+                "error": str(e),
+                "requested_resource": f"{owner}/{repo}/{sha}/{action_name}/{artifact_name}"
+            }, status=e.status)

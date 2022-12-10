@@ -1,7 +1,7 @@
 from django.urls import include, path
 from rest_framework.routers import DefaultRouter
 
-from .views import HealthcheckView, RulesView
+from .views import GitHubArtifactsView, HealthcheckView, RulesView
 from .viewsets import (
     AocAccountLinkViewSet,
     AocCompletionistBlockViewSet,
@@ -86,5 +86,10 @@ urlpatterns = (
     # from django_hosts.resolvers import reverse
     path('bot/', include((bot_router.urls, 'api'), namespace='bot')),
     path('healthcheck', HealthcheckView.as_view(), name='healthcheck'),
-    path('rules', RulesView.as_view(), name='rules')
+    path('rules', RulesView.as_view(), name='rules'),
+    path(
+        'github/artifact/<str:owner>/<str:repo>/<str:sha>/<str:action_name>/<str:artifact_name>',
+        GitHubArtifactsView.as_view(),
+        name="github-artifacts"
+    ),
 )

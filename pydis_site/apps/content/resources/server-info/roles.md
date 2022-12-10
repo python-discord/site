@@ -28,8 +28,12 @@ There are multiple requirements listed there for getting the role.
 This includes writing pull requests for open issues, and also for reviewing open pull requests (**we really need reviewers!**)
 
 **How to get it:** Contribute to the projects!
-There is no minimum requirements, but the role is **not** assigned for every single contribution.
-Read more about this in the [Guidelines for the Contributors Role](/pages/contributing/#guidelines-for-the-contributors-role) on the Contributing page.
+It’s difficult to precisely quantify contributions, but we’ve come up with the following guidelines for the role:
+
+- The member has made several significant contributions to our projects.
+- The member has a positive influence in our contributors subcommunity.
+
+The role will be assigned at the discretion of the Admin Team in consultation with the Core Developers Team. Check out our [walkthrough](/pages/contributing/) to get started contributing.
 
 ---
 
