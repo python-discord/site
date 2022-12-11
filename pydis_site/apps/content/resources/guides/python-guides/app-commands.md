@@ -29,6 +29,7 @@ Slash commands in discord.py are held by a container, [CommandTree](https://disc
 
 One new feature added in discord.py v2 is `setup_hook`. `setup_hook` is a special asynchronous method of the Client and Bot classes which can be overwritten to perform numerous tasks. This method is safe to use as it is always triggered before any events are dispatched, i.e. this method is triggered before the *IDENTIFY* payload is sent to the discord gateway.
 Note that methods of the Bot class such as `change_presence` will not work in setup_hook as the current application does not have an active connection to the gateway at this point.
+A full list of commands you can't use in setup_hook can be found [here](https://discord.com/developers/docs/topics/gateway-events#send-events).
 
 __**THE FOLLOWING ARE EXAMPLES OF HOW A `SETUP_HOOK` FUNCTION CAN BE DEFINED**__
 
@@ -283,7 +284,7 @@ async def _time(interaction: discord.Interaction, time_to_wait: int):
     # -------------------------------------------------------------
     await interaction.edit_original_response(content=f"I will notify you after {time_to_wait} seconds have passed!")
     await asyncio.sleep(time_to_wait)
-    await interaction.edit_original_message(content=f"{interaction.user.mention}, {time_to_wait} seconds have already passed!")
+    await interaction.edit_original_response(content=f"{interaction.user.mention}, {time_to_wait} seconds have already passed!")
 ```
 
 # Checking for Permissions and Roles!
