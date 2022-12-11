@@ -34,7 +34,6 @@ There are 4 easy needed steps to make this happen
 
 1. Navigate to the **Python Help System** category.<br>
 ![Python help system category](/static/images/content/help_channels/help-system-category.png)
-
 2. Open the **python-help** forum channel.
 3. Click on the **New Post** button in the top-right corner.<br>
 ![New post button](/static/images/content/help_channels/new-post-button.png)
