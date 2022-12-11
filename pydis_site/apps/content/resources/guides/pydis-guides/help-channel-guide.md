@@ -40,7 +40,7 @@ There are 4 easy needed steps to make this happen
 ![New post button](/static/images/content/help_channels/new-post-button.png)
 4. Choose a brief title that best describes your issue, along with a message explaining it more in details, and **post** it.
 Note that you can also choose one or more tags which can help attract experts of that tag easily.<br>
-![Create new post](static/images/content/help_channels/new-post-form.png)
+![Create new post](/static/images/content/help_channels/new-post-form.png)
 
 Be sure to [ask questions with enough information](../asking-good-questions) in order to give yourself the best chances of getting help!
 
