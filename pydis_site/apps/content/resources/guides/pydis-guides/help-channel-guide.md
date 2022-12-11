@@ -33,12 +33,17 @@ Help forum posts can be used for all Python-related help, and have the advantage
 There are 4 easy needed steps to make this happen
 
 1. Navigate to the **Python Help System** category.
+
 ![Python help system category](/static/images/content/help_channels/help-system-category.png)
-2. Open the **python-help** forum channel.
-3. Click on the **New Post** button in the top-right corner.
+3. Open the **python-help** forum channel.
+4. Click on the **New Post** button in the top-right corner.
 ![New post button](/static/images/content/help_channels/new-post-button.png)
-4. Choose a brief title that best describes your issue, along with a message explaining it more in details, and **post** it. Be sure to [ask questions with enough information](../asking-good-questions) in order to give yourself the best chances of getting help!
+5. Choose a brief title that best describes your issue, along with a message explaining it more in details, and **post** it.
+Note that you can also choose one or more tags which can help attract experts of that tag easily.
+
 ![Create new post](/static/images/content/help_channels/new-post-form.png)
+
+Be sure to [ask questions with enough information](../asking-good-questions) in order to give yourself the best chances of getting help!
 
 At this point you will have the **Help Cooldown** role which will remain on your profile until you close your newly created post. This ensures that users can only have one post at any given time, giving everyone a chance to have their question seen.
 
