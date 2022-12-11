@@ -32,19 +32,14 @@ Help forum posts can be used for all Python-related help, and have the advantage
 
 There are 4 easy needed steps to make this happen
 
-1. Navigate to the **Python Help System** category.
-
+1. Navigate to the **Python Help System** category.<br>
 ![Python help system category](/static/images/content/help_channels/help-system-category.png)
 
 2. Open the **python-help** forum channel.
-
-3. Click on the **New Post** button in the top-right corner.
-
+3. Click on the **New Post** button in the top-right corner.<br>
 ![New post button](/static/images/content/help_channels/new-post-button.png)
-
 4. Choose a brief title that best describes your issue, along with a message explaining it more in details, and **post** it.
-Note that you can also choose one or more tags which can help attract experts of that tag easily.
-
+Note that you can also choose one or more tags which can help attract experts of that tag easily.<br>
 ![Create new post](static/images/content/help_channels/new-post-form.png)
 
 Be sure to [ask questions with enough information](../asking-good-questions) in order to give yourself the best chances of getting help!
