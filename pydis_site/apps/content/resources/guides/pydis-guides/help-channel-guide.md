@@ -37,12 +37,15 @@ There are 4 easy needed steps to make this happen
 ![Python help system category](/static/images/content/help_channels/help-system-category.png)
 
 2. Open the **python-help** forum channel.
+
 3. Click on the **New Post** button in the top-right corner.
+
 ![New post button](/static/images/content/help_channels/new-post-button.png)
+
 4. Choose a brief title that best describes your issue, along with a message explaining it more in details, and **post** it.
 Note that you can also choose one or more tags which can help attract experts of that tag easily.
 
-![Create new post](/static/images/content/help_channels/new-post-form.png)
+![Create new post](static/images/content/help_channels/new-post-form.png)
 
 Be sure to [ask questions with enough information](../asking-good-questions) in order to give yourself the best chances of getting help!
 
@@ -65,7 +68,7 @@ If you feel like your question is continuously being overlooked, read our guide 
 
 ### My question was answered. What do I do?
 
-Go ahead and use of the `!close` or `!solved` commands if you've satisfactorily solved your problem. You will only be able to run this command in your own post, and no one (outside of staff) will be able to close your post for you.
+Go ahead and use one of the `!close` or `!solved` commands if you've satisfactorily solved your problem. You will only be able to run this command in your own post, and no one (outside of staff) will be able to close your post for you.
 
 Closing your post once you are finished leads to less occupied ones, which means more attention can be given to other users that still need help.
 
