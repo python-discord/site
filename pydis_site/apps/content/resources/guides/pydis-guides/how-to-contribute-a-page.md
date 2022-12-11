@@ -169,7 +169,7 @@ path = os.path.join("foo", "bar")
 ### HTML Attributes
 To add HTML attributes to certain lines/paragraphs, [see this page](https://python-markdown.github.io/extensions/attr_list/#the-list) for the format and where to put it.
 
-This can be useful for setting the image size when adding an image using markdown (see the [Image Captions](#image-captions) section for an example), or for adding bulma styles to certain elements (like the warning notification [here](/pages/guides/pydis-guides/contributing/sir-lancebot#setup-instructions)).<br>
+This can be useful for setting the image size when adding an image using markdown (see the [Image Captions](#image-captions) section for an example), or for adding bulma styles to certain elements (like the warning notification [here](/pages/guides/pydis-guides/contributing/sir-lancebot#run-with-docker)).<br>
 **This should be used sparingly, as it reduces readability and simplicity of the article.**
 
 ---
