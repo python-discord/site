@@ -9,7 +9,7 @@ relevant_links:
 toc: 3
 ---
 
-At Python Discord we have two different kinds of help channels: **topical help channels** and **forum posts**.
+At Python Discord we have two different kinds of help channels: **topical help channels** and **help forum posts**.
 
 # Topical Help Channels
 
