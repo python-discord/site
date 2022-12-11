@@ -112,16 +112,16 @@ You have the source code on your local computer, now how do you actually run it?
 ### 3. Read our Contributing Guidelines
 We have a few short rules that all contributors must follow. Make sure you read and follow them while working on our projects.
 
-[**Contributing Guidelines**](./contributing-guidelines/).
+[**Read our Contributing Guidelines here.**](./contributing-guidelines/)
 
 As mentioned in the Contributing Guidelines, we have a simple style guide for our projects based on PEP 8. Give it a read to keep your code consistent with the rest of the codebase.
 
-[**Style Guide**](./style-guide/)
+[**Read our Style Guide here.**](./style-guide/)
 
 ### 4. Create an issue
 The first step to any new contribution is an issue describing a problem with the current codebase or proposing a new feature. All the open issues are viewable on the GitHub repositories, for instance here is the [issues page for Sir Lancebot](https://github.com/python-discord/sir-lancebot/issues). If you have something that you want to implement open a new issue to present your idea. Otherwise, you can browse the unassigned issues and ask to be assigned to one that you're interested in, either in the comments on the issue or in the [`#dev-contrib`](https://discord.gg/2h3qBv8Xaa) channel on Discord.
 
-[**How to write a good issue**](./issues/)
+[**Find out how to write a good issue here.**](./issues/)
 
 Don't move forward until your issue is approved by a Core Developer. Issues are not guaranteed to be approved so your work may be wasted.
 {: .notification .is-warning }
