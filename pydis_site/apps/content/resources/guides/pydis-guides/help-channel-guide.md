@@ -57,12 +57,12 @@ Once you click on `Post`, these events take place:<br>
 #### Example
 Suppose we're trying to find the minimum value in a list of integers.
 Once we've chosen our title and message content, we are ready to make a new post.<br><br>
-![Filled form example](C:\Users\AmrouBellalouna\PycharmProjects\python-discord-site\pydis_site/static/images/content/help_channels/question-example.png)<br><br>
+![Filled form example](/static/images/content/help_channels/question-example.png)<br><br>
 Note how we've checked the **Algos & data structs** tag here, whose circumference is highlighted in blue, since this is a question about an algorithm to find the minimum.<br>
 This will greatly help others pinpoint where they can help you best based on a combination of your title and tag from a first glance.<br><br>
 Once you click on post, a new channel is created, and you can see the original message on top along with the `OP` tag next to the poster's avatar.<br>
 You will also see the message that our Python bot sends instantly right after yours.<br><br>
-![Newly created thread example](C:\Users\AmrouBellalouna\PycharmProjects\python-discord-site\pydis_site/static/images/content/help_channels/newly-created-thread-example.png)
+![Newly created thread example](/static/images/content/help_channels/newly-created-thread-example.png)
 
 ### How long does my help post stay active?
 
