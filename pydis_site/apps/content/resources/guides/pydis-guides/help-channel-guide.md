@@ -49,10 +49,11 @@ At this point you will have the **Help Cooldown** role which will remain on your
 
 ### I created a new help post, what happens now?
 Once you click on `Post`, these events take place:
-1. A new channel will be created for you, and you'll be marked as the `Original Poster` (or `OP`) of that channel.<br>
+1. A new channel will be created for you and you'll have an `OP` next to you username, which tells people you're the `Original Poster`, or in other words, the owner of the help topic in that channel.<br>
 2. Your original question/message will always be the first one in that channel.<br>
 3. Our Python Bot will send a message reminding you of what you should include in your question/message in case you could have missed anything.<br>
-4. People will be able to jump on that channel and you can have a discussion with anyone who's volunteering to help you by asking as many followup questions as you want.
+4. People will be able to jump on that channel and you can have a discussion with anyone who's volunteering to help you by asking as many followup questions as you want.<br>
+
 
 ### How long does my help post stay active?
 
