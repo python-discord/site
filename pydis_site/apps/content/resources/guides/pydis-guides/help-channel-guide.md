@@ -48,20 +48,21 @@ At this point you will have the **Help Cooldown** role which will remain on your
 # Frequently Asked Questions
 
 ### I created a new help post, what happens now?
-Once you click on `Post`, these events take place:
+Once you click on `Post`, these events take place:<br>
 1. A new channel will be created for you, and you'll have an `OP` next to you username, which tells people you're the `Original Poster`, or in other words, the owner of the help topic in that channel.<br>
 2. Your original question/message will always be the first one in that channel.<br>
-3. Our Python Bot will send a message reminding you of what you should include in your question/message in case you could have missed anything.<br>
+3. Our Python bot will send a message reminding you of what you should include in your question/message in case you could have missed anything.<br>
 4. People will be able to jump on that channel, and you can have a discussion with anyone who's volunteering to help you by asking as many followup questions as you want.<br>
 
 #### Example
-Suppose we're trying to find the minimum value in a list of integers.<br>
-Once we've chosen our title and message content, we are ready to post.<br>
-![Filled form example](/static/images/content/help_channels/question-example.png)<br>
+Suppose we're trying to find the minimum value in a list of integers.
+Once we've chosen our title and message content, we are ready to make a new post.<br><br>
+![Filled form example](C:\Users\AmrouBellalouna\PycharmProjects\python-discord-site\pydis_site/static/images/content/help_channels/question-example.png)<br><br>
 Note how we've checked the **Algos & data structs** tag here, whose circumference is highlighted in blue, since this is a question about an algorithm to find the minimum.<br>
-Once you click on post, a new channel is created, and you can see the original message on top along with the `OP` tag next to the poster's avater.<br>
-You can also see the message that our Python bot sends instantly right after you.<br>
-![Newly created thread example](/static/images/content/help_channels/newly-created-thread-example.png)
+This will greatly help others pinpoint where they can help you best based on a combination of your title and tag from a first glance.<br><br>
+Once you click on post, a new channel is created, and you can see the original message on top along with the `OP` tag next to the poster's avatar.<br>
+You will also see the message that our Python bot sends instantly right after yours.<br><br>
+![Newly created thread example](C:\Users\AmrouBellalouna\PycharmProjects\python-discord-site\pydis_site/static/images/content/help_channels/newly-created-thread-example.png)
 
 ### How long does my help post stay active?
 
