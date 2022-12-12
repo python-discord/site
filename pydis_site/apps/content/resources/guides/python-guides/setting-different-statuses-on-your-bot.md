@@ -5,11 +5,13 @@ description: How to personalize your Discord bot status
 
 You've probably seen a bot or two have a status message under their username in the member bar set to something such as `Playing Commands: .help`.
 
-This guide shows how to set such a presence, so your bot can have one as well.
+This guide shows how to set such a status, so your bot can have one as well.
 
 **Please note:**
 
-If you want to change the bot status, it is suggested to not do so during the on_ready event, since it would be called many times and making an API call on that event has a chance to disconnect the bot.
+If you want to change the bot status, it is suggested to not do so during the `on_ready` event, since it would be called many times and making an API call on that event has a chance to disconnect the bot.
+
+The status should not have a problem being set during runtime with `change_presence`, in the examples shown below.
 
 Instead, set the desired status using the activity / status kwarg of commands.Bot, for example:
 ```python
