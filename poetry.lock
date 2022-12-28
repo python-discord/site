@@ -162,7 +162,7 @@ bcrypt = ["bcrypt"]
 
 [[package]]
 name = "django-distill"
-version = "3.0.1"
+version = "3.0.2"
 description = "Static site renderer and publisher for Django."
 category = "main"
 optional = false
@@ -903,7 +903,7 @@ brotli = ["Brotli"]
 [metadata]
 lock-version = "1.1"
 python-versions = "3.10.*"
-content-hash = "b936bb56bbd48a7fa3698b56ebc895287f3d82e56e423b808c173c7ab0c8fb6c"
+content-hash = "665e382448c5a673383213abbea5bdc58ab3228a4894a211aeeee3e0a8f67fde"
 
 [metadata.files]
 anyio = [
@@ -1093,7 +1093,7 @@ django = [
     {file = "Django-4.1.4.tar.gz", hash = "sha256:d38a4e108d2386cb9637da66a82dc8d0733caede4c83c4afdbda78af4214211b"},
 ]
 django-distill = [
-    {file = "django-distill-3.0.1.tar.gz", hash = "sha256:8bbac5e45d2afc61cc718d587c6026267c985305f5e599465f2ebc4b0cba9ebf"},
+    {file = "django-distill-3.0.2.tar.gz", hash = "sha256:01df70e595c6ba4fee4baa5511b0bdea42388bfec409aeb70000315f109a993f"},
 ]
 django-environ = [
     {file = "django-environ-0.9.0.tar.gz", hash = "sha256:bff5381533056328c9ac02f71790bd5bf1cea81b1beeb648f28b81c9e83e0a21"},
