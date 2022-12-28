@@ -1,6 +1,6 @@
 ---
 title: Subclassing Context
-description: "Subclassing the default `commands.Context` class to add more functionability and customisability."
+description: "Subclassing the default `commands.Context` class to add more functionability and customizability."
 ---
 
 Start by reading the guide on [subclassing the `Bot` class](./subclassing_bot.md). A subclass of Bot has to be used to
@@ -20,6 +20,7 @@ The first part - of course - is creating the actual context subclass. This is do
 subclass, it will look like this:
 
 ```python
+import asyncio
 from typing import Optional
 
 from discord import RawReactionActionEvent
@@ -45,10 +46,14 @@ class CustomContext(commands.Context):
         """
         msg = await self.send(message)
 
-        for reaction in ('\N{WHITE HEAVY CHECK MARK}', '\N{CROSS MARK}'):
+        for reaction in ('✅', '❌'):
             await msg.add_reaction(reaction)
 
         confirmation = None
+
+        # This function is a closure because it is defined inside of another
+        # function. This allows the function to access the self and msg
+        # variables defined above.
 
         def check(payload: RawReactionActionEvent):
             # 'nonlocal' works almost like 'global' except for functions inside of
@@ -100,16 +105,24 @@ class CustomBot(commands.Bot):
 Now that discord.py is using your custom context, you can use it in a command. For example:
 
 ```python
+import discord
 from discord.ext import commands
 
+# Enable the message intent so that we get message content. This is needed for
+# the commands we define below 
+intents = discord.Intents.default()
+intents.message_content = True
 
-bot = CustomBot(...)  # Replace with the arguments for the bot
+
+# Replace '...' with any additional arguments for the bot
+bot = CustomBot(intents=intents, ...)
 
 
 @bot.command()
 async def massban(ctx: CustomContext, members: commands.Greedy[discord.Member]):
-    if not await ctx.prompt(f"Are you sure you want to ban {len(members)}?"):
-        # Return if the author cancelled, or didn't react
+    prompt = await ctx.prompt(f"Are you sure you want to ban {len(members)} members?")
+    if not prompt:
+        # Return if the author cancelled, or didn't react in time
         return
 
     ...  # Perform the mass-ban, knowing the author has confirmed this action
