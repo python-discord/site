@@ -9,7 +9,7 @@ relevant_links:
 toc: 2
 ---
 
-Python Discord has a lot of people asking questions, be it in the help channels, topical channels, or any other part of the server.
+Python Discord has a lot of people asking questions, be it in the help forum, topical channels, or any other part of the server.
 Therefore, you might sometimes want to give people the answers you have in mind.
 But you might not be sure how best to approach the issue, or maybe you'd like to see how others handle it.
 This article aims to present a few of the general principles which guide the staff on a day-to-day basis on the server.
@@ -64,7 +64,7 @@ At other times, it might not be as obvious, and it might be a good idea to kindl
 The path is often more important than the answer.
 Your goal should primarily be to allow the helpee to apply, at least to a degree, the concepts you introduce in your answer.
 Otherwise, they might keep struggling with the same problem over and over again.
-That means that simply showing your answer might close the help channel for the moment, but won't be very helpful in the long-term.
+That means that simply showing your answer might close the help post for the moment, but won't be very helpful in the long-term.
 
 A common approach is to walk the helpee through to an answer:
 
