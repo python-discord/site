@@ -26,7 +26,7 @@ PyJWT = {version = "2.6.0", extras = ["crypto"]}
 pymdown-extensions = "9.9"
 
 [tool.poetry.dev-dependencies]
-coverage = "7.0.1"
+coverage = "7.0.5"
 flake8 = "6.0.0"
 flake8-annotations = "2.9.1"
 flake8-bandit = "4.1.1"
