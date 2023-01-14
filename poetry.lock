@@ -1476,14 +1476,14 @@ testing = ["coverage (>=6.2)", "coverage-enable-subprocess (>=1)", "flaky (>=3.7
 
 [[package]]
 name = "whitenoise"
-version = "6.2.0"
+version = "6.3.0"
 description = "Radically simplified static file serving for WSGI applications"
 category = "main"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "whitenoise-6.2.0-py3-none-any.whl", hash = "sha256:8e9c600a5c18bd17655ef668ad55b5edf6c24ce9bdca5bf607649ca4b1e8e2c2"},
-    {file = "whitenoise-6.2.0.tar.gz", hash = "sha256:8fa943c6d4cd9e27673b70c21a07b0aa120873901e099cd46cab40f7cc96d567"},
+    {file = "whitenoise-6.3.0-py3-none-any.whl", hash = "sha256:cf8ecf56d86ba1c734fdb5ef6127312e39e92ad5947fef9033dc9e43ba2777d9"},
+    {file = "whitenoise-6.3.0.tar.gz", hash = "sha256:fe0af31504ab08faa1ec7fc02845432096e40cc1b27e6a7747263d7b30fb51fa"},
 ]
 
 [package.extras]
@@ -1492,4 +1492,4 @@ brotli = ["Brotli"]
 [metadata]
 lock-version = "2.0"
 python-versions = "3.10.*"
-content-hash = "663942793fd99eef0fba4eac4b51afb63b25e0da9bfb6717ac1805351472061e"
+content-hash = "b2d445b85f990dd10f136346306b7de92234fb4889b37ca4730676f77e720e23"
