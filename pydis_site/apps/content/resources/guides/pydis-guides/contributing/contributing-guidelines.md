@@ -12,7 +12,7 @@ We have simple but strict style rules that are enforced through linting.
 Not all of the style rules are enforced by linting, so make sure to read the [style guide](../style-guide/) as well.
 2. **Make great commits.**
 Great commits should be atomic, with a commit message explaining what and why.
-Check out [Writing Good Commit Messages](./commit-messages) for details.
+Check out [Writing Good Commit Messages](../commit-messages/) for details.
 3. **Do not open a pull request if you aren't assigned to the issue.**
 If someone is already working on it, consider offering to collaborate with that person.
 4. **Use assets licensed for public use.**

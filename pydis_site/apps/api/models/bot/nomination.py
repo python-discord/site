@@ -35,6 +35,10 @@ class Nomination(ModelReprMixin, models.Model):
         default=False,
         help_text="Whether a review was made."
     )
+    thread_id = models.BigIntegerField(
+        help_text="The nomination vote's thread id.",
+        null=True,
+    )
 
     def __str__(self):
         """Representation that makes the target and state of the nomination immediately evident."""
