@@ -1,5 +1,5 @@
 ---
-title: Subclassing Context
+title: Subclassing Context in discord.py
 description: "Subclassing the default `commands.Context` class to add more functionability and customizability."
 ---
 
