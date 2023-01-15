@@ -622,15 +622,15 @@ files = [
 smmap = ">=3.0.1,<6"
 
 [[package]]
-name = "GitPython"
-version = "3.1.29"
+name = "gitpython"
+version = "3.1.30"
 description = "GitPython is a python library used to interact with Git repositories"
 category = "dev"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "GitPython-3.1.29-py3-none-any.whl", hash = "sha256:41eea0deec2deea139b459ac03656f0dd28fc4a3387240ec1d3c259a2c47850f"},
-    {file = "GitPython-3.1.29.tar.gz", hash = "sha256:cc36bfc4a3f913e66805a28e84703e419d9c264c1077e537b54f0e1af85dbefd"},
+    {file = "GitPython-3.1.30-py3-none-any.whl", hash = "sha256:cd455b0000615c60e286208ba540271af9fe531fa6a87cc590a7298785ab2882"},
+    {file = "GitPython-3.1.30.tar.gz", hash = "sha256:769c2d83e13f5d938b7688479da374c4e3d49f71549aaf462b646db9602ea6f8"},
 ]
 
 [package.dependencies]
@@ -1115,14 +1115,14 @@ tests = ["coverage[toml] (==5.0.4)", "pytest (>=6.0.0,<7.0.0)"]
 
 [[package]]
 name = "pymdown-extensions"
-version = "9.9"
+version = "9.9.1"
 description = "Extension pack for Python Markdown."
 category = "main"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "pymdown_extensions-9.9-py3-none-any.whl", hash = "sha256:ac698c15265680db5eb13cd4342abfcde2079ac01e5486028f47a1b41547b859"},
-    {file = "pymdown_extensions-9.9.tar.gz", hash = "sha256:0f8fb7b74a37a61cc34e90b2c91865458b713ec774894ffad64353a5fce85cfc"},
+    {file = "pymdown_extensions-9.9.1-py3-none-any.whl", hash = "sha256:8a8973933ab45b6fe8f5f8da1de25766356b1f91dee107bf4a34efd158dc340b"},
+    {file = "pymdown_extensions-9.9.1.tar.gz", hash = "sha256:abed29926960bbb3b40f5ed5fa6375e29724d4e3cb86ced7c2bbd37ead1afeea"},
 ]
 
 [package.dependencies]
@@ -1492,4 +1492,4 @@ brotli = ["Brotli"]
 [metadata]
 lock-version = "2.0"
 python-versions = "3.10.*"
-content-hash = "b2d445b85f990dd10f136346306b7de92234fb4889b37ca4730676f77e720e23"
+content-hash = "77cce32c3f20953bbbe109eb8c7965f95f4c3079262452842799178e52206bdc"
