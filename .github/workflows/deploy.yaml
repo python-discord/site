@@ -30,6 +30,8 @@ jobs:
         with:
           repository: python-discord/kubernetes
 
+      - uses: azure/setup-kubectl@v3
+
       - name: Authenticate with Kubernetes
         uses: azure/k8s-set-context@v1
         with:
@@ -42,7 +44,6 @@ jobs:
           manifests: |
               namespaces/default/site/deployment.yaml
           images: 'ghcr.io/python-discord/site:${{ steps.sha_tag.outputs.tag }}'
-          kubectl-version: 'latest'
 
       - name: Purge Cloudflare Edge Cache
         uses: jakejarvis/cloudflare-purge-action@master
