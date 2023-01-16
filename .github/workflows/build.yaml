@@ -23,7 +23,7 @@ jobs:
           echo "::set-output name=tag::$tag"
 
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       # The current version (v2) of Docker's build-push action uses
       # buildx, which comes with BuildKit features that help us speed
