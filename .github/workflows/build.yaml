@@ -20,7 +20,7 @@ jobs:
         id: sha_tag
         run: |
           tag=$(cut -c 1-7 <<< $GITHUB_SHA)
-          echo "::set-output name=tag::$tag"
+          echo "tag=$tag" >> $GITHUB_OUTPUT
 
       - name: Checkout code
         uses: actions/checkout@v3
