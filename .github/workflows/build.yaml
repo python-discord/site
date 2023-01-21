@@ -20,12 +20,12 @@ jobs:
         id: sha_tag
         run: |
           tag=$(cut -c 1-7 <<< $GITHUB_SHA)
-          echo "::set-output name=tag::$tag"
+          echo "tag=$tag" >> $GITHUB_OUTPUT
 
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # The current version (v2) of Docker's build-push action uses
+      # The current version (v3) of Docker's build-push action uses
       # buildx, which comes with BuildKit features that help us speed
       # up our builds using additional cache features. Buildx also
       # has a lot of other features that are not as relevant to us.
