@@ -1,19 +1,13 @@
 import contextlib
 from dataclasses import dataclass
+from datetime import timedelta
 from typing import Any, Dict, Tuple, Type
 
 from django.db.models import Model
-from django_hosts import reverse
+from django.urls import reverse
 
-from pydis_site.apps.api.models.bot.filters import (  # noqa: I101 - Preserving the filter order
-    FilterList,
-    FilterSettings,
-    FilterAction,
-    ChannelRange,
-    Filter,
-    FilterOverride
-)
-from pydis_site.apps.api.tests.base import APISubdomainTestCase
+from pydis_site.apps.api.models.bot.filters import FilterList, Filter
+from pydis_site.apps.api.tests.base import AuthenticatedAPITestCase
 
 
 @dataclass()
@@ -21,99 +15,76 @@ class TestSequence:
     model: Type[Model]
     route: str
     object: Dict[str, Any]
-    ignored_fields: Tuple[str] = ()
+    ignored_fields: Tuple[str, ...] = ()
 
     def url(self, detail: bool = False) -> str:
-        return reverse(f'bot:{self.route}-{"detail" if detail else "list"}', host='api')
+        return reverse(f'api:bot:{self.route}-{"detail" if detail else "list"}')
 
 
-FK_FIELDS: Dict[Type[Model], Tuple[str]] = {
-    FilterList: ("default_settings",),
-    FilterSettings: ("default_action", "default_range"),
-    FilterAction: (),
-    ChannelRange: (),
+FK_FIELDS: Dict[Type[Model], Tuple[str, ...]] = {
+    FilterList: (),
     Filter: ("filter_list",),
-    FilterOverride: ("filter_action", "filter_range")
 }
 
 
 def get_test_sequences() -> Dict[str, TestSequence]:
+    filter_list1_deny_dict = {
+        "name": "testname",
+        "list_type": 0,
+        "guild_pings": [],
+        "filter_dm": True,
+        "dm_pings": [],
+        "remove_context": False,
+        "bypass_roles": [],
+        "enabled": True,
+        "dm_content": "",
+        "dm_embed": "",
+        "infraction_type": "NONE",
+        "infraction_reason": "",
+        "infraction_duration": timedelta(seconds=0),
+        "infraction_channel": 0,
+        "disabled_channels": [],
+        "disabled_categories": [],
+        "enabled_channels": [],
+        "enabled_categories": [],
+        "send_alert": True
+    }
+    filter_list1_allow_dict = filter_list1_deny_dict.copy()
+    filter_list1_allow_dict["list_type"] = 1
+    filter_list1_allow = FilterList(**filter_list1_allow_dict)
+
     return {
-        "filter_list": TestSequence(
+        "filter_list1": TestSequence(
+            FilterList,
+            "filterlist",
+            filter_list1_deny_dict,
+            ignored_fields=("filters", "created_at", "updated_at")
+        ),
+        "filter_list2": TestSequence(
             FilterList,
             "filterlist",
             {
-                "name": "testname",
-                "list_type": 0,
-                "default_settings": FilterSettings(
-                    ping_type=[],
-                    filter_dm=False,
-                    dm_ping_type=[],
-                    remove_context=False,
-                    bypass_roles=[],
-                    enabled=False,
-                    default_action=FilterAction(
-                        dm_content=None,
-                        infraction_type=None,
-                        infraction_reason="",
-                        infraction_duration=None
-                    ),
-                    default_range=ChannelRange(
-                        disallowed_channels=[],
-                        disallowed_categories=[],
-                        allowed_channels=[],
-                        allowed_categories=[],
-                        default=False
-                    )
-                )
-            },
-            ignored_fields=("filters",)
-        ),
-        "filter_settings": TestSequence(
-            FilterSettings,
-            "filtersettings",
-            {
-                "ping_type": ["onduty"],
-                "filter_dm": True,
-                "dm_ping_type": ["123456"],
+                "name": "testname2",
+                "list_type": 1,
+                "guild_pings": ["Moderators"],
+                "filter_dm": False,
+                "dm_pings": ["here"],
                 "remove_context": True,
-                "bypass_roles": [123456],
-                "enabled": True,
-                "default_action": FilterAction(
-                    dm_content=None,
-                    infraction_type=None,
-                    infraction_reason="",
-                    infraction_duration=None
-                ),
-                "default_range": ChannelRange(
-                    disallowed_channels=[],
-                    disallowed_categories=[],
-                    allowed_channels=[],
-                    allowed_categories=[],
-                    default=False
-                )
-            }
-        ),
-        "filter_action": TestSequence(
-            FilterAction,
-            "filteraction",
-            {
-                "dm_content": "This is a DM message.",
-                "infraction_type": "Mute",
-                "infraction_reason": "Too long beard",
-                "infraction_duration": "1 02:03:00"
-            }
-        ),
-        "channel_range": TestSequence(
-            ChannelRange,
-            "channelrange",
-            {
-                "disallowed_channels": [1234],
-                "disallowed_categories": [5678],
-                "allowed_channels": [9101],
-                "allowed_categories": [1121],
-                "default": True
-            }
+                "bypass_roles": ["123456"],
+                "enabled": False,
+                "dm_content": "testing testing",
+                "dm_embed": "one two three",
+                "infraction_type": "MUTE",
+                "infraction_reason": "stop testing",
+                "infraction_duration": timedelta(seconds=10.5),
+                "infraction_channel": 123,
+                "disabled_channels": ["python-general"],
+                "disabled_categories": ["CODE JAM"],
+                "enabled_channels": ["mighty-mice"],
+                "enabled_categories": ["Lobby"],
+                "send_alert": False
+            },
+            ignored_fields=("filters", "created_at", "updated_at")
         ),
         "filter": TestSequence(
             Filter,
@@ -121,58 +92,35 @@ def get_test_sequences() -> Dict[str, TestSequence]:
             {
                 "content": "bad word",
                 "description": "This is a really bad word.",
-                "additional_field": None,
-                "override": None,
-                "filter_list": FilterList(
-                    name="testname",
-                    list_type=0,
-                    default_settings=FilterSettings(
-                        ping_type=[],
-                        filter_dm=False,
-                        dm_ping_type=[],
-                        remove_context=False,
-                        bypass_roles=[],
-                        enabled=False,
-                        default_action=FilterAction(
-                            dm_content=None,
-                            infraction_type=None,
-                            infraction_reason="",
-                            infraction_duration=None
-                        ),
-                        default_range=ChannelRange(
-                            disallowed_channels=[],
-                            disallowed_categories=[],
-                            allowed_channels=[],
-                            allowed_categories=[],
-                            default=False
-                        )
-                    )
-                )
-            }
+                "additional_field": "{'hi': 'there'}",
+                "guild_pings": None,
+                "filter_dm": None,
+                "dm_pings": None,
+                "remove_context": None,
+                "bypass_roles": None,
+                "enabled": None,
+                "dm_content": None,
+                "dm_embed": None,
+                "infraction_type": None,
+                "infraction_reason": None,
+                "infraction_duration": None,
+                "infraction_channel": None,
+                "disabled_channels": None,
+                "disabled_categories": None,
+                "enabled_channels": None,
+                "enabled_categories": None,
+                "send_alert": None,
+                "filter_list": filter_list1_allow
+            },
+            ignored_fields=("created_at", "updated_at")
         ),
-        "filter_override": TestSequence(
-            FilterOverride,
-            "filteroverride",
-            {
-                "ping_type": ["everyone"],
-                "filter_dm": False,
-                "dm_ping_type": ["here"],
-                "remove_context": False,
-                "bypass_roles": [9876],
-                "enabled": True,
-                "filter_action": None,
-                "filter_range": None
-            }
-        )
     }
 
 
 def save_nested_objects(object_: Model, save_root: bool = True) -> None:
-    for field in FK_FIELDS[object_.__class__]:
+    for field in FK_FIELDS.get(object_.__class__, ()):
         value = getattr(object_, field)
-
-        if value is not None:
-            save_nested_objects(value)
+        save_nested_objects(value)
 
     if save_root:
         object_.save()
@@ -182,6 +130,8 @@ def clean_test_json(json: dict) -> dict:
     for key, value in json.items():
         if isinstance(value, Model):
             json[key] = value.id
+        elif isinstance(value, timedelta):
+            json[key] = str(value.total_seconds())
 
     return json
 
@@ -194,7 +144,22 @@ def clean_api_json(json: dict, sequence: TestSequence) -> dict:
     return json
 
 
-class GenericFilterTest(APISubdomainTestCase):
+def flatten_settings(json: dict) -> dict:
+    settings = json.pop("settings", {})
+    flattened_settings = {}
+    for entry, value in settings.items():
+        if isinstance(value, dict):
+            flattened_settings.update(value)
+        else:
+            flattened_settings[entry] = value
+
+    json.update(flattened_settings)
+
+    return json
+
+
+class GenericFilterTests(AuthenticatedAPITestCase):
+
     def test_cannot_read_unauthenticated(self) -> None:
         for name, sequence in get_test_sequences().items():
             with self.subTest(name=name):
@@ -222,7 +187,7 @@ class GenericFilterTest(APISubdomainTestCase):
                 response = self.client.get(sequence.url())
                 self.assertDictEqual(
                     clean_test_json(sequence.object),
-                    clean_api_json(response.json()[0], sequence)
+                    clean_api_json(flatten_settings(response.json()[0]), sequence)
                 )
 
     def test_fetch_by_id(self) -> None:
@@ -236,7 +201,7 @@ class GenericFilterTest(APISubdomainTestCase):
                 response = self.client.get(f"{sequence.url()}/{saved.id}")
                 self.assertDictEqual(
                     clean_test_json(sequence.object),
-                    clean_api_json(response.json(), sequence)
+                    clean_api_json(flatten_settings(response.json()), sequence)
                 )
 
     def test_fetch_non_existing(self) -> None:
@@ -259,14 +224,15 @@ class GenericFilterTest(APISubdomainTestCase):
 
                 self.assertEqual(response.status_code, 201)
                 self.assertDictEqual(
-                    clean_api_json(response.json(), sequence),
+                    clean_api_json(flatten_settings(response.json()), sequence),
                     clean_test_json(sequence.object)
                 )
 
     def test_creation_missing_field(self) -> None:
         for name, sequence in get_test_sequences().items():
             with self.subTest(name=name):
-                save_nested_objects(sequence.model(**sequence.object), False)
+                saved = sequence.model(**sequence.object)
+                save_nested_objects(saved)
                 data = clean_test_json(sequence.object.copy())
 
                 for field in sequence.model._meta.get_fields():
@@ -296,3 +262,68 @@ class GenericFilterTest(APISubdomainTestCase):
 
                 response = self.client.delete(f"{sequence.url()}/42")
                 self.assertEqual(response.status_code, 404)
+
+
+class FilterValidationTests(AuthenticatedAPITestCase):
+
+    def test_filter_validation(self) -> None:
+        test_sequences = get_test_sequences()
+        base_filter = test_sequences["filter"]
+        base_filter_list = test_sequences["filter_list1"]
+        cases = (
+            ({"infraction_reason": "hi"}, {}, 400), ({"infraction_duration": timedelta(seconds=10)}, {}, 400),
+            ({"infraction_reason": "hi"}, {"infraction_type": "NOTE"}, 200),
+            ({"infraction_duration": timedelta(seconds=10)}, {"infraction_type": "MUTE"}, 200),
+            ({"enabled_channels": ["admins"]}, {}, 200), ({"disabled_channels": ["123"]}, {}, 200),
+            ({"enabled_categories": ["CODE JAM"]}, {}, 200), ({"disabled_categories": ["CODE JAM"]}, {}, 200),
+            ({"enabled_channels": ["admins"], "disabled_channels": ["123", "admins"]}, {}, 400),
+            ({"enabled_categories": ["admins"], "disabled_categories": ["123", "admins"]}, {}, 400),
+            ({"enabled_channels": ["admins"]}, {"disabled_channels": ["123", "admins"]}, 400),
+            ({"enabled_categories": ["admins"]}, {"disabled_categories": ["123", "admins"]}, 400),
+        )
+
+        for filter_settings, filter_list_settings, response_code in cases:
+            with self.subTest(f_settings=filter_settings, fl_settings=filter_list_settings, response=response_code):
+                base_filter.model.objects.all().delete()
+                base_filter_list.model.objects.all().delete()
+
+                case_filter_dict = base_filter.object.copy()
+                case_fl_dict = base_filter_list.object.copy()
+                case_fl_dict.update(filter_list_settings)
+
+                case_fl = base_filter_list.model(**case_fl_dict)
+                case_filter_dict["filter_list"] = case_fl
+                case_filter = base_filter.model(**case_filter_dict)
+                save_nested_objects(case_filter)
+
+                filter_settings["filter_list"] = case_fl
+                response = self.client.patch(
+                    f"{base_filter.url()}/{case_filter.id}", data=clean_test_json(filter_settings)
+                )
+                self.assertEqual(response.status_code, response_code)
+
+    def test_filter_list_validation(self) -> None:
+        test_sequences = get_test_sequences()
+        base_filter_list = test_sequences["filter_list1"]
+        cases = (
+            ({"infraction_reason": "hi"}, 400), ({"infraction_duration": timedelta(seconds=10)}, 400),
+            ({"infraction_reason": "hi", "infraction_type": "NOTE"}, 200),
+            ({"infraction_duration": timedelta(seconds=10), "infraction_type": "MUTE"}, 200),
+            ({"enabled_channels": ["admins"]}, 200), ({"disabled_channels": ["123"]}, 200),
+            ({"enabled_categories": ["CODE JAM"]}, 200), ({"disabled_categories": ["CODE JAM"]}, 200),
+            ({"enabled_channels": ["admins"], "disabled_channels": ["123", "admins"]}, 400),
+            ({"enabled_categories": ["admins"], "disabled_categories": ["123", "admins"]}, 400),
+        )
+
+        for filter_list_settings, response_code in cases:
+            with self.subTest(fl_settings=filter_list_settings, response=response_code):
+                base_filter_list.model.objects.all().delete()
+
+                case_fl_dict = base_filter_list.object.copy()
+                case_fl = base_filter_list.model(**case_fl_dict)
+                save_nested_objects(case_fl)
+
+                response = self.client.patch(
+                    f"{base_filter_list.url()}/{case_fl.id}", data=clean_test_json(filter_list_settings)
+                )
+                self.assertEqual(response.status_code, response_code)

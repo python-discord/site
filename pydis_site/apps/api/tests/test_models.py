@@ -8,7 +8,6 @@ from pydis_site.apps.api.models import (
     DocumentationLink,
     Filter,
     FilterList,
-    FilterSettings,
     Infraction,
     MessageDeletionContext,
     Nomination,
@@ -110,13 +109,11 @@ class StringDunderMethodTests(SimpleTestCase):
             FilterList(
                 name="forbidden_duckies",
                 list_type=0,
-                default_settings=FilterSettings()
             ),
             Filter(
                 content="ducky_nsfw",
                 description="This ducky is totally inappropriate!",
                 additional_field=None,
-                override=None
             ),
             OffensiveMessage(
                 id=602951077675139072,

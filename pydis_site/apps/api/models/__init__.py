@@ -6,7 +6,6 @@ from .bot import (
     BumpedThread,
     DocumentationLink,
     DeletedMessage,
-    FilterList,
     Infraction,
     Message,
     MessageDeletionContext,
