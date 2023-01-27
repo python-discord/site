@@ -327,3 +327,15 @@ class FilterValidationTests(AuthenticatedAPITestCase):
                     f"{base_filter_list.url()}/{case_fl.id}", data=clean_test_json(filter_list_settings)
                 )
                 self.assertEqual(response.status_code, response_code)
+
+    def test_filter_unique_constraint(self) -> None:
+        test_filter = get_test_sequences()["filter"]
+        test_filter.model.objects.all().delete()
+        test_filter_object = test_filter.model(**test_filter.object)
+        save_nested_objects(test_filter_object, False)
+
+        response = self.client.post(test_filter.url(), data=clean_test_json(test_filter.object))
+        self.assertEqual(response.status_code, 201)
+
+        response = self.client.post(test_filter.url(), data=clean_test_json(test_filter.object))
+        self.assertEqual(response.status_code, 400)

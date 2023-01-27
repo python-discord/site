@@ -257,6 +257,15 @@ class FilterSerializer(ModelSerializer):
         ) + SETTINGS_FIELDS
         extra_kwargs = _create_filter_meta_extra_kwargs()
 
+    def create(self, validated_data: dict) -> User:
+        """Override the create method to catch violations of the custom uniqueness constraint."""
+        try:
+            return super().create(validated_data)
+        except IntegrityError:
+            raise ValidationError(
+                "Check if a filter with this combination of content and settings already exists in this filter list."
+            )
+
     def to_representation(self, instance: Filter) -> dict:
         """
         Provides a custom JSON representation to the Filter Serializers.
