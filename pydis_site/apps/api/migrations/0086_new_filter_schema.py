@@ -89,7 +89,7 @@ def forward(apps: Apps, schema_editor: BaseDatabaseSchemaEditor) -> None:
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('api', '0084_infraction_last_applied'),
+        ('api', '0085_add_thread_id_to_nominations'),
     ]
 
     operations = [

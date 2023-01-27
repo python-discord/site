@@ -11,8 +11,6 @@ from pydis_site import settings
 
 MAX_RUN_TIME = datetime.timedelta(minutes=10)
 """The maximum time allowed before an action is declared timed out."""
-ISO_FORMAT_STRING = "%Y-%m-%dT%H:%M:%SZ"
-"""The datetime string format GitHub uses."""
 
 
 class ArtifactProcessingError(Exception):
@@ -147,7 +145,7 @@ def authorize(owner: str, repo: str) -> httpx.Client:
 
 def check_run_status(run: WorkflowRun) -> str:
     """Check if the provided run has been completed, otherwise raise an exception."""
-    created_at = datetime.datetime.strptime(run.created_at, ISO_FORMAT_STRING)
+    created_at = datetime.datetime.strptime(run.created_at, settings.GITHUB_TIMESTAMP_FORMAT)
     run_time = datetime.datetime.utcnow() - created_at
 
     if run.status != "completed":

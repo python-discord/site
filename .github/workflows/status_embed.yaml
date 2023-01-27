@@ -44,10 +44,10 @@ jobs:
           wget --quiet --header="Authorization: token $GITHUB_TOKEN" -O pull_request_payload.zip $DOWNLOAD_URL || exit 2
           unzip -p pull_request_payload.zip > pull_request_payload.json
           [ -s pull_request_payload.json ] || exit 3
-          echo "::set-output name=pr_author_login::$(jq -r '.user.login // empty' pull_request_payload.json)"
-          echo "::set-output name=pr_number::$(jq -r '.number // empty' pull_request_payload.json)"
-          echo "::set-output name=pr_title::$(jq -r '.title // empty' pull_request_payload.json)"
-          echo "::set-output name=pr_source::$(jq -r '.head.label // empty' pull_request_payload.json)"
+          echo "pr_author_login=$(jq -r '.user.login // empty' pull_request_payload.json)" >> $GITHUB_OUTPUT
+          echo "pr_number=$(jq -r '.number // empty' pull_request_payload.json)" >> $GITHUB_OUTPUT
+          echo "pr_title=$(jq -r '.title // empty' pull_request_payload.json)" >> $GITHUB_OUTPUT
+          echo "pr_source=$(jq -r '.head.label // empty' pull_request_payload.json)" >> $GITHUB_OUTPUT
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -56,7 +56,7 @@ jobs:
       # more information and we can fine tune when we actually want
       # to send an embed.
       - name: GitHub Actions Status Embed for Discord
-        uses: SebastiaanZ/github-status-embed-for-discord@v0.2.1
+        uses: SebastiaanZ/github-status-embed-for-discord@v0.3.0
         with:
           # Our GitHub Actions webhook
           webhook_id: '784184528997842985'

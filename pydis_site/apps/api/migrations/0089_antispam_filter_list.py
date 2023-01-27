@@ -41,7 +41,7 @@ def create_antispam_list(apps: Apps, _):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('api', '0087_unique_filter_list'),
+        ('api', '0088_unique_filter_list'),
     ]
 
     operations = [

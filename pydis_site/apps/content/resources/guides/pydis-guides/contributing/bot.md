@@ -88,6 +88,7 @@ urls:
 
     # Snekbox
     snekbox_eval_api: "http://localhost:8060/eval"
+    snekbox_311_eval_api: "http://localhost:8065/eval"
 
 ##### <<  Replace the following � characters with the channel IDs in your test server  >> #####
 #  This assumes the template was used: https://discord.new/zmHtscpYN9E3
@@ -481,9 +482,13 @@ You are now almost ready to run the Python bot. The simplest way to do so is wit
 In your `config.yml` file:
 
 * Set `urls.site` to `"web:8000"`.
-* If you wish to work with snekbox set `urls.snekbox_eval_api` to `"http://snekbox:8060/eval"`.
+* If you wish to work with snekbox set the following:
+    * `urls.snekbox_eval_api` to `"http://snekbox:8060/eval"`
+    * `urls.snekbox_311_eval_api` to `"http://snekbox-311:8060/eval"`.
 
 Assuming you have Docker installed **and running**, enter the cloned repo in the command line and type `docker-compose up`.
+
+If working with snekbox you can run `docker-compose --profile 3.10 up` to also start up a 3.10 snekbox container, in addition to the default 3.11 container!
 
 After pulling the images and building the containers, your bot will start. Enter your server and type `!help` (or whatever prefix you chose instead of `!`).
 
@@ -494,12 +499,13 @@ The advantage of this method is that you can run the bot's code in your preferre
 
 * Append the following line to your `.env` file: `BOT_API_KEY=badbot13m0n8f570f942013fc818f234916ca531`.
 * In your `config.yml` file, set `urls.site` to `"localhost:8000"`. If you wish to keep using `web:8000`, then [COMPOSE_PROJECT_NAME](../docker/#compose-project-names) has to be set.
-* To work with snekbox, set `urls.snekbox_eval_api` to `"http://localhost:8060/eval"`
+* To work with snekbox, set `urls.snekbox_eval_api` to `"http://localhost:8060/eval"` and `urls.snekbox_311_eval_api` to `"http://localhost:8065/eval"`
 
 You will need to start the services separately, but if you got the previous section with Docker working, that's pretty simple:
 
 * `docker-compose up web` to start the site container. This is required.
 * `docker-compose up snekbox` to start the snekbox container. You only need this if you're planning on working on the snekbox cog.
+* `docker-compose up snekbox-311` to start the snekbox 3.11 container. You only need this if you're planning on working on the snekbox cog.
 * `docker-compose up redis` to start the Redis container. You only need this if you're not using fakeredis. For more info refer to [Working with Redis](#optional-working-with-redis).
 
 You can start several services together: `docker-compose up web snekbox redis`.
