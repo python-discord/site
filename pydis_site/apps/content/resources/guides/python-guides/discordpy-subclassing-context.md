@@ -9,7 +9,7 @@ inject your custom context subclass into discord.py.
 ## Overview
 
 The way this works is by creating a subclass of discord.py's [`Context` class](https://discordpy.readthedocs.io/en/latest/ext/commands/api.html#discord.ext.commands.Context)
-adding whatever functionality you wish. Usually this is adding custom methods or properties, so that you don't need to
+adding whatever functionality you wish. Usually this is done by adding custom methods or properties, so that you don't need to
 copy it around or awkwardly import it elsewhere.
 
 This guide will show you how to add a `prompt()` method to the context and how to use it in a command.
