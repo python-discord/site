@@ -41,8 +41,8 @@ class CustomContext(commands.Context):
         (default is `30`) for the author to react to the message.
 
         If `delete_after` is `True`, the message will be deleted before returning a
-        boolean or None (if the author didn't respond) indicating whether the author
-        confirmed or denied.
+        True, False, or None indicating whether the author confirmed, denied,
+        or didn't interact with the message.
         """
         msg = await self.send(message)
 
@@ -66,11 +66,11 @@ class CustomContext(commands.Context):
 
             emoji = str(payload.emoji)
 
-            if emoji == '\N{WHITE HEAVY CHECK MARK}':
+            if emoji == '✅':
                 confirmation = True
                 return True
 
-            elif emoji == '\N{CROSS MARK}':
+            elif emoji == '❌':
                 confirmation = False
                 return True
 
