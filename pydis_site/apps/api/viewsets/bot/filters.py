@@ -22,69 +22,79 @@ class FilterListViewSet(ModelViewSet):
     >>> [
     ...     {
     ...         "id": 1,
-    ...         "name": "invites",
+    ...         "created_at": "2023-01-27T21:26:34.027293Z",
+    ...         "updated_at": "2023-01-27T21:26:34.027308Z",
+    ...         "name": "invite",
     ...         "list_type": 1,
     ...         "filters": [
     ...             {
     ...                 "id": 1,
+    ...                 "created_at": "2023-01-27T21:26:34.029539Z",
+    ...                 "updated_at": "2023-01-27T21:26:34.030532Z",
     ...                 "content": "267624335836053506",
     ...                 "description": "Python Discord",
     ...                 "additional_field": None,
-    ...                 "filter_list": 1
+    ...                 "filter_list": 1,
     ...                 "settings": {
-    ...                        "bypass_roles": None
-    ...                        "filter_dm": None,
-    ...                        "enabled": None
-    ...                        "send_alert": True,
-    ...                        "remove_context": None
-    ...                        "infraction_and_notification": {
-    ...                            "infraction_type": None,
-    ...                            "infraction_reason": "",
-    ...                            "infraction_duration": None
-    ...                            "dm_content": None,
-    ...                            "dm_embed": None
-    ...                        },
-    ...                        "channel_scope": {
-    ...                            "disabled_channels": None,
-    ...                            "disabled_categories": None,
-    ...                            "enabled_channels": None
-    ...                        }
-    ...                        "mentions": {
-    ...                            "ping_type": None
-    ...                            "dm_ping_type": None
-    ...                         }
-    ...                    }
-    ...
+    ...                     "bypass_roles": None,
+    ...                     "filter_dm": None,
+    ...                     "enabled": None,
+    ...                     "remove_context": None,
+    ...                     "send_alert": None,
+    ...                     "infraction_and_notification": {
+    ...                         "infraction_type": None,
+    ...                         "infraction_reason": None,
+    ...                         "infraction_duration": None,
+    ...                         "infraction_channel": None,
+    ...                         "dm_content": None,
+    ...                         "dm_embed": None
+    ...                     },
+    ...                     "channel_scope": {
+    ...                         "disabled_channels": None,
+    ...                         "disabled_categories": None,
+    ...                         "enabled_channels": None,
+    ...                         "enabled_categories": None
+    ...                     },
+    ...                     "mentions": {
+    ...                         "guild_pings": None,
+    ...                         "dm_pings": None
+    ...                     }
+    ...                 }
     ...             },
     ...             ...
     ...         ],
-    ...            "settings": {
-    ...              "bypass_roles": [
-    ...                  "staff"
-    ...              ],
-    ...              "filter_dm": True,
-    ...              "enabled": True
-    ...              "remove_context": True,
-    ...              "send_alert": True
-    ...              "infraction_and_notification": {
-    ...                   "infraction_type": "",
-    ...                   "infraction_reason": "",
-    ...                   "infraction_duration": "0.0",
-    ...                   "dm_content": "",
-    ...                   "dm_embed": ""
-    ...               }
-    ...               "channel_scope": {
+    ...         "settings": {
+    ...             "bypass_roles": [
+    ...                 "Helpers"
+    ...             ],
+    ...             "filter_dm": True,
+    ...             "enabled": True,
+    ...             "remove_context": True,
+    ...             "send_alert": True,
+    ...             "infraction_and_notification": {
+    ...                 "infraction_type": "NONE",
+    ...                 "infraction_reason": "",
+    ...                 "infraction_duration": "0.0",
+    ...                 "infraction_channel": 0,
+    ...                 "dm_content": "Per Rule 6, your invite link has been removed...",
+    ...                 "dm_embed": ""
+    ...             },
+    ...             "channel_scope": {
     ...                 "disabled_channels": [],
-    ...                 "disabled_categories": [],
-    ...                 "enabled_channels": []
-    ...               }
-    ...               "mentions": {
-    ...                 "ping_type": [
-    ...                     "onduty"
-    ...                 ]
-    ...                 "dm_ping_type": []
-    ...                }
-    ...           },
+    ...                 "disabled_categories": [
+    ...                     "CODE JAM"
+    ...                 ],
+    ...                 "enabled_channels": [],
+    ...                 "enabled_categories": []
+    ...             },
+    ...             "mentions": {
+    ...                 "guild_pings": [
+    ...                     "Moderators"
+    ...                 ],
+    ...                 "dm_pings": []
+    ...             }
+    ...         }
+    ...     },
     ...     ...
     ... ]
 
@@ -97,74 +107,204 @@ class FilterListViewSet(ModelViewSet):
 
     #### Response format
     >>> {
-    ...         "id": 1,
-    ...         "name": "invites",
-    ...         "list_type": 1,
-    ...         "filters": [
-    ...             {
-    ...                 "id": 1,
-    ...                 "filter_list": 1
-    ...                 "content": "267624335836053506",
-    ...                 "description": "Python Discord",
-    ...                 "additional_field": None,
-    ...                 "settings": {
-    ...                        "bypass_roles": None
-    ...                        "filter_dm": None,
-    ...                        "enabled": None
-    ...                        "remove_context": None,
-    ...                        "send_alert": None
-    ...                        "infraction_and_notification": {
-    ...                            "infraction_type": None,
-    ...                            "infraction_reason": "",
-    ...                            "infraction_duration": None
-    ...                            "dm_content": None,
-    ...                            "dm_embed": None
-    ...                        },
-    ...                        "channel_scope": {
-    ...                            "disabled_channels": None,
-    ...                            "disabled_categories": None,
-    ...                            "enabled_channels": None
-    ...                        }
-    ...                        "mentions": {
-    ...                            "ping_type": None
-    ...                            "dm_ping_type": None
-    ...                         }
-    ...                    }
-    ...
-    ...             },
-    ...             ...
+    ...     "id": 1,
+    ...     "created_at": "2023-01-27T21:26:34.027293Z",
+    ...     "updated_at": "2023-01-27T21:26:34.027308Z",
+    ...     "name": "invite",
+    ...     "list_type": 1,
+    ...     "filters": [
+    ...         {
+    ...             "id": 1,
+    ...             "created_at": "2023-01-27T21:26:34.029539Z",
+    ...             "updated_at": "2023-01-27T21:26:34.030532Z",
+    ...             "content": "267624335836053506",
+    ...             "description": "Python Discord",
+    ...             "additional_field": None,
+    ...             "filter_list": 1,
+    ...             "settings": {
+    ...                 "bypass_roles": None,
+    ...                 "filter_dm": None,
+    ...                 "enabled": None,
+    ...                 "remove_context": None,
+    ...                 "send_alert": None,
+    ...                 "infraction_and_notification": {
+    ...                     "infraction_type": None,
+    ...                     "infraction_reason": None,
+    ...                     "infraction_duration": None,
+    ...                     "infraction_channel": None,
+    ...                     "dm_content": None,
+    ...                     "dm_embed": None
+    ...                 },
+    ...                 "channel_scope": {
+    ...                     "disabled_channels": None,
+    ...                     "disabled_categories": None,
+    ...                     "enabled_channels": None,
+    ...                     "enabled_categories": None
+    ...                 },
+    ...                 "mentions": {
+    ...                     "guild_pings": None,
+    ...                     "dm_pings": None
+    ...                 }
+    ...             }
+    ...         },
+    ...         ...
+    ...     ],
+    ...     "settings": {
+    ...         "bypass_roles": [
+    ...             "Helpers"
     ...         ],
-    ...            "settings": {
-    ...              "bypass_roles": [
-    ...                  "staff"
-    ...              ],
-    ...              "filter_dm": True,
-    ...              "enabled": True
-    ...              "remove_context": True
-    ...              "send_alert": True
-    ...              "infraction_and_notification": {
-    ...                   "infraction_type": "",
-    ...                   "infraction_reason": "",
-    ...                   "infraction_duration": "0.0",
-    ...                   "dm_content": "",
-    ...                   "dm_embed": ""
-    ...               }
-    ...               "channel_scope": {
-    ...                 "disabled_channels": [],
-    ...                 "disabled_categories": [],
-    ...                 "enabled_channels": []
-    ...                }
-    ...               "mentions": {
-    ...                 "ping_type": [
-    ...                     "onduty"
-    ...                 ]
-    ...                 "dm_ping_type": []
-    ...                }
+    ...         "filter_dm": True,
+    ...         "enabled": True,
+    ...         "remove_context": True,
+    ...         "send_alert": True,
+    ...         "infraction_and_notification": {
+    ...             "infraction_type": "NONE",
+    ...             "infraction_reason": "",
+    ...             "infraction_duration": "0.0",
+    ...             "infraction_channel": 0,
+    ...             "dm_content": "Per Rule 6, your invite link has been removed...",
+    ...             "dm_embed": ""
+    ...         },
+    ...         "channel_scope": {
+    ...             "disabled_channels": [],
+    ...             "disabled_categories": [
+    ...                 "CODE JAM"
+    ...             ],
+    ...             "enabled_channels": [],
+    ...             "enabled_categories": []
+    ...         },
+    ...         "mentions": {
+    ...             "guild_pings": [
+    ...                 "Moderators"
+    ...             ],
+    ...             "dm_pings": []
+    ...         }
+    ...     }
     ... }
 
     #### Status codes
     - 200: returned on success
     - 404: returned if the id was not found.
+
+    ### POST /bot/filter/filter_lists
+    Adds a single FilterList item to the database.
+
+    #### Request body
+    >>> {
+    ...     "name": "invite",
+    ...     "list_type": 1,
+    ...     "bypass_roles": [
+    ...         "Helpers"
+    ...     ],
+    ...     "filter_dm": True,
+    ...     "enabled": True,
+    ...     "remove_context": True,
+    ...     "send_alert": True,
+    ...     "infraction_type": "NONE",
+    ...     "infraction_reason": "",
+    ...     "infraction_duration": "0.0",
+    ...     "infraction_channel": 0,
+    ...     "dm_content": "Per Rule 6, your invite link has been removed...",
+    ...     "dm_embed": "",
+    ...     "disabled_channels": [],
+    ...     "disabled_categories": [
+    ...         "CODE JAM"
+    ...     ],
+    ...     "enabled_channels": [],
+    ...     "enabled_categories": []
+    ...     "guild_pings": [
+    ...         "Moderators"
+    ...     ],
+    ...     "dm_pings": []
+    ... }
+
+    #### Status codes
+    - 201: returned on success
+    - 400: if one of the given fields is invalid
+
+    ### PATCH /bot/filter/filter_lists/<id:int>
+    Updates a specific FilterList item from the database.
+
+    #### Response format
+    >>> {
+    ...     "id": 1,
+    ...     "created_at": "2023-01-27T21:26:34.027293Z",
+    ...     "updated_at": "2023-01-27T21:26:34.027308Z",
+    ...     "name": "invite",
+    ...     "list_type": 1,
+    ...     "filters": [
+    ...         {
+    ...             "id": 1,
+    ...             "created_at": "2023-01-27T21:26:34.029539Z",
+    ...             "updated_at": "2023-01-27T21:26:34.030532Z",
+    ...             "content": "267624335836053506",
+    ...             "description": "Python Discord",
+    ...             "additional_field": None,
+    ...             "filter_list": 1,
+    ...             "settings": {
+    ...                 "bypass_roles": None,
+    ...                 "filter_dm": None,
+    ...                 "enabled": None,
+    ...                 "remove_context": None,
+    ...                 "send_alert": None,
+    ...                 "infraction_and_notification": {
+    ...                     "infraction_type": None,
+    ...                     "infraction_reason": None,
+    ...                     "infraction_duration": None,
+    ...                     "infraction_channel": None,
+    ...                     "dm_content": None,
+    ...                     "dm_embed": None
+    ...                 },
+    ...                 "channel_scope": {
+    ...                     "disabled_channels": None,
+    ...                     "disabled_categories": None,
+    ...                     "enabled_channels": None,
+    ...                     "enabled_categories": None
+    ...                 },
+    ...                 "mentions": {
+    ...                     "guild_pings": None,
+    ...                     "dm_pings": None
+    ...                 }
+    ...             }
+    ...         },
+    ...         ...
+    ...     ],
+    ...     "settings": {
+    ...         "bypass_roles": [
+    ...             "Helpers"
+    ...         ],
+    ...         "filter_dm": True,
+    ...         "enabled": True,
+    ...         "remove_context": True,
+    ...         "send_alert": True,
+    ...         "infraction_and_notification": {
+    ...             "infraction_type": "NONE",
+    ...             "infraction_reason": "",
+    ...             "infraction_duration": "0.0",
+    ...             "infraction_channel": 0,
+    ...             "dm_content": "Per Rule 6, your invite link has been removed...",
+    ...             "dm_embed": ""
+    ...         },
+    ...         "channel_scope": {
+    ...             "disabled_channels": [],
+    ...             "disabled_categories": [
+    ...                 "CODE JAM"
+    ...             ],
+    ...             "enabled_channels": [],
+    ...             "enabled_categories": []
+    ...         },
+    ...         "mentions": {
+    ...             "guild_pings": [
+    ...                 "Moderators"
+    ...             ],
+    ...             "dm_pings": []
+    ...         }
+    ...     }
+    ... }
+
+    #### Status codes
+    - 200: returned on success
+    - 400: if one of the given fields is invalid
 
     ### DELETE /bot/filter/filter_lists/<id:int>
     Deletes the FilterList item with the given `id`.
@@ -188,33 +328,39 @@ class FilterViewSet(ModelViewSet):
 
     #### Response format
     >>> [
-    ...     {
-    ...                 "id": 1,
-    ...                 "filter_list": 1
-    ...                 "content": "267624335836053506",
-    ...                 "description": "Python Discord",
-    ...                 "additional_field": None,
-    ...                 "settings": {
-    ...                        "bypass_roles": None
-    ...                        "filter_dm": None,
-    ...                        "enabled": None
-    ...                        "remove_context": True,
-    ...                        "send_alert": True
-    ...                        "infraction": {
-    ...                            "infraction_type": None,
-    ...                            "infraction_reason": None,
-    ...                            "infraction_duration": None
-    ...                        },
-    ...                        "channel_scope": {
-    ...                          "disabled_channels": None,
-    ...                          "disabled_categories": None,
-    ...                          "enabled_channels": None
-    ...                        }
-    ...                        "mentions": {
-    ...                          "ping_type": None,
-    ...                          "dm_ping_type": None
-    ...                       }
-    ...                    }
+    ...         {
+    ...         "id": 1,
+    ...         "created_at": "2023-01-27T21:26:34.029539Z",
+    ...         "updated_at": "2023-01-27T21:26:34.030532Z",
+    ...         "content": "267624335836053506",
+    ...         "description": "Python Discord",
+    ...         "additional_field": None,
+    ...         "filter_list": 1,
+    ...         "settings": {
+    ...             "bypass_roles": None,
+    ...             "filter_dm": None,
+    ...             "enabled": None,
+    ...             "remove_context": None,
+    ...             "send_alert": None,
+    ...             "infraction_and_notification": {
+    ...                 "infraction_type": None,
+    ...                 "infraction_reason": None,
+    ...                 "infraction_duration": None,
+    ...                 "infraction_channel": None,
+    ...                 "dm_content": None,
+    ...                 "dm_embed": None
+    ...             },
+    ...             "channel_scope": {
+    ...                 "disabled_channels": None,
+    ...                 "disabled_categories": None,
+    ...                 "enabled_channels": None,
+    ...                 "enabled_categories": None
+    ...             },
+    ...             "mentions": {
+    ...                 "guild_pings": None,
+    ...                 "dm_pings": None
+    ...             }
+    ...         }
     ...     },
     ...     ...
     ... ]
@@ -228,32 +374,38 @@ class FilterViewSet(ModelViewSet):
 
     #### Response format
     >>> {
-    ...                 "id": 1,
-    ...                 "filter_list": 1
-    ...                 "content": "267624335836053506",
-    ...                 "description": "Python Discord",
-    ...                 "additional_field": None,
-    ...                 "settings": {
-    ...                        "bypass_roles": None
-    ...                        "filter_dm": None,
-    ...                        "enabled": None
-    ...                        "remove_context": True,
-    ...                        "send_alert": True
-    ...                        "infraction": {
-    ...                            "infraction_type": None,
-    ...                            "infraction_reason": None,
-    ...                            "infraction_duration": None
-    ...                        },
-    ...                        "channel_scope": {
-    ...                          "disabled_channels": None,
-    ...                          "disabled_categories": None,
-    ...                          "enabled_channels": None,
-    ...                        }
-    ...                       "mentions": {
-    ...                         "ping_type": None
-    ...                         "dm_ping_type": None
-    ...                       }
-    ...                    }
+    ...     "id": 1,
+    ...     "created_at": "2023-01-27T21:26:34.029539Z",
+    ...     "updated_at": "2023-01-27T21:26:34.030532Z",
+    ...     "content": "267624335836053506",
+    ...     "description": "Python Discord",
+    ...     "additional_field": None,
+    ...     "filter_list": 1,
+    ...     "settings": {
+    ...         "bypass_roles": None,
+    ...         "filter_dm": None,
+    ...         "enabled": None,
+    ...         "remove_context": None,
+    ...         "send_alert": None,
+    ...         "infraction_and_notification": {
+    ...             "infraction_type": None,
+    ...             "infraction_reason": None,
+    ...             "infraction_duration": None,
+    ...             "infraction_channel": None,
+    ...             "dm_content": None,
+    ...             "dm_embed": None
+    ...         },
+    ...         "channel_scope": {
+    ...             "disabled_channels": None,
+    ...             "disabled_categories": None,
+    ...             "enabled_channels": None,
+    ...             "enabled_categories": None
+    ...         },
+    ...         "mentions": {
+    ...             "guild_pings": None,
+    ...             "dm_pings": None
+    ...         }
+    ...     }
     ... }
 
     #### Status codes
@@ -265,10 +417,27 @@ class FilterViewSet(ModelViewSet):
 
     #### Request body
     >>> {
+    ...     "filter_list": 1,
     ...     "content": "267624335836053506",
     ...     "description": "Python Discord",
     ...     "additional_field": None,
-    ...     "override": 1
+    ...     "bypass_roles": None,
+    ...     "filter_dm": None,
+    ...     "enabled": False,
+    ...     "remove_context": None,
+    ...     "send_alert": None,
+    ...     "infraction_type": None,
+    ...     "infraction_reason": None,
+    ...     "infraction_duration": None,
+    ...     "infraction_channel": None,
+    ...     "dm_content": None,
+    ...     "dm_embed": None
+    ...     "disabled_channels": None,
+    ...     "disabled_categories": None,
+    ...     "enabled_channels": None,
+    ...     "enabled_categories": None
+    ...     "guild_pings": None,
+    ...     "dm_pings": None
     ... }
 
     #### Status codes
@@ -281,10 +450,37 @@ class FilterViewSet(ModelViewSet):
     #### Response format
     >>> {
     ...     "id": 1,
+    ...     "created_at": "2023-01-27T21:26:34.029539Z",
+    ...     "updated_at": "2023-01-27T21:26:34.030532Z",
     ...     "content": "267624335836053506",
     ...     "description": "Python Discord",
     ...     "additional_field": None,
-    ...     "override": 1
+    ...     "filter_list": 1,
+    ...     "settings": {
+    ...         "bypass_roles": None,
+    ...         "filter_dm": None,
+    ...         "enabled": None,
+    ...         "remove_context": None,
+    ...         "send_alert": None,
+    ...         "infraction_and_notification": {
+    ...             "infraction_type": None,
+    ...             "infraction_reason": None,
+    ...             "infraction_duration": None,
+    ...             "infraction_channel": None,
+    ...             "dm_content": None,
+    ...             "dm_embed": None
+    ...         },
+    ...         "channel_scope": {
+    ...             "disabled_channels": None,
+    ...             "disabled_categories": None,
+    ...             "enabled_channels": None,
+    ...             "enabled_categories": None
+    ...         },
+    ...         "mentions": {
+    ...             "guild_pings": None,
+    ...             "dm_pings": None
+    ...         }
+    ...     }
     ... }
 
     #### Status codes

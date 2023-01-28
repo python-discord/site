@@ -4,8 +4,8 @@ from django.db import models
 from django.db.models import UniqueConstraint
 
 # Must be imported that way to avoid circular imports
+from pydis_site.apps.api.models.mixins import ModelReprMixin, ModelTimestampMixin
 from .infraction import Infraction
-from pydis_site.apps.api.models.mixins import ModelTimestampMixin, ModelReprMixin
 
 
 class FilterListType(models.IntegerChoices):
@@ -76,7 +76,10 @@ class FilterList(ModelTimestampMixin, ModelReprMixin, models.Model):
         null=False
     )
     remove_context = models.BooleanField(
-        help_text="Whether this filter should remove the context (such as a message) triggering it.",
+        help_text=(
+            "Whether this filter should remove the context (such as a message) "
+            "triggering it."
+        ),
         null=False
     )
     bypass_roles = ArrayField(
@@ -186,7 +189,10 @@ class FilterBase(ModelTimestampMixin, ModelReprMixin, models.Model):
         null=True
     )
     remove_context = models.BooleanField(
-        help_text="Whether this filter should remove the context (such as a message) triggering it.",
+        help_text=(
+            "Whether this filter should remove the context (such as a message) "
+            "triggering it."
+        ),
         null=True
     )
     bypass_roles = ArrayField(

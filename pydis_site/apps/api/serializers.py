@@ -21,9 +21,9 @@ from .models import (
     BumpedThread,
     DeletedMessage,
     DocumentationLink,
-    Infraction,
-    FilterList,
     Filter,
+    FilterList,
+    Infraction,
     MessageDeletionContext,
     Nomination,
     NominationEntry,
@@ -183,7 +183,9 @@ ALLOW_EMPTY_SETTINGS = (
 )
 
 # Required fields for custom JSON representation purposes
-BASE_FILTER_FIELDS = ('id', 'created_at', 'updated_at', 'content', 'description', 'additional_field')
+BASE_FILTER_FIELDS = (
+    'id', 'created_at', 'updated_at', 'content', 'description', 'additional_field'
+)
 BASE_FILTERLIST_FIELDS = ('id', 'created_at', 'updated_at', 'name', 'list_type')
 BASE_SETTINGS_FIELDS = (
     "bypass_roles",
@@ -235,16 +237,31 @@ class FilterSerializer(ModelSerializer):
     def validate(self, data: dict) -> dict:
         """Perform infraction data + allowed and disallowed lists validation."""
         if (
-            (get_field_value(data, "infraction_reason") or get_field_value(data, "infraction_duration"))
+            (
+                get_field_value(data, "infraction_reason")
+                or get_field_value(data, "infraction_duration")
+            )
             and get_field_value(data, "infraction_type") == "NONE"
         ):
-            raise ValidationError("Infraction type is required with infraction duration or reason.")
+            raise ValidationError(
+                "Infraction type is required with infraction duration or reason."
+            )
 
-        if set(get_field_value(data, "disabled_channels")) & set(get_field_value(data, "enabled_channels")):
-            raise ValidationError("You can't have the same value in both enabled and disabled channels lists.")
+        if (
+            set(get_field_value(data, "disabled_channels"))
+            & set(get_field_value(data, "enabled_channels"))
+        ):
+            raise ValidationError(
+                "You can't have the same value in both enabled and disabled channels lists."
+            )
 
-        if set(get_field_value(data, "disabled_categories")) & set(get_field_value(data, "enabled_categories")):
-            raise ValidationError("You can't have the same value in both enabled and disabled categories lists.")
+        if (
+            set(get_field_value(data, "disabled_categories"))
+            & set(get_field_value(data, "enabled_categories"))
+        ):
+            raise ValidationError(
+                "You can't have the same value in both enabled and disabled categories lists."
+            )
 
         return data
 
@@ -253,7 +270,13 @@ class FilterSerializer(ModelSerializer):
 
         model = Filter
         fields = (
-            'id', 'created_at', 'updated_at', 'content', 'description', 'additional_field', 'filter_list'
+            'id',
+            'created_at',
+            'updated_at',
+            'content',
+            'description',
+            'additional_field',
+            'filter_list'
         ) + SETTINGS_FIELDS
         extra_kwargs = _create_filter_meta_extra_kwargs()
 
@@ -263,7 +286,8 @@ class FilterSerializer(ModelSerializer):
             return super().create(validated_data)
         except IntegrityError:
             raise ValidationError(
-                "Check if a filter with this combination of content and settings already exists in this filter list."
+                "Check if a filter with this combination of content "
+                "and settings already exists in this filter list."
             )
 
     def to_representation(self, instance: Filter) -> dict:
@@ -340,7 +364,9 @@ class FilterListSerializer(ModelSerializer):
         """Metadata defined for the Django REST Framework."""
 
         model = FilterList
-        fields = ('id', 'created_at', 'updated_at', 'name', 'list_type', 'filters') + SETTINGS_FIELDS
+        fields = (
+            'id', 'created_at', 'updated_at', 'name', 'list_type', 'filters'
+        ) + SETTINGS_FIELDS
         extra_kwargs = _create_filter_list_meta_extra_kwargs()
 
         # Ensure there can only be one filter list with the same name and type.

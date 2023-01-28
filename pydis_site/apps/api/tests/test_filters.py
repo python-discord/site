@@ -6,7 +6,7 @@ from typing import Any, Dict, Tuple, Type
 from django.db.models import Model
 from django.urls import reverse
 
-from pydis_site.apps.api.models.bot.filters import FilterList, Filter
+from pydis_site.apps.api.models.bot.filters import Filter, FilterList
 from pydis_site.apps.api.tests.base import AuthenticatedAPITestCase
 
 
@@ -271,11 +271,14 @@ class FilterValidationTests(AuthenticatedAPITestCase):
         base_filter = test_sequences["filter"]
         base_filter_list = test_sequences["filter_list1"]
         cases = (
-            ({"infraction_reason": "hi"}, {}, 400), ({"infraction_duration": timedelta(seconds=10)}, {}, 400),
+            ({"infraction_reason": "hi"}, {}, 400),
+            ({"infraction_duration": timedelta(seconds=10)}, {}, 400),
             ({"infraction_reason": "hi"}, {"infraction_type": "NOTE"}, 200),
             ({"infraction_duration": timedelta(seconds=10)}, {"infraction_type": "MUTE"}, 200),
-            ({"enabled_channels": ["admins"]}, {}, 200), ({"disabled_channels": ["123"]}, {}, 200),
-            ({"enabled_categories": ["CODE JAM"]}, {}, 200), ({"disabled_categories": ["CODE JAM"]}, {}, 200),
+            ({"enabled_channels": ["admins"]}, {}, 200),
+            ({"disabled_channels": ["123"]}, {}, 200),
+            ({"enabled_categories": ["CODE JAM"]}, {}, 200),
+            ({"disabled_categories": ["CODE JAM"]}, {}, 200),
             ({"enabled_channels": ["admins"], "disabled_channels": ["123", "admins"]}, {}, 400),
             ({"enabled_categories": ["admins"], "disabled_categories": ["123", "admins"]}, {}, 400),
             ({"enabled_channels": ["admins"]}, {"disabled_channels": ["123", "admins"]}, 400),
@@ -283,7 +286,9 @@ class FilterValidationTests(AuthenticatedAPITestCase):
         )
 
         for filter_settings, filter_list_settings, response_code in cases:
-            with self.subTest(f_settings=filter_settings, fl_settings=filter_list_settings, response=response_code):
+            with self.subTest(
+                f_settings=filter_settings, fl_settings=filter_list_settings, response=response_code
+            ):
                 base_filter.model.objects.all().delete()
                 base_filter_list.model.objects.all().delete()
 
@@ -306,11 +311,13 @@ class FilterValidationTests(AuthenticatedAPITestCase):
         test_sequences = get_test_sequences()
         base_filter_list = test_sequences["filter_list1"]
         cases = (
-            ({"infraction_reason": "hi"}, 400), ({"infraction_duration": timedelta(seconds=10)}, 400),
+            ({"infraction_reason": "hi"}, 400),
+            ({"infraction_duration": timedelta(seconds=10)}, 400),
             ({"infraction_reason": "hi", "infraction_type": "NOTE"}, 200),
             ({"infraction_duration": timedelta(seconds=10), "infraction_type": "MUTE"}, 200),
             ({"enabled_channels": ["admins"]}, 200), ({"disabled_channels": ["123"]}, 200),
-            ({"enabled_categories": ["CODE JAM"]}, 200), ({"disabled_categories": ["CODE JAM"]}, 200),
+            ({"enabled_categories": ["CODE JAM"]}, 200),
+            ({"disabled_categories": ["CODE JAM"]}, 200),
             ({"enabled_channels": ["admins"], "disabled_channels": ["123", "admins"]}, 400),
             ({"enabled_categories": ["admins"], "disabled_categories": ["123", "admins"]}, 400),
         )
@@ -324,7 +331,8 @@ class FilterValidationTests(AuthenticatedAPITestCase):
                 save_nested_objects(case_fl)
 
                 response = self.client.patch(
-                    f"{base_filter_list.url()}/{case_fl.id}", data=clean_test_json(filter_list_settings)
+                    f"{base_filter_list.url()}/{case_fl.id}",
+                    data=clean_test_json(filter_list_settings)
                 )
                 self.assertEqual(response.status_code, response_code)
 
