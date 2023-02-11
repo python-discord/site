@@ -226,7 +226,7 @@ def _create_filter_meta_extra_kwargs() -> dict[str, dict[str, bool]]:
 
 def get_field_value(data: dict, field_name: str) -> Any:
     """Get the value directly from the key, or from the filter list if it's missing or is None."""
-    if data.get(field_name):
+    if data.get(field_name) is not None:
         return data[field_name]
     return getattr(data["filter_list"], field_name)
 
