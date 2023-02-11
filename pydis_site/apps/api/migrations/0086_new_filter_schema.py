@@ -1,4 +1,4 @@
-# Modified migration file to migrate existing filters to the new one
+"""Modified migration file to migrate existing filters to the new system."""
 from datetime import timedelta
 
 import django.contrib.postgres.fields
@@ -8,7 +8,7 @@ from django.db import migrations, models
 import django.db.models.deletion
 from django.db.backends.base.schema import BaseDatabaseSchemaEditor
 
-import pydis_site.apps.api.models.bot.filters
+import pydis_site.apps.api.models
 
 OLD_LIST_NAMES = (('GUILD_INVITE', True), ('GUILD_INVITE', False), ('FILE_FORMAT', True), ('DOMAIN_NAME', False), ('FILTER_TOKEN', False), ('REDIRECT', False))
 change_map = {
@@ -116,7 +116,7 @@ class Migration(migrations.Migration):
                 ('dm_embed', models.CharField(help_text='The content of the DM embed', max_length=2000, null=True, blank=True)),
                 ('infraction_type', models.CharField(choices=[('NONE', 'None'), ('NOTE', 'Note'), ('WARNING', 'Warning'), ('WATCH', 'Watch'), ('MUTE', 'Mute'), ('KICK', 'Kick'), ('BAN', 'Ban'), ('SUPERSTAR', 'Superstar'), ('VOICE_BAN', 'Voice Ban'), ('VOICE_MUTE', 'Voice Mute')], help_text='The infraction to apply to this user.', max_length=10, null=True)),
                 ('infraction_reason', models.CharField(help_text='The reason to give for the infraction.', max_length=1000, null=True, blank=True)),
-                ('infraction_duration', models.DurationField(help_text='The duration of the infraction. Null if permanent.', null=True)),
+                ('infraction_duration', models.DurationField(help_text='The duration of the infraction. 0 for permanent.', null=True)),
                 ('infraction_channel', models.BigIntegerField(validators=(MinValueValidator(limit_value=0, message="Channel IDs cannot be negative."),), help_text="Channel in which to send the infraction.", null=True)),
                 ('disabled_channels', django.contrib.postgres.fields.ArrayField(base_field=models.CharField(max_length=100), help_text="Channels in which to not run the filter.", null=True, size=None)),
                 ('disabled_categories', django.contrib.postgres.fields.ArrayField(base_field=models.CharField(max_length=100), help_text="Categories in which to not run the filter.", null=True, size=None)),
@@ -143,7 +143,7 @@ class Migration(migrations.Migration):
                 ('dm_embed', models.CharField(help_text='The content of the DM embed', max_length=2000, blank=True)),
                 ('infraction_type', models.CharField(choices=[('NONE', 'None'), ('NOTE', 'Note'), ('WARNING', 'Warning'), ('WATCH', 'Watch'), ('MUTE', 'Mute'), ('KICK', 'Kick'), ('BAN', 'Ban'), ('SUPERSTAR', 'Superstar'), ('VOICE_BAN', 'Voice Ban'), ('VOICE_MUTE', 'Voice Mute')], help_text='The infraction to apply to this user.', max_length=10)),
                 ('infraction_reason', models.CharField(help_text='The reason to give for the infraction.', max_length=1000, blank=True)),
-                ('infraction_duration', models.DurationField(help_text='The duration of the infraction. Null if permanent.')),
+                ('infraction_duration', models.DurationField(help_text='The duration of the infraction. 0 for permanent.')),
                 ('infraction_channel', models.BigIntegerField(validators=(MinValueValidator(limit_value=0, message="Channel IDs cannot be negative."),), help_text="Channel in which to send the infraction.")),
                 ('disabled_channels', django.contrib.postgres.fields.ArrayField(base_field=models.CharField(max_length=100), help_text="Channels in which to not run the filter.", size=None)),
                 ('disabled_categories', django.contrib.postgres.fields.ArrayField(base_field=models.CharField(max_length=100), help_text="Categories in which to not run the filter.", size=None)),

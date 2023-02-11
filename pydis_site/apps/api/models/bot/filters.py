@@ -52,7 +52,7 @@ class FilterList(ModelTimestampMixin, ModelReprMixin, models.Model):
     )
     infraction_duration = models.DurationField(
         null=False,
-        help_text="The duration of the infraction. Null if permanent."
+        help_text="The duration of the infraction. 0 for permanent."
     )
     infraction_channel = models.BigIntegerField(
         validators=(
@@ -165,7 +165,7 @@ class FilterBase(ModelTimestampMixin, ModelReprMixin, models.Model):
     )
     infraction_duration = models.DurationField(
         null=True,
-        help_text="The duration of the infraction. Null if permanent."
+        help_text="The duration of the infraction. 0 for permanent."
     )
     infraction_channel = models.BigIntegerField(
         validators=(
@@ -209,7 +209,6 @@ class FilterBase(ModelTimestampMixin, ModelReprMixin, models.Model):
         null=True
     )
 
-    # Check FilterList model for information about these properties.
     enabled_channels = ArrayField(
         models.CharField(max_length=100),
         help_text="Channels in which to run the filter even if it's disabled in the category.",

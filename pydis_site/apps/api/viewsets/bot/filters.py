@@ -311,7 +311,7 @@ class FilterListViewSet(ModelViewSet):
 
     #### Status codes
     - 204: returned on success
-    - 404: if a tag with the given `id` does not exist
+    - 404: if a FilterList with the given `id` does not exist
     """
 
     serializer_class = FilterListSerializer
@@ -492,7 +492,7 @@ class FilterViewSet(ModelViewSet):
 
     #### Status codes
     - 204: returned on success
-    - 404: if a tag with the given `id` does not exist
+    - 404: if a Filter with the given `id` does not exist
     """
 
     serializer_class = FilterSerializer
