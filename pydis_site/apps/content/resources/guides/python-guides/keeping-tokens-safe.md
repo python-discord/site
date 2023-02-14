@@ -11,7 +11,7 @@ To help prevent leaking your token,
 you should ensure that you don't upload it to an open source program/website,
 such as replit and github, as they show your code publicly.
 The best practice for storing tokens is generally utilising .env files
-([click here](https://vcokltfre.dev/tips/tokens/.) for more information on storing tokens safely).
+([click here](https://tutorial.vco.sh/tips/tokens/) for more information on storing tokens safely).
 
 # What should I do if my token does get leaked?
 
