@@ -105,7 +105,7 @@ class InfractionViewSet(
     ...     'reason': 'He terk my jerb!',
     ...     'user': 172395097705414656,
     ...     'dm_sent': False,
-    ...     'jump_url': '<discord message link>'x
+    ...     'jump_url': '<discord message link>'
     ... }
 
     #### Response format
