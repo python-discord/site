@@ -16,8 +16,7 @@ The Python bot is tightly coupled with the Python Discord server, so to have a f
 It's possible to set the bot to use a single channel for all cogs, but that will cause extreme spam and will be difficult to work with.
 
 You can start your own server and set up channels as you see fit, but for your convenience we have a template for a development server you can use: [https://discord.new/zmHtscpYN9E3](https://discord.new/zmHtscpYN9E3).
-Keep in mind that this is not a mirror of the Python server, but a reduced version for testing purposes. A lot of the channels in the Python server were merged.
-
+Keep in mind that this is not an exact mirror of the Python server, but a reduced version for testing purposes.
 ---
 
 ### Set Up a Bot Account
@@ -38,7 +37,47 @@ If your bot fails to start with a `PrivilegedIntentsRequired` exception, this in
 ### Configure the Bot
 You now have both the bot's code and a server to run it on. It's time you to connect the two by changing the bot's configurations.
 
-#### config.yml
+#### Scaffolding the configuration
+To make setup much easier, there is a file called `bootstrap_config.py` that represents a script to bootstrap the configuration for you and help you get started immediately
+without having to spend much time copying ids from your newly created server into your configuration file.
+
+**Note**
+
+This phase can be skipped and done manually, but would require extra manual work. 
+
+##### 1. Script setup
+##### 1.1. Environment variables
+You will need to create a file called `.env` which will contain two required values for the script to work: `BOT_TOKEN` and `GUILD_ID`
+Inside, add the following two lines:
+
+```text
+BOT_TOKEN=YourDiscordBotTokenHere
+GUILD_ID=YourDiscordTestServerIdHere
+```
+See [here](../creating-bot-account) for help with obtaining the bot token and [here](obtaining-discord-ids.md#guild-id) for help with obtaining the guild's id
+
+**Note**
+
+The `.env` file will be ignored by commits.
+##### 1.2 Setting up the script environment
+The bootstrapping script is Python code like any other. To run it locally, you will need the right version of Python with the necessary packages installed:
+1. Make sure you follow steps `1` and `2` [here](#setting-up-a-development-environment)
+2. [Install the `config-bootstrap` dependency group](installing-project-dependencies.md#installing-specific-dependency-groups).
+
+#### 2. Running the script
+
+Once the script setup phase is complete, all that is left is to run it.
+To do this, you'll simply need to run the `configure` poetry task like thise
+
+```shell
+$ poetry run task configure
+```
+
+Once the script has finished running, you'll notice the creation of a new file called [`.env.server`](#envserver) at your project's root directory.
+This file will contain the extracted ids from your newly created server which are necessary for your bot to run.
+Congratulations, you have finished the configuration & can now start [running your bot](#run-it-)
+
+#### .env.server
 Entering the directory of the cloned code, you will find a file named `config-default.yml`.
 This file contains the various configurations we use to make the bot run on the Python Discord server, such as channel and role IDs, and the emojis it works with.
 It also contains configurations such as how long it takes for a help channel to time out, and how many messages a user needs to voice-verify.
@@ -629,18 +668,19 @@ If you find any bugs in the bot or would like to request a feature, feel free to
 ### Appendix: Full ENV File Options
 The following is a list of all available environment variables used by the bot:
 
-| Variable | Required | Description |
-| -------- | -------- | -------- |
-| `BOT_TOKEN` | Always | Your Discord bot account's token (see [Set Up a Bot Account](#set-up-a-bot-account)). |
-| `BOT_API_KEY` | When running bot without Docker | Used to authenticate with the site's API. When using Docker to run the bot, this is automatically set. By default, the site will always have the API key shown in the example below. |
-| `BOT_SENTRY_DSN` | When connecting the bot to sentry | The DSN of the sentry monitor. |
+| Variable             | Required | Description                                                                                                                                                                                                                                         |
+|----------------------| -------- |-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `BOT_TOKEN`          | Always | Your Discord bot account's token (see [Set Up a Bot Account](#set-up-a-bot-account)).                                                                                                                                                               |
+| `GUILD_ID`           | Always | Your Discord test server's id (see [Set Up a Bot Account](#set-up-a-bot-account)).                                                                                                                                                                  |
+| `BOT_API_KEY`        | When running bot without Docker | Used to authenticate with the site's API. When using Docker to run the bot, this is automatically set. By default, the site will always have the API key shown in the example below.                                                                |
+| `BOT_SENTRY_DSN`     | When connecting the bot to sentry | The DSN of the sentry monitor.                                                                                                                                                                                                                      |
 | `BOT_TRACE_LOGGERS ` | When you wish to see specific or all trace logs | Comma separated list that specifies which loggers emit trace logs through the listed names. If the ! prefix is used, all of the loggers except the listed ones are set to the trace level. If * is used, the root logger is set to the trace level. |
-| `BOT_DEBUG` | In production | `true` or `false`, depending on whether to enable debug mode, affecting the behavior of certain features. `true` by default.
-| `REDIS_PASSWORD` | When not using FakeRedis | The password to connect to the Redis database (see [Optional: Working with Redis](#optional-working-with-redis)). |
-| `USE_METRICITY` | When using Metricity | `true` or `false`, depending on whether to enable metrics collection using Metricity (see [Optional: Working with Metricity](#optional-working-with-metricity)). `false` by default. |
-| `GITHUB_API_KEY` | When you wish to interact with GitHub | The API key to interact with GitHub, for example to download files for the branding manager.
-| `METABASE_USERNAME` | When you wish to interact with Metabase | The username for a Metabase admin account.
-| `METABASE_PASSWORD` | When you wish to interact with Metabase | The password for a Metabase admin account.
+| `BOT_DEBUG`          | In production | `true` or `false`, depending on whether to enable debug mode, affecting the behavior of certain features. `true` by default.                                                                                                                        
+| `REDIS_PASSWORD`     | When not using FakeRedis | The password to connect to the Redis database (see [Optional: Working with Redis](#optional-working-with-redis)).                                                                                                                                   |
+| `USE_METRICITY`      | When using Metricity | `true` or `false`, depending on whether to enable metrics collection using Metricity (see [Optional: Working with Metricity](#optional-working-with-metricity)). `false` by default.                                                                |
+| `GITHUB_API_KEY`     | When you wish to interact with GitHub | The API key to interact with GitHub, for example to download files for the branding manager.                                                                                                                                                        
+| `METABASE_USERNAME`  | When you wish to interact with Metabase | The username for a Metabase admin account.                                                                                                                                                                                                          
+| `METABASE_PASSWORD`  | When you wish to interact with Metabase | The password for a Metabase admin account.                                                                                                                                                                                                          
 
 ---
 
