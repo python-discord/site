@@ -41,9 +41,7 @@ You now have both the bot's code and a server to run it on. It's time you to con
 To make setup much easier, there is a file called `bootstrap_config.py` that represents a script to bootstrap the configuration for you and help you get started immediately
 without having to spend much time copying ids from your newly created server into your configuration file.
 
-**Note**
-
-This phase can be skipped and done manually, but would require extra manual work.
+**Note**: This phase can be skipped and done manually, but would require extra manual work.
 
 ##### 1. Script setup
 ##### 1.1. Environment variables
@@ -56,9 +54,7 @@ GUILD_ID=YourDiscordTestServerIdHere
 ```
 See [here](../creating-bot-account) for help with obtaining the bot token and [here](obtaining-discord-ids.md#guild-id) for help with obtaining the guild's id
 
-**Note**
-
-The `.env` file will be ignored by commits.
+**Note**: The `.env` file will be ignored by commits.
 ##### 1.2 Setting up the script environment
 The bootstrapping script is Python code like any other. To run it locally, you will need the right version of Python with the necessary packages installed:
 1. Make sure you follow steps `1` and `2` [here](#setting-up-a-development-environment)
