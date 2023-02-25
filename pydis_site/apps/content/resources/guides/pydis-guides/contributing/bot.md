@@ -153,6 +153,7 @@ See [here](../obtaining-discord-ids) for help with obtaining Discord IDs.
         <div class="card-content">
               <p>If you used the provided server template, and you're not sure which channels belong where in the config file, you can use the config below. Pay attention to the comments with several <code>#</code> symbols, and replace the <code>�</code> characters with the right IDs.</p>
               <pre>
+                <code class="language-yaml">
 
 # Channels configuration
 channels.announcements=�
@@ -548,7 +549,8 @@ filters.notify_user_zalgo=false
 filters.offensive_msg_delete_days=7
 filters.ping_everyone=true
 
-</pre>
+  </code>
+  </pre>
 </div></div></div>
 <br>
 
