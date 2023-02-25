@@ -36,8 +36,9 @@ If your bot fails to start with a `PrivilegedIntentsRequired` exception, this in
 
 ### Configure the Bot
 You now have both the bot's code and a server to run it on. It's time you to connect the two by changing the bot's configurations.
+This can be done either automatically or manually, and we'll be detailing the steps for both.
 
-#### Scaffolding the configuration
+#### Automatic configuration
 To make setup much easier, there is a file called `bootstrap_config.py` that represents a script to bootstrap the configuration for you and help you get started immediately
 without having to spend much time copying ids from your newly created server into your configuration file.
 
@@ -63,17 +64,24 @@ The bootstrapping script is Python code like any other. To run it locally, you w
 #### 2. Running the script
 
 Once the script setup phase is complete, all that is left is to run it.
-To do this, you'll simply need to run the `configure` poetry task like thise
+To do this, you'll simply need to run the `configure` poetry task like this
 
 ```shell
 $ poetry run task configure
+```
+
+or, without poetry and from the root directory
+
+```shell
+python3 -m bootstrap_config
 ```
 
 Once the script has finished running, you'll notice the creation of a new file called [`.env.server`](#envserver) at your project's root directory.
 This file will contain the extracted ids from your newly created server which are necessary for your bot to run.
 Congratulations, you have finished the configuration & can now start [running your bot](#run-it-)
 
-#### .env.server
+#### Manual configuration
+##### .env.server
 All server configuration values are saved in a file called `.env.server`, which needs to be at the root directory of the cloned code.
 This file contains the various configurations we use to make the bot run on the Python Discord server, such as channel and role IDs, and the emojis it works with.
 It also contains configurations such as how long it takes for a help channel to time out, and how many messages a user needs to voice-verify.
@@ -529,11 +537,11 @@ We understand this is tedious and are working on a better solution for setting u
 </div>
 <br>
 
-#### .env
+##### .env
 The second file you need to create is the one containing the environment variables, and needs to be named `.env`.
 Inside, add the line `BOT_TOKEN=YourDiscordBotTokenHere`. See [here](../creating-bot-account) for help with obtaining the bot token.
 
-The `.env` file will be ignored by commits.
+**Note**: The `.env` file will be ignored by commits.
 
 ---
 
