@@ -549,22 +549,22 @@ filters.ping_everyone=true
 </div></div></div>
 <br>
 
-If you don't wish to use the provided `config.yml` above, these are the main sections in `config-default.yml` that need overriding:
 
-* `guild.id`
-* `guild.categories`
-* `guild.channels`
-* `guild.roles`
-* `guild.webhooks`
-* `style.emojis`
+If you don't wish to use the provided `env.server` above, the main values that need overriding are **all** the ones prefixed with:
+
+* `guild.`
+* `categories.`
+* `channels.`
+* `roles.`
+* `webhooks.`
+* `emojis.`
 
 Additionally:
 
-* At this stage, set `bot.redis.use_fakeredis` to `true`. If you're looking for instructions for working with Redis, see [Working with Redis](#optional-working-with-redis).
-* Set `urls.site_api` to `!JOIN [*DOMAIN, "/api"]`.
+* At this stage, set `redis.use_fakeredis` to `true`. If you're looking for instructions for working with Redis, see [Working with Redis](#optional-working-with-redis).
 * Set `urls.site_schema` and `urls.site_api_schema` to `"http://"`.
 
-We understand this is tedious and are working on a better solution for setting up test servers.
+We understand this is tedious which is why we **recommend** using the [automatic configuration setup](#automatic-configuration)
 
 <div class="card">
     <button type="button" class="card-header collapsible">
@@ -575,9 +575,9 @@ We understand this is tedious and are working on a better solution for setting u
     </button>
     <div class="collapsible-content collapsed">
         <div class="card-content">
-            While it's technically possible to edit <code>config-default.yml</code> to match your server, it is heavily discouraged.
+            While it's technically possible to edit the values in `constants.py` to match your server, it is heavily discouraged.
             This file's purpose is to provide the configurations the Python bot needs to run in the Python server in production, and should remain as such.
-            In contrast, the <code>config.yml</code> file can remain in your local copy of the code, and will be ignored by commits via the project's <code>.gitignore</code>.
+            In contrast, the <code>.env.server</code> file can remain in your local copy of the code, and will be ignored by commits via the project's <code>.gitignore</code>.
         </div>
     </div>
 </div>
