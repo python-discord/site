@@ -43,9 +43,9 @@ $ poetry run task precommit
 
 ## Installing specific dependency groups
 
-In some cases, like when you'll be using the configuration bootstrapping script, you might need to install extra dependencies that are 
+In some cases, like when you'll be using the configuration bootstrapping script, you might need to install extra dependencies that are
 not necessary for the bot project to function.
-These dependency are put in a separate optional group likewise:
+These dependencies are generally put in a separate optional group likewise:
 
 ```text
 [tool.poetry.group.group-name]
