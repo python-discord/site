@@ -101,8 +101,6 @@ Let's take an example where we suppose we'll only be testing a feature that need
 
 ```py
 
-from pydantic import Field
-
 class EnvConfig:
     # Defines from where & how Pydantic will be looking for env variables
     ...
@@ -111,8 +109,8 @@ class _Channels(EnvConfig):
 
     EnvConfig.Config.env_prefix = "channels."
 
-    announcements: int = Field(default=123)
-    changelog: int = Field(default=456)
+    announcements = 123
+    changelog = 456
 
 # Instantiate the class & load the configuration
 Channels = _Channels()
