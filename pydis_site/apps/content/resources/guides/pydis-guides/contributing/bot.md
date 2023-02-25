@@ -578,7 +578,7 @@ We understand this is tedious which is why we **recommend** using the [automatic
     </button>
     <div class="collapsible-content collapsed">
         <div class="card-content">
-            While it's technically possible to edit the values in `constants.py` to match your server, it is heavily discouraged.
+            While it's technically possible to edit the values in <code>constants.py</code> to match your server, it is heavily discouraged.
             This file's purpose is to provide the configurations the Python bot needs to run in the Python server in production, and should remain as such.
             In contrast, the <code>.env.server</code> file can remain in your local copy of the code, and will be ignored by commits via the project's <code>.gitignore</code>.
         </div>
