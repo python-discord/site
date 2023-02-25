@@ -141,7 +141,7 @@ See [here](../obtaining-discord-ids) for help with obtaining Discord IDs.
 
 <div class="card">
     <button type="button" class="card-header collapsible">
-        <span class="card-header-title subtitle is-6 my-2 ml-2">Optional config.yml</span>
+        <span class="card-header-title subtitle is-6 my-2 ml-2">Full .env.server appendix</span>
         <span class="card-header-icon">
             <i class="fas fa-fw fa-angle-down title is-5" aria-hidden="true"></i>
         </span>
@@ -150,356 +150,402 @@ See [here](../obtaining-discord-ids) for help with obtaining Discord IDs.
         <div class="card-content">
               <p>If you used the provided server template, and you're not sure which channels belong where in the config file, you can use the config below. Pay attention to the comments with several <code>#</code> symbols, and replace the <code>�</code> characters with the right IDs.</p>
               <pre>
-                <code class="language-yaml">
-bot:
-    prefix:      "!"
-
-    redis:
-        host:  "redis"
-        password: null
-        port:  6379
-        use_fakeredis: true
-
-    stats:
-        presence_update_timeout: 300
-        statsd_host: "graphite.default.svc.cluster.local"
-
-urls:
-    # PyDis site vars
-    site:        &DOMAIN       "web:8000"
-    site_api:    &API    !JOIN [*DOMAIN, "/api"]
-    site_api_schema:           "http://"
-    site_paste:  &PASTE  !JOIN ["paste.", "pythondiscord.com"]
-    site_schema: &SCHEMA       "http://"
-    site_staff:  &STAFF  !JOIN [*DOMAIN, "/staff"]
-
-    paste_service:                      !JOIN ["https://", *PASTE, "/{key}"]
-    site_logs_view:                     !JOIN [*SCHEMA, *STAFF, "/bot/logs"]
-
-    # Snekbox
-    snekbox_eval_api: "http://localhost:8060/eval"
-    snekbox_311_eval_api: "http://localhost:8065/eval"
-
-##### <<  Replace the following � characters with the channel IDs in your test server  >> #####
-#  This assumes the template was used: https://discord.new/zmHtscpYN9E3
-dev_guild:
-    id: &DEV_GUILD_ID   �
-
-    categories:
-        logs:           &DEV_LOGS               �
-        help_available: &DEV_HELP_AVAILABLE     �
-        help_occupied:  &DEV_HELP_OCCUPIED      �
-        help_dormant:   &DEV_HELP_DORMANT       �
-        voice:          &DEV_VOICE              �
-
-    channels:
-        # Staff
-        admins_mods:            &DEV_ADMINS_MODS            �
-        lounge_helpers_org:     &DEV_LOUNGE_HELPERS_ORG     �
-        defcon:                 &DEV_DEFCON                 �
-        incidents:              &DEV_INCIDENTS              �
-        incidents_archive:      &DEV_INCIDENTS_ARCHIVE      �
-        staff_announcements:    &DEV_STAFF_ANNOUNCEMENTS    �
-        dev_logs:               &DEV_DEV_LOGS               �
-
-        # Logs
-        all_logs:   &DEV_ALL_LOGS   �
-        bb_logs:    &DEV_BB_LOGS    �
-        duck_pond:  &DEV_DUCK_POND  �
-
-        # Available Help Channels
-        how_to_get_help:    &DEV_HTGH   �
-
-        # Miscellaneous
-        bot_commands:       &DEV_BOT_CMD    �
-        general_meta_voice: &DEV_GMV        �
-        dev_core_contrib:   &DEV_DEV        �
-
-        # Voice
-        voice-verification: &DEV_VOICE_VER      �
-        vc:                 &DEV_VC             �
-        staff_voice:        &DEV_STAFF_VOICE    �
-
-        # News
-        announcements:  &DEV_ANNOUNCEMENTS  �
-        py_news:        &DEV_PY_NEWS        �
-
-        # Off-topic
-        off_topic_0: &DEV_OT_0  �
-        off_topic_1: &DEV_OT_1  �
-        off_topic_2: &DEV_OT_2  �
-
-guild:
-    ##### <<  Replace the following � characters with the role and webhook IDs in your test server  >> #####
-    roles:
-        announcements:                          �
-        contributors:                           �
-        help_cooldown:                          �
-        muted:              &MUTED_ROLE         �
-        partners:           &PY_PARTNER_ROLE    �
-        python_community:   &PY_COMMUNITY_ROLE  �
-        voice_verified:                         �
-
-        # Staff
-        admins:             &ADMINS_ROLE    �
-        core_developers:                    �
-        devops:                             �
-        domain_leads:                       �
-        helpers:            &HELPERS_ROLE   �
-        moderators:         &MODS_ROLE      �
-        mod_team:           &MOD_TEAM_ROLE  �
-        owners:             &OWNERS_ROLE    �
-        code_jam_event_team:                �
-        project_leads:                      �
-
-        # Code Jam
-        team_leaders:   �
-
-        # Streaming
-        video: �
-
-    webhooks:
-        big_brother:                            �
-        dev_log:                                �
-        duck_pond:                              �
-        incidents:                              �
-        incidents_archive:                      �
-        python_news:        &PYNEWS_WEBHOOK     �
-        talent_pool:                            �
-
-    ##### <<  At this point your test bot should be able to mostly work with your test server  >> #####
-    #  The following is the actual configs the bot uses, don't delete these.
-    id: *DEV_GUILD_ID
-    invite: "https://discord.gg/python"
-
-    categories:
-        help_available:                     *DEV_HELP_AVAILABLE
-        help_dormant:                       *DEV_HELP_DORMANT
-        help_in_use:                        *DEV_HELP_OCCUPIED
-        logs:                               *DEV_LOGS
-        voice:                              *DEV_VOICE
-
-    channels:
-        # Public announcement and news channels
-        announcements:  *DEV_ANNOUNCEMENTS
-        change_log:     *DEV_ANNOUNCEMENTS
-        mailing_lists:  *DEV_ANNOUNCEMENTS
-        python_events:  *DEV_ANNOUNCEMENTS
-        python_news:    *DEV_PY_NEWS
-
-        # Development
-        dev_contrib:        *DEV_DEV
-        dev_core:           *DEV_DEV
-        dev_log:            *DEV_DEV_LOGS
-
-        # Discussion
-        meta:                               *DEV_GMV
-        python_general:     *DEV_GMV
-
-        # Python Help: Available
-        cooldown:           *DEV_HTGH
-        how_to_get_help:    *DEV_HTGH
-
-        # Topical
-        discord_py:         *DEV_GMV
-
-        # Logs
-        attachment_log:     *DEV_ALL_LOGS
-        message_log:        *DEV_ALL_LOGS
-        mod_log:            *DEV_ALL_LOGS
-        user_log:           *DEV_ALL_LOGS
-        voice_log:          *DEV_ALL_LOGS
-
-        # Off-topic
-        off_topic_0:    *DEV_OT_0
-        off_topic_1:    *DEV_OT_1
-        off_topic_2:    *DEV_OT_2
-
-        # Special
-        bot_commands:       *DEV_BOT_CMD
-        voice_gate:         *DEV_VOICE_VER
-        code_jam_planning:  *DEV_ADMINS_MODS
-
-        # Staff
-        admins:             *DEV_ADMINS_MODS
-        admin_spam:         *DEV_ADMINS_MODS
-        defcon:             *DEV_DEFCON
-        duck_pond:          *DEV_DUCK_POND
-        helpers:            *DEV_LOUNGE_HELPERS_ORG
-        incidents:                          *DEV_INCIDENTS
-        incidents_archive:                  *DEV_INCIDENTS_ARCHIVE
-        mods:               *DEV_ADMINS_MODS
-        mod_alerts:                         *DEV_ADMINS_MODS
-        mod_meta:           *DEV_ADMINS_MODS
-        mod_spam:           *DEV_ADMINS_MODS
-        mod_tools:          *DEV_ADMINS_MODS
-        organisation:       *DEV_LOUNGE_HELPERS_ORG
-        staff_lounge:       *DEV_LOUNGE_HELPERS_ORG
-
-        # Staff announcement channels
-        admin_announcements:    *DEV_STAFF_ANNOUNCEMENTS
-        mod_announcements:      *DEV_STAFF_ANNOUNCEMENTS
-        staff_announcements:    *DEV_STAFF_ANNOUNCEMENTS
-
-        # Voice Channels
-        admins_voice:       *DEV_STAFF_VOICE
-        code_help_voice_1:  *DEV_VC
-        code_help_voice_2:  *DEV_VC
-        general_voice:      *DEV_VC
-        staff_voice:        *DEV_STAFF_VOICE
-
-        # Voice Chat
-        code_help_chat_1:                   *DEV_GMV
-        code_help_chat_2:                   *DEV_GMV
-        staff_voice_chat:                   *DEV_ADMINS_MODS
-        voice_chat:                         *DEV_GMV
-
-        # Watch
-        big_brother_logs:                   *DEV_BB_LOGS
-
-    moderation_categories:
-        - *DEV_LOGS
-
-    moderation_channels:
-        - *DEV_ADMINS_MODS
-
-    # Modlog cog ignores events which occur in these channels
-    modlog_blacklist:
-        - *DEV_ADMINS_MODS
-        - *DEV_ALL_LOGS
-        - *DEV_STAFF_VOICE
-
-    reminder_whitelist:
-        - *DEV_BOT_CMD
-        - *DEV_DEV
-
-    moderation_roles:
-        - *ADMINS_ROLE
-        - *MODS_ROLE
-        - *MOD_TEAM_ROLE
-        - *OWNERS_ROLE
-
-    staff_roles:
-        - *ADMINS_ROLE
-        - *HELPERS_ROLE
-        - *MODS_ROLE
-        - *OWNERS_ROLE
-
-##### <<  The bot shouldn't fail without these, but commands adding specific emojis won't work.  >> #####
-#  You should at least set the trashcan. Set the incidents emojis if relevant.
-style:
-    emojis:
-        badge_bug_hunter: "<:bug_hunter_lvl1:�>"
-        badge_bug_hunter_level_2: "<:bug_hunter_lvl2:�>"
-        badge_early_supporter: "<:early_supporter:�>"
-        badge_hypesquad: "<:hypesquad_events:�>"
-        badge_hypesquad_balance: "<:hypesquad_balance:�>"
-        badge_hypesquad_bravery: "<:hypesquad_bravery:�>"
-        badge_hypesquad_brilliance: "<:hypesquad_brilliance:�>"
-        badge_partner: "<:partner:�>"
-        badge_staff: "<:discord_staff:�>"
-        badge_verified_bot_developer: "<:verified_bot_dev:�>"
-
-        defcon_shutdown:    "<:defcondisabled:�>"
-        defcon_unshutdown:  "<:defconenabled:�>"
-        defcon_update:      "<:defconsettingsupdated:�>"
-
-        failmail: "<:failmail:�>"
-
-        #incident_actioned:      "<:incident_actioned:�>"
-        incident_investigating: "<:incident_investigating:�>"
-        incident_unactioned:    "<:incident_unactioned:�>"
-
-        status_dnd:     "<:status_dnd:�>"
-        status_idle:    "<:status_idle:�>"
-        status_offline: "<:status_offline:�>"
-        status_online:  "<:status_online:�>"
-
-        trashcan: "<:trashcan:�>"
-
-##### <<  Optional - If you don't care about the filtering, help channel and py-news cogs, ignore the rest of this file  >> #####
-filter:
-    # What do we filter?
-    filter_domains:        true
-    filter_everyone_ping:  true
-    filter_invites:        true
-    filter_zalgo:          false
-    watch_regex:           true
-    watch_rich_embeds:     true
-
-    # Notify user on filter?
-    # Notifications are not expected for "watchlist" type filters
-    notify_user_domains:        false
-    notify_user_everyone_ping:  true
-    notify_user_invites:        true
-    notify_user_zalgo:          false
-
-    # Filter configuration
-    offensive_msg_delete_days: 7     # How many days before deleting an offensive message?
-    ping_everyone:             true
-
-    # Censor doesn't apply to these
-    channel_whitelist:
-        - *DEV_ADMINS_MODS
-        - *DEV_BB_LOGS
-        - *DEV_ALL_LOGS
-        - *DEV_LOUNGE_HELPERS_ORG
-
-    role_whitelist:
-        - *ADMINS_ROLE
-        - *HELPERS_ROLE
-        - *MODS_ROLE
-        - *OWNERS_ROLE
-        - *PY_COMMUNITY_ROLE
-        - *PY_PARTNER_ROLE
-
-help_channels:
-    enable: true
-
-    # Minimum interval before allowing a certain user to claim a new help channel
-    claim_minutes: 1
-
-    # Roles which are allowed to use the command which makes channels dormant
-    cmd_whitelist:
-        - *HELPERS_ROLE
-
-    # Allowed duration of inactivity before making a channel dormant
-    idle_minutes: 1
-
-    # Allowed duration of inactivity when channel is empty (due to deleted messages)
-    # before message making a channel dormant
-    deleted_idle_minutes: 1
-
-    # Maximum number of channels to put in the available category
-    max_available: 2
-
-    # Maximum number of channels across all 3 categories
-    # Note Discord has a hard limit of 50 channels per category, so this shouldn't be > 50
-    max_total_channels: 20
-
-    # Prefix for help channel names
-    name_prefix: 'help-'
-
-    # Notify if more available channels are needed but there are no more dormant ones
-    notify: true
-
-    # Channel in which to send notifications
-    notify_channel: *DEV_LOUNGE_HELPERS_ORG
-
-    # Minimum interval between helper notifications
-    notify_minutes: 5
-
-    # Mention these roles in notifications
-    notify_roles:
-        - *HELPERS_ROLE
-
-python_news:
-    channel: *DEV_PY_NEWS
-    webhook: *PYNEWS_WEBHOOK
-
-##### <<  Add any additional sections you need to override from config-default.yml  >> #####
-            </code>
-          </pre>
+
+# Channels configuration
+channels.announcements=�
+channels.changelog=�
+channels.mailing_lists=�
+channels.python_events=�
+channels.python_news=�
+channels.reddit=�
+
+channels.dev_contrib=�
+channels.dev_core=�
+channels.dev_log=�
+
+channels.meta=�
+channels.python_general=�
+
+channels.help_system_forum=�
+
+channels.attachment_log=�
+channels.filter_log=�
+channels.message_log=�
+channels.mod_log=�
+channels.nomination_archive=�
+channels.user_log=�
+channels.voice_log=�
+
+channels.off_topic_0=�
+channels.off_topic_1=�
+channels.off_topic_2=�
+
+channels.bot_commands=�
+channels.discord_bots=�
+channels.esoteric=�
+channels.voice_gate=�
+channels.code_jam_planning=�
+
+### Staff
+channels.admins=�
+channels.admin_spam=�
+channels.defcon=�
+channels.helpers=�
+channels.incidents=�
+channels.incidents_archive=�
+channels.mod_alerts=�
+channels.mod_meta=�
+channels.mods=�
+channels.nominations=�
+channels.nomination_voting=�
+channels.organisation=�
+
+### Staff announcement channels
+channels.admin_announcements=�
+channels.mod_announcements=�
+channels.staff_announcements=�
+channels.staff_info=�
+channels.staff_lounge=�
+
+### Voice Channels
+channels.admins_voice=�
+channels.code_help_voice_0=�
+channels.code_help_voice_1=�
+channels.general_voice_0=�
+channels.general_voice_1=�
+channels.staff_voice=�
+
+channels.black_formatter=�
+
+### Voice Chat
+channels.code_help_chat_0=�
+channels.code_help_chat_1=�
+channels.staff_voice_chat=�
+channels.voice_chat_0=�
+channels.voice_chat_1=�
+
+channels.big_brother_logs=�
+channels.duck_pond=�
+channels.roles=�
+
+# Roles configuration
+
+roles.advent_of_code=�
+roles.announcements=�
+roles.lovefest=�
+roles.pyweek_announcements=�
+roles.revival_of_code=�
+roles.legacy_help_channels_access=�
+
+roles.contributors=�
+roles.help_cooldown=�
+roles.muted=�
+roles.partners=�
+roles.python_community=�
+roles.sprinters=�
+roles.voice_verified=�
+
+### Streaming
+roles.video=�
+
+### Staff
+roles.admins=�
+roles.core_developers=�
+roles.code_jam_event_team=�
+roles.devops=�
+roles.domain_leads=�
+roles.events_lead=�
+roles.helpers=�
+roles.moderators=�
+roles.mod_team=�
+roles.owners=�
+roles.project_leads=�
+
+### Code Jam
+roles.jammers=�
+
+### Patreon
+roles.patreon_tier_1=�
+roles.patreon_tier_2=�
+roles.patreon_tier_3=�
+
+
+
+# Categories configuration
+
+categories.logs=�
+categories.moderators=�
+categories.modmail=�
+categories.appeals=�
+categories.appeals2=�
+categories.voice=�
+
+### 2021 Summer Code Jam
+categories.summer_code_jam=�
+
+
+# Guild configuration
+guild.id=�
+guild.invite="https://discord.gg/python"
+
+
+# Webhooks configuration
+
+webhooks.big_brother.id=�
+webhooks.dev_log.id=�
+webhooks.duck_pond.id=�
+webhooks.incidents.id=�
+webhooks.incidents_archive.id=�
+webhooks.python_news.id=�
+
+# Big brother configuration
+big_brother.header_message_limit=15
+big_brother.log_delay=15
+
+# Code Block configuration
+
+code_block.cooldown_seconds=300
+code_block.minimum_lines=4
+
+
+# Colours configuration
+
+colours.blue=0x3775a8
+colours.bright_green=0x01d277
+colours.orange=0xe67e22
+colours.pink=0xcf84e0
+colours.purple=0xb734eb
+colours.soft_green=0x68c290
+colours.soft_orange=0xf9cb54
+colours.soft_red=0xcd6d6d
+colours.white=0xfffffe
+colours.yellow=0xffd241
+
+# Free configuration
+free.activity_timeout=600
+free.cooldown_per=60.0
+free.cooldown_rate=1
+
+# Antispam configuration
+antispam.rules.attachments.interval=10
+antispam.rules.attachments.max=10
+
+antispam.rules.burst.interval=10
+antispam.rules.burst.max=7
+
+antispam.rules.chars.interval=5
+antispam.rules.chars.max=200
+
+antispam.rules.discord_emojis.interval=10
+antispam.rules.discord_emojis.max=20
+
+antispam.rules.duplicates.interval=10
+antispam.rules.duplicates.max=3
+
+antispam.rules.links.interval=10
+antispam.rules.links.max=10
+
+antispam.rules.mentions.interval=10
+antispam.rules.mentions.max=5
+
+antispam.rules.newlines.interval=10
+antispam.rules.newlines.max=100
+antispam.rules.newlines.max_consecutive=10
+
+antispam.rules.role_mentions.interval=10
+antispam.rules.role_mentions.max=3
+
+
+antispam.cache_size=100
+antispam.clean_offending=true
+antispam.ping_everyone=true
+antispam.punishment.remove_after=600
+
+
+# Help channels configuration
+help_channels.enable=true
+help_channels.idle_minutes=30
+help_channels.deleted_idle_minutes=5
+
+# Redirect output configuration
+redirect_output.delete_delay=15
+redirect_output.delete_invocation=true
+
+# Duck pond configuration
+duckpond.threshold=7
+
+# Python news configuration
+python_news.mail_lists=
+
+# Voice gate configuration
+voice_gate.bot_message_delete_delay=10
+voice_gate.minimum_activity_blocks=3
+voice_gate.minimum_days_member=3
+voice_gate.minimum_messages=50
+voice_gate.voice_ping_delete_delay=60
+
+# Branding configuration
+branding.cycle_frequency=3
+
+# Video permisions configuration
+video_permission.default_permission_duration=5
+
+# Redis configuration
+redis.host="redis.default.svc.cluster.local"
+redis.port=6379
+redis.use_fakeredis=false  # If this is true, Bot will use fakeredis.aioredis
+
+# Cleaning configuration
+clean.message_limit=10000
+
+# Stats configuration
+stats.presence_update_timeout=30
+stats.statsd_host="graphite.default.svc.cluster.local"
+
+# Cooldowns configuration
+cooldowns.tags=60
+
+# Metabase configuration
+metabase.base_url="http://metabase.default.svc.cluster.local"
+metabase.public_url="https://metabase.pythondiscord.com"
+metabase.max_session_age=20_160
+
+# URLs configuration
+
+urls.snekbox_eval_api="http://snekbox.default.svc.cluster.local/eval"
+urls.snekbox_311_eval_api="http://snekbox-311.default.svc.cluster.local/eval"
+
+# Discord API
+urls.discord_api="https://discordapp.com/api/v7/"
+
+# Misc endpoints
+urls.bot_avatar="https://raw.githubusercontent.com/python-discord/branding/main/logos/logo_circle/logo_circle.png"
+urls.github_bot_repo=https://github.com/python-discord/bot
+
+# Site
+urls.site="pythondiscord.com"
+urls.site_schema="https://"
+urls.site_api="site.default.svc.cluster.local/api"
+urls.site_api_schema="http://"
+
+urls.connect_max_retries=3
+urls.connect_cooldown=5
+
+
+# Emojis configuration
+emojis.badge_bug_hunter="<:bug_hunter_lvl1:743882896372269137>"
+emojis.badge_bug_hunter_level_2="<:bug_hunter_lvl2:743882896611344505>"
+emojis.badge_early_supporter="<:early_supporter:743882896909140058>"
+emojis.badge_hypesquad="<:hypesquad_events:743882896892362873>"
+emojis.badge_hypesquad_balance="<:hypesquad_balance:743882896460480625>"
+emojis.badge_hypesquad_bravery="<:hypesquad_bravery:743882896745693335>"
+emojis.badge_hypesquad_brilliance="<:hypesquad_brilliance:743882896938631248>"
+emojis.badge_partner="<:partner:748666453242413136>"
+emojis.badge_staff="<:discord_staff:743882896498098226>"
+emojis.badge_verified_bot_developer="<:verified_bot_dev:743882897299210310>"
+emojis.verified_bot="<:verified_bot:811645219220750347>"
+emojis.bot="<:bot:812712599464443914>"
+
+emojis.defcon_shutdown="<:defcondisabled:470326273952972810>"  # noqa: E704
+emojis.defcon_unshutdown="<:defconenabled:470326274213150730>"  # noqa: E704
+emojis.defcon_update="<:defconsettingsupdated:470326274082996224>"  # noqa: E704
+
+emojis.failmail="<:failmail:633660039931887616>"
+
+emojis.incident_actioned="<:incident_actioned:714221559279255583>"
+emojis.incident_investigating="<:incident_investigating:714224190928191551>"
+emojis.incident_unactioned="<:incident_unactioned:714223099645526026>"
+
+emojis.status_dnd="<:status_dnd:470326272082313216>"
+emojis.status_idle="<:status_idle:470326266625785866>"
+emojis.status_offline="<:status_offline:470326266537705472>"
+emojis.status_online="<:status_online:470326272351010816>"
+
+emojis.ducky_dave="<:ducky_dave:742058418692423772>"
+
+emojis.trashcan="<:trashcan:637136429717389331>"
+
+emojis.bullet="\u2022"
+emojis.check_mark="\u2705"
+emojis.cross_mark="\u274C"
+emojis.new="\U0001F195"
+emojis.pencil="\u270F"
+
+emojis.ok_hand=":ok_hand:"
+
+# Icons configuration
+
+icons.crown_blurple="https://cdn.discordapp.com/emojis/469964153289965568.png"
+icons.crown_green="https://cdn.discordapp.com/emojis/469964154719961088.png"
+icons.crown_red="https://cdn.discordapp.com/emojis/469964154879344640.png"
+
+icons.defcon_denied="https://cdn.discordapp.com/emojis/472475292078964738.png"
+icons.defcon_shutdown="https://cdn.discordapp.com/emojis/470326273952972810.png"
+icons.defcon_unshutdown="https://cdn.discordapp.com/emojis/470326274213150730.png"
+icons.defcon_update="https://cdn.discordapp.com/emojis/472472638342561793.png"
+
+icons.filtering="https://cdn.discordapp.com/emojis/472472638594482195.png"
+
+icons.green_checkmark="https://raw.githubusercontent.com/python-discord/branding/main/icons/checkmark/green-checkmark-dist.png"
+icons.green_questionmark="https://raw.githubusercontent.com/python-discord/branding/main/icons/checkmark/green-question-mark-dist.png"
+
+icons.guild_update="https://cdn.discordapp.com/emojis/469954765141442561.png"
+
+icons.hash_blurple="https://cdn.discordapp.com/emojis/469950142942806017.png"
+icons.hash_green="https://cdn.discordapp.com/emojis/469950144918585344.png"
+icons.hash_red="https://cdn.discordapp.com/emojis/469950145413251072.png"
+
+icons.message_bulk_delete="https://cdn.discordapp.com/emojis/469952898994929668.png"
+icons.message_delete="https://cdn.discordapp.com/emojis/472472641320648704.png"
+icons.message_edit="https://cdn.discordapp.com/emojis/472472638976163870.png"
+
+icons.pencil="https://cdn.discordapp.com/emojis/470326272401211415.png"
+
+icons.questionmark="https://cdn.discordapp.com/emojis/512367613339369475.png"
+
+icons.remind_blurple="https://cdn.discordapp.com/emojis/477907609215827968.png"
+icons.remind_green="https://cdn.discordapp.com/emojis/477907607785570310.png"
+icons.remind_red="https://cdn.discordapp.com/emojis/477907608057937930.png"
+
+icons.sign_in="https://cdn.discordapp.com/emojis/469952898181234698.png"
+icons.sign_out="https://cdn.discordapp.com/emojis/469952898089091082.png"
+
+icons.superstarify="https://cdn.discordapp.com/emojis/636288153044516874.png"
+icons.unsuperstarify="https://cdn.discordapp.com/emojis/636288201258172446.png"
+
+icons.token_removed="https://cdn.discordapp.com/emojis/470326273298792469.png"
+
+icons.user_ban="https://cdn.discordapp.com/emojis/469952898026045441.png"
+icons.user_mute="https://cdn.discordapp.com/emojis/472472640100106250.png"
+icons.user_unban="https://cdn.discordapp.com/emojis/469952898692808704.png"
+icons.user_unmute="https://cdn.discordapp.com/emojis/472472639206719508.png"
+icons.user_update="https://cdn.discordapp.com/emojis/469952898684551168.png"
+icons.user_verified="https://cdn.discordapp.com/emojis/470326274519334936.png"
+icons.user_warn="https://cdn.discordapp.com/emojis/470326274238447633.png"
+
+icons.voice_state_blue="https://cdn.discordapp.com/emojis/656899769662439456.png"
+icons.voice_state_green="https://cdn.discordapp.com/emojis/656899770094452754.png"
+icons.voice_state_red="https://cdn.discordapp.com/emojis/656899769905709076.png"
+
+# Filters configuration
+filters.filter_domains=true
+filters.filter_everyone_ping=true
+filters.filter_invites=true
+filters.filter_zalgo=false
+filters.watch_regex=true
+filters.watch_rich_embeds=true
+
+### Notifications are not expected for "watchlist" type filters
+
+filters.notify_user_domains=false
+filters.notify_user_everyone_ping=true
+filters.notify_user_invites=true
+filters.notify_user_zalgo=false
+
+filters.offensive_msg_delete_days=7
+filters.ping_everyone=true
+
+</pre>
 </div></div></div>
 <br>
 
