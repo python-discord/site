@@ -155,6 +155,10 @@ See [here](../obtaining-discord-ids) for help with obtaining Discord IDs.
               <pre>
                 <code class="language-yaml">
 
+##### <<  Replace the following � characters with the channel IDs in your test server  >> #####
+#  This assumes the template was used: https://discord.new/zmHtscpYN9E3
+
+
 # Channels configuration
 channels.announcements=�
 channels.changelog=�
@@ -232,6 +236,9 @@ channels.big_brother_logs=�
 channels.duck_pond=�
 channels.roles=�
 
+##### << Replace the following � characters with the role IDs in your test server >> #####
+
+
 # Roles configuration
 
 roles.advent_of_code=�
@@ -273,7 +280,7 @@ roles.patreon_tier_1=�
 roles.patreon_tier_2=�
 roles.patreon_tier_3=�
 
-
+##### << Replace the following � characters with the category IDs in your test server >> #####
 
 # Categories configuration
 
@@ -287,11 +294,14 @@ categories.voice=�
 ### 2021 Summer Code Jam
 categories.summer_code_jam=�
 
+##### << Replace the following � character with the ID of your test server >> #####
 
 # Guild configuration
 guild.id=�
 guild.invite="https://discord.gg/python"
 
+
+##### << Replace the following � characters with the webhook IDs in your test server >> #####
 
 # Webhooks configuration
 
@@ -435,6 +445,10 @@ urls.site_api_schema="http://"
 urls.connect_max_retries=3
 urls.connect_cooldown=5
 
+##### << The bot shouldn't fail without these, but commands adding specific emojis won't work. >> #####
+##### << You should at least set the trashcan. Set the incidents emojis if relevant. >> #####
+
+
 
 # Emojis configuration
 emojis.badge_bug_hunter="<:bug_hunter_lvl1:743882896372269137>"
@@ -530,6 +544,8 @@ icons.user_warn="https://cdn.discordapp.com/emojis/470326274238447633.png"
 icons.voice_state_blue="https://cdn.discordapp.com/emojis/656899769662439456.png"
 icons.voice_state_green="https://cdn.discordapp.com/emojis/656899770094452754.png"
 icons.voice_state_red="https://cdn.discordapp.com/emojis/656899769905709076.png"
+
+##### << Optional - If you don't care about the filtering, help channel and py-news cogs, ignore the rest of this file >> #####
 
 # Filters configuration
 filters.filter_domains=true
