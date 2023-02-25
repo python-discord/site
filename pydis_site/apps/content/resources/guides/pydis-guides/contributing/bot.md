@@ -78,13 +78,60 @@ This file will contain the extracted ids from your newly created server which ar
 Congratulations, you have finished the configuration & can now start [running your bot](#run-it-)
 
 #### .env.server
-Entering the directory of the cloned code, you will find a file named `config-default.yml`.
+All server configuration values are saved in a file called `.env.server`, which needs to be at the root directory of the cloned code.
 This file contains the various configurations we use to make the bot run on the Python Discord server, such as channel and role IDs, and the emojis it works with.
 It also contains configurations such as how long it takes for a help channel to time out, and how many messages a user needs to voice-verify.
 
-To run the bot in your test server, you will need to override some of those configurations.
-Create and open a new file in the directory called `config.yml`. Alternatively, copy the `config-default.yml` file and rename the copy to `config.yml`.
-The bot will first look at the items in `config.yml`, and will fall back to `config-default.yml` only if necessary. Note that you don't have to specify all items in `config.yml`, just the ones you want to override such as channel IDs.
+If you decided to use the bootstrapping script, you'll find that this file has already been created (which we recommend),
+otherwise you'll need to create it manually.
+
+To run the bot in your test server, you will **only** need to add the **necessary** configuration values for the channels/roles/categories, etc.
+that you'll be using for testing
+
+Let's take an example where we suppose we'll only be testing a feature that needs the `announcements` channel.
+
+`constants.py`
+
+```py
+
+from pydantic import Field
+
+class EnvConfig:
+    # Defines from where & how Pydantic will be looking for env variables
+    ...
+
+class _Channels(EnvConfig):
+
+    EnvConfig.Config.env_prefix = "channels."
+
+    announcements: int = Field(default=123)
+    changelog: int = Field(default=456)
+
+# Instantiate the class & load the configuration
+Channels = _Channels()
+```
+
+`.env.server` file
+
+```text
+channels.announcements=789
+```
+
+When you launch your bot, `pydantic` will load up the server constants from the `.env.server` file if they exist.
+
+Each constants class will define its own prefix, which will make `pydantic` look for variables that will look like `{{env_prefix}}{{attribute_name}}` in the environment files
+
+In our example, this will imply that pydantic will look for both `channels.announcements` and `channels.changelog` in the `.env.server` file.
+
+As you can see here, only `channels.announcements` has been defined in the `.env.server` file since it's the only one needed, which will tell `pydantic`
+to use the value **789** for the `announcements` attribute instead of the default **456**, and use the default value for the `changelog` attribute
+
+```python
+>>> Channels.announcements
+789
+>>> Channels.changelong
+456
+```
 
 See [here](../obtaining-discord-ids) for help with obtaining Discord IDs.
 
