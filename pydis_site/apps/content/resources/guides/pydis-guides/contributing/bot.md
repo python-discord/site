@@ -47,6 +47,7 @@ without having to spend much time copying ids from your newly created server int
 ##### 1. Script setup
 ##### 1.1. Environment variables
 You will need to create a file called `.env` which will contain two required values for the script to work: `BOT_TOKEN` and `GUILD_ID`
+
 Inside, add the following two lines:
 
 ```text
@@ -58,6 +59,7 @@ See [here](../creating-bot-account) for help with obtaining the bot token and [h
 **Note**: The `.env` file will be ignored by commits.
 ##### 1.2 Setting up the script environment
 The bootstrapping script is Python code like any other. To run it locally, you will need the right version of Python with the necessary packages installed:
+
 1. Make sure you follow steps `1` and `2` [here](#setting-up-a-development-environment)
 2. [Install the `config-bootstrap` dependency group](../installing-project-dependencies#installing-specific-dependency-groups).
 
@@ -78,7 +80,8 @@ python3 -m bootstrap_config
 
 Once the script has finished running, you'll notice the creation of a new file called [`.env.server`](#envserver) at your project's root directory.
 This file will contain the extracted ids from your newly created server which are necessary for your bot to run.
-Congratulations, you have finished the configuration & can now start [running your bot](#run-it-)
+
+**Congratulations**, you have finished the configuration & can now start [running your bot](#run-it)
 
 #### Manual configuration
 ##### .env.server
