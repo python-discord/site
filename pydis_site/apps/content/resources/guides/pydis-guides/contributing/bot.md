@@ -615,7 +615,7 @@ You are now almost ready to run the Python bot. The simplest way to do so is wit
 </div>
 <br>
 
-In your `config.yml` file:
+In your `.env.server` file:
 
 * Set `urls.site` to `"web:8000"`.
 * If you wish to work with snekbox set the following:
@@ -634,7 +634,7 @@ Your bot is now running, but this method makes debugging with an IDE a fairly in
 The advantage of this method is that you can run the bot's code in your preferred editor, with debugger and all, while keeping all the setup of the bot's various dependencies inside Docker.
 
 * Append the following line to your `.env` file: `BOT_API_KEY=badbot13m0n8f570f942013fc818f234916ca531`.
-* In your `config.yml` file, set `urls.site` to `"localhost:8000"`. If you wish to keep using `web:8000`, then [COMPOSE_PROJECT_NAME](../docker/#compose-project-names) has to be set.
+* In your `.env.server` file, set `urls.site` to `"localhost:8000"`. If you wish to keep using `web:8000`, then [COMPOSE_PROJECT_NAME](../docker/#compose-project-names) has to be set.
 * To work with snekbox, set `urls.snekbox_eval_api` to `"http://localhost:8060/eval"` and `urls.snekbox_311_eval_api` to `"http://localhost:8065/eval"`
 
 You will need to start the services separately, but if you got the previous section with Docker working, that's pretty simple:
@@ -679,7 +679,7 @@ You can run additional services on the host, but this guide won't go over how to
 If possible, prefer to start the services through Docker to replicate the production environment as much as possible.
 
 The site, however, is a mandatory service for the bot.
-Refer to the [previous section](#with-the-bot-running-locally) and the [site contributing guide](../site) to learn how to start it on the host, in which case you will need to change `urls.site` in `config.yml` to wherever the site is being hosted.
+Refer to the [previous section](#with-the-bot-running-locally) and the [site contributing guide](../site) to learn how to start it on the host, in which case you will need to change `urls.site` in `.env.server` to wherever the site is being hosted.
 
 ---
 ### Development Tips
@@ -721,15 +721,15 @@ We are always open to more statistics so add as many as you can!
 ---
 
 ### Optional: Working with Redis
-In [Configure the Bot](#configyml) you were asked to set `bot.redis.use_fakeredis` to `true`. If you do not need to work on features that rely on Redis, this is enough. Fakeredis will give the illusion that features relying on Redis are saving information properly, but restarting the bot or the specific cog will wipe that information.
+In [Configure the Bot](#envserver) you were asked to set `redis.use_fakeredis` to `true`. If you do not need to work on features that rely on Redis, this is enough. Fakeredis will give the illusion that features relying on Redis are saving information properly, but restarting the bot or the specific cog will wipe that information.
 
-If you are working on a feature that relies on Redis, you will need to enable Redis to make sure persistency is achieved for the feature across restarts. The first step towards that is going to `config.yml` and setting `bot.redis.use_fakeredis` to `false`.
+If you are working on a feature that relies on Redis, you will need to enable Redis to make sure persistency is achieved for the feature across restarts. The first step towards that is going to `.env.server` and setting `redis.use_fakeredis` to `false`.
 
 #### Starting Redis in Docker (Recommended)
-If you're using the Docker image provided in the project's Docker Compose, open your `config.yml` file. If you're running the bot in Docker, set `bot.redis.host` to `redis`, and if you're running it on the host set it to `localhost`. Set `bot.redis.password` to `null`.
+If you're using the Docker image provided in the project's Docker Compose, open your `.env.server` file. If you're running the bot in Docker, set `redis.host` to `redis`, and if you're running it on the host set it to `localhost`. Set `bot.redis.password` to `""`.
 
 #### Starting Redis Using Other Methods
-You can run your own instance of Redis, but in that case you will need to correctly set `bot.redis.host` and `bot.redis.port`, and the `bot.redis.password` value in `config-default.yml` should not be overridden. Then, enter the `.env` file, and set `REDIS_PASSWORD` to whatever password you set.
+You can run your own instance of Redis, but in that case you will need to correctly set `redis.host` and `redis.port`, and the `redis.password` value in `constants.py` should not be overridden. Then, enter the `.env` file, and set `REDIS_PASSWORD` to whatever password you set.
 
 ---
 
