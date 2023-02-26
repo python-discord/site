@@ -46,13 +46,13 @@ without having to spend much time copying ids from your newly created server int
 
 ##### 1. Script setup
 ##### 1.1. Environment variables
-You will need to create a file called `.env` which will contain two required values for the script to work: `BOT_TOKEN` and `GUILD_ID`
+You will need to create a file called `.env` which will contain two required values for the script to work: `BOT.TOKEN` and `GUILD.ID`
 
 Inside, add the following two lines:
 
 ```text
-BOT_TOKEN=YourDiscordBotTokenHere
-GUILD_ID=YourDiscordTestServerIdHere
+BOT.TOKEN=YourDiscordBotTokenHere
+GUILD.ID=YourDiscordTestServerIdHere
 ```
 See [here](../creating-bot-account) for help with obtaining the bot token and [here](../obtaining-discord-ids#guild-id) for help with obtaining the guild's id
 
@@ -604,7 +604,7 @@ We understand this is tedious which is why we **recommend** using the [automatic
 
 ##### .env
 The second file you need to create is the one containing the environment variables, and needs to be named `.env`.
-Inside, add the line `BOT_TOKEN=YourDiscordBotTokenHere`. See [here](../creating-bot-account) for help with obtaining the bot token.
+Inside, add the line `BOT.TOKEN=YourDiscordBotTokenHere`. See [here](../creating-bot-account) for help with obtaining the bot token.
 
 **Note**: The `.env` file will be ignored by commits.
 
@@ -652,7 +652,7 @@ Your bot is now running, but this method makes debugging with an IDE a fairly in
 #### With the Bot Running Locally
 The advantage of this method is that you can run the bot's code in your preferred editor, with debugger and all, while keeping all the setup of the bot's various dependencies inside Docker.
 
-* Append the following line to your `.env` file: `BOT_API_KEY=badbot13m0n8f570f942013fc818f234916ca531`.
+* Append the following line to your `.env` file: `API_KEYS.SITE_API=badbot13m0n8f570f942013fc818f234916ca531`.
 * In your `.env.server` file, set `urls.site` to `"localhost:8000"`. If you wish to keep using `web:8000`, then [COMPOSE_PROJECT_NAME](../docker/#compose-project-names) has to be set.
 * To work with snekbox, set `urls.snekbox_eval_api` to `"http://localhost:8060/eval"` and `urls.snekbox_311_eval_api` to `"http://localhost:8065/eval"`
 
@@ -748,7 +748,7 @@ If you are working on a feature that relies on Redis, you will need to enable Re
 If you're using the Docker image provided in the project's Docker Compose, open your `.env.server` file. If you're running the bot in Docker, set `redis.host` to `redis`, and if you're running it on the host set it to `localhost`. Set `bot.redis.password` to `""`.
 
 #### Starting Redis Using Other Methods
-You can run your own instance of Redis, but in that case you will need to correctly set `redis.host` and `redis.port`, and the `redis.password` value in `constants.py` should not be overridden. Then, enter the `.env` file, and set `REDIS_PASSWORD` to whatever password you set.
+You can run your own instance of Redis, but in that case you will need to correctly set `redis.host` and `redis.port`, and the `redis.password` value in `constants.py` should not be overridden. Then, enter the `.env` file, and set `REDIS.PASSWORD` to whatever password you set.
 
 ---
 
@@ -784,19 +784,19 @@ If you find any bugs in the bot or would like to request a feature, feel free to
 ### Appendix: Full ENV File Options
 The following is a list of all available environment variables used by the bot:
 
-| Variable             | Required                                        | Description                                                                                                                                                                                                                                         |
-|----------------------|-------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `BOT_TOKEN`          | Always                                          | Your Discord bot account's token (see [Set Up a Bot Account](#set-up-a-bot-account)).                                                                                                                                                               |
-| `GUILD_ID`           | When using the bootstrapping script             | Your Discord test server's id (see [Set Up a Test Server](#set-up-a-test-server)).                                                                                                                                                                  |
-| `BOT_API_KEY`        | When running bot without Docker                 | Used to authenticate with the site's API. When using Docker to run the bot, this is automatically set. By default, the site will always have the API key shown in the example below.                                                                |
-| `BOT_SENTRY_DSN`     | When connecting the bot to sentry               | The DSN of the sentry monitor.                                                                                                                                                                                                                      |
-| `BOT_TRACE_LOGGERS ` | When you wish to see specific or all trace logs | Comma separated list that specifies which loggers emit trace logs through the listed names. If the ! prefix is used, all of the loggers except the listed ones are set to the trace level. If * is used, the root logger is set to the trace level. |
-| `BOT_DEBUG`          | In production                                   | `true` or `false`, depending on whether to enable debug mode, affecting the behavior of certain features. `true` by default.                                                                                                                        |
-| `REDIS_PASSWORD`     | When not using FakeRedis                        | The password to connect to the Redis database (see [Optional: Working with Redis](#optional-working-with-redis)).                                                                                                                                   |
-| `USE_METRICITY`      | When using Metricity                            | `true` or `false`, depending on whether to enable metrics collection using Metricity (see [Optional: Working with Metricity](#optional-working-with-metricity)). `false` by default.                                                                |
-| `GITHUB_API_KEY`     | When you wish to interact with GitHub           | The API key to interact with GitHub, for example to download files for the branding manager.                                                                                                                                                        |
-| `METABASE_USERNAME`  | When you wish to interact with Metabase         | The username for a Metabase admin account.                                                                                                                                                                                                          |
-| `METABASE_PASSWORD`  | When you wish to interact with Metabase         | The password for a Metabase admin account.                                                                                                                                                                                                          |
+| Variable            | Required                                        | Description                                                                                                                                                                                                                                         |
+|---------------------|-------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `BOT.TOKEN`         | Always                                          | Your Discord bot account's token (see [Set Up a Bot Account](#set-up-a-bot-account)).                                                                                                                                                               |
+| `GUILD.ID`          | When using the bootstrapping script             | Your Discord test server's id (see [Set Up a Test Server](#set-up-a-test-server)).                                                                                                                                                                  |
+| `API_KEYS.SITE_API` | When running bot without Docker                 | Used to authenticate with the site's API. When using Docker to run the bot, this is automatically set. By default, the site will always have the API key shown in the example below.                                                                |
+| `SENTRY_DSN`        | When connecting the bot to sentry               | The DSN of the sentry monitor.                                                                                                                                                                                                                      |
+| `TRACE_LOGGERS `    | When you wish to see specific or all trace logs | Comma separated list that specifies which loggers emit trace logs through the listed names. If the ! prefix is used, all of the loggers except the listed ones are set to the trace level. If * is used, the root logger is set to the trace level. |
+| `DEBUG`             | In production                                   | `true` or `false`, depending on whether to enable debug mode, affecting the behavior of certain features. `true` by default.                                                                                                                        |
+| `REDIS.PASSWORD`    | When not using FakeRedis                        | The password to connect to the Redis database (see [Optional: Working with Redis](#optional-working-with-redis)).                                                                                                                                   |
+| `USE_METRICITY`     | When using Metricity                            | `true` or `false`, depending on whether to enable metrics collection using Metricity (see [Optional: Working with Metricity](#optional-working-with-metricity)). `false` by default.                                                                |
+| `API_KEYS.GITHUB`   | When you wish to interact with GitHub           | The API key to interact with GitHub, for example to download files for the branding manager.                                                                                                                                                        |
+| `METABASE.USERNAME` | When you wish to interact with Metabase         | The username for a Metabase admin account.                                                                                                                                                                                                          |
+| `METABASE.PASSWORD` | When you wish to interact with Metabase         | The password for a Metabase admin account.                                                                                                                                                                                                          |
 
 ---
 
