@@ -59,7 +59,7 @@ You will need your own test server and bot account on Discord to test your chang
     * `#dev-log`
     * `#sir-lancebot-commands`
 4. Create the following roles:
-    * `@Admin`
+    * `@Admins`
 5. Note down the IDs for your server, as well as any channels and roles created.
     * [**Learn how to obtain the ID of a server, channel or role here.**](../setting-test-server-and-bot-account#obtain-the-ids)
 
