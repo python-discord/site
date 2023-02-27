@@ -13,7 +13,7 @@ django-filter = "22.1"
 djangorestframework = "3.14.0"
 psycopg2-binary = "2.9.5"
 django-simple-bulma = "2.5.0"
-whitenoise = "6.3.0"
+whitenoise = "6.4.0"
 httpx = "0.23.3"
 pyyaml = "6.0"
 gunicorn = "20.1.0"
@@ -26,7 +26,7 @@ PyJWT = {version = "2.6.0", extras = ["crypto"]}
 pymdown-extensions = "9.9.2"
 
 [tool.poetry.dev-dependencies]
-coverage = "7.1.0"
+coverage = "7.2.1"
 flake8 = "6.0.0"
 flake8-annotations = "3.0.0"
 flake8-bandit = "4.1.1"
@@ -37,10 +37,10 @@ flake8-tidy-imports = "4.8.0"
 flake8-string-format = "0.3.0"
 flake8-todo = "0.7"
 pep8-naming = "0.13.3"
-pre-commit = "3.0.4"
+pre-commit = "3.1.0"
 pyfakefs = "5.1.0"
 taskipy = "1.10.3"
-python-dotenv = "0.21.1"
+python-dotenv = "1.0.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
