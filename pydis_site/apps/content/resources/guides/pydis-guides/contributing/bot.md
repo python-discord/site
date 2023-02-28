@@ -111,8 +111,8 @@ class _Channels(EnvConfig):
 
     EnvConfig.Config.env_prefix = "channels."
 
-    announcements = 123
-    changelog = 456
+    announcements = 1079790565794779156
+    changelog = 1077877318564991006
 
 # Instantiate the class & load the configuration
 Channels = _Channels()
@@ -121,7 +121,7 @@ Channels = _Channels()
 `.env.server` file
 
 ```text
-channels.announcements=789
+channels.announcements=1077875228002234398
 ```
 
 When you launch your bot, `pydantic` will load up the server constants from the `.env.server` file if they exist.
@@ -131,13 +131,13 @@ Each constants class will define its own prefix, which will make `pydantic` look
 In our example, this will imply that pydantic will look for both `channels.announcements` and `channels.changelog` in the `.env.server` file.
 
 As you can see here, only `channels.announcements` has been defined in the `.env.server` file since it's the only one needed, which will tell `pydantic`
-to use the value **789** for the `announcements` attribute instead of the default **456**, and use the default value for the `changelog` attribute
+to use the value **1077875228002234398** for the `announcements` attribute instead of the default **1079790565794779156**, and use the default value for the `changelog` attribute
 
 ```python
 >>> Channels.announcements
-789
+1077875228002234398
 >>> Channels.changelong
-456
+1077877318564991006
 ```
 
 See [here](../obtaining-discord-ids) for help with obtaining Discord IDs.
