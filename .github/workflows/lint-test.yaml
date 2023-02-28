@@ -18,8 +18,6 @@ jobs:
       - name: Install Python Dependencies
         uses: HassanAbouelela/actions/setup-python@setup-python_v1.4.0
         with:
-          dev: true
-          install_args: "--with dev"
           python_version: '3.10'
 
       # Start the database early to give it a chance to get ready before
