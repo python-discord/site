@@ -58,7 +58,8 @@ See [here](../creating-bot-account) for help with obtaining the bot token and [h
 
 **Note**: The `.env` is and should remain ignored by git, otherwise you risk pushing sensitive information.
 ##### 1.2 Setting up the script environment
-The bootstrapping script is Python code like any other. To run it locally, you will need the right version of Python with the necessary packages installed:
+The bootstrapping script is a Python program so you will need a compatible Python version and the necessary dependencies installed,
+which are all detailed here:
 
 1. Make sure you follow steps `1` and `2` [here](#setting-up-a-development-environment)
 2. [Install the `config-bootstrap` dependency group](../installing-project-dependencies#installing-specific-dependency-groups).
