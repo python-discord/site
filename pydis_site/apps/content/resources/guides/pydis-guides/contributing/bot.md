@@ -93,7 +93,7 @@ It also contains configurations such as how long it takes for a help channel to 
 If you decided to use the bootstrapping script, you'll find that this file has already been created (which we recommend),
 otherwise you'll need to create it manually.
 
-If you decide to set the configuration values manually, you will **only** need to set the values for the channels, roles, categories, etc. 
+If you decide to set the configuration values manually, you will **only** need to set the values for the channels, roles, categories, etc.
 that are used by the component you are developing.
 
 
