@@ -56,7 +56,7 @@ GUILD.ID=YourDiscordTestServerIdHere
 ```
 See [here](../creating-bot-account) for help with obtaining the bot token and [here](../obtaining-discord-ids#guild-id) for help with obtaining the guild's id
 
-**Note**: The `.env` file will be ignored by commits.
+**Note**: The `.env` is and should remain ignored by git, otherwise you risk pushing sensitive information.
 ##### 1.2 Setting up the script environment
 The bootstrapping script is Python code like any other. To run it locally, you will need the right version of Python with the necessary packages installed:
 
@@ -606,7 +606,7 @@ We understand this is tedious which is why we **recommend** using the [automatic
 The second file you need to create is the one containing the environment variables, and needs to be named `.env`.
 Inside, add the line `BOT.TOKEN=YourDiscordBotTokenHere`. See [here](../creating-bot-account) for help with obtaining the bot token.
 
-**Note**: The `.env` file will be ignored by commits.
+**Note**: The `.env` is and should remain ignored by git, otherwise you risk pushing sensitive information.
 
 ---
 
