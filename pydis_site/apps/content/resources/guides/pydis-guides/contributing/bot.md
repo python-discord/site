@@ -93,8 +93,9 @@ It also contains configurations such as how long it takes for a help channel to 
 If you decided to use the bootstrapping script, you'll find that this file has already been created (which we recommend),
 otherwise you'll need to create it manually.
 
-To run the bot in your test server, you will **only** need to add the **necessary** configuration values for the channels/roles/categories, etc.
-that you'll be using for testing
+If you decide to set the configuration values manually, you will **only** need to set the values for the channels, roles, categories, etc. 
+that are used by the component you are developing.
+
 
 Let's take an example where we suppose we'll only be testing a feature that needs the `announcements` channel.
 
