@@ -10,7 +10,7 @@ You should have already forked the [`sir-lancebot`](https://github.com/python-di
 Remember to ensure that you have read the [contributing guidelines](../contributing-guidelines) in full before you start contributing.
 
 ### Requirements
-- [Python 3.9](https://www.python.org/downloads/)
+- [Python 3.10](https://www.python.org/downloads/)
 - [Poetry](https://github.com/python-poetry/poetry#installation)
 - [Git](https://git-scm.com/downloads)
     - [Windows Installer](https://git-scm.com/download/win)
