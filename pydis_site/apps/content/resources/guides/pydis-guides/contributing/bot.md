@@ -627,7 +627,7 @@ Once the previous steps are done, all that is left is to:
 1. Create a new channel
 2. Choose the `Forum` type
 3. [Copy its ID](../obtaining-discord-ids#channel-id)
-4. Add the following line to the `.env.server` file: `channels.python_help={newly_created_forum_channel_id}` 
+4. Add the following line to the `.env.server` file: `channels.python_help={newly_created_forum_channel_id}`
 
 
 ### Run it!
