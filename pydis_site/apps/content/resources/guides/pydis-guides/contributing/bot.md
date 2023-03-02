@@ -612,6 +612,24 @@ Inside, add the line `BOT.TOKEN=YourDiscordBotTokenHere`. See [here](../creating
 
 ---
 
+### Working with the help forum
+If you will be working on a feature that includes the python help forum, you will need to use `Forum Channels`.
+
+Forum channels cannot be included in a template, which is why this needs to be done by hand for the time being.
+
+To activate forum channels, your Discord server needs to have the community feature.
+If that's not the case already, here are the steps required to do it:
+1. Go to server settings
+2. Scroll down to the `COMMUNITY` section and click on `Enable Community`
+3. Click on `Get Started` and fill out the necessary info
+
+Once the previous steps are done, all that is left is to:
+1. Create a new channel
+2. Choose the `Forum` type
+3. [Copy its ID](../obtaining-discord-ids#channel-id)
+4. Add the following line to the `.env.server` file: `channels.python_help={newly_created_forum_channel_id}` 
+
+
 ### Run it!
 #### With Docker
 You are now almost ready to run the Python bot. The simplest way to do so is with Docker.
