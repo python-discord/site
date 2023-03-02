@@ -39,7 +39,7 @@ You now have both the bot's code and a server to run it on. It's time you to con
 This can be done either automatically or manually, and we'll be detailing the steps for both.
 
 #### Automatic configuration
-To make setup much easier, there is a file called `bootstrap_config.py` that represents a script to bootstrap the configuration for you and help you get started immediately
+To make setup much easier, there is a file called `botstrap.py` that represents a script to bootstrap the configuration for you and help you get started immediately
 without having to spend much time copying ids from your newly created server into your configuration file.
 
 **Note**: This phase can be skipped and done manually, but would require extra manual work.
@@ -76,7 +76,7 @@ $ poetry run task configure
 or, without poetry and from the root directory
 
 ```shell
-python3 -m bootstrap_config
+python3 -m botstrap
 ```
 
 Once the script has finished running, you'll notice the creation of a new file called [`.env.server`](#envserver) at your project's root directory.
