@@ -36,7 +36,7 @@ jobs:
 
   build-deploy:
     if: github.ref == 'refs/heads/main'
-    uses: ./.github/worfklows/build-deploy.yaml
+    uses: ./.github/workflows/build-deploy.yaml
     needs:
       - lint-test
       - generate-sha-tag
