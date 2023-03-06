@@ -18,7 +18,6 @@ jobs:
 
 
   generate-sha-tag:
-    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     outputs:
       sha-tag: ${{ steps.sha-tag.outputs.sha-tag }}
