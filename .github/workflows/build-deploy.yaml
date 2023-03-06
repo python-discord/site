@@ -1,26 +1,20 @@
-name: Build
+name: Build & Deploy
 
 on:
-  workflow_run:
-    workflows: ["Lint & Test"]
-    branches:
-      - main
-    types:
-      - completed
+  workflow_call:
+    inputs:
+      sha-tag:
+        description: "A short-form SHA tag for the commit that triggered this workflow"
+        required: true
+        type: string
+
 
 jobs:
   build:
     name: Build Docker Image
-    if: github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'push'
     runs-on: ubuntu-latest
 
     steps:
-      # Create a commit SHA-based tag for the container repositories
-      - name: Create SHA Container Tag
-        id: sha_tag
-        run: |
-          tag=$(cut -c 1-7 <<< $GITHUB_SHA)
-          echo "tag=$tag" >> $GITHUB_OUTPUT
 
       - name: Checkout code
         uses: actions/checkout@v3
@@ -56,3 +50,39 @@ jobs:
             ghcr.io/python-discord/site:${{ steps.sha_tag.outputs.tag }}
           build-args: |
             git_sha=${{ github.sha }}
+
+  deploy:
+    name: Deploy
+    needs: build
+    runs-on: ubuntu-latest
+    environment: production
+
+    steps:
+      # Check out the private Kubernetes repository for the
+      # deployment.yaml file using a GitHub Personal Access
+      # Token to get access.
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          repository: python-discord/kubernetes
+
+      - uses: azure/setup-kubectl@v3
+
+      - name: Authenticate with Kubernetes
+        uses: azure/k8s-set-context@v3
+        with:
+          method: kubeconfig
+          kubeconfig: ${{ secrets.KUBECONFIG }}
+
+      - name: Deploy to Kubernetes
+        uses: Azure/k8s-deploy@v4
+        with:
+        manifests: |
+          namespaces/default/site/deployment.yaml
+          images: 'ghcr.io/python-discord/site:${{ steps.sha_tag.outputs.tag }}'
+
+      - name: Purge Cloudflare Edge Cache
+        uses: jakejarvis/cloudflare-purge-action@master
+        env:
+          CLOUDFLARE_ZONE: 989c984a358bfcd1e9b9d188cc86c1df
+          CLOUDFLARE_TOKEN: ${{ secrets.CLOUDFLARE_CACHE_TOKEN }}
