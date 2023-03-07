@@ -27,7 +27,7 @@ jobs:
         run: |
           tag=$(cut -c 1-7 <<< $GITHUB_SHA)
           echo "sha-tag=$tag" >> $GITHUB_OUTPUT
-          
+
   publish-static-preview:
     uses: ./.github/workflows/static-preview.yaml
     with:
