@@ -768,7 +768,8 @@ If you are working on a feature that relies on Redis, you will need to enable Re
 If you're using the Docker image provided in the project's Docker Compose, open your `.env.server` file. If you're running the bot in Docker, set `redis_host` to `redis`, and if you're running it on the host set it to `localhost`. Set `redis_password` to `""`.
 
 #### Starting Redis Using Other Methods
-You can run your own instance of Redis, but in that case you will need to correctly set `redis_host` and `redis_port`, and the `redis_password` value in `constants.py` should not be overridden. Then, enter the `.env` file, and set `REDIS_PASSWORD` to whatever password you set.
+You can run your own instance of Redis, but in that case you will need to correctly set `redis_host` and `redis_port` in your `.env.server` file and the `REDIS_PASSWORD` in the `.env` file.
+**Note**: The previously mentioned variables **SHOULD NOT** be overriden or changed in `constants.py`
 
 ---
 
