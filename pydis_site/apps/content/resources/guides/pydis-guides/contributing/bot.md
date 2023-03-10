@@ -16,7 +16,7 @@ The Python bot is tightly coupled with the Python Discord server, so to have a f
 It's possible to set the bot to use a single channel for all cogs, but that will cause extreme spam and will be difficult to work with.
 
 You can start your own server and set up channels as you see fit, but for your convenience we have a template for a development server you can use: [https://discord.new/zmHtscpYN9E3](https://discord.new/zmHtscpYN9E3).
-Keep in mind that this is not an exact mirror of the Python server, but a reduced version for testing purposes.
+The server will only contain the channels that are needed by the bot.
 ---
 
 ### Set Up a Bot Account
@@ -35,18 +35,20 @@ If your bot fails to start with a `PrivilegedIntentsRequired` exception, this in
 ---
 
 ### Configure the Bot
-You now have both the bot's code and a server to run it on. It's time you to connect the two by changing the bot's configurations.
+You now have both the bot's code and a server to run it on. It's time for you to connect the two by changing the bot's configurations.
 This can be done either automatically or manually, and we'll be detailing the steps for both.
 
-#### Automatic configuration
-To make setup much easier, there is a file called `botstrap.py` that represents a script to bootstrap the configuration for you and help you get started immediately
-without having to spend much time copying ids from your newly created server into your configuration file.
+**Note**: Skip this step if you would like to configure the bot manually, but that will require more work.
 
-**Note**: This phase can be skipped and done manually, but would require extra manual work.
+#### Automatic configuration
+To make setup much easier, the script in `botstrap.py` bootstraps the configuration for you and helps you get started immediately,
+without having to spend much time copying IDs from your newly created server into your configuration file.
+
+**Note**: The script will also work on existing servers as long as the channel names are the same as the one in Python Discord. 
 
 ##### 1. Script setup
 ##### 1.1. Environment variables
-You will need to create a file called `.env` which will contain two required values for the script to work: `BOT_TOKEN` and `GUILD_ID`
+You will need to create a file called `.env`, which will contain two required values: `BOT_TOKEN` and `GUILD_ID`.
 
 Inside, add the following two lines:
 
@@ -54,37 +56,37 @@ Inside, add the following two lines:
 BOT_TOKEN=YourDiscordBotTokenHere
 GUILD_ID=YourDiscordTestServerIdHere
 ```
-See [here](../creating-bot-account) for help with obtaining the bot token and [here](../obtaining-discord-ids#guild-id) for help with obtaining the guild's id
+See [here](../creating-bot-account) for help with obtaining the bot token, and [here](../obtaining-discord-ids#guild-id) for help with obtaining the guild's ID.
 
 **Note**: The `.env` is and should remain ignored by git, otherwise you risk pushing sensitive information.
 ##### 1.2 Setting up the script environment
 The bootstrapping script is a Python program so you will need a compatible Python version and the necessary dependencies installed,
 which are all detailed here:
 
-1. Make sure you follow steps `1` and `2` [here](#setting-up-a-development-environment)
-2. [Install the `config-bootstrap` dependency group](../installing-project-dependencies#installing-specific-dependency-groups).
+1. Make sure you have [Python 3.10](https://www.python.org/downloads/) installed. It helps if it is your system's default Python version.
+2. [Install Poetry](https://github.com/python-poetry/poetry#installation).
+3. [Install the dependencies](../installing-project-dependencies).
 
 #### 2. Running the script
 
 Once the script setup phase is complete, all that is left is to run it.
-To do this, you'll simply need to run the `configure` poetry task like this
+To do this, you'll simply need to run the `configure` poetry task:
 
 ```shell
 $ poetry run task configure
 ```
 
-or, without poetry and from the root directory
-
-```shell
-python3 -m botstrap
-```
-
 Once the script has finished running, you'll notice the creation of a new file called [`.env.server`](#envserver) at your project's root directory.
-This file will contain the extracted ids from your newly created server which are necessary for your bot to run.
+This file will contain the extracted IDs from your server which are necessary for your bot to run.
 
-**Congratulations**, you have finished the configuration & can now start [running your bot](#run-it)
+**Congratulations**, you have finished the configuration and can now [run your bot](#run-it).
+
+
 
 #### Manual configuration
+
+**Note**: Skip this part if you used the automatic configuration.
+
 ##### .env.server
 All server configuration values are saved in a file called `.env.server`, which needs to be at the root directory of the cloned code.
 This file contains the various configurations we use to make the bot run on the Python Discord server, such as channel and role IDs, and the emojis it works with.
@@ -96,8 +98,7 @@ otherwise you'll need to create it manually.
 If you decide to set the configuration values manually, you will **only** need to set the values for the channels, roles, categories, etc.
 that are used by the component you are developing.
 
-
-Let's take an example where we suppose we'll only be testing a feature that needs the `announcements` channel.
+For example, if we're testing a feature that only needs the `announcements` channel:
 
 `constants.py`
 
@@ -571,7 +572,7 @@ filters_ping_everyone=true
 <br>
 
 
-If you don't wish to use the provided `env.server` above, the main values that need overriding are **all** the ones prefixed with:
+If you wish to set all values in your `env.server` for your testing server, you need to set **all** the ones prefixed with:
 
 * `guild_`
 * `categories_`
@@ -585,7 +586,7 @@ Additionally:
 * At this stage, set `redis_use_fakeredis` to `true`. If you're looking for instructions for working with Redis, see [Working with Redis](#optional-working-with-redis).
 * Set `urls_site_schema` and `urls_site_api_schema` to `"http://"`.
 
-We understand this is tedious which is why we **recommend** using the [automatic configuration setup](#automatic-configuration)
+We understand this is tedious which is why we **heavily recommend** using the [automatic configuration setup](#automatic-configuration)
 
 <div class="card">
     <button type="button" class="card-header collapsible">
@@ -611,23 +612,6 @@ Inside, add the line `BOT_TOKEN=YourDiscordBotTokenHere`. See [here](../creating
 **Note**: The `.env` is and should remain ignored by git, otherwise you risk pushing sensitive information.
 
 ---
-
-### Working with the help forum
-If you will be working on a feature that includes the python help forum, you will need to use `Forum Channels`.
-
-Forum channels cannot be included in a template, which is why this needs to be done by hand for the time being.
-
-To activate forum channels, your Discord server needs to have the community feature.
-If that's not the case already, here are the steps required to do it:
-1. Go to server settings
-2. Scroll down to the `COMMUNITY` section and click on `Enable Community`
-3. Click on `Get Started` and fill out the necessary info
-
-Once the previous steps are done, all that is left is to:
-1. Create a new channel
-2. Choose the `Forum` type
-3. [Copy its ID](../obtaining-discord-ids#channel-id)
-4. Add the following line to the `.env.server` file: `channels_python_help={newly_created_forum_channel_id}`
 
 
 ### Run it!
@@ -673,7 +657,7 @@ Your bot is now running, but this method makes debugging with an IDE a fairly in
 The advantage of this method is that you can run the bot's code in your preferred editor, with debugger and all, while keeping all the setup of the bot's various dependencies inside Docker.
 
 * Append the following line to your `.env` file: `API_KEYS_SITE_API=badbot13m0n8f570f942013fc818f234916ca531`.
-* In your `.env.server` file, set `urls_site_api` to `"localhost:8000/api"`. If you wish to keep using `web:8000`, then [COMPOSE_PROJECT_NAME](../docker/#compose-project-names) has to be set.
+* In your `.env.server` file, set `urls_site_api` to `"localhost:8000/api"`. If you wish to keep using `web:8000/api`, then [COMPOSE_PROJECT_NAME](../docker/#compose-project-names) has to be set.
 * To work with snekbox, set `urls_snekbox_eval_api` to `"http://localhost:8060/eval"` and `urls_snekbox_311_eval_api` to `"http://localhost:8065/eval"`
 
 You will need to start the services separately, but if you got the previous section with Docker working, that's pretty simple:
@@ -756,6 +740,25 @@ Note that if you changed code that is not associated with a particular extension
 
 Details on how to add new statistics can be found on the [statistic infrastructure page](https://blog.pythondiscord.com/statistics-infrastructure).
 We are always open to more statistics so add as many as you can!
+
+---
+
+### Optional: Working with the help forum
+If you will be working on a feature that includes the python help forum, you will need to use `Forum Channels`.
+
+Forum channels cannot be included in a template, which is why this needs to be done by hand for the time being.
+
+To activate forum channels, your Discord server needs to have the community feature.
+If that's not the case already, here are the steps required to do it:
+1. Go to server settings
+2. Scroll down to the `COMMUNITY` section and click on `Enable Community`
+3. Click on `Get Started` and fill out the necessary info
+
+Once the previous steps are done, all that is left is to:
+1. Create a new channel
+2. Choose the `Forum` type
+3. [Copy its ID](../obtaining-discord-ids#channel-id)
+4. Add the following line to the `.env.server` file: `channels_python_help={newly_created_forum_channel_id}`
 
 ---
 
