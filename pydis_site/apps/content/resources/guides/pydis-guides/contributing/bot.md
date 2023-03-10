@@ -53,7 +53,7 @@ otherwise a lot of it has to be done by hand which will be detailed in the [manu
 This file will mostly contain sensitive information such as your `BOT_TOKEN` and your `REDIS_PASSWORD`, and other configurations related to external services that the bot might use,
 such as: `USE_METRICITY`, etc. which are all not necessarily coupled to things that can be fetched from your server, with the only exception to `GUILD_ID`.
 
-**Notes**: 
+**Notes**:
 * Both `.env` and `.env.server` are and should remain ignored by git, otherwise you risk pushing sensitive information.
 * Skip the following step if you would like to configure the bot manually, but that will require more work.
 
