@@ -640,7 +640,7 @@ You are now almost ready to run the Python bot. The simplest way to do so is wit
 
 In your `.env.server` file:
 
-* Set `urls_site` to `"web:8000"`.
+* Set `urls_site` to `"web:8000"` and `urls_site_api` to `"web:8000/api"`.
 * If you wish to work with snekbox set the following:
     * `urls_snekbox_eval_api` to `"http://snekbox:8060/eval"`
     * `urls_snekbox_311_eval_api` to `"http://snekbox-311:8060/eval"`.
