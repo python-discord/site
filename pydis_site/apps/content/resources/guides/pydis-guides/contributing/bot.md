@@ -39,7 +39,23 @@ If your bot fails to start with a `PrivilegedIntentsRequired` exception, this in
 You now have both the bot's code and a server to run it on. It's time for you to connect the two by changing the bot's configurations.
 This can be done either automatically or manually, and we'll be detailing the steps for both.
 
-**Note**: Skip this step if you would like to configure the bot manually, but that will require more work.
+One thing to know is that the bot relies on precisely **two** configuration files to work
+
+#### .env.server
+All server configuration values are saved in this file, which needs to be at the root directory of the cloned code.
+This file contains the various configurations we use to make the bot run on the Python Discord server, such as channel and role IDs, and the emojis it works with.
+It also contains configurations such as how long it takes for a help channel to time out, and how many messages a user needs to voice-verify.
+
+This file will be created for you automatically if you decide to go with [automatic configuration](#automatic-configuration),
+otherwise a lot of it has to be done by hand which will be detailed in the [manual configuration](#manual-configuration) section.
+
+#### .env
+This file will mostly contain sensitive information such as your `BOT_TOKEN` and your `REDIS_PASSWORD`, and other configurations related to external services that the bot might use,
+such as: `USE_METRICITY`, etc. which are all not necessarily coupled to things that can be fetched from your server, with the only exception to `GUILD_ID`.
+
+**Notes**: 
+* Both `.env` and `.env.server` are and should remain ignored by git, otherwise you risk pushing sensitive information.
+* Skip the following step if you would like to configure the bot manually, but that will require more work.
 
 #### Automatic configuration
 To make setup much easier, the script in `botstrap.py` bootstraps the configuration for you and helps you get started immediately,
@@ -59,7 +75,7 @@ GUILD_ID=YourDiscordTestServerIdHere
 ```
 See [here](../creating-bot-account) for help with obtaining the bot token, and [here](../obtaining-discord-ids#guild-id) for help with obtaining the guild's ID.
 
-**Note**: The `.env` is and should remain ignored by git, otherwise you risk pushing sensitive information.
+
 ##### 1.2 Setting up the script environment
 The bootstrapping script is a Python program so you will need a compatible Python version and the necessary dependencies installed,
 which are all detailed here:
@@ -83,20 +99,15 @@ This file will contain the extracted IDs from your server which are necessary fo
 **Congratulations**, you have finished the configuration and can now [run your bot](#run-it).
 
 
-
 #### Manual configuration
 
 **Note**: Skip this part if you used the automatic configuration.
 
 ##### .env.server
-All server configuration values are saved in a file called `.env.server`, which needs to be at the root directory of the cloned code.
-This file contains the various configurations we use to make the bot run on the Python Discord server, such as channel and role IDs, and the emojis it works with.
-It also contains configurations such as how long it takes for a help channel to time out, and how many messages a user needs to voice-verify.
+Reading this means that you're ready for a bit of manual labour.
+If for some reason you've missed the automatic server setup section, you can read about it [here](#automatic-configuration)
 
-If you decided to use the bootstrapping script, you'll find that this file has already been created (which we recommend),
-otherwise you'll need to create it manually.
-
-If you decide to set the configuration values manually, you will **only** need to set the values for the channels, roles, categories, etc.
+To configure the bot manually, you will **only** need to set the values for the channels, roles, categories, etc.
 that are used by the component you are developing.
 
 For example, if we're testing a feature that only needs the `announcements` channel:
@@ -120,9 +131,11 @@ class _Channels(EnvConfig):
 Channels = _Channels()
 ```
 
-`.env.server` file
+`.env.server` file:
 
 ```text
+# .env.server
+
 channels_announcements=1077875228002234398
 ```
 
@@ -180,8 +193,6 @@ We understand this is tedious which is why we **heavily recommend** using the [a
 ##### .env
 The second file you need to create is the one containing the environment variables, and needs to be named `.env`.
 Inside, add the line `BOT_TOKEN=YourDiscordBotTokenHere`. See [here](../creating-bot-account) for help with obtaining the bot token.
-
-**Note**: The `.env` is and should remain ignored by git, otherwise you risk pushing sensitive information.
 
 ---
 
