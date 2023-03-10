@@ -10,12 +10,12 @@ The following variables are needed for running Sir Lancebot:
 | -------- | -------- |
 | `BOT_TOKEN` | Bot Token from the [Discord developer portal](https://discord.com/developers/applications) |
 | `BOT_GUILD` | ID of the Discord Server |
-| `BOT_ADMIN_ROLE_ID` | ID of the role @Admins |
-| `ROLE_HELPERS` | ID of the role @Helpers |
-| `CHANNEL_ANNOUNCEMENTS` | ID of the #announcements channel |
-| `CHANNEL_DEVLOG` | ID of the #dev-log channel |
-| `CHANNEL_COMMUNITY_BOT_COMMANDS` | ID of the #sir-lancebot-commands channel |
-| `CHANNEL_REDDIT` | ID of the #reddit channel |
+| `BOT_ADMIN_ROLE_ID` | ID of the role `@Admins` |
+| `ROLE_HELPERS` | ID of the role `@Helpers` |
+| `CHANNEL_ANNOUNCEMENTS` | ID of the `#announcements` channel |
+| `CHANNEL_DEVLOG` | ID of the `#dev-log` channel |
+| `CHANNEL_COMMUNITY_BOT_COMMANDS` | ID of the `#sir-lancebot-commands` channel |
+| `CHANNEL_REDDIT` | ID of the `#reddit` channel |
 
 ---
 ## Debug Variables
@@ -32,8 +32,7 @@ Additionally, you may find the following environment variables useful during dev
 | `REDIS_PASSWORD` | |
 | `USE_FAKEREDIS` | If the FakeRedis module should be used. Set this to true if you don't have a Redis database setup. |
 | `BOT_SENTRY_DSN` | The DSN of the sentry monitor. |
-| `TRASHCAN_EMOJI` | The full emoji to use for the trashcan. Format should be like the output of `\:emoji:`. |
-
+| `TRASHCAN_EMOJI` | The full emoji to use for the trashcan. Format should be like the output of sending `\:emoji:` on discord. |
 
 ---
 ## Tokens/APIs
@@ -66,8 +65,8 @@ These variables might come in handy while working on certain cogs:
 | Advent of Code | `AOC_ROLE_ID` | ID of the advent of code role.
 | Advent of Code | `AOC_IGNORED_DAYS` | Comma separated list of days to ignore while calculating score. |
 | Advent of Code | `AOC_YEAR` | Debug variable to change the year used for AoC. |
-| Advent of Code | `AOC_CHANNEL_ID` | The ID of the #advent-of-code channel |
-| Advent of Code | `AOC_COMMANDS_CHANNEL_ID` | The ID of the #advent-of-code-commands channel |
+| Advent of Code | `AOC_CHANNEL_ID` | The ID of the `#advent-of-code` channel |
+| Advent of Code | `AOC_COMMANDS_CHANNEL_ID` | The ID of the `#advent-of-code-commands` channel |
 | Advent of Code | `AOC_FALLBACK_SESSION` | |
 | Advent of Code | `AOC_SESSION_COOKIE` | |
 | Valentines | `LOVEFEST_ROLE_ID` | |
