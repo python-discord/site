@@ -43,7 +43,7 @@ This can be done either automatically or manually, and we'll be detailing the st
 
 #### Automatic configuration
 To make setup much easier, the script in `botstrap.py` bootstraps the configuration for you and helps you get started immediately,
-without having to spend much time copying IDs from your newly created server into your configuration file.
+without having to spend much time copying IDs from your server into your configuration file.
 
 **Note**: The script will also work on existing servers as long as the channel names are the same as the one in Python Discord.
 
