@@ -16,7 +16,8 @@ The Python bot is tightly coupled with the Python Discord server, so to have a f
 It's possible to set the bot to use a single channel for all cogs, but that will cause extreme spam and will be difficult to work with.
 
 You can start your own server and set up channels as you see fit, but for your convenience we have a template for a development server you can use: [https://discord.new/zmHtscpYN9E3](https://discord.new/zmHtscpYN9E3).
-The server will only contain the channels that are needed by the bot.
+Keep in mind that this is not an exact mirror of the Python server, but a reduced version for testing purposes.
+The channels there are mostly the ones needed by the bot.
 ---
 
 ### Set Up a Bot Account
