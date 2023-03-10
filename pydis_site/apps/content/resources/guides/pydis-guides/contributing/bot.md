@@ -658,7 +658,7 @@ Your bot is now running, but this method makes debugging with an IDE a fairly in
 The advantage of this method is that you can run the bot's code in your preferred editor, with debugger and all, while keeping all the setup of the bot's various dependencies inside Docker.
 
 * Append the following line to your `.env` file: `API_KEYS_SITE_API=badbot13m0n8f570f942013fc818f234916ca531`.
-* In your `.env.server` file, set `urls_site` to `"web:8000"` and `urls_site_api` to `"localhost:8000/api"`. If you wish to keep using `web:8000/api` and `web:8000/api`, then [COMPOSE_PROJECT_NAME](../docker/#compose-project-names) has to be set.
+* In your `.env.server` file, set `urls_site` to `"localhost:8000"` and `urls_site_api` to `"localhost:8000/api"`. If you wish to keep using `web:8000/api` and `web:8000/api`, then [COMPOSE_PROJECT_NAME](../docker/#compose-project-names) has to be set.
 * To work with snekbox, set `urls_snekbox_eval_api` to `"http://localhost:8060/eval"` and `urls_snekbox_311_eval_api` to `"http://localhost:8065/eval"`
 
 You will need to start the services separately, but if you got the previous section with Docker working, that's pretty simple:
