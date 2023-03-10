@@ -44,7 +44,7 @@ This can be done either automatically or manually, and we'll be detailing the st
 To make setup much easier, the script in `botstrap.py` bootstraps the configuration for you and helps you get started immediately,
 without having to spend much time copying IDs from your newly created server into your configuration file.
 
-**Note**: The script will also work on existing servers as long as the channel names are the same as the one in Python Discord. 
+**Note**: The script will also work on existing servers as long as the channel names are the same as the one in Python Discord.
 
 ##### 1. Script setup
 ##### 1.1. Environment variables
