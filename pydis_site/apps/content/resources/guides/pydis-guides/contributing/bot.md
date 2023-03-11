@@ -50,8 +50,8 @@ This file will be created for you automatically if you decide to go with [automa
 otherwise a lot of it has to be done by hand which will be detailed in the [manual configuration](#manual-configuration) section.
 
 #### .env
-This file will mostly contain sensitive information such as your `BOT_TOKEN` and your `REDIS_PASSWORD`, and other configurations related to external services that the bot might use,
-such as: `USE_METRICITY`, etc. which are all not necessarily coupled to things that can be fetched from your server, with the only exception to `GUILD_ID`.
+This file will mostly contain sensitive information such as your `BOT_TOKEN` and your `REDIS_PASSWORD`.
+It will also contain configurations related to external services the bot might use such as `USE_METRICITY`, which are unrelated your server, with the only exception being `GUILD_ID`.
 
 **Notes**:
 * Both `.env` and `.env.server` are and should remain ignored by git, otherwise you risk pushing sensitive information.
@@ -240,7 +240,7 @@ Your bot is now running, but this method makes debugging with an IDE a fairly in
 The advantage of this method is that you can run the bot's code in your preferred editor, with debugger and all, while keeping all the setup of the bot's various dependencies inside Docker.
 
 * Append the following line to your `.env` file: `API_KEYS_SITE_API=badbot13m0n8f570f942013fc818f234916ca531`.
-* In your `.env.server` file, set `urls_site` to `"localhost:8000"` and `urls_site_api` to `"localhost:8000/api"`. If you wish to keep using `web:8000/api` and `web:8000/api`, then [COMPOSE_PROJECT_NAME](../docker/#compose-project-names) has to be set.
+* In your `.env.server` file, set `urls_site` to `"localhost:8000"` and `urls_site_api` to `"localhost:8000/api"`. If you wish to keep using `web:8000` and `web:8000/api`, then [COMPOSE_PROJECT_NAME](../docker/#compose-project-names) has to be set.
 * To work with snekbox, set `urls_snekbox_eval_api` to `"http://localhost:8060/eval"` and `urls_snekbox_311_eval_api` to `"http://localhost:8065/eval"`
 
 You will need to start the services separately, but if you got the previous section with Docker working, that's pretty simple:
