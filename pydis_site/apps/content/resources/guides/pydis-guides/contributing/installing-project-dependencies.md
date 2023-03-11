@@ -39,27 +39,3 @@ $ poetry run task precommit
    ![PyCharm Poetry Environment](/static/images/content/contributing/pycharm_poetry.png)<br/>
 6. PyCharm will automatically install the packages required into a virtual environment.<br/>
    ![PyCharm Project Interpreter](/static/images/content/contributing/pycharm_poetry_success.png)
-
-
-## Installing specific dependency groups
-
-In some cases, like when you'll be using the configuration bootstrapping script, you might need to install extra dependencies that are
-not necessary for the bot project to function.
-These dependencies are generally put in a separate optional group likewise:
-
-```text
-[tool.poetry.group.group-name]
-...
-[tool.poetry.group.group-name.dependencies]
-pytest = "^6.0.0"
-pytest-mock = "*"
-```
-
-To install them, you simply need to run the following command
----
-
-```shell
-$ poetry install --only {{group-name}}
-```
-
----
