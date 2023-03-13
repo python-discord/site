@@ -385,7 +385,7 @@ If you want to run the bot locally, you can run `docker-compose up metricity` in
 ### Issues?
 If you have any issues with setting up the bot, come discuss it with us on the [#dev-contrib](https://discord.gg/2h3qBv8Xaa) channel on our server.
 
-If you find any bugs in the bot or would like to request a feature, feel free to open an issue on the repository.
+If you find any bugs in the bot or would like to request a feature, feel free to [open an issue](https://github.com/python-discord/bot/issues/new/choose) on the repository.
 
 ---
 
