@@ -30,6 +30,8 @@ jobs:
 
   publish-static-preview:
     uses: ./.github/workflows/static-preview.yaml
+    needs:
+      - generate-sha-tag
     with:
       sha-tag: ${{ needs.generate-sha-tag.outputs.sha-tag }}
 
