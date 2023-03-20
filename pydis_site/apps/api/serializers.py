@@ -184,7 +184,8 @@ class InfractionSerializer(ModelSerializer):
             'type',
             'reason',
             'hidden',
-            'dm_sent'
+            'dm_sent',
+            'jump_url'
         )
 
     def validate(self, attrs: dict) -> dict:

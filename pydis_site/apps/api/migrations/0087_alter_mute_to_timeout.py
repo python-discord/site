@@ -12,7 +12,7 @@ def rename_type(apps: Apps, _) -> None:
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('api', '0085_add_thread_id_to_nominations'),
+        ('api', '0086_infraction_jump_url'),
     ]
 
     operations = [
