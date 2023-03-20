@@ -12,7 +12,7 @@ class Infraction(ModelReprMixin, models.Model):
         ("note", "Note"),
         ("warning", "Warning"),
         ("watch", "Watch"),
-        ("mute", "Mute"),
+        ("timeout", "Timeout"),
         ("kick", "Kick"),
         ("ban", "Ban"),
         ("superstar", "Superstar"),
