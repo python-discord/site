@@ -44,7 +44,7 @@ jobs:
 
   sentry-release:
     if: github.ref == 'refs/heads/main'
-    uses: ./.github/workflows/sentry_release.yaml
+    uses: ./.github/workflows/sentry-release.yaml
     needs:
       - build-deploy
     secrets: inherit
