@@ -1,11 +1,7 @@
 name: Lint & Test
 
 on:
-  push:
-    branches:
-      - main
-  pull_request:
-
+  workflow_call
 
 jobs:
   lint-test:
@@ -13,12 +9,11 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Install Python Dependencies
-        uses: HassanAbouelela/actions/setup-python@setup-python_v1.3.1
+        uses: HassanAbouelela/actions/setup-python@setup-python_v1.4.0
         with:
-          dev: true
           python_version: '3.10'
 
       # Start the database early to give it a chance to get ready before
@@ -59,10 +54,10 @@ jobs:
       # This step will publish the coverage reports coveralls.io and
       # link the report to the commit
       - name: Publish Coverage Report
-        uses: coverallsapp/github-action@1.1.3
+        uses: coverallsapp/github-action@v2.0.0
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          path-to-lcov: ./coverage.lcov
+          file: ./coverage.lcov
 
       - name: Tear down docker-compose containers
         run: docker-compose stop
@@ -85,7 +80,7 @@ jobs:
       - name: Upload a Build Artifact
         if: always() && steps.prepare-artifact.outcome == 'success'
         continue-on-error: true
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: pull-request-payload
           path: pull_request_payload.json

@@ -72,7 +72,8 @@ class InfractionViewSet(
     ...         'type': 'ban',
     ...         'reason': 'He terk my jerb!',
     ...         'hidden': True,
-    ...         'dm_sent': True
+    ...         'dm_sent': True,
+    ...         'jump_url': '<discord message link>'
     ...     }
     ... ]
 
@@ -103,7 +104,8 @@ class InfractionViewSet(
     ...     'type': 'ban',
     ...     'reason': 'He terk my jerb!',
     ...     'user': 172395097705414656,
-    ...     'dm_sent': False
+    ...     'dm_sent': False,
+    ...     'jump_url': '<discord message link>'
     ... }
 
     #### Response format
@@ -138,7 +140,7 @@ class InfractionViewSet(
 
     #### Status codes
     - 204: returned on success
-    - 404: if a infraction with the given `id` does not exist
+    - 404: if an infraction with the given `id` does not exist
 
     ### Expanded routes
     All routes support expansion of `user` and `actor` in responses. To use an expanded route,

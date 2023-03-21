@@ -171,6 +171,10 @@ class RulesView(APIView):
                 "Do not offer or ask for paid work of any kind.",
                 ["paid", "work", "money"]
             ),
+            (
+              "Do not copy and paste answers from ChatGPT or similar AI tools.",
+              ["gpt", "chatgpt", "gpt3", "ai"]
+            ),
         ])
 
 
