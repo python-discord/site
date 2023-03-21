@@ -47,7 +47,7 @@ jobs:
           cache-to: type=inline
           tags: |
             ghcr.io/python-discord/site:latest
-            ghcr.io/python-discord/site:${{ steps.sha_tag.outputs.tag }}
+            ghcr.io/python-discord/site:${{ inputs.sha_tag }}
           build-args: |
             git_sha=${{ github.sha }}
 
@@ -79,7 +79,7 @@ jobs:
         with:
           manifests: |
             namespaces/default/site/deployment.yaml
-          images: 'ghcr.io/python-discord/site:${{ steps.sha_tag.outputs.tag }}'
+          images: 'ghcr.io/python-discord/site:${{ inputs.sha_tag }}'
 
       - name: Purge Cloudflare Edge Cache
         uses: jakejarvis/cloudflare-purge-action@master
