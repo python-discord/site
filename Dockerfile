@@ -8,7 +8,7 @@ WORKDIR /app
 
 # Install project dependencies
 COPY pyproject.toml poetry.lock ./
-RUN poetry install --without dev
+RUN poetry install --only main
 
 # Set Git SHA environment variable
 ARG git_sha="development"

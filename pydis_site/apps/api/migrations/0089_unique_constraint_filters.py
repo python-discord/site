@@ -4,7 +4,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('api', '0086_new_filter_schema'),
+        ('api', '0088_new_filter_schema'),
     ]
 
     operations = [

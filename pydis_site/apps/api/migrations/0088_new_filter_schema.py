@@ -89,7 +89,7 @@ def forward(apps: Apps, schema_editor: BaseDatabaseSchemaEditor) -> None:
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('api', '0085_add_thread_id_to_nominations'),
+        ('api', '0087_alter_mute_to_timeout'),
     ]
 
     operations = [
@@ -114,7 +114,7 @@ class Migration(migrations.Migration):
                 ('enabled', models.BooleanField(help_text='Whether this filter is currently enabled.', null=True)),
                 ('dm_content', models.CharField(help_text='The DM to send to a user triggering this filter.', max_length=1000, null=True, blank=True)),
                 ('dm_embed', models.CharField(help_text='The content of the DM embed', max_length=2000, null=True, blank=True)),
-                ('infraction_type', models.CharField(choices=[('NONE', 'None'), ('NOTE', 'Note'), ('WARNING', 'Warning'), ('WATCH', 'Watch'), ('MUTE', 'Mute'), ('KICK', 'Kick'), ('BAN', 'Ban'), ('SUPERSTAR', 'Superstar'), ('VOICE_BAN', 'Voice Ban'), ('VOICE_MUTE', 'Voice Mute')], help_text='The infraction to apply to this user.', max_length=10, null=True)),
+                ('infraction_type', models.CharField(choices=[('NONE', 'None'), ('NOTE', 'Note'), ('WARNING', 'Warning'), ('WATCH', 'Watch'), ('TIMEOUT', 'Timeout'), ('KICK', 'Kick'), ('BAN', 'Ban'), ('SUPERSTAR', 'Superstar'), ('VOICE_BAN', 'Voice Ban'), ('VOICE_MUTE', 'Voice Mute')], help_text='The infraction to apply to this user.', max_length=10, null=True)),
                 ('infraction_reason', models.CharField(help_text='The reason to give for the infraction.', max_length=1000, null=True, blank=True)),
                 ('infraction_duration', models.DurationField(help_text='The duration of the infraction. 0 for permanent.', null=True)),
                 ('infraction_channel', models.BigIntegerField(validators=(MinValueValidator(limit_value=0, message="Channel IDs cannot be negative."),), help_text="Channel in which to send the infraction.", null=True)),
@@ -141,7 +141,7 @@ class Migration(migrations.Migration):
                 ('enabled', models.BooleanField(help_text='Whether this filter is currently enabled.')),
                 ('dm_content', models.CharField(help_text='The DM to send to a user triggering this filter.', max_length=1000, blank=True)),
                 ('dm_embed', models.CharField(help_text='The content of the DM embed', max_length=2000, blank=True)),
-                ('infraction_type', models.CharField(choices=[('NONE', 'None'), ('NOTE', 'Note'), ('WARNING', 'Warning'), ('WATCH', 'Watch'), ('MUTE', 'Mute'), ('KICK', 'Kick'), ('BAN', 'Ban'), ('SUPERSTAR', 'Superstar'), ('VOICE_BAN', 'Voice Ban'), ('VOICE_MUTE', 'Voice Mute')], help_text='The infraction to apply to this user.', max_length=10)),
+                ('infraction_type', models.CharField(choices=[('NONE', 'None'), ('NOTE', 'Note'), ('WARNING', 'Warning'), ('WATCH', 'Watch'), ('TIMEOUT', 'Timeout'), ('KICK', 'Kick'), ('BAN', 'Ban'), ('SUPERSTAR', 'Superstar'), ('VOICE_BAN', 'Voice Ban'), ('VOICE_MUTE', 'Voice Mute')], help_text='The infraction to apply to this user.', max_length=10)),
                 ('infraction_reason', models.CharField(help_text='The reason to give for the infraction.', max_length=1000, blank=True)),
                 ('infraction_duration', models.DurationField(help_text='The duration of the infraction. 0 for permanent.')),
                 ('infraction_channel', models.BigIntegerField(validators=(MinValueValidator(limit_value=0, message="Channel IDs cannot be negative."),), help_text="Channel in which to send the infraction.")),

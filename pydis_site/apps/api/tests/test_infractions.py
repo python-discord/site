@@ -68,10 +68,10 @@ class InfractionTests(AuthenticatedAPITestCase):
             active=False,
             inserted_at=dt(2020, 10, 10, 0, 1, 0, tzinfo=timezone.utc),
         )
-        cls.mute_permanent = Infraction.objects.create(
+        cls.timeout_permanent = Infraction.objects.create(
             user_id=cls.user.id,
             actor_id=cls.user.id,
-            type='mute',
+            type='timeout',
             reason='He has a filthy mouth and I am his soap.',
             active=True,
             inserted_at=dt(2020, 10, 10, 0, 2, 0, tzinfo=timezone.utc),
@@ -107,7 +107,7 @@ class InfractionTests(AuthenticatedAPITestCase):
         self.assertEqual(len(infractions), 5)
         self.assertEqual(infractions[0]['id'], self.voiceban_expires_later.id)
         self.assertEqual(infractions[1]['id'], self.superstar_expires_soon.id)
-        self.assertEqual(infractions[2]['id'], self.mute_permanent.id)
+        self.assertEqual(infractions[2]['id'], self.timeout_permanent.id)
         self.assertEqual(infractions[3]['id'], self.ban_inactive.id)
         self.assertEqual(infractions[4]['id'], self.ban_hidden.id)
 
@@ -134,7 +134,7 @@ class InfractionTests(AuthenticatedAPITestCase):
 
     def test_filter_permanent_false(self):
         url = reverse('api:bot:infraction-list')
-        response = self.client.get(f'{url}?type=mute&permanent=false')
+        response = self.client.get(f'{url}?type=timeout&permanent=false')
 
         self.assertEqual(response.status_code, 200)
         infractions = response.json()
@@ -143,12 +143,12 @@ class InfractionTests(AuthenticatedAPITestCase):
 
     def test_filter_permanent_true(self):
         url = reverse('api:bot:infraction-list')
-        response = self.client.get(f'{url}?type=mute&permanent=true')
+        response = self.client.get(f'{url}?type=timeout&permanent=true')
 
         self.assertEqual(response.status_code, 200)
         infractions = response.json()
 
-        self.assertEqual(infractions[0]['id'], self.mute_permanent.id)
+        self.assertEqual(infractions[0]['id'], self.timeout_permanent.id)
 
     def test_filter_after(self):
         url = reverse('api:bot:infraction-list')
@@ -241,7 +241,7 @@ class InfractionTests(AuthenticatedAPITestCase):
 
     def test_filter_manytypes(self):
         url = reverse('api:bot:infraction-list')
-        response = self.client.get(f'{url}?types=mute,ban')
+        response = self.client.get(f'{url}?types=timeout,ban')
 
         self.assertEqual(response.status_code, 200)
         infractions = response.json()
@@ -249,7 +249,7 @@ class InfractionTests(AuthenticatedAPITestCase):
 
     def test_types_type_invalid(self):
         url = reverse('api:bot:infraction-list')
-        response = self.client.get(f'{url}?types=mute,ban&type=superstar')
+        response = self.client.get(f'{url}?types=timeout,ban&type=superstar')
 
         self.assertEqual(response.status_code, 400)
         errors = list(response.json())
@@ -519,7 +519,7 @@ class CreationTests(AuthenticatedAPITestCase):
     def test_returns_400_for_second_active_infraction_of_the_same_type(self):
         """Test if the API rejects a second active infraction of the same type for a given user."""
         url = reverse('api:bot:infraction-list')
-        active_infraction_types = ('mute', 'ban', 'superstar')
+        active_infraction_types = ('timeout', 'ban', 'superstar')
 
         for infraction_type in active_infraction_types:
             with self.subTest(infraction_type=infraction_type):
@@ -562,7 +562,7 @@ class CreationTests(AuthenticatedAPITestCase):
         first_active_infraction = {
             'user': self.user.id,
             'actor': self.user.id,
-            'type': 'mute',
+            'type': 'timeout',
             'reason': 'Be silent!',
             'hidden': True,
             'active': True,
@@ -649,9 +649,9 @@ class CreationTests(AuthenticatedAPITestCase):
         Infraction.objects.create(
             user=self.user,
             actor=self.user,
-            type="mute",
+            type="timeout",
             active=True,
-            reason="The first active mute"
+            reason="The first active timeout"
         )
 
     def test_unique_constraint_accepts_active_infractions_for_different_users(self):

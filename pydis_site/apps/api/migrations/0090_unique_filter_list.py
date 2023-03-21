@@ -91,7 +91,7 @@ def create_unique_list(apps: Apps, _):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('api', '0087_unique_constraint_filters'),
+        ('api', '0089_unique_constraint_filters'),
     ]
 
     operations = [

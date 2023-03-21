@@ -22,7 +22,7 @@ def create_antispam_list(apps: Apps, _):
         enabled=True,
         dm_content="",
         dm_embed="",
-        infraction_type="MUTE",
+        infraction_type="TIMEOUT",
         infraction_reason="",
         infraction_duration=timedelta(seconds=600),
         infraction_channel=0,
@@ -41,7 +41,7 @@ def create_antispam_list(apps: Apps, _):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('api', '0088_unique_filter_list'),
+        ('api', '0090_unique_filter_list'),
     ]
 
     operations = [
