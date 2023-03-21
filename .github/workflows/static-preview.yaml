@@ -38,7 +38,7 @@ jobs:
           cache-to: type=inline
           tags: |
             ghcr.io/python-discord/static-site:latest
-            ghcr.io/python-discord/static-site:${{ inputs.sha_tag }}
+            ghcr.io/python-discord/static-site:${{ inputs.sha-tag }}
           build-args: |
             git_sha=${{ github.sha }}
             STATIC_BUILD=TRUE
@@ -48,7 +48,7 @@ jobs:
         run: |
           mkdir docker_build \
           && docker run --entrypoint /bin/echo --name site \
-          ghcr.io/python-discord/static-site:${{ inputs.sha_tag }} \
+          ghcr.io/python-discord/static-site:${{ inputs.sha-tag }} \
           && docker cp site:/app docker_build/
 
       # Build directly to a local folder
