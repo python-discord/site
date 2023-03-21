@@ -125,9 +125,7 @@ Being a helper is also more than just quantity of messages, it's about quality. 
 # Miscellaneous Roles
 
 ### <span class="fas fa-circle" style="color:#9f3fee"></span> Partners
-**Description:** Representatives of communities we are partnered with. For a list of partnered communities, see the `#partners` channel.
-
-*Note: Not related to [Discord Partners](https://discordapp.com/partners), which our server is currently a part of.*
+**Description:** Representatives of communities we are partnered with.
 
 ### <span class="fas fa-circle" style="color:#c77cfa"></span> Python Community
 **Description:** Prominent people in the Python ecosystem.
