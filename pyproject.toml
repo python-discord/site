@@ -23,7 +23,7 @@ PyJWT = {version = "2.6.0", extras = ["crypto"]}
 pymdown-extensions = "9.10"
 python-frontmatter = "1.0.0"
 pyyaml = "6.0"
-sentry-sdk = "1.16.0"
+sentry-sdk = "1.17.0"
 whitenoise = "6.4.0"
 
 [tool.poetry.group.dev.dependencies]
