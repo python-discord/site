@@ -1,12 +1,12 @@
+import atexit
+import shutil
+import tempfile
 from pathlib import Path
 
-from pyfakefs import fake_filesystem_unittest
+from django.test import TestCase
 
 
-# Set the module constant within Patcher to use the fake filesystem
-# https://jmcgeheeiv.github.io/pyfakefs/master/usage.html#modules-to-reload
-with fake_filesystem_unittest.Patcher() as _:
-    BASE_PATH = Path("res")
+BASE_PATH = Path(tempfile.mkdtemp(prefix='pydis-site-content-app-tests-'))
 
 
 # Valid markdown content with YAML metadata
@@ -50,7 +50,7 @@ PARSED_METADATA = {
 PARSED_CATEGORY_INFO = {"title": "Category Name", "description": "Description"}
 
 
-class MockPagesTestCase(fake_filesystem_unittest.TestCase):
+class MockPagesTestCase(TestCase):
     """
     TestCase with a fake filesystem for testing.
 
@@ -75,29 +75,32 @@ class MockPagesTestCase(fake_filesystem_unittest.TestCase):
 
     def setUp(self):
         """Create the fake filesystem."""
-        self.setUpPyfakefs()
-
-        self.fs.create_file(f"{BASE_PATH}/_info.yml", contents=CATEGORY_INFO)
-        self.fs.create_file(f"{BASE_PATH}/root.md", contents=MARKDOWN_WITH_METADATA)
-        self.fs.create_file(
-            f"{BASE_PATH}/root_without_metadata.md", contents=MARKDOWN_WITHOUT_METADATA
-        )
-        self.fs.create_file(f"{BASE_PATH}/not_a_page.md/_info.yml", contents=CATEGORY_INFO)
-        self.fs.create_file(f"{BASE_PATH}/category/_info.yml", contents=CATEGORY_INFO)
-        self.fs.create_file(
-            f"{BASE_PATH}/category/with_metadata.md", contents=MARKDOWN_WITH_METADATA
-        )
-        self.fs.create_file(f"{BASE_PATH}/category/subcategory/_info.yml", contents=CATEGORY_INFO)
-        self.fs.create_file(
-            f"{BASE_PATH}/category/subcategory/with_metadata.md", contents=MARKDOWN_WITH_METADATA
-        )
-        self.fs.create_file(
-            f"{BASE_PATH}/category/subcategory/without_metadata.md",
-            contents=MARKDOWN_WITHOUT_METADATA
-        )
+        Path(f"{BASE_PATH}/_info.yml").write_text(CATEGORY_INFO)
+        Path(f"{BASE_PATH}/root.md").write_text(MARKDOWN_WITH_METADATA)
+        Path(f"{BASE_PATH}/root_without_metadata.md").write_text(MARKDOWN_WITHOUT_METADATA)
+        Path(f"{BASE_PATH}/not_a_page.md").mkdir(exist_ok=True)
+        Path(f"{BASE_PATH}/not_a_page.md/_info.yml").write_text(CATEGORY_INFO)
+        Path(f"{BASE_PATH}/category").mkdir(exist_ok=True)
+        Path(f"{BASE_PATH}/category/_info.yml").write_text(CATEGORY_INFO)
+        Path(f"{BASE_PATH}/category/with_metadata.md").write_text(MARKDOWN_WITH_METADATA)
+        Path(f"{BASE_PATH}/category/subcategory").mkdir(exist_ok=True)
+        Path(f"{BASE_PATH}/category/subcategory/_info.yml").write_text(CATEGORY_INFO)
+        Path(
+            f"{BASE_PATH}/category/subcategory/with_metadata.md"
+        ).write_text(MARKDOWN_WITH_METADATA)
+        Path(
+            f"{BASE_PATH}/category/subcategory/without_metadata.md"
+        ).write_text(MARKDOWN_WITHOUT_METADATA)
 
         temp = f"{BASE_PATH}/tmp"  # noqa: S108
-        self.fs.create_file(f"{temp}/_info.yml", contents=CATEGORY_INFO)
-        self.fs.create_file(f"{temp}.md", contents=MARKDOWN_WITH_METADATA)
-        self.fs.create_file(f"{temp}/category/_info.yml", contents=CATEGORY_INFO)
-        self.fs.create_dir(f"{temp}/category/subcategory_without_info")
+        Path(f"{temp}").mkdir(exist_ok=True)
+        Path(f"{temp}/_info.yml").write_text(CATEGORY_INFO)
+        Path(f"{temp}.md").write_text(MARKDOWN_WITH_METADATA)
+        Path(f"{temp}/category").mkdir(exist_ok=True)
+        Path(f"{temp}/category/_info.yml").write_text(CATEGORY_INFO)
+        Path(f"{temp}/category/subcategory_without_info").mkdir(exist_ok=True)
+
+    @classmethod
+    def setUpTestData(cls):
+        # May get called multiple times - ignore erorrs in that case.
+        atexit.register(shutil.rmtree, BASE_PATH, ignore_errors=True)
