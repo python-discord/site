@@ -842,14 +842,14 @@ files = [
 
 [[package]]
 name = "markdown"
-version = "3.4.1"
-description = "Python implementation of Markdown."
+version = "3.4.2"
+description = "Python implementation of John Gruber's Markdown."
 category = "main"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "Markdown-3.4.1-py3-none-any.whl", hash = "sha256:08fb8465cffd03d10b9dd34a5c3fea908e20391a2a90b88d66362cb05beed186"},
-    {file = "Markdown-3.4.1.tar.gz", hash = "sha256:3b809086bb6efad416156e00a0da66fe47618a5d6918dd688f53f40c8e4cfeff"},
+    {file = "Markdown-3.4.2-py3-none-any.whl", hash = "sha256:590e8c8139ce62a1121b4b07fd471eced441378f19f3265540de0791851977e5"},
+    {file = "Markdown-3.4.2.tar.gz", hash = "sha256:e104be388c28462b4e83bd0ddfc68eff6022305cc4b5ab14caf8d235fae132b9"},
 ]
 
 [package.extras]
@@ -1537,4 +1537,4 @@ brotli = ["Brotli"]
 [metadata]
 lock-version = "2.0"
 python-versions = "3.10.*"
-content-hash = "e22311a7b6bba3f8397ba214fe7640a1080c27a63f42262527909d18de6248c1"
+content-hash = "364d285b6d97d84894d8bba6c6f79b6d58433c91b451b9a793aba868376603aa"
