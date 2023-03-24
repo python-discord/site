@@ -7,6 +7,7 @@ from django.test import TestCase
 
 
 BASE_PATH = Path(tempfile.mkdtemp(prefix='pydis-site-content-app-tests-'))
+atexit.register(shutil.rmtree, BASE_PATH, ignore_errors=True)
 
 
 # Valid markdown content with YAML metadata
@@ -99,8 +100,3 @@ class MockPagesTestCase(TestCase):
         Path(f"{temp}/category").mkdir(exist_ok=True)
         Path(f"{temp}/category/_info.yml").write_text(CATEGORY_INFO)
         Path(f"{temp}/category/subcategory_without_info").mkdir(exist_ok=True)
-
-    @classmethod
-    def setUpTestData(cls):
-        # May get called multiple times - ignore erorrs in that case.
-        atexit.register(shutil.rmtree, BASE_PATH, ignore_errors=True)
