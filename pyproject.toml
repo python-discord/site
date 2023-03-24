@@ -17,7 +17,7 @@ django-simple-bulma = "2.5.0"
 djangorestframework = "3.14.0"
 gunicorn = "20.1.0"
 httpx = "0.23.3"
-markdown = "3.4.1"
+markdown = "3.4.2"
 psycopg2-binary = "2.9.5"
 PyJWT = {version = "2.6.0", extras = ["crypto"]}
 pymdown-extensions = "9.10"
