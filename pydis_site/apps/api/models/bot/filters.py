@@ -101,7 +101,7 @@ class FilterList(ModelTimestampMixin, ModelReprMixin, models.Model):
     )
     disabled_channels = ArrayField(
         models.CharField(max_length=100),
-        help_text="Channels in which to not run the filter."
+        help_text="Channels in which to not run the filter even if it's enabled in the category."
     )
     enabled_categories = ArrayField(
         models.CharField(max_length=100),
@@ -216,7 +216,8 @@ class FilterBase(ModelTimestampMixin, ModelReprMixin, models.Model):
     )
     disabled_channels = ArrayField(
         models.CharField(max_length=100),
-        help_text="Channels in which to not run the filter.", null=True
+        help_text="Channels in which to not run the filter even if it's enabled in the category.",
+        null=True
     )
     enabled_categories = ArrayField(
         models.CharField(max_length=100),

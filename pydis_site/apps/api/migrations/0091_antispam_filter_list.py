@@ -7,7 +7,7 @@ import pydis_site.apps.api.models.bot.filters
 
 
 def create_antispam_list(apps: Apps, _):
-    """Create the 'unique' FilterList and its related Filters."""
+    """Create the 'antispam' FilterList and its related Filters."""
     filter_list: pydis_site.apps.api.models.FilterList = apps.get_model("api", "FilterList")
     filter_: pydis_site.apps.api.models.Filter = apps.get_model("api", "Filter")
 
