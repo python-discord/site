@@ -247,20 +247,24 @@ class FilterSerializer(ModelSerializer):
                 "Infraction type is required with infraction duration or reason."
             )
 
-        if (
+        common_channels = (
             set(get_field_value(data, "disabled_channels"))
             & set(get_field_value(data, "enabled_channels"))
-        ):
+        )
+        if common_channels:
             raise ValidationError(
-                "You can't have the same value in both enabled and disabled channels lists."
+                "You can't have the same value in both enabled and disabled channels lists:"
+                f" {', '.join(repr(channel) for channel in common_channels)}."
             )
 
-        if (
+        common_categories = (
             set(get_field_value(data, "disabled_categories"))
             & set(get_field_value(data, "enabled_categories"))
-        ):
+        )
+        if common_categories:
             raise ValidationError(
-                "You can't have the same value in both enabled and disabled categories lists."
+                "You can't have the same value in both enabled and disabled categories lists:"
+                f" {', '.join(repr(category) for category in common_categories)}."
             )
 
         return data
@@ -333,17 +337,23 @@ class FilterListSerializer(ModelSerializer):
             data.get('disabled_channels') is not None
             and data.get('enabled_channels') is not None
         ):
-            channels_collection = data['disabled_channels'] + data['enabled_channels']
-            if len(channels_collection) != len(set(channels_collection)):
-                raise ValidationError("Enabled and Disabled channels lists contain duplicates.")
+            common_channels = set(data['disabled_channels']) & set(data['enabled_channels'])
+            if common_channels:
+                raise ValidationError(
+                    "You can't have the same value in both enabled and disabled channels lists:"
+                    f" {', '.join(repr(channel) for channel in common_channels)}."
+                )
 
         if (
             data.get('disabled_categories') is not None
             and data.get('enabled_categories') is not None
         ):
-            categories_collection = data['disabled_categories'] + data['enabled_categories']
-            if len(categories_collection) != len(set(categories_collection)):
-                raise ValidationError("Enabled and Disabled categories lists contain duplicates.")
+            common_categories = set(data['disabled_categories']) & set(data['enabled_categories'])
+            if common_categories:
+                raise ValidationError(
+                    "You can't have the same value in both enabled and disabled categories lists:"
+                    f" {', '.join(repr(category) for category in common_categories)}."
+                )
 
         return data
 
