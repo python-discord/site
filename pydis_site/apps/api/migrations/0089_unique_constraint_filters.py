@@ -12,6 +12,7 @@ class Migration(migrations.Migration):
             "ALTER TABLE api_filter "
             "ADD CONSTRAINT unique_filters UNIQUE NULLS NOT DISTINCT "
             "(content, additional_field, filter_list_id, dm_content, dm_embed, infraction_type, infraction_reason, infraction_duration, infraction_channel, guild_pings, filter_dm, dm_pings, remove_context, bypass_roles, enabled, send_alert, enabled_channels, disabled_channels, enabled_categories, disabled_categories)",
+            reverse_sql="ALTER TABLE api_filter DROP CONSTRAINT unique_filters",
             state_operations=[
                 migrations.AddConstraint(
                     model_name='filter',
