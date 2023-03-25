@@ -211,11 +211,11 @@ CHANNEL_SCOPE_FIELDS = (
 MENTIONS_FIELDS = ("guild_pings", "dm_pings")
 
 
-def _create_filter_meta_extra_kwargs() -> dict[str, dict[str, bool]]:
-    """Create the extra kwargs of the Filter serializer's Meta class."""
+def _create_meta_extra_kwargs(*, for_filter: bool) -> dict[str, dict[str, bool]]:
+    """Create the extra kwargs for the Meta classes of the Filter and FilterList serializers."""
     extra_kwargs = {}
     for field in SETTINGS_FIELDS:
-        field_args = {'required': False, 'allow_null': True}
+        field_args = {'required': False, 'allow_null': True} if for_filter else {}
         if field in ALLOW_BLANK_SETTINGS:
             field_args['allow_blank'] = True
         if field in ALLOW_EMPTY_SETTINGS:
@@ -278,7 +278,7 @@ class FilterSerializer(ModelSerializer):
             'additional_field',
             'filter_list'
         ) + SETTINGS_FIELDS
-        extra_kwargs = _create_filter_meta_extra_kwargs()
+        extra_kwargs = _create_meta_extra_kwargs(for_filter=True)
 
     def create(self, validated_data: dict) -> User:
         """Override the create method to catch violations of the custom uniqueness constraint."""
@@ -315,19 +315,6 @@ class FilterSerializer(ModelSerializer):
         schema["filter_list"] = instance.filter_list.id
         schema["settings"] = settings
         return schema
-
-
-def _create_filter_list_meta_extra_kwargs() -> dict[str, dict[str, bool]]:
-    """Create the extra kwargs of the FilterList serializer's Meta class."""
-    extra_kwargs = {}
-    for field in SETTINGS_FIELDS:
-        field_args = {}
-        if field in ALLOW_BLANK_SETTINGS:
-            field_args['allow_blank'] = True
-        if field in ALLOW_EMPTY_SETTINGS:
-            field_args['allow_empty'] = True
-        extra_kwargs[field] = field_args
-    return extra_kwargs
 
 
 class FilterListSerializer(ModelSerializer):
@@ -367,7 +354,7 @@ class FilterListSerializer(ModelSerializer):
         fields = (
             'id', 'created_at', 'updated_at', 'name', 'list_type', 'filters'
         ) + SETTINGS_FIELDS
-        extra_kwargs = _create_filter_list_meta_extra_kwargs()
+        extra_kwargs = _create_meta_extra_kwargs(for_filter=False)
 
         # Ensure there can only be one filter list with the same name and type.
         validators = [
