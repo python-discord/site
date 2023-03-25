@@ -253,8 +253,8 @@ class Filter(FilterBase):
         constraints = (
             UniqueConstraint(
                 fields=tuple(
-                    [field.name for field in FilterBase._meta.fields
-                     if field.name not in ("id", "description", "created_at", "updated_at")]
+                    field.name for field in FilterBase._meta.fields
+                    if field.name not in ("id", "description", "created_at", "updated_at")
                 ),
                 name="unique_filters"),
         )

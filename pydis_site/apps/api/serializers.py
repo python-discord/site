@@ -188,27 +188,27 @@ BASE_FILTER_FIELDS = (
 )
 BASE_FILTERLIST_FIELDS = ('id', 'created_at', 'updated_at', 'name', 'list_type')
 BASE_SETTINGS_FIELDS = (
-    "bypass_roles",
-    "filter_dm",
-    "enabled",
-    "remove_context",
-    "send_alert"
+    'bypass_roles',
+    'filter_dm',
+    'enabled',
+    'remove_context',
+    'send_alert'
 )
 INFRACTION_AND_NOTIFICATION_FIELDS = (
-    "infraction_type",
-    "infraction_reason",
-    "infraction_duration",
-    "infraction_channel",
-    "dm_content",
-    "dm_embed"
+    'infraction_type',
+    'infraction_reason',
+    'infraction_duration',
+    'infraction_channel',
+    'dm_content',
+    'dm_embed'
 )
 CHANNEL_SCOPE_FIELDS = (
-    "disabled_channels",
-    "disabled_categories",
-    "enabled_channels",
-    "enabled_categories"
+    'disabled_channels',
+    'disabled_categories',
+    'enabled_channels',
+    'enabled_categories'
 )
-MENTIONS_FIELDS = ("guild_pings", "dm_pings")
+MENTIONS_FIELDS = ('guild_pings', 'dm_pings')
 
 
 def _create_meta_extra_kwargs(*, for_filter: bool) -> dict[str, dict[str, bool]]:
@@ -228,7 +228,7 @@ def get_field_value(data: dict, field_name: str) -> Any:
     """Get the value directly from the key, or from the filter list if it's missing or is None."""
     if data.get(field_name) is not None:
         return data[field_name]
-    return getattr(data["filter_list"], field_name)
+    return getattr(data['filter_list'], field_name)
 
 
 class FilterSerializer(ModelSerializer):
@@ -238,18 +238,18 @@ class FilterSerializer(ModelSerializer):
         """Perform infraction data + allowed and disallowed lists validation."""
         if (
             (
-                get_field_value(data, "infraction_reason")
-                or get_field_value(data, "infraction_duration")
+                get_field_value(data, 'infraction_reason')
+                or get_field_value(data, 'infraction_duration')
             )
-            and get_field_value(data, "infraction_type") == "NONE"
+            and get_field_value(data, 'infraction_type') == 'NONE'
         ):
             raise ValidationError(
                 "Infraction type is required with infraction duration or reason."
             )
 
         common_channels = (
-            set(get_field_value(data, "disabled_channels"))
-            & set(get_field_value(data, "enabled_channels"))
+            set(get_field_value(data, 'disabled_channels'))
+            & set(get_field_value(data, 'enabled_channels'))
         )
         if common_channels:
             raise ValidationError(
@@ -258,8 +258,8 @@ class FilterSerializer(ModelSerializer):
             )
 
         common_categories = (
-            set(get_field_value(data, "disabled_categories"))
-            & set(get_field_value(data, "enabled_categories"))
+            set(get_field_value(data, 'disabled_categories'))
+            & set(get_field_value(data, 'enabled_categories'))
         )
         if common_categories:
             raise ValidationError(
@@ -305,19 +305,19 @@ class FilterSerializer(ModelSerializer):
         into a sub-field called `settings`.
         """
         settings = {name: getattr(instance, name) for name in BASE_SETTINGS_FIELDS}
-        settings["infraction_and_notification"] = {
+        settings['infraction_and_notification'] = {
             name: getattr(instance, name) for name in INFRACTION_AND_NOTIFICATION_FIELDS
         }
-        settings["channel_scope"] = {
+        settings['channel_scope'] = {
             name: getattr(instance, name) for name in CHANNEL_SCOPE_FIELDS
         }
-        settings["mentions"] = {
+        settings['mentions'] = {
             name: getattr(instance, name) for name in MENTIONS_FIELDS
         }
 
         schema = {name: getattr(instance, name) for name in BASE_FILTER_FIELDS}
-        schema["filter_list"] = instance.filter_list.id
-        schema["settings"] = settings
+        schema['filter_list'] = instance.filter_list.id
+        schema['settings'] = settings
         return schema
 
 
@@ -388,19 +388,19 @@ class FilterListSerializer(ModelSerializer):
         into a sub-field called `settings`.
         """
         schema = {name: getattr(instance, name) for name in BASE_FILTERLIST_FIELDS}
-        schema["filters"] = [
+        schema['filters'] = [
             FilterSerializer(many=False).to_representation(instance=item)
             for item in Filter.objects.filter(filter_list=instance.id)
         ]
 
         settings = {name: getattr(instance, name) for name in BASE_SETTINGS_FIELDS}
-        settings["infraction_and_notification"] = {
+        settings['infraction_and_notification'] = {
             name: getattr(instance, name) for name in INFRACTION_AND_NOTIFICATION_FIELDS
         }
-        settings["channel_scope"] = {name: getattr(instance, name) for name in CHANNEL_SCOPE_FIELDS}
-        settings["mentions"] = {name: getattr(instance, name) for name in MENTIONS_FIELDS}
+        settings['channel_scope'] = {name: getattr(instance, name) for name in CHANNEL_SCOPE_FIELDS}
+        settings['mentions'] = {name: getattr(instance, name) for name in MENTIONS_FIELDS}
 
-        schema["settings"] = settings
+        schema['settings'] = settings
         return schema
 
 #  endregion
