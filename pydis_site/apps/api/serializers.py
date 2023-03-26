@@ -184,7 +184,7 @@ ALLOW_EMPTY_SETTINGS = (
 
 # Required fields for custom JSON representation purposes
 BASE_FILTER_FIELDS = (
-    'id', 'created_at', 'updated_at', 'content', 'description', 'additional_field'
+    'id', 'created_at', 'updated_at', 'content', 'description', 'additional_settings'
 )
 BASE_FILTERLIST_FIELDS = ('id', 'created_at', 'updated_at', 'name', 'list_type')
 BASE_SETTINGS_FIELDS = (
@@ -279,7 +279,7 @@ class FilterSerializer(ModelSerializer):
             'updated_at',
             'content',
             'description',
-            'additional_field',
+            'additional_settings',
             'filter_list'
         ) + SETTINGS_FIELDS
         extra_kwargs = _create_meta_extra_kwargs(for_filter=True)
@@ -382,9 +382,10 @@ class FilterListSerializer(ModelSerializer):
         Provides a custom JSON representation to the FilterList Serializers.
 
         This representation restructures how the Filter is represented.
-        It groups the Infraction, Channel and Mention related fields into their own separated group.
+        It groups the Infraction, Channel, and Mention related fields
+        into their own separated groups.
 
-        Furthermore, it puts the fields that meant to represent FilterList settings,
+        Furthermore, it puts the fields that are meant to represent FilterList settings,
         into a sub-field called `settings`.
         """
         schema = {name: getattr(instance, name) for name in BASE_FILTERLIST_FIELDS}

@@ -113,7 +113,7 @@ class StringDunderMethodTests(SimpleTestCase):
             Filter(
                 content="ducky_nsfw",
                 description="This ducky is totally inappropriate!",
-                additional_field=None,
+                additional_settings=None,
             ),
             OffensiveMessage(
                 id=602951077675139072,

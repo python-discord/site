@@ -33,7 +33,7 @@ class FilterListViewSet(ModelViewSet):
     ...                 "updated_at": "2023-01-27T21:26:34.030532Z",
     ...                 "content": "267624335836053506",
     ...                 "description": "Python Discord",
-    ...                 "additional_field": None,
+    ...                 "additional_settings": None,
     ...                 "filter_list": 1,
     ...                 "settings": {
     ...                     "bypass_roles": None,
@@ -119,7 +119,7 @@ class FilterListViewSet(ModelViewSet):
     ...             "updated_at": "2023-01-27T21:26:34.030532Z",
     ...             "content": "267624335836053506",
     ...             "description": "Python Discord",
-    ...             "additional_field": None,
+    ...             "additional_settings": None,
     ...             "filter_list": 1,
     ...             "settings": {
     ...                 "bypass_roles": None,
@@ -239,7 +239,7 @@ class FilterListViewSet(ModelViewSet):
     ...             "updated_at": "2023-01-27T21:26:34.030532Z",
     ...             "content": "267624335836053506",
     ...             "description": "Python Discord",
-    ...             "additional_field": None,
+    ...             "additional_settings": None,
     ...             "filter_list": 1,
     ...             "settings": {
     ...                 "bypass_roles": None,
@@ -334,7 +334,7 @@ class FilterViewSet(ModelViewSet):
     ...         "updated_at": "2023-01-27T21:26:34.030532Z",
     ...         "content": "267624335836053506",
     ...         "description": "Python Discord",
-    ...         "additional_field": None,
+    ...         "additional_settings": None,
     ...         "filter_list": 1,
     ...         "settings": {
     ...             "bypass_roles": None,
@@ -379,7 +379,7 @@ class FilterViewSet(ModelViewSet):
     ...     "updated_at": "2023-01-27T21:26:34.030532Z",
     ...     "content": "267624335836053506",
     ...     "description": "Python Discord",
-    ...     "additional_field": None,
+    ...     "additional_settings": None,
     ...     "filter_list": 1,
     ...     "settings": {
     ...         "bypass_roles": None,
@@ -420,7 +420,7 @@ class FilterViewSet(ModelViewSet):
     ...     "filter_list": 1,
     ...     "content": "267624335836053506",
     ...     "description": "Python Discord",
-    ...     "additional_field": None,
+    ...     "additional_settings": None,
     ...     "bypass_roles": None,
     ...     "filter_dm": None,
     ...     "enabled": False,
@@ -454,7 +454,7 @@ class FilterViewSet(ModelViewSet):
     ...     "updated_at": "2023-01-27T21:26:34.030532Z",
     ...     "content": "267624335836053506",
     ...     "description": "Python Discord",
-    ...     "additional_field": None,
+    ...     "additional_settings": None,
     ...     "filter_list": 1,
     ...     "settings": {
     ...         "bypass_roles": None,

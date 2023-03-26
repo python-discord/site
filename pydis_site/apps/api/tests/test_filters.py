@@ -92,7 +92,7 @@ def get_test_sequences() -> Dict[str, TestSequence]:
             {
                 "content": "bad word",
                 "description": "This is a really bad word.",
-                "additional_field": "{'hi': 'there'}",
+                "additional_settings": "{'hi': 'there'}",
                 "guild_pings": None,
                 "filter_dm": None,
                 "dm_pings": None,
