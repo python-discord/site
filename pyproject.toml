@@ -28,7 +28,7 @@ whitenoise = "6.4.0"
 
 [tool.poetry.group.dev.dependencies]
 python-dotenv = "1.0.0"
-taskipy = "1.10.3"
+taskipy = "1.10.4"
 
 [tool.poetry.group.lint.dependencies]
 flake8 = "6.0.0"
