@@ -434,18 +434,23 @@ bcrypt = ["bcrypt"]
 
 [[package]]
 name = "django-distill"
-version = "3.0.2"
+version = "3.1.2"
 description = "Static site renderer and publisher for Django."
 category = "main"
 optional = false
 python-versions = "*"
 files = [
-    {file = "django-distill-3.0.2.tar.gz", hash = "sha256:01df70e595c6ba4fee4baa5511b0bdea42388bfec409aeb70000315f109a993f"},
+    {file = "django-distill-3.1.2.tar.gz", hash = "sha256:9f0e8d3a9fe09e106d5004fc5b7033b2399032c690d537ef15aa6bd16059470e"},
 ]
 
 [package.dependencies]
 django = "*"
 requests = "*"
+
+[package.extras]
+amazon = ["boto3"]
+google = ["google-api-python-client", "google-cloud-storage"]
+microsoft = ["azure-storage-blob"]
 
 [[package]]
 name = "django-environ"
@@ -1525,4 +1530,4 @@ brotli = ["Brotli"]
 [metadata]
 lock-version = "2.0"
 python-versions = "3.10.*"
-content-hash = "2120856078fb6a0c9d7234d15eeb5dbd7bb5b2716b771e75bacf6d4ba29430ab"
+content-hash = "9c0e0aece7bf4d8dc4ac2cd2b7d3774cdbca2b02e75dd4e970811bc6329d2d53"
