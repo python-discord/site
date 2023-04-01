@@ -16,6 +16,7 @@ The Python bot is tightly coupled with the Python Discord server, so to have a f
 It's possible to set the bot to use a single channel for all cogs, but that will cause extreme spam and will be difficult to work with.
 
 You can start your own server and set up channels as you see fit, but for your convenience we have a template for a development server you can use: [https://discord.new/zmHtscpYN9E3](https://discord.new/zmHtscpYN9E3).
+
 Keep in mind that this is not an exact mirror of the Python server, but a reduced version for testing purposes.
 The channels there are mostly the ones needed by the bot.
 ---
@@ -229,11 +230,11 @@ In your `.env.server` file:
 
 
 
-Assuming you have Docker installed **and running**, enter the cloned repo in the command line and type `docker-compose up`.
+Assuming you have Docker installed **and running**, enter the cloned repo in the command line and type `docker compose up`.
 
-If working with snekbox you can run `docker-compose --profile 3.10 up` to also start up a 3.10 snekbox container, in addition to the default 3.11 container!
+If working with snekbox you can run `docker compose --profile 3.10 up` to also start up a 3.10 snekbox container, in addition to the default 3.11 container!
 
-After pulling the images and building the containers, your bot will start. Enter your server and type `!help` (or whatever prefix you chose instead of `!`).
+After pulling the images and building the containers, your bot will start. Enter your server and type `!help` (or whatever prefix you [chose](#optional--changing-your-command-prefix) instead of `!`).
 
 Your bot is now running, but this method makes debugging with an IDE a fairly involved process. For additional running methods, continue reading the following sections.
 
@@ -247,17 +248,17 @@ The advantage of this method is that you can run the bot's code in your preferre
 
 You will need to start the services separately, but if you got the previous section with Docker working, that's pretty simple:
 
-* `docker-compose up web` to start the site container. This is required.
-* `docker-compose up snekbox` to start the snekbox container. You only need this if you're planning on working on the snekbox cog.
-* `docker-compose up snekbox-311` to start the snekbox 3.11 container. You only need this if you're planning on working on the snekbox cog.
-* `docker-compose up redis` to start the Redis container. You only need this if you're not using fakeredis. For more info refer to [Working with Redis](#optional-working-with-redis).
+* `docker compose up web` to start the site container. This is required.
+* `docker compose up snekbox` to start the snekbox container. You only need this if you're planning on working on the snekbox cog.
+* `docker compose up snekbox-311` to start the snekbox 3.11 container. You only need this if you're planning on working on the snekbox cog.
+* `docker compose up redis` to start the Redis container. You only need this if you're not using fakeredis. For more info refer to [Working with Redis](#optional-working-with-redis).
 
-You can start several services together: `docker-compose up web snekbox redis`.
+You can start several services together: `docker compose up web snekbox redis`.
 
 ##### Setting Up a Development Environment
 The bot's code is Python code like any other. To run it locally, you will need the right version of Python with the necessary packages installed:
 
-1. Make sure you have [Python 3.10](https://www.python.org/downloads/) installed. It helps if it is your system's default Python version.
+1. Make sure you have [Python 3.11](https://www.python.org/downloads/) installed. It helps if it is your system's default Python version.
 2. [Install Poetry](https://github.com/python-poetry/poetry#installation).
 3. [Install the dependencies](../installing-project-dependencies).
 
@@ -380,9 +381,9 @@ guild_id = replace_with_your_guild_id
 ```
 To properly replicate production behavior, set the `staff_role_id`, `staff_categories`, and `ignore_categories` fields as well.
 
-Now, `docker-compose up` will also start Metricity.
+Now, `docker compose up` will also start Metricity.
 
-If you want to run the bot locally, you can run `docker-compose up metricity` instead.
+If you want to run the bot locally, you can run `docker compose up metricity` instead.
 
 ---
 
