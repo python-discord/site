@@ -169,7 +169,7 @@ If you wish to set all values in your `env.server` for your testing server, you 
 
 Additionally:
 
-* At this stage, set `redis_use_fakeredis` to `true`. If you're looking for instructions for working with Redis, see [Working with Redis](#optional-working-with-redis).
+* At this stage, set `redis_use_fakeredis=true`. If you're looking for instructions for working with Redis, see [Working with Redis](#optional-working-with-redis).
 
 We understand this is tedious which is why we **heavily recommend** using the [automatic configuration setup](#automatic-configuration)
 
@@ -241,8 +241,8 @@ Your bot is now running, but this method makes debugging with an IDE a fairly in
 The advantage of this method is that you can run the bot's code in your preferred editor, with debugger and all, while keeping all the setup of the bot's various dependencies inside Docker.
 
 * Append the following line to your `.env` file: `API_KEYS_SITE_API=badbot13m0n8f570f942013fc818f234916ca531`.
-* In your `.env.server` file, set `urls_site_api` to `"http://localhost:8000/api"`. If you wish to keep using `http://web:8000/api`, then [COMPOSE_PROJECT_NAME](../docker/#compose-project-names) has to be set.
-* To work with snekbox, set `urls_snekbox_eval_api` to `"http://localhost:8060/eval"` and `urls_snekbox_311_eval_api` to `"http://localhost:8065/eval"`
+* In your `.env.server` file, set `urls_site_api="http://localhost:8000/api"`. If you wish to keep using `http://web:8000/api`, then [COMPOSE_PROJECT_NAME](../docker/#compose-project-names) has to be set.
+* To work with snekbox, set `urls_snekbox_eval_api="http://localhost:8060/eval"` and `urls_snekbox_311_eval_api="http://localhost:8065/eval"`
 
 
 You will need to start the services separately, but if you got the previous section with Docker working, that's pretty simple:
@@ -351,12 +351,12 @@ Once the previous steps are done, all that is left is to:
 ---
 
 ### Optional: Working with Redis
-In [Configure the Bot](#envserver) you were asked to set `redis_use_fakeredis` to `true`. If you do not need to work on features that rely on Redis, this is enough. Fakeredis will give the illusion that features relying on Redis are saving information properly, but restarting the bot or the specific cog will wipe that information.
+In [Configure the Bot](#envserver) you were asked to set `redis_use_fakeredis=true`. If you do not need to work on features that rely on Redis, this is enough. Fakeredis will give the illusion that features relying on Redis are saving information properly, but restarting the bot or the specific cog will wipe that information.
 
 If you are working on a feature that relies on Redis, you will need to enable Redis to make sure persistency is achieved for the feature across restarts. The first step towards that is going to `.env.server` and setting `redis.use_fakeredis` to `false`.
 
 #### Starting Redis in Docker (Recommended)
-If you're using the Docker image provided in the project's Docker Compose, open your `.env.server` file. If you're running the bot in Docker, set `redis_host` to `redis`, and if you're running it on the host set it to `localhost`. Set `redis_password` to `""`.
+If you're using the Docker image provided in the project's Docker Compose, open your `.env.server` file. If you're running the bot in Docker, set `redis_host=redis`, and if you're running it on the host set it to `localhost`. Set `redis_password=""`.
 
 #### Starting Redis Using Other Methods
 You can run your own instance of Redis, but in that case you will need to correctly set `redis_host` and `redis_port` in your `.env.server` file and the `REDIS_PASSWORD` in the `.env` file.
@@ -387,8 +387,13 @@ If you want to run the bot locally, you can run `docker-compose up metricity` in
 ---
 
 ### Optional: Working with bot moderation logs
-To be able to view moderation-related logs published by the bot to site, you will need to set `urls_site_logs_view` to `http://localhost:8000/staff/bot/logs` in your `.env.server`.
+To be able to view moderation-related logs published by the bot to site, you will need to set `urls_site_logs_view=http://localhost:8000/staff/bot/logs` in your `.env.server`.
 This will work in both Docker and locally.
+
+---
+
+### Optional: Changing your command prefix
+If you would like a prefix other than the default `!`, set `BOT_PREFIX={{your_prefix}}` in `.env.server`.
 
 ---
 
