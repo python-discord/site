@@ -170,7 +170,6 @@ If you wish to set all values in your `env.server` for your testing server, you 
 Additionally:
 
 * At this stage, set `redis_use_fakeredis` to `true`. If you're looking for instructions for working with Redis, see [Working with Redis](#optional-working-with-redis).
-* Set `urls_site_schema` and `urls_site_api_schema` to `"http://"`.
 
 We understand this is tedious which is why we **heavily recommend** using the [automatic configuration setup](#automatic-configuration)
 
@@ -224,10 +223,11 @@ You are now almost ready to run the Python bot. The simplest way to do so is wit
 
 In your `.env.server` file:
 
-* Set `urls_site` to `"web:8000"` and `urls_site_api` to `"web:8000/api"`.
-* If you wish to work with snekbox set the following:
+* If you wish to work with snekbox, set the following:
     * `urls_snekbox_eval_api` to `"http://snekbox:8060/eval"`
     * `urls_snekbox_311_eval_api` to `"http://snekbox-311:8060/eval"`.
+
+
 
 Assuming you have Docker installed **and running**, enter the cloned repo in the command line and type `docker-compose up`.
 
@@ -241,8 +241,9 @@ Your bot is now running, but this method makes debugging with an IDE a fairly in
 The advantage of this method is that you can run the bot's code in your preferred editor, with debugger and all, while keeping all the setup of the bot's various dependencies inside Docker.
 
 * Append the following line to your `.env` file: `API_KEYS_SITE_API=badbot13m0n8f570f942013fc818f234916ca531`.
-* In your `.env.server` file, set `urls_site` to `"localhost:8000"` and `urls_site_api` to `"localhost:8000/api"`. If you wish to keep using `web:8000` and `web:8000/api`, then [COMPOSE_PROJECT_NAME](../docker/#compose-project-names) has to be set.
+* In your `.env.server` file, set `urls_site_api` to `"http://localhost:8000/api"`. If you wish to keep using `http://web:8000/api`, then [COMPOSE_PROJECT_NAME](../docker/#compose-project-names) has to be set.
 * To work with snekbox, set `urls_snekbox_eval_api` to `"http://localhost:8060/eval"` and `urls_snekbox_311_eval_api` to `"http://localhost:8065/eval"`
+
 
 You will need to start the services separately, but if you got the previous section with Docker working, that's pretty simple:
 
@@ -328,6 +329,9 @@ We are always open to more statistics so add as many as you can!
 ---
 
 ### Optional: Working with the help forum
+
+**Note**: This is only required when you're not configuring the bot [automatically](#automatic-configuration)
+
 If you will be working on a feature that includes the python help forum, you will need to use `Forum Channels`.
 
 Forum channels cannot be included in a template, which is why this needs to be done by hand for the time being.
@@ -379,6 +383,12 @@ To properly replicate production behavior, set the `staff_role_id`, `staff_categ
 Now, `docker-compose up` will also start Metricity.
 
 If you want to run the bot locally, you can run `docker-compose up metricity` instead.
+
+---
+
+### Optional: Working with bot moderation logs
+To be able to view moderation-related logs published by the bot to site, you will need to set `urls_site_logs_view` to `http://localhost:8000/staff/bot/logs` in your `.env.server`.
+This will work in both Docker and locally.
 
 ---
 
