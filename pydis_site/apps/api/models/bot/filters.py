@@ -132,7 +132,7 @@ class FilterBase(ModelTimestampMixin, ModelReprMixin, models.Model):
         help_text="Why this filter has been added.", null=True
     )
     additional_settings = models.JSONField(
-        null=True, help_text="Additional settings which are specific to this filter."
+        help_text="Additional settings which are specific to this filter.", default=dict
     )
     filter_list = models.ForeignKey(
         FilterList, models.CASCADE, related_name="filters",

@@ -230,6 +230,7 @@ class GenericFilterTests(AuthenticatedAPITestCase):
 
     def test_creation_missing_field(self) -> None:
         for name, sequence in get_test_sequences().items():
+            ignored_fields = sequence.ignored_fields + ("id", "additional_settings")
             with self.subTest(name=name):
                 saved = sequence.model(**sequence.object)
                 save_nested_objects(saved)
@@ -237,7 +238,7 @@ class GenericFilterTests(AuthenticatedAPITestCase):
 
                 for field in sequence.model._meta.get_fields():
                     with self.subTest(field=field):
-                        if field.null or field.name in sequence.ignored_fields + ("id",):
+                        if field.null or field.name in ignored_fields:
                             continue
 
                         test_data = data.copy()
