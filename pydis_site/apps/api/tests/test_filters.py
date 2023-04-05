@@ -274,6 +274,7 @@ class FilterValidationTests(AuthenticatedAPITestCase):
             ({"infraction_reason": "hi"}, {}, 400),
             ({"infraction_duration": timedelta(seconds=10)}, {}, 400),
             ({"infraction_reason": "hi"}, {"infraction_type": "NOTE"}, 200),
+            ({"infraction_type": "TIMEOUT", "infraction_duration": timedelta(days=30)}, {}, 400),
             ({"infraction_duration": timedelta(seconds=10)}, {"infraction_type": "TIMEOUT"}, 200),
             ({"enabled_channels": ["admins"]}, {}, 200),
             ({"disabled_channels": ["123"]}, {}, 200),
@@ -313,6 +314,7 @@ class FilterValidationTests(AuthenticatedAPITestCase):
         cases = (
             ({"infraction_reason": "hi"}, 400),
             ({"infraction_duration": timedelta(seconds=10)}, 400),
+            ({"infraction_type": "TIMEOUT", "infraction_duration": timedelta(days=30)}, 400),
             ({"infraction_reason": "hi", "infraction_type": "NOTE"}, 200),
             ({"infraction_duration": timedelta(seconds=10), "infraction_type": "TIMEOUT"}, 200),
             ({"enabled_channels": ["admins"]}, 200), ({"disabled_channels": ["123"]}, 200),

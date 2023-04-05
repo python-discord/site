@@ -1,4 +1,5 @@
 """Converters from Django models to data interchange formats and back."""
+from datetime import timedelta
 from typing import Any
 
 from django.db.models.query import QuerySet
@@ -210,6 +211,8 @@ CHANNEL_SCOPE_FIELDS = (
 )
 MENTIONS_FIELDS = ('guild_pings', 'dm_pings')
 
+MAX_TIMEOUT_DURATION = timedelta(days=28)
+
 
 def _create_meta_extra_kwargs(*, for_filter: bool) -> dict[str, dict[str, bool]]:
     """Create the extra kwargs for the Meta classes of the Filter and FilterList serializers."""
@@ -236,15 +239,22 @@ class FilterSerializer(ModelSerializer):
 
     def validate(self, data: dict) -> dict:
         """Perform infraction data + allowed and disallowed lists validation."""
+        infraction_type = get_field_value(data, 'infraction_type')
+        infraction_duration = get_field_value(data, 'infraction_duration')
         if (
-            (
-                get_field_value(data, 'infraction_reason')
-                or get_field_value(data, 'infraction_duration')
-            )
-            and get_field_value(data, 'infraction_type') == 'NONE'
+            (get_field_value(data, 'infraction_reason') or infraction_duration)
+            and infraction_type == 'NONE'
         ):
             raise ValidationError(
                 "Infraction type is required with infraction duration or reason."
+            )
+
+        if (
+            infraction_type == 'TIMEOUT'
+            and (not infraction_duration or infraction_duration > MAX_TIMEOUT_DURATION)
+        ):
+            raise ValidationError(
+                f"A timeout cannot be longer than {MAX_TIMEOUT_DURATION.days} days."
             )
 
         common_channels = (
@@ -328,8 +338,9 @@ class FilterListSerializer(ModelSerializer):
 
     def validate(self, data: dict) -> dict:
         """Perform infraction data + allow and disallowed lists validation."""
+        infraction_duration = data.get('infraction_duration')
         if (
-            data.get('infraction_reason') or data.get('infraction_duration')
+            data.get('infraction_reason') or infraction_duration
         ) and not data.get('infraction_type'):
             raise ValidationError("Infraction type is required with infraction duration or reason")
 
@@ -343,6 +354,14 @@ class FilterListSerializer(ModelSerializer):
                     "You can't have the same value in both enabled and disabled channels lists:"
                     f" {', '.join(repr(channel) for channel in common_channels)}."
                 )
+
+        if (
+            data.get('infraction_type') == 'TIMEOUT'
+            and (not infraction_duration or infraction_duration > MAX_TIMEOUT_DURATION)
+        ):
+            raise ValidationError(
+                f"A timeout cannot be longer than {MAX_TIMEOUT_DURATION.days} days."
+            )
 
         if (
             data.get('disabled_categories') is not None
