@@ -126,9 +126,8 @@ class FilterList(ModelTimestampMixin, ModelReprMixin, models.Model):
 class FilterBase(ModelTimestampMixin, ModelReprMixin, models.Model):
     """One specific trigger of a list."""
 
-    content = models.CharField(max_length=100, help_text="The definition of this filter.")
-    description = models.CharField(
-        max_length=200,
+    content = models.TextField(help_text="The definition of this filter.")
+    description = models.TextField(
         help_text="Why this filter has been added.", null=True
     )
     additional_settings = models.JSONField(
