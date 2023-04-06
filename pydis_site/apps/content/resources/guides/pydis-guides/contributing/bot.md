@@ -80,7 +80,7 @@ without having to spend much time copying IDs from your server into your configu
 The bootstrapping script is a Python program so you will need a compatible Python version and the necessary dependencies installed,
 which are all detailed here:
 
-1. Make sure you have [Python 3.10](https://www.python.org/downloads/) installed. It helps if it is your system's default Python version.
+1. Make sure you have [Python 3.11](https://www.python.org/downloads/) installed. It helps if it is your system's default Python version.
 2. [Install Poetry](https://github.com/python-poetry/poetry#installation).
 3. [Install the dependencies](../installing-project-dependencies).
 
@@ -106,8 +106,8 @@ This file will contain the extracted IDs from your server which are necessary fo
 Reading this means that you're ready for a bit of manual labour.
 If for some reason you've missed the automatic server setup section, you can read about it [here](#automatic-configuration)
 
-To configure the bot manually, you will **only** need to set the values for the channels, roles, categories, etc.
-that are used by the component you are developing inside the `.env.server` file.
+To configure the bot manually, you will **only** need to set inside the `.env.server` file the values for the channels, roles, categories, etc.
+that are used by the component you are developing.
 
 For example, if we're testing a feature that only needs the `announcements` channel:
 
@@ -165,9 +165,6 @@ If you wish to set all values in your `env.server` for your testing server, you 
 * `webhooks_`
 * `emojis_`
 
-Additionally:
-
-* At this stage, set `redis_use_fakeredis=true`. If you're looking for instructions for working with Redis, see [Working with Redis](#optional-working-with-redis).
 
 We understand this is tedious which is why we **heavily recommend** using the [automatic configuration setup](#automatic-configuration)
 
@@ -220,6 +217,7 @@ In your `.env.server` file:
     * `urls_snekbox_eval_api` to `"http://snekbox:8060/eval"`
     * `urls_snekbox_311_eval_api` to `"http://snekbox-311:8060/eval"`.
 
+* At this stage, set `redis_use_fakeredis` to `true`. If you're looking for instructions for working with Redis, see [Working with Redis](#optional-working-with-redis).
 
 
 Assuming you have Docker installed **and running**, enter the cloned repo in the command line and type `docker compose up`.
