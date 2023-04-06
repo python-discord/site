@@ -6,6 +6,8 @@ from .bot import (
     DocumentationLinkViewSet,
     FilterListViewSet,
     InfractionViewSet,
+    FilterListViewSet,
+    FilterViewSet,
     NominationViewSet,
     OffensiveMessageViewSet,
     AocAccountLinkViewSet,

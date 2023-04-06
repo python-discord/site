@@ -13,6 +13,8 @@ from .models import (
     BotSetting,
     DeletedMessage,
     DocumentationLink,
+    Filter,
+    FilterList,
     Infraction,
     MessageDeletionContext,
     Nomination,
@@ -192,6 +194,16 @@ class DeletedMessageInline(admin.TabularInline):
     """Tabular Inline Admin model for Deleted Message to be viewed within Context."""
 
     model = DeletedMessage
+
+
+@admin.register(FilterList)
+class FilterListAdmin(admin.ModelAdmin):
+    """Admin formatting for the FilterList model."""
+
+
+@admin.register(Filter)
+class FilterAdmin(admin.ModelAdmin):
+    """Admin formatting for the Filter model."""
 
 
 @admin.register(MessageDeletionContext)

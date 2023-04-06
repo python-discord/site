@@ -10,6 +10,7 @@ from .viewsets import (
     DeletedMessageViewSet,
     DocumentationLinkViewSet,
     FilterListViewSet,
+    FilterViewSet,
     InfractionViewSet,
     NominationViewSet,
     OffTopicChannelNameViewSet,
@@ -22,12 +23,20 @@ from .viewsets import (
 # https://www.django-rest-framework.org/api-guide/routers/#defaultrouter
 bot_router = DefaultRouter(trailing_slash=False)
 bot_router.register(
+    'filter/filter_lists',
+    FilterListViewSet
+)
+bot_router.register(
     "aoc-account-links",
     AocAccountLinkViewSet
 )
 bot_router.register(
     "aoc-completionist-blocks",
     AocCompletionistBlockViewSet
+)
+bot_router.register(
+    'filter/filters',
+    FilterViewSet
 )
 bot_router.register(
     'bot-settings',

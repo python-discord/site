@@ -6,6 +6,8 @@ from django.test import SimpleTestCase, TestCase
 from pydis_site.apps.api.models import (
     DeletedMessage,
     DocumentationLink,
+    Filter,
+    FilterList,
     Infraction,
     MessageDeletionContext,
     Nomination,
@@ -103,6 +105,15 @@ class StringDunderMethodTests(SimpleTestCase):
             ),
             DocumentationLink(
                 'test', 'http://example.com', 'http://example.com'
+            ),
+            FilterList(
+                name="forbidden_duckies",
+                list_type=0,
+            ),
+            Filter(
+                content="ducky_nsfw",
+                description="This ducky is totally inappropriate!",
+                additional_settings=None,
             ),
             OffensiveMessage(
                 id=602951077675139072,
