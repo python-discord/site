@@ -40,7 +40,21 @@ If your bot fails to start with a `PrivilegedIntentsRequired` exception, this in
 You now have both the bot's code and a server to run it on. It's time for you to connect the two by changing the bot's configurations.
 This can be done either automatically or manually, and we'll be detailing the steps for both.
 
-One thing to know is that the bot relies on precisely **two** configuration files to work
+One thing to know is that the bot relies on precisely **two** configuration files to work.
+
+
+#### .env
+This file will mostly contain sensitive information such as your `BOT_TOKEN` and your `REDIS_PASSWORD`.
+It will also contain configurations related to external services the bot might use such as `USE_METRICITY`, which are unrelated to your server, with the only exception being `GUILD_ID`.
+
+This file will **always** need to have `BOT_TOKEN` and `GUILD_ID` values set:
+
+```text
+BOT_TOKEN=YourDiscordBotTokenHere
+GUILD_ID=YourDiscordTestServerIdHere
+```
+See [here](../creating-bot-account) for help with obtaining the bot token, and [here](../obtaining-discord-ids#guild-id) for help with obtaining the guild's ID.
+
 
 #### .env.server
 All server configuration values are saved in this file, which needs to be at the root directory of the cloned code.
@@ -50,9 +64,6 @@ It also contains configurations such as how long it takes for a help channel to 
 This file will be created for you automatically if you decide to go with [automatic configuration](#automatic-configuration),
 otherwise a lot of it has to be done by hand which will be detailed in the [manual configuration](#manual-configuration) section.
 
-#### .env
-This file will mostly contain sensitive information such as your `BOT_TOKEN` and your `REDIS_PASSWORD`.
-It will also contain configurations related to external services the bot might use such as `USE_METRICITY`, which are unrelated to your server, with the only exception being `GUILD_ID`.
 
 **Notes**:
 
@@ -66,19 +77,6 @@ without having to spend much time copying IDs from your server into your configu
 **Note**: The script will also work on existing servers as long as the channel names are the same as the one in Python Discord.
 
 ##### 1. Script setup
-##### 1.1. Environment variables
-You will need to create a file called `.env`, which will contain two required values: `BOT_TOKEN` and `GUILD_ID`.
-
-Inside, add the following two lines:
-
-```text
-BOT_TOKEN=YourDiscordBotTokenHere
-GUILD_ID=YourDiscordTestServerIdHere
-```
-See [here](../creating-bot-account) for help with obtaining the bot token, and [here](../obtaining-discord-ids#guild-id) for help with obtaining the guild's ID.
-
-
-##### 1.2 Setting up the script environment
 The bootstrapping script is a Python program so you will need a compatible Python version and the necessary dependencies installed,
 which are all detailed here:
 
@@ -86,7 +84,7 @@ which are all detailed here:
 2. [Install Poetry](https://github.com/python-poetry/poetry#installation).
 3. [Install the dependencies](../installing-project-dependencies).
 
-#### 2. Running the script
+##### 2. Running the script
 
 Once the script setup phase is complete, all that is left is to run it.
 To do this, you'll simply need to run the `configure` poetry task:
@@ -105,12 +103,11 @@ This file will contain the extracted IDs from your server which are necessary fo
 
 **Note**: Skip this part if you used the automatic configuration.
 
-##### .env.server
 Reading this means that you're ready for a bit of manual labour.
 If for some reason you've missed the automatic server setup section, you can read about it [here](#automatic-configuration)
 
 To configure the bot manually, you will **only** need to set the values for the channels, roles, categories, etc.
-that are used by the component you are developing.
+that are used by the component you are developing inside the `.env.server` file.
 
 For example, if we're testing a feature that only needs the `announcements` channel:
 
@@ -191,11 +188,6 @@ We understand this is tedious which is why we **heavily recommend** using the [a
 </div>
 <br>
 
-##### .env
-The second file you need to create is the one containing the environment variables, and needs to be named `.env`.
-Inside, add the line `BOT_TOKEN=YourDiscordBotTokenHere`. See [here](../creating-bot-account) for help with obtaining the bot token.
-
----
 
 
 ### Run it!
