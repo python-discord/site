@@ -1304,14 +1304,14 @@ idna2008 = ["idna"]
 
 [[package]]
 name = "sentry-sdk"
-version = "1.19.0"
+version = "1.19.1"
 description = "Python client for Sentry (https://sentry.io)"
 category = "main"
 optional = false
 python-versions = "*"
 files = [
-    {file = "sentry-sdk-1.19.0.tar.gz", hash = "sha256:6732b59a55051646587acce21f6a00b53d05df9282d54886ad88b59b4e9b82ad"},
-    {file = "sentry_sdk-1.19.0-py2.py3-none-any.whl", hash = "sha256:8dcffbbb963963567384d6eb49c76b8fb05753540715cbee5e5ca5bc8327ded4"},
+    {file = "sentry-sdk-1.19.1.tar.gz", hash = "sha256:7ae78bd921981a5010ab540d6bdf3b793659a4db8cccf7f16180702d48a80d84"},
+    {file = "sentry_sdk-1.19.1-py2.py3-none-any.whl", hash = "sha256:885a11c69df23e53eb281d003b9ff15a5bdfa43d8a2a53589be52104a1b4582f"},
 ]
 
 [package.dependencies]
@@ -1522,4 +1522,4 @@ brotli = ["Brotli"]
 [metadata]
 lock-version = "2.0"
 python-versions = "3.10.*"
-content-hash = "5137410f5e7a7be270b5faace050cd9a60bf8e52fa9312cdb5725b36019183a9"
+content-hash = "8862dcbc14ed263313f671ae197f83ba8fb26dd648d36b2ff9194181ca3280f2"
