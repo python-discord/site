@@ -1,0 +1,50 @@
+name: CI
+
+on:
+  push:
+    branches:
+    - main
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint-test:
+    uses: ./.github/workflows/lint-test.yaml
+
+  generate-sha-tag:
+    runs-on: ubuntu-latest
+    outputs:
+      sha-tag: ${{ steps.sha-tag.outputs.sha-tag }}
+    steps:
+      - name: Create SHA Container tag
+        id: sha-tag
+        run: |
+          tag=$(cut -c 1-7 <<< $GITHUB_SHA)
+          echo "sha-tag=$tag" >> $GITHUB_OUTPUT
+
+  publish-static-preview:
+    uses: ./.github/workflows/static-preview.yaml
+    needs:
+      - generate-sha-tag
+    with:
+      sha-tag: ${{ needs.generate-sha-tag.outputs.sha-tag }}
+
+  build-deploy:
+    if: github.ref == 'refs/heads/main'
+    uses: ./.github/workflows/build-deploy.yaml
+    needs:
+      - lint-test
+      - generate-sha-tag
+    with:
+      sha-tag: ${{ needs.generate-sha-tag.outputs.sha-tag }}
+    secrets: inherit
+
+  sentry-release:
+    if: github.ref == 'refs/heads/main'
+    uses: ./.github/workflows/sentry-release.yaml
+    needs:
+      - build-deploy
+    secrets: inherit

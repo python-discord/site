@@ -1,0 +1,14 @@
+name: The Python Tutorial
+description: The official Python tutorial by Python.org
+title_image: https://www.python.org/static/community_logos/python-logo-master-v3-TM.png
+title_url: https://docs.python.org/3/tutorial/
+tags:
+  topics:
+    - general
+  payment_tiers:
+    - free
+  difficulty:
+    - beginner
+    - intermediate
+  type:
+    - tutorial

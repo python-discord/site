@@ -1,4 +1,7 @@
 """Converters from Django models to data interchange formats and back."""
+from datetime import timedelta
+from typing import Any
+
 from django.db.models.query import QuerySet
 from django.db.utils import IntegrityError
 from rest_framework.exceptions import NotFound
@@ -19,6 +22,7 @@ from .models import (
     BumpedThread,
     DeletedMessage,
     DocumentationLink,
+    Filter,
     FilterList,
     Infraction,
     MessageDeletionContext,
@@ -141,29 +145,285 @@ class DocumentationLinkSerializer(ModelSerializer):
         fields = ('package', 'base_url', 'inventory_url')
 
 
+#  region: filters serializers
+
+SETTINGS_FIELDS = (
+    'dm_content',
+    'dm_embed',
+    'infraction_type',
+    'infraction_reason',
+    'infraction_duration',
+    'infraction_channel',
+    'guild_pings',
+    'filter_dm',
+    'dm_pings',
+    'remove_context',
+    'send_alert',
+    'bypass_roles',
+    'enabled',
+    'enabled_channels',
+    'disabled_channels',
+    'enabled_categories',
+    'disabled_categories',
+)
+
+ALLOW_BLANK_SETTINGS = (
+    'dm_content',
+    'dm_embed',
+    'infraction_reason',
+)
+
+ALLOW_EMPTY_SETTINGS = (
+    'enabled_channels',
+    'disabled_channels',
+    'enabled_categories',
+    'disabled_categories',
+    'guild_pings',
+    'dm_pings',
+    'bypass_roles',
+)
+
+# Required fields for custom JSON representation purposes
+BASE_FILTER_FIELDS = (
+    'id', 'created_at', 'updated_at', 'content', 'description', 'additional_settings'
+)
+BASE_FILTERLIST_FIELDS = ('id', 'created_at', 'updated_at', 'name', 'list_type')
+BASE_SETTINGS_FIELDS = (
+    'bypass_roles',
+    'filter_dm',
+    'enabled',
+    'remove_context',
+    'send_alert'
+)
+INFRACTION_AND_NOTIFICATION_FIELDS = (
+    'infraction_type',
+    'infraction_reason',
+    'infraction_duration',
+    'infraction_channel',
+    'dm_content',
+    'dm_embed'
+)
+CHANNEL_SCOPE_FIELDS = (
+    'disabled_channels',
+    'disabled_categories',
+    'enabled_channels',
+    'enabled_categories'
+)
+MENTIONS_FIELDS = ('guild_pings', 'dm_pings')
+
+MAX_TIMEOUT_DURATION = timedelta(days=28)
+
+
+def _create_meta_extra_kwargs(*, for_filter: bool) -> dict[str, dict[str, bool]]:
+    """Create the extra kwargs for the Meta classes of the Filter and FilterList serializers."""
+    extra_kwargs = {}
+    for field in SETTINGS_FIELDS:
+        field_args = {'required': False, 'allow_null': True} if for_filter else {}
+        if field in ALLOW_BLANK_SETTINGS:
+            field_args['allow_blank'] = True
+        if field in ALLOW_EMPTY_SETTINGS:
+            field_args['allow_empty'] = True
+        extra_kwargs[field] = field_args
+    return extra_kwargs
+
+
+def get_field_value(data: dict, field_name: str) -> Any:
+    """Get the value directly from the key, or from the filter list if it's missing or is None."""
+    if data.get(field_name) is not None:
+        return data[field_name]
+    return getattr(data['filter_list'], field_name)
+
+
+class FilterSerializer(ModelSerializer):
+    """A class providing (de-)serialization of `Filter` instances."""
+
+    def validate(self, data: dict) -> dict:
+        """Perform infraction data + allowed and disallowed lists validation."""
+        infraction_type = get_field_value(data, 'infraction_type')
+        infraction_duration = get_field_value(data, 'infraction_duration')
+        if (
+            (get_field_value(data, 'infraction_reason') or infraction_duration)
+            and infraction_type == 'NONE'
+        ):
+            raise ValidationError(
+                "Infraction type is required with infraction duration or reason."
+            )
+
+        if (
+            infraction_type == 'TIMEOUT'
+            and (not infraction_duration or infraction_duration > MAX_TIMEOUT_DURATION)
+        ):
+            raise ValidationError(
+                f"A timeout cannot be longer than {MAX_TIMEOUT_DURATION.days} days."
+            )
+
+        common_channels = (
+            set(get_field_value(data, 'disabled_channels'))
+            & set(get_field_value(data, 'enabled_channels'))
+        )
+        if common_channels:
+            raise ValidationError(
+                "You can't have the same value in both enabled and disabled channels lists:"
+                f" {', '.join(repr(channel) for channel in common_channels)}."
+            )
+
+        common_categories = (
+            set(get_field_value(data, 'disabled_categories'))
+            & set(get_field_value(data, 'enabled_categories'))
+        )
+        if common_categories:
+            raise ValidationError(
+                "You can't have the same value in both enabled and disabled categories lists:"
+                f" {', '.join(repr(category) for category in common_categories)}."
+            )
+
+        return data
+
+    class Meta:
+        """Metadata defined for the Django REST Framework."""
+
+        model = Filter
+        fields = (
+            'id',
+            'created_at',
+            'updated_at',
+            'content',
+            'description',
+            'additional_settings',
+            'filter_list'
+        ) + SETTINGS_FIELDS
+        extra_kwargs = _create_meta_extra_kwargs(for_filter=True)
+
+    def create(self, validated_data: dict) -> User:
+        """Override the create method to catch violations of the custom uniqueness constraint."""
+        try:
+            return super().create(validated_data)
+        except IntegrityError:
+            raise ValidationError(
+                "Check if a filter with this combination of content "
+                "and settings already exists in this filter list."
+            )
+
+    def to_representation(self, instance: Filter) -> dict:
+        """
+        Provides a custom JSON representation to the Filter Serializers.
+
+        This representation restructures how the Filter is represented.
+        It groups the Infraction, Channel and Mention related fields into their own separated group.
+
+        Furthermore, it puts the fields that meant to represent Filter settings,
+        into a sub-field called `settings`.
+        """
+        settings = {name: getattr(instance, name) for name in BASE_SETTINGS_FIELDS}
+        settings['infraction_and_notification'] = {
+            name: getattr(instance, name) for name in INFRACTION_AND_NOTIFICATION_FIELDS
+        }
+        settings['channel_scope'] = {
+            name: getattr(instance, name) for name in CHANNEL_SCOPE_FIELDS
+        }
+        settings['mentions'] = {
+            name: getattr(instance, name) for name in MENTIONS_FIELDS
+        }
+
+        schema = {name: getattr(instance, name) for name in BASE_FILTER_FIELDS}
+        schema['filter_list'] = instance.filter_list.id
+        schema['settings'] = settings
+        return schema
+
+
 class FilterListSerializer(ModelSerializer):
     """A class providing (de-)serialization of `FilterList` instances."""
+
+    filters = FilterSerializer(many=True, read_only=True)
+
+    def validate(self, data: dict) -> dict:
+        """Perform infraction data + allow and disallowed lists validation."""
+        infraction_duration = data.get('infraction_duration')
+        if (
+            data.get('infraction_reason') or infraction_duration
+        ) and not data.get('infraction_type'):
+            raise ValidationError("Infraction type is required with infraction duration or reason")
+
+        if (
+            data.get('disabled_channels') is not None
+            and data.get('enabled_channels') is not None
+        ):
+            common_channels = set(data['disabled_channels']) & set(data['enabled_channels'])
+            if common_channels:
+                raise ValidationError(
+                    "You can't have the same value in both enabled and disabled channels lists:"
+                    f" {', '.join(repr(channel) for channel in common_channels)}."
+                )
+
+        if (
+            data.get('infraction_type') == 'TIMEOUT'
+            and (not infraction_duration or infraction_duration > MAX_TIMEOUT_DURATION)
+        ):
+            raise ValidationError(
+                f"A timeout cannot be longer than {MAX_TIMEOUT_DURATION.days} days."
+            )
+
+        if (
+            data.get('disabled_categories') is not None
+            and data.get('enabled_categories') is not None
+        ):
+            common_categories = set(data['disabled_categories']) & set(data['enabled_categories'])
+            if common_categories:
+                raise ValidationError(
+                    "You can't have the same value in both enabled and disabled categories lists:"
+                    f" {', '.join(repr(category) for category in common_categories)}."
+                )
+
+        return data
 
     class Meta:
         """Metadata defined for the Django REST Framework."""
 
         model = FilterList
-        fields = ('id', 'created_at', 'updated_at', 'type', 'allowed', 'content', 'comment')
+        fields = (
+            'id', 'created_at', 'updated_at', 'name', 'list_type', 'filters'
+        ) + SETTINGS_FIELDS
+        extra_kwargs = _create_meta_extra_kwargs(for_filter=False)
 
-        # This validator ensures only one filterlist with the
-        # same content can exist. This means that we cannot have both an allow
-        # and a deny for the same item, and we cannot have duplicates of the
-        # same item.
+        # Ensure there can only be one filter list with the same name and type.
         validators = [
             UniqueTogetherValidator(
                 queryset=FilterList.objects.all(),
-                fields=['content', 'type'],
+                fields=('name', 'list_type'),
                 message=(
-                    "A filterlist for this item already exists. "
-                    "Please note that you cannot add the same item to both allow and deny."
+                    "A filterlist with the same name and type already exists."
                 )
             ),
         ]
+
+    def to_representation(self, instance: FilterList) -> dict:
+        """
+        Provides a custom JSON representation to the FilterList Serializers.
+
+        This representation restructures how the Filter is represented.
+        It groups the Infraction, Channel, and Mention related fields
+        into their own separated groups.
+
+        Furthermore, it puts the fields that are meant to represent FilterList settings,
+        into a sub-field called `settings`.
+        """
+        schema = {name: getattr(instance, name) for name in BASE_FILTERLIST_FIELDS}
+        schema['filters'] = [
+            FilterSerializer(many=False).to_representation(instance=item)
+            for item in Filter.objects.filter(filter_list=instance.id)
+        ]
+
+        settings = {name: getattr(instance, name) for name in BASE_SETTINGS_FIELDS}
+        settings['infraction_and_notification'] = {
+            name: getattr(instance, name) for name in INFRACTION_AND_NOTIFICATION_FIELDS
+        }
+        settings['channel_scope'] = {name: getattr(instance, name) for name in CHANNEL_SCOPE_FIELDS}
+        settings['mentions'] = {name: getattr(instance, name) for name in MENTIONS_FIELDS}
+
+        schema['settings'] = settings
+        return schema
+
+#  endregion
 
 
 class InfractionSerializer(ModelSerializer):
@@ -184,7 +444,8 @@ class InfractionSerializer(ModelSerializer):
             'type',
             'reason',
             'hidden',
-            'dm_sent'
+            'dm_sent',
+            'jump_url'
         )
 
     def validate(self, attrs: dict) -> dict:
@@ -203,7 +464,7 @@ class InfractionSerializer(ModelSerializer):
         if hidden and infr_type in ('superstar', 'warning', 'voice_ban', 'voice_mute'):
             raise ValidationError({'hidden': [f'{infr_type} infractions cannot be hidden.']})
 
-        if not hidden and infr_type in ('note', ):
+        if not hidden and infr_type in ('note',):
             raise ValidationError({'hidden': [f'{infr_type} infractions must be hidden.']})
 
         return attrs

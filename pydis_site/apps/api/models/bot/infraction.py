@@ -12,7 +12,7 @@ class Infraction(ModelReprMixin, models.Model):
         ("note", "Note"),
         ("warning", "Warning"),
         ("watch", "Watch"),
-        ("mute", "Mute"),
+        ("timeout", "Timeout"),
         ("kick", "Kick"),
         ("ban", "Ban"),
         ("superstar", "Superstar"),
@@ -67,6 +67,15 @@ class Infraction(ModelReprMixin, models.Model):
     dm_sent = models.BooleanField(
         null=True,
         help_text="Whether a DM was sent to the user when infraction was applied."
+    )
+
+    jump_url = models.URLField(
+        default=None,
+        null=True,
+        max_length=88,
+        help_text=(
+            "The jump url to message invoking the infraction."
+        )
     )
 
     def __str__(self):

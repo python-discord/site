@@ -14,6 +14,7 @@ We have a small but strict set of rules on our server. Please read over them and
 > 7. Keep discussions relevant to the channel topic. Each channel's description tells you the topic.
 > 8. Do not help with ongoing exams. When helping with homework, help people learn how to do the assignment without doing it for them.
 > 9. Do not offer or ask for paid work of any kind.
+> 10. Do not copy and paste answers from ChatGPT or similar AI tools.
 
 # Name & Profile Policy
 
