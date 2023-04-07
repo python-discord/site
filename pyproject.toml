@@ -44,7 +44,7 @@ pep8-naming = "0.13.3"
 pre-commit = "3.2.2"
 
 [tool.poetry.group.test.dependencies]
-coverage = "7.2.2"
+coverage = "7.2.3"
 
 [build-system]
 requires = ["poetry-core>=1.2.0"]
