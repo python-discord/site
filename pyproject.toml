@@ -16,7 +16,7 @@ django-prometheus = "2.2.0"
 django-simple-bulma = "2.5.0"
 djangorestframework = "3.14.0"
 gunicorn = "20.1.0"
-httpx = "0.23.3"
+httpx = "0.24.0"
 markdown = "3.4.3"
 psycopg2-binary = "2.9.6"
 PyJWT = {version = "2.6.0", extras = ["crypto"]}
