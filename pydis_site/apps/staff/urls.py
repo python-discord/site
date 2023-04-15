@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .viewsets import LogView
+from .views import LogView
 
 app_name = 'staff'
 urlpatterns = [
