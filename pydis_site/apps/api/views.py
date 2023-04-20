@@ -149,9 +149,9 @@ class RulesView(APIView):
                 ["english", "language"]
             ),
             (
-                "Do not provide or request help on projects that may break laws, "
-                "breach terms of services, or are malicious or inappropriate.",
-                ["infraction", "tos", "breach", "malicious", "inappropriate"]
+                "Do not provide or request help on projects that may violate terms of service, "
+                "or that may be deemed inappropriate, malicious, or illegal.",
+                ["infraction", "tos", "breach", "malicious", "inappropriate", "illegal"]
             ),
             (
                 "Do not post unapproved advertising.",
