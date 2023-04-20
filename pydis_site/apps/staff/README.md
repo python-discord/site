@@ -1,7 +1,7 @@
 # The "staff" app
 
 This Django application hosts any staff-internal tooling, which, at time of
-writing, only is an endpoint to view logs uploaded by the Python bot.
+writing, is only an endpoint to view logs uploaded by the Python bot.
 
 This app mainly interacts with a single model from the `api` app, and has no
 models on its own. The following files and directories are of interest:
