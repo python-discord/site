@@ -120,7 +120,7 @@ class RulesView(APIView):
             link_format
         )
         discord_tos = self._format_link(
-            'Terms Of Service',
+            'Terms of Service',
             'https://discordapp.com/terms',
             link_format
         )
