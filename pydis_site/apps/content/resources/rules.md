@@ -9,7 +9,7 @@ We have a small but strict set of rules on our server. Please read over them and
 > 2. Follow the [Discord Community Guidelines](https://discordapp.com/guidelines) and [Terms of Service](https://discordapp.com/terms).
 > 3. Respect staff members and listen to their instructions.
 > 4. Use English to the best of your ability. Be polite if someone speaks English imperfectly.
-> 5. Do not provide or request help on projects that may break laws, breach terms of services, or are malicious or inappropriate.
+> 5. Do not provide or request help on projects that may violate terms of service, or that may be deemed inappropriate, malicious, or illegal.
 > 6. Do not post unapproved advertising.
 > 7. Keep discussions relevant to the channel topic. Each channel's description tells you the topic.
 > 8. Do not help with ongoing exams. When helping with homework, help people learn how to do the assignment without doing it for them.
