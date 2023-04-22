@@ -11,6 +11,8 @@ omit =
     */apps.py
     */urls.py
     pydis_site/apps/api/models/bot/metricity.py
+    # GitHub API functions are mocked away
+    pydis_site/apps/content/utils.py
     pydis_site/wsgi.py
     pydis_site/settings.py
     pydis_site/utils/resources.py
