@@ -1,6 +1,6 @@
 import textwrap
 from pathlib import Path
-from unittest import TestCase
+from unittest import TestCase, mock
 
 import django.test
 import markdown
@@ -223,7 +223,8 @@ class TagViewTests(django.test.TestCase):
 
     def test_invalid_tag_404(self):
         """Test that a tag which doesn't exist raises a 404."""
-        response = self.client.get("/pages/tags/non-existent/")
+        with mock.patch("pydis_site.apps.content.utils.fetch_tags", autospec=True):
+            response = self.client.get("/pages/tags/non-existent/")
         self.assertEqual(404, response.status_code)
 
     def test_context_tag(self):
