@@ -30,7 +30,8 @@
                     <li class="is-active"><a href="#">{{ page_title }}</a></li>
                 </ul>
             </nav>
-            <div class="is-flex is-justify-content-flex-end">
+        </div>
+        <div class="is-flex is-pulled-right is-right">
             {# Sub-Article dropdown for category pages #}
             {% if subarticles %}
                 {% include "content/dropdown.html" %}
@@ -44,7 +45,6 @@
                     </a>
                 </div>
             {% endif %}
-            </div>
         </div>
     </section>
 
