@@ -2,6 +2,16 @@
     padding: 1rem;
 }
 
+#edit-on-github {
+    margin-left: 1rem;
+}
+
+@media (max-width: 600px) {
+    #edit-on-github {
+        display: none;
+    }
+}
+
 i.has-icon-padding {
     padding: 0 10px 25px 0;
 }
