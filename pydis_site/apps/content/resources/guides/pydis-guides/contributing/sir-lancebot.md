@@ -72,17 +72,17 @@ You will have to setup environment variables:
 
 The following variables are needed for running Sir Lancebot:
 
-| Environment Variable | Description |
-| -------- | -------- |
-| `BOT_TOKEN` | Bot Token from the [Discord developer portal](https://discord.com/developers/applications) |
-| `BOT_GUILD` | ID of the Discord Server |
-| `BOT_ADMIN_ROLE_ID` | ID of the role `@Admins` |
-| `ROLE_HELPERS` | ID of the role `@Helpers` |
-| `CHANNEL_ANNOUNCEMENTS` | ID of the `#announcements` channel |
-| `CHANNEL_DEVLOG` | ID of the `#dev-log` channel |
-| `CHANNEL_COMMUNITY_BOT_COMMANDS` | ID of the `#sir-lancebot-commands` channel |
+| Environment Variable           | Description                                                                                |
+|--------------------------------|--------------------------------------------------------------------------------------------|
+| `CLIENT_TOKEN`                 | Bot Token from the [Discord developer portal](https://discord.com/developers/applications) |
+| `CLIENT_GUILD`                 | ID of the Discord Server                                                                   |
+| `ROLES_ADMIN`                  | ID of the role `@Admins`                                                                   |
+| `ROLES_HELPERS`                | ID of the role `@Helpers`                                                                  |
+| `CHANNELS_ANNOUNCEMENTS`       | ID of the `#announcements` channel                                                         |
+| `CHANNELS_DEVLOG`              | ID of the `#dev-log` channel                                                               |
+| `CHANNEL_SIR_LANCEBOT_PLAYGROUND` | ID of the `#sir-lancebot-playground` channel                                               |
 
-[**Full environment variable reference for this project.**](./env-var-reference)
+[**Full environment variable reference for this project.**](../sir-lancebot/env-var-reference)
 
 ---
 
