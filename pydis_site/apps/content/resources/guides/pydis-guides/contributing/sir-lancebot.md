@@ -57,9 +57,10 @@ You will need your own test server and bot account on Discord to test your chang
 3. Create the following text channels:
     * `#announcements`
     * `#dev-log`
-    * `#sir-lancebot-commands`
+    * `#sir-lancebot-playground`
 4. Create the following roles:
     * `@Admins`
+    * `@Helpers`
 5. Note down the IDs for your server, as well as any channels and roles created.
     * [**Learn how to obtain the ID of a server, channel or role here.**](../setting-test-server-and-bot-account#obtain-the-ids)
 
@@ -86,7 +87,7 @@ The following variables are needed for running Sir Lancebot:
 
 ---
 
-While not required, we advise you set `USE_FAKEREDIS` to `true` in development to avoid the need of setting up a Redis server.
+While not required, we advise you set `REDIS_USE_FAKEREDIS` to `true` in development to avoid the need of setting up a Redis server.
 It does mean you may lose persistent data on restart but this is non-critical.
 Otherwise, please see the below linked guide for Redis related variables.
 {: .notification .is-warning }
@@ -96,11 +97,11 @@ Otherwise, please see the below linked guide for Redis related variables.
 The sections below describe the two ways you can run this project. We recommend Docker as it requires less setup.
 
 ## Run with Docker
-Make sure to have Docker running, then use the Docker command `docker-compose up` in the project root.
+Make sure to have Docker running, then use the Docker command `docker compose up` in the project root.
 The first time you run this command, it may take a few minutes while Docker downloads and installs Sir Lancebot's dependencies.
 
 ```shell
-$ docker-compose up
+$ docker compose up
 ```
 
 If you get any Docker related errors, reference the [Possible Issues](../docker#possible-issues) section of the Docker page.
