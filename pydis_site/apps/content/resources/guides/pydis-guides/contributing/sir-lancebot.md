@@ -57,9 +57,10 @@ You will need your own test server and bot account on Discord to test your chang
 3. Create the following text channels:
     * `#announcements`
     * `#dev-log`
-    * `#sir-lancebot-commands`
+    * `#sir-lancebot-playground`
 4. Create the following roles:
     * `@Admins`
+    * `@Helpers`
 5. Note down the IDs for your server, as well as any channels and roles created.
     * [**Learn how to obtain the ID of a server, channel or role here.**](../setting-test-server-and-bot-account#obtain-the-ids)
 
@@ -72,21 +73,21 @@ You will have to setup environment variables:
 
 The following variables are needed for running Sir Lancebot:
 
-| Environment Variable | Description |
-| -------- | -------- |
-| `BOT_TOKEN` | Bot Token from the [Discord developer portal](https://discord.com/developers/applications) |
-| `BOT_GUILD` | ID of the Discord Server |
-| `BOT_ADMIN_ROLE_ID` | ID of the role `@Admins` |
-| `ROLE_HELPERS` | ID of the role `@Helpers` |
-| `CHANNEL_ANNOUNCEMENTS` | ID of the `#announcements` channel |
-| `CHANNEL_DEVLOG` | ID of the `#dev-log` channel |
-| `CHANNEL_COMMUNITY_BOT_COMMANDS` | ID of the `#sir-lancebot-commands` channel |
+| Environment Variable               | Description                                                                                |
+|------------------------------------|--------------------------------------------------------------------------------------------|
+| `CLIENT_TOKEN`                     | Bot Token from the [Discord developer portal](https://discord.com/developers/applications) |
+| `CLIENT_GUILD`                     | ID of the Discord Server                                                                   |
+| `ROLES_ADMIN`                      | ID of the role `@Admins`                                                                   |
+| `ROLES_HELPERS`                    | ID of the role `@Helpers`                                                                  |
+| `CHANNELS_ANNOUNCEMENTS`           | ID of the `#announcements` channel                                                         |
+| `CHANNELS_DEVLOG`                  | ID of the `#dev-log` channel                                                               |
+| `CHANNELS_SIR_LANCEBOT_PLAYGROUND` | ID of the `#sir-lancebot-playground` channel                                               |
 
-[**Full environment variable reference for this project.**](./env-var-reference)
+[**Full environment variable reference for this project.**](../sir-lancebot/env-var-reference)
 
 ---
 
-While not required, we advise you set `USE_FAKEREDIS` to `true` in development to avoid the need of setting up a Redis server.
+While not required, we advise you set `REDIS_USE_FAKEREDIS` to `true` in development to avoid the need of setting up a Redis server.
 It does mean you may lose persistent data on restart but this is non-critical.
 Otherwise, please see the below linked guide for Redis related variables.
 {: .notification .is-warning }
@@ -96,11 +97,11 @@ Otherwise, please see the below linked guide for Redis related variables.
 The sections below describe the two ways you can run this project. We recommend Docker as it requires less setup.
 
 ## Run with Docker
-Make sure to have Docker running, then use the Docker command `docker-compose up` in the project root.
+Make sure to have Docker running, then use the Docker command `docker compose up` in the project root.
 The first time you run this command, it may take a few minutes while Docker downloads and installs Sir Lancebot's dependencies.
 
 ```shell
-$ docker-compose up
+$ docker compose up
 ```
 
 If you get any Docker related errors, reference the [Possible Issues](../docker#possible-issues) section of the Docker page.

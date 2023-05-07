@@ -6,69 +6,58 @@ toc: 2
 ## General Variables
 The following variables are needed for running Sir Lancebot:
 
-| Environment Variable | Description |
-| -------- | -------- |
-| `BOT_TOKEN` | Bot Token from the [Discord developer portal](https://discord.com/developers/applications) |
-| `BOT_GUILD` | ID of the Discord Server |
-| `BOT_ADMIN_ROLE_ID` | ID of the role `@Admins` |
-| `ROLE_HELPERS` | ID of the role `@Helpers` |
-| `CHANNEL_ANNOUNCEMENTS` | ID of the `#announcements` channel |
-| `CHANNEL_DEVLOG` | ID of the `#dev-log` channel |
-| `CHANNEL_COMMUNITY_BOT_COMMANDS` | ID of the `#sir-lancebot-commands` channel |
-| `CHANNEL_REDDIT` | ID of the `#reddit` channel |
+| Environment Variable               | Description                                                                                |
+|------------------------------------|--------------------------------------------------------------------------------------------|
+| `CLIENT_TOKEN`                     | Bot Token from the [Discord developer portal](https://discord.com/developers/applications) |
+| `CLIENT_GUILD`                     | ID of the Discord Server                                                                   |
+| `ROLES_ADMINS`                     | ID of the role `@Admins`                                                                   |
+| `ROLES_HELPERS`                    | ID of the role `@Helpers`                                                                  |
+| `CHANNELS_ANNOUNCEMENTS`           | ID of the `#announcements` channel                                                         |
+| `CHANNELS_DEVLOG`                  | ID of the `#dev-log` channel                                                               |
+| `CHANNELS_SIR_LANCEBOT_PLAYGROUND` | ID of the `#sir-lancebot-commands` channel                                                 |
+| `CHANNELS_REDDIT`                  | ID of the `#reddit` channel                                                                |
 
 ---
 ## Debug Variables
 Additionally, you may find the following environment variables useful during development:
 
-| Environment Variable | Description |
-| -------- | -------- |
-| `BOT_DEBUG` | Debug mode of the bot | False |
-| `PREFIX` | The bot's invocation prefix | `.` |
-| `CYCLE_FREQUENCY` | Amount of days between cycling server icon | 3 |
-| `MONTH_OVERRIDE` | Integer in range `[0, 12]`, overrides current month w.r.t. seasonal decorators |
-| `REDIS_HOST` | The address to connect to for the Redis database. |
-| `REDIS_PORT` | |
-| `REDIS_PASSWORD` | |
-| `USE_FAKEREDIS` | If the FakeRedis module should be used. Set this to true if you don't have a Redis database setup. |
-| `BOT_SENTRY_DSN` | The DSN of the sentry monitor. |
-| `TRASHCAN_EMOJI` | The full emoji to use for the trashcan. Format should be like the output of sending `\:emoji:` on discord. |
+| Environment Variable       | Description                                                                                                |
+|----------------------------|------------------------------------------------------------------------------------------------------------|
+| `CLIENT_DEBUG`             | Debug mode of the bot                                                                                      |
+| `CLIENT_PREFIX`            | The bot's invocation prefix                                                                                |
+| `CLIENT_MONTH_OVERRIDE`    | Integer in range `[0, 12]`, overrides current month w.r.t. seasonal decorators                             |
+| `REDIS_HOST`               | The address to connect to for the Redis database.                                                          |
+| `REDIS_PORT`               | The port on which the Redis database is exposed.                                                           |
+| `REDIS_PASSWORD`           | The password to connect to the Redis database.                                                             |
+| `REDIS_USE_FAKEREDIS`      | If the FakeRedis module should be used. Set this to true if you don't have a Redis database setup.         |
+| `BOT_SENTRY_DSN`           | The DSN of the sentry monitor.                                                                             |
+| `TRASHCAN_EMOJI`           | The full emoji to use for the trashcan. Format should be like the output of sending `\:emoji:` on discord. |
 
 ---
 ## Tokens/APIs
 If you will be working with an external service, you might have to set one of these tokens:
 
-| Token | Description |
-| -------- | -------- |
-| `GITHUB_TOKEN` | Personal access token for GitHub, raises rate limits from 60 to 5000 requests per hour. |
-| `GIPHY_TOKEN` | Required for API access. [Docs](https://developers.giphy.com/docs/api) |
-| `OMDB_API_KEY` | Required for API access. [Docs](https://www.omdbapi.com/) |
-| `REDDIT_CLIENT_ID` | OAuth2 client ID for authenticating with the [reddit API](https://github.com/reddit-archive/reddit/wiki/OAuth2). |
-| `REDDIT_SECRET` | OAuth2 secret for authenticating with the reddit API. *Leave empty if you're not using the reddit API.* |
-| `REDDIT_WEBHOOK` | Webhook ID for Reddit channel |
-| `YOUTUBE_API_KEY` | An OAuth Key or Token are required for API access. [Docs](https://developers.google.com/youtube/v3/docs#calling-the-api) |
-| `TMDB_API_KEY` | Required for API access. [Docs](https://developers.themoviedb.org/3/getting-started/introduction) |
-| `NASA_API_KEY` | Required for API access. [Docs](https://api.nasa.gov/) |
-| `WOLFRAM_API_KEY` | |
-| `UNSPLASH_KEY` | Required for API access. Use the `access_token` given by Unsplash. [Docs](https://unsplash.com/documentation) |
-| `IGDB_CLIENT_ID` | OAuth2 client ID for authenticating with the [IGDB API](https://api-docs.igdb.com/) |
-| `IGDB_CLIENT_SECRET` | OAuth2 secret for authenticating with the IGDB API. *Leave empty if you're not using the IGDB API.* |
+| Token                       | Description                                                                                                              |
+|-----------------------------|--------------------------------------------------------------------------------------------------------------------------|
+| `TOKENS_GITHUB`             | Personal access token for GitHub, raises rate limits from 60 to 5000 requests per hour.                                  |
+| `TOKENS_GIPHY`              | Required for API access. [Docs](https://developers.giphy.com/docs/api)                                                   |
+| `REDDIT_CLIENT_ID`          | OAuth2 client ID for authenticating with the [reddit API](https://github.com/reddit-archive/reddit/wiki/OAuth2).         |
+| `REDDIT_SECRET`             | OAuth2 secret for authenticating with the reddit API. *Leave empty if you're not using the reddit API.*                  |
+| `REDDIT_WEBHOOK`            | Webhook ID for Reddit channel                                                                                            |
+| `TOKENS_YOUTUBE`            | An OAuth Key or Token are required for API access. [Docs](https://developers.google.com/youtube/v3/docs#calling-the-api) |
+| `TOKENS_TMDB`               | Required for API access. [Docs](https://developers.themoviedb.org/3/getting-started/introduction)                        |
+| `TOKENS_NASA`               | Required for API access. [Docs](https://api.nasa.gov/)                                                                   |
+| `WOLFRAM_KEY`               | Required for API access. [Docs](https://products.wolframalpha.com/simple-api/documentation)                              |
+| `TOKENS_UNSPLASH`           | Required for API access. Use the `access_token` given by Unsplash. [Docs](https://unsplash.com/documentation)            |
+| `TOKENS_IGDB_CLIENT_ID`     | OAuth2 client ID for authenticating with the [IGDB API](https://api-docs.igdb.com/)                                      |
+| `TOKENS_IGDB_CLIENT_SECRET` | OAuth2 secret for authenticating with the IGDB API. *Leave empty if you're not using the IGDB API.*                      |
 
 ---
 ## Seasonal Cogs
 These variables might come in handy while working on certain cogs:
 
-| Cog | Environment Variable | Description |
-| -------- | -------- | -------- |
-| Advent of Code | `AOC_LEADERBOARDS` | List of leaderboards separated by `::`. Each entry should have an `id,session cookie,join code` separated by commas in that order. |
-| Advent of Code | `AOC_STAFF_LEADERBOARD_ID` | Integer ID of the staff leaderboard. |
-| Advent of Code | `AOC_ROLE_ID` | ID of the advent of code role.
-| Advent of Code | `AOC_IGNORED_DAYS` | Comma separated list of days to ignore while calculating score. |
-| Advent of Code | `AOC_YEAR` | Debug variable to change the year used for AoC. |
-| Advent of Code | `AOC_CHANNEL_ID` | The ID of the `#advent-of-code` channel |
-| Advent of Code | `AOC_COMMANDS_CHANNEL_ID` | The ID of the `#advent-of-code-commands` channel |
-| Advent of Code | `AOC_FALLBACK_SESSION` | |
-| Advent of Code | `AOC_SESSION_COOKIE` | |
-| Valentines | `LOVEFEST_ROLE_ID` | |
-| Wolfram | `WOLFRAM_USER_LIMIT_DAY` | |
-| Wolfram | `WOLFRAM_GUILD_LIMIT_DAY` | |
+| Cog        | Environment Variable      | Description                                                      |
+|------------|---------------------------|------------------------------------------------------------------|
+| Valentines | `ROLES_LOVEFEST`          | ID of the role `@Lovefest`                                       |
+| Wolfram    | `WOLFRAM_USER_LIMIT_DAY`  | The amount of requests a user can make per day                   |
+| Wolfram    | `WOLFRAM_GUILD_LIMIT_DAY` | The amount of requests that can come from the same guild per day |
