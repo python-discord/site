@@ -28,5 +28,5 @@ def footer_datetime(timestamp: str) -> datetime:
 
 @register.filter
 def visible_newlines(text: str) -> str:
-    """Takes an embed timestamp and returns a timezone-aware datetime object."""
+    """Visualizes newlines in text by replacing them with a grey-ish `↵`."""
     return text.replace("\n", " <span class='has-text-grey'>↵</span><br>")

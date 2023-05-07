@@ -1,0 +1,17 @@
+description: A collection of hundreds of charts made with Python with their associated reproducible code.
+name: Python Graph Gallery
+title_url: https://www.python-graph-gallery.com/
+urls:
+  - icon: branding/github
+    url: https://github.com/holtzy/The-Python-Graph-Gallery
+    color: black
+tags:
+  topics:
+    - data science
+  payment_tiers:
+    - free
+  difficulty:
+    - beginner
+    - intermediate
+  type:
+    - tutorial
