@@ -25,7 +25,6 @@ Additionally, you may find the following environment variables useful during dev
 |----------------------------|------------------------------------------------------------------------------------------------------------|
 | `CLIENT_DEBUG`             | Debug mode of the bot                                                                                      |
 | `CLIENT_PREFIX`            | The bot's invocation prefix                                                                                |
-| `BRANDING_CYCLE_FREQUENCY` | Amount of days between cycling server icon                                                                 |
 | `CLIENT_MONTH_OVERRIDE`    | Integer in range `[0, 12]`, overrides current month w.r.t. seasonal decorators                             |
 | `REDIS_HOST`               | The address to connect to for the Redis database.                                                          |
 | `REDIS_PORT`               | The port on which the Redis database is exposed.                                                           |
