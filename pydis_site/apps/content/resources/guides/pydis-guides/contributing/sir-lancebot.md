@@ -72,15 +72,15 @@ You will have to setup environment variables:
 
 The following variables are needed for running Sir Lancebot:
 
-| Environment Variable           | Description                                                                                |
-|--------------------------------|--------------------------------------------------------------------------------------------|
-| `CLIENT_TOKEN`                 | Bot Token from the [Discord developer portal](https://discord.com/developers/applications) |
-| `CLIENT_GUILD`                 | ID of the Discord Server                                                                   |
-| `ROLES_ADMIN`                  | ID of the role `@Admins`                                                                   |
-| `ROLES_HELPERS`                | ID of the role `@Helpers`                                                                  |
-| `CHANNELS_ANNOUNCEMENTS`       | ID of the `#announcements` channel                                                         |
-| `CHANNELS_DEVLOG`              | ID of the `#dev-log` channel                                                               |
-| `CHANNEL_SIR_LANCEBOT_PLAYGROUND` | ID of the `#sir-lancebot-playground` channel                                               |
+| Environment Variable               | Description                                                                                |
+|------------------------------------|--------------------------------------------------------------------------------------------|
+| `CLIENT_TOKEN`                     | Bot Token from the [Discord developer portal](https://discord.com/developers/applications) |
+| `CLIENT_GUILD`                     | ID of the Discord Server                                                                   |
+| `ROLES_ADMIN`                      | ID of the role `@Admins`                                                                   |
+| `ROLES_HELPERS`                    | ID of the role `@Helpers`                                                                  |
+| `CHANNELS_ANNOUNCEMENTS`           | ID of the `#announcements` channel                                                         |
+| `CHANNELS_DEVLOG`                  | ID of the `#dev-log` channel                                                               |
+| `CHANNELS_SIR_LANCEBOT_PLAYGROUND` | ID of the `#sir-lancebot-playground` channel                                               |
 
 [**Full environment variable reference for this project.**](../sir-lancebot/env-var-reference)
 
