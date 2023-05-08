@@ -569,14 +569,14 @@ pyflakes = ">=3.0.0,<3.1.0"
 
 [[package]]
 name = "flake8-annotations"
-version = "3.0.0"
+version = "3.0.1"
 description = "Flake8 Type Annotation Checks"
 category = "dev"
 optional = false
-python-versions = ">=3.8.1,<4.0.0"
+python-versions = ">=3.8.1"
 files = [
-    {file = "flake8_annotations-3.0.0-py3-none-any.whl", hash = "sha256:ea927d31016515e9aa6e256651d74baeeee6fa4ad3f8383715ec5c0460a4c225"},
-    {file = "flake8_annotations-3.0.0.tar.gz", hash = "sha256:88c8b35a0db10b9a92be69ed3f81494509a18db1c3162551e57bc0fc35fab065"},
+    {file = "flake8_annotations-3.0.1-py3-none-any.whl", hash = "sha256:af78e3216ad800d7e144745ece6df706c81b3255290cbf870e54879d495e8ade"},
+    {file = "flake8_annotations-3.0.1.tar.gz", hash = "sha256:ff37375e71e3b83f2a5a04d443c41e2c407de557a884f3300a7fa32f3c41cb0a"},
 ]
 
 [package.dependencies]
@@ -1509,4 +1509,4 @@ brotli = ["Brotli"]
 [metadata]
 lock-version = "2.0"
 python-versions = "3.10.*"
-content-hash = "92cdc235ecd701ef9bb59a702e13a3309dcfd44871ab7353a7380aa34e5884c0"
+content-hash = "65157862f1dee34d33112066c24b5158dbff304e3e205fe4ace73b11e6ed6cf9"

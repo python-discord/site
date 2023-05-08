@@ -32,7 +32,7 @@ taskipy = "1.10.4"
 
 [tool.poetry.group.lint.dependencies]
 flake8 = "6.0.0"
-flake8-annotations = "3.0.0"
+flake8-annotations = "3.0.1"
 flake8-bandit = "4.1.1"
 flake8-bugbear = "23.3.23"
 flake8-docstrings = "1.7.0"
