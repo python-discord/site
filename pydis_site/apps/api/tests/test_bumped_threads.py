@@ -1,7 +1,7 @@
 from django.urls import reverse
 
 from .base import AuthenticatedAPITestCase
-from ..models import BumpedThread
+from pydis_site.apps.api.models import BumpedThread
 
 
 class UnauthedBumpedThreadAPITests(AuthenticatedAPITestCase):

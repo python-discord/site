@@ -1,5 +1,4 @@
 import re
-import typing
 
 import frontmatter
 import markdown
@@ -22,7 +21,7 @@ COMMAND_REGEX = re.compile(r"`*!tags? (?P<first>[\w-]+)(?P<second> [\w-]+)?`*")
 class TagView(TemplateView):
     """Handles tag pages."""
 
-    tag: typing.Union[Tag, list[Tag]]
+    tag: Tag | list[Tag]
     is_group: bool
 
     def setup(self, *args, **kwargs) -> None:

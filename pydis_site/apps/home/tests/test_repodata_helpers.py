@@ -22,7 +22,7 @@ def mocked_requests_get(*args, **kwargs) -> "MockResponse":  # noqa: F821
 
     if args[0] == HomeView.github_api:
         json_path = Path(__file__).resolve().parent / "mock_github_api_response.json"
-        with open(json_path, 'r') as json_file:
+        with open(json_path) as json_file:
             mock_data = json.load(json_file)
 
         return MockResponse(mock_data, 200)

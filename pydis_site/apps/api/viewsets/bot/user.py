@@ -1,4 +1,3 @@
-import typing
 from collections import OrderedDict
 
 from django.db.models import Q
@@ -24,14 +23,14 @@ class UserListPagination(PageNumberPagination):
     page_size = 2500
     page_size_query_param = "page_size"
 
-    def get_next_page_number(self) -> typing.Optional[int]:
+    def get_next_page_number(self) -> int | None:
         """Get the next page number."""
         if not self.page.has_next():
             return None
         page_number = self.page.next_page_number()
         return page_number
 
-    def get_previous_page_number(self) -> typing.Optional[int]:
+    def get_previous_page_number(self) -> int | None:
         """Get the previous page number."""
         if not self.page.has_previous():
             return None

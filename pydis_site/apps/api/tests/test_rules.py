@@ -5,7 +5,7 @@ from pathlib import Path
 from django.urls import reverse
 
 from .base import AuthenticatedAPITestCase
-from ..views import RulesView
+from pydis_site.apps.api.views import RulesView
 
 
 class RuleAPITests(AuthenticatedAPITestCase):

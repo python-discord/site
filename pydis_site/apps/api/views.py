@@ -93,7 +93,7 @@ class RulesView(APIView):
         """
         if target == 'html':
             return f'<a href="{link}">{description}</a>'
-        elif target == 'md':
+        elif target == 'md':  # noqa: RET505
             return f'[{description}]({link})'
         else:
             raise ValueError(
@@ -101,7 +101,7 @@ class RulesView(APIView):
             )
 
     # `format` here is the result format, we have a link format here instead.
-    def get(self, request, format=None):  # noqa: D102,ANN001,ANN201
+    def get(self, request, format=None):  # noqa: ANN001, ANN201
         """
         Returns a list of our community rules coupled with their keywords.
 

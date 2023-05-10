@@ -8,7 +8,7 @@ from . import utils, views
 app_name = "content"
 
 
-def __get_all_files(root: Path, folder: typing.Optional[Path] = None) -> list[str]:
+def __get_all_files(root: Path, folder: Path | None = None) -> list[str]:
     """Find all folders and markdown files recursively starting from `root`."""
     if not folder:
         folder = root

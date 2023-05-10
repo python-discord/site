@@ -1,5 +1,4 @@
 import logging
-from typing import Dict, List
 
 import httpx
 from django.core.handlers.wsgi import WSGIRequest
@@ -45,7 +44,7 @@ class HomeView(View):
         else:
             self.headers = {}
 
-    def _get_api_data(self) -> Dict[str, Dict[str, str]]:
+    def _get_api_data(self) -> dict[str, dict[str, str]]:
         """
         Call the GitHub API and get information about our repos.
 
@@ -54,7 +53,7 @@ class HomeView(View):
         repo_dict = {}
         try:
             # Fetch the data from the GitHub API
-            api_data: List[dict] = httpx.get(
+            api_data: list[dict] = httpx.get(
                 self.github_api,
                 headers=self.headers,
                 timeout=settings.TIMEOUT_PERIOD
@@ -89,7 +88,7 @@ class HomeView(View):
 
         return repo_dict
 
-    def _get_repo_data(self) -> List[RepositoryMetadata]:
+    def _get_repo_data(self) -> list[RepositoryMetadata]:
         """Build a list of RepositoryMetadata objects that we can use to populate the front page."""
         # First off, load the timestamp of the least recently updated entry.
         if settings.STATIC_BUILD:
@@ -121,8 +120,7 @@ class HomeView(View):
 
             if settings.STATIC_BUILD:
                 return data
-            else:
-                return RepositoryMetadata.objects.bulk_create(data)
+            return RepositoryMetadata.objects.bulk_create(data)
 
         # If the data is stale, we should refresh it.
         if (timezone.now() - last_update).seconds > self.repository_cache_ttl:
@@ -149,8 +147,7 @@ class HomeView(View):
             return database_repositories
 
         # Otherwise, if the data is fresher than 2 minutes old, we should just return it.
-        else:
-            return RepositoryMetadata.objects.all()
+        return RepositoryMetadata.objects.all()
 
     def get(self, request: WSGIRequest) -> HttpResponse:
         """Collect repo data and render the homepage view."""

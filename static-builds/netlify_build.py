@@ -14,15 +14,15 @@ from pathlib import Path
 from urllib import parse
 
 import httpx
+import contextlib
 
 
 def raise_response(response: httpx.Response) -> None:
     """Raise an exception from a response if necessary."""
     if response.status_code // 100 != 2:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             print(response.json())
-        except json.JSONDecodeError:
-            pass
+
 
     response.raise_for_status()
 

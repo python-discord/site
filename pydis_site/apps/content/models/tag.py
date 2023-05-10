@@ -30,8 +30,7 @@ class Commit(models.Model):
 
     def lines(self) -> collections.abc.Iterable[str]:
         """Return each line in the commit message."""
-        for line in self.message.split("\n"):
-            yield line
+        yield from self.message.split("\n")
 
     def format_authors(self) -> collections.abc.Iterable[str]:
         """Return a nice representation of the author(s)' name and email."""

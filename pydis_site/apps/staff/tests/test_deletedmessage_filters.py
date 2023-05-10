@@ -3,7 +3,7 @@ import enum
 from django.test import TestCase
 from django.utils import timezone
 
-from ..templatetags import deletedmessage_filters
+from pydis_site.apps.staff.templatetags import deletedmessage_filters
 
 
 class Colour(enum.IntEnum):

@@ -1,10 +1,10 @@
 from rest_framework.viewsets import ModelViewSet
 
-from pydis_site.apps.api.models.bot.filters import (  # noqa: I101 - Preserving the filter order
+from pydis_site.apps.api.models.bot.filters import (  # - Preserving the filter order
     FilterList,
     Filter
 )
-from pydis_site.apps.api.serializers import (  # noqa: I101 - Preserving the filter order
+from pydis_site.apps.api.serializers import (  # - Preserving the filter order
     FilterListSerializer,
     FilterSerializer,
 )
