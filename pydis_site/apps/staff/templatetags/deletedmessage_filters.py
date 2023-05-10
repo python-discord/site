@@ -1,5 +1,4 @@
 from datetime import datetime
-from typing import Union
 
 from django import template
 
@@ -7,7 +6,7 @@ register = template.Library()
 
 
 @register.filter
-def hex_colour(colour: Union[str, int]) -> str:
+def hex_colour(colour: str | int) -> str:
     """
     Converts the given representation of a colour to its RGB hex string.
 

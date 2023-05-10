@@ -8,7 +8,7 @@ from pydis_site.apps.events.views import IndexView, PageView
 app_name = "events"
 
 
-def __get_all_files(root: Path, folder: typing.Optional[Path] = None) -> list[str]:
+def __get_all_files(root: Path, folder: Path | None = None) -> list[str]:
     """Find all folders and HTML files recursively starting from `root`."""
     if not folder:
         folder = root

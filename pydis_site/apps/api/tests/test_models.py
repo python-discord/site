@@ -118,7 +118,7 @@ class StringDunderMethodTests(SimpleTestCase):
             OffensiveMessage(
                 id=602951077675139072,
                 channel_id=291284109232308226,
-                delete_date=dt(3000, 1, 1)
+                delete_date=dt(3000, 1, 1, tzinfo=timezone.utc)
             ),
             OffTopicChannelName(name='bob-the-builders-playground'),
             Role(
@@ -132,7 +132,7 @@ class StringDunderMethodTests(SimpleTestCase):
                     name='shawn',
                     discriminator=555,
                 ),
-                creation=dt.utcnow()
+                creation=dt.now(tz=timezone.utc)
             ),
             User(
                 id=5,

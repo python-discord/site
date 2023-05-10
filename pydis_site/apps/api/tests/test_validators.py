@@ -3,8 +3,8 @@ from datetime import datetime, timezone
 from django.core.exceptions import ValidationError
 from django.test import TestCase
 
-from ..models.bot.bot_setting import validate_bot_setting_name
-from ..models.bot.offensive_message import future_date_validator
+from pydis_site.apps.api.models.bot.bot_setting import validate_bot_setting_name
+from pydis_site.apps.api.models.bot.offensive_message import future_date_validator
 
 
 REQUIRED_KEYS = (

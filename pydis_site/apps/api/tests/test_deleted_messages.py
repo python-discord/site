@@ -1,10 +1,9 @@
-from datetime import datetime
+from datetime import datetime, timezone
 
 from django.urls import reverse
-from django.utils import timezone
 
 from .base import AuthenticatedAPITestCase
-from ..models import MessageDeletionContext, User
+from pydis_site.apps.api.models import MessageDeletionContext, User
 
 
 class DeletedMessagesWithoutActorTests(AuthenticatedAPITestCase):
@@ -18,7 +17,7 @@ class DeletedMessagesWithoutActorTests(AuthenticatedAPITestCase):
 
         cls.data = {
             'actor': None,
-            'creation': datetime.utcnow().isoformat(),
+            'creation': datetime.now(tz=timezone.utc).isoformat(),
             'deletedmessage_set': [
                 {
                     'author': cls.author.id,
@@ -58,7 +57,7 @@ class DeletedMessagesWithActorTests(AuthenticatedAPITestCase):
 
         cls.data = {
             'actor': cls.actor.id,
-            'creation': datetime.utcnow().isoformat(),
+            'creation': datetime.now(tz=timezone.utc).isoformat(),
             'deletedmessage_set': [
                 {
                     'author': cls.author.id,
@@ -90,7 +89,7 @@ class DeletedMessagesLogURLTests(AuthenticatedAPITestCase):
 
         cls.deletion_context = MessageDeletionContext.objects.create(
             actor=cls.actor,
-            creation=timezone.now()
+            creation=datetime.now(tz=timezone.utc),
         )
 
     def test_valid_log_url(self):

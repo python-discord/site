@@ -4,9 +4,9 @@ from unittest.mock import Mock, patch
 from django.urls import reverse
 
 from .base import AuthenticatedAPITestCase
-from ..models import Infraction, Role, User
-from ..models.bot.metricity import NotFoundError
-from ..viewsets.bot.user import UserListPagination
+from pydis_site.apps.api.models import Infraction, Role, User
+from pydis_site.apps.api.models.bot.metricity import NotFoundError
+from pydis_site.apps.api.viewsets.bot.user import UserListPagination
 
 
 class UnauthedUserAPITests(AuthenticatedAPITestCase):
@@ -469,18 +469,17 @@ class UserMetricityTests(AuthenticatedAPITestCase):
             with self.subTest(
                 voice_infractions=case['voice_infractions'],
                 voice_gate_blocked=case['voice_gate_blocked']
-            ):
-                with patch("pydis_site.apps.api.viewsets.bot.user.Infraction.objects.filter") as p:
-                    p.return_value = case['voice_infractions']
+            ), patch("pydis_site.apps.api.viewsets.bot.user.Infraction.objects.filter") as p:
+                p.return_value = case['voice_infractions']
 
-                    url = reverse('api:bot:user-metricity-data', args=[0])
-                    response = self.client.get(url)
+                url = reverse('api:bot:user-metricity-data', args=[0])
+                response = self.client.get(url)
 
-                    self.assertEqual(response.status_code, 200)
-                    self.assertEqual(
-                        response.json()["voice_gate_blocked"],
-                        case["voice_gate_blocked"]
-                    )
+                self.assertEqual(response.status_code, 200)
+                self.assertEqual(
+                    response.json()["voice_gate_blocked"],
+                    case["voice_gate_blocked"]
+                )
 
     def test_metricity_review_data(self):
         # Given

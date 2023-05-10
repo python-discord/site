@@ -151,8 +151,11 @@ def set_tag_commit(tag: Tag) -> None:
     commit = data["commit"]
     author, committer = commit["author"], commit["committer"]
 
-    date = datetime.datetime.strptime(committer["date"], settings.GITHUB_TIMESTAMP_FORMAT)
-    date = date.replace(tzinfo=datetime.timezone.utc)
+    date = (
+        datetime.datetime
+        .strptime(committer["date"], settings.GITHUB_TIMESTAMP_FORMAT)
+        .replace(tzinfo=datetime.timezone.utc)
+    )
 
     if author["email"] == committer["email"]:
         authors = [author]
@@ -212,9 +215,8 @@ def get_tags() -> list[Tag]:
             record_tags(tags)
 
         return tags
-    else:
-        # Get tags from database
-        return list(Tag.objects.all())
+
+    return list(Tag.objects.all())
 
 
 def get_tag(path: str, *, skip_sync: bool = False) -> Tag | list[Tag]:
@@ -242,13 +244,13 @@ def get_tag(path: str, *, skip_sync: bool = False) -> Tag | list[Tag]:
             if tag.last_commit is None and not skip_sync:
                 set_tag_commit(tag)
             return tag
-        elif tag.group == name and group is None:
+        elif tag.group == name and group is None:  # noqa: RET505
             matches.append(tag)
 
     if matches:
         return matches
 
-    raise Tag.DoesNotExist()
+    raise Tag.DoesNotExist
 
 
 def get_tag_category(tags: list[Tag] | None = None, *, collapse_groups: bool) -> dict[str, dict]:

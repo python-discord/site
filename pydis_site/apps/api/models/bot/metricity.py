@@ -1,4 +1,3 @@
-from typing import List, Tuple
 
 from django.db import connections
 
@@ -10,10 +9,9 @@ EXCLUDE_CHANNELS = (
 )
 
 
-class NotFoundError(Exception):  # noqa: N818
+class NotFoundError(Exception):
     """Raised when an entity cannot be found."""
 
-    pass
 
 
 class Metricity:
@@ -31,15 +29,14 @@ class Metricity:
     def user(self, user_id: str) -> dict:
         """Query a user's data."""
         # TODO: Swap this back to some sort of verified at date
-        columns = ["joined_at"]
-        query = f"SELECT {','.join(columns)} FROM users WHERE id = '%s'"
+        query = "SELECT joined_at FROM users WHERE id = '%s'"
         self.cursor.execute(query, [user_id])
         values = self.cursor.fetchone()
 
         if not values:
-            raise NotFoundError()
+            raise NotFoundError
 
-        return dict(zip(columns, values))
+        return {'joined_at': values[0]}
 
     def total_messages(self, user_id: str) -> int:
         """Query total number of messages for a user."""
@@ -58,7 +55,7 @@ class Metricity:
         values = self.cursor.fetchone()
 
         if not values:
-            raise NotFoundError()
+            raise NotFoundError
 
         return values[0]
 
@@ -88,11 +85,11 @@ class Metricity:
         values = self.cursor.fetchone()
 
         if not values:
-            raise NotFoundError()
+            raise NotFoundError
 
         return values[0]
 
-    def top_channel_activity(self, user_id: str) -> List[Tuple[str, int]]:
+    def top_channel_activity(self, user_id: str) -> list[tuple[str, int]]:
         """
         Query the top three channels in which the user is most active.
 
@@ -127,7 +124,7 @@ class Metricity:
         values = self.cursor.fetchall()
 
         if not values:
-            raise NotFoundError()
+            raise NotFoundError
 
         return values
 

@@ -8,8 +8,8 @@ from django.db.utils import IntegrityError
 from django.urls import reverse
 
 from .base import AuthenticatedAPITestCase
-from ..models import Infraction, User
-from ..serializers import InfractionSerializer
+from pydis_site.apps.api.models import Infraction, User
+from pydis_site.apps.api.serializers import InfractionSerializer
 
 
 class UnauthenticatedTests(AuthenticatedAPITestCase):
@@ -152,8 +152,8 @@ class InfractionTests(AuthenticatedAPITestCase):
 
     def test_filter_after(self):
         url = reverse('api:bot:infraction-list')
-        target_time = datetime.datetime.utcnow() + datetime.timedelta(hours=5)
-        response = self.client.get(f'{url}?type=superstar&expires_after={target_time.isoformat()}')
+        target_time = datetime.datetime.now(tz=timezone.utc) + datetime.timedelta(hours=5)
+        response = self.client.get(url, {'type': 'superstar', 'expires_after': target_time.isoformat()})
 
         self.assertEqual(response.status_code, 200)
         infractions = response.json()
@@ -161,8 +161,8 @@ class InfractionTests(AuthenticatedAPITestCase):
 
     def test_filter_before(self):
         url = reverse('api:bot:infraction-list')
-        target_time = datetime.datetime.utcnow() + datetime.timedelta(hours=5)
-        response = self.client.get(f'{url}?type=superstar&expires_before={target_time.isoformat()}')
+        target_time = datetime.datetime.now(tz=timezone.utc) + datetime.timedelta(hours=5)
+        response = self.client.get(url, {'type': 'superstar', 'expires_before': target_time.isoformat()})
 
         self.assertEqual(response.status_code, 200)
         infractions = response.json()
@@ -185,11 +185,12 @@ class InfractionTests(AuthenticatedAPITestCase):
 
     def test_after_before_before(self):
         url = reverse('api:bot:infraction-list')
-        target_time = datetime.datetime.utcnow() + datetime.timedelta(hours=4)
-        target_time_late = datetime.datetime.utcnow() + datetime.timedelta(hours=6)
+        target_time = datetime.datetime.now(tz=timezone.utc) + datetime.timedelta(hours=4)
+        target_time_late = datetime.datetime.now(tz=timezone.utc) + datetime.timedelta(hours=6)
         response = self.client.get(
-            f'{url}?expires_before={target_time_late.isoformat()}'
-            f'&expires_after={target_time.isoformat()}'
+            url,
+            {'expires_before': target_time_late.isoformat(),
+             'expires_after': target_time.isoformat()},
         )
 
         self.assertEqual(response.status_code, 200)
@@ -198,11 +199,12 @@ class InfractionTests(AuthenticatedAPITestCase):
 
     def test_after_after_before_invalid(self):
         url = reverse('api:bot:infraction-list')
-        target_time = datetime.datetime.utcnow() + datetime.timedelta(hours=5)
-        target_time_late = datetime.datetime.utcnow() + datetime.timedelta(hours=9)
+        target_time = datetime.datetime.now(tz=timezone.utc) + datetime.timedelta(hours=5)
+        target_time_late = datetime.datetime.now(tz=timezone.utc) + datetime.timedelta(hours=9)
         response = self.client.get(
-            f'{url}?expires_before={target_time.isoformat()}'
-            f'&expires_after={target_time_late.isoformat()}'
+            url,
+            {'expires_before': target_time.isoformat(),
+             'expires_after': target_time_late.isoformat()},
         )
 
         self.assertEqual(response.status_code, 400)
@@ -212,8 +214,11 @@ class InfractionTests(AuthenticatedAPITestCase):
 
     def test_permanent_after_invalid(self):
         url = reverse('api:bot:infraction-list')
-        target_time = datetime.datetime.utcnow() + datetime.timedelta(hours=5)
-        response = self.client.get(f'{url}?permanent=true&expires_after={target_time.isoformat()}')
+        target_time = datetime.datetime.now(tz=timezone.utc) + datetime.timedelta(hours=5)
+        response = self.client.get(
+            url,
+            {'permanent': 'true', 'expires_after': target_time.isoformat()},
+        )
 
         self.assertEqual(response.status_code, 400)
         errors = list(response.json())
@@ -221,8 +226,11 @@ class InfractionTests(AuthenticatedAPITestCase):
 
     def test_permanent_before_invalid(self):
         url = reverse('api:bot:infraction-list')
-        target_time = datetime.datetime.utcnow() + datetime.timedelta(hours=5)
-        response = self.client.get(f'{url}?permanent=true&expires_before={target_time.isoformat()}')
+        target_time = datetime.datetime.now(tz=timezone.utc) + datetime.timedelta(hours=5)
+        response = self.client.get(
+            url,
+            {'permanent': 'true', 'expires_before': target_time.isoformat()},
+        )
 
         self.assertEqual(response.status_code, 400)
         errors = list(response.json())
@@ -230,9 +238,10 @@ class InfractionTests(AuthenticatedAPITestCase):
 
     def test_nonpermanent_before(self):
         url = reverse('api:bot:infraction-list')
-        target_time = datetime.datetime.utcnow() + datetime.timedelta(hours=6)
+        target_time = datetime.datetime.now(tz=timezone.utc) + datetime.timedelta(hours=6)
         response = self.client.get(
-            f'{url}?permanent=false&expires_before={target_time.isoformat()}'
+            url,
+            {'permanent': 'false', 'expires_before': target_time.isoformat()},
         )
 
         self.assertEqual(response.status_code, 200)
@@ -522,39 +531,38 @@ class CreationTests(AuthenticatedAPITestCase):
         active_infraction_types = ('timeout', 'ban', 'superstar')
 
         for infraction_type in active_infraction_types:
-            with self.subTest(infraction_type=infraction_type):
-                with transaction.atomic():
-                    first_active_infraction = {
-                        'user': self.user.id,
-                        'actor': self.user.id,
-                        'type': infraction_type,
-                        'reason': 'Take me on!',
-                        'active': True,
-                        'expires_at': '2019-10-04T12:52:00+00:00'
-                    }
+            with self.subTest(infraction_type=infraction_type), transaction.atomic():
+                first_active_infraction = {
+                    'user': self.user.id,
+                    'actor': self.user.id,
+                    'type': infraction_type,
+                    'reason': 'Take me on!',
+                    'active': True,
+                    'expires_at': '2019-10-04T12:52:00+00:00'
+                }
 
-                    # Post the first active infraction of a type and confirm it's accepted.
-                    first_response = self.client.post(url, data=first_active_infraction)
-                    self.assertEqual(first_response.status_code, 201)
+                # Post the first active infraction of a type and confirm it's accepted.
+                first_response = self.client.post(url, data=first_active_infraction)
+                self.assertEqual(first_response.status_code, 201)
 
-                    second_active_infraction = {
-                        'user': self.user.id,
-                        'actor': self.user.id,
-                        'type': infraction_type,
-                        'reason': 'Take on me!',
-                        'active': True,
-                        'expires_at': '2019-10-04T12:52:00+00:00'
+                second_active_infraction = {
+                    'user': self.user.id,
+                    'actor': self.user.id,
+                    'type': infraction_type,
+                    'reason': 'Take on me!',
+                    'active': True,
+                    'expires_at': '2019-10-04T12:52:00+00:00'
+                }
+                second_response = self.client.post(url, data=second_active_infraction)
+                self.assertEqual(second_response.status_code, 400)
+                self.assertEqual(
+                    second_response.json(),
+                    {
+                        'non_field_errors': [
+                            'This user already has an active infraction of this type.'
+                        ]
                     }
-                    second_response = self.client.post(url, data=second_active_infraction)
-                    self.assertEqual(second_response.status_code, 400)
-                    self.assertEqual(
-                        second_response.json(),
-                        {
-                            'non_field_errors': [
-                                'This user already has an active infraction of this type.'
-                            ]
-                        }
-                    )
+                )
 
     def test_returns_201_for_second_active_infraction_of_different_type(self):
         """Test if the API accepts a second active infraction of a different type than the first."""

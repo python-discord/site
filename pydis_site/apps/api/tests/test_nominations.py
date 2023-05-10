@@ -3,7 +3,7 @@ from datetime import datetime as dt, timedelta, timezone
 from django.urls import reverse
 
 from .base import AuthenticatedAPITestCase
-from ..models import Nomination, NominationEntry, User
+from pydis_site.apps.api.models import Nomination, NominationEntry, User
 
 
 class CreationTests(AuthenticatedAPITestCase):

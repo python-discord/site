@@ -83,22 +83,21 @@ def map_redirect(name: str, data: Redirect) -> list[URLPattern]:
 
         return paths
 
+    redirect_path_name = "pages" if new_app_name == "content" else new_app_name
+    if len(data.redirect_arguments) > 0:
+        redirect_arg = data.redirect_arguments[0]
     else:
-        redirect_path_name = "pages" if new_app_name == "content" else new_app_name
-        if len(data.redirect_arguments) > 0:
-            redirect_arg = data.redirect_arguments[0]
-        else:
-            redirect_arg = "resources/"
-        new_redirect = f"/{redirect_path_name}/{redirect_arg}"
+        redirect_arg = "resources/"
+    new_redirect = f"/{redirect_path_name}/{redirect_arg}"
 
-        if new_redirect == "/resources/resources/":
-            new_redirect = "/resources/"
+    if new_redirect == "/resources/resources/":
+        new_redirect = "/resources/"
 
-        return [distill_path(
-            data.original_path,
-            lambda *args: HttpResponse(REDIRECT_TEMPLATE.format(url=new_redirect)),
-            name=name,
-        )]
+    return [distill_path(
+        data.original_path,
+        lambda *args: HttpResponse(REDIRECT_TEMPLATE.format(url=new_redirect)),
+        name=name,
+    )]
 
 
 urlpatterns = []

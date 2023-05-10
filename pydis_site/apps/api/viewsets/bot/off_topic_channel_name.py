@@ -85,10 +85,9 @@ class OffTopicChannelNameViewSet(ModelViewSet):
             serializer.save()
             return Response(create_data, status=HTTP_201_CREATED)
 
-        else:
-            raise ParseError(detail={
-                'name': ["This query parameter is required."]
-            })
+        raise ParseError(detail={
+            'name': ["This query parameter is required."]
+        })
 
     def list(self, request: Request, *args, **kwargs) -> Response:
         """

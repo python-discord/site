@@ -1,7 +1,7 @@
 import contextlib
 from dataclasses import dataclass
 from datetime import timedelta
-from typing import Any, Dict, Tuple, Type
+from typing import Any
 
 from django.db.models import Model
 from django.urls import reverse
@@ -12,22 +12,22 @@ from pydis_site.apps.api.tests.base import AuthenticatedAPITestCase
 
 @dataclass()
 class TestSequence:
-    model: Type[Model]
+    model: type[Model]
     route: str
-    object: Dict[str, Any]
-    ignored_fields: Tuple[str, ...] = ()
+    object: dict[str, Any]
+    ignored_fields: tuple[str, ...] = ()
 
     def url(self, detail: bool = False) -> str:
         return reverse(f'api:bot:{self.route}-{"detail" if detail else "list"}')
 
 
-FK_FIELDS: Dict[Type[Model], Tuple[str, ...]] = {
+FK_FIELDS: dict[type[Model], tuple[str, ...]] = {
     FilterList: (),
     Filter: ("filter_list",),
 }
 
 
-def get_test_sequences() -> Dict[str, TestSequence]:
+def get_test_sequences() -> dict[str, TestSequence]:
     filter_list1_deny_dict = {
         "name": "testname",
         "list_type": 0,

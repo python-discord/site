@@ -1,7 +1,7 @@
 from django.urls import reverse
 
 from .base import AuthenticatedAPITestCase
-from ..models import OffTopicChannelName
+from pydis_site.apps.api.models import OffTopicChannelName
 
 
 class UnauthenticatedTests(AuthenticatedAPITestCase):

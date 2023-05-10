@@ -29,18 +29,9 @@ whitenoise = "6.4.0"
 [tool.poetry.group.dev.dependencies]
 python-dotenv = "1.0.0"
 taskipy = "1.10.4"
+ruff = "^0.0.265"
 
 [tool.poetry.group.lint.dependencies]
-flake8 = "6.0.0"
-flake8-annotations = "3.0.1"
-flake8-bandit = "4.1.1"
-flake8-bugbear = "23.5.9"
-flake8-docstrings = "1.7.0"
-flake8-import-order = "0.18.2"
-flake8-tidy-imports = "4.8.0"
-flake8-string-format = "0.3.0"
-flake8-todo = "0.7"
-pep8-naming = "0.13.3"
 pre-commit = "3.3.1"
 
 [tool.poetry.group.test.dependencies]
@@ -49,6 +40,34 @@ coverage = "7.2.5"
 [build-system]
 requires = ["poetry-core>=1.2.0"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+target-version = "py310"
+extend-exclude = [".cache"]
+ignore = [
+    "ANN002", "ANN003", "ANN101", "ANN102", "ANN204", "ANN206", "ANN401",
+    "B904",
+    "C401", "C408",
+    "D100", "D104", "D105", "D107", "D203", "D212", "D214", "D215", "D301",
+    "D400", "D401", "D402", "D404", "D405", "D406", "D407", "D408", "D409", "D410", "D411", "D412", "D413", "D414", "D416", "D417",
+    "E731",
+    "RET504",
+    "RUF005",
+    "S311",
+    "SIM102", "SIM108",
+]
+line-length = 120
+select = ["ANN", "B", "C4", "D", "DTZ", "E", "F", "ISC", "INT", "N", "PGH", "PIE", "RET", "RSE", "RUF", "S", "SIM", "T20", "TID", "UP", "W"]
+
+[tool.ruff.per-file-ignores]
+"pydis_site/apps/**/migrations/*.py" = ["ALL"]
+"manage.py" = ["T201"]
+"pydis_site/apps/api/tests/base.py" = ["S106"]
+"pydis_site/apps/**/tests/test_*.py" = ["ANN", "D"]
+"static-builds/netlify_build.py" = ["T201"]
+"pydis_site/apps/api/tests/test_off_topic_channel_names.py" = ["RUF001"]
+"gunicorn.conf.py" = ["ANN", "D"]
+"pydis_site/apps/api/models/bot/off_topic_channel_name.py" = ["RUF001"]
 
 [tool.taskipy.tasks]
 start = "python manage.py run --debug"

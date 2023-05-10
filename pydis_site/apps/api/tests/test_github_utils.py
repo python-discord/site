@@ -12,7 +12,7 @@ import rest_framework.test
 from django.urls import reverse
 
 from pydis_site import settings
-from .. import github_utils
+from pydis_site.apps.api import github_utils
 
 
 class GeneralUtilityTests(unittest.TestCase):
@@ -39,7 +39,8 @@ class GeneralUtilityTests(unittest.TestCase):
 
         delta = datetime.timedelta(minutes=10)
         self.assertAlmostEqual(decoded["exp"] - decoded["iat"], delta.total_seconds())
-        self.assertLess(decoded["exp"], (datetime.datetime.now() + delta).timestamp())
+        then = datetime.datetime.now(tz=datetime.timezone.utc) + delta
+        self.assertLess(decoded["exp"], then.timestamp())
 
 
 class CheckRunTests(unittest.TestCase):
@@ -50,7 +51,7 @@ class CheckRunTests(unittest.TestCase):
         "head_sha": "sha",
         "status": "completed",
         "conclusion": "success",
-        "created_at": datetime.datetime.utcnow().strftime(settings.GITHUB_TIMESTAMP_FORMAT),
+        "created_at": datetime.datetime.now(tz=datetime.timezone.utc).strftime(settings.GITHUB_TIMESTAMP_FORMAT),
         "artifacts_url": "url",
     }
 
@@ -74,7 +75,8 @@ class CheckRunTests(unittest.TestCase):
         # Set the creation time to well before the MAX_RUN_TIME
         # to guarantee the right conclusion
         kwargs["created_at"] = (
-            datetime.datetime.utcnow() - github_utils.MAX_RUN_TIME - datetime.timedelta(minutes=10)
+            datetime.datetime.now(tz=datetime.timezone.utc)
+            - github_utils.MAX_RUN_TIME - datetime.timedelta(minutes=10)
         ).strftime(settings.GITHUB_TIMESTAMP_FORMAT)
 
         with self.assertRaises(github_utils.RunTimeoutError):
@@ -103,29 +105,26 @@ def get_response_authorize(_: httpx.Client, request: httpx.Request, **__) -> htt
                     "account": {"login": "VALID_OWNER"},
                     "access_tokens_url": "https://example.com/ACCESS_TOKEN_URL"
                 }])
-            else:
-                return httpx.Response(
-                    401, json={"error": "auth app/installations"}, request=request
-                )
+            return httpx.Response(
+                401, json={"error": "auth app/installations"}, request=request
+            )
 
-        elif path == "/installation/repositories":
+        elif path == "/installation/repositories":  # noqa: RET505
             if auth == "bearer app access token":
                 return httpx.Response(200, request=request, json={
                     "repositories": [{
                         "name": "VALID_REPO"
                     }]
                 })
-            else:  # pragma: no cover
-                return httpx.Response(
-                    401, json={"error": "auth installation/repositories"}, request=request
-                )
+        return httpx.Response(  # pragma: no cover
+            401, json={"error": "auth installation/repositories"}, request=request
+        )
 
-    elif request.method == "POST":
+    elif request.method == "POST":  # noqa: RET505
         if path == "/ACCESS_TOKEN_URL":
             if auth == "bearer JWT initial token":
                 return httpx.Response(200, request=request, json={"token": "app access token"})
-            else:  # pragma: no cover
-                return httpx.Response(401, json={"error": "auth access_token"}, request=request)
+            return httpx.Response(401, json={"error": "auth access_token"}, request=request)  # pragma: no cover
 
     # Reaching this point means something has gone wrong
     return httpx.Response(500, request=request)  # pragma: no cover
@@ -138,7 +137,7 @@ class AuthorizeTests(unittest.TestCase):
 
     def test_invalid_apps_auth(self):
         """Test that an exception is raised if authorization was attempted with an invalid token."""
-        with mock.patch.object(github_utils, "generate_token", return_value="Invalid token"):
+        with mock.patch.object(github_utils, "generate_token", return_value="Invalid token"):  # noqa: SIM117
             with self.assertRaises(httpx.HTTPStatusError) as error:
                 github_utils.authorize("VALID_OWNER", "VALID_REPO")
 
@@ -179,7 +178,11 @@ class ArtifactFetcherTests(unittest.TestCase):
                 run = github_utils.WorkflowRun(
                     name="action_name",
                     head_sha="action_sha",
-                    created_at=datetime.datetime.now().strftime(settings.GITHUB_TIMESTAMP_FORMAT),
+                    created_at=(
+                        datetime.datetime
+                        .now(tz=datetime.timezone.utc)
+                        .strftime(settings.GITHUB_TIMESTAMP_FORMAT)
+                    ),
                     status="completed",
                     conclusion="success",
                     artifacts_url="artifacts_url"
@@ -187,7 +190,7 @@ class ArtifactFetcherTests(unittest.TestCase):
                 return httpx.Response(
                     200, request=request, json={"workflow_runs": [dataclasses.asdict(run)]}
                 )
-            elif path == "/artifact_url":
+            elif path == "/artifact_url":  # noqa: RET505
                 return httpx.Response(
                     200, request=request, json={"artifacts": [{
                         "name": "artifact_name",

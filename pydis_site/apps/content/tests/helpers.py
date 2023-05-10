@@ -62,19 +62,19 @@ class MockPagesTestCase(TestCase):
     ├── not_a_page.md
     ├── tmp.md
     ├── tmp
-    |   ├── _info.yml
-    |   └── category
-    |       ├── _info.yml
-    |       └── subcategory_without_info
+    |   ├── _info.yml
+    |   └── category
+    |       ├── _info.yml
+    |       └── subcategory_without_info
     └── category
-        ├── _info.yml
-        ├── with_metadata.md
-        └── subcategory
-            ├── with_metadata.md
-            └── without_metadata.md
+        ├── _info.yml
+        ├── with_metadata.md
+        └── subcategory
+            ├── with_metadata.md
+            └── without_metadata.md
     """
 
-    def setUp(self):
+    def setUp(self) -> None:
         """Create the fake filesystem."""
         Path(f"{BASE_PATH}/_info.yml").write_text(CATEGORY_INFO)
         Path(f"{BASE_PATH}/root.md").write_text(MARKDOWN_WITH_METADATA)

@@ -61,9 +61,10 @@ class Message(ModelReprMixin, models.Model):
     @property
     def timestamp(self) -> datetime.datetime:
         """Attribute that represents the message timestamp as derived from the snowflake id."""
-        return datetime.datetime.utcfromtimestamp(
-            ((self.id >> 22) + 1420070400000) / 1000
-        ).replace(tzinfo=datetime.timezone.utc)
+        return datetime.datetime.fromtimestamp(
+            ((self.id >> 22) + 1420070400000) / 1000,
+            tz=datetime.timezone.utc,
+        )
 
     class Meta:
         """Metadata provided for Django's ORM."""

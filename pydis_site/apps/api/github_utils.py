@@ -82,7 +82,7 @@ def generate_token() -> str:
     Refer to:
     https://docs.github.com/en/developers/apps/building-github-apps/authenticating-with-github-apps#authenticating-as-a-github-app
     """
-    now = datetime.datetime.now()
+    now = datetime.datetime.now(tz=datetime.timezone.utc)
     return jwt.encode(
         {
             "iat": math.floor((now - datetime.timedelta(seconds=60)).timestamp()),  # Issued at
@@ -145,8 +145,12 @@ def authorize(owner: str, repo: str) -> httpx.Client:
 
 def check_run_status(run: WorkflowRun) -> str:
     """Check if the provided run has been completed, otherwise raise an exception."""
-    created_at = datetime.datetime.strptime(run.created_at, settings.GITHUB_TIMESTAMP_FORMAT)
-    run_time = datetime.datetime.utcnow() - created_at
+    created_at = (
+        datetime.datetime
+        .strptime(run.created_at, settings.GITHUB_TIMESTAMP_FORMAT)
+        .replace(tzinfo=datetime.timezone.utc)
+    )
+    run_time = datetime.datetime.now(tz=datetime.timezone.utc) - created_at
 
     if run.status != "completed":
         if run_time <= MAX_RUN_TIME:
@@ -154,8 +158,7 @@ def check_run_status(run: WorkflowRun) -> str:
                 f"The requested run is still pending. It was created "
                 f"{run_time.seconds // 60}:{run_time.seconds % 60 :>02} minutes ago."
             )
-        else:
-            raise RunTimeoutError("The requested workflow was not ready in time.")
+        raise RunTimeoutError("The requested workflow was not ready in time.")
 
     if run.conclusion != "success":
         # The action failed, or did not run

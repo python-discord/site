@@ -1,5 +1,4 @@
 import json
-import typing as t
 from pathlib import Path
 
 import yaml
@@ -22,7 +21,7 @@ class ResourceView(View):
         """Sort a tuple by its key alphabetically, disregarding 'the' as a prefix."""
         name, resource = tuple_
         name = name.casefold()
-        if name.startswith("the ") or name.startswith("the_"):
+        if name.startswith(("the ", "the_")):
             return name[4:]
         return name
 
@@ -48,7 +47,7 @@ class ResourceView(View):
         }
         for resource_name, resource in self.resources.items():
             css_classes = []
-            for tag_type in resource_tags.keys():
+            for tag_type in resource_tags:
                 # Store the tags into `resource_tags`
                 tags = resource.get("tags", {}).get(tag_type, [])
                 for tag in tags:
@@ -102,7 +101,7 @@ class ResourceView(View):
             "difficulty": [to_kebabcase(tier) for tier in self.filters["Difficulty"]["filters"]],
         }
 
-    def get(self, request: WSGIRequest, resource_type: t.Optional[str] = None) -> HttpResponse:
+    def get(self, request: WSGIRequest, resource_type: str | None = None) -> HttpResponse:
         """List out all the resources, and any filtering options from the URL."""
         # Add type filtering if the request is made to somewhere like /resources/video.
         # We also convert all spaces to dashes, so they'll correspond with the filters.
