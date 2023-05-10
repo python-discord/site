@@ -30,12 +30,12 @@ class MessageDeletionContext(ModelReprMixin, models.Model):
         help_text="When this deletion took place."
     )
 
-    @property
-    def log_url(self) -> str:
-        """Create the url for the deleted message logs."""
-        return reverse('staff:logs', args=(self.id,))
-
     class Meta:
         """Set the ordering for list views to newest first."""
 
         ordering = ("-creation",)
+
+    @property
+    def log_url(self) -> str:
+        """Create the url for the deleted message logs."""
+        return reverse('staff:logs', args=(self.id,))

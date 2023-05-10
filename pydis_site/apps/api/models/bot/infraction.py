@@ -78,15 +78,6 @@ class Infraction(ModelReprMixin, models.Model):
         )
     )
 
-    def __str__(self):
-        """Returns some info on the current infraction, for display purposes."""
-        s = f"#{self.id}: {self.type} on {self.user_id}"
-        if self.expires_at:
-            s += f" until {self.expires_at}"
-        if self.hidden:
-            s += " (hidden)"
-        return s
-
     class Meta:
         """Defines the meta options for the infraction model."""
 
@@ -98,3 +89,12 @@ class Infraction(ModelReprMixin, models.Model):
                 name="unique_active_infraction_per_type_per_user"
             ),
         )
+
+    def __str__(self):
+        """Returns some info on the current infraction, for display purposes."""
+        s = f"#{self.id}: {self.type} on {self.user_id}"
+        if self.expires_at:
+            s += f" until {self.expires_at}"
+        if self.hidden:
+            s += " (hidden)"
+        return s

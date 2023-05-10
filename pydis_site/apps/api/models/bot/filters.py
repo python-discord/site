@@ -231,13 +231,13 @@ class FilterBase(ModelTimestampMixin, ModelReprMixin, models.Model):
         null=True
     )
 
-    def __str__(self) -> str:
-        return f"Filter {self.content!r}"
-
     class Meta:
         """Metaclass for FilterBase to make it abstract model."""
 
         abstract = True
+
+    def __str__(self) -> str:
+        return f"Filter {self.content!r}"
 
 
 class Filter(FilterBase):

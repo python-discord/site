@@ -58,6 +58,11 @@ class Message(ModelReprMixin, models.Model):
         help_text="Attachments attached to this message."
     )
 
+    class Meta:
+        """Metadata provided for Django's ORM."""
+
+        abstract = True
+
     @property
     def timestamp(self) -> datetime.datetime:
         """Attribute that represents the message timestamp as derived from the snowflake id."""
@@ -65,8 +70,3 @@ class Message(ModelReprMixin, models.Model):
             ((self.id >> 22) + 1420070400000) / 1000,
             tz=datetime.timezone.utc,
         )
-
-    class Meta:
-        """Metadata provided for Django's ORM."""
-
-        abstract = True
