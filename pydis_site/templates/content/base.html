@@ -37,7 +37,7 @@
                 {% include "content/dropdown.html" %}
             {% endif %}
             {# Edit on GitHub for content articles #}
-            {% if page %}
+            {% if page and not tag %}
                 <div id="edit-on-github">
                     <a href="{{ request.path | page_src_url }}">
                         <i class="fa-solid fa-pencil"></i>
