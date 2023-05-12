@@ -37,11 +37,11 @@ class DocumentationLink(ModelReprMixin, models.Model):
         help_text="The URL at which the Sphinx inventory is available for this package."
     )
 
-    def __str__(self):
-        """Returns the package and URL for the current documentation link, for display purposes."""
-        return f"{self.package} - {self.base_url}"
-
     class Meta:
         """Defines the meta options for the documentation link model."""
 
         ordering = ['package']
+
+    def __str__(self):
+        """Returns the package and URL for the current documentation link, for display purposes."""
+        return f"{self.package} - {self.base_url}"

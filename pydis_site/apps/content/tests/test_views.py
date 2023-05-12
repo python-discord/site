@@ -387,6 +387,14 @@ class TagViewTests(django.test.TestCase):
             response.context.get("page")
         )
 
+    def test_tags_have_no_edit_on_github_link(self):
+        """Tags should not have the standard edit on GitHub link."""
+        # The standard "Edit on GitHub" link should not be displayed on tags
+        # because they have their own GitHub icon that links there.
+        Tag.objects.create(name="example", body="Joe William Banks", last_commit=self.commit)
+        response = self.client.get("/pages/tags/example/")
+        self.assertNotContains(response, "Edit on GitHub")
+
     def test_tag_root_page(self):
         """Test the root tag page which lists all tags."""
         Tag.objects.create(name="tag-1", last_commit=self.commit)
