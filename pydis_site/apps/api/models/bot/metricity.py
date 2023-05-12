@@ -3,10 +3,11 @@ from django.db import connections
 
 BLOCK_INTERVAL = 10 * 60  # 10 minute blocks
 
-EXCLUDE_CHANNELS = (
+# This needs to be a list due to psycopg3 type adaptions.
+EXCLUDE_CHANNELS = [
     "267659945086812160",  # Bot commands
     "607247579608121354"  # SeasonalBot commands
-)
+]
 
 
 class NotFoundError(Exception):
@@ -48,7 +49,7 @@ class Metricity:
             WHERE
                 author_id = '%s'
                 AND NOT is_deleted
-                AND channel_id NOT IN %s
+                AND channel_id != ANY(%s)
             """,
             [user_id, EXCLUDE_CHANNELS]
         )
@@ -76,7 +77,7 @@ class Metricity:
                 WHERE
                     author_id='%s'
                     AND NOT is_deleted
-                    AND channel_id NOT IN %s
+                    AND channel_id != ANY(%s)
                 GROUP BY interval
             ) block_query;
             """,
@@ -144,13 +145,13 @@ class Metricity:
                 author_id, COUNT(*)
             FROM messages
             WHERE
-                author_id IN %s
+                author_id = ANY(%s)
                 AND NOT is_deleted
-                AND channel_id NOT IN %s
+                AND channel_id != ANY(%s)
                 AND created_at > now() - interval '%s days'
             GROUP BY author_id
             """,
-            [tuple(user_ids), EXCLUDE_CHANNELS, days]
+            [user_ids, EXCLUDE_CHANNELS, days]
         )
         values = self.cursor.fetchall()
 
