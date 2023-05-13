@@ -1,4 +1,4 @@
-from datetime import datetime as dt, timedelta, timezone
+from datetime import UTC, datetime as dt, timedelta
 
 from django.urls import reverse
 
@@ -38,7 +38,7 @@ class CreationTests(AuthenticatedAPITestCase):
         )
         self.assertAlmostEqual(
             nomination.inserted_at,
-            dt.now(timezone.utc),
+            dt.now(UTC),
             delta=timedelta(seconds=2)
         )
         self.assertEqual(nomination.user.id, data['user'])
@@ -319,7 +319,7 @@ class NominationTests(AuthenticatedAPITestCase):
 
         self.assertAlmostEqual(
             nomination.ended_at,
-            dt.now(timezone.utc),
+            dt.now(UTC),
             delta=timedelta(seconds=2)
         )
         self.assertFalse(nomination.active)

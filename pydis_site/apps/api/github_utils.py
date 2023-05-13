@@ -82,7 +82,7 @@ def generate_token() -> str:
     Refer to:
     https://docs.github.com/en/developers/apps/building-github-apps/authenticating-with-github-apps#authenticating-as-a-github-app
     """
-    now = datetime.datetime.now(tz=datetime.timezone.utc)
+    now = datetime.datetime.now(tz=datetime.UTC)
     return jwt.encode(
         {
             "iat": math.floor((now - datetime.timedelta(seconds=60)).timestamp()),  # Issued at
@@ -148,9 +148,9 @@ def check_run_status(run: WorkflowRun) -> str:
     created_at = (
         datetime.datetime
         .strptime(run.created_at, settings.GITHUB_TIMESTAMP_FORMAT)
-        .replace(tzinfo=datetime.timezone.utc)
+        .replace(tzinfo=datetime.UTC)
     )
-    run_time = datetime.datetime.now(tz=datetime.timezone.utc) - created_at
+    run_time = datetime.datetime.now(tz=datetime.UTC) - created_at
 
     if run.status != "completed":
         if run_time <= MAX_RUN_TIME:
