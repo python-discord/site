@@ -10,16 +10,11 @@ repos:
         args: [--fix=lf]
       - id: trailing-whitespace
         args: [--markdown-linebreak-ext=md]
-  - repo: https://github.com/pre-commit/pygrep-hooks
-    rev: v1.5.1
-    hooks:
-      - id: python-check-blanket-noqa
   - repo: local
     hooks:
-      - id: flake8
-        name: Flake8
-        description: This hook runs flake8 within our project's environment.
-        entry: poetry run flake8
+      - id: ruff
+        name: ruff
+        description: This hook runs ruff within our project's environment.
+        entry: poetry run ruff
         language: system
         types: [python]
-        require_serial: true

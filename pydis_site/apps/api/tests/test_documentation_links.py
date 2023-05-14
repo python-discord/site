@@ -1,7 +1,7 @@
 from django.urls import reverse
 
 from .base import AuthenticatedAPITestCase
-from ..models import DocumentationLink
+from pydis_site.apps.api.models import DocumentationLink
 
 
 class UnauthedDocumentationLinkAPITests(AuthenticatedAPITestCase):

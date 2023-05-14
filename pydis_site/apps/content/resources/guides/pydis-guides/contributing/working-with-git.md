@@ -19,5 +19,7 @@ Below are links to regular workflows for working with Git using PyCharm or the C
 **Resources to learn Git**
 
 * [The Git Book](https://git-scm.com/book)
-* [Corey Schafer's Youtube Tutorials](https://www.youtube.com/watch?v=HVsySz-h9r4&list=PL-osiE80TeTuRUfjRe54Eea17-YfnOOAx)
-* [GitHub Git Resources Portal](https://try.github.io/)
+* [Corey Schafer's YouTube tutorials](https://www.youtube.com/watch?v=HVsySz-h9r4&list=PL-osiE80TeTuRUfjRe54Eea17-YfnOOAx)
+* [GitHub Git resources portal](https://try.github.io/)
+* [Git cheatsheet](https://education.github.com/git-cheat-sheet-education.pdf)
+* [Learn Git branching](https://learngitbranching.js.org)

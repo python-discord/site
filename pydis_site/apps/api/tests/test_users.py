@@ -4,9 +4,9 @@ from unittest.mock import Mock, patch
 from django.urls import reverse
 
 from .base import AuthenticatedAPITestCase
-from ..models import Infraction, Role, User
-from ..models.bot.metricity import NotFoundError
-from ..viewsets.bot.user import UserListPagination
+from pydis_site.apps.api.models import Infraction, Role, User
+from pydis_site.apps.api.models.bot.metricity import NotFoundError
+from pydis_site.apps.api.viewsets.bot.user import UserListPagination
 
 
 class UnauthedUserAPITests(AuthenticatedAPITestCase):
@@ -469,18 +469,17 @@ class UserMetricityTests(AuthenticatedAPITestCase):
             with self.subTest(
                 voice_infractions=case['voice_infractions'],
                 voice_gate_blocked=case['voice_gate_blocked']
-            ):
-                with patch("pydis_site.apps.api.viewsets.bot.user.Infraction.objects.filter") as p:
-                    p.return_value = case['voice_infractions']
+            ), patch("pydis_site.apps.api.viewsets.bot.user.Infraction.objects.filter") as p:
+                p.return_value = case['voice_infractions']
 
-                    url = reverse('api:bot:user-metricity-data', args=[0])
-                    response = self.client.get(url)
+                url = reverse('api:bot:user-metricity-data', args=[0])
+                response = self.client.get(url)
 
-                    self.assertEqual(response.status_code, 200)
-                    self.assertEqual(
-                        response.json()["voice_gate_blocked"],
-                        case["voice_gate_blocked"]
-                    )
+                self.assertEqual(response.status_code, 200)
+                self.assertEqual(
+                    response.json()["voice_gate_blocked"],
+                    case["voice_gate_blocked"]
+                )
 
     def test_metricity_review_data(self):
         # Given
@@ -501,6 +500,90 @@ class UserMetricityTests(AuthenticatedAPITestCase):
             "top_channel_activity": channel_activity,
             "total_messages": total_messages
         })
+
+    def test_metricity_activity_data(self):
+        # Given
+        self.mock_no_metricity_user()  # Other functions shouldn't be used.
+        self.metricity.total_messages_in_past_n_days.return_value = [(0, 10)]
+
+        # When
+        url = reverse("api:bot:user-metricity-activity-data")
+        response = self.client.post(
+            url,
+            data=[0, 1],
+            QUERY_STRING="days=10",
+        )
+
+        # Then
+        self.assertEqual(response.status_code, 200)
+        self.metricity.total_messages_in_past_n_days.assert_called_once_with(["0", "1"], 10)
+        self.assertEqual(response.json(), {"0": 10, "1": 0})
+
+    def test_metricity_activity_data_invalid_days(self):
+        # Given
+        self.mock_no_metricity_user()  # Other functions shouldn't be used.
+
+        # When
+        url = reverse("api:bot:user-metricity-activity-data")
+        response = self.client.post(
+            url,
+            data=[0, 1],
+            QUERY_STRING="days=fifty",
+        )
+
+        # Then
+        self.assertEqual(response.status_code, 400)
+        self.metricity.total_messages_in_past_n_days.assert_not_called()
+        self.assertEqual(response.json(), {"days": ["This query parameter must be an integer."]})
+
+    def test_metricity_activity_data_no_days(self):
+        # Given
+        self.mock_no_metricity_user()  # Other functions shouldn't be used.
+
+        # When
+        url = reverse('api:bot:user-metricity-activity-data')
+        response = self.client.post(
+            url,
+            data=[0, 1],
+        )
+
+        # Then
+        self.assertEqual(response.status_code, 400)
+        self.metricity.total_messages_in_past_n_days.assert_not_called()
+        self.assertEqual(response.json(), {'days': ["This query parameter is required."]})
+
+    def test_metricity_activity_data_no_users(self):
+        # Given
+        self.mock_no_metricity_user()  # Other functions shouldn't be used.
+
+        # When
+        url = reverse('api:bot:user-metricity-activity-data')
+        response = self.client.post(
+            url,
+            QUERY_STRING="days=10",
+        )
+
+        # Then
+        self.assertEqual(response.status_code, 400)
+        self.metricity.total_messages_in_past_n_days.assert_not_called()
+        self.assertEqual(response.json(), ['Expected a list of items but got type "dict".'])
+
+    def test_metricity_activity_data_invalid_users(self):
+        # Given
+        self.mock_no_metricity_user()  # Other functions shouldn't be used.
+
+        # When
+        url = reverse('api:bot:user-metricity-activity-data')
+        response = self.client.post(
+            url,
+            data=[123, 'username'],
+            QUERY_STRING="days=10",
+        )
+
+        # Then
+        self.assertEqual(response.status_code, 400)
+        self.metricity.total_messages_in_past_n_days.assert_not_called()
+        self.assertEqual(response.json(), {'1': ['A valid integer is required.']})
 
     def mock_metricity_user(self, joined_at, total_messages, total_blocks, top_channel_activity):
         patcher = patch("pydis_site.apps.api.viewsets.bot.user.Metricity")

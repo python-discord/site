@@ -1,19 +1,18 @@
-from typing import List, Tuple
 
 from django.db import connections
 
 BLOCK_INTERVAL = 10 * 60  # 10 minute blocks
 
-EXCLUDE_CHANNELS = (
+# This needs to be a list due to psycopg3 type adaptions.
+EXCLUDE_CHANNELS = [
     "267659945086812160",  # Bot commands
     "607247579608121354"  # SeasonalBot commands
-)
+]
 
 
-class NotFoundError(Exception):  # noqa: N818
+class NotFoundError(Exception):
     """Raised when an entity cannot be found."""
 
-    pass
 
 
 class Metricity:
@@ -31,15 +30,14 @@ class Metricity:
     def user(self, user_id: str) -> dict:
         """Query a user's data."""
         # TODO: Swap this back to some sort of verified at date
-        columns = ["joined_at"]
-        query = f"SELECT {','.join(columns)} FROM users WHERE id = '%s'"
+        query = "SELECT joined_at FROM users WHERE id = '%s'"
         self.cursor.execute(query, [user_id])
         values = self.cursor.fetchone()
 
         if not values:
-            raise NotFoundError()
+            raise NotFoundError
 
-        return dict(zip(columns, values))
+        return {'joined_at': values[0]}
 
     def total_messages(self, user_id: str) -> int:
         """Query total number of messages for a user."""
@@ -51,14 +49,14 @@ class Metricity:
             WHERE
                 author_id = '%s'
                 AND NOT is_deleted
-                AND channel_id NOT IN %s
+                AND channel_id != ANY(%s)
             """,
             [user_id, EXCLUDE_CHANNELS]
         )
         values = self.cursor.fetchone()
 
         if not values:
-            raise NotFoundError()
+            raise NotFoundError
 
         return values[0]
 
@@ -79,7 +77,7 @@ class Metricity:
                 WHERE
                     author_id='%s'
                     AND NOT is_deleted
-                    AND channel_id NOT IN %s
+                    AND channel_id != ANY(%s)
                 GROUP BY interval
             ) block_query;
             """,
@@ -88,11 +86,11 @@ class Metricity:
         values = self.cursor.fetchone()
 
         if not values:
-            raise NotFoundError()
+            raise NotFoundError
 
         return values[0]
 
-    def top_channel_activity(self, user_id: str) -> List[Tuple[str, int]]:
+    def top_channel_activity(self, user_id: str) -> list[tuple[str, int]]:
         """
         Query the top three channels in which the user is most active.
 
@@ -127,6 +125,34 @@ class Metricity:
         values = self.cursor.fetchall()
 
         if not values:
-            raise NotFoundError()
+            raise NotFoundError
+
+        return values
+
+    def total_messages_in_past_n_days(
+        self,
+        user_ids: list[str],
+        days: int
+    ) -> list[tuple[str, int]]:
+        """
+        Query activity by a list of users in the past `days` days.
+
+        Returns a list of (user_id, message_count) tuples.
+        """
+        self.cursor.execute(
+            """
+            SELECT
+                author_id, COUNT(*)
+            FROM messages
+            WHERE
+                author_id = ANY(%s)
+                AND NOT is_deleted
+                AND channel_id != ANY(%s)
+                AND created_at > now() - interval '%s days'
+            GROUP BY author_id
+            """,
+            [user_ids, EXCLUDE_CHANNELS, days]
+        )
+        values = self.cursor.fetchall()
 
         return values

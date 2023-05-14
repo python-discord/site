@@ -4,7 +4,7 @@ from django.forms.models import model_to_dict
 from django.urls import reverse
 
 from .base import AuthenticatedAPITestCase
-from ..models import Reminder, User
+from pydis_site.apps.api.models import Reminder, User
 
 
 class UnauthedReminderAPITests(AuthenticatedAPITestCase):
@@ -59,7 +59,7 @@ class ReminderCreationTests(AuthenticatedAPITestCase):
         data = {
             'author': self.author.id,
             'content': 'Remember to...wait what was it again?',
-            'expiration': datetime.utcnow().isoformat(),
+            'expiration': datetime.now(tz=timezone.utc).isoformat(),
             'jump_url': "https://www.google.com",
             'channel_id': 123,
             'mentions': [8888, 9999],

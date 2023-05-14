@@ -6,8 +6,9 @@ from django.test import SimpleTestCase, TestCase
 from pydis_site.apps.api.models import (
     DeletedMessage,
     DocumentationLink,
+    Filter,
+    FilterList,
     Infraction,
-    Message,
     MessageDeletionContext,
     Nomination,
     NominationEntry,
@@ -105,10 +106,19 @@ class StringDunderMethodTests(SimpleTestCase):
             DocumentationLink(
                 'test', 'http://example.com', 'http://example.com'
             ),
+            FilterList(
+                name="forbidden_duckies",
+                list_type=0,
+            ),
+            Filter(
+                content="ducky_nsfw",
+                description="This ducky is totally inappropriate!",
+                additional_settings=None,
+            ),
             OffensiveMessage(
                 id=602951077675139072,
                 channel_id=291284109232308226,
-                delete_date=dt(3000, 1, 1)
+                delete_date=dt(3000, 1, 1, tzinfo=timezone.utc)
             ),
             OffTopicChannelName(name='bob-the-builders-playground'),
             Role(
@@ -116,24 +126,13 @@ class StringDunderMethodTests(SimpleTestCase):
                 colour=0x5, permissions=0,
                 position=10,
             ),
-            Message(
-                id=45,
-                author=User(
-                    id=444,
-                    name='bill',
-                    discriminator=5,
-                ),
-                channel_id=666,
-                content="wooey",
-                embeds=[]
-            ),
             MessageDeletionContext(
                 actor=User(
                     id=5555,
                     name='shawn',
                     discriminator=555,
                 ),
-                creation=dt.utcnow()
+                creation=dt.now(tz=timezone.utc)
             ),
             User(
                 id=5,

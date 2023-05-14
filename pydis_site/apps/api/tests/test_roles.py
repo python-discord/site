@@ -1,7 +1,7 @@
 from django.urls import reverse
 
 from .base import AuthenticatedAPITestCase
-from ..models import Role, User
+from pydis_site.apps.api.models import Role, User
 
 
 class CreationTests(AuthenticatedAPITestCase):

@@ -172,7 +172,7 @@ class NominationViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
     serializer_class = NominationSerializer
     queryset = Nomination.objects.all()
     filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
-    filter_fields = ('user__id', 'active')
+    filterset_fields = ('user__id', 'active')
     frozen_fields = ('id', 'inserted_at', 'user', 'ended_at')
     frozen_on_create = ('ended_at', 'end_reason', 'active', 'inserted_at', 'reviewed')
 
@@ -273,6 +273,11 @@ class NominationViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
                     {'reviewed': ['This field cannot be set while you are ending a nomination.']}
                 )
 
+            if 'thread_id' in request.data:
+                raise ValidationError(
+                    {'thread_id': ['This field cannot be set when ending a nomination.']}
+                )
+
             instance.ended_at = timezone.now()
 
         elif 'active' in data:
@@ -281,13 +286,15 @@ class NominationViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
                 {'active': ['This field can only be used to end a nomination']}
             )
 
-        # This is actually covered, but for some reason coverage don't think so.
-        elif 'reviewed' in request.data:  # pragma: no cover
-            # 4. We are altering the reviewed state of the nomination.
-            if not instance.active:
-                raise ValidationError(
-                    {'reviewed': ['This field cannot be set if the nomination is inactive.']}
-                )
+        elif not instance.active and 'reviewed' in request.data:
+            raise ValidationError(
+                {'reviewed': ['This field cannot be set if the nomination is inactive.']}
+            )
+
+        elif not instance.active and 'thread_id' in request.data:
+            raise ValidationError(
+                {'thread_id': ['This field cannot be set if the nomination is inactive.']}
+            )
 
         if 'reason' in request.data:
             if 'actor' not in request.data:

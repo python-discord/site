@@ -1,9 +1,8 @@
-from datetime import datetime
+import datetime
 
 from django.db import IntegrityError
 from django.db.models import QuerySet
 from django.http.request import HttpRequest
-from django.utils import timezone
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.decorators import action
 from rest_framework.exceptions import ValidationError
@@ -73,7 +72,8 @@ class InfractionViewSet(
     ...         'type': 'ban',
     ...         'reason': 'He terk my jerb!',
     ...         'hidden': True,
-    ...         'dm_sent': True
+    ...         'dm_sent': True,
+    ...         'jump_url': '<discord message link>'
     ...     }
     ... ]
 
@@ -104,7 +104,8 @@ class InfractionViewSet(
     ...     'type': 'ban',
     ...     'reason': 'He terk my jerb!',
     ...     'user': 172395097705414656,
-    ...     'dm_sent': False
+    ...     'dm_sent': False,
+    ...     'jump_url': '<discord message link>'
     ... }
 
     #### Response format
@@ -139,7 +140,7 @@ class InfractionViewSet(
 
     #### Status codes
     - 204: returned on success
-    - 404: if a infraction with the given `id` does not exist
+    - 404: if an infraction with the given `id` does not exist
 
     ### Expanded routes
     All routes support expansion of `user` and `actor` in responses. To use an expanded route,
@@ -154,7 +155,7 @@ class InfractionViewSet(
     queryset = Infraction.objects.all()
     pagination_class = LimitOffsetPaginationExtended
     filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
-    filter_fields = ('user__id', 'actor__id', 'active', 'hidden', 'type')
+    filterset_fields = ('user__id', 'actor__id', 'active', 'hidden', 'type')
     search_fields = ('$reason',)
     frozen_fields = ('id', 'inserted_at', 'type', 'user', 'actor', 'hidden')
 
@@ -185,23 +186,21 @@ class InfractionViewSet(
         filter_expires_after = self.request.query_params.get('expires_after')
         if filter_expires_after:
             try:
-                expires_after_parsed = datetime.fromisoformat(filter_expires_after)
+                expires_after_parsed = datetime.datetime.fromisoformat(filter_expires_after)
             except ValueError:
                 raise ValidationError({'expires_after': ['failed to convert to datetime']})
-            additional_filters['expires_at__gte'] = timezone.make_aware(
-                expires_after_parsed,
-                timezone=timezone.utc,
+            additional_filters['expires_at__gte'] = expires_after_parsed.replace(
+                tzinfo=datetime.timezone.utc
             )
 
         filter_expires_before = self.request.query_params.get('expires_before')
         if filter_expires_before:
             try:
-                expires_before_parsed = datetime.fromisoformat(filter_expires_before)
+                expires_before_parsed = datetime.datetime.fromisoformat(filter_expires_before)
             except ValueError:
                 raise ValidationError({'expires_before': ['failed to convert to datetime']})
-            additional_filters['expires_at__lte'] = timezone.make_aware(
-                expires_before_parsed,
-                timezone=timezone.utc,
+            additional_filters['expires_at__lte'] = expires_before_parsed.replace(
+                tzinfo=datetime.timezone.utc
             )
 
         if 'expires_at__lte' in additional_filters and 'expires_at__gte' in additional_filters:

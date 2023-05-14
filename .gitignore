@@ -36,6 +36,7 @@ pip-log.txt
 pip-delete-this-directory.txt
 
 # Unit test / coverage reports
+*.lcov
 htmlcov/
 .tox/
 .coverage
@@ -132,3 +133,6 @@ log.*
 
 # Mac/OSX
 .DS_Store
+
+# Private keys
+*.pem

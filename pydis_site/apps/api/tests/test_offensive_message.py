@@ -3,13 +3,13 @@ import datetime
 from django.urls import reverse
 
 from .base import AuthenticatedAPITestCase
-from ..models import OffensiveMessage
+from pydis_site.apps.api.models import OffensiveMessage
 
 
 class CreationTests(AuthenticatedAPITestCase):
     def test_accept_valid_data(self):
         url = reverse('api:bot:offensivemessage-list')
-        delete_at = datetime.datetime.now() + datetime.timedelta(days=1)
+        delete_at = datetime.datetime.now() + datetime.timedelta(days=1)  # noqa: DTZ005
         data = {
             'id': '602951077675139072',
             'channel_id': '291284109232308226',
@@ -32,7 +32,7 @@ class CreationTests(AuthenticatedAPITestCase):
 
     def test_returns_400_on_non_future_date(self):
         url = reverse('api:bot:offensivemessage-list')
-        delete_at = datetime.datetime.now() - datetime.timedelta(days=1)
+        delete_at = datetime.datetime.now() - datetime.timedelta(days=1)  # noqa: DTZ005
         data = {
             'id': '602951077675139072',
             'channel_id': '291284109232308226',
@@ -46,7 +46,7 @@ class CreationTests(AuthenticatedAPITestCase):
 
     def test_returns_400_on_negative_id_or_channel_id(self):
         url = reverse('api:bot:offensivemessage-list')
-        delete_at = datetime.datetime.now() + datetime.timedelta(days=1)
+        delete_at = datetime.datetime.now() + datetime.timedelta(days=1)  # noqa: DTZ005
         data = {
             'id': '602951077675139072',
             'channel_id': '291284109232308226',
@@ -72,7 +72,7 @@ class CreationTests(AuthenticatedAPITestCase):
 class ListTests(AuthenticatedAPITestCase):
     @classmethod
     def setUpTestData(cls):
-        delete_at = datetime.datetime.now() + datetime.timedelta(days=1)
+        delete_at = datetime.datetime.now() + datetime.timedelta(days=1)  # noqa: DTZ005
         aware_delete_at = delete_at.replace(tzinfo=datetime.timezone.utc)
 
         cls.messages = [

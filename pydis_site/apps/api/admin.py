@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import json
-from typing import Iterable, Optional, Tuple
+from collections.abc import Iterable
 
 from django import urls
 from django.contrib import admin
@@ -13,6 +13,8 @@ from .models import (
     BotSetting,
     DeletedMessage,
     DocumentationLink,
+    Filter,
+    FilterList,
     Infraction,
     MessageDeletionContext,
     Nomination,
@@ -60,16 +62,16 @@ class InfractionActorFilter(admin.SimpleListFilter):
     title = "Actor"
     parameter_name = "actor"
 
-    def lookups(self, request: HttpRequest, model: NominationAdmin) -> Iterable[Tuple[int, str]]:
+    def lookups(self, request: HttpRequest, model: NominationAdmin) -> Iterable[tuple[int, str]]:
         """Selectable values for viewer to filter by."""
         actor_ids = Infraction.objects.order_by().values_list("actor").distinct()
         actors = User.objects.filter(id__in=actor_ids)
         return ((a.id, a.username) for a in actors)
 
-    def queryset(self, request: HttpRequest, queryset: QuerySet) -> Optional[QuerySet]:
+    def queryset(self, request: HttpRequest, queryset: QuerySet) -> QuerySet | None:
         """Query to filter the list of Users against."""
         if not self.value():
-            return
+            return None
         return queryset.filter(actor__id=self.value())
 
 
@@ -147,7 +149,7 @@ class DeletedMessageAdmin(admin.ModelAdmin):
 
     list_display = ("id", "author", "channel_id")
 
-    def embed_data(self, message: DeletedMessage) -> Optional[str]:
+    def embed_data(self, message: DeletedMessage) -> str | None:
         """Format embed data in a code block for better readability."""
         if message.embeds:
             return format_html(
@@ -155,6 +157,7 @@ class DeletedMessageAdmin(admin.ModelAdmin):
                 "<code>{0}</code></pre>",
                 json.dumps(message.embeds, indent=4)
             )
+        return None
 
     embed_data.short_description = "Embeds"
 
@@ -194,6 +197,16 @@ class DeletedMessageInline(admin.TabularInline):
     model = DeletedMessage
 
 
+@admin.register(FilterList)
+class FilterListAdmin(admin.ModelAdmin):
+    """Admin formatting for the FilterList model."""
+
+
+@admin.register(Filter)
+class FilterAdmin(admin.ModelAdmin):
+    """Admin formatting for the Filter model."""
+
+
 @admin.register(MessageDeletionContext)
 class MessageDeletionContextAdmin(admin.ModelAdmin):
     """Admin formatting for the MessageDeletionContext model."""
@@ -217,16 +230,16 @@ class NominationActorFilter(admin.SimpleListFilter):
     title = "Actor"
     parameter_name = "actor"
 
-    def lookups(self, request: HttpRequest, model: NominationAdmin) -> Iterable[Tuple[int, str]]:
+    def lookups(self, request: HttpRequest, model: NominationAdmin) -> Iterable[tuple[int, str]]:
         """Selectable values for viewer to filter by."""
         actor_ids = NominationEntry.objects.order_by().values_list("actor").distinct()
         actors = User.objects.filter(id__in=actor_ids)
         return ((a.id, a.username) for a in actors)
 
-    def queryset(self, request: HttpRequest, queryset: QuerySet) -> Optional[QuerySet]:
+    def queryset(self, request: HttpRequest, queryset: QuerySet) -> QuerySet | None:
         """Query to filter the list of Users against."""
         if not self.value():
-            return
+            return None
         nomination_ids = NominationEntry.objects.filter(
             actor__id=self.value()
         ).values_list("nomination_id").distinct()
@@ -280,16 +293,16 @@ class NominationEntryActorFilter(admin.SimpleListFilter):
     title = "Actor"
     parameter_name = "actor"
 
-    def lookups(self, request: HttpRequest, model: NominationAdmin) -> Iterable[Tuple[int, str]]:
+    def lookups(self, request: HttpRequest, model: NominationAdmin) -> Iterable[tuple[int, str]]:
         """Selectable values for viewer to filter by."""
         actor_ids = NominationEntry.objects.order_by().values_list("actor").distinct()
         actors = User.objects.filter(id__in=actor_ids)
         return ((a.id, a.username) for a in actors)
 
-    def queryset(self, request: HttpRequest, queryset: QuerySet) -> Optional[QuerySet]:
+    def queryset(self, request: HttpRequest, queryset: QuerySet) -> QuerySet | None:
         """Query to filter the list of Users against."""
         if not self.value():
-            return
+            return None
         return queryset.filter(actor__id=self.value())
 
 
@@ -413,15 +426,15 @@ class UserRoleFilter(admin.SimpleListFilter):
     title = "Role"
     parameter_name = "role"
 
-    def lookups(self, request: HttpRequest, model: UserAdmin) -> Iterable[Tuple[str, str]]:
+    def lookups(self, request: HttpRequest, model: UserAdmin) -> Iterable[tuple[str, str]]:
         """Selectable values for viewer to filter by."""
         roles = Role.objects.all()
         return ((r.name, r.name) for r in roles)
 
-    def queryset(self, request: HttpRequest, queryset: QuerySet) -> Optional[QuerySet]:
+    def queryset(self, request: HttpRequest, queryset: QuerySet) -> QuerySet | None:
         """Query to filter the list of Users against."""
         if not self.value():
-            return
+            return None
         role = Role.objects.get(name=self.value())
         return queryset.filter(roles__contains=[role.id])
 

@@ -1,5 +1,6 @@
 {% extends 'base/base.html' %}
 {% load static %}
+{% load page_src %}
 
 {% block title %}{{ page_title }}{% endblock %}
 {% block head %}
@@ -8,6 +9,10 @@
     <meta property="og:description" content="{{ page_description }}" />
     <link rel="stylesheet" href="{% static "css/content/page.css" %}">
     <link rel="stylesheet" href="{% static "css/collapsibles.css" %}">
+    <link rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/styles/atom-one-dark.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
     <script src="{% static "js/collapsibles.js" %}"></script>
 {% endblock %}
 
@@ -25,9 +30,20 @@
                     <li class="is-active"><a href="#">{{ page_title }}</a></li>
                 </ul>
             </nav>
+        </div>
+        <div class="is-flex is-pulled-right is-right">
             {# Sub-Article dropdown for category pages #}
             {% if subarticles %}
                 {% include "content/dropdown.html" %}
+            {% endif %}
+            {# Edit on GitHub for content articles #}
+            {% if page and not tag %}
+                <div id="edit-on-github">
+                    <a href="{{ request.path | page_src_url }}">
+                        <i class="fa-solid fa-pencil"></i>
+                        Edit on GitHub
+                    </a>
+                </div>
             {% endif %}
         </div>
     </section>
@@ -35,7 +51,7 @@
     <section class="section">
         <div class="container">
             <div class="content">
-                <h1 class="title">{{ page_title }}</h1>
+                <h1 class="title">{% block title_element %}{{ page_title }}{% endblock %}</h1>
                 {% block page_content %}{% endblock %}
             </div>
         </div>

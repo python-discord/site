@@ -26,7 +26,7 @@ If none of the above steps help you or you're not sure how to do some of the abo
 
 # A Good Question
 
-When you're ready to ask a question, there's a few things you should have to hand before forming a query.
+When you're ready to ask a question, there are a few things you should have to hand before forming a query.
 
 * A code example that illustrates your problem
 * If possible, make this a minimal example rather than an entire application

@@ -7,6 +7,7 @@ from pathlib import Path
 import django
 from django.contrib.auth import get_user_model
 from django.core.management import call_command, execute_from_command_line
+from django.test.utils import ignore_warnings
 
 DEFAULT_ENVS = {
     "DJANGO_SETTINGS_MODULE": "pydis_site.settings",
@@ -95,13 +96,15 @@ class SiteManager:
                 name="pythondiscord.local:8000"
             )
 
-    def prepare_server(self) -> None:
-        """Perform preparation tasks before running the server."""
+    def prepare_environment(self) -> None:
+        """Perform common preparation tasks."""
         django.setup()
 
         print("Applying migrations.")
         call_command("migrate", verbosity=self.verbosity)
 
+    def prepare_server(self) -> None:
+        """Preform runserver-specific preparation tasks."""
         if self.debug:
             # In Production, collectstatic is ran in the Docker image
             print("Collecting static files.")
@@ -121,6 +124,7 @@ class SiteManager:
 
         # Prevent preparing twice when in dev mode due to reloader
         if not self.debug or in_reloader:
+            self.prepare_environment()
             self.prepare_server()
 
         print("Starting server.")
@@ -148,6 +152,20 @@ class SiteManager:
         # Run gunicorn for the production server.
         gunicorn.app.wsgiapp.run()
 
+    def run_tests(self) -> None:
+        """Prepare and run the test suite."""
+        self.prepare_environment()
+        # The whitenoise package expects a staticfiles directory to exist during startup,
+        # else it raises a warning. This is fine under normal application, but during
+        # tests, staticfiles are not, and do not need to be generated.
+        # The following line suppresses the warning.
+        # Reference: https://github.com/evansd/whitenoise/issues/215
+        with ignore_warnings(
+            message=r"No directory at: .*staticfiles",
+            module="whitenoise.base",
+        ):
+            call_command(*sys.argv[1:])
+
 
 def clean_up_static_files(build_folder: Path) -> None:
     """Recursively loop over the build directory and fix links."""
@@ -168,12 +186,16 @@ def clean_up_static_files(build_folder: Path) -> None:
 def main() -> None:
     """Entry point for Django management script."""
     # Use the custom site manager for launching the server
-    if len(sys.argv) > 1 and sys.argv[1] == "run":
-        SiteManager(sys.argv).run_server()
+    if len(sys.argv) > 1 and sys.argv[1] in ("run", "test"):
+        manager = SiteManager(sys.argv)
+        if sys.argv[1] == "run":
+            manager.run_server()
+        elif sys.argv[1] == "test":
+            manager.run_tests()
 
     # Pass any others directly to standard management commands
     else:
-        _static_build = "distill" in sys.argv[1]
+        _static_build = len(sys.argv) > 1 and "distill" in sys.argv[1]
 
         if _static_build:
             # Build a static version of the site with no databases and API support

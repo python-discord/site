@@ -61,6 +61,7 @@ class AuthenticatedAPITestCase(APITestCase):
     ...         self.assertEqual(response.status_code, 200)
     """
 
-    def setUp(self):
+    def setUp(self) -> None:
+        """Bootstrap the user and authenticate it."""
         super().setUp()
         self.client.force_authenticate(test_user)
