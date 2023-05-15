@@ -16,7 +16,7 @@ class CreationTests(AuthenticatedAPITestCase):
             'delete_date': delete_at.isoformat()[:-1]
         }
 
-        aware_delete_at = delete_at.replace(tzinfo=datetime.timezone.utc)
+        aware_delete_at = delete_at.replace(tzinfo=datetime.UTC)
 
         response = self.client.post(url, data=data)
         self.assertEqual(response.status_code, 201)
@@ -73,7 +73,7 @@ class ListTests(AuthenticatedAPITestCase):
     @classmethod
     def setUpTestData(cls):
         delete_at = datetime.datetime.now() + datetime.timedelta(days=1)  # noqa: DTZ005
-        aware_delete_at = delete_at.replace(tzinfo=datetime.timezone.utc)
+        aware_delete_at = delete_at.replace(tzinfo=datetime.UTC)
 
         cls.messages = [
             {
@@ -111,7 +111,7 @@ class ListTests(AuthenticatedAPITestCase):
 class DeletionTests(AuthenticatedAPITestCase):
     @classmethod
     def setUpTestData(cls):
-        delete_at = datetime.datetime.now(tz=datetime.timezone.utc) + datetime.timedelta(days=1)
+        delete_at = datetime.datetime.now(tz=datetime.UTC) + datetime.timedelta(days=1)
 
         cls.valid_offensive_message = OffensiveMessage.objects.create(
             id=602951077675139072,
@@ -135,7 +135,7 @@ class DeletionTests(AuthenticatedAPITestCase):
 class NotAllowedMethodsTests(AuthenticatedAPITestCase):
     @classmethod
     def setUpTestData(cls):
-        delete_at = datetime.datetime.now(tz=datetime.timezone.utc) + datetime.timedelta(days=1)
+        delete_at = datetime.datetime.now(tz=datetime.UTC) + datetime.timedelta(days=1)
 
         cls.valid_offensive_message = OffensiveMessage.objects.create(
             id=602951077675139072,

@@ -39,7 +39,7 @@ class GeneralUtilityTests(unittest.TestCase):
 
         delta = datetime.timedelta(minutes=10)
         self.assertAlmostEqual(decoded["exp"] - decoded["iat"], delta.total_seconds())
-        then = datetime.datetime.now(tz=datetime.timezone.utc) + delta
+        then = datetime.datetime.now(tz=datetime.UTC) + delta
         self.assertLess(decoded["exp"], then.timestamp())
 
 
@@ -51,7 +51,7 @@ class CheckRunTests(unittest.TestCase):
         "head_sha": "sha",
         "status": "completed",
         "conclusion": "success",
-        "created_at": datetime.datetime.now(tz=datetime.timezone.utc).strftime(settings.GITHUB_TIMESTAMP_FORMAT),
+        "created_at": datetime.datetime.now(tz=datetime.UTC).strftime(settings.GITHUB_TIMESTAMP_FORMAT),
         "artifacts_url": "url",
     }
 
@@ -75,7 +75,7 @@ class CheckRunTests(unittest.TestCase):
         # Set the creation time to well before the MAX_RUN_TIME
         # to guarantee the right conclusion
         kwargs["created_at"] = (
-            datetime.datetime.now(tz=datetime.timezone.utc)
+            datetime.datetime.now(tz=datetime.UTC)
             - github_utils.MAX_RUN_TIME - datetime.timedelta(minutes=10)
         ).strftime(settings.GITHUB_TIMESTAMP_FORMAT)
 
@@ -180,7 +180,7 @@ class ArtifactFetcherTests(unittest.TestCase):
                     head_sha="action_sha",
                     created_at=(
                         datetime.datetime
-                        .now(tz=datetime.timezone.utc)
+                        .now(tz=datetime.UTC)
                         .strftime(settings.GITHUB_TIMESTAMP_FORMAT)
                     ),
                     status="completed",
