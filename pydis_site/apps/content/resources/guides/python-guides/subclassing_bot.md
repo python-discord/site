@@ -27,7 +27,7 @@ class CustomBot(commands.Bot):
         await super().start(*args, **kwargs)
 
     # Example of a custom bot method
-    def get_launch_time_str(self) -> datetime.datetime:
+    def get_launch_time_str(self) -> str:
         """Get bot launch datetime without milliseconds in UTC and status."""
         return f"Bot started at: {self.launch_time.strftime('%F %T')} UTC."
 
@@ -56,3 +56,4 @@ token = YOUR_TOKEN_HERE
 bot.run(token)
 ```
 With the above example, you are not required to change any of the existing or future code, it is identical to code done without subclassing bot.
+ty
