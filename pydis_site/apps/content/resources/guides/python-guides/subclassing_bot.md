@@ -56,4 +56,3 @@ token = YOUR_TOKEN_HERE
 bot.run(token)
 ```
 With the above example, you are not required to change any of the existing or future code, it is identical to code done without subclassing bot.
-ty
