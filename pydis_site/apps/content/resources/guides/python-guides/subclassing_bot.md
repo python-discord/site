@@ -55,4 +55,4 @@ async def start_time(ctx):
 token = YOUR_TOKEN_HERE
 bot.run(token)
 ```
-The next step would be to look into discord.py cogs as they help in organizing of collection of commands into various files and folders. Refer to https://discordpy.readthedocs.io/en/stable/ext/commands/cogs.html for more on cogs. Here is an example of cogs https://gist.github.com/EvieePy/d78c061a4798ae81be9825468fe146be (*Credit to EvieePy*).
+The next step would be to look into discord.py cogs as they help in organizing collections  of commands into various files and folders. Refer to [the official docs](https://discordpy.readthedocs.io/en/stable/ext/commands/cogs.html) for more on them.
