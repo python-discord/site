@@ -68,5 +68,5 @@ class Message(ModelReprMixin, models.Model):
         """Attribute that represents the message timestamp as derived from the snowflake id."""
         return datetime.datetime.fromtimestamp(
             ((self.id >> 22) + 1420070400000) / 1000,
-            tz=datetime.timezone.utc,
+            tz=datetime.UTC,
         )

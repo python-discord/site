@@ -1,4 +1,4 @@
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 from django.core.exceptions import ValidationError
 from django.test import TestCase
@@ -23,8 +23,8 @@ class BotSettingValidatorTests(TestCase):
 
 class OffensiveMessageValidatorsTests(TestCase):
     def test_accepts_future_date(self):
-        future_date_validator(datetime(3000, 1, 1, tzinfo=timezone.utc))
+        future_date_validator(datetime(3000, 1, 1, tzinfo=UTC))
 
     def test_rejects_non_future_date(self):
         with self.assertRaises(ValidationError):
-            future_date_validator(datetime(1000, 1, 1, tzinfo=timezone.utc))
+            future_date_validator(datetime(1000, 1, 1, tzinfo=UTC))

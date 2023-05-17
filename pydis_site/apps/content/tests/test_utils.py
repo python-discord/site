@@ -17,7 +17,7 @@ from pydis_site.apps.content.tests.helpers import (
     BASE_PATH, MockPagesTestCase, PARSED_CATEGORY_INFO, PARSED_HTML, PARSED_METADATA
 )
 
-_time = datetime.datetime(2022, 10, 10, 10, 10, 10, tzinfo=datetime.timezone.utc)
+_time = datetime.datetime(2022, 10, 10, 10, 10, 10, tzinfo=datetime.UTC)
 _time_str = _time.strftime(settings.GITHUB_TIMESTAMP_FORMAT)
 TEST_COMMIT_KWARGS = {
     "sha": "123",

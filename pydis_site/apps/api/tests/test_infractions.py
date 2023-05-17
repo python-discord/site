@@ -1,5 +1,5 @@
 import datetime
-from datetime import datetime as dt, timedelta, timezone
+from datetime import UTC, datetime as dt, timedelta
 from unittest.mock import patch
 from urllib.parse import quote
 
@@ -56,8 +56,8 @@ class InfractionTests(AuthenticatedAPITestCase):
             type='ban',
             reason='He terk my jerb!',
             hidden=True,
-            inserted_at=dt(2020, 10, 10, 0, 0, 0, tzinfo=timezone.utc),
-            expires_at=dt(5018, 11, 20, 15, 52, tzinfo=timezone.utc),
+            inserted_at=dt(2020, 10, 10, 0, 0, 0, tzinfo=UTC),
+            expires_at=dt(5018, 11, 20, 15, 52, tzinfo=UTC),
             active=True,
         )
         cls.ban_inactive = Infraction.objects.create(
@@ -66,7 +66,7 @@ class InfractionTests(AuthenticatedAPITestCase):
             type='ban',
             reason='James is an ass, and we won\'t be working with him again.',
             active=False,
-            inserted_at=dt(2020, 10, 10, 0, 1, 0, tzinfo=timezone.utc),
+            inserted_at=dt(2020, 10, 10, 0, 1, 0, tzinfo=UTC),
         )
         cls.timeout_permanent = Infraction.objects.create(
             user_id=cls.user.id,
@@ -74,7 +74,7 @@ class InfractionTests(AuthenticatedAPITestCase):
             type='timeout',
             reason='He has a filthy mouth and I am his soap.',
             active=True,
-            inserted_at=dt(2020, 10, 10, 0, 2, 0, tzinfo=timezone.utc),
+            inserted_at=dt(2020, 10, 10, 0, 2, 0, tzinfo=UTC),
             expires_at=None,
         )
         cls.superstar_expires_soon = Infraction.objects.create(
@@ -83,8 +83,8 @@ class InfractionTests(AuthenticatedAPITestCase):
             type='superstar',
             reason='This one doesn\'t matter anymore.',
             active=True,
-            inserted_at=dt(2020, 10, 10, 0, 3, 0, tzinfo=timezone.utc),
-            expires_at=dt.now(timezone.utc) + datetime.timedelta(hours=5),
+            inserted_at=dt(2020, 10, 10, 0, 3, 0, tzinfo=UTC),
+            expires_at=dt.now(UTC) + datetime.timedelta(hours=5),
         )
         cls.voiceban_expires_later = Infraction.objects.create(
             user_id=cls.user.id,
@@ -92,8 +92,8 @@ class InfractionTests(AuthenticatedAPITestCase):
             type='voice_ban',
             reason='Jet engine mic',
             active=True,
-            inserted_at=dt(2020, 10, 10, 0, 4, 0, tzinfo=timezone.utc),
-            expires_at=dt.now(timezone.utc) + datetime.timedelta(days=5),
+            inserted_at=dt(2020, 10, 10, 0, 4, 0, tzinfo=UTC),
+            expires_at=dt.now(UTC) + datetime.timedelta(days=5),
         )
 
     def test_list_all(self):
@@ -152,7 +152,7 @@ class InfractionTests(AuthenticatedAPITestCase):
 
     def test_filter_after(self):
         url = reverse('api:bot:infraction-list')
-        target_time = datetime.datetime.now(tz=timezone.utc) + datetime.timedelta(hours=5)
+        target_time = datetime.datetime.now(tz=UTC) + datetime.timedelta(hours=5)
         response = self.client.get(url, {'type': 'superstar', 'expires_after': target_time.isoformat()})
 
         self.assertEqual(response.status_code, 200)
@@ -161,7 +161,7 @@ class InfractionTests(AuthenticatedAPITestCase):
 
     def test_filter_before(self):
         url = reverse('api:bot:infraction-list')
-        target_time = datetime.datetime.now(tz=timezone.utc) + datetime.timedelta(hours=5)
+        target_time = datetime.datetime.now(tz=UTC) + datetime.timedelta(hours=5)
         response = self.client.get(url, {'type': 'superstar', 'expires_before': target_time.isoformat()})
 
         self.assertEqual(response.status_code, 200)
@@ -185,8 +185,8 @@ class InfractionTests(AuthenticatedAPITestCase):
 
     def test_after_before_before(self):
         url = reverse('api:bot:infraction-list')
-        target_time = datetime.datetime.now(tz=timezone.utc) + datetime.timedelta(hours=4)
-        target_time_late = datetime.datetime.now(tz=timezone.utc) + datetime.timedelta(hours=6)
+        target_time = datetime.datetime.now(tz=UTC) + datetime.timedelta(hours=4)
+        target_time_late = datetime.datetime.now(tz=UTC) + datetime.timedelta(hours=6)
         response = self.client.get(
             url,
             {'expires_before': target_time_late.isoformat(),
@@ -199,8 +199,8 @@ class InfractionTests(AuthenticatedAPITestCase):
 
     def test_after_after_before_invalid(self):
         url = reverse('api:bot:infraction-list')
-        target_time = datetime.datetime.now(tz=timezone.utc) + datetime.timedelta(hours=5)
-        target_time_late = datetime.datetime.now(tz=timezone.utc) + datetime.timedelta(hours=9)
+        target_time = datetime.datetime.now(tz=UTC) + datetime.timedelta(hours=5)
+        target_time_late = datetime.datetime.now(tz=UTC) + datetime.timedelta(hours=9)
         response = self.client.get(
             url,
             {'expires_before': target_time.isoformat(),
@@ -214,7 +214,7 @@ class InfractionTests(AuthenticatedAPITestCase):
 
     def test_permanent_after_invalid(self):
         url = reverse('api:bot:infraction-list')
-        target_time = datetime.datetime.now(tz=timezone.utc) + datetime.timedelta(hours=5)
+        target_time = datetime.datetime.now(tz=UTC) + datetime.timedelta(hours=5)
         response = self.client.get(
             url,
             {'permanent': 'true', 'expires_after': target_time.isoformat()},
@@ -226,7 +226,7 @@ class InfractionTests(AuthenticatedAPITestCase):
 
     def test_permanent_before_invalid(self):
         url = reverse('api:bot:infraction-list')
-        target_time = datetime.datetime.now(tz=timezone.utc) + datetime.timedelta(hours=5)
+        target_time = datetime.datetime.now(tz=UTC) + datetime.timedelta(hours=5)
         response = self.client.get(
             url,
             {'permanent': 'true', 'expires_before': target_time.isoformat()},
@@ -238,7 +238,7 @@ class InfractionTests(AuthenticatedAPITestCase):
 
     def test_nonpermanent_before(self):
         url = reverse('api:bot:infraction-list')
-        target_time = datetime.datetime.now(tz=timezone.utc) + datetime.timedelta(hours=6)
+        target_time = datetime.datetime.now(tz=UTC) + datetime.timedelta(hours=6)
         response = self.client.get(
             url,
             {'permanent': 'false', 'expires_before': target_time.isoformat()},
@@ -370,7 +370,7 @@ class CreationTests(AuthenticatedAPITestCase):
         infraction = Infraction.objects.get(id=response.json()['id'])
         self.assertAlmostEqual(
             infraction.inserted_at,
-            dt.now(timezone.utc),
+            dt.now(UTC),
             delta=timedelta(seconds=2)
         )
         self.assertEqual(infraction.expires_at.isoformat(), data['expires_at'])
@@ -814,7 +814,7 @@ class SerializerTests(AuthenticatedAPITestCase):
             actor_id=self.user.id,
             type=_type,
             reason='A reason.',
-            expires_at=dt(5018, 11, 20, 15, 52, tzinfo=timezone.utc),
+            expires_at=dt(5018, 11, 20, 15, 52, tzinfo=UTC),
             active=active
         )
 

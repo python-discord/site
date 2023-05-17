@@ -132,7 +132,7 @@ def set_tag_commit(tag: Tag) -> None:
         tag.last_commit = Commit(
             sha="68da80efc00d9932a209d5cccd8d344cec0f09ea",
             message="Initial Commit\n\nTHIS IS FAKE DEMO DATA",
-            date=datetime.datetime(2018, 2, 3, 12, 20, 26, tzinfo=datetime.timezone.utc),
+            date=datetime.datetime(2018, 2, 3, 12, 20, 26, tzinfo=datetime.UTC),
             authors=json.dumps([{"name": "Joseph", "email": "joseph@josephbanks.me"}]),
         )
         return
@@ -154,7 +154,7 @@ def set_tag_commit(tag: Tag) -> None:
     date = (
         datetime.datetime
         .strptime(committer["date"], settings.GITHUB_TIMESTAMP_FORMAT)
-        .replace(tzinfo=datetime.timezone.utc)
+        .replace(tzinfo=datetime.UTC)
     )
 
     if author["email"] == committer["email"]:

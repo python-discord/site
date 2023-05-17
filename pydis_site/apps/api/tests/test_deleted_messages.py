@@ -1,4 +1,4 @@
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 from django.urls import reverse
 
@@ -17,7 +17,7 @@ class DeletedMessagesWithoutActorTests(AuthenticatedAPITestCase):
 
         cls.data = {
             'actor': None,
-            'creation': datetime.now(tz=timezone.utc).isoformat(),
+            'creation': datetime.now(tz=UTC).isoformat(),
             'deletedmessage_set': [
                 {
                     'author': cls.author.id,
@@ -57,7 +57,7 @@ class DeletedMessagesWithActorTests(AuthenticatedAPITestCase):
 
         cls.data = {
             'actor': cls.actor.id,
-            'creation': datetime.now(tz=timezone.utc).isoformat(),
+            'creation': datetime.now(tz=UTC).isoformat(),
             'deletedmessage_set': [
                 {
                     'author': cls.author.id,
@@ -89,7 +89,7 @@ class DeletedMessagesLogURLTests(AuthenticatedAPITestCase):
 
         cls.deletion_context = MessageDeletionContext.objects.create(
             actor=cls.actor,
-            creation=datetime.now(tz=timezone.utc),
+            creation=datetime.now(tz=UTC),
         )
 
     def test_valid_log_url(self):

@@ -1,4 +1,4 @@
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 from django.forms.models import model_to_dict
 from django.urls import reverse
@@ -59,7 +59,7 @@ class ReminderCreationTests(AuthenticatedAPITestCase):
         data = {
             'author': self.author.id,
             'content': 'Remember to...wait what was it again?',
-            'expiration': datetime.now(tz=timezone.utc).isoformat(),
+            'expiration': datetime.now(tz=UTC).isoformat(),
             'jump_url': "https://www.google.com",
             'channel_id': 123,
             'mentions': [8888, 9999],
@@ -91,7 +91,7 @@ class ReminderDeletionTests(AuthenticatedAPITestCase):
         cls.reminder = Reminder.objects.create(
             author=cls.author,
             content="Don't forget to set yourself a reminder",
-            expiration=datetime.now(timezone.utc),
+            expiration=datetime.now(UTC),
             jump_url="https://www.decliningmentalfaculties.com",
             channel_id=123
         )
@@ -122,7 +122,7 @@ class ReminderListTests(AuthenticatedAPITestCase):
         cls.reminder_one = Reminder.objects.create(
             author=cls.author,
             content="We should take Bikini Bottom, and push it somewhere else!",
-            expiration=datetime.now(timezone.utc),
+            expiration=datetime.now(UTC),
             jump_url="https://www.icantseemyforehead.com",
             channel_id=123
         )
@@ -130,7 +130,7 @@ class ReminderListTests(AuthenticatedAPITestCase):
         cls.reminder_two = Reminder.objects.create(
             author=cls.author,
             content="Gahhh-I love being purple!",
-            expiration=datetime.now(timezone.utc),
+            expiration=datetime.now(UTC),
             jump_url="https://www.goofygoobersicecreampartyboat.com",
             channel_id=123,
             active=False
@@ -176,7 +176,7 @@ class ReminderRetrieveTests(AuthenticatedAPITestCase):
         cls.reminder = Reminder.objects.create(
             author=cls.author,
             content="Reminder content",
-            expiration=datetime.now(timezone.utc),
+            expiration=datetime.now(UTC),
             jump_url="http://example.com/",
             channel_id=123
         )
@@ -204,7 +204,7 @@ class ReminderUpdateTests(AuthenticatedAPITestCase):
         cls.reminder = Reminder.objects.create(
             author=cls.author,
             content="Squash those do-gooders",
-            expiration=datetime.now(timezone.utc),
+            expiration=datetime.now(UTC),
             jump_url="https://www.decliningmentalfaculties.com",
             channel_id=123
         )
