@@ -56,7 +56,7 @@ class RuleCorrectnessTests(AuthenticatedAPITestCase):
         )
 
         markdown_rules = []
-        for line in markdown_rules_path.read_text().splitlines():
+        for line in markdown_rules_path.read_text(encoding="utf8").splitlines():
             matches = self.markdown_rule_re.match(line)
             if matches is not None:
                 markdown_rules.append(matches.group(1))
