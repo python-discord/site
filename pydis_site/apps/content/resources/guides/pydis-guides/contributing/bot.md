@@ -134,7 +134,6 @@ Some other useful docker commands are as follows:
 
 1. `docker compose pull` this pulls updates for all non-bot services, such as psotgres, redis and our [site](../site) project!
 1. `docker compose build` this rebuilds the bot's docker image, this is only needed if you need to make changes to the bot's dependencies, or the Dockerfile itself.
-1. `docker compose --profile 3.10 up` this starts a 3.10 snekbox container, in addition to the default 3.11 container!
 
 Your bot is now running, all inside Docker.
 
