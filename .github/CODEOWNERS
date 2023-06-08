@@ -9,7 +9,7 @@ pydis_site/apps/home/**                         @ks129
 **/models/**                                    @Den4200
 
 # CI & Docker
-.github/workflows/**                            @MarkKoz @SebastiaanZ @Den4200 @ks129
+.github/workflows/**                            @MarkKoz @Den4200 @ks129
 Dockerfile                                      @MarkKoz @Den4200
 docker-compose.yml                              @MarkKoz @Den4200
 
