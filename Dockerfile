@@ -1,4 +1,4 @@
-FROM ghcr.io/chrislovering/python-poetry-base:3.11-slim
+FROM ghcr.io/owl-corp/python-poetry-base:3.11-slim
 
 # Allow service to handle stops gracefully
 STOPSIGNAL SIGQUIT

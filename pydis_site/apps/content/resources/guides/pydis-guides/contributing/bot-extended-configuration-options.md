@@ -115,14 +115,13 @@ The advantage of this method is that you can run the bot's code in your preferre
 
 * Append the following line to your `.env` file: `API_KEYS_SITE_API=badbot13m0n8f570f942013fc818f234916ca531`.
 * In your `.env.server` file, set `urls_site_api="http://localhost:8000/api"`. If you wish to keep using `http://web:8000/api`, then [COMPOSE_PROJECT_NAME](../docker/#compose-project-names) has to be set.
-* To work with snekbox, set `urls_snekbox_eval_api="http://localhost:8060/eval"` and `urls_snekbox_311_eval_api="http://localhost:8065/eval"`
+* To work with snekbox, set `urls_snekbox_eval_api="http://localhost:8060/eval"`.
 
 
 You will need to start the services separately, but if you got the previous section with Docker working, that's pretty simple:
 
 * `docker compose up web` to start the site container. This is required.
 * `docker compose up snekbox` to start the snekbox container. You only need this if you're planning on working on the snekbox cog.
-* `docker compose up snekbox-311` to start the snekbox 3.11 container. You only need this if you're planning on working on the snekbox cog.
 * `docker compose up redis` to start the Redis container. You only need this if you're not using fakeredis. For more info refer to [Working with Redis](#optional-working-with-redis).
 
 You can start several services together: `docker compose up web snekbox redis`.
