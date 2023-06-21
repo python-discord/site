@@ -285,7 +285,7 @@ class UserViewSet(ModelViewSet):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     @action(detail=True)
-    def metricity_data(self, request: Request, pk: str = None) -> Response:
+    def metricity_data(self, request: Request, pk: str | None = None) -> Response:
         """Request handler for metricity_data endpoint."""
         user = self.get_object()
 
@@ -308,7 +308,7 @@ class UserViewSet(ModelViewSet):
                                 status=status.HTTP_404_NOT_FOUND)
 
     @action(detail=True)
-    def metricity_review_data(self, request: Request, pk: str = None) -> Response:
+    def metricity_review_data(self, request: Request, pk: str | None = None) -> Response:
         """Request handler for metricity_review_data endpoint."""
         user = self.get_object()
 
