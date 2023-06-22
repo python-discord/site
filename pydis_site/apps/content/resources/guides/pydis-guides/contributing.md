@@ -82,7 +82,7 @@ Our projects on Python Discord are open source and [available on GitHub](https:/
 # How do I start contributing?
 Unsure of what contributing to open source projects involves? Have questions about how to use GitHub? Just need to know about our contribution etiquette? Completing these steps will have you ready to make your first contribution no matter your starting point.
 
-Feel free to skip any steps you're already familiar with, but please make sure not to miss the [Contributing Guidelines](#5-read-our-contributing-guidelines).
+Feel free to skip any steps you're already familiar with, but please make sure not to miss the [Contributing Guidelines](#3-read-our-contributing-guidelines).
 
 If you are here looking for the answer to a specific question, check out the sub-articles in the top right of the page to see a list of our guides.
 
@@ -129,7 +129,7 @@ Don't move forward until your issue is approved by a Core Developer. Issues are 
 ### 5. Make changes
 Now it is time to make the changes to fulfill your approved issue. You should create a new Git branch for your feature; that way you can keep your main branch up to date with ours and even work on multiple features at once in separate branches.
 
-This is a good time to review [how to write good commit messages](./contributing-guidelines/commit-messages) if you haven't already.
+This is a good time to review [how to write good commit messages](./commit-messages) if you haven't already.
 
 ### 6. Open a pull request
 After your issue has been approved and you've written your code and tested it, it's time to open a pull request. Pull requests are a feature in GitHub; you can think of them as asking the project maintainers to accept your changes. This gives other contributors a chance to review your code and make any needed changes before it's merged into the main branch of the project.
