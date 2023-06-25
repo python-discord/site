@@ -146,7 +146,7 @@ class RulesView(APIView):
             (
                 "Use English to the best of your ability. "
                 "Be polite if someone speaks English imperfectly.",
-                ["english", "language"]
+                ["english", "eng", "language"]
             ),
             (
                 "Do not provide or request help on projects that may violate terms of service, "
@@ -165,7 +165,7 @@ class RulesView(APIView):
             (
                 "Do not help with ongoing exams. When helping with homework, "
                 "help people learn how to do the assignment without doing it for them.",
-                ["exam", "exams", "assignment", "assignments", "homework"]
+                ["exam", "exams", "assignment", "assignments", "homework", "hw"]
             ),
             (
                 "Do not offer or ask for paid work of any kind.",
