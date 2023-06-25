@@ -172,8 +172,8 @@ class RulesView(APIView):
                 ["paid", "work", "money"]
             ),
             (
-              "Do not copy and paste answers from ChatGPT or similar AI tools.",
-              ["gpt", "chatgpt", "gpt3", "ai"]
+                "Do not copy and paste answers from ChatGPT or similar AI tools.",
+                ["gpt", "chatgpt", "gpt3", "ai"]
             ),
         ])
 
