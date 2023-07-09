@@ -73,7 +73,7 @@ detailed information about these settings.
 #### Notes regarding `DATABASE_URL`
 
 - If the database is hosted locally i.e. on the same machine as the webserver, then use `localhost` for the host. Windows and macOS users may need to use the [Docker host IP](https://stackoverflow.com/questions/22944631/how-to-get-the-ip-address-of-the-docker-host-from-inside-a-docker-container) instead.
-- If the database is running in Docker, use port `7777`. Otherwise, use `5432` as that is the default port used by PostegreSQL.
+- If the database is running in Docker, use port `7777`. Otherwise, use `5432` as that is the default port used by PostgreSQL.
 - If you configured PostgreSQL in a different manner or you are not hosting it locally, then you will need to determine the correct host and port yourself.
 The user, password, and database name should all still be `pysite` unless you deviated from the setup instructions in the previous section.
 
