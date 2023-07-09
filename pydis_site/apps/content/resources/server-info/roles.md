@@ -33,7 +33,7 @@ It’s difficult to precisely quantify contributions, but we’ve come up with t
 - The member has made several significant contributions to our projects.
 - The member has a positive influence in our contributors subcommunity.
 
-The role will be assigned at the discretion of the Admin Team in consultation with the Core Developers Team. Check out our [walkthrough](/pages/contributing/) to get started contributing.
+The role will be assigned at the discretion of the Admin Team in consultation with the Core Developers Team. Check out our [walkthrough](/pages/guides/pydis-guides/contributing/) to get started contributing.
 
 ---
 

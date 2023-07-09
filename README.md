@@ -17,7 +17,7 @@ If you're looking to contribute or play around with the code, take a look at [th
 [7]: https://coveralls.io/repos/github/python-discord/site/badge.svg?branch=main
 [8]: https://coveralls.io/github/python-discord/site?branch=main
 [9]: https://pythondiscord.com
-[10]: https://pythondiscord.com/pages/contributing/site/
+[10]: https://pythondiscord.com/pages/guides/pydis-guides/contributing/site/
 [11]: https://github.com/python-discord/site/issues
 [12]: https://raw.githubusercontent.com/python-discord/branding/main/logos/badge/badge_github.svg
 [13]: https://discord.gg/python
