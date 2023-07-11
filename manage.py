@@ -2,12 +2,12 @@
 import os
 import platform
 import sys
+import warnings
 from pathlib import Path
 
 import django
 from django.contrib.auth import get_user_model
 from django.core.management import call_command, execute_from_command_line
-from django.test.utils import ignore_warnings
 
 DEFAULT_ENVS = {
     "DJANGO_SETTINGS_MODULE": "pydis_site.settings",
@@ -160,11 +160,12 @@ class SiteManager:
         # tests, staticfiles are not, and do not need to be generated.
         # The following line suppresses the warning.
         # Reference: https://github.com/evansd/whitenoise/issues/215
-        with ignore_warnings(
-            message=r"No directory at: .*staticfiles",
-            module="whitenoise.base",
-        ):
-            call_command(*sys.argv[1:])
+        warnings.filterwarnings(
+            action='ignore',
+            category=UserWarning,
+            message=r"^No directory at: .*staticfiles/$"
+        )
+        call_command(*sys.argv[1:])
 
 
 def clean_up_static_files(build_folder: Path) -> None:
