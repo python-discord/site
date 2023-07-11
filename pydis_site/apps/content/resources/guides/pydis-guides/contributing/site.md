@@ -92,7 +92,7 @@ docker-compose up
 
 The `-d` option can be appended to the command to run in detached mode. This runs the containers in the background so the current terminal session is available for use with other things.
 
-If you get any Docker related errors, reference the [Possible Issues](https://pythondiscord.com/pages/contributing/docker/#possible-issues") section of the Docker page.
+If you get any Docker related errors, reference the [Possible Issues](https://pythondiscord.com/pages/guides/pydis-guides/contributing/docker/#possible-issues") section of the Docker page.
 {: .notification .is-warning }
 
 ## Run on the host
