@@ -5,11 +5,8 @@ description: The Kivy project, through the Kivy framework and its sister project
 icon_image: https://raw.githubusercontent.com/kivy/kivy-website/master/content/logos/kivy-logo-black-256.png
 icon_size: 50
 title_image: https://i.imgur.com/EVP3jZR.png
-title_url: https://discord.gg/djPtTRJ
+title_url: https://kivy.org/
 urls:
-  - icon: solid/external-link-alt
-    url: https://kivy.org/
-    color: teal
   - icon: branding/discord
     url: https://discord.gg/djPtTRJ
     color: blurple
