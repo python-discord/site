@@ -3,8 +3,8 @@
 {% load static %}
 
 {# Show a GitHub button on tag pages #}
-{% block title_element %}
 {% if is_tag_listing %}
+{% block title_element %}
     <link rel="stylesheet" href="{% static "css/content/color.css" %}">
     <div class="level">
         <div class="level-left">{{ block.super }}</div>
@@ -12,8 +12,8 @@
             <a class="level-item fab fa-github" href="{{ tag_url }}"></a>
         </div>
     </div>
-{% endif %}
 {% endblock %}
+{% endif %}
 
 {% block page_content %}
     {# Nested Categories #}
