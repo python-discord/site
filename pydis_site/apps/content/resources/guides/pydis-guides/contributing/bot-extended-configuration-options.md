@@ -73,7 +73,7 @@ If you wish to set all values in your `env.server` for your testing server, you 
 
 **Note**: This is only required when you're not configuring the bot [automatically](#automatic-configuration)
 
-If you will be working on a feature that includes the python help forum, you will need to use `Forum Channels`.
+If you will be working on a feature that includes the Python help forum, you will need to use `Forum Channels`.
 
 Forum channels cannot be included in a template, which is why this needs to be done by hand for the time being.
 
