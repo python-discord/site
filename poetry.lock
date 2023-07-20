@@ -488,13 +488,13 @@ testing = ["covdefaults (>=2.3)", "coverage (>=7.2.3)", "diff-cover (>=7.5)", "p
 
 [[package]]
 name = "gunicorn"
-version = "21.1.0"
+version = "21.2.0"
 description = "WSGI HTTP Server for UNIX"
 optional = false
 python-versions = ">=3.5"
 files = [
-    {file = "gunicorn-21.1.0-py3-none-any.whl", hash = "sha256:11fc98ea214a5845f614891e8c90b0211fbe595e677d204d7cd7d80f6f348891"},
-    {file = "gunicorn-21.1.0.tar.gz", hash = "sha256:37ced4b6622f263a6483eb7cbe9606df81afd57dc0fa464883600624790271c5"},
+    {file = "gunicorn-21.2.0-py3-none-any.whl", hash = "sha256:3213aa5e8c24949e792bcacfc176fef362e7aac80b76c56f6b5122bf350722f0"},
+    {file = "gunicorn-21.2.0.tar.gz", hash = "sha256:88ec8bff1d634f98e61b9f65bc4bf3cd918a90806c6f5c48bc5603849ec81033"},
 ]
 
 [package.dependencies]
@@ -1183,4 +1183,4 @@ brotli = ["Brotli"]
 [metadata]
 lock-version = "2.0"
 python-versions = "3.11.*"
-content-hash = "faabcb858f704079d9cce8807784a62dfd7da76a8e581e60c8588b3eb43c7b3e"
+content-hash = "e1db404f8b4ee71c59469bf11956faca074c3e534c1d99eb44ac530aa8ba075f"
