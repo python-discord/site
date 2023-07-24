@@ -68,7 +68,7 @@ def map_redirect(name: str, data: Redirect) -> list[URLPattern]:
             raise ValueError(f"Unknown app in redirect: {new_app_name}")
 
         for item in items:
-            entry = list(item.values())[0]
+            entry = next(iter(item.values()))
 
             # Replace dynamic redirect with concrete path
             concrete_path = __PARAMETER_REGEX.sub(entry, data.original_path)
