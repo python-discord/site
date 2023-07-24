@@ -174,14 +174,14 @@ class InfractionTests(AuthenticatedAPITestCase):
         response = self.client.get(f'{url}?expires_after=gibberish')
 
         self.assertEqual(response.status_code, 400)
-        self.assertEqual(list(response.json())[0], "expires_after")
+        self.assertEqual(next(iter(response.json())), "expires_after")
 
     def test_filter_before_invalid(self):
         url = reverse('api:bot:infraction-list')
         response = self.client.get(f'{url}?expires_before=000000000')
 
         self.assertEqual(response.status_code, 400)
-        self.assertEqual(list(response.json())[0], "expires_before")
+        self.assertEqual(next(iter(response.json())), "expires_before")
 
     def test_after_before_before(self):
         url = reverse('api:bot:infraction-list')
