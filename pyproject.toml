@@ -29,7 +29,7 @@ psycopg = {extras = ["binary"], version = "3.1.9"}
 [tool.poetry.group.dev.dependencies]
 python-dotenv = "1.0.0"
 taskipy = "1.11.0"
-ruff = "0.0.278"
+ruff = "0.0.280"
 
 [tool.poetry.group.lint.dependencies]
 pre-commit = "3.3.3"
