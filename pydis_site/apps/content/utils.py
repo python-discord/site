@@ -1,8 +1,10 @@
 import datetime
 import functools
 import json
+import logging
 import tarfile
 import tempfile
+from http import HTTPStatus
 from io import BytesIO
 from pathlib import Path
 
@@ -18,6 +20,7 @@ from pydis_site import settings
 from .models import Commit, Tag
 
 TAG_CACHE_TTL = datetime.timedelta(hours=1)
+log = logging.getLogger(__name__)
 
 
 def github_client(**kwargs) -> httpx.Client:
@@ -144,9 +147,26 @@ def set_tag_commit(tag: Tag) -> None:
 
     # Fetch and set the commit
     with github_client() as client:
-        data = client.get("/repos/python-discord/bot/commits", params={"path": path})
-        data.raise_for_status()
-        data = data.json()[0]
+        response = client.get("/repos/python-discord/bot/commits", params={"path": path})
+        if (
+            # We want to hop out early in three cases:
+            # - We got a forbidden response. (GitHub wrongfully uses this for rate limits.)
+            # - We got ratelimited.
+            response.status_code in (HTTPStatus.FORBIDDEN, HTTPStatus.TOO_MANY_REQUESTS)
+            # - GitHub has unicorn time again and is returning 5xx codes.
+            or int(response.status_code / 100) == 5
+        ):  # pragma: no cover
+            log.warning(
+                "Received code %d from GitHub for commit history for bot file %r",
+                response.status_code, path,
+            )
+            # We hop out early because otherwise, these failures may result in the
+            # overall request to the tag page breaking.
+            return
+
+        # This should only be permanent issues from here, such as bad requests.
+        response.raise_for_status()
+        data = response.json()[0]
 
     commit = data["commit"]
     author, committer = commit["author"], commit["committer"]
