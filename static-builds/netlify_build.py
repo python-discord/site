@@ -1,6 +1,6 @@
 """Build script to deploy project on netlify."""
 
-# WARNING: This file must remain compatible with python 3.8
+# WARNING: This file must remain compatible with Python 3.8
 
 # This script performs all the actions required to build and deploy our project on netlify
 # It depends on the following packages, which are set in the netlify UI:

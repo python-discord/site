@@ -26,7 +26,7 @@ description: This guide shows how to host a bot with Docker and GitHub Actions o
 
 ## Introduction
 
-Let's say you have got a nice discord bot written in python and you have a VPS to host it on. Now the only question is
+Let's say you have got a nice discord bot written in Python and you have a VPS to host it on. Now the only question is
 how to run it 24/7. You might have been suggested to use *screen multiplexer*, but it has some disadvantages:
 
 1. Every time you update the bot you have to SSH to your server, attach to screen, shutdown the bot, run `git pull` and
