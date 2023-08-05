@@ -42,7 +42,7 @@ Publish Directory:
 
 | Name           | Value                          | Description                                                                               |
 |----------------|--------------------------------|-------------------------------------------------------------------------------------------|
-| PYTHON_VERSION | 3.8                            | The python version. Supported options are defined by netlify [here][netlify build image]. |
+| PYTHON_VERSION | 3.8                            | The Python version. Supported options are defined by netlify [here][netlify build image]. |
 | API_URL        | https://pythondiscord.com/     | The link to the API, which will be used to fetch the build artifacts.                     |
 | ACTION_NAME    | Build & Publish Static Preview | The name of the workflow which will be used to find the artifact.                         |
 | ARTIFACT_NAME  | static-build                   | The name of the artifact to download.                                                     |
