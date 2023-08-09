@@ -56,9 +56,7 @@ class PageOrCategoryView(TemplateView):
                     entry_info["name"] = frontmatter.load(entry).metadata["title"]
                 elif entry.is_dir():
                     entry_info["name"] = utils.get_category(entry)["title"]
-                else:  # pragma: no cover
-                    # TODO: Remove coverage.py pragma in Python 3.10
-                    # See: https://github.com/nedbat/coveragepy/issues/198
+                else:
                     continue
                 context["subarticles"].append(entry_info)
 
