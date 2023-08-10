@@ -1,0 +1,194 @@
+{% extends "events/base_sidebar.html" %}
+
+{% load static %}
+
+{% block title %}Summer Code Jam 2023{% endblock %}
+
+{% block breadcrumb %}
+    <li><a href="{% url "events:index" %}">Events</a></li>
+    <li><a href="{% url "events:page" path="code-jams" %}">Code Jams</a></li>
+    <li><a href="{% url "events:page" path="code-jams/10" %}">Code Jam 2023</a></li>
+    <li class="is-active"><a href="#">Approved Frameworks</a></li>
+{% endblock %}
+
+{% block event_content %}
+    <p>
+        Below is the list of approved frameworks that you can use for the code jam.
+        Please work with your team to choose a library (or multiple) that everyone can and want to develop with.
+        If there is a library not listed below that you think should be here, you're welcome to discuss it with the Events Team over in the Discord server.
+
+    </p>
+    <p>
+        Other libraries can be used to help build your application, but if their primary purpose is image manipulation or processing then they must be approved or from this list.
+        In particular, if you'd like to use a graph/plot creating library similar to Matplotlib or a machine learning framework/model, double check with us before deciding to use it.
+    </p>
+
+    <h3 id="approved-frameworks"><a href="#approved-frameworks">Approved Frameworks</a></h3>
+
+    <div class="card mb-4">
+        <div class="card-content">
+            <div class="content">
+                <p class="subtitle">Pillow</p>
+                <p>
+                    Pillow is a fork of the Python Imaging Library (PIL). The Python Imaging Library adds image processing capabilities to your Python interpreter.
+                    This library provides extensive file format support, an efficient internal representation, and fairly powerful image processing capabilities.
+                    The core image library is designed for fast access to data stored in a few basic pixel formats. It should provide a solid foundation for a general image processing tool.
+                </p>
+            </div>
+        </div>
+        <div class="card-footer">
+            <a href="https://python-pillow.org/" class="card-footer-item"><i class="fas fa-book"></i>&ensp;Documentation</a>
+            <a href="https://github.com/python-pillow/Pillow" class="card-footer-item"><i class="fab fa-github"></i>&ensp;GitHub</a>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-content">
+            <div class="content">
+                <p class="subtitle">OpenCV-Python</p>
+                <p>
+                    OpenCV (Open Source Computer Vision Library: http://opencv.org) is an open-source library that includes several hundreds of computer vision algorithms.
+                </p>
+            </div>
+        </div>
+        <div class="card-footer">
+            <a href="https://docs.opencv.org/4.x/" class="card-footer-item"><i class="fas fa-book"></i>&ensp;Documentation</a>
+            <a href="https://github.com/opencv/opencv-python" class="card-footer-item"><i class="fab fa-github"></i>&ensp;GitHub</a>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-content">
+            <div class="content">
+                <p class="subtitle">NumPy</p>
+                <p>
+                    NumPy is the fundamental package for scientific computing with Python.
+                </p>
+            </div>
+        </div>
+        <div class="card-footer">
+            <a href="https://numpy.org/doc/stable/" class="card-footer-item"><i class="fas fa-book"></i>&ensp;Documentation</a>
+            <a href="https://github.com/numpy/numpy" class="card-footer-item"><i class="fab fa-github"></i>&ensp;GitHub</a>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-content">
+            <div class="content">
+                <p class="subtitle">scikit-image</p>
+                <p>
+                    scikit-image is a collection of algorithms for image processing.
+                </p>
+            </div>
+        </div>
+        <div class="card-footer">
+            <a href="https://scikit-image.org/docs/stable/" class="card-footer-item"><i class="fas fa-book"></i>&ensp;Documentation</a>
+            <a href="https://github.com/scikit-image/scikit-image" class="card-footer-item"><i class="fab fa-github"></i>&ensp;GitHub</a>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-content">
+            <div class="content">
+                <p class="subtitle">matplotlib</p>
+                <p>
+                    Matplotlib is a comprehensive library for creating static, animated, and interactive visualizations in Python. Matplotlib makes easy things easy and hard things possible.
+                </p>
+            </div>
+        </div>
+        <div class="card-footer">
+            <a href="https://matplotlib.org/" class="card-footer-item"><i class="fas fa-book"></i>&ensp;Documentation</a>
+            <a href="https://github.com/matplotlib/matplotlib" class="card-footer-item"><i class="fab fa-github"></i>&ensp;GitHub</a>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-content">
+            <div class="content">
+                <p class="subtitle">PyQtGraph</p>
+                <p>
+                    PyQtGraph is intended for use in mathematics / scientific / engineering applications.
+                    Despite being written entirely in Python, the library is fast due to its heavy leverage of numpy for number crunching, Qt's GraphicsView framework for 2D display, and OpenGL for 3D display.
+                </p>
+            </div>
+        </div>
+        <div class="card-footer">
+            <a href="https://www.pyqtgraph.org/" class="card-footer-item"><i class="fas fa-book"></i>&ensp;Documentation</a>
+            <a href="https://github.com/pyqtgraph/pyqtgraph" class="card-footer-item"><i class="fab fa-github"></i>&ensp;GitHub</a>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-content">
+            <div class="content">
+                <p class="subtitle">SciPy</p>
+                <p>
+                    SciPy is a collection of mathematical algorithms and convenience functions built on NumPy.
+                    It adds significant power to Python by providing the user with high-level commands and classes for manipulating and visualizing data.
+                </p>
+            </div>
+        </div>
+        <div class="card-footer">
+            <a href="https://docs.scipy.org/doc/scipy/" class="card-footer-item"><i class="fas fa-book"></i>&ensp;Documentation</a>
+            <a href="https://github.com/scipy/scipy" class="card-footer-item"><i class="fab fa-github"></i>&ensp;GitHub</a>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-content">
+            <div class="content">
+                <p class="subtitle">Mahotas</p>
+                <p>
+                    Mahotas is a computer vision and image processing library for Python.
+                    It includes many algorithms implemented in C++ for speed while operating in numpy arrays and with a very clean Python interface.
+                    Mahotas currently has over 100 functions for image processing and computer vision and it keeps growing.
+                </p>
+            </div>
+        </div>
+        <div class="card-footer">
+            <a href="https://mahotas.readthedocs.io/en/latest/" class="card-footer-item"><i class="fas fa-book"></i>&ensp;Documentation</a>
+            <a href="https://github.com/luispedro/mahotas" class="card-footer-item"><i class="fab fa-github"></i>&ensp;GitHub</a>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-content">
+            <div class="content">
+                <p class="subtitle">VisPy</p>
+                <p>
+                    VisPy is a high-performance interactive 2D/3D data visualization library.
+                    VisPy leverages the computational power of modern Graphics Processing Units (GPUs) through the OpenGL library to display very large datasets.
+                </p>
+            </div>
+        </div>
+        <div class="card-footer">
+            <a href="https://vispy.org/" class="card-footer-item"><i class="fas fa-book"></i>&ensp;Documentation</a>
+            <a href="https://github.com/vispy/vispy" class="card-footer-item"><i class="fab fa-github"></i>&ensp;GitHub</a>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-content">
+            <div class="content">
+                <p class="subtitle">bokeh</p>
+                <p>
+                    Bokeh is an interactive visualization library for modern web browsers.
+                    It provides elegant, concise construction of versatile graphics and affords high-performance interactivity across large or streaming datasets.
+                    Bokeh can help anyone who wants to create interactive plots, dashboards, and data applications quickly and easily.
+                </p>
+            </div>
+        </div>
+        <div class="card-footer">
+            <a href="https://docs.bokeh.org/en/latest/" class="card-footer-item"><i class="fas fa-book"></i>&ensp;Documentation</a>
+            <a href="https://github.com/bokeh/bokeh" class="card-footer-item"><i class="fab fa-github"></i>&ensp;GitHub</a>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+{% block sidebar %}
+
+    {% include "events/sidebar/code-jams/10.html" %}
+
+{% endblock %}
