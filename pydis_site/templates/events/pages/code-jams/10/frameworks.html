@@ -184,6 +184,51 @@
         </div>
     </div>
 
+    <div class="card mb-4">
+        <div class="card-content">
+            <div class="content">
+                <p class="subtitle">ffmpeg-python</p>
+                <p>
+                    A Python wrapper for the powerful FFmpeg software.
+                </p>
+                <p>
+                    ⚠ You can use other ffmpeg Python bindings, but both with this one and others, make sure that it works well with newer Python versions and be mindful of issues reported in their repositories.
+                </p>
+            </div>
+        </div>
+        <div class="card-footer">
+            <a href="https://kkroening.github.io/ffmpeg-python/" class="card-footer-item"><i class="fas fa-book"></i>&ensp;Documentation</a>
+            <a href="https://github.com/kkroening/ffmpeg-python" class="card-footer-item"><i class="fab fa-github"></i>&ensp;GitHub</a>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-content">
+            <div class="content">
+                <p class="subtitle">imageio</p>
+                <p>
+                    Imageio is a Python library that provides an easy interface to read and write a wide range of image data, including animated images, video, volumetric data, and scientific formats.
+                    It is cross-platform, runs on Python 3.8+, and is easy to install.
+                </p>
+            </div>
+        </div>
+        <div class="card-footer">
+            <a href="https://imageio.readthedocs.io/en/stable/" class="card-footer-item"><i class="fas fa-book"></i>&ensp;Documentation</a>
+            <a href="https://github.com/imageio/imageio" class="card-footer-item"><i class="fab fa-github"></i>&ensp;GitHub</a>
+        </div>
+    </div>
+
+    <h4 id="can-i-use-ml"><a href="#can-i-use-ml">Q: Can I use machine learning libraries?</a></h4>
+    <p>
+        A: Yes, you can use libraries such as scikit-learn, PyTorch, TensorFlow, etc.
+        <b>However</b>:
+    </p>
+        <ol type="1">
+            <li>Your project should be easy to install and run, so it can't require a dedicated GPU or otherwise significant computational resources.</li>
+            <li>This might prove to be a barrier for your teammates to contribute to the project if they're not knowledgeable in the field.</li>
+            <li>We would still like to see more "classical" image processing techniques. This isn't an ML code jam.</li>
+            <li>If you use pretrained models you need to specify where you took them from, and they need to be compatible with the project license.</li>
+        </ol>
 
 {% endblock %}
 
