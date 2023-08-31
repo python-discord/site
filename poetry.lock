@@ -388,13 +388,13 @@ microsoft = ["azure-storage-blob"]
 
 [[package]]
 name = "django-environ"
-version = "0.10.0"
+version = "0.11.1"
 description = "A package that allows you to utilize 12factor inspired environment variables to configure your Django application."
 optional = false
-python-versions = ">=3.5,<4"
+python-versions = ">=3.6,<4"
 files = [
-    {file = "django-environ-0.10.0.tar.gz", hash = "sha256:b3559a91439c9d774a9e0c1ced872364772c612cdf6dc919506a2b13f7a77225"},
-    {file = "django_environ-0.10.0-py2.py3-none-any.whl", hash = "sha256:510f8c9c1d0a38b0815f91504270c29440a0cf44fab07f55942fa8d31bbb9be6"},
+    {file = "django-environ-0.11.1.tar.gz", hash = "sha256:f50dde64c024dfac76279dfd7dade8da994e376d38c3374623ce99490f1534dd"},
+    {file = "django_environ-0.11.1-py2.py3-none-any.whl", hash = "sha256:3b8a0f7f02e6c2999776123f7b5afca4eda4b2b3d8bb5fc3805b2cf476c50018"},
 ]
 
 [package.extras]
@@ -1190,4 +1190,4 @@ brotli = ["Brotli"]
 [metadata]
 lock-version = "2.0"
 python-versions = "3.11.*"
-content-hash = "e75903ee059de3d63dbe7ca19d599f9684f1d3ce76dfb70b7b14105b7f51d857"
+content-hash = "d166bd705db2b42a136b68e90000057994561918718a3d46844db40c505f5af7"
