@@ -2,27 +2,36 @@
 title: Why JSON is unsuitable as a database
 description: The many reasons why you shouldn't use JSON as a database, and instead opt for SQL.
 relevant_links:
-    Tips on Storing Data: https://tutorial.vco.sh/tips/storage/
+  Tips on Storing Data: https://tutorial.vco.sh/tips/storage/
 ---
 
-JSON, quite simply, is not a database. It's not designed to be a data storage format,
-rather a wayof transmitting data over a network. It's also often used as a way of doing configuration files for programs.
+JSON (JavaScript Object Notation) is commonly used for data interchange, but it's not a database solution. SQL (Structured Query Language) offers better alternatives due to the following reasons:
 
-There is no redundancy built in to JSON. JSON is just a format, and Python has libraries for it
-like json and ujson that let you load and dump it, sometimes to files, but that's all it does, write data to a file.
-There is no sort of DBMS (Database Management System), which means no sort of sophistication in how the data is stored,
-or built in ways to keep it safe and backed up, there's no built in encryption either - bear in mind
-in larger applications encryption may be necessary for GDPR/relevant data protection regulations compliance.
+## Data Integrity and Validation:
 
-JSON, unlike relational databases, has no way to store relational data,
-which is a very commonly needed way of storing data.
-Relational data, as the name may suggest, is data that relates to other data.
-For example if you have a table of users and a table of servers, the server table will probably have an owner field,
-where you'd reference a user from the users table. (**This is only relevant for relational data**).
+JSON lacks predefined schemas and validation checks, leading to inconsistent and invalid data.
+SQL databases enforce data integrity through structured schemas and data type constraints.
 
-JSON is primarily a KV (key-value) format, for example `{"a": "b"}` where `a` is the key and `b` is the value,
-but what if you want to search not by that key but by a sub-key? Well, instead of being able to quickly use `var[key]`,
-which in a Python dictionary has a constant return time (for more info look up hash tables),
-you now have to iterate through every object in the dictionary and compare to find what you're looking for.
-Most relational database systems, like MySQL, MariaDB, and PostgreSQL have ways of indexing secondary fields
-apart from the primary key so that you can easily search by multiple attributes.
+## Querying and Indexing:
+
+JSON databases lack efficient querying and indexing mechanisms, making data retrieval slow.
+SQL databases excel at quick data retrieval with optimized indexing.
+
+## Complex Queries:
+
+JSON databases struggle with complex queries, lacking features like JOINs and aggregations.
+SQL databases support advanced querying, enabling complex data operations.
+
+## ACID Transactions:
+
+JSON databases often lack proper transaction support, compromising data consistency.
+SQL databases follow ACID principles, ensuring reliable transactions even during failures.
+
+## Scalability:
+
+JSON databases face scalability challenges due to limited indexing and querying capabilities.
+SQL databases offer better scalability options, including horizontal scaling.
+
+### Conclusion:
+
+JSON's flexibility suits data exchange, but its shortcomings in data integrity, querying efficiency, transactions, and scalability make it unsuitable for robust databases. SQL databases, with structured schemas, powerful queries, ACID transactions, and scalability, provide better solutions for data-intensive applications. When choosing a database solution, consider your project's needs and the limitations of JSON, favoring SQL where appropriate.
