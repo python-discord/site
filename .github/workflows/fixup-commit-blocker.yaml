@@ -1,0 +1,13 @@
+name: Block fixup commits
+
+on:
+  pull_request_target:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  block-fixup-commits:
+    if: github.ref != 'refs/heads/main'
+    uses: python-discord/.github/.github/workflows/block-fixup-commits.yaml@main
