@@ -129,6 +129,14 @@ Unless you are editing the Dockerfile or docker-compose.yml, you shouldn't need 
 [**Click here to see the basic Git workflow when contributing to one of our projects.**](../working-with-git/)
 
 ---
+# Deploy previews
+
+When you open a pull request, the `netlify` bot will build and publish a static
+preview of your changes, which is very valuable if you made any changes to the
+content or styling of the website. An example deploy preview can be found on
+[pull request #773](https://github.com/python-discord/site/pull/773#issuecomment-1257224147).
+
+---
 # Django admin site
 
 Django provides an interface for administration with which you can view and edit the models among other things.
