@@ -38,7 +38,7 @@ jobs:
       # Build the container, including an inline cache manifest to
       # allow us to use the registry as a cache source.
       - name: Build and push
-        uses: docker/build-push-action@v4
+        uses: docker/build-push-action@v5
         with:
           context: .
           file: ./Dockerfile
