@@ -181,6 +181,6 @@ The website is configured through the following environment variables:
 # Next steps
 Now that you have everything setup, it is finally time to make changes to the site! If you have not yet read the [contributing guidelines](../contributing-guidelines.md), now is a good time. Contributions that do not adhere to the guidelines may be rejected.
 
-If you're not sure where to go from here, our [detailed walkthrough](../#2-set-up-the-project) is for you.
+If you're not sure where to go from here, our [detailed walkthrough](../#2-set-up-the-project), or the [guide on contributing a page](../../how-to-contribute-a-page) is for you.
 
 Have fun!
