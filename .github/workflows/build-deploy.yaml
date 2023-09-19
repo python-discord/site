@@ -58,13 +58,11 @@ jobs:
     environment: production
 
     steps:
-      # Check out the private Kubernetes repository for the
-      # deployment.yaml file using a GitHub Personal Access
-      # Token to get access.
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          repository: python-discord/kubernetes
+          repository: python-discord/infra
+          path: infra
 
       - uses: azure/setup-kubectl@v3
 
@@ -78,7 +76,7 @@ jobs:
         uses: Azure/k8s-deploy@v4
         with:
           manifests: |
-            namespaces/default/site/deployment.yaml
+            infra/kubernetes/namespaces/default/site/deployment.yaml
           images: 'ghcr.io/python-discord/site:${{ inputs.sha-tag }}'
 
       - name: Purge Cloudflare Edge Cache
