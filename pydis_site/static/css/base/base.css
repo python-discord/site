@@ -52,6 +52,7 @@ main.site-content {
     background-position: 100% 50%;
     background-repeat: no-repeat;
     padding-left: 2.5rem;
+    padding-right: 2.5rem;
     background-color: #697ec4ff;
     transition: all 0.2s cubic-bezier(.25,.8,.25,1);
     overflow: hidden;
