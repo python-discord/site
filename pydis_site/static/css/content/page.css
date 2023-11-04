@@ -96,12 +96,3 @@ ul.menu-list.toc {
 li img {
     margin-top: 0.5em;
 }
-
-.dropdown-menu{
-    min-width: 15rem;
-}
-
-a.dropdown-item {
-    white-space: normal;
-    padding-right: 0;
-}
