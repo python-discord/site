@@ -24,7 +24,7 @@ python-frontmatter = "1.0.1"
 pyyaml = "6.0.1"
 sentry-sdk = "1.35.0"
 whitenoise = "6.6.0"
-psycopg = {extras = ["binary"], version = "3.1.12"}
+psycopg = {extras = ["binary"], version = "3.1.13"}
 
 [tool.poetry.group.dev.dependencies]
 python-dotenv = "1.0.0"
