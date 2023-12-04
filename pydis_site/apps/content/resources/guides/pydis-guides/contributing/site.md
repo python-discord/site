@@ -53,7 +53,7 @@ CREATE DATABASE pysite WITH OWNER pysite;
 CREATE DATABASE metricity WITH OWNER pysite;
 ```
 
-Finally, enter `/q` to exit psql.
+Finally, enter `\q` to exit psql.
 
 ### 2. Environment variables
 
