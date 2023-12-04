@@ -1,3 +1,7 @@
+# When updating the Python version here, please make sure to also
+# update the contributor guide, which can be found at
+#   pydis_site/apps/content/resources/guides/pydis-guides/contributing/site.md
+# Thank you!
 FROM ghcr.io/owl-corp/python-poetry-base:3.11-slim
 
 # Allow service to handle stops gracefully
