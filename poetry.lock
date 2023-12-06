@@ -404,13 +404,13 @@ testing = ["coverage[toml] (>=5.0a4)", "pytest (>=4.6.11)"]
 
 [[package]]
 name = "django-filter"
-version = "23.4"
+version = "23.5"
 description = "Django-filter is a reusable Django application for allowing users to filter querysets dynamically."
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "django-filter-23.4.tar.gz", hash = "sha256:bed070b38359dce7d2dbe057b165d59773057986356cb809ded983b36c77a976"},
-    {file = "django_filter-23.4-py3-none-any.whl", hash = "sha256:526954f18bd7d6423f232a9a7974f58fbc6863908b9fc160de075e01adcc2a5f"},
+    {file = "django-filter-23.5.tar.gz", hash = "sha256:67583aa43b91fe8c49f74a832d95f4d8442be628fd4c6d65e9f811f5153a4e5c"},
+    {file = "django_filter-23.5-py3-none-any.whl", hash = "sha256:99122a201d83860aef4fe77758b69dda913e874cc5e0eaa50a86b0b18d708400"},
 ]
 
 [package.dependencies]
@@ -1204,4 +1204,4 @@ brotli = ["Brotli"]
 [metadata]
 lock-version = "2.0"
 python-versions = "3.11.*"
-content-hash = "09866362ea00eabb70043dfc209102d600213339467409227a97a1f55665c4f5"
+content-hash = "ba4a866f147b178930a5bc21a86b0202d33269fa0549157f1367ae7bc6aef665"
