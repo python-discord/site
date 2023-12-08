@@ -79,7 +79,7 @@ main.site-content {
 
 #netcup-logo {
     padding-left: 15px;
-    background: url(https://www.netcup-wiki.de/static/assets/images/netcup_logo_white.svg) no-repeat center;
+    background: url(/static/images/sponsors/netcup-white.svg) no-repeat center;
     background-size: 60px;
     background-position: 0px 3px;
     color: #00000000;
