@@ -1,7 +1,12 @@
 from django.urls import include, path
 from rest_framework.routers import DefaultRouter
 
-from .views import GitHubArtifactsView, HealthcheckView, RulesView
+from .views import (
+    GitHubArtifactsView,
+    GitHubWebhookFilterView,
+    HealthcheckView,
+    RulesView,
+)
 from .viewsets import (
     AocAccountLinkViewSet,
     AocCompletionistBlockViewSet,
@@ -100,5 +105,10 @@ urlpatterns = (
         'github/artifact/<str:owner>/<str:repo>/<str:sha>/<str:action_name>/<str:artifact_name>',
         GitHubArtifactsView.as_view(),
         name="github-artifacts"
+    ),
+    path(
+        'github/webhook-filter/<str:webhook_id>/<str:webhook_token>',
+        GitHubWebhookFilterView.as_view(),
+        name='github-webhook-filter'
     ),
 )
