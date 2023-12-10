@@ -1,6 +1,7 @@
 from rest_framework.mixins import (
     CreateModelMixin,
     DestroyModelMixin,
+    UpdateModelMixin,
     ListModelMixin
 )
 from rest_framework.viewsets import GenericViewSet
@@ -10,7 +11,7 @@ from pydis_site.apps.api.serializers import OffensiveMessageSerializer
 
 
 class OffensiveMessageViewSet(
-    CreateModelMixin, ListModelMixin, DestroyModelMixin, GenericViewSet
+    CreateModelMixin, ListModelMixin, UpdateModelMixin, DestroyModelMixin, GenericViewSet
 ):
     """
     View providing CRUD access to offensive messages.
@@ -45,6 +46,16 @@ class OffensiveMessageViewSet(
     #### Status codes
     - 201: returned on success
     - 400: if the body format is invalid
+
+    ### PATCH /bot/offensive-messages/<id:int>
+    Perform a partial update of the offensive message with the given `id`.
+    Intended to allow rescheduling the deletion date in case the bot's attempt
+    to delete the message failed due to another error than the message already
+    being deleted.
+
+    #### Status codes
+    - 200: returned on success
+    - 404: if a offensive message object with the given `id` does not exist
 
     ### DELETE /bot/offensive-messages/<id:int>
     Delete the offensive message object with the given `id`.
