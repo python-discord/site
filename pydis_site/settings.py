@@ -54,7 +54,8 @@ if not STATIC_BUILD:
         dsn=env('SITE_DSN'),
         integrations=[DjangoIntegration(), LoggingIntegration(level=logging.DEBUG, event_level=logging.ERROR)],
         send_default_pii=True,
-        release=f"site@{GIT_SHA}"
+        release=f"site@{GIT_SHA}",
+        profiles_sample_rate=0.5,
     )
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
