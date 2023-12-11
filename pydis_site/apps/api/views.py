@@ -1,3 +1,8 @@
+import json
+import urllib.request
+from collections.abc import Mapping
+
+from rest_framework import status
 from rest_framework.exceptions import ParseError
 from rest_framework.request import Request
 from rest_framework.response import Response
@@ -226,3 +231,102 @@ class GitHubArtifactsView(APIView):
                 "error": str(e),
                 "requested_resource": f"{owner}/{repo}/{sha}/{action_name}/{artifact_name}"
             }, status=e.status)
+
+
+class GitHubWebhookFilterView(APIView):
+    """
+    Filters uninteresting events from webhooks sent by GitHub to Discord.
+
+    ## Routes
+    ### POST /github/webhook-filter/:webhook_id/:webhook_token
+    Takes the GitHub webhook payload as the request body, documented on here:
+    https://docs.github.com/en/webhooks/webhook-events-and-payloads. The endpoint
+    will then determine whether the sent webhook event is of interest,
+    and if so, will forward it to Discord. The response from Discord is
+    then returned back to the client of this website, including the original
+    status code and headers (excluding `Content-Type`).
+
+    ## Authentication
+    Does not require any authentication nor permissions on its own, however,
+    Discord will validate that the webhook originates from GitHub and respond
+    with a 403 forbidden error if not.
+    """
+
+    authentication_classes = ()
+    permission_classes = ()
+
+    def post(self, request: Request, *, webhook_id: str, webhook_token: str) -> Response:
+        """Filter a webhook POST from GitHub before sending it to Discord."""
+        sender = request.data.get('sender', {})
+        sender_name = sender.get('login', '')
+        event = request.headers.get('X-GitHub-Event')
+        repository = request.data.get('repository', {})
+
+        is_coveralls = 'coveralls' in sender_name
+        is_github_bot = sender.get('type') == 'bot'
+        is_sentry = 'sentry-io' in sender_name
+        is_dependabot_branch_deletion = (
+            'dependabot' in request.data.get('ref', '')
+            and event == 'delete'
+        )
+        is_bot_pr_approval = (
+            '[bot]' in request.data.get('pull_request', {}).get('user', {}).get('login', '')
+            and event == 'pull_request_review'
+        )
+        is_empty_review = (
+            request.data.get('review', {}).get('state') == 'commented'
+            and event == 'pull_request_review'
+            and request.data.get('review', {}).get('body') is None
+        )
+        is_black_non_main_push = (
+            request.data.get('ref') != 'refs/heads/main'
+            and repository.get('name') == 'black'
+            and repository.get('owner', {}).get('login') == 'psf'
+            and event == 'push'
+        )
+
+        is_bot_payload = (
+            is_coveralls
+            or (is_github_bot and not is_sentry)
+            or is_dependabot_branch_deletion
+            or is_bot_pr_approval
+        )
+        is_noisy_user_action = is_empty_review
+        should_ignore = is_bot_payload or is_noisy_user_action or is_black_non_main_push
+
+        if should_ignore:
+            return Response(
+                {'message': "Ignored by github-filter endpoint"},
+                status=status.HTTP_203_NON_AUTHORITATIVE_INFORMATION,
+            )
+
+        (response_status, headers, body) = self.send_webhook(
+            webhook_id, webhook_token, request.data, dict(request.headers),
+        )
+        headers.pop('Connection', None)
+        headers.pop('Content-Length', None)
+        return Response(data=body, headers=headers, status=response_status)
+
+    def send_webhook(
+        self,
+        webhook_id: str,
+        webhook_token: str,
+        data: dict,
+        headers: Mapping[str, str],
+    ) -> tuple[int, dict[str, str], bytes]:
+        """Execute a webhook on Discord's GitHub webhook endpoint."""
+        payload = json.dumps(data).encode()
+        headers.pop('Content-Length', None)
+        headers.pop('Content-Type', None)
+        headers.pop('Host', None)
+        request = urllib.request.Request(  # noqa: S310
+            f'https://discord.com/api/webhooks/{webhook_id}/{webhook_token}/github?wait=1',
+            data=payload,
+            headers={'Content-Type': 'application/json', **headers},
+        )
+
+        try:
+            with urllib.request.urlopen(request) as response:  # noqa: S310
+                return (response.status, dict(response.getheaders()), response.read())
+        except urllib.error.HTTPError as err:  # pragma: no cover
+            return (err.code, dict(err.headers), err.fp.read())
