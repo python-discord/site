@@ -156,6 +156,14 @@ class UpdateOffensiveMessageTestCase(AuthenticatedAPITestCase):
             delta=datetime.timedelta(seconds=1),
         )
 
+    def test_updating_write_once_fields(self):
+        """Fields such as the channel ID may not be updated."""
+        url = reverse('api:bot:offensivemessage-detail', args=(self.message.id,))
+        data = {'channel_id': self.message.channel_id + 1}
+        response = self.client.patch(url, data=data)
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.json(), {'channel_id': ["This field cannot be updated."]})
+
     def test_updating_nonexistent_message(self):
         url = reverse('api:bot:offensivemessage-detail', args=(self.message.id + 1,))
         data = {'delete_date': self.in_one_week}
