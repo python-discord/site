@@ -1,6 +1,8 @@
 import json
+import logging
 import urllib.request
 from collections.abc import Mapping
+from http import HTTPStatus
 
 from rest_framework import status
 from rest_framework.exceptions import ParseError
@@ -254,6 +256,7 @@ class GitHubWebhookFilterView(APIView):
 
     authentication_classes = ()
     permission_classes = ()
+    logger = logging.getLogger(__name__ + ".GitHubWebhookFilterView")
 
     def post(self, request: Request, *, webhook_id: str, webhook_token: str) -> Response:
         """Filter a webhook POST from GitHub before sending it to Discord."""
@@ -329,4 +332,10 @@ class GitHubWebhookFilterView(APIView):
             with urllib.request.urlopen(request) as response:  # noqa: S310
                 return (response.status, dict(response.getheaders()), response.read())
         except urllib.error.HTTPError as err:  # pragma: no cover
+            if err.code == HTTPStatus.TOO_MANY_REQUESTS:
+                self.logger.warning(
+                    "We are being rate limited by Discord! Scope: %s, reset-after: %s",
+                    headers.get("X-RateLimit-Scope"),
+                    headers.get("X-RateLimit-Reset-After"),
+                )
             return (err.code, dict(err.headers), err.fp.read())
