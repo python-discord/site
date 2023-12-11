@@ -183,4 +183,9 @@ Now that you have everything setup, it is finally time to make changes to the si
 
 If you're not sure where to go from here, our [detailed walkthrough](../#2-set-up-the-project), or the [guide on contributing a page](../../how-to-contribute-a-page) is for you.
 
+The site repository also contains `README.md` files in all major directories of
+interest, which explain where which functionality of the site is located. For
+example, see the [API app's
+README](https://github.com/python-discord/site/tree/main/pydis_site/apps/api).
+
 Have fun!
