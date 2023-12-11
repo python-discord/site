@@ -173,7 +173,6 @@ class NominationViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
     queryset = Nomination.objects.all()
     filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
     filterset_fields = ('user__id', 'active')
-    frozen_fields = ('id', 'inserted_at', 'user', 'ended_at')
     frozen_on_create = ('ended_at', 'end_reason', 'active', 'inserted_at', 'reviewed')
 
     def create(self, request: HttpRequest, *args, **kwargs) -> Response:
@@ -238,10 +237,6 @@ class NominationViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
 
         Called by the Django Rest Framework in response to the corresponding HTTP request.
         """
-        for field in request.data:
-            if field in self.frozen_fields:
-                raise ValidationError({field: ['This field cannot be updated.']})
-
         instance = self.get_object()
         serializer = self.get_serializer(instance, data=request.data, partial=True)
         serializer.is_valid(raise_exception=True)
