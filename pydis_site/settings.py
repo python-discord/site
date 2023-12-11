@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
+import logging
 import os
 import secrets
 import sys
@@ -19,6 +20,7 @@ from socket import gethostbyname, gethostname
 
 import environ
 import sentry_sdk
+from sentry_sdk.integrations.logging import LoggingIntegration
 from sentry_sdk.integrations.django import DjangoIntegration
 
 env = environ.Env(
@@ -50,7 +52,7 @@ if GITHUB_APP_KEY and (key_file := Path(GITHUB_APP_KEY)).is_file():
 if not STATIC_BUILD:
     sentry_sdk.init(
         dsn=env('SITE_DSN'),
-        integrations=[DjangoIntegration()],
+        integrations=[DjangoIntegration(), LoggingIntegration(level=logging.DEBUG, event_level=logging.ERROR)],
         send_default_pii=True,
         release=f"site@{GIT_SHA}"
     )
