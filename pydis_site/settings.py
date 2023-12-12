@@ -55,7 +55,10 @@ if not STATIC_BUILD:
         integrations=[DjangoIntegration(), LoggingIntegration(level=logging.DEBUG, event_level=logging.ERROR)],
         send_default_pii=True,
         release=f"site@{GIT_SHA}",
-        profiles_sample_rate=0.5,
+        profiles_sample_rate=1.0,
+        enable_tracing=True,
+        enable_db_query_source=True,
+        db_query_source_threshold_ms=100,  # Queries slower that 100ms will include the source in the event
     )
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
