@@ -261,30 +261,27 @@ class GitHubWebhookFilterView(APIView):
     def post(self, request: Request, *, webhook_id: str, webhook_token: str) -> Response:
         """Filter a webhook POST from GitHub before sending it to Discord."""
         sender = request.data.get('sender', {})
-        sender_name = sender.get('login', '')
-        event = request.headers.get('X-GitHub-Event')
+        sender_name = sender.get('login', '').lower()
+        event = request.headers.get('X-GitHub-Event', '').lower()
         repository = request.data.get('repository', {})
 
         is_coveralls = 'coveralls' in sender_name
-        is_github_bot = sender.get('type') == 'bot'
+        is_github_bot = sender.get('type', '').lower() == 'bot'
         is_sentry = 'sentry-io' in sender_name
         is_dependabot_branch_deletion = (
-            'dependabot' in request.data.get('ref', '')
+            'dependabot' in request.data.get('ref', '').lower()
             and event == 'delete'
         )
-        is_bot_pr_approval = (
-            '[bot]' in request.data.get('pull_request', {}).get('user', {}).get('login', '')
-            and event == 'pull_request_review'
-        )
+        is_bot_pr_approval = is_github_bot and event == 'pull_request_review'
         is_empty_review = (
-            request.data.get('review', {}).get('state') == 'commented'
+            request.data.get('review', {}).get('state', '').lower() == 'commented'
             and event == 'pull_request_review'
             and request.data.get('review', {}).get('body') is None
         )
         is_black_non_main_push = (
             request.data.get('ref') != 'refs/heads/main'
-            and repository.get('name') == 'black'
-            and repository.get('owner', {}).get('login') == 'psf'
+            and repository.get('name', '').lower() == 'black'
+            and repository.get('owner', {}).get('login', '').lower() == 'psf'
             and event == 'push'
         )
 
