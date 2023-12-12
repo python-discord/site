@@ -19,5 +19,6 @@ from .bot import (
     OffTopicChannelName,
     Reminder,
     Role,
-    User
+    User,
+    UserAltRelationship
 )

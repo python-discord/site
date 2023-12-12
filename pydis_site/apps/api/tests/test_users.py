@@ -4,7 +4,7 @@ from unittest.mock import Mock, patch
 from django.urls import reverse
 
 from .base import AuthenticatedAPITestCase
-from pydis_site.apps.api.models import Infraction, Role, User
+from pydis_site.apps.api.models import Infraction, Role, User, UserAltRelationship
 from pydis_site.apps.api.models.bot.metricity import NotFoundError
 from pydis_site.apps.api.viewsets.bot.user import UserListPagination
 
@@ -651,3 +651,447 @@ class UserViewSetTests(AuthenticatedAPITestCase):
         result = response.json()
         self.assertEqual(result['count'], 0)
         self.assertEqual(result['results'], [])
+
+
+class UserAltUpdateTests(AuthenticatedAPITestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.user_1 = User.objects.create(
+            id=12095219,
+            name=f"Test user {random.randint(100, 1000)}",
+            discriminator=random.randint(1, 9999),
+            in_guild=True,
+        )
+        cls.user_2 = User.objects.create(
+            id=18259125,
+            name=f"Test user {random.randint(100, 1000)}",
+            discriminator=random.randint(1, 9999),
+            in_guild=True,
+        )
+
+    def test_adding_existing_alt(self) -> None:
+        url = reverse('api:bot:user-alts', args=(self.user_1.id,))
+        data = {
+            'target': self.user_2.id,
+            'actor': self.user_1.id,
+            'context': "Joe's trolling account"
+        }
+        response = self.client.post(url, data)
+        self.assertEqual(response.status_code, 204)
+
+        self.user_1.refresh_from_db()
+        self.user_2.refresh_from_db()
+
+        self.assertQuerySetEqual(self.user_1.alts.all(), [self.user_2])
+        self.assertQuerySetEqual(self.user_2.alts.all(), [self.user_1])
+
+        detail_url = reverse('api:bot:user-detail', args=(self.user_1.id,))
+        detail_response = self.client.get(detail_url)
+        self.assertEqual(detail_response.status_code, 200)
+
+        parsed_detail = detail_response.json()
+        [parsed_alt] = parsed_detail.pop('alts')
+        parsed_alt.pop('created_at')
+        parsed_alt.pop('updated_at')
+
+        self.assertEqual(
+            parsed_detail,
+            {
+                'id': self.user_1.id,
+                'name': self.user_1.name,
+                'display_name': self.user_1.display_name,
+                'discriminator': self.user_1.discriminator,
+                'roles': self.user_1.roles,
+                'in_guild': self.user_1.in_guild,
+            }
+        )
+        self.assertEqual(
+            parsed_alt,
+            {
+                'source': self.user_1.id,
+                'target': data['target'],
+                'alts': [self.user_1.id],
+                'actor': data['actor'],
+                'context': data['context'],
+            }
+        )
+
+    def test_adding_existing_alt_twice_via_source(self) -> None:
+        self.verify_adding_existing_alt(add_on_source=True)
+
+    def test_adding_existing_alt_twice_via_target(self) -> None:
+        self.verify_adding_existing_alt(add_on_source=False)
+
+    def verify_adding_existing_alt(self, add_on_source: bool) -> None:
+        url = reverse('api:bot:user-alts', args=(self.user_1.id,))
+        data = {
+            'target': self.user_2.id,
+            'actor': self.user_1.id,
+            'context': "Lemon's trolling account"
+        }
+        initial_response = self.client.post(url, data)
+        self.assertEqual(initial_response.status_code, 204)
+
+        if add_on_source:
+            repeated_url = url
+            repeated_data = data
+        else:
+            repeated_url = reverse('api:bot:user-alts', args=(self.user_2.id,))
+            repeated_data = {
+                'target': self.user_1.id,
+                'actor': self.user_1.id,
+                'context': data['context']
+            }
+
+        response = self.client.post(repeated_url, repeated_data)
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.json(), {
+            'source': ["This relationship has already been established"]
+        })
+
+    def test_removing_existing_alt_source_from_target(self) -> None:
+        self.verify_deletion(delete_on_source=False)
+
+    def test_removing_existing_alt_target_from_source(self) -> None:
+        self.verify_deletion(delete_on_source=True)
+
+    def verify_deletion(self, delete_on_source: bool) -> None:
+        url = reverse('api:bot:user-alts', args=(self.user_1.id,))
+        data = {
+            'target': self.user_2.id,
+            'actor': self.user_1.id,
+            'context': "Lemon's trolling account"
+        }
+        initial_response = self.client.post(url, data)
+        self.assertEqual(initial_response.status_code, 204)
+
+        self.assertTrue(self.user_1.alts.all().exists())
+        self.assertTrue(self.user_2.alts.all().exists())
+
+        if delete_on_source:
+            data = self.user_2.id
+            alts_url = reverse('api:bot:user-alts', args=(self.user_1.id,))
+        else:
+            data = self.user_1.id
+            alts_url = reverse('api:bot:user-alts', args=(self.user_2.id,))
+
+        response = self.client.delete(alts_url, data)
+
+        self.assertEqual(response.status_code, 204)
+
+        self.user_1.refresh_from_db()
+        self.user_2.refresh_from_db()
+
+        self.assertFalse(self.user_1.alts.all().exists())
+        self.assertFalse(self.user_2.alts.all().exists())
+
+    def test_removing_unknown_alt(self) -> None:
+        data = self.user_1.id + self.user_2.id
+        url = reverse('api:bot:user-alts', args=(self.user_1.id,))
+        response = self.client.delete(url, data)
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.json(), {
+            'non_field_errors': ["Specified account is not a known alternate account of this user"]
+        })
+
+    def test_add_alt_returns_error_for_missing_keys_in_request_body(self) -> None:
+        url = reverse('api:bot:user-alts', args=(self.user_1.id,))
+        data = {'hello': 'joe'}
+        response = self.client.post(url, data)
+        self.assertEqual(response.status_code, 400)
+
+    def test_remove_alt_returns_error_for_non_int_request_body(self) -> None:
+        url = reverse('api:bot:user-alts', args=(self.user_1.id,))
+        data = {'hello': 'joe'}
+        response = self.client.delete(url, data)
+        self.assertEqual(response.status_code, 400)
+
+    def test_adding_alt_to_user_that_does_not_exist(self) -> None:
+        """Patching a user's alts for a user that doesn't exist should return a 404."""
+        url = reverse('api:bot:user-alts', args=(self.user_1.id + self.user_2.id,))
+        data = {
+            'target': self.user_2.id,
+            'actor': self.user_1.id,
+            'context': "Chris's trolling account"
+        }
+        response = self.client.post(url, data)
+        self.assertEqual(response.status_code, 404)
+
+    def test_adding_alt_that_does_not_exist_to_user(self) -> None:
+        """Patching a user's alts with an alt that is unknown should return a 400."""
+        url = reverse('api:bot:user-alts', args=(self.user_1.id,))
+        data = {
+            'target': self.user_1.id + self.user_2.id,
+            'actor': self.user_1.id,
+            'context': "Hello, Joe"
+        }
+        response = self.client.post(url, data)
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.json(), {
+            'target': [f'Invalid pk "{data["target"]}" - object does not exist.']
+        })
+
+    def test_cannot_add_self_as_alt_account(self) -> None:
+        """The existing account may not be an alt of itself."""
+        url = reverse('api:bot:user-alts', args=(self.user_1.id,))
+        data = {
+            'target': self.user_1.id,
+            'actor': self.user_1.id,
+            'context': "Schizophrenia"
+        }
+        response = self.client.post(url, data)
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.json(), {
+            'source': ["The user may not be an alternate account of itself"]
+        })
+
+    def test_cannot_update_alts_on_regular_user_patch_route(self) -> None:
+        """The regular user update route does not allow editing the alts."""
+        url = reverse('api:bot:user-detail', args=(self.user_1.id,))
+        data = {'alts': [self.user_2.id]}
+        response = self.client.patch(url, data)
+        self.assertEqual(response.status_code, 200)  # XXX: This seems to be a DRF bug
+
+        self.user_1.refresh_from_db()
+        self.assertQuerySetEqual(self.user_1.alts.all(), ())
+        self.user_2.refresh_from_db()
+        self.assertQuerySetEqual(self.user_2.alts.all(), ())
+
+    def test_cannot_update_alts_on_bulk_user_patch_route(self) -> None:
+        """The bulk user update route does not allow editing the alts."""
+        url = reverse('api:bot:user-bulk-patch')
+        data = [{'id': self.user_1.id, 'alts': [self.user_2.id]}]
+        response = self.client.patch(url, data)
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.json(), {'non_field_errors': ['Insufficient data provided.']})
+
+        self.user_1.refresh_from_db()
+        self.assertQuerySetEqual(self.user_1.alts.all(), ())
+        self.user_2.refresh_from_db()
+        self.assertQuerySetEqual(self.user_2.alts.all(), ())
+
+    def test_user_bulk_patch_does_not_discard_alts(self) -> None:
+        """The bulk user update route should not modify the alts."""
+        alts_url = reverse('api:bot:user-alts', args=(self.user_1.id,))
+        data = {
+            'target': self.user_2.id,
+            'actor': self.user_2.id,
+            'context': "This is my testing account"
+        }
+        alts_response = self.client.post(alts_url, data)
+        self.assertEqual(alts_response.status_code, 204)
+
+        url = reverse('api:bot:user-bulk-patch')
+        self.user_1.alts.set((self.user_2,))
+        data = [{'id': self.user_1.id, 'name': "Joe Armstrong"}]
+        response = self.client.patch(url, data)
+        self.assertEqual(response.status_code, 200)
+
+        self.user_1.refresh_from_db()
+        self.assertQuerySetEqual(self.user_1.alts.all(), (self.user_2,))
+        self.user_2.refresh_from_db()
+        self.assertQuerySetEqual(self.user_2.alts.all(), (self.user_1,))
+
+
+class UserAltUpdateWithExistingAltsTests(AuthenticatedAPITestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.user_1 = User.objects.create(
+            id=12095219,
+            name=f"Test user {random.randint(100, 1000)}",
+            discriminator=random.randint(1, 9999),
+            in_guild=True,
+        )
+        cls.user_2 = User.objects.create(
+            id=18259125,
+            name=f"Test user {random.randint(100, 1000)}",
+            discriminator=random.randint(1, 9999),
+            in_guild=True,
+        )
+        cls.relationship_1 = UserAltRelationship.objects.create(
+            source=cls.user_1,
+            target=cls.user_2,
+            context="Test user's trolling account",
+            actor=cls.user_1
+        )
+        cls.relationship_2 = UserAltRelationship.objects.create(
+            source=cls.user_2,
+            target=cls.user_1,
+            context="Test user's trolling account",
+            actor=cls.user_1
+        )
+
+    def test_returns_404_for_unknown_user(self) -> None:
+        url = reverse('api:bot:user-alts', args=(self.user_1.id + self.user_2.id,))
+        response = self.client.patch(url, {'target': self.user_2.id, 'context': "Dinoman"})
+        self.assertEqual(response.status_code, 404)
+
+    def test_returns_400_for_unknown_alt_from_source(self) -> None:
+        self.verify_returns_400_for_unknown_alt(from_source=True)
+
+    def test_returns_400_for_unknown_alt_from_target(self) -> None:
+        self.verify_returns_400_for_unknown_alt(from_source=False)
+
+    def verify_returns_400_for_unknown_alt(self, from_source: bool) -> None:
+        if from_source:
+            source = self.user_1.id
+        else:
+            source = self.user_2.id
+
+        target = self.user_1.id + self.user_2.id
+
+        url = reverse('api:bot:user-alts', args=(source,))
+        data = {'target': target, 'context': "Still a trolling account"}
+        response = self.client.patch(url, data)
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.json(), {
+            'target': ["User is not an associated alt account"]
+        })
+
+    def test_returns_400_for_missing_fields(self) -> None:
+        url = reverse('api:bot:user-alts', args=(self.user_1.id,))
+        payloads = [{'target': self.user_2.id}, {'context': "Confirmed"}]
+        for payload in payloads:
+            key = next(iter(payload))
+            (missing_key,) = tuple({'target', 'context'} - {key})
+            with self.subTest(specified_key=next(iter(payload))):
+                response = self.client.patch(url, payload)
+                self.assertEqual(response.status_code, 400)
+                self.assertEqual(response.json(), {
+                    missing_key: ["This field is required."]
+                })
+
+    def test_accepts_valid_update_from_source(self) -> None:
+        self.verify_accepts_valid_update(from_source=True)
+
+    def test_accepts_valid_update_from_target(self) -> None:
+        self.verify_accepts_valid_update(from_source=False)
+
+    def verify_accepts_valid_update(self, from_source: bool) -> None:
+        if from_source:
+            source = self.user_1.id
+            target = self.user_2.id
+        else:
+            source = self.user_2.id
+            target = self.user_1.id
+
+        url = reverse('api:bot:user-alts', args=(source,))
+        data = {'target': target, 'context': "Still a trolling account"}
+        response = self.client.patch(url, data)
+        self.assertEqual(response.status_code, 204)
+
+        self.relationship_1.refresh_from_db()
+        self.relationship_2.refresh_from_db()
+        self.assertEqual(self.relationship_1.context, data['context'])
+        self.assertEqual(self.relationship_2.context, data['context'])
+
+    def test_retrieving_alts_via_source(self) -> None:
+        self.verify_retrieving_alts(from_source=True)
+
+    def test_retrieving_alts_via_target(self) -> None:
+        self.verify_retrieving_alts(from_source=False)
+
+    def verify_retrieving_alts(self, from_source: bool) -> None:
+        if from_source:
+            source = self.user_1.id
+            target = self.user_2.id
+        else:
+            source = self.user_2.id
+            target = self.user_1.id
+
+        url = reverse('api:bot:user-detail', args=(source,))
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        body = response.json()
+        [alt] = body['alts']
+        alt.pop('created_at')
+        alt.pop('updated_at')
+        self.assertEqual(alt,
+            {
+                'actor': self.relationship_1.actor.id,
+                'source': source,
+                'alts': [source],
+                'target': target,
+                'context': self.relationship_1.context
+            }
+        )
+
+
+class UserAltUpdateWithExistingTransitiveAltsTests(AuthenticatedAPITestCase):
+    """
+    Test user alt methods via transitive alternate account relationships.
+
+    Specifically, user 2 is an alt account of user 1, and user 3 is an alt
+    account of user 2. However, user 3 should not be an alt account of
+    user 1 in this case.
+    """
+
+    @classmethod
+    def setUpTestData(cls):
+        cls.user_1 = User.objects.create(
+            id=12095219,
+            name=f"Test user {random.randint(100, 1000)}",
+            discriminator=random.randint(1, 9999),
+            in_guild=True,
+        )
+        cls.user_2 = User.objects.create(
+            id=18259125,
+            name=f"Test user {random.randint(100, 1000)}",
+            discriminator=random.randint(1, 9999),
+            in_guild=True,
+        )
+        cls.user_3 = User.objects.create(
+            id=18294612591,
+            name=f"Test user {random.randint(100, 1000)}",
+            discriminator=random.randint(1, 9999),
+            in_guild=True,
+        )
+        cls.relationship_1 = UserAltRelationship.objects.create(
+            source=cls.user_1,
+            target=cls.user_2,
+            context="Test user's trolling account (rel 1, U1 -> U2)",
+            actor=cls.user_1
+        )
+        cls.relationship_2 = UserAltRelationship.objects.create(
+            source=cls.user_2,
+            target=cls.user_1,
+            context="Test user's trolling account (rel 2, U2 -> U1)",
+            actor=cls.user_1
+        )
+        cls.relationship_3 = UserAltRelationship.objects.create(
+            source=cls.user_2,
+            target=cls.user_3,
+            context="Test user's trolling account (rel 3, U2 -> U3)",
+            actor=cls.user_2
+        )
+        cls.relationship_4 = UserAltRelationship.objects.create(
+            source=cls.user_3,
+            target=cls.user_2,
+            context="Test user's trolling account (rel 4, U3 -> U2)",
+            actor=cls.user_2
+        )
+
+    def test_retrieving_alts_via_source(self) -> None:
+        subtests = [
+            # Source user, Expected sub-alts of each alt
+            # U1, ({U2 -> {U1, U3}},)
+            (self.user_1.id, ({self.user_1.id, self.user_3.id},)),
+            # U2, ({U1 -> U2}, {U3 -> U2},)
+            (self.user_2.id, ({self.user_2.id}, {self.user_2.id})),
+            # U3, ({U2 -> {U1, U3}},)
+            (self.user_3.id, ({self.user_1.id, self.user_3.id},)),
+        ]
+
+        for (source, expected_subalts) in subtests:
+            with self.subTest(source=source):
+                url = reverse('api:bot:user-detail', args=(source,))
+                response = self.client.get(url)
+                self.assertEqual(response.status_code, 200)
+                body = response.json()
+                for alt, subalts in zip(body['alts'], expected_subalts, strict=True):
+                    alt.pop('created_at')
+                    alt.pop('updated_at')
+
+                    self.assertEqual(len(set(alt['alts'])), len(subalts))
+                    self.assertEqual(set(alt['alts']), subalts)
+                    self.assertEqual(alt['source'], source)
