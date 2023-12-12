@@ -749,6 +749,8 @@ class ExpandedTests(AuthenticatedAPITestCase):
             obj = infraction[key]
             for field in ('id', 'name', 'discriminator', 'roles', 'in_guild'):
                 self.assertTrue(field in obj, msg=f'field "{field}" missing from {key}')
+            if key == 'user':
+                self.assertIn('alts', obj)
 
     def test_list_expanded(self):
         url = reverse('api:bot:infraction-list-expanded')

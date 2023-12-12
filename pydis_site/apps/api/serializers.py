@@ -11,6 +11,7 @@ from rest_framework.serializers import (
     ListSerializer,
     ModelSerializer,
     PrimaryKeyRelatedField,
+    SerializerMethodField,
     ValidationError
 )
 from rest_framework.settings import api_settings
@@ -33,7 +34,8 @@ from .models import (
     OffensiveMessage,
     Reminder,
     Role,
-    User
+    User,
+    UserAltRelationship
 )
 
 class FrozenFieldsMixin:
@@ -505,7 +507,7 @@ class ExpandedInfractionSerializer(InfractionSerializer):
         """Return the dictionary representation of this infraction."""
         ret = super().to_representation(instance)
 
-        ret['user'] = UserSerializer(instance.user).data
+        ret['user'] = UserWithAltsSerializer(instance.user).data
         ret['actor'] = UserSerializer(instance.actor).data
 
         return ret
@@ -661,6 +663,36 @@ class UserListSerializer(ListSerializer):
         return updated
 
 
+class UserAltRelationshipSerializer(FrozenFieldsMixin, ModelSerializer):
+    """A class providing (de-)serialization of `UserAltRelationship` instances."""
+
+    actor = PrimaryKeyRelatedField(queryset=User.objects.all())
+    source = PrimaryKeyRelatedField(queryset=User.objects.all())
+    target = PrimaryKeyRelatedField(queryset=User.objects.all())
+
+    class Meta:
+        """Metadata defined for the Django REST Framework."""
+
+        model = UserAltRelationship
+        fields = ('source', 'target', 'actor', 'context', 'created_at', 'updated_at')
+        frozen_fields = ('source', 'target', 'actor')
+        depth = 1
+
+    def to_representation(self, instance: UserAltRelationship) -> dict:
+        """Add the alts of the target to the representation."""
+        representation = super().to_representation(instance)
+        representation['alts'] = tuple(
+            user_id
+            for (user_id,) in (
+                UserAltRelationship.objects
+                .filter(source=instance.target)
+                .values_list('target_id')
+            )
+        )
+        return representation
+
+
+
 class UserSerializer(ModelSerializer):
     """A class providing (de-)serialization of `User` instances."""
 
@@ -681,6 +713,26 @@ class UserSerializer(ModelSerializer):
             return super().create(validated_data)
         except IntegrityError:
             raise ValidationError({"id": ["User with ID already present."]})
+
+
+class UserWithAltsSerializer(FrozenFieldsMixin, UserSerializer):
+    """A class providing (de-)serialization of `User` instances, expanding their alternate accounts."""
+
+    alts = SerializerMethodField()
+
+    class Meta:
+        """Metadata defined for the Django REST Framework."""
+
+        model = User
+        fields = ('id', 'name', 'discriminator', 'roles', 'in_guild', 'alts')
+        frozen_fields = ('alts',)
+
+    def get_alts(self, user: User) -> list[dict]:
+        """Retrieve the alts with all additional data on them."""
+        return [
+            UserAltRelationshipSerializer(alt).data
+            for alt in user.alts.through.objects.filter(source=user)
+        ]
 
 
 class NominationEntrySerializer(ModelSerializer):
