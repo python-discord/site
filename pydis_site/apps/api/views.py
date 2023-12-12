@@ -272,10 +272,7 @@ class GitHubWebhookFilterView(APIView):
             'dependabot' in request.data.get('ref', '').lower()
             and event == 'delete'
         )
-        is_bot_pr_approval = (
-            '[bot]' in request.data.get('pull_request', {}).get('user', {}).get('login', '').lower()
-            and event == 'pull_request_review'
-        )
+        is_bot_pr_approval = is_github_bot and event == 'pull_request_review'
         is_empty_review = (
             request.data.get('review', {}).get('state', '').lower() == 'commented'
             and event == 'pull_request_review'
