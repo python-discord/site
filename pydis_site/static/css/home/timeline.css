@@ -3547,8 +3547,6 @@ mark {
     position: relative;
     margin-left: 1.25em;
     margin-left: var(--space-md);
-    background: hsl(0, 0%, 100%);
-    background: var(--color-white);
     border-radius: 0.25em;
     border-radius: var(--radius-md);
     padding: 1.25em;
@@ -3596,11 +3594,6 @@ mark {
         border-left-color: hsl(0, 0%, 100%);
         border-left-color: var(--color-white)
     }
-}
-
-.cd-timeline__date {
-    color: hsla(207, 10%, 55%, 0.7);
-    color: hsla(var(--cd-color-3-h), var(--cd-color-3-s), var(--cd-color-3-l), 0.7)
 }
 
 @media (min-width: 64rem) {
