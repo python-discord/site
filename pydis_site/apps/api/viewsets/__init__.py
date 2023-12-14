@@ -1,12 +1,17 @@
 # flake8: noqa
 from .bot import (
-    FilterListViewSet,
     BotSettingViewSet,
+    BumpedThreadViewSet,
     DeletedMessageViewSet,
     DocumentationLinkViewSet,
+    FilterListViewSet,
     InfractionViewSet,
+    FilterListViewSet,
+    FilterViewSet,
     NominationViewSet,
     OffensiveMessageViewSet,
+    AocAccountLinkViewSet,
+    AocCompletionistBlockViewSet,
     OffTopicChannelNameViewSet,
     ReminderViewSet,
     RoleViewSet,

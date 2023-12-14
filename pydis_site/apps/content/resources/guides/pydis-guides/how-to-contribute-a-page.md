@@ -3,8 +3,8 @@ title: How to Contribute a Page
 description: Learn how to write and publish a page to this website.
 icon: fas fa-info
 relevant_links:
-    Contributing to Site: https://pythondiscord.com/pages/contributing/site/
-    Using Git: https://pythondiscord.com/pages/contributing/working-with-git/
+    Contributing to Site: https://pythondiscord.com/pages/guides/pydis-guides/contributing/site/
+    Using Git: https://pythondiscord.com/pages/guides/pydis-guides/contributing/working-with-git/
 toc: 4
 ---
 
@@ -14,8 +14,8 @@ If you are interested in writing or modifying pages seen here on the site, follo
 For further assistance and help with contributing pages, send a message to the `#dev-contrib` channel in the Discord server!
 
 ## Prerequisites
-Before working on a new page, you have to [setup the site project locally](https://pythondiscord.com/pages/contributing/site/).
-It is also a good idea to familiarize yourself with the [git workflow](https://pythondiscord.com/pages/contributing/working-with-git/), as it is part of the contribution workflow.
+Before working on a new page, you have to [setup the site project locally](https://pythondiscord.com/pages/guides/pydis-guides/contributing/site/).
+It is also a good idea to familiarize yourself with the [git workflow](https://pythondiscord.com/pages/guides/pydis-guides/contributing/working-with-git/), as it is part of the contribution workflow.
 
 Additionally, please submit your proposed page or modification to a page as an [issue in the site repository](https://github.com/python-discord/site/issues), or discuss it in the `#dev-contrib` channel in the server.
 As website changes require staff approval, discussing the page content beforehand helps with accelerating the contribution process, and avoids wasted work in the event the proposed page is not accepted.
@@ -68,8 +68,8 @@ title: How to Contribute a Page
 description: Learn how to write and publish a page to this website.
 icon: fas fa-info
 relevant_links:
-    Contributing to Site: https://pythondiscord.com/pages/contributing/site/
-    Using Git: https://pythondiscord.com/pages/contributing/working-with-git/
+    Contributing to Site: https://pythondiscord.com/pages/guides/pydis-guides/contributing/site/
+    Using Git: https://pythondiscord.com/pages/guides/pydis-guides/contributing/working-with-git/
 ---
 
 Pages, which include guides, articles, and other static content,...
@@ -169,7 +169,7 @@ path = os.path.join("foo", "bar")
 ### HTML Attributes
 To add HTML attributes to certain lines/paragraphs, [see this page](https://python-markdown.github.io/extensions/attr_list/#the-list) for the format and where to put it.
 
-This can be useful for setting the image size when adding an image using markdown (see the [Image Captions](#image-captions) section for an example), or for adding bulma styles to certain elements (like the warning notification [here](/pages/guides/pydis-guides/contributing/sir-lancebot#setup-instructions)).<br>
+This can be useful for setting the image size when adding an image using markdown (see the [Image Captions](#image-captions) section for an example), or for adding bulma styles to certain elements (like the warning notification [here](/pages/guides/pydis-guides/contributing/sir-lancebot#run-with-docker)).<br>
 **This should be used sparingly, as it reduces readability and simplicity of the article.**
 
 ---
@@ -214,4 +214,45 @@ To use a custom label in the table of contents for a heading, set the `data-toc-
 
 ```markdown
 # Header 1 {: data-toc-label="Header One" }
+```
+
+## Tips
+
+### Nested/Unhighlighted Code Blocks
+To nest code blocks, increase the number of ticks in the outer block by 1. To remove highlighting from code blocks (ie. no dark background), you can use the `nohighlight` language.
+`````nohighlight
+````nohighlight
+```python
+print("Some inner code block text.")
+```
+````
+`````
+
+### Images in Lists
+To properly indent images in lists, keep the image on the line directly after the previous line and add `<br>` to the end of the text, like this:
+
+```markdown
+1. List item text one.<br>
+![Image text one](image/link/one)
+
+2. List item text two.<br>
+![Image text two](image/link/two)
+```
+
+### Keeping Text In The Same Paragraph
+You can also use `<br>` to break lines while keeping them in the same paragraph (avoiding the vertical spacing added between paragraphs).
+
+```nohighlight
+##### Same line, same paragraph
+Line A
+Line B
+
+##### Different line, different paragraph
+Line A
+
+Line B
+
+##### Different line, same paragraph
+Line A<br>
+Line B
 ```

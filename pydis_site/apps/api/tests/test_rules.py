@@ -1,7 +1,11 @@
+import itertools
+import re
+from pathlib import Path
+
 from django.urls import reverse
 
 from .base import AuthenticatedAPITestCase
-from ..views import RulesView
+from pydis_site.apps.api.views import RulesView
 
 
 class RuleAPITests(AuthenticatedAPITestCase):
@@ -33,3 +37,37 @@ class RuleAPITests(AuthenticatedAPITestCase):
         url = reverse('api:rules')
         response = self.client.get(url + '?link_format=unknown')
         self.assertEqual(response.status_code, 400)
+
+
+class RuleCorrectnessTests(AuthenticatedAPITestCase):
+    """Verifies that the rules from the API and by the static rules in the content app match."""
+
+    @classmethod
+    def setUpTestData(cls):
+        cls.markdown_rule_re = re.compile(r'^> \d+\. (.*)$')
+
+    def test_rules_in_markdown_file_roughly_equal_api_rules(self) -> None:
+        url = reverse('api:rules')
+        api_response = self.client.get(url + '?link_format=md')
+        api_rules = tuple(rule for (rule, _tags) in api_response.json())
+
+        markdown_rules_path = (
+            Path(__file__).parent.parent.parent / 'content' / 'resources' / 'rules.md'
+        )
+
+        markdown_rules = []
+        for line in markdown_rules_path.read_text(encoding="utf8").splitlines():
+            matches = self.markdown_rule_re.match(line)
+            if matches is not None:
+                markdown_rules.append(matches.group(1))
+
+        zipper = itertools.zip_longest(api_rules, markdown_rules)
+        for idx, (api_rule, markdown_rule) in enumerate(zipper):
+            with self.subTest(f"Rule {idx}"):
+                self.assertIsNotNone(
+                    markdown_rule, f"The API has more rules than {markdown_rules_path}"
+                )
+                self.assertIsNotNone(
+                    api_rule, f"{markdown_rules_path} has more rules than the API endpoint"
+                )
+                self.assertEqual(markdown_rule, api_rule)

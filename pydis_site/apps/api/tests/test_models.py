@@ -1,14 +1,14 @@
-from datetime import datetime as dt
+from datetime import UTC, datetime as dt
 
 from django.core.exceptions import ValidationError
 from django.test import SimpleTestCase, TestCase
-from django.utils import timezone
 
 from pydis_site.apps.api.models import (
     DeletedMessage,
     DocumentationLink,
+    Filter,
+    FilterList,
     Infraction,
-    Message,
     MessageDeletionContext,
     Nomination,
     NominationEntry,
@@ -41,7 +41,7 @@ class NitroMessageLengthTest(TestCase):
         self.context = MessageDeletionContext.objects.create(
             id=50,
             actor=self.user,
-            creation=dt.utcnow()
+            creation=dt.now(UTC)
         )
 
     def test_create(self):
@@ -99,17 +99,26 @@ class StringDunderMethodTests(SimpleTestCase):
                         name='shawn',
                         discriminator=555,
                     ),
-                    creation=dt.utcnow()
+                    creation=dt.now(UTC)
                 ),
                 embeds=[]
             ),
             DocumentationLink(
                 'test', 'http://example.com', 'http://example.com'
             ),
+            FilterList(
+                name="forbidden_duckies",
+                list_type=0,
+            ),
+            Filter(
+                content="ducky_nsfw",
+                description="This ducky is totally inappropriate!",
+                additional_settings=None,
+            ),
             OffensiveMessage(
                 id=602951077675139072,
                 channel_id=291284109232308226,
-                delete_date=dt(3000, 1, 1)
+                delete_date=dt(3000, 1, 1, tzinfo=UTC)
             ),
             OffTopicChannelName(name='bob-the-builders-playground'),
             Role(
@@ -117,24 +126,13 @@ class StringDunderMethodTests(SimpleTestCase):
                 colour=0x5, permissions=0,
                 position=10,
             ),
-            Message(
-                id=45,
-                author=User(
-                    id=444,
-                    name='bill',
-                    discriminator=5,
-                ),
-                channel_id=666,
-                content="wooey",
-                embeds=[]
-            ),
             MessageDeletionContext(
                 actor=User(
                     id=5555,
                     name='shawn',
                     discriminator=555,
                 ),
-                creation=dt.utcnow()
+                creation=dt.now(tz=UTC)
             ),
             User(
                 id=5,
@@ -153,7 +151,7 @@ class StringDunderMethodTests(SimpleTestCase):
                 hidden=True,
                 type='kick',
                 reason='He terk my jerb!',
-                expires_at=dt(5018, 11, 20, 15, 52, tzinfo=timezone.utc)
+                expires_at=dt(5018, 11, 20, 15, 52, tzinfo=UTC)
             ),
             Reminder(
                 author=User(
@@ -167,7 +165,7 @@ class StringDunderMethodTests(SimpleTestCase):
                     '267624335836053506/291284109232308226/463087129459949587'
                 ),
                 content="oh no",
-                expiration=dt(5018, 11, 20, 15, 52, tzinfo=timezone.utc)
+                expiration=dt(5018, 11, 20, 15, 52, tzinfo=UTC)
             ),
             NominationEntry(
                 nomination_id=self.nomination.id,

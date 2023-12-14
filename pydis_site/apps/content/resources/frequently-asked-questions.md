@@ -75,12 +75,6 @@ If you have any questions about how to contribute, drop by the `#dev-contrib` ch
 
 ## Server Specific Questions
 
-#### **Q: Why are the help channels named after elements/food?**
-
-We want to keep the help channels uniquely named with it being somewhat easy to remember, so we decided on elements/food. `#help-1` doesn't work as well as `help-carbon` (`help-strawberry`).
-If we had them numbered, they would quickly move out of order and possibly cause confusion for newer members.
-
-
 #### **Q: Why can't I upload a specific file type?**
 
 The only file types that we allow on this server are those that Discord supports a native preview for.

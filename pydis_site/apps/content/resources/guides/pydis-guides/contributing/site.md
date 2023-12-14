@@ -5,9 +5,11 @@ icon: fab fa-github
 toc: 1
 ---
 
-# Requirements
+You should have already forked the [`site`](https://github.com/python-discord/site) repository and cloned it to your local machine. If not, check out our [detailed walkthrough](../#1-fork-and-clone-the-repo).
 
-- [Python 3.9](https://www.python.org/downloads/)
+### Requirements
+
+- [Python 3.11](https://www.python.org/downloads/)
 - [Poetry](https://python-poetry.org/docs/#installation)
     - `pip install poetry`
 - [Git](https://git-scm.com/downloads)
@@ -27,22 +29,9 @@ Without Docker:
     - Note that if you wish, the webserver can run on the host and still use Docker for PostgreSQL.
 
 ---
-# Fork the project
-
-You will need access to a copy of the git repository of your own that will allow you to edit the code and push your commits to.
-Creating a copy of a repository under your own account is called a _fork_.
-
-- [Learn how to create a fork of the repository here.](../forking-repository/)
-
-This is where all your changes and commits will be pushed to, and from where your PRs will originate from.
-
-For any Core Developers, since you have write permissions already to the original repository, you can just create a feature branch to push your commits to instead.
-
----
 # Development environment
 
-1. [Clone your fork to a local project directory](../cloning-repository/)
-2. [Install the project's dependencies](../installing-project-dependencies/)
+[Install the project's dependencies](../installing-project-dependencies/)
 
 ## Without Docker
 
@@ -64,7 +53,7 @@ CREATE DATABASE pysite WITH OWNER pysite;
 CREATE DATABASE metricity WITH OWNER pysite;
 ```
 
-Finally, enter `/q` to exit psql.
+Finally, enter `\q` to exit psql.
 
 ### 2. Environment variables
 
@@ -84,7 +73,7 @@ detailed information about these settings.
 #### Notes regarding `DATABASE_URL`
 
 - If the database is hosted locally i.e. on the same machine as the webserver, then use `localhost` for the host. Windows and macOS users may need to use the [Docker host IP](https://stackoverflow.com/questions/22944631/how-to-get-the-ip-address-of-the-docker-host-from-inside-a-docker-container) instead.
-- If the database is running in Docker, use port `7777`. Otherwise, use `5432` as that is the default port used by PostegreSQL.
+- If the database is running in Docker, use port `7777`. Otherwise, use `5432` as that is the default port used by PostgreSQL.
 - If you configured PostgreSQL in a different manner or you are not hosting it locally, then you will need to determine the correct host and port yourself.
 The user, password, and database name should all still be `pysite` unless you deviated from the setup instructions in the previous section.
 
@@ -103,7 +92,7 @@ docker-compose up
 
 The `-d` option can be appended to the command to run in detached mode. This runs the containers in the background so the current terminal session is available for use with other things.
 
-If you get any Docker related errors, reference the [Possible Issues](https://pythondiscord.com/pages/contributing/docker/#possible-issues") section of the Docker page.
+If you get any Docker related errors, reference the [Possible Issues](https://pythondiscord.com/pages/guides/pydis-guides/contributing/docker/#possible-issues") section of the Docker page.
 {: .notification .is-warning }
 
 ## Run on the host
@@ -138,6 +127,14 @@ The development environment will watch for code changes in your project director
 Unless you are editing the Dockerfile or docker-compose.yml, you shouldn't need to manually restart the container during a developing session.
 
 [**Click here to see the basic Git workflow when contributing to one of our projects.**](../working-with-git/)
+
+---
+# Deploy previews
+
+When you open a pull request, the `netlify` bot will build and publish a static
+preview of your changes, which is very valuable if you made any changes to the
+content or styling of the website. An example deploy preview can be found on
+[pull request #773](https://github.com/python-discord/site/pull/773#issuecomment-1257224147).
 
 ---
 # Django admin site
@@ -178,3 +175,17 @@ The website is configured through the following environment variables:
 - **`STATIC_ROOT`**: The root in which `python manage.py collectstatic`
   collects static files. Optional, defaults to `/app/staticfiles` for the
   standard Docker deployment.
+
+---
+
+# Next steps
+Now that you have everything setup, it is finally time to make changes to the site! If you have not yet read the [contributing guidelines](../contributing-guidelines.md), now is a good time. Contributions that do not adhere to the guidelines may be rejected.
+
+If you're not sure where to go from here, our [detailed walkthrough](../#2-set-up-the-project), or the [guide on contributing a page](../../how-to-contribute-a-page) is for you.
+
+The site repository also contains `README.md` files in all major directories of
+interest, which explain where which functionality of the site is located. For
+example, see the [API app's
+README](https://github.com/python-discord/site/tree/main/pydis_site/apps/api).
+
+Have fun!

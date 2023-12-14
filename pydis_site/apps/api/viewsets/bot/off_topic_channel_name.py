@@ -85,10 +85,9 @@ class OffTopicChannelNameViewSet(ModelViewSet):
             serializer.save()
             return Response(create_data, status=HTTP_201_CREATED)
 
-        else:
-            raise ParseError(detail={
-                'name': ["This query parameter is required."]
-            })
+        raise ParseError(detail={
+            'name': ["This query parameter is required."]
+        })
 
     def list(self, request: Request, *args, **kwargs) -> Response:
         """
@@ -108,7 +107,7 @@ class OffTopicChannelNameViewSet(ModelViewSet):
                     'random_items': ["Must be a positive integer."]
                 })
 
-            queryset = self.queryset.order_by('used', '?')[:random_count]
+            queryset = self.queryset.filter(active=True).order_by('used', '?')[:random_count]
 
             # When any name is used in our listing then this means we reached end of round
             # and we need to reset all other names `used` to False
@@ -133,7 +132,6 @@ class OffTopicChannelNameViewSet(ModelViewSet):
             return Response(serialized.data)
 
         params = {}
-
         if active_param := request.query_params.get("active"):
             params["active"] = active_param.lower() == "true"
 

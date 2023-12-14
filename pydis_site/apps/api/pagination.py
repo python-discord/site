@@ -1,7 +1,6 @@
-import typing
-
 from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.response import Response
+from rest_framework.utils.serializer_helpers import ReturnList
 
 
 class LimitOffsetPaginationExtended(LimitOffsetPagination):
@@ -44,6 +43,6 @@ class LimitOffsetPaginationExtended(LimitOffsetPagination):
 
     default_limit = 100
 
-    def get_paginated_response(self, data: typing.Any) -> Response:
+    def get_paginated_response(self, data: ReturnList) -> Response:
         """Override to skip metadata i.e. `count`, `next`, and `previous`."""
         return Response(data)

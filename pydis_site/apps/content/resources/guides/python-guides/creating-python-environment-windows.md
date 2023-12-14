@@ -29,7 +29,7 @@ You will also need a text editor for writing Python programs, and for subsequent
 Powerful programs called integrated development environments (IDEs) like PyCharm and Visual Studio Code contain text editors, but they also contain many other features with uses that aren't immediately obvious to new programmers.
 
 [Notepad++](https://notepad-plus-plus.org/) is a popular text editor for both beginners and advanced users who prefer a simpler interface.
-Other editors we recommend can be found (https://pythondiscord.com/resources/tools/#editors)[here].
+Other editors we recommend can be found [here](https://pythondiscord.com/resources/tools/#editors).
 
 ## Installing Git Bash
 Git is a command line program that helps you keep track of changes to your code, among other things.

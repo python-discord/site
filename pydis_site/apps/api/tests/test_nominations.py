@@ -1,9 +1,9 @@
-from datetime import datetime as dt, timedelta, timezone
+from datetime import UTC, datetime as dt, timedelta
 
 from django.urls import reverse
 
 from .base import AuthenticatedAPITestCase
-from ..models import Nomination, NominationEntry, User
+from pydis_site.apps.api.models import Nomination, NominationEntry, User
 
 
 class CreationTests(AuthenticatedAPITestCase):
@@ -38,7 +38,7 @@ class CreationTests(AuthenticatedAPITestCase):
         )
         self.assertAlmostEqual(
             nomination.inserted_at,
-            dt.now(timezone.utc),
+            dt.now(UTC),
             delta=timedelta(seconds=2)
         )
         self.assertEqual(nomination.user.id, data['user'])
@@ -254,7 +254,7 @@ class NominationTests(AuthenticatedAPITestCase):
     def test_returns_400_on_frozen_field_update(self):
         url = reverse('api:bot:nomination-detail', args=(self.active_nomination.id,))
         data = {
-            'user': "Theo Katzman"
+            'user': 1234
         }
 
         response = self.client.patch(url, data=data)
@@ -319,7 +319,7 @@ class NominationTests(AuthenticatedAPITestCase):
 
         self.assertAlmostEqual(
             nomination.ended_at,
-            dt.now(timezone.utc),
+            dt.now(UTC),
             delta=timedelta(seconds=2)
         )
         self.assertFalse(nomination.active)
@@ -523,4 +523,36 @@ class NominationTests(AuthenticatedAPITestCase):
         self.assertEqual(response.status_code, 400)
         self.assertEqual(response.json(), {
             'actor': ["The actor doesn't exist or has not nominated the user."]
+        })
+
+    def test_patch_nomination_set_thread_id_of_active_nomination(self):
+        url = reverse('api:bot:nomination-detail', args=(self.active_nomination.id,))
+        data = {'thread_id': 9876543210}
+        response = self.client.patch(url, data=data)
+        self.assertEqual(response.status_code, 200)
+
+    def test_patch_nomination_set_thread_id_and_reviewed_of_active_nomination(self):
+        url = reverse('api:bot:nomination-detail', args=(self.active_nomination.id,))
+        data = {'thread_id': 9876543210, "reviewed": True}
+        response = self.client.patch(url, data=data)
+        self.assertEqual(response.status_code, 200)
+
+    def test_modifying_thread_id_when_ending_nomination(self):
+        url = reverse('api:bot:nomination-detail', args=(self.active_nomination.id,))
+        data = {'thread_id': 9876543210, 'active': False, 'end_reason': "What?"}
+
+        response = self.client.patch(url, data=data)
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.json(), {
+            'thread_id': ['This field cannot be set when ending a nomination.']
+        })
+
+    def test_patch_thread_id_for_inactive_nomination(self):
+        url = reverse('api:bot:nomination-detail', args=(self.inactive_nomination.id,))
+        data = {'thread_id': 9876543210}
+
+        response = self.client.patch(url, data=data)
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.json(), {
+            'thread_id': ['This field cannot be set if the nomination is inactive.']
         })

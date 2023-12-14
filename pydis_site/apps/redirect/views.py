@@ -1,4 +1,3 @@
-import typing as t
 
 from django.views.generic import RedirectView
 
@@ -15,7 +14,7 @@ class CustomRedirectView(RedirectView):
         """Overwrites original as_view to add static args."""
         return super().as_view(**initkwargs)
 
-    def get_redirect_url(self, *args, **kwargs) -> t.Optional[str]:
+    def get_redirect_url(self, *args, **kwargs) -> str | None:
         """Extends default behaviour to use static args."""
         args = self.static_args + args + tuple(kwargs.values())
         if self.prefix_redirect:

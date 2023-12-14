@@ -9,6 +9,13 @@
 {% block content %}
   {% include "base/navbar.html" %}
 
+  <!-- Mobile-only Code Jam Banner -->
+  <section id="mobile-notice" class="is-primary is-hidden-tablet">
+    <a href="/events/code-jams/9/">
+      <img src="{% static "images/events/cj10_2023_banner3.png" %}" alt="Code Jam 2023">
+    </a>
+  </section>
+
   <!-- Wave Hero -->
   <section id="wave-hero" class="section is-hidden-mobile">
 
@@ -37,7 +44,15 @@
               ></iframe>
             </div>
           </div>
+
+          {# Code Jam Banner #}
+          <div id="wave-hero-right" class="column is-half">
+            <a href="/events/code-jams/10/">
+              <img src="{% static "images/events/cj10_2023_banner3.png" %}" alt="Code Jam 2023">
+            </a>
+          </div>
         </div>
+
       </div>
 
     {# Animated wave elements #}
@@ -84,9 +99,9 @@
             <div class="mini-timeline">
               <i class="fa fa-asterisk"></i>
               <i class="fa fa-code"></i>
-              <i class="fab fa-python"></i>
-              <i class="fa fa-alien-monster"></i>
-              <i class="fa fa-duck"></i>
+              <i class="fab fa-lg fa-python"></i>
+              <i class="fab fa-discord"></i>
+              <i class="fa fa-sm fa-terminal"></i>
               <i class="fa fa-bug"></i>
             </div>
 
@@ -174,28 +189,28 @@
         </h1>
         <div class="columns is-mobile is-multiline">
           <a href="https://www.netcup.eu/" class="column is-narrow">
-            <img src="{% static "images/sponsors/netcup.png" %}" alt="netcup"/>
+            <img src="{% static "images/sponsors/netcup.png" %}" alt="netcup" loading="lazy"/>
           </a>
           <a href="https://www.linode.com/?r=3bc18ce876ff43ea31f201b91e8e119c9753f085" class="column is-narrow">
-            <img src="{% static "images/sponsors/linode.png" %}" alt="Linode"/>
+            <img src="{% static "images/sponsors/linode.png" %}" alt="Linode" loading="lazy"/>
           </a>
           <a href="https://jetbrains.com" class="column is-narrow">
-            <img src="{% static "images/sponsors/jetbrains.png" %}" alt="JetBrains"/>
+            <img src="{% static "images/sponsors/jetbrains.png" %}" alt="JetBrains" loading="lazy"/>
           </a>
           <a href="https://sentry.io" class="column is-narrow">
-            <img src="{% static "images/sponsors/sentry.png" %}" alt="Sentry"/>
+            <img src="{% static "images/sponsors/sentry.png" %}" alt="Sentry" loading="lazy"/>
           </a>
           <a href="https://notion.so" class="column is-narrow">
-            <img src="{% static "images/sponsors/notion.png" %}" alt="Notion"/>
+            <img src="{% static "images/sponsors/notion.png" %}" alt="Notion" loading="lazy"/>
           </a>
           <a href="https://streamyard.com" class="column is-narrow">
-            <img src="{% static "images/sponsors/streamyard.png" %}" alt="StreamYard"/>
+            <img src="{% static "images/sponsors/streamyard.png" %}" alt="StreamYard" loading="lazy"/>
           </a>
           <a href="https://www.netlify.com/" class="column is-narrow">
-            <img src="{% static "images/sponsors/netlify.png" %}" alt="Netlify"/>
+            <img src="{% static "images/sponsors/netlify.png" %}" alt="Netlify" loading="lazy"/>
           </a>
           <a href="https://www.cloudflare.com/" class="column is-narrow">
-            <img src="{% static "images/sponsors/cloudflare.png" %}" alt="Cloudflare"/>
+            <img src="{% static "images/sponsors/cloudflare.png" %}" alt="Cloudflare" loading="lazy"/>
           </a>
         </div>
       </div>

@@ -1,21 +1,18 @@
-FROM --platform=linux/amd64 python:3.9-slim-buster
+# When updating the Python version here, please make sure to also
+# update the contributor guide, which can be found at
+#   pydis_site/apps/content/resources/guides/pydis-guides/contributing/site.md
+# Thank you!
+FROM ghcr.io/owl-corp/python-poetry-base:3.11-slim
 
 # Allow service to handle stops gracefully
 STOPSIGNAL SIGQUIT
-
-# Set pip to have cleaner logs and no saved cache
-ENV PIP_NO_CACHE_DIR=false \
-    POETRY_VIRTUALENVS_CREATE=false
-
-# Install poetry
-RUN pip install -U poetry
 
 # Copy the project files into working directory
 WORKDIR /app
 
 # Install project dependencies
 COPY pyproject.toml poetry.lock ./
-RUN poetry install --no-dev
+RUN poetry install --only main
 
 # Set Git SHA environment variable
 ARG git_sha="development"
@@ -34,14 +31,14 @@ RUN \
     SECRET_KEY=dummy_value \
     DATABASE_URL=postgres://localhost \
     METRICITY_DB_URL=postgres://localhost \
-    python manage.py collectstatic --noinput --clear
+    poetry run python manage.py collectstatic --noinput --clear
 
 # Build static files if we are doing a static build
 ARG STATIC_BUILD=false
 RUN if [ $STATIC_BUILD = "TRUE" ] ; \
-  then SECRET_KEY=dummy_value python manage.py distill-local build --traceback --force ; \
+  then SECRET_KEY=dummy_value poetry run python manage.py distill-local build --traceback --force ; \
 fi
 
 # Run web server through custom manager
-ENTRYPOINT ["python", "manage.py"]
+ENTRYPOINT ["poetry", "run", "python", "manage.py"]
 CMD ["run"]

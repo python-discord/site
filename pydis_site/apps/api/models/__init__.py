@@ -1,7 +1,9 @@
 # flake8: noqa
 from .bot import (
     FilterList,
+    Filter,
     BotSetting,
+    BumpedThread,
     DocumentationLink,
     DeletedMessage,
     Infraction,
@@ -10,6 +12,8 @@ from .bot import (
     Nomination,
     NominationEntry,
     OffensiveMessage,
+    AocAccountLink,
+    AocCompletionistBlock,
     OffTopicChannelName,
     Reminder,
     Role,

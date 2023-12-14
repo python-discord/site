@@ -1,14 +1,15 @@
 import datetime
-from datetime import datetime as dt, timedelta, timezone
+from datetime import UTC, datetime as dt, timedelta
 from unittest.mock import patch
 from urllib.parse import quote
 
+from django.db import transaction
 from django.db.utils import IntegrityError
 from django.urls import reverse
 
 from .base import AuthenticatedAPITestCase
-from ..models import Infraction, User
-from ..serializers import InfractionSerializer
+from pydis_site.apps.api.models import Infraction, User
+from pydis_site.apps.api.serializers import InfractionSerializer
 
 
 class UnauthenticatedTests(AuthenticatedAPITestCase):
@@ -55,23 +56,26 @@ class InfractionTests(AuthenticatedAPITestCase):
             type='ban',
             reason='He terk my jerb!',
             hidden=True,
-            expires_at=dt(5018, 11, 20, 15, 52, tzinfo=timezone.utc),
-            active=True
+            inserted_at=dt(2020, 10, 10, 0, 0, 0, tzinfo=UTC),
+            expires_at=dt(5018, 11, 20, 15, 52, tzinfo=UTC),
+            active=True,
         )
         cls.ban_inactive = Infraction.objects.create(
             user_id=cls.user.id,
             actor_id=cls.user.id,
             type='ban',
             reason='James is an ass, and we won\'t be working with him again.',
-            active=False
+            active=False,
+            inserted_at=dt(2020, 10, 10, 0, 1, 0, tzinfo=UTC),
         )
-        cls.mute_permanent = Infraction.objects.create(
+        cls.timeout_permanent = Infraction.objects.create(
             user_id=cls.user.id,
             actor_id=cls.user.id,
-            type='mute',
+            type='timeout',
             reason='He has a filthy mouth and I am his soap.',
             active=True,
-            expires_at=None
+            inserted_at=dt(2020, 10, 10, 0, 2, 0, tzinfo=UTC),
+            expires_at=None,
         )
         cls.superstar_expires_soon = Infraction.objects.create(
             user_id=cls.user.id,
@@ -79,7 +83,8 @@ class InfractionTests(AuthenticatedAPITestCase):
             type='superstar',
             reason='This one doesn\'t matter anymore.',
             active=True,
-            expires_at=datetime.datetime.utcnow() + datetime.timedelta(hours=5)
+            inserted_at=dt(2020, 10, 10, 0, 3, 0, tzinfo=UTC),
+            expires_at=dt.now(UTC) + datetime.timedelta(hours=5),
         )
         cls.voiceban_expires_later = Infraction.objects.create(
             user_id=cls.user.id,
@@ -87,7 +92,8 @@ class InfractionTests(AuthenticatedAPITestCase):
             type='voice_ban',
             reason='Jet engine mic',
             active=True,
-            expires_at=datetime.datetime.utcnow() + datetime.timedelta(days=5)
+            inserted_at=dt(2020, 10, 10, 0, 4, 0, tzinfo=UTC),
+            expires_at=dt.now(UTC) + datetime.timedelta(days=5),
         )
 
     def test_list_all(self):
@@ -101,7 +107,7 @@ class InfractionTests(AuthenticatedAPITestCase):
         self.assertEqual(len(infractions), 5)
         self.assertEqual(infractions[0]['id'], self.voiceban_expires_later.id)
         self.assertEqual(infractions[1]['id'], self.superstar_expires_soon.id)
-        self.assertEqual(infractions[2]['id'], self.mute_permanent.id)
+        self.assertEqual(infractions[2]['id'], self.timeout_permanent.id)
         self.assertEqual(infractions[3]['id'], self.ban_inactive.id)
         self.assertEqual(infractions[4]['id'], self.ban_hidden.id)
 
@@ -128,7 +134,7 @@ class InfractionTests(AuthenticatedAPITestCase):
 
     def test_filter_permanent_false(self):
         url = reverse('api:bot:infraction-list')
-        response = self.client.get(f'{url}?type=mute&permanent=false')
+        response = self.client.get(f'{url}?type=timeout&permanent=false')
 
         self.assertEqual(response.status_code, 200)
         infractions = response.json()
@@ -137,17 +143,17 @@ class InfractionTests(AuthenticatedAPITestCase):
 
     def test_filter_permanent_true(self):
         url = reverse('api:bot:infraction-list')
-        response = self.client.get(f'{url}?type=mute&permanent=true')
+        response = self.client.get(f'{url}?type=timeout&permanent=true')
 
         self.assertEqual(response.status_code, 200)
         infractions = response.json()
 
-        self.assertEqual(infractions[0]['id'], self.mute_permanent.id)
+        self.assertEqual(infractions[0]['id'], self.timeout_permanent.id)
 
     def test_filter_after(self):
         url = reverse('api:bot:infraction-list')
-        target_time = datetime.datetime.utcnow() + datetime.timedelta(hours=5)
-        response = self.client.get(f'{url}?type=superstar&expires_after={target_time.isoformat()}')
+        target_time = datetime.datetime.now(tz=UTC) + datetime.timedelta(hours=5)
+        response = self.client.get(url, {'type': 'superstar', 'expires_after': target_time.isoformat()})
 
         self.assertEqual(response.status_code, 200)
         infractions = response.json()
@@ -155,8 +161,8 @@ class InfractionTests(AuthenticatedAPITestCase):
 
     def test_filter_before(self):
         url = reverse('api:bot:infraction-list')
-        target_time = datetime.datetime.utcnow() + datetime.timedelta(hours=5)
-        response = self.client.get(f'{url}?type=superstar&expires_before={target_time.isoformat()}')
+        target_time = datetime.datetime.now(tz=UTC) + datetime.timedelta(hours=5)
+        response = self.client.get(url, {'type': 'superstar', 'expires_before': target_time.isoformat()})
 
         self.assertEqual(response.status_code, 200)
         infractions = response.json()
@@ -168,22 +174,23 @@ class InfractionTests(AuthenticatedAPITestCase):
         response = self.client.get(f'{url}?expires_after=gibberish')
 
         self.assertEqual(response.status_code, 400)
-        self.assertEqual(list(response.json())[0], "expires_after")
+        self.assertEqual(next(iter(response.json())), "expires_after")
 
     def test_filter_before_invalid(self):
         url = reverse('api:bot:infraction-list')
         response = self.client.get(f'{url}?expires_before=000000000')
 
         self.assertEqual(response.status_code, 400)
-        self.assertEqual(list(response.json())[0], "expires_before")
+        self.assertEqual(next(iter(response.json())), "expires_before")
 
     def test_after_before_before(self):
         url = reverse('api:bot:infraction-list')
-        target_time = datetime.datetime.utcnow() + datetime.timedelta(hours=4)
-        target_time_late = datetime.datetime.utcnow() + datetime.timedelta(hours=6)
+        target_time = datetime.datetime.now(tz=UTC) + datetime.timedelta(hours=4)
+        target_time_late = datetime.datetime.now(tz=UTC) + datetime.timedelta(hours=6)
         response = self.client.get(
-            f'{url}?expires_before={target_time_late.isoformat()}'
-            f'&expires_after={target_time.isoformat()}'
+            url,
+            {'expires_before': target_time_late.isoformat(),
+             'expires_after': target_time.isoformat()},
         )
 
         self.assertEqual(response.status_code, 200)
@@ -192,11 +199,12 @@ class InfractionTests(AuthenticatedAPITestCase):
 
     def test_after_after_before_invalid(self):
         url = reverse('api:bot:infraction-list')
-        target_time = datetime.datetime.utcnow() + datetime.timedelta(hours=5)
-        target_time_late = datetime.datetime.utcnow() + datetime.timedelta(hours=9)
+        target_time = datetime.datetime.now(tz=UTC) + datetime.timedelta(hours=5)
+        target_time_late = datetime.datetime.now(tz=UTC) + datetime.timedelta(hours=9)
         response = self.client.get(
-            f'{url}?expires_before={target_time.isoformat()}'
-            f'&expires_after={target_time_late.isoformat()}'
+            url,
+            {'expires_before': target_time.isoformat(),
+             'expires_after': target_time_late.isoformat()},
         )
 
         self.assertEqual(response.status_code, 400)
@@ -206,8 +214,11 @@ class InfractionTests(AuthenticatedAPITestCase):
 
     def test_permanent_after_invalid(self):
         url = reverse('api:bot:infraction-list')
-        target_time = datetime.datetime.utcnow() + datetime.timedelta(hours=5)
-        response = self.client.get(f'{url}?permanent=true&expires_after={target_time.isoformat()}')
+        target_time = datetime.datetime.now(tz=UTC) + datetime.timedelta(hours=5)
+        response = self.client.get(
+            url,
+            {'permanent': 'true', 'expires_after': target_time.isoformat()},
+        )
 
         self.assertEqual(response.status_code, 400)
         errors = list(response.json())
@@ -215,8 +226,11 @@ class InfractionTests(AuthenticatedAPITestCase):
 
     def test_permanent_before_invalid(self):
         url = reverse('api:bot:infraction-list')
-        target_time = datetime.datetime.utcnow() + datetime.timedelta(hours=5)
-        response = self.client.get(f'{url}?permanent=true&expires_before={target_time.isoformat()}')
+        target_time = datetime.datetime.now(tz=UTC) + datetime.timedelta(hours=5)
+        response = self.client.get(
+            url,
+            {'permanent': 'true', 'expires_before': target_time.isoformat()},
+        )
 
         self.assertEqual(response.status_code, 400)
         errors = list(response.json())
@@ -224,9 +238,10 @@ class InfractionTests(AuthenticatedAPITestCase):
 
     def test_nonpermanent_before(self):
         url = reverse('api:bot:infraction-list')
-        target_time = datetime.datetime.utcnow() + datetime.timedelta(hours=6)
+        target_time = datetime.datetime.now(tz=UTC) + datetime.timedelta(hours=6)
         response = self.client.get(
-            f'{url}?permanent=false&expires_before={target_time.isoformat()}'
+            url,
+            {'permanent': 'false', 'expires_before': target_time.isoformat()},
         )
 
         self.assertEqual(response.status_code, 200)
@@ -235,7 +250,7 @@ class InfractionTests(AuthenticatedAPITestCase):
 
     def test_filter_manytypes(self):
         url = reverse('api:bot:infraction-list')
-        response = self.client.get(f'{url}?types=mute,ban')
+        response = self.client.get(f'{url}?types=timeout,ban')
 
         self.assertEqual(response.status_code, 200)
         infractions = response.json()
@@ -243,7 +258,7 @@ class InfractionTests(AuthenticatedAPITestCase):
 
     def test_types_type_invalid(self):
         url = reverse('api:bot:infraction-list')
-        response = self.client.get(f'{url}?types=mute,ban&type=superstar')
+        response = self.client.get(f'{url}?types=timeout,ban&type=superstar')
 
         self.assertEqual(response.status_code, 400)
         errors = list(response.json())
@@ -355,7 +370,7 @@ class CreationTests(AuthenticatedAPITestCase):
         infraction = Infraction.objects.get(id=response.json()['id'])
         self.assertAlmostEqual(
             infraction.inserted_at,
-            dt.now(timezone.utc),
+            dt.now(UTC),
             delta=timedelta(seconds=2)
         )
         self.assertEqual(infraction.expires_at.isoformat(), data['expires_at'])
@@ -492,6 +507,7 @@ class CreationTests(AuthenticatedAPITestCase):
         )
 
         for infraction_type, hidden in restricted_types:
+            # https://stackoverflow.com/a/23326971
             with self.subTest(infraction_type=infraction_type):
                 invalid_infraction = {
                     'user': self.user.id,
@@ -512,10 +528,10 @@ class CreationTests(AuthenticatedAPITestCase):
     def test_returns_400_for_second_active_infraction_of_the_same_type(self):
         """Test if the API rejects a second active infraction of the same type for a given user."""
         url = reverse('api:bot:infraction-list')
-        active_infraction_types = ('mute', 'ban', 'superstar')
+        active_infraction_types = ('timeout', 'ban', 'superstar')
 
         for infraction_type in active_infraction_types:
-            with self.subTest(infraction_type=infraction_type):
+            with self.subTest(infraction_type=infraction_type), transaction.atomic():
                 first_active_infraction = {
                     'user': self.user.id,
                     'actor': self.user.id,
@@ -554,7 +570,7 @@ class CreationTests(AuthenticatedAPITestCase):
         first_active_infraction = {
             'user': self.user.id,
             'actor': self.user.id,
-            'type': 'mute',
+            'type': 'timeout',
             'reason': 'Be silent!',
             'hidden': True,
             'active': True,
@@ -641,9 +657,9 @@ class CreationTests(AuthenticatedAPITestCase):
         Infraction.objects.create(
             user=self.user,
             actor=self.user,
-            type="mute",
+            type="timeout",
             active=True,
-            reason="The first active mute"
+            reason="The first active timeout"
         )
 
     def test_unique_constraint_accepts_active_infractions_for_different_users(self):
@@ -798,7 +814,7 @@ class SerializerTests(AuthenticatedAPITestCase):
             actor_id=self.user.id,
             type=_type,
             reason='A reason.',
-            expires_at=dt(5018, 11, 20, 15, 52, tzinfo=timezone.utc),
+            expires_at=dt(5018, 11, 20, 15, 52, tzinfo=UTC),
             active=active
         )
 
@@ -810,22 +826,6 @@ class SerializerTests(AuthenticatedAPITestCase):
         serializer = InfractionSerializer(instance, data=data, partial=True)
 
         self.assertTrue(serializer.is_valid(), msg=serializer.errors)
-
-    def test_validation_error_if_active_duplicate(self):
-        self.create_infraction('ban', active=True)
-        instance = self.create_infraction('ban', active=False)
-
-        data = {'active': True}
-        serializer = InfractionSerializer(instance, data=data, partial=True)
-
-        if not serializer.is_valid():
-            self.assertIn('non_field_errors', serializer.errors)
-
-            code = serializer.errors['non_field_errors'][0].code
-            msg = f'Expected failure on unique validator but got {serializer.errors}'
-            self.assertEqual(code, 'unique', msg=msg)
-        else:  # pragma: no cover
-            self.fail('Validation unexpectedly succeeded.')
 
     def test_is_valid_for_new_active_infraction(self):
         self.create_infraction('ban', active=False)

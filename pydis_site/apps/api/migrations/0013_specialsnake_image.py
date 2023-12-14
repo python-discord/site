@@ -2,7 +2,6 @@
 
 import datetime
 from django.db import migrations, models
-from django.utils.timezone import utc
 
 
 class Migration(migrations.Migration):
@@ -15,7 +14,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='specialsnake',
             name='image',
-            field=models.URLField(default=datetime.datetime(2018, 10, 23, 11, 51, 23, 703868, tzinfo=utc)),
+            field=models.URLField(default=datetime.datetime(2018, 10, 23, 11, 51, 23, 703868, tzinfo=datetime.timezone.utc)),
             preserve_default=False,
         ),
     ]

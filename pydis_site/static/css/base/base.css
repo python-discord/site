@@ -54,7 +54,6 @@ main.site-content {
     padding-left: 2.5rem;
     padding-right: 2.5rem;
     background-color: #697ec4ff;
-    margin-left: 0.5rem;
     transition: all 0.2s cubic-bezier(.25,.8,.25,1);
     overflow: hidden;
 }
@@ -80,7 +79,7 @@ main.site-content {
 
 #netcup-logo {
     padding-left: 15px;
-    background: url(https://www.netcup-wiki.de/static/assets/images/netcup_logo_white.svg) no-repeat center;
+    background: url(/static/images/sponsors/netcup-white.svg) no-repeat center;
     background-size: 60px;
     background-position: 0px 3px;
     color: #00000000;

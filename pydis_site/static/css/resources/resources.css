@@ -73,6 +73,11 @@ display: block;
     margin-right: 0.25em !important;
 }
 
+/* Style the search bar */
+#resource-search {
+    margin: 0.25em 0.25em 0 0.25em;
+}
+
 /* Center the 404 div */
 .no-resources-found {
     display: none;
@@ -84,6 +89,35 @@ display: block;
 /* Make sure jQuery will use flex when setting `show()` again. */
 .no-resources-found[style*='display: block'] {
     display: flex !important;
+}
+
+/* By default, we hide the search tag. We'll add it only when there's a search happening. */
+.tag.search-query {
+    display: none;
+    min-width: fit-content;
+    max-width: fit-content;
+    padding-right: 2em;
+}
+.tag.search-query .inner {
+    display: inline-block;
+    padding: 0;
+    max-width: 16.5rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    line-height: 2em;
+}
+.tag.search-query i {
+    margin: 0 !important;
+    display: inline-block;
+    line-height: 2em;
+    float: left;
+    padding-right: 1em;
+}
+
+/* Don't allow the tag pool to exceed its parent containers width. */
+#tag-pool {
+    max-width: 100%;
 }
 
 /* Disable clicking on the checkbox itself. */
@@ -124,7 +158,6 @@ i.is-primary {
     filter: brightness(120%);
     color: #7289DA;
 }
-
 
 /* Set default display to inline-flex, for centering. */
 span.filter-box-tag {
@@ -181,7 +214,8 @@ button.delete.is-info::after {
 
 /* Give outlines to active tags */
 span.filter-box-tag,
-span.resource-tag.active {
+span.resource-tag.active,
+.tag.search-query {
     outline-width: 1px;
     outline-style: solid;
 }
@@ -244,6 +278,9 @@ span.resource-tag.active.has-background-info-light {
     .filter-panel {
         padding-top: 4px;
         padding-bottom: 4px;
+    }
+    .tag.search-query .inner {
+        max-width: 16.2rem;
     }
 }
 

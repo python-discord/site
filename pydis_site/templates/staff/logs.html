@@ -14,12 +14,16 @@
         <li>Date: {{ deletion_context.creation }}</li>
     </ul>
     <div class="is-divider has-small-margin"></div>
-    {% for message in deletion_context.deletedmessage_set.all %}
+    {% for message in deletion_context.deletedmessage_set.all reversed %}
         <div class="discord-message">
             <div class="discord-message-header">
                 <span class="discord-username"
-                      style="color: {{ message.author.top_role.colour | hex_colour }}">{{ message.author }}</span><span
-                    class="discord-message-metadata has-text-grey">{{ message.timestamp }} | User ID: {{ message.author.id }}</span>
+                      style="color: {{ message.author.top_role.colour | hex_colour }}">{{ message.author }}
+                </span>
+                <span class="discord-message-metadata has-text-grey">
+                    User ID: {{ message.author.id }}<br>
+                    {{ message.timestamp }} (Channel ID-Message ID: {{ message.channel_id }}-{{ message.id }})
+                </span>
             </div>
             <div class="discord-message-content">
                 {{ message.content | escape | visible_newlines | safe }}

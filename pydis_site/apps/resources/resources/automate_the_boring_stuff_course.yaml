@@ -1,7 +1,6 @@
 description: The interactive course version of Al Sweigart's excellent book for beginners, taught by the author himself.
-  This link has a discounted version of the course which will always cost 10 dollars. Thanks, Al!
-name: Automate the Boring Stuff with Python
-title_url: https://www.udemy.com/automate/?couponCode=FOR_LIKE_10_BUCKS
+name: Automate the Boring Stuff with Python Udemy Course
+title_url: https://www.udemy.com/automate/
 tags:
   topics:
     - general

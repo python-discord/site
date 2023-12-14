@@ -35,16 +35,20 @@ class Nomination(ModelReprMixin, models.Model):
         default=False,
         help_text="Whether a review was made."
     )
-
-    def __str__(self):
-        """Representation that makes the target and state of the nomination immediately evident."""
-        status = "active" if self.active else "ended"
-        return f"Nomination of {self.user} ({status})"
+    thread_id = models.BigIntegerField(
+        help_text="The nomination vote's thread id.",
+        null=True,
+    )
 
     class Meta:
         """Set the ordering of nominations to most recent first."""
 
         ordering = ("-inserted_at",)
+
+    def __str__(self):
+        """Representation that makes the target and state of the nomination immediately evident."""
+        status = "active" if self.active else "ended"
+        return f"Nomination of {self.user} ({status})"
 
 
 class NominationEntry(ModelReprMixin, models.Model):

@@ -12,7 +12,7 @@ class Infraction(ModelReprMixin, models.Model):
         ("note", "Note"),
         ("warning", "Warning"),
         ("watch", "Watch"),
-        ("mute", "Mute"),
+        ("timeout", "Timeout"),
         ("kick", "Kick"),
         ("ban", "Ban"),
         ("superstar", "Superstar"),
@@ -22,6 +22,12 @@ class Infraction(ModelReprMixin, models.Model):
     inserted_at = models.DateTimeField(
         default=timezone.now,
         help_text="The date and time of the creation of this infraction."
+    )
+    last_applied = models.DateTimeField(
+        # This default is for backwards compatibility with bot versions
+        # that don't explicitly give a value.
+        default=timezone.now,
+        help_text="The date and time of when this infraction was last applied."
     )
     expires_at = models.DateTimeField(
         null=True,
@@ -63,14 +69,14 @@ class Infraction(ModelReprMixin, models.Model):
         help_text="Whether a DM was sent to the user when infraction was applied."
     )
 
-    def __str__(self):
-        """Returns some info on the current infraction, for display purposes."""
-        s = f"#{self.id}: {self.type} on {self.user_id}"
-        if self.expires_at:
-            s += f" until {self.expires_at}"
-        if self.hidden:
-            s += " (hidden)"
-        return s
+    jump_url = models.URLField(
+        default=None,
+        null=True,
+        max_length=88,
+        help_text=(
+            "The jump url to message invoking the infraction."
+        )
+    )
 
     class Meta:
         """Defines the meta options for the infraction model."""
@@ -83,3 +89,12 @@ class Infraction(ModelReprMixin, models.Model):
                 name="unique_active_infraction_per_type_per_user"
             ),
         )
+
+    def __str__(self):
+        """Returns some info on the current infraction, for display purposes."""
+        s = f"#{self.id}: {self.type} on {self.user_id}"
+        if self.expires_at:
+            s += f" until {self.expires_at}"
+        if self.hidden:
+            s += " (hidden)"
+        return s

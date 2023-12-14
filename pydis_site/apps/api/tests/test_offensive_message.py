@@ -3,20 +3,31 @@ import datetime
 from django.urls import reverse
 
 from .base import AuthenticatedAPITestCase
-from ..models import OffensiveMessage
+from pydis_site.apps.api.models import OffensiveMessage
+
+
+def create_offensive_message() -> OffensiveMessage:
+    """Creates and returns an `OffensiveMessgage` record for tests."""
+    delete_at = datetime.datetime.now(tz=datetime.UTC) + datetime.timedelta(days=1)
+
+    return OffensiveMessage.objects.create(
+        id=602951077675139072,
+        channel_id=291284109232308226,
+        delete_date=delete_at,
+    )
 
 
 class CreationTests(AuthenticatedAPITestCase):
     def test_accept_valid_data(self):
         url = reverse('api:bot:offensivemessage-list')
-        delete_at = datetime.datetime.now() + datetime.timedelta(days=1)
+        delete_at = datetime.datetime.now() + datetime.timedelta(days=1)  # noqa: DTZ005
         data = {
             'id': '602951077675139072',
             'channel_id': '291284109232308226',
             'delete_date': delete_at.isoformat()[:-1]
         }
 
-        aware_delete_at = delete_at.replace(tzinfo=datetime.timezone.utc)
+        aware_delete_at = delete_at.replace(tzinfo=datetime.UTC)
 
         response = self.client.post(url, data=data)
         self.assertEqual(response.status_code, 201)
@@ -32,7 +43,7 @@ class CreationTests(AuthenticatedAPITestCase):
 
     def test_returns_400_on_non_future_date(self):
         url = reverse('api:bot:offensivemessage-list')
-        delete_at = datetime.datetime.now() - datetime.timedelta(days=1)
+        delete_at = datetime.datetime.now() - datetime.timedelta(days=1)  # noqa: DTZ005
         data = {
             'id': '602951077675139072',
             'channel_id': '291284109232308226',
@@ -46,7 +57,7 @@ class CreationTests(AuthenticatedAPITestCase):
 
     def test_returns_400_on_negative_id_or_channel_id(self):
         url = reverse('api:bot:offensivemessage-list')
-        delete_at = datetime.datetime.now() + datetime.timedelta(days=1)
+        delete_at = datetime.datetime.now() + datetime.timedelta(days=1)  # noqa: DTZ005
         data = {
             'id': '602951077675139072',
             'channel_id': '291284109232308226',
@@ -72,8 +83,8 @@ class CreationTests(AuthenticatedAPITestCase):
 class ListTests(AuthenticatedAPITestCase):
     @classmethod
     def setUpTestData(cls):
-        delete_at = datetime.datetime.now() + datetime.timedelta(days=1)
-        aware_delete_at = delete_at.replace(tzinfo=datetime.timezone.utc)
+        delete_at = datetime.datetime.now() + datetime.timedelta(days=1)  # noqa: DTZ005
+        aware_delete_at = delete_at.replace(tzinfo=datetime.UTC)
 
         cls.messages = [
             {
@@ -111,13 +122,7 @@ class ListTests(AuthenticatedAPITestCase):
 class DeletionTests(AuthenticatedAPITestCase):
     @classmethod
     def setUpTestData(cls):
-        delete_at = datetime.datetime.now(tz=datetime.timezone.utc) + datetime.timedelta(days=1)
-
-        cls.valid_offensive_message = OffensiveMessage.objects.create(
-            id=602951077675139072,
-            channel_id=291284109232308226,
-            delete_date=delete_at.isoformat()
-        )
+        cls.valid_offensive_message = create_offensive_message()
 
     def test_delete_data(self):
         url = reverse(
@@ -132,24 +137,53 @@ class DeletionTests(AuthenticatedAPITestCase):
         )
 
 
+class UpdateOffensiveMessageTestCase(AuthenticatedAPITestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.message = create_offensive_message()
+        cls.in_one_week = datetime.datetime.now(tz=datetime.UTC) + datetime.timedelta(days=7)
+
+    def test_updating_message(self):
+        url = reverse('api:bot:offensivemessage-detail', args=(self.message.id,))
+        data = {'delete_date': self.in_one_week.isoformat()}
+        update_response = self.client.patch(url, data=data)
+        self.assertEqual(update_response.status_code, 200)
+
+        self.message.refresh_from_db()
+        self.assertAlmostEqual(
+            self.message.delete_date,
+            self.in_one_week,
+            delta=datetime.timedelta(seconds=1),
+        )
+
+    def test_updating_write_once_fields(self):
+        """Fields such as the channel ID may not be updated."""
+        url = reverse('api:bot:offensivemessage-detail', args=(self.message.id,))
+        data = {'channel_id': self.message.channel_id + 1}
+        response = self.client.patch(url, data=data)
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.json(), {'channel_id': ["This field cannot be updated."]})
+
+    def test_updating_nonexistent_message(self):
+        url = reverse('api:bot:offensivemessage-detail', args=(self.message.id + 1,))
+        data = {'delete_date': self.in_one_week}
+
+        response = self.client.patch(url, data=data)
+        self.assertEqual(response.status_code, 404)
+        self.message.refresh_from_db()
+        self.assertNotAlmostEqual(
+            self.message.delete_date,
+            self.in_one_week,
+            delta=datetime.timedelta(seconds=1),
+        )
+
+
 class NotAllowedMethodsTests(AuthenticatedAPITestCase):
     @classmethod
     def setUpTestData(cls):
-        delete_at = datetime.datetime.now(tz=datetime.timezone.utc) + datetime.timedelta(days=1)
+        cls.message = create_offensive_message()
 
-        cls.valid_offensive_message = OffensiveMessage.objects.create(
-            id=602951077675139072,
-            channel_id=291284109232308226,
-            delete_date=delete_at.isoformat()
-        )
-
-    def test_returns_405_for_patch_and_put_requests(self):
-        url = reverse(
-            'api:bot:offensivemessage-detail', args=(self.valid_offensive_message.id,)
-        )
-        not_allowed_methods = (self.client.patch, self.client.put)
-
-        for method in not_allowed_methods:
-            with self.subTest(method=method):
-                response = method(url, {})
-                self.assertEqual(response.status_code, 405)
+    def test_returns_405_for_get(self):
+        url = reverse('api:bot:offensivemessage-detail', args=(self.message.id,))
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 405)
