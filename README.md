@@ -12,6 +12,7 @@ If you happen to run into issues with setup, please don't hesitate to open an is
 
 If you're looking to contribute or play around with the code, take a look at [the wiki][10]. If you're looking for things to do, check out [our issues][11].
 
+
 [1]: https://github.com/python-discord/site/workflows/CI/badge.svg?branch=main
 [2]: https://github.com/python-discord/site/actions/workflows/main.yaml?query=event%3Apush+branch%3Amain
 [7]: https://coveralls.io/repos/github/python-discord/site/badge.svg?branch=main
