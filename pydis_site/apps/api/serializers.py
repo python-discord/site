@@ -505,13 +505,8 @@ class ExpandedInfractionSerializer(InfractionSerializer):
         """Return the dictionary representation of this infraction."""
         ret = super().to_representation(instance)
 
-        user = User.objects.get(id=ret['user'])
-        user_data = UserSerializer(user).data
-        ret['user'] = user_data
-
-        actor = User.objects.get(id=ret['actor'])
-        actor_data = UserSerializer(actor).data
-        ret['actor'] = actor_data
+        ret['user'] = UserSerializer(instance.user).data
+        ret['actor'] = UserSerializer(instance.actor).data
 
         return ret
 
