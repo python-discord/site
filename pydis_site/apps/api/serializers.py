@@ -151,12 +151,9 @@ class MessageDeletionContextSerializer(ModelSerializer):
         """
         messages = validated_data.pop('deletedmessage_set')
         deletion_context = MessageDeletionContext.objects.create(**validated_data)
-        for message in messages:
-            DeletedMessage.objects.create(
-                deletion_context=deletion_context,
-                **message
-            )
-
+        DeletedMessage.objects.bulk_create(
+            DeletedMessage(deletion_context=deletion_context, **message) for message in messages
+        )
         return deletion_context
 
 
