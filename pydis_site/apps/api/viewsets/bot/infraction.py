@@ -230,7 +230,11 @@ class InfractionViewSet(
                 })
             additional_filters['type__in'] = [i.strip() for i in filter_types.split(",")]
 
-        return self.queryset.filter(**additional_filters)
+        qs = self.queryset.filter(**additional_filters)
+        if self.serializer_class is ExpandedInfractionSerializer:
+            return qs.prefetch_related('actor', 'user')
+
+        return qs
 
     @action(url_path='expanded', detail=False)
     def list_expanded(self, *args, **kwargs) -> Response:
