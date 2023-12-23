@@ -10,6 +10,11 @@
     #edit-on-github {
         display: none;
     }
+
+   .dropdown-menu {
+        left: unset;
+        right: 0;
+    }
 }
 
 i.has-icon-padding {
