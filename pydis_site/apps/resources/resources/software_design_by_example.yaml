@@ -6,6 +6,9 @@ description: A tool-based introduction to Software Design with Python. This book
 title_image: https://third-bit.com/sdxpy/logo.svg
 title_url: https://third-bit.com/sdxpy/
 urls:
+- icon: branding/goodreads
+  url: https://www.goodreads.com/book/show/199430059-software-design-by-example
+  color: black
 - icon: branding/github
   url: https://github.com/gvwilson/sdxpy
   color: black
@@ -15,6 +18,7 @@ tags:
     - software design
   payment_tiers:
     - free
+    - paid
   difficulty:
     - intermediate
   type:
