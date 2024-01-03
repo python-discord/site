@@ -3,7 +3,8 @@ description: A tool-based introduction to Software Design with Python. This book
   design by explaining examples of small versions of familiar tools to show how
   experienced software designers think. It introduces some fundamental ideas in computer
   science that many self-taught programmers haven’t encountered.
-title_image: https://third-bit.com/sdxpy/logo.svg
+icon_image: https://third-bit.com/sdxpy/logo.svg
+icon_size: 50
 title_url: https://third-bit.com/sdxpy/
 urls:
 - icon: branding/goodreads
