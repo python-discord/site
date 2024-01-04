@@ -432,13 +432,13 @@ prometheus-client = ">=0.7"
 
 [[package]]
 name = "django-simple-bulma"
-version = "2.5.0"
+version = "2.6.0"
 description = "Django application to add the Bulma CSS framework and its extensions"
 optional = false
 python-versions = "*"
 files = [
-    {file = "django-simple-bulma-2.5.0.tar.gz", hash = "sha256:d4e9f6ea857954a9bdc7a4f16453834a578cd04da5c3a96b2a3241bfcfabead2"},
-    {file = "django_simple_bulma-2.5.0-py3-none-any.whl", hash = "sha256:c413b031494d80f674068a782440c6ec5f20a12501ee7464d6f781a5777fa89c"},
+    {file = "django-simple-bulma-2.6.0.tar.gz", hash = "sha256:7660aac87f3bfb23f2bbbd564e216337f443c001698d344759ad5753f8e3a3c1"},
+    {file = "django_simple_bulma-2.6.0-py3-none-any.whl", hash = "sha256:06a195e630f9bfa91060a0075a18ba6953bb72e7396fda3737561af0dfeab0d1"},
 ]
 
 [package.dependencies]
