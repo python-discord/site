@@ -91,6 +91,11 @@ h1 {
     height: 26px;
     z-index: 3;
 }
+[data-theme="dark"] {
+    #bottom-wave {
+        background: url(../../images/waves/wave_black.svg) repeat-x !important;
+    }
+}
 
 @keyframes wave {
   0% {
@@ -175,6 +180,11 @@ h1 {
 
 #projects .card:hover .card-header-title {
     color: #363636;
+}
+[data-theme="dark"] {
+    #projects .card:hover .card-header-title {
+        color: #CAD6FF;
+    }
 }
 
 #projects .card-content {

@@ -30,6 +30,8 @@ function setStyleSheets(newTheme) {
             darkStylesheet.disabled = false;
             break;
     }
+
+    document.querySelector("html").setAttribute("data-theme", newTheme);
 }
 
 // Reflect chosen theme on the switch toggle.
