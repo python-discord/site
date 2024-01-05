@@ -3,7 +3,6 @@
 {% block head %}
     <link rel="stylesheet" href="{% static "css/base/navbar.css" %}">
     <link href="https://css.gg/css?=|moon|sun" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="{% static "js/base/navbar.js" %}"></script>
 {% endblock %}
 
@@ -104,17 +103,18 @@
         </div>
       </div>
 
+      {# Theme toggle #}
       <div class="navbar-item">
         <div id="theme-switch" class="switch dark">
           <div class="switch-outer"></div>
           <div class="switch-inner"></div>
           <i class="theme-icon light gg-sun"></i>
-          <div class="knob dark"></div>
+          <div id="theme-knob" class="knob dark"></div>
           <i class="theme-icon dark gg-moon"></i>
         </div>
       </div>
 
-      {# Desktop Nav Discord  #}
+      {# Desktop Nav Discord #}
       <div id="discord-btn" class="buttons is-hidden-touch is-white">
         <a href="https://discord.gg/python" class="button is-large is-primary">Discord</a>
       </div>

@@ -1,94 +1,64 @@
 "use strict";
 
-const defaultCssElement = $("#bulma-css")[0];
-const darkCssElement = $("#bulma-css-dark")[0];
+const defaultTheme = "light";
+const lightCssElement = document.getElementById("bulma-css");
+const darkCssElement = document.getElementById("bulma-css-dark");
 
 function getCurrentTheme() {
-    if (document.cookie === "")
-        return "default";
-
-    return document.cookie
-        .split('; ')
-        .find(row => row.startsWith('theme='))
-        .split('=')[1];
+    const theme = localStorage.getItem("theme");
+    if (theme === null || theme === "")
+        return defaultTheme;
+    return theme;
 }
 
-function displayThemedElements() {
-    const defaultElements = Array.from($(".show-default-mode"));
-    const darkElements = Array.from($(".show-dark-mode"));
-
-    switch (getCurrentTheme()) {
-        case "":
-        case "default":
-            defaultElements.forEach(e => e.style.display = null);
-            darkElements.forEach(e => e.style.display = 'none');
-            break;
-        case "dark":
-            defaultElements.forEach(e => e.style.display = 'none');
-            darkElements.forEach(e => e.style.display = null);
-            break;
-    }
-}
-
-function setStyleSheets() {
-    switch (getCurrentTheme()) {
-        case "":
-        case "default":
-            defaultCssElement.disabled = false;
+function setStyleSheets(newTheme) {
+    switch (newTheme) {
+        case "light":
+            lightCssElement.disabled = false;
             darkCssElement.disabled = true;
             break;
         case "dark":
-            defaultCssElement.disabled = true;
+            lightCssElement.disabled = true;
             darkCssElement.disabled = false;
             break;
     }
 }
 
-function toggleThemeSwitch() {
-    let switchToggle = $(".switch")[0];
-    let knob = $(".knob")[0];
-
-    if (knob.classList.contains("dark")) {
-        knob.classList.remove("dark");
-        knob.classList.add("light");
-
-        // After 500ms, switch the icons
-        setTimeout(function() {
-            switchToggle.classList.remove("dark");
-            switchToggle.classList.add("light");
-        }, 100);
-    } else {
-        knob.classList.remove("light");
-        knob.classList.add("dark");
-
-        // After 500ms, switch the icons
-        setTimeout(function() {
-            switchToggle.classList.remove("light");
-            switchToggle.classList.add("dark");
-        }, 100);
+function toggleThemeSwitch(newTheme) {
+    const switchToggle = document.getElementById("theme-switch");
+    const knob = document.getElementById("theme-knob");
+    switch (newTheme) {
+        case "light":
+            knob.classList.remove("dark");
+            knob.classList.add("light");
+            setTimeout(function() {
+                switchToggle.classList.remove("dark");
+                switchToggle.classList.add("light");
+            }, 100);
+            break;
+        case "dark":
+            knob.classList.remove("light");
+            knob.classList.add("dark");
+            setTimeout(function() {
+                switchToggle.classList.remove("light");
+                switchToggle.classList.add("dark");
+            }, 100);
+            break;
     }
 }
 
 // Executed when the page has finished loading.
 document.addEventListener("DOMContentLoaded", () => {
+    const theme = getCurrentTheme()
+    setStyleSheets(theme);
+    toggleThemeSwitch(theme);
 
-    setStyleSheets();
-    displayThemedElements();
-
-    if (getCurrentTheme() === "default")
-        toggleThemeSwitch();
-
-    $('#theme-switch').on("click", () => {
-
-        // Update cookie
-        if (getCurrentTheme() === "dark") {
-            document.cookie = "theme=default";
-        } else {
-            document.cookie = "theme=dark";
-        }
-
-        setStyleSheets();
-        displayThemedElements();
-        toggleThemeSwitch();
+    const switchToggle = document.getElementById("theme-switch");
+    switchToggle.addEventListener("click", () => {
+        const newTheme = getCurrentTheme() === "light" ? "dark" : "light";
+        console.log(newTheme);
+        localStorage.setItem("theme", newTheme);
+        setStyleSheets(newTheme);
+        toggleThemeSwitch(newTheme);
     });
 });
