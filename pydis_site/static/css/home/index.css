@@ -111,6 +111,10 @@ h1 {
     margin: 0 1em;
 }
 
+[data-theme="dark"] #showcase .box {
+    box-shadow: 0 0.5em 1em -0.125em rgb(10 10 10 / 10%), 0 0px 0 1px rgb(10 10 10 / 2%);
+}
+
 #showcase .mini-timeline {
     height: 3px;
     position: relative;
@@ -157,8 +161,16 @@ h1 {
     flex-direction: column;
 }
 
+[data-theme="dark"] #projects .card {
+    border: #4E4F51 1px solid;
+}
+
 #projects .card:hover {
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+
+[data-theme="dark"] #projects .card:hover {
+    box-shadow: 0 1px 3px rgb(10 10 10 / 65%), 0 1px 2px rgb(10 10 10 / 85%);
 }
 
 #projects .card-header {
@@ -174,16 +186,18 @@ h1 {
 
 #projects .card-header-title {
     padding: 0;
+    /* The primary blurple theme color */
     color: #7289DA;
 }
 
 #projects .card:hover .card-header-title {
     color: #363636;
 }
-[data-theme="dark"] {
-    #projects .card:hover .card-header-title {
-        color: #CAD6FF;
-    }
+
+[data-theme="dark"] #projects .card:hover .card-header-title {
+    /* The light blurple theme color, consistent hover behaviour with other
+     * parts of the site. */
+    color: #CAD6FF;
 }
 
 #projects .card-content {
