@@ -299,7 +299,7 @@ LOGGING = {
 
 # Custom settings for django-simple-bulma
 BULMA_SETTINGS = {
-    "variables": {  # If you update these colours, please update the notification.css file
+    "variables": {
         "primary": "#7289DA",    # Discord blurple
         "green": "#32ac66",      # Colour picked after Discord discussion
         "turquoise": "#7289DA",  # Blurple, because Bulma uses this regardless of `primary` above
