@@ -300,7 +300,7 @@ LOGGING = {
 # Custom settings for django-simple-bulma
 BULMA_SETTINGS = {
     "variables": {
-        "primary": "#7289DA",    # Discord blurple
+        "primary": "#7289DA",    # PyDis blurple
         "green": "#32ac66",      # Colour picked after Discord discussion
         "turquoise": "#7289DA",  # Blurple, because Bulma uses this regardless of `primary` above
         "blue": "#2482c1",       # Colour picked after Discord discussion
@@ -316,7 +316,7 @@ BULMA_SETTINGS = {
         "tooltip-max-width": "30rem",
     },
     "dark_variables": {
-        "primary": "#7289DA",
+        "primary": "#7289DA",    # PyDis blurple
 
         "white": "#2C2F33",
         "white-bis": "#23272A ",
@@ -333,6 +333,9 @@ BULMA_SETTINGS = {
         "text-strong": "#FEFEFE",
 
         "link": "$primary",
+        "link-hover": "#CAD6FF", # PyDis light blurple
+        "link-focus": "$link-hover",
+        "link-active": "$link-hover",
 
         # Use the same sizes
         "dimensions": "16 24 32 48 64 96 128 256 512",

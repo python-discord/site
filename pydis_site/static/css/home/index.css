@@ -191,12 +191,12 @@ h1 {
 }
 
 #projects .card:hover .card-header-title {
+    /* Bulma link-hover setting */
     color: #363636;
 }
 
 [data-theme="dark"] #projects .card:hover .card-header-title {
-    /* The light blurple theme color, consistent hover behaviour with other
-     * parts of the site. */
+    /* Bulma link-hover setting */
     color: #CAD6FF;
 }
 
