@@ -91,10 +91,9 @@ h1 {
     height: 26px;
     z-index: 3;
 }
-[data-theme="dark"] {
-    #bottom-wave {
-        background: url(../../images/waves/wave_black.svg) repeat-x !important;
-    }
+
+[data-theme="dark"] #bottom-wave {
+    background: url(../../images/waves/wave_black.svg) repeat-x !important;
 }
 
 @keyframes wave {
