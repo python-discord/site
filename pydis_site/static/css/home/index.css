@@ -241,21 +241,60 @@ h1 {
     text-align: center;
 }
 
-#sponsors .columns {
-    display: block;
-    justify-content: center;
-    margin: auto;
-    max-width: 80%;
+[data-theme="dark"] #sponsors {
+    background-color: #2C2F33 !important;
+}
+
+#sponsors .container {
+    max-width: 70%;
 }
 
 #sponsors a {
-    margin: auto;
-    display: inline-block;
+    border-radius: .2rem;
+    margin-bottom: .8rem;
 }
 
-#sponsors img {
-    width: auto;
-    height: auto;
+[data-theme="dark"] #sponsors a {
+    background-color: #EDEDED;
+}
 
-    max-height: 5rem;
+@media (min-width: 800px) {
+    #sponsors a.column.is-one-third:first-child {
+        margin-left: -.8rem;
+        margin-right: .8rem;
+    }
+
+    #sponsors a.column.is-one-third:last-child {
+        margin-left: .8rem;
+        margin-right: -.8rem;
+    }
+
+    #sponsors a.column.is-half {
+        width: calc(50% + .4rem);
+    }
+
+    #sponsors a.column.is-half:first-child {
+        margin-left: -.8rem;
+        margin-right: .4rem;
+    }
+
+    #sponsors a.column.is-half:last-child {
+        margin-left: .4rem;
+        margin-right: -.8rem;
+    }
+
+    #sponsors img {
+        height: 4rem;
+    }
+}
+
+@media (max-width: 800px) {
+    #sponsors .columns {
+        margin-bottom: 1.5rem;
+    }
+
+    #sponsors img {
+        max-height: 4rem;
+        max-width: 50%;
+    }
 }
