@@ -316,7 +316,7 @@ BULMA_SETTINGS = {
         "tooltip-max-width": "30rem",
     },
     "dark_variables": {
-        "primary": "#7289DA",    # PyDis blurple
+        "primary": "#7289DA",         # PyDis blurple
 
         "white": "#2C2F33",
         "white-bis": "#23272A ",
@@ -333,9 +333,16 @@ BULMA_SETTINGS = {
         "text-strong": "#FEFEFE",
 
         "link": "$primary",
-        "link-hover": "#CAD6FF", # PyDis light blurple
+        "link-hover": "#CAD6FF",      # PyDis light blurple
         "link-focus": "$link-hover",
         "link-active": "$link-hover",
+
+        "code": "#FF7990",            # Adjusted to 4.5 contrast ratio per WCAG Level AA
+        "code-background": "#464951", # A graduation lighter than the default for light theme
+
+        # Same as bulma, adjusted for dark mode
+        "shadow": "0 0.5em 1em -0.125em rgba(10, 10, 10, 0.1), 0 0px 0 1px rgba(10, 10, 10, 0.02)",
+        "border": "#4E4F51",
 
         # Use the same sizes
         "dimensions": "16 24 32 48 64 96 128 256 512",

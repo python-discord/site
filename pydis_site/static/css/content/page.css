@@ -22,6 +22,18 @@ i.has-icon-padding {
     flex-direction: column;
 }
 
+[data-theme="dark"] .card.github-card {
+    border: solid 1px #4E4F51;
+}
+
+[data-theme="dark"] .card-footer {
+    border-top: solid 1px #4E4F51;
+}
+
+[data-theme="dark"] .card-footer-item:not(:last-child) {
+    border-right: solid 1px #4E4F51;
+}
+
 .card.github-card .card-content {
     flex: 1;
 }
