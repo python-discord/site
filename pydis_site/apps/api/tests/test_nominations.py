@@ -254,7 +254,7 @@ class NominationTests(AuthenticatedAPITestCase):
     def test_returns_400_on_frozen_field_update(self):
         url = reverse('api:bot:nomination-detail', args=(self.active_nomination.id,))
         data = {
-            'user': "Theo Katzman"
+            'user': 1234
         }
 
         response = self.client.patch(url, data=data)

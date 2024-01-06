@@ -157,14 +157,9 @@ class InfractionViewSet(
     filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
     filterset_fields = ('user__id', 'actor__id', 'active', 'hidden', 'type')
     search_fields = ('$reason',)
-    frozen_fields = ('id', 'inserted_at', 'type', 'user', 'actor', 'hidden')
 
     def partial_update(self, request: HttpRequest, *_args, **_kwargs) -> Response:
         """Method that handles the nuts and bolts of updating an Infraction."""
-        for field in request.data:
-            if field in self.frozen_fields:
-                raise ValidationError({field: ['This field cannot be updated.']})
-
         instance = self.get_object()
         serializer = self.get_serializer(instance, data=request.data, partial=True)
         serializer.is_valid(raise_exception=True)
@@ -235,7 +230,11 @@ class InfractionViewSet(
                 })
             additional_filters['type__in'] = [i.strip() for i in filter_types.split(",")]
 
-        return self.queryset.filter(**additional_filters)
+        qs = self.queryset.filter(**additional_filters)
+        if self.serializer_class is ExpandedInfractionSerializer:
+            return qs.prefetch_related('actor', 'user')
+
+        return qs
 
     @action(url_path='expanded', detail=False)
     def list_expanded(self, *args, **kwargs) -> Response:

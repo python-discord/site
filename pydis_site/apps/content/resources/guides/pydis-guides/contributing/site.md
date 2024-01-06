@@ -9,7 +9,7 @@ You should have already forked the [`site`](https://github.com/python-discord/si
 
 ### Requirements
 
-- [Python 3.10](https://www.python.org/downloads/)
+- [Python 3.11](https://www.python.org/downloads/)
 - [Poetry](https://python-poetry.org/docs/#installation)
     - `pip install poetry`
 - [Git](https://git-scm.com/downloads)
@@ -53,7 +53,7 @@ CREATE DATABASE pysite WITH OWNER pysite;
 CREATE DATABASE metricity WITH OWNER pysite;
 ```
 
-Finally, enter `/q` to exit psql.
+Finally, enter `\q` to exit psql.
 
 ### 2. Environment variables
 
@@ -182,5 +182,10 @@ The website is configured through the following environment variables:
 Now that you have everything setup, it is finally time to make changes to the site! If you have not yet read the [contributing guidelines](../contributing-guidelines.md), now is a good time. Contributions that do not adhere to the guidelines may be rejected.
 
 If you're not sure where to go from here, our [detailed walkthrough](../#2-set-up-the-project), or the [guide on contributing a page](../../how-to-contribute-a-page) is for you.
+
+The site repository also contains `README.md` files in all major directories of
+interest, which explain where which functionality of the site is located. For
+example, see the [API app's
+README](https://github.com/python-discord/site/tree/main/pydis_site/apps/api).
 
 Have fun!

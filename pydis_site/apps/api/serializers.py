@@ -2,6 +2,7 @@
 from datetime import timedelta
 from typing import Any
 
+from django.db import models
 from django.db.models.query import QuerySet
 from django.db.utils import IntegrityError
 from rest_framework.exceptions import NotFound
@@ -34,6 +35,30 @@ from .models import (
     Role,
     User
 )
+
+class FrozenFieldsMixin:
+    """
+    Serializer mixin that allows adding non-updateable fields to a serializer.
+
+    To use, inherit from the mixin and specify the fields that should only be
+    written to on creation in the `frozen_fields` attribute of the `Meta` class
+    in a serializer.
+
+    See also the DRF discussion for this feature at
+    https://github.com/encode/django-rest-framework/discussions/8606, which may
+    eventually provide an official way to implement this.
+    """
+
+    def update(self, instance: models.Model, validated_data: dict) -> models.Model:
+        """Validate that no frozen fields were changed and update the instance."""
+        for field_name in getattr(self.Meta, 'frozen_fields', ()):
+            if field_name in validated_data:
+                raise ValidationError(
+                    {
+                        field_name: ["This field cannot be updated."]
+                    }
+                )
+        return super().update(instance, validated_data)
 
 
 class BotSettingSerializer(ModelSerializer):
@@ -126,12 +151,9 @@ class MessageDeletionContextSerializer(ModelSerializer):
         """
         messages = validated_data.pop('deletedmessage_set')
         deletion_context = MessageDeletionContext.objects.create(**validated_data)
-        for message in messages:
-            DeletedMessage.objects.create(
-                deletion_context=deletion_context,
-                **message
-            )
-
+        DeletedMessage.objects.bulk_create(
+            DeletedMessage(deletion_context=deletion_context, **message) for message in messages
+        )
         return deletion_context
 
 
@@ -426,7 +448,7 @@ class FilterListSerializer(ModelSerializer):
 #  endregion
 
 
-class InfractionSerializer(ModelSerializer):
+class InfractionSerializer(FrozenFieldsMixin, ModelSerializer):
     """A class providing (de-)serialization of `Infraction` instances."""
 
     class Meta:
@@ -447,6 +469,7 @@ class InfractionSerializer(ModelSerializer):
             'dm_sent',
             'jump_url'
         )
+        frozen_fields = ('id', 'inserted_at', 'type', 'user', 'actor', 'hidden')
 
     def validate(self, attrs: dict) -> dict:
         """Validate data constraints for the given data and abort if it is invalid."""
@@ -482,13 +505,8 @@ class ExpandedInfractionSerializer(InfractionSerializer):
         """Return the dictionary representation of this infraction."""
         ret = super().to_representation(instance)
 
-        user = User.objects.get(id=ret['user'])
-        user_data = UserSerializer(user).data
-        ret['user'] = user_data
-
-        actor = User.objects.get(id=ret['actor'])
-        actor_data = UserSerializer(actor).data
-        ret['actor'] = actor_data
+        ret['user'] = UserSerializer(instance.user).data
+        ret['actor'] = UserSerializer(instance.actor).data
 
         return ret
 
@@ -683,7 +701,7 @@ class NominationEntrySerializer(ModelSerializer):
         fields = ('nomination', 'actor', 'reason', 'inserted_at')
 
 
-class NominationSerializer(ModelSerializer):
+class NominationSerializer(FrozenFieldsMixin, ModelSerializer):
     """A class providing (de-)serialization of `Nomination` instances."""
 
     entries = NominationEntrySerializer(many=True, read_only=True)
@@ -703,9 +721,10 @@ class NominationSerializer(ModelSerializer):
             'entries',
             'thread_id'
         )
+        frozen_fields = ('id', 'inserted_at', 'user', 'ended_at')
 
 
-class OffensiveMessageSerializer(ModelSerializer):
+class OffensiveMessageSerializer(FrozenFieldsMixin, ModelSerializer):
     """A class providing (de-)serialization of `OffensiveMessage` instances."""
 
     class Meta:
@@ -713,3 +732,4 @@ class OffensiveMessageSerializer(ModelSerializer):
 
         model = OffensiveMessage
         fields = ('id', 'channel_id', 'delete_date')
+        frozen_fields = ('id', 'channel_id')
