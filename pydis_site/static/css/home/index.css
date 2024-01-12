@@ -252,6 +252,11 @@ h1 {
 #sponsors a {
     border-radius: .2rem;
     margin-bottom: .8rem;
+    position: relative;
+}
+
+#sponsors img {
+    max-height: 4rem;
 }
 
 [data-theme="dark"] #sponsors a {
@@ -283,18 +288,25 @@ h1 {
         margin-right: -.8rem;
     }
 
-    #sponsors img {
-        height: 4rem;
+    #sponsors a {
+        height: 5rem;
+        padding: .4rem;
     }
+
+    #sponsors img {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+        max-width: calc(100% - 0.8rem);
+    }
+
 }
 
 @media (max-width: 800px) {
     #sponsors .columns {
         margin-bottom: 1.5rem;
-    }
-
-    #sponsors img {
-        max-height: 4rem;
-        max-width: 50%;
     }
 }
