@@ -3386,6 +3386,13 @@ mark {
     --font-secondary: 'Open Sans', sans-serif
 }
 
+[data-theme="dark"] {
+    --cd-color-2: hsl(0, 0%, 34%);
+    --cd-color-2-h: 0;
+    --cd-color-2-s: 0%;
+    --cd-color-2-l: 34%;
+}
+
 @supports (--css: variables) {
     @media (min-width: 64rem) {
         :root {
@@ -3564,7 +3571,7 @@ mark {
     height: 0;
     border: 7px solid transparent;
     border-right-color: hsl(0, 0%, 100%);
-    border-right-color: var(--color-white)
+    border-right-color: var(--cd-color-2)
 }
 
 .cd-timeline__content h2 {
@@ -3592,7 +3599,7 @@ mark {
         height: 0;
         border: 7px solid transparent;
         border-left-color: hsl(0, 0%, 100%);
-        border-left-color: var(--color-white)
+        border-left-color: var(--cd-color-2)
     }
 }
 
