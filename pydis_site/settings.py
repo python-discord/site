@@ -317,6 +317,8 @@ BULMA_SETTINGS = {
     },
     "dark_variables": {
         "primary": "#7289DA",         # PyDis blurple
+        "warning": "#4B4636",
+        "warning-invert": "#FFFFFF",
 
         "white": "#2C2F33",
         "white-bis": "#23272A ",

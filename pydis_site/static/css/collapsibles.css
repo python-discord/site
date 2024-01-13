@@ -5,6 +5,10 @@
   outline: none;
 }
 
+[data-theme="dark"] .collapsible {
+  background-color: #403f45;
+}
+
 .collapsible-content {
   transition: max-height 0.3s ease-out;
   overflow: hidden;

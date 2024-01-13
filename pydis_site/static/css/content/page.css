@@ -108,3 +108,7 @@ ul.menu-list.toc {
 li img {
     margin-top: 0.5em;
 }
+
+[data-theme="dark"] hr {
+    background-color: #4c515a;
+}
