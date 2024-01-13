@@ -332,8 +332,8 @@ BULMA_SETTINGS = {
         "text-light": "#F7F7F7",
         "text-strong": "#FEFEFE",
 
-        "link": "$primary",
-        "link-hover": "#CAD6FF",      # PyDis light blurple
+        "link": "#99B0FF",            # A brighter PyDis blurple
+        "link-hover": "#FFFFFF",
         "link-focus": "$link-hover",
         "link-active": "$link-hover",
 

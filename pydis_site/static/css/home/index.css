@@ -186,8 +186,8 @@ h1 {
 
 #projects .card-header-title {
     padding: 0;
-    /* The primary blurple theme color */
-    color: #7289DA;
+    /* Link color from settings.py */
+    color: #99B0FF;
 }
 
 #projects .card:hover .card-header-title {
@@ -197,7 +197,7 @@ h1 {
 
 [data-theme="dark"] #projects .card:hover .card-header-title {
     /* Bulma link-hover setting */
-    color: #CAD6FF;
+    color: #FFFFFF;
 }
 
 #projects .card-content {

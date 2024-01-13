@@ -154,9 +154,13 @@ i.is-primary {
 }
 
 /* When hovering title anchors, just make the color a lighter primary, not black. */
-.resource-box a:hover {
+[data-theme="light"] .resource-box a:hover {
     filter: brightness(120%);
     color: #7289DA;
+}
+
+[data-theme="dark"] .resource-box a:hover {
+    color: white;
 }
 
 /* Set default display to inline-flex, for centering. */
