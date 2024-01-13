@@ -10,6 +10,11 @@
     #edit-on-github {
         display: none;
     }
+
+   .dropdown-menu {
+        left: unset;
+        right: 0;
+    }
 }
 
 i.has-icon-padding {
@@ -111,4 +116,12 @@ li img {
 
 [data-theme="dark"] hr {
     background-color: #4c515a;
+
+.dropdown-menu {
+    min-width: 15rem;
+}
+
+a.dropdown-item {
+    white-space: normal;
+    padding-right: 0;
 }
