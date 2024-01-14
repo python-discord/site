@@ -170,7 +170,7 @@ class NominationViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
     """
 
     serializer_class = NominationSerializer
-    queryset = Nomination.objects.all()
+    queryset = Nomination.objects.all().prefetch_related('entries')
     filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
     filterset_fields = ('user__id', 'active')
     frozen_on_create = ('ended_at', 'end_reason', 'active', 'inserted_at', 'reviewed')
