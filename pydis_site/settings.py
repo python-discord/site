@@ -319,6 +319,14 @@ BULMA_SETTINGS = {
         "primary": "#7289DA",         # PyDis blurple
         "warning": "#4B4636",
         "warning-invert": "#FFFFFF",
+        "primary-dark": "#EFF1FB",    # Bulma's primary-light
+        "primary-light": "#3C497A",
+        "success-dark": "#EFFAF5",    # Bulma's success-light
+        "success-light": "#205D42",
+        "danger-dark": "#FEECF0",     # Bulma's danger-light
+        "danger-light": "#642431",
+        "info-dark": "#EFF5FB",       # Bulma's info-light
+        "info-light": "#295477",
 
         "white": "#2C2F33",
         "white-bis": "#23272A ",
