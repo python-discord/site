@@ -4,7 +4,7 @@ title_url: https://www.python-graph-gallery.com/
 urls:
   - icon: branding/github
     url: https://github.com/holtzy/The-Python-Graph-Gallery
-    color: black
+    color: dark
 tags:
   topics:
     - data science

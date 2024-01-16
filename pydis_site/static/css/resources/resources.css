@@ -199,21 +199,25 @@ button.delete {
 }
 
 /* Colors for delete button x's */
-button.delete.is-primary::before,
-button.delete.is-primary::after {
+[data-theme="light"] button.delete.is-primary::before,
+[data-theme="light"] button.delete.is-primary::after {
     background-color: #2a45a2;
 }
-button.delete.is-success::before,
-button.delete.is-success::after {
+[data-theme="light"] button.delete.is-success::before,
+[data-theme="light"] button.delete.is-success::after {
     background-color: #2c9659;
 }
-button.delete.is-danger::before,
-button.delete.is-danger::after {
+[data-theme="light"] button.delete.is-danger::before,
+[data-theme="light"] button.delete.is-danger::after {
     background-color: #c32841;
 }
-button.delete.is-info::before,
-button.delete.is-info::after {
+[data-theme="light"] button.delete.is-info::before,
+[data-theme="light"] button.delete.is-info::after {
     background-color: #237fbd;
+}
+[data-theme="dark"] button.delete::before,
+[data-theme="dark"] button.delete::after {
+    background-color: #FFFFFF;
 }
 
 /* Give outlines to active tags */

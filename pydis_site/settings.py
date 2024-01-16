@@ -320,13 +320,13 @@ BULMA_SETTINGS = {
         "warning": "#4B4636",
         "warning-invert": "#FFFFFF",
         "primary-dark": "#EFF1FB",    # Bulma's primary-light
-        "primary-light": "#3C497A",
+        "primary-light": "#2B3660",
         "success-dark": "#EFFAF5",    # Bulma's success-light
-        "success-light": "#205D42",
+        "success-light": "#214133",
         "danger-dark": "#FEECF0",     # Bulma's danger-light
-        "danger-light": "#642431",
+        "danger-light": "#4C1822",
         "info-dark": "#EFF5FB",       # Bulma's info-light
-        "info-light": "#295477",
+        "info-light": "#254056",
 
         "white": "#2C2F33",
         "white-bis": "#23272A ",
@@ -353,6 +353,7 @@ BULMA_SETTINGS = {
         # Same as bulma, adjusted for dark mode
         "shadow": "0 0.5em 1em -0.125em rgba(10, 10, 10, 0.1), 0 0px 0 1px rgba(10, 10, 10, 0.02)",
         "border": "#4E4F51",
+        "border-light": "#313233",
 
         # Use the same sizes
         "dimensions": "16 24 32 48 64 96 128 256 512",

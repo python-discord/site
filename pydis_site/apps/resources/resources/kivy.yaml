@@ -12,7 +12,7 @@ urls:
     color: blurple
   - icon: branding/github
     url: https://github.com/kivy
-    color: black
+    color: dark
 tags:
   topics:
     - user interface
