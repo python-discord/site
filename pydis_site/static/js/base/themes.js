@@ -26,8 +26,8 @@ function setStyleSheets(newTheme) {
             darkStylesheet.disabled = true;
             break;
         case "dark":
-            lightStylesheet.disabled = true;
             darkStylesheet.disabled = false;
+            lightStylesheet.disabled = true;
             break;
     }
 
