@@ -114,10 +114,6 @@ li img {
     margin-top: 0.5em;
 }
 
-[data-theme="dark"] hr {
-    background-color: #4c515a;
-}
-
 .dropdown-menu {
     min-width: 15rem;
 }
@@ -125,4 +121,14 @@ li img {
 a.dropdown-item {
     white-space: normal;
     padding-right: 0;
+}
+
+[data-theme="dark"] hr {
+    background-color: #4c515a;
+}
+
+[data-theme="dark"] .has-dark-mode-background {
+    background-color: #EDEDED;
+    border-radius: .1rem;
+    padding: .3rem;
 }
