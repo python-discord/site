@@ -3,6 +3,10 @@
 const defaultTheme = "light";
 const stylesheet = document.getElementById("bulma-css");
 
+// We include the dark stylesheet in base template to include the rel="preload",
+// but remove the actual rel="stylesheet" element here because we won't need it.
+document.getElementById("bulma-css-dark").remove();
+
 // Get saved preference for the site in local storage, optionally accounting
 // for system preference used when a page loads.
 function getCurrentTheme(systemPrefers) {
