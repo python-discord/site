@@ -17,6 +17,7 @@
 
 .switch.dark .switch-outer {
     background-color: #22272E;
+    border: solid 1px #515151;
 }
 
 .switch.light .switch-outer {
