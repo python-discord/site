@@ -1,8 +1,7 @@
 "use strict";
 
 const defaultTheme = "light";
-const lightStylesheet = document.getElementById("bulma-css");
-const darkStylesheet = document.getElementById("bulma-css-dark");
+const stylesheet = document.getElementById("bulma-css");
 
 // Get saved preference for the site in local storage, optionally accounting
 // for system preference used when a page loads.
@@ -22,12 +21,10 @@ function getCurrentTheme(systemPrefers) {
 function setStyleSheets(newTheme) {
     switch (newTheme) {
         case "light":
-            lightStylesheet.rel = "stylesheet";
-            darkStylesheet.rel = "stylesheet alternate";
+            stylesheet.href = "/static/css/bulma.css";
             break;
         case "dark":
-            darkStylesheet.rel = "stylesheet";
-            lightStylesheet.rel = "stylesheet alternate";
+            stylesheet.href = "/static/css/dark_bulma.css";
             break;
     }
 
