@@ -59,19 +59,19 @@ function toggleThemeSwitch(newTheme) {
     }
 }
 
+let theme;
+const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)");
+
+if (systemPrefersDark.matches)
+    theme = getCurrentTheme("dark");
+else
+    theme = getCurrentTheme();
+
+setStyleSheets(theme);
+
 // Executed when the page has finished loading.
 document.addEventListener("DOMContentLoaded", () => {
-    let theme;
-    const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)");
-
-    if (systemPrefersDark.matches)
-        theme = getCurrentTheme("dark");
-    else
-        theme = getCurrentTheme();
-
-    setStyleSheets(theme);
     toggleThemeSwitch(theme);
-
     systemPrefersDark.addEventListener("change", ({matches: isDark}) => {
         const newTheme = isDark ? "dark" : "light";
         // Let the new system preference take precedence over toggle preference
