@@ -40,7 +40,7 @@
 
 
                         {# Filter box tags #}
-                        <div class="card filter-tags is-white has-background-white-bis">
+                        <div class="card filter-tags is-white has-background-white">
                             <div class="is-flex ml-auto">
                                 <div id="tag-pool">
                                     {# A filter tag for when there are no filters active #}
@@ -116,7 +116,7 @@
 
                         {# Filter checkboxes #}
                         {% for filter_name, filter_data in filters.items %}
-                            <div class="card filter-category-header has-background-white-bis">
+                            <div class="card filter-category-header has-background-white">
                                 <button type="button" class="card-header collapsible">
                                     <span class="card-header-title subtitle is-6 my-2 ml-2">
                                         <i class="fa-fw {{ filter_data.icon }} is-primary" aria-hidden="true"></i>&nbsp&nbsp{{ filter_name }}

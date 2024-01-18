@@ -112,7 +112,7 @@ h1 {
 }
 
 [data-theme="dark"] #showcase .box {
-    box-shadow: 0 0.5em 1em -0.125em rgb(10 10 10 / 10%), 0 0px 0 1px rgb(10 10 10 / 2%);
+    box-shadow: 0 0.5em 1em -0.125em rgb(0 0 0 / 30%), 0 0px 0 1px rgb(10 10 10 / 5%);
 }
 
 #showcase .mini-timeline {
@@ -186,6 +186,10 @@ h1 {
 
 #projects .card-header-title {
     padding: 0;
+    color: #7289DA;
+}
+
+[data-theme="dark"] #projects .card-header-title {
     /* Link color from settings.py */
     color: #99B0FF;
 }

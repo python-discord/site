@@ -3426,6 +3426,10 @@ mark {
     background-color: hsl(var(--cd-color-2-h), var(--cd-color-2-s), calc(var(--cd-color-2-l)*1.05));
 }
 
+[data-theme="dark"] .cd-timeline {
+    background-color: #2C2F33;
+}
+
 .cd-timeline h2 {
     font-weight: 700
 }
