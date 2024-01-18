@@ -38,7 +38,7 @@
 }
 
 .knob.light {
-    background-color: #364c94;
+    background-color: white;
     margin: 7% auto auto 56%;
 }
 
@@ -50,7 +50,8 @@
 
 .theme-icon.light {
     left: 10%;
-    top: 15%
+    top: 15%;
+    color: white;
 }
 
 .theme-icon.dark {
