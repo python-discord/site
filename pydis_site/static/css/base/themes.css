@@ -45,7 +45,7 @@
 .theme-icon {
     position: absolute !important;
     --ggs: 0.75;
-    transition: opacity 0.3s ease-out;
+    transition: opacity 0.1s ease-out;
 }
 
 .theme-icon.light {
