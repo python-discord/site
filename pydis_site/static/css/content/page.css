@@ -119,6 +119,10 @@ a.dropdown-item {
     padding-right: 0;
 }
 
+[data-theme="dark"] .card.github-card {
+    border: solid 1px #4E4F51;
+}
+
 [data-theme="dark"] hr {
     background-color: #4c515a;
 }
