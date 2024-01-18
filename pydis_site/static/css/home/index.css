@@ -111,10 +111,6 @@ h1 {
     margin: 0 1em;
 }
 
-[data-theme="dark"] #showcase .box {
-    box-shadow: 0 0.5em 1em -0.125em rgb(0 0 0 / 30%), 0 0px 0 1px rgb(10 10 10 / 5%);
-}
-
 #showcase .mini-timeline {
     height: 3px;
     position: relative;
@@ -170,7 +166,7 @@ h1 {
 }
 
 [data-theme="dark"] #projects .card:hover {
-    box-shadow: 0 1px 3px rgb(10 10 10 / 65%), 0 1px 2px rgb(10 10 10 / 85%);
+    box-shadow: 0 3px 3px rgba(0, 0, 0, 0.7);
 }
 
 #projects .card-header {

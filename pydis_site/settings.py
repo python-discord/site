@@ -351,7 +351,7 @@ BULMA_SETTINGS = {
         "code-background": "#464951", # A graduation lighter than the default for light theme
 
         # Same as bulma, adjusted for dark mode
-        "shadow": "0 0.5em 1em -0.125em rgba(10, 10, 10, 0.3), 0 0px 0 1px rgba(82, 82, 82, 0.2)",
+        "shadow": "0 0.5em 1em -0.125em rgba(0, 0, 0, 0.3), 0 0px 0 1px rgba(0, 0, 0, 0.13)",
         "border": "#4E4F51",
         "border-light": "#313233",
 
