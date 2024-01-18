@@ -22,12 +22,12 @@ function getCurrentTheme(systemPrefers) {
 function setStyleSheets(newTheme) {
     switch (newTheme) {
         case "light":
-            lightStylesheet.disabled = false;
-            darkStylesheet.disabled = true;
+            lightStylesheet.rel = "stylesheet";
+            darkStylesheet.rel = "stylesheet alternate";
             break;
         case "dark":
-            darkStylesheet.disabled = false;
-            lightStylesheet.disabled = true;
+            darkStylesheet.rel = "stylesheet";
+            lightStylesheet.rel = "stylesheet alternate";
             break;
     }
 
