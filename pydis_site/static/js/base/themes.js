@@ -2,6 +2,7 @@
 
 const defaultTheme = "light";
 const stylesheet = document.getElementById("bulma-css");
+const htmlTag = document.querySelector("html");
 
 // We include the dark stylesheet in base template to include the rel="preload",
 // but remove the actual rel="stylesheet" element here because we won't need it.
@@ -32,7 +33,7 @@ function setStyleSheets(newTheme) {
             break;
     }
 
-    document.querySelector("html").setAttribute("data-theme", newTheme);
+    htmlTag.setAttribute("data-theme", newTheme);
 }
 
 // Reflect chosen theme on the switch toggle.
@@ -73,6 +74,7 @@ setStyleSheets(theme);
 // Executed when the page has finished loading.
 document.addEventListener("DOMContentLoaded", () => {
     toggleThemeSwitch(theme);
+
     systemPrefersDark.addEventListener("change", ({matches: isDark}) => {
         const newTheme = isDark ? "dark" : "light";
         // Let the new system preference take precedence over toggle preference
@@ -84,7 +86,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const switchToggle = document.getElementById("theme-switch");
     switchToggle.addEventListener("click", () => {
-        const newTheme = getCurrentTheme() === "light" ? "dark" : "light";
+        const newTheme = htmlTag.getAttribute("data-theme") === "light" ? "dark" : "light";
         localStorage.setItem("theme", newTheme);
         setStyleSheets(newTheme);
         toggleThemeSwitch(newTheme);
