@@ -1,0 +1,18 @@
+{% extends "events/base_sidebar.html" %}
+
+{% block breadcrumb %}
+    <li><a href="{% url "events:index" %}">Events</a></li>
+    <li class="is-active"><a href="#">Pixels</a></li>
+{% endblock %}
+
+{% block title %}Pixels{% endblock %}
+
+{% block event_content %}
+<p>
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque risus mi, tempus quis placerat ut, porta nec nulla. Vestibulum rhoncus ac ex sit amet fringilla. Nullam gravida purus diam, et dictum felis venenatis efficitur.
+</p>
+{% endblock %}
+
+{% block sidebar %}
+    {% include "events/sidebar/pixels.html" %}
+{% endblock %}

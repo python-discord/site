@@ -1,0 +1,24 @@
+{% extends "events/base_sidebar.html" %}
+
+{% block breadcrumb %}
+    <li><a href="{% url "events:index" %}">Events</a></li>
+    <li class="is-active"><a href="#">Revival of Code</a></li>
+{% endblock %}
+
+{% block title %}Revival of Code{% endblock %}
+
+{% block event_content %}
+<p>
+    Each year, many of our members take part of an online coding competition called
+    <a href="https://adventofcode.com/" target="_blank" rel="noopener">Advent of Code</a> that takes place in December. Advent of Code is an
+    Advent calendar of small programming puzzles for a variety of skill sets and skill levels that can be solved
+    in any programming language you like, including Python.
+</p>
+<p>
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque risus mi, tempus quis placerat ut, porta nec nulla. Vestibulum rhoncus ac ex sit amet fringilla. Nullam gravida purus diam, et dictum felis venenatis efficitur.
+</p>
+{% endblock %}
+
+{% block sidebar %}
+    {% include "events/sidebar/revivalofcode.html" %}
+{% endblock %}

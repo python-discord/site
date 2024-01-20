@@ -1,0 +1,18 @@
+{% load static %}
+
+<h2 class="title is-4">Upcoming event</h2>
+<div class="box">
+    <h2 class="title is-4"><a href="{% url "events:page" path="code-jams/10" %}">Pyweek 37</a></h2>
+    <p><strong>March 17-24</strong></p>
+    <div class="columns is-3" style="--columnGap: 0.75rem;">
+        <div class="column">
+            <p>Once a year we host a code jam for members of our server to participate in. The code jam is an event where we place you in a team with 5 other random server members. You then have 11 days to code some sort of application or program in Python. Your program must use the specified technology/framework and incorporate the theme chosen by the server.</p>
+            <a href="{% url "events:page" path="code-jams/10" %}" class="button is-link">
+                Join now
+            </a>
+        </div>
+        <div class="column">
+            <img src="https://pyweek.readthedocs.io/en/latest/_static/pyweek.svg" style="border-radius: 10px;" alt="Pyweek logo">
+        </div>
+    </div>
+</div>

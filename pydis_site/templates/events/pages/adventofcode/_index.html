@@ -1,0 +1,32 @@
+{% extends "events/base_sidebar.html" %}
+
+{% block breadcrumb %}
+    <li><a href="{% url "events:index" %}">Events</a></li>
+    <li class="is-active"><a href="#">Advent of Code</a></li>
+{% endblock %}
+
+{% block title %}Advent of Code{% endblock %}
+
+{% block event_content %}
+<p>
+    Each year, many of our members take part of an online coding competition called
+    <a href="https://adventofcode.com/" target="_blank" rel="noopener">Advent of Code</a> that takes place in December. Advent of Code is an
+    Advent calendar of small programming puzzles for a variety of skill sets and skill levels that can be solved
+    in any programming language you like, including Python.
+</p>
+<p>
+    During the event, we will open a special discussion channel in which our members can discuss the puzzles
+    and compare their solutions. We will also open a private leaderboard and may even reward the best scoring
+    members on that board with prizes!
+</p>
+<p>
+    However, this event isn't purely competitive. You can also join in just to see how far you'll get, to
+    challenge yourself, as a way of learning Python, or just for the fun of it. In 2019, almost 200 members
+    signed up for our private leaderboard, but many more took on the challenge without focusing on the
+    competitive aspect.
+</p>
+{% endblock %}
+
+{% block sidebar %}
+    {% include "events/sidebar/adventofcode/useful-links.html" %}
+{% endblock %}
