@@ -1,4 +1,4 @@
-<h4 class="is-title is-6">Recent events</h4>
+<h4 class="title is-4">Recent events</h4>
 <div class="box">
     <ul class="menu-list" style="margin-top: 0;">
         <li><a class="has-text-link" href="https://pyweek.org/35/">March: PyWeek 35</a></li>
@@ -8,14 +8,16 @@
     </ul>
 </div>
 
-<h4 class="is-title is-6">All events</h4>
-<div class="box is-hidden-mobile">
-    <ul class="menu-list" style="margin-top: 0;">
-        <li><a class="has-text-link" href="{% url "events:page" path="code-jams" %}">Code Jams</a></li>
-        <li><a class="has-text-link" href="{% url "events:page" path="pyweek" %}">PyWeek</a></li>
-        <li><a class="has-text-link" href="{% url "events:page" path="pixels" %}">Pixels</a></li>
-        <li><a class="has-text-link" href="{% url "events:page" path="adventofcode" %}">Advent of Code</a></li>
-        <li><a class="has-text-link" href="{% url "events:page" path="revivalofcode" %}">Revival of Code</a></li>
-        <li><a class="has-text-link" href="{% url "events:page" path="game-jams" %}">Game Jams</a></li>
-    </ul>
+<div class="is-hidden-mobile">
+    <h4 class="title is-4">All events</h4>
+    <div class="box">
+        <ul class="menu-list" style="margin-top: 0;">
+            <li><a class="has-text-link" href="{% url "events:page" path="code-jams" %}">Code Jams</a></li>
+            <li><a class="has-text-link" href="{% url "events:page" path="pyweek" %}">PyWeek</a></li>
+            <li><a class="has-text-link" href="{% url "events:page" path="pixels" %}">Pixels</a></li>
+            <li><a class="has-text-link" href="{% url "events:page" path="adventofcode" %}">Advent of Code</a></li>
+            <li><a class="has-text-link" href="{% url "events:page" path="revivalofcode" %}">Revival of Code</a></li>
+            <li><a class="has-text-link" href="{% url "events:page" path="game-jams" %}">Game Jams</a></li>
+        </ul>
+    </div>
 </div>
