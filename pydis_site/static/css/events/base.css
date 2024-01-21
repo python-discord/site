@@ -23,3 +23,68 @@ pre {
     border-radius: 10px;
     max-width: 50%;
 }
+
+/* CSS-only Masonry layout:
+ * https://tobiasahlin.com/blog/masonry-with-css/
+ *
+ * Adapted for responsiveness:
+ * - Mobile   (<=700px)   No columns at all
+ * - Tablets  (700~900px) Two columns Masonry
+ * - Desktop+ (>=900px)   Three columns Masonry
+ */
+@media (min-width: 700px) {
+    .event-gallery {
+        display: flex;
+        flex-flow: column wrap;
+        align-content: space-between;
+    }
+
+    @media (min-width: 900px) {
+        /* 3 columns */
+        .event-gallery {
+            /* Required. Must be only slightly taller than the tallest column */
+            height: 60rem;
+        }
+
+        .event-gallery .box {
+            width: calc(33% - 1rem);
+            margin-bottom: 1rem;
+        }
+
+        /* Reorder vertically */
+        .event-gallery .box:nth-child(3n+1) { order: 1; }
+        .event-gallery .box:nth-child(3n+2) { order: 2; }
+        .event-gallery .box:nth-child(3n)   { order: 3; }
+
+        /* 2 line breaks to force new columns, for each gap between the three columns. */
+        .event-gallery::before, .event-gallery::after {
+            content: "";
+            flex-basis: 100%;
+            width: 0;
+            order: 2;
+        }
+    }
+
+    @media (max-width: 900px) {
+        /* 2 columns */
+        .event-gallery {
+            height: 80rem;
+        }
+
+        .event-gallery .box {
+            width: calc(50% - 1rem);
+            margin-bottom: 1rem;
+        }
+
+        .event-gallery .box:nth-child(2n+1) { order: 1; }
+        .event-gallery .box:nth-child(2n)   { order: 2; }
+
+        /* 1 line break to force a new column, for the gap between the two columns. */
+        .event-gallery::before {
+            content: "";
+            flex-basis: 100%;
+            width: 0;
+            order: 1;
+        }
+    }
+}
