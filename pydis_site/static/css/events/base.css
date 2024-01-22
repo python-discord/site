@@ -54,7 +54,7 @@ pre {
         /* 3 columns */
         .event-gallery {
             /* Required. Must be only slightly taller than the tallest column */
-            height: 80rem;
+            height: 60rem;
         }
 
         .event-gallery .box {
@@ -79,7 +79,7 @@ pre {
     @media (max-width: 900px) {
         /* 2 columns */
         .event-gallery {
-            height: 90rem;
+            height: 80rem;
         }
 
         .event-gallery .box {
