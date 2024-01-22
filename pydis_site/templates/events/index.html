@@ -10,34 +10,87 @@
 <div class="columns is-variable is-8">
     <div class="column is-two-thirds">
         <p>Briefly describe events. Explain how to subscribe to updates from the <code>#roles</code> channel.</p>
-
         {% include "events/current_event.html" %}
 
-        {% include "events/upcoming_event.html" %}
-
-        <h2 class="title is-4">Scheduled events</h2>
-        <div class="columns is-3" style="--columnGap: 0.75rem;">
-            <div class="column">
-                <div class="box">
-                    <h2 class="title is-6">January-June</h2>
-                    <ul>
-                        <li>March: <a href="{% url "events:page" path="pyweek" %}">PyWeek</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="column">
-                <div class="box">
-                    <h2 class="title is-6">July-December</h2>
-                    <ul>
-                        <li>TBD: <a href="{% url "events:page" path="revivalofcode" %}">Revival of Code</a></li>
-                        <li>TBD: <a href="{% url "events:page" path="code-jams" %}">Code Jam</a></li>
-                        <li>September: <a href="{% url "events:page" path="pyweek" %}">PyWeek</a></li>
-                        <li>December 1-25: <a href="{% url "events:page" path="adventofcode" %}">Advent of Code</a></li>
-                    </ul>
-                </div>
+            <div class="box">
+                <h2 class="title is-5" style="margin-bottom: 2rem;">Scheduled events for 2024</h2>
+                <article class="media">
+                    <figure class="media-left">
+                        <p class="image is-64x64">
+                            <img class="is-rounded" src="/static/images/events/icons/pyweek.png">
+                        </p>
+                    </figure>
+                    <div class="media-content">
+                        <div class="content">
+                            <h5 class="title is-4"><a href="{% url "events:page" path="pyweek" %}">PyWeek 37</a></h5>
+                            <p class="subtitle is-6">March 17-24</p>
+                            <p>The bi-annual game-jam where you are allowed one week to write a game from scratch, either as an individual or as a team.</p>
+                        </div>
+                        <a class="button is-small is-link is-outlined" href="https://pyweek.org/">Learn more</a>
+                    </div>
+                </article>
+                <article class="media">
+                    <figure class="media-left">
+                        <p class="image is-64x64">
+                            <img class="is-rounded" src="/static/images/events/icons/adventofcode.png">
+                        </p>
+                    </figure>
+                    <div class="media-content">
+                        <div class="content">
+                            <h5 class="title is-4"><a href="{% url "events:page" path="revivalofcode" %}">Revival of Code</a></h5>
+                            <p class="subtitle is-6">TBD</p>
+                            <p>Revisit past years' Advent of Code problems! Puzzles are relased every other day and there will be dedicated solution threads for you to discuss with other participants.</p>
+                        </div>
+                        <a class="button is-small is-link is-outlined" href="{% url "events:page" path="revivalofcode" %}">Learn more</a>
+                    </div>
+                </article>
+                <article class="media">
+                    <figure class="media-left">
+                        <p class="image is-64x64">
+                            <img class="is-rounded" src="/static/images/events/icons/codejam.svg">
+                        </p>
+                    </figure>
+                    <div class="media-content">
+                        <div class="content">
+                            <h5 class="title is-4"><a href="{% url "events:page" path="codejams" %}">Code Jam</a></h5>
+                            <p class="subtitle is-6">TBD</p>
+                            <p>Our annual code-jam where we place you in a team of five and you have 11 days to code some sort of application or program in Python based on a selected technology or framework.</p>
+                        </div>
+                        <a class="button is-small is-link is-outlined" href="{% url "events:page" path="codejams" %}">Learn more</a>
+                    </div>
+                </article>
+                <article class="media">
+                    <figure class="media-left">
+                        <p class="image is-64x64">
+                            <img class="is-rounded" src="/static/images/events/icons/pyweek.png">
+                        </p>
+                    </figure>
+                    <div class="media-content">
+                        <div class="content">
+                            <h5 class="title is-4"><a href="{% url "events:page" path="pyweek" %}">PyWeek 38</a></h5>
+                            <p class="subtitle is-6">September</p>
+                            <p>The bi-annual game-jam where you are allowed one week to write a game from scratch, either as an individual or as a team.</p>
+                        </div>
+                        <a class="button is-small is-link is-outlined" href="https://pyweek.org/">Learn more</a>
+                    </div>
+                </article>
+                <article class="media">
+                    <figure class="media-left">
+                        <p class="image is-64x64">
+                            <img class="is-rounded" src="/static/images/events/icons/adventofcode.png">
+                        </p>
+                    </figure>
+                    <div class="media-content">
+                        <div class="content">
+                            <h5 class="title is-4"><a href="{% url "events:page" path="adventofcode" %}">Advent of Code</a></h5>
+                            <p class="subtitle is-6">December 1-25</p>
+                            <p>Daily programming puzzles with increasing difficulties where each puzzle has a little story and you can discuss solutions with other participants. You are allowed to use any programming language you like.</p>
+                        </div>
+                        <a class="button is-small is-link is-outlined" href="{% url "events:page" path="adventofcode" %}">Learn more</a>
+                    </div>
+                </article>
             </div>
         </div>
-    </div>
     <div class="column">
         {% include "events/sidebar/events_list.html" %}
     </div>
@@ -46,45 +99,55 @@
 
 <h2 class="title is-4">All events</h2>
 <div class="event-gallery">
-    <div class="box">
-        <div class="box-content">
+    <div class="card">
+        <div class="card-content">
             <h2 class="title is-4"><a href="{% url "events:page" path="code-jams" %}">Code Jams</a></h2>
             <p>Once a year we host a code jam for members of our server to participate in. The code jam is an event where we place you in a team with 5 other random server members. You then have 11 days to code some sort of application or program in Python. Your program must use the specified technology/framework and incorporate the theme chosen by the server.</p>
         </div>
     </div>
-    <div class="box">
-        <img src="/static/images/events/gallery/pyweek.png" alt="PyWeek logo">
-        <div class="box-content">
+    <div class="card">
+        <div class="card-image">
+            <img src="/static/images/events/gallery/pyweek.png" alt="PyWeek logo">
+        </div>
+        <div class="card-content">
             <h2 class="title is-4"><a href="{% url "events:page" path="pyweek" %}">PyWeek</a></h2>
             <p>For the past 15 years, PyWeek has been running a bi-annual game jam for the Python language. As of 2020, we are excited to say we are officially partnered with PyWeek to co-run these events.</p>
         </div>
     </div>
-    <div class="box">
-        <img src="/static/images/events/gallery/pixels.png" alt="Logo for pixels">
-        <div class="box-content">
+    <div class="card">
+        <div class="card-image">
+            <img src="/static/images/events/gallery/pixels.png" alt="Logo for pixels">
+        </div>
+        <div class="card-content">
             <h2 class="title is-4"><a href="{% url "events:page" path="pixels" %}">Pixels</a></h2>
             <p>A collaborative canvas where users paint pixel by pixel, by POSTing co-ordinates and a color code to an API.</p>
         </div>
     </div>
-    <div class="box">
-        <img src="/static/images/events/gallery/adventofcode.png" alt="Server icon for AoC">
-        <div class="box-content">
+    <div class="card">
+        <div class="card-image">
+            <img src="/static/images/events/gallery/adventofcode.png" alt="Server icon for AoC">
+        </div>
+        <div class="card-content">
             <h2 class="title is-4"><a href="{% url "events:page" path="adventofcode" %}">Advent of code</a></h2>
             <p>An advent calendar of small programming puzzles for a variety of skill sets and skill levels that can be solved in any programming language you like, including Python.</p>
         </div>
     </div>
-    <div class="box">
-        <img src="/static/images/events/gallery/adventofcode.png" alt="Server icon for AoC">
-        <div class="box-content">
+    <div class="card">
+        <div class="card-image">
+            <img src="/static/images/events/gallery/adventofcode.png" alt="Server icon for AoC">
+        </div>
+        <div class="card-content">
             <h2 class="title is-4"><a href="{% url "events:page" path="revivalofcode" %}">Revival of Code</a></h2>
             <p>
                 Revival of Code is a Python Discord hosted event where we release old Advent of Code puzzles from a previous year. The puzzles start off easy and gradually get more difficult, all while revealing a fun little story that is appropriate for some seasons more than others. Questions will be posted every other day, and you'll be able to discuss your solutions in dedicated threads.
             </p>
         </div>
     </div>
-    <div class="box">
-        <img src="/static/images/events/gallery/gamejam.png" alt="Game Jam 2020">
-        <div class="box-content">
+    <div class="card">
+        <div class="card-image">
+            <img src="/static/images/events/gallery/gamejam.png" alt="Game Jam 2020">
+        </div>
+        <div class="card-content">
             <h2 class="title is-4"><a href="{% url "events:page" path="game-jams" %}">Game Jams</a></h2>
             <p>The Game Jam is similar to our Code Jams, but smaller in scope. Instead of having to complete a qualifier
             and being teamed up with random strangers, members of our community can just sign-up individually or pair up

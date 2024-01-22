@@ -19,20 +19,8 @@ pre {
     margin-bottom: 0 !important
 }
 
-
-.event-gallery .box {
-    padding: 0;
-}
-
-.event-gallery .box-content {
-    padding: 1.25rem;
-}
-
-.event-gallery img {
-    object-fit: cover;
-    /* Same as that of box */
-    border-top-left-radius: 6px;
-    border-top-right-radius: 6px;
+.event-gallery .card {
+    border-radius: 6px;
 }
 
 /* CSS-only Masonry layout:
@@ -57,15 +45,15 @@ pre {
             height: 60rem;
         }
 
-        .event-gallery .box {
+        .event-gallery .card {
             width: calc(33% - 1rem);
             margin-bottom: 1rem;
         }
 
         /* Reorder vertically */
-        .event-gallery .box:nth-child(3n+1) { order: 1; }
-        .event-gallery .box:nth-child(3n+2) { order: 2; }
-        .event-gallery .box:nth-child(3n)   { order: 3; }
+        .event-gallery .card:nth-child(3n+1) { order: 1; }
+        .event-gallery .card:nth-child(3n+2) { order: 2; }
+        .event-gallery .card:nth-child(3n)   { order: 3; }
 
         /* 2 line breaks to force new columns, for each gap between the three columns. */
         .event-gallery::before, .event-gallery::after {
@@ -82,13 +70,13 @@ pre {
             height: 80rem;
         }
 
-        .event-gallery .box {
+        .event-gallery .card {
             width: calc(50% - 1rem);
             margin-bottom: 1rem;
         }
 
-        .event-gallery .box:nth-child(2n+1) { order: 1; }
-        .event-gallery .box:nth-child(2n)   { order: 2; }
+        .event-gallery .card:nth-child(2n+1) { order: 1; }
+        .event-gallery .card:nth-child(2n)   { order: 2; }
 
         /* 1 line break to force a new column, for the gap between the two columns. */
         .event-gallery::before {
