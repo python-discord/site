@@ -19,9 +19,20 @@ pre {
     margin-bottom: 0 !important
 }
 
+
+.event-gallery .box {
+    padding: 0;
+}
+
+.event-gallery .box-content {
+    padding: 1.25rem;
+}
+
 .event-gallery img {
-    border-radius: 10px;
-    max-width: 50%;
+    object-fit: cover;
+    /* Same as that of box */
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
 }
 
 /* CSS-only Masonry layout:
@@ -43,7 +54,7 @@ pre {
         /* 3 columns */
         .event-gallery {
             /* Required. Must be only slightly taller than the tallest column */
-            height: 60rem;
+            height: 80rem;
         }
 
         .event-gallery .box {
@@ -68,7 +79,7 @@ pre {
     @media (max-width: 900px) {
         /* 2 columns */
         .event-gallery {
-            height: 80rem;
+            height: 90rem;
         }
 
         .event-gallery .box {
