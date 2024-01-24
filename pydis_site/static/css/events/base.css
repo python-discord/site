@@ -21,6 +21,24 @@ pre {
 
 .event-gallery .card {
     border-radius: 6px;
+    margin-bottom: 1.5rem;
+}
+
+.event-gallery .card img {
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+}
+
+@media (min-width: 700px) {
+    .scheduled-events .media-left {
+        margin-left: 2rem;
+        margin-right: 2rem;
+    }
+
+    .previous-events .media-left {
+        margin-left: 1rem;
+        margin-right: 1rem;
+    }
 }
 
 /* CSS-only Masonry layout:
@@ -42,12 +60,11 @@ pre {
         /* 3 columns */
         .event-gallery {
             /* Required. Must be only slightly taller than the tallest column */
-            height: 60rem;
+            height: 70rem;
         }
 
         .event-gallery .card {
             width: calc(33% - 1rem);
-            margin-bottom: 1rem;
         }
 
         /* Reorder vertically */
@@ -67,12 +84,11 @@ pre {
     @media (max-width: 900px) {
         /* 2 columns */
         .event-gallery {
-            height: 80rem;
+            height: 90rem;
         }
 
         .event-gallery .card {
             width: calc(50% - 1rem);
-            margin-bottom: 1rem;
         }
 
         .event-gallery .card:nth-child(2n+1) { order: 1; }

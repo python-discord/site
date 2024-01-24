@@ -12,29 +12,29 @@
         <p>Briefly describe events. Explain how to subscribe to updates from the <code>#roles</code> channel.</p>
         {% include "events/current_event.html" %}
 
-            <div class="box">
+            <div class="box scheduled-events">
                 <h2 class="title is-5" style="margin-bottom: 2rem;">Scheduled events for 2024</h2>
                 <article class="media">
-                    <figure class="media-left">
+                    <div class="media-left">
                         <p class="image is-64x64">
-                            <img class="is-rounded" src="/static/images/events/icons/pyweek.png">
+                            <a href="https://pyweek.org/37/"><img class="is-rounded" src="/static/images/events/icons/pyweek.png"></a>
                         </p>
-                    </figure>
+                    </div>
                     <div class="media-content">
                         <div class="content">
-                            <h5 class="title is-4"><a href="{% url "events:page" path="pyweek" %}">PyWeek 37</a></h5>
+                            <h5 class="title is-4"><a href="https://pyweek.org/37/">PyWeek 37</a></h5>
                             <p class="subtitle is-6">March 17-24</p>
                             <p>The bi-annual game-jam where you are allowed one week to write a game from scratch, either as an individual or as a team.</p>
                         </div>
-                        <a class="button is-small is-link is-outlined" href="https://pyweek.org/">Learn more</a>
+                        <a class="button is-small is-link is-outlined" href="https://pyweek.org/37/">Learn more</a>
                     </div>
                 </article>
                 <article class="media">
-                    <figure class="media-left">
+                    <div class="media-left">
                         <p class="image is-64x64">
-                            <img class="is-rounded" src="/static/images/events/icons/adventofcode.png">
+                            <a href="{% url "events:page" path="revivalofcode" %}"><img class="is-rounded" src="/static/images/events/icons/adventofcode.png"></a>
                         </p>
-                    </figure>
+                    </div>
                     <div class="media-content">
                         <div class="content">
                             <h5 class="title is-4"><a href="{% url "events:page" path="revivalofcode" %}">Revival of Code</a></h5>
@@ -45,26 +45,26 @@
                     </div>
                 </article>
                 <article class="media">
-                    <figure class="media-left">
+                    <div class="media-left">
                         <p class="image is-64x64">
-                            <img class="is-rounded" src="/static/images/events/icons/codejam.svg">
+                            <a href="{% url "events:page" path="code-jams" %}"><img class="is-rounded" src="/static/images/events/icons/codejam.svg"></a>
                         </p>
-                    </figure>
+                    </div>
                     <div class="media-content">
                         <div class="content">
-                            <h5 class="title is-4"><a href="{% url "events:page" path="codejams" %}">Code Jam</a></h5>
+                            <h5 class="title is-4"><a href="{% url "events:page" path="code-jams" %}">Code Jam</a></h5>
                             <p class="subtitle is-6">TBD</p>
                             <p>Our annual code-jam where we place you in a team of five and you have 11 days to code some sort of application or program in Python based on a selected technology or framework.</p>
                         </div>
-                        <a class="button is-small is-link is-outlined" href="{% url "events:page" path="codejams" %}">Learn more</a>
+                        <a class="button is-small is-link is-outlined" href="{% url "events:page" path="code-jams" %}">Learn more</a>
                     </div>
                 </article>
                 <article class="media">
-                    <figure class="media-left">
+                    <div class="media-left">
                         <p class="image is-64x64">
-                            <img class="is-rounded" src="/static/images/events/icons/pyweek.png">
+                            <a href="{% url "events:page" path="pyweek" %}"><img class="is-rounded" src="/static/images/events/icons/pyweek.png"></a>
                         </p>
-                    </figure>
+                    </div>
                     <div class="media-content">
                         <div class="content">
                             <h5 class="title is-4"><a href="{% url "events:page" path="pyweek" %}">PyWeek 38</a></h5>
@@ -75,11 +75,11 @@
                     </div>
                 </article>
                 <article class="media">
-                    <figure class="media-left">
+                    <div class="media-left">
                         <p class="image is-64x64">
-                            <img class="is-rounded" src="/static/images/events/icons/adventofcode.png">
+                            <a href="{% url "events:page" path="adventofcode" %}"><img class="is-rounded" src="/static/images/events/icons/adventofcode.png"></a>
                         </p>
-                    </figure>
+                    </div>
                     <div class="media-content">
                         <div class="content">
                             <h5 class="title is-4"><a href="{% url "events:page" path="adventofcode" %}">Advent of Code</a></h5>
