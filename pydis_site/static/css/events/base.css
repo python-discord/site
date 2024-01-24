@@ -19,6 +19,10 @@ pre {
     margin-bottom: 0 !important
 }
 
+.event-gallery .tags {
+    margin-top: -.75rem;
+}
+
 .event-gallery .card {
     border-radius: 6px;
     margin-bottom: 1.5rem;
@@ -58,9 +62,13 @@ pre {
 
     @media (min-width: 900px) {
         /* 3 columns */
-        .event-gallery {
+        #main-events {
             /* Required. Must be only slightly taller than the tallest column */
-            height: 70rem;
+            height: 65rem;
+        }
+
+        #other-events {
+            height: 30rem;
         }
 
         .event-gallery .card {
@@ -83,8 +91,12 @@ pre {
 
     @media (max-width: 900px) {
         /* 2 columns */
-        .event-gallery {
+        #main-events {
             height: 90rem;
+        }
+
+        #other-events {
+            height: 30rem;
         }
 
         .event-gallery .card {

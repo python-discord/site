@@ -96,63 +96,9 @@
     </div>
 </div>
 
-
-<h2 class="title is-4">All events</h2>
-<div class="event-gallery">
-    <div class="card">
-        <div class="card-content">
-            <h2 class="title is-4"><a href="{% url "events:page" path="code-jams" %}">Code Jams</a></h2>
-            <p>Once a year we host a code jam for members of our server to participate in. The code jam is an event where we place you in a team with 5 other random server members. You then have 11 days to code some sort of application or program in Python. Your program must use the specified technology/framework and incorporate the theme chosen by the server.</p>
-        </div>
-    </div>
-    <div class="card">
-        <div class="card-image">
-            <img src="/static/images/events/gallery/pyweek.png" alt="PyWeek logo">
-        </div>
-        <div class="card-content">
-            <h2 class="title is-4"><a href="{% url "events:page" path="pyweek" %}">PyWeek</a></h2>
-            <p>For the past 15 years, PyWeek has been running a bi-annual game jam for the Python language. As of 2020, we are excited to say we are officially partnered with PyWeek to co-run these events.</p>
-        </div>
-    </div>
-    <div class="card">
-        <div class="card-image">
-            <img src="/static/images/events/gallery/pixels.png" alt="Logo for pixels">
-        </div>
-        <div class="card-content">
-            <h2 class="title is-4"><a href="{% url "events:page" path="pixels" %}">Pixels</a></h2>
-            <p>A collaborative canvas where users paint pixel by pixel, by POSTing co-ordinates and a color code to an API.</p>
-        </div>
-    </div>
-    <div class="card">
-        <div class="card-image">
-            <img src="/static/images/events/gallery/adventofcode.png" alt="Server icon for AoC">
-        </div>
-        <div class="card-content">
-            <h2 class="title is-4"><a href="{% url "events:page" path="adventofcode" %}">Advent of code</a></h2>
-            <p>An advent calendar of small programming puzzles for a variety of skill sets and skill levels that can be solved in any programming language you like, including Python.</p>
-        </div>
-    </div>
-    <div class="card">
-        <div class="card-image">
-            <img src="/static/images/events/gallery/adventofcode.png" alt="Server icon for AoC">
-        </div>
-        <div class="card-content">
-            <h2 class="title is-4"><a href="{% url "events:page" path="revivalofcode" %}">Revival of Code</a></h2>
-            <p>
-                Revival of Code is a Python Discord hosted event where we release old Advent of Code puzzles from a previous year. The puzzles start off easy and gradually get more difficult, all while revealing a fun little story that is appropriate for some seasons more than others. Questions will be posted every other day, and you'll be able to discuss your solutions in dedicated threads.
-            </p>
-        </div>
-    </div>
-    <div class="card">
-        <div class="card-image">
-            <img src="/static/images/events/gallery/gamejam.png" alt="Game Jam 2020">
-        </div>
-        <div class="card-content">
-            <h2 class="title is-4"><a href="{% url "events:page" path="game-jams" %}">Game Jams</a></h2>
-            <p>The Game Jam is similar to our Code Jams, but smaller in scope. Instead of having to complete a qualifier
-            and being teamed up with random strangers, members of our community can just sign-up individually or pair up
-            with whoever they like.</p>
-        </div>
-    </div>
-</div>
+<br>
+<hr/>
+{% include "events/main_events.html" %}
+<hr/>
+{% include "events/other_events.html" %}
 {% endblock %}

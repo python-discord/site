@@ -1,0 +1,61 @@
+{% load static %}
+
+<div class="has-text-centered">
+    <h2 class="title is-4">Workshops & other events</h2>
+</div>
+<br>
+<div class="event-gallery" id="other-events">
+    <div class="card">
+        <div class="card-image">
+            <img src="/static/images/events/gallery/gamejam.png" alt="Game Jam 2020">
+        </div>
+        <div class="card-content">
+            <h2 class="title is-4"><a href="{% url "events:page" path="game-jams" %}">Game Jams</a></h2>
+            <div class="tags">
+                <span class="tag">
+                    <span class="icon-text">
+                        <span class="icon"><i class="fa-regular fa-calendar"></i></span>
+                        <span>April 2020</span>
+                    </span>
+                </span>
+            </div>
+            <p>The Game Jam is similar to our Code Jams, but smaller in scope. Instead of having to complete a qualifier
+            and being teamed up with random strangers, members of our community can just sign-up individually or pair up
+            with whoever they like.</p>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-image">
+            <img src="/static/images/events/gallery/trivia.png" alt="Game Jam 2020">
+        </div>
+        <div class="card-content">
+            <h2 class="title is-4"><a href="{% url "events:page" path="replace" %}">[add-link] Trivia Night</a></h2>
+            <div class="tags">
+                <span class="tag">
+                    <span class="icon-text">
+                        <span class="icon"><i class="fa-regular fa-calendar"></i></span>
+                        <span>Feb. 12, 2022</span>
+                    </span>
+                </span>
+            </div>
+            <p>How well do you know Python inside out? Members got to find out in a Trivia Night event. Contestants were given questions about Python's internals, its development, and more. To win, contestants had to get the most questions right while being fast to answer. </p>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-image">
+            <img src="/static/images/events/gallery/devops_hour.png" alt="DevOps Hour">
+        </div>
+        <div class="card-content">
+            <h2 class="title is-4"><a href="{% url "events:page" path="replace" %}">[add-link] DevOps Hour with Joe Banks</a></h2>
+            <div class="tags">
+                <span class="tag">
+                    <span class="icon-text">
+                        <span class="icon"><i class="fa-regular fa-calendar"></i></span>
+                        <span>Jul. 26, 2022</span>
+                    </span>
+                </span>
+            </div>
+            <p>On 26 July 2022 one of Python Discord’s owners, Joe Banks, sat down and gave an hour long talk about DevOps in Python Discord and how <em>you</em> can get started with DevOps.</p>
+        </div>
+    </div>
+</div>
