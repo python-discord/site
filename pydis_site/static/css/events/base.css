@@ -19,8 +19,8 @@ pre {
     margin-bottom: 0 !important
 }
 
-.event-gallery .tags {
-    margin-top: -.75rem;
+.event-gallery .date-icon {
+    margin-left: -.25rem;
 }
 
 .event-gallery .card {
@@ -68,7 +68,7 @@ pre {
         }
 
         #other-events {
-            height: 30rem;
+            height: 75rem;
         }
 
         .event-gallery .card {
@@ -96,7 +96,7 @@ pre {
         }
 
         #other-events {
-            height: 30rem;
+            height: 100rem;
         }
 
         .event-gallery .card {
