@@ -27,7 +27,7 @@ whitenoise = "6.6.0"
 psycopg = {extras = ["binary"], version = "3.1.17"}
 
 [tool.poetry.group.dev.dependencies]
-python-dotenv = "1.0.0"
+python-dotenv = "1.0.1"
 taskipy = "1.12.2"
 ruff = "0.1.14"
 
