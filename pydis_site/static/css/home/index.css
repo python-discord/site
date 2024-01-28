@@ -23,6 +23,10 @@ h1 {
     padding: 0;
 }
 
+[data-theme="dark"] #wave-hero {
+    background-color: #3B4774;
+}
+
 #wave-hero .container {
     z-index: 4;  /* keep hero contents above wave animations */
 }
@@ -57,6 +61,16 @@ h1 {
     transition: all 0.3s cubic-bezier(.25,.8,.25,1);
 }
 
+[data-theme="dark"] #wave-hero-right img {
+    -webkit-filter: brightness(0.9);
+    filter: brightness(0.9);
+}
+
+[data-theme="dark"] #wave-hero-right img:hover {
+    -webkit-filter: none;
+    filter: none;
+}
+
 #wave-hero-right img:hover {
     box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 }
@@ -72,11 +86,22 @@ h1 {
     transform: translate3d(0,0,0);  /* Trigger 3D acceleration for smoother animation */
 }
 
+[data-theme="dark"] #wave-hero .wave {
+    background: url(../../images/waves_dark/wave_dark.svg) repeat-x;
+}
+
 #front-wave {
     animation-duration: 60s;
     animation-delay: -50s;
-    opacity: 0.5;
     height: 178px;
+}
+
+[data-theme="light"] #front-wave {
+    opacity: 0.5;
+}
+
+[data-theme="dark"] #wave-hero #front-wave {
+    background: url(../../images/waves_dark/wave_darker.svg) repeat-x;
 }
 
 #back-wave {
@@ -93,7 +118,7 @@ h1 {
 }
 
 [data-theme="dark"] #bottom-wave {
-    background: url(../../images/waves/wave_black.svg) repeat-x !important;
+    background: url(../../images/waves_dark/wave_black.svg) repeat-x !important;
 }
 
 @keyframes wave {

@@ -328,6 +328,8 @@ BULMA_SETTINGS = {
         "info-dark": "#EFF5FB",       # Bulma's info-light
         "info-light": "#254056",
 
+        "body-background-color": "#252629",
+
         "white": "#2C2F33",
         "white-bis": "#23272A ",
         "white-ter": "#36393F",
@@ -337,6 +339,8 @@ BULMA_SETTINGS = {
         "black-bis": "#F2F2F2",
         "black-ter": "#E6E6E6",
         "dark": "$black",
+
+        "grey-darker": "#303032",
 
         "text": "#F4F4F4",
         "text-light": "#F7F7F7",

@@ -8,10 +8,10 @@
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="1600"
-   height="28.745832"
+   height="198"
    version="1.1"
    id="svg11"
-   sodipodi:docname="wavew.svg"
+   sodipodi:docname="wave.svg"
    inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)">
   <metadata
      id="metadata15">
@@ -21,7 +21,6 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -39,24 +38,20 @@
      id="namedview13"
      showgrid="false"
      inkscape:zoom="1.44625"
-     inkscape:cx="884.40031"
-     inkscape:cy="-61.865141"
+     inkscape:cx="757.49384"
+     inkscape:cy="107.38903"
      inkscape:window-x="4880"
      inkscape:window-y="677"
      inkscape:window-maximized="1"
-     inkscape:current-layer="svg11"
-     fit-margin-top="0"
-     fit-margin-left="0"
-     fit-margin-right="0"
-     fit-margin-bottom="0" />
+     inkscape:current-layer="svg11" />
   <defs
      id="defs7">
     <linearGradient
        id="a"
-       x1="0.5"
-       x2="0.5"
-       y1="-0.10958999"
-       y2="1">
+       x1="50%"
+       x2="50%"
+       y1="-10.959%"
+       y2="100%">
       <stop
          stop-color="#57BBC1"
          stop-opacity=".25"
@@ -71,7 +66,8 @@
   <path
      fill="url(#a)"
      fill-rule="evenodd"
-     d="M 1599.995,17.566918 C 1289,17.566918 1190.102,-0.03623696 789,5.6042811e-5 389,5.6042811e-5 289,17.566918 0,17.566918 v 11.178914 h 1600 c 0,0 -0.01,-6.968673 -0.01,-11.178914 z"
+     d="M.005 121C311 121 409.898-.25 811 0c400 0 500 121 789 121v77H0s.005-48 .005-77z"
+     transform="matrix(-1 0 0 1 1600 0)"
      id="path9"
-     style="fill:#2C2F33;fill-opacity:1;stroke-width:0.381026" />
+     style="fill:#455289;fill-opacity:1" />
 </svg>
