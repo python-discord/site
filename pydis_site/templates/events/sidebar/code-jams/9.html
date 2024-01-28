@@ -9,13 +9,22 @@
 <div class="box">
     <img src="{% static "images/events/summer_code_jam_2022/site_banner.png" %}" alt="Summer Code Jam 2022">
     <h4 class="menu-label">Our Sponsors</h4>
-    <a href="https://www.digitalocean.com/" target="_blank">
-        <img src="{% static "images/events/DO_Logo_Vertical_Blue.png" %}" alt="Digital Ocean">
-    </a>
-    <a href="https://jetbrains.com" target="_blank">
-        <img src="{% static "images/sponsors/jetbrains.png" %}" alt="JetBrains">
-    </a>
-    <a href="https://replit.com/" target="_blank">
-        <img src="{% static "images/events/Replit.png" %}" alt="Replit">
-    </a>
+    <div class="sponsor">
+        <a href="https://www.digitalocean.com/" target="_blank">
+            <img class="light-image" src="{% static "images/events/logos/DO_Logo_Vertical_Blue.png" %}" alt="Digital Ocean">
+            <img class="dark-image" src="{% static "images/events/logos_dark/DO_Logo_Vertical_White.png" %}" alt="Digital Ocean">
+        </a>
+    </div>
+    <div class="sponsor">
+        <a href="https://jetbrains.com" target="_blank">
+            <img class="light-image" src="{% static "images/sponsors/jetbrains.png" %}" alt="JetBrains">
+            <img class="dark-image" src="{% static "images/sponsors_dark/jetbrains.png" %}" alt="JetBrains">
+        </a>
+    </div>
+    <div class="sponsor">
+        <a href="https://replit.com/" target="_blank">
+            <img class="light-image" src="{% static "images/events/logos/Replit.png" %}" alt="Replit">
+            <img class="dark-image" src="{% static "images/events/logos_dark/Replit.png" %}" alt="Replit">
+        </a>
+    </div>
 </div>

@@ -85,7 +85,6 @@ Pages, which include guides, articles, and other static content,...
 - **toc:** A number representing the smallest heading tag to show in the table of contents.
     See: [Table of Contents](#table-of-contents)
 
-
 ## Working with dark mode
 
 If your article includes images, you can apply a few classes for a better experience for readers using dark mode.
@@ -108,6 +107,8 @@ If you can provide two images, suited for each of the light and dark modes speci
 ```
 
 This way, when the reader is in light mode, only `image_light.png` is shown, and when the reader is in dark mode, only `image_dark.png` is shown.
+
+All images with `light-image` class are hidden in dark mode and all images with `dark-image` class are hidden in light mode.
 
 ## Extended Markdown
 

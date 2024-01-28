@@ -6,10 +6,10 @@ title_url: https://python.swaroopch.com/
 urls:
 - icon: regular/book
   url: https://www.lulu.com/shop/swaroop-c-h/a-byte-of-python/paperback/product-21142968.html
-  color: black
+  color: dark
 - icon: branding/goodreads
   url: https://www.goodreads.com/book/show/6762544-a-byte-of-python
-  color: black
+  color: dark
 tags:
   topics:
     - general

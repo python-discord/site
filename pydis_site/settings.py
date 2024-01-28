@@ -299,8 +299,8 @@ LOGGING = {
 
 # Custom settings for django-simple-bulma
 BULMA_SETTINGS = {
-    "variables": {  # If you update these colours, please update the notification.css file
-        "primary": "#7289DA",    # Discord blurple
+    "variables": {
+        "primary": "#7289DA",    # PyDis blurple
         "green": "#32ac66",      # Colour picked after Discord discussion
         "turquoise": "#7289DA",  # Blurple, because Bulma uses this regardless of `primary` above
         "blue": "#2482c1",       # Colour picked after Discord discussion
@@ -311,6 +311,56 @@ BULMA_SETTINGS = {
         "link": "$primary",
 
         "dimensions": "16 24 32 48 64 96 128 256 512",  # Possible image dimensions
+        "navbar-height": "4.75rem",
+        "footer-padding": "1rem 1.5rem 1rem",
+        "tooltip-max-width": "30rem",
+    },
+    "dark_variables": {
+        "primary": "#5365A4",         # A darker PyDis blurple
+        "warning": "#4B4636",
+        "warning-invert": "#FFFFFF",
+        "primary-dark": "#EFF1FB",    # Bulma's primary-light
+        "primary-light": "#2B3660",
+        "success-dark": "#EFFAF5",    # Bulma's success-light
+        "success-light": "#214133",
+        "danger-dark": "#FEECF0",     # Bulma's danger-light
+        "danger-light": "#4C1822",
+        "info-dark": "#EFF5FB",       # Bulma's info-light
+        "info-light": "#254056",
+
+        "body-background-color": "#252629",
+
+        "white": "#2C2F33",
+        "white-bis": "#23272A ",
+        "white-ter": "#36393F",
+        "light": "$white",
+
+        "black": "#F7F7F7",
+        "black-bis": "#F2F2F2",
+        "black-ter": "#E6E6E6",
+        "dark": "$black",
+
+        "grey-darker": "#303032",
+
+        "text": "#F4F4F4",
+        "text-light": "#F7F7F7",
+        "text-strong": "#FEFEFE",
+
+        "link": "#99B0FF",            # A brighter PyDis blurple
+        "link-hover": "#FFFFFF",
+        "link-focus": "$link-hover",
+        "link-active": "$link-hover",
+
+        "code": "#FF7990",            # Adjusted to 4.5 contrast ratio per WCAG Level AA
+        "code-background": "#464951", # A graduation lighter than the default for light theme
+
+        # Same as bulma, adjusted for dark mode
+        "shadow": "0 0.5em 1em -0.125em rgba(0, 0, 0, 0.3), 0 0px 0 1px rgba(0, 0, 0, 0.13)",
+        "border": "#4E4F51",
+        "border-light": "#313233",
+
+        # Use the same sizes
+        "dimensions": "16 24 32 48 64 96 128 256 512",
         "navbar-height": "4.75rem",
         "footer-padding": "1rem 1.5rem 1rem",
         "tooltip-max-width": "30rem",

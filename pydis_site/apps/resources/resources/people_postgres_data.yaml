@@ -5,6 +5,7 @@ description: People, Postgres, Data specializes in building users of Postgres
   They take a holistic approach to their community inviting not only technical topics but Professional Development
   and Life in general including movies, games, books and travel.
 title_image: https://media.discordapp.net/attachments/748954447857844318/750519488268730377/people_postgres_data.png
+title_image_dark: /static/images/resources_dark/people_postgres_data.png
 title_url: https://postgresconf.org/
 urls:
   - icon: branding/discord
