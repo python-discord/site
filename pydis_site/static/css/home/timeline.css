@@ -3496,6 +3496,10 @@ mark {
     box-shadow: 0 0 0 4px var(--color-white), inset 0 2px 0 rgba(0, 0, 0, 0.08), 0 3px 0 4px rgba(0, 0, 0, 0.05)
 }
 
+[data-theme="dark"] .cd-timeline__img {
+    box-shadow: 0 0 0 4px var(--cd-color-2), inset 0 2px 0 rgba(0, 0, 0, 0.08), 0 3px 0 4px rgba(0, 0, 0, 0.05)
+}
+
 .cd-timeline__img i {
     font-size: 1.5em;
     color: white;
