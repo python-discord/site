@@ -5,10 +5,10 @@ title_url: http://shop.oreilly.com/product/0636920031116.do
 urls:
 - icon: branding/goodreads
   url: https://www.goodreads.com/book/show/18774655-flask-web-development
-  color: black
+  color: dark
 - icon: branding/github
   url: https://github.com/miguelgrinberg/flasky
-  color: black
+  color: dark
 tags:
   topics:
     - web development

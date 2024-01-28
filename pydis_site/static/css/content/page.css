@@ -27,6 +27,14 @@ i.has-icon-padding {
     flex-direction: column;
 }
 
+[data-theme="dark"] .card-footer {
+    border-top: solid 1px #4E4F51;
+}
+
+[data-theme="dark"] .card-footer-item:not(:last-child) {
+    border-right: solid 1px #4E4F51;
+}
+
 .card.github-card .card-content {
     flex: 1;
 }
@@ -109,4 +117,18 @@ li img {
 a.dropdown-item {
     white-space: normal;
     padding-right: 0;
+}
+
+[data-theme="dark"] .card.github-card {
+    border: solid 1px #4E4F51;
+}
+
+[data-theme="dark"] hr {
+    background-color: #4c515a;
+}
+
+[data-theme="dark"] .has-dark-mode-background {
+    background-color: #EDEDED;
+    border-radius: .1rem;
+    padding: .3rem;
 }

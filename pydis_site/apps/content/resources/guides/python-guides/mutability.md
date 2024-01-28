@@ -30,11 +30,11 @@ It just returns a new one.
 Let's examine what's going on here.
 At first, the variable `s` refers to some object, the string `'hello'`.
 
-![s refers to the string "hello"](/static/images/content/mutability/s_refers_hello.png)
+![s refers to the string "hello"](/static/images/content/mutability/s_refers_hello.png){: class="has-dark-mode-background" }
 
 When you call `s.upper()`, a new string, which contains the characters `'HELLO'`, gets created.
 
-![s.upper creates "HELLO"](/static/images/content/mutability/s_upper_creates_HELLO.png)
+![s.upper creates "HELLO"](/static/images/content/mutability/s_upper_creates_HELLO.png){: class="has-dark-mode-background" }
 
 This happens even if you just call `s.upper()` without any assignment, on its own line:
 ```python
@@ -44,12 +44,12 @@ In this case, a new object will be created and discarded right away.
 
 Then the assignment part comes in: the name `s` gets disconnected from `'hello'`, and gets connected to `'HELLO'`.
 
-![s gets assigned to "HELLO"](/static/images/content/mutability/s_gets_assigned_to_HELLO.png)
+![s gets assigned to "HELLO"](/static/images/content/mutability/s_gets_assigned_to_HELLO.png){: class="has-dark-mode-background" }
 
 Now we can say that `'HELLO'` is stored in the `s` variable.
 
 Then, because no variables refer to the _object_ `'hello'`, it gets eaten by the garbage collector.
 
-!["hello" Gets Eaten](/static/images/content/mutability/hello_gets_eaten.png)
+!["hello" Gets Eaten](/static/images/content/mutability/hello_gets_eaten.png){: class="has-dark-mode-background" }
 
 It means that the memory reserved for that object will be freed. If that didn't happen, the 'garbage' would accumulate over time and fill up all the RAM.

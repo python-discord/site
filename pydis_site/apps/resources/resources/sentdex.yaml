@@ -10,6 +10,7 @@ description: 'An enormous amount of Python content for all skill levels
   Check out his channel for more video series!
   '
 title_image: https://i.imgur.com/kJgWZIu.png
+title_image_dark: /static/images/resources_dark/sentdex.png
 title_url: https://www.youtube.com/user/sentdex
 urls:
   - icon: solid/external-link-alt

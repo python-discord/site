@@ -5,10 +5,10 @@ title_url: https://effectivepython.com/
 urls:
 - icon: branding/goodreads
   url: https://www.goodreads.com/book/show/48566725-effective-python
-  color: black
+  color: dark
 - icon: branding/github
   url: https://github.com/bslatkin/effectivepython
-  color: black
+  color: dark
 tags:
   topics:
     - general

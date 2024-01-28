@@ -1,11 +1,15 @@
 .collapsible {
-  cursor: pointer;
-  width: 100%;
-  border: none;
-  outline: none;
+    cursor: pointer;
+    width: 100%;
+    border: none;
+    outline: none;
+}
+
+[data-theme="dark"] .collapsible {
+    background-color: #34353A;
 }
 
 .collapsible-content {
-  transition: max-height 0.3s ease-out;
-  overflow: hidden;
+    transition: max-height 0.3s ease-out;
+    overflow: hidden;
 }
