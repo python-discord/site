@@ -2,6 +2,7 @@ name: Panda3D
 description: Panda3D is a Python-focused 3-D framework for rapid development of games,
   visualizations, and simulations, written in C++ with an emphasis on performance and flexibility.
 title_image: /static/images/resources/panda3d.png
+title_image_dark: /static/images/resources_dark/panda3d.png
 title_url: https://www.panda3d.org/
 position: 9
 urls:

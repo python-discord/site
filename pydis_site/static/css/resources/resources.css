@@ -37,7 +37,7 @@ i.has-icon-padding {
     display: none;
 }
 #tab-content p.is-active {
-display: block;
+    display: block;
 }
 
 /* Disable highlighting for all text in the filters. */

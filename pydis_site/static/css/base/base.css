@@ -194,3 +194,11 @@ button.is-size-navbar-menu, a.is-size-navbar-menu {
 [data-theme="dark"] .button.is-link:hover, .button.is-link.is-hovered {
     background-color: #6276BC;
 }
+
+[data-theme="dark"] .light-image {
+    display: none;
+}
+
+[data-theme="light"] .dark-image {
+    display: none;
+}

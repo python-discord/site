@@ -266,10 +266,6 @@ h1 {
     text-align: center;
 }
 
-[data-theme="dark"] #sponsors {
-    background-color: #2C2F33 !important;
-}
-
 #sponsors .container {
     max-width: 70%;
 }
@@ -282,10 +278,6 @@ h1 {
 
 #sponsors img {
     max-height: 4rem;
-}
-
-[data-theme="dark"] #sponsors a {
-    background-color: #EDEDED;
 }
 
 @media (min-width: 800px) {

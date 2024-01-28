@@ -5,6 +5,7 @@ description: Adafruit is an open-source electronics manufacturer
   provide help with your projects,
   and the Adafruit devs do all the CircuitPython Development right out in the open.
 title_image: /static/images/resources/adafruit.png
+title_image_dark: /static/images/resources_dark/adafruit.png
 title_url: https://adafruit.com/
 urls:
   - icon: branding/discord

@@ -32,7 +32,3 @@ pre {
 .box .sponsor {
     margin-bottom: 1rem;
 }
-
-[data-theme="dark"] .sponsor {
-    background-color: #EDEDED;
-}
