@@ -186,10 +186,6 @@ button.is-size-navbar-menu, a.is-size-navbar-menu {
     }
 }
 
-[data-theme="dark"] .button.is-primary, .button.is-link {
-    background-color: #5365A4;
-}
-
 [data-theme="dark"] .button.is-primary:hover, .button.is-primary.is-hovered,
 [data-theme="dark"] .button.is-link:hover, .button.is-link.is-hovered {
     background-color: #6276BC;

@@ -316,7 +316,7 @@ BULMA_SETTINGS = {
         "tooltip-max-width": "30rem",
     },
     "dark_variables": {
-        "primary": "#7289DA",         # PyDis blurple
+        "primary": "#5365A4",         # A darker PyDis blurple
         "warning": "#4B4636",
         "warning-invert": "#FFFFFF",
         "primary-dark": "#EFF1FB",    # Bulma's primary-light
