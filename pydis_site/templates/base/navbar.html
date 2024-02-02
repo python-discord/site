@@ -1,5 +1,11 @@
 {% load static %}
 
+{% block head %}
+  <link rel="stylesheet" href="{% static "css/base/themes.css" %}">
+  <link href="https://css.gg/css?=|moon|sun" rel="stylesheet">
+  <script src="{% static "js/base/themes.js" %}"></script>
+{% endblock %}
+
 <nav class="navbar is-primary" role="navigation" aria-label="main navigation">
   <div class="navbar-brand">
 
@@ -39,7 +45,7 @@
 
       {# YouTube #}
       <a class="navbar-item" href="https://youtube.com/pythondiscord">
-        <span class="icon is-size-4 is-medium"><i class="fab fa-youtube"></i></span>
+        <span class="icon is-size-4 is-medium is-dark"><i class="fab fa-youtube"></i></span>
         <span>&nbsp;YouTube</span>
       </a>
 
@@ -97,12 +103,22 @@
         </div>
       </div>
 
-      {# Desktop Nav Discord  #}
-      <div id="discord-btn" class="buttons is-hidden-touch">
+      {# Theme toggle #}
+      <div class="navbar-item">
+        <div id="theme-switch" class="switch dark">
+          <div class="switch-outer"></div>
+          <div class="switch-inner"></div>
+          <i class="theme-icon light gg-sun"></i>
+          <div id="theme-knob" class="knob dark"></div>
+          <i class="theme-icon dark gg-moon"></i>
+        </div>
+      </div>
+
+      {# Desktop Nav Discord #}
+      <div id="discord-btn" class="buttons is-hidden-touch is-white">
         <a href="https://discord.gg/python" class="button is-large is-primary">Discord</a>
       </div>
 
     </div>
-
   </div>
 </nav>

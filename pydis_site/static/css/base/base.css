@@ -23,6 +23,20 @@ main.site-content {
     padding-right: 0.8em;
 }
 
+[data-theme="dark"] .navbar.is-primary {
+    background-color: #3B4774;
+}
+
+/* No good way other than this for now, because the item hover background setting
+ * applies only for a navbar without is-primary.
+ */
+@media screen and (min-width: 1024px) {
+    [data-theme="dark"] .navbar.is-primary .navbar-end > a.navbar-item:hover,
+    [data-theme="dark"] .navbar.is-primary .navbar-item.has-dropdown:hover .navbar-link {
+        background-color: #455382;
+    }
+}
+
 .navbar-item .navbar-link {
     padding-left: 1.5em;
     padding-right: 2.5em;
@@ -56,6 +70,10 @@ main.site-content {
     background-color: #697ec4ff;
     transition: all 0.2s cubic-bezier(.25,.8,.25,1);
     overflow: hidden;
+}
+
+[data-theme="dark"] #discord-btn a {
+    background-color: #58689cff;
 }
 
 #discord-btn:hover a {
@@ -166,4 +184,17 @@ button.is-size-navbar-menu, a.is-size-navbar-menu {
     html {
         scroll-behavior: auto;
     }
+}
+
+[data-theme="dark"] .button.is-primary:hover, .button.is-primary.is-hovered,
+[data-theme="dark"] .button.is-link:hover, .button.is-link.is-hovered {
+    background-color: #6276BC;
+}
+
+[data-theme="dark"] .light-image {
+    display: none;
+}
+
+[data-theme="light"] .dark-image {
+    display: none;
 }

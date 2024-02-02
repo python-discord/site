@@ -10,6 +10,7 @@ description: 'Corey has a number of exceptionally high quality tutorial series
   Check out his channel for more video series!
   '
 title_image: https://i.imgur.com/KIfWw3b.png
+title_image_dark: /static/images/resources_dark/coreyschafer.png
 title_url: https://www.youtube.com/channel/UCCezIgC97PvUuR4_gbFUs5g
 urls:
   - icon: solid/external-link-alt

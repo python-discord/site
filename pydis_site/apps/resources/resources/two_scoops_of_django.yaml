@@ -5,10 +5,10 @@ title_url: https://www.feldroy.com/books/two-scoops-of-django-3-x
 urls:
 - icon: branding/goodreads
   url: https://www.goodreads.com/book/show/55822151-two-scoops-of-django-3-x
-  color: black
+  color: dark
 - icon: branding/github
   url: https://github.com/twoscoops/two-scoops-of-django-2.0-code-examples
-  color: black
+  color: dark
 tags:
   topics:
     - web development

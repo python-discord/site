@@ -9,10 +9,10 @@ title_url: https://third-bit.com/sdxpy/
 urls:
 - icon: branding/goodreads
   url: https://www.goodreads.com/book/show/199430059-software-design-by-example
-  color: black
+  color: dark
 - icon: branding/github
   url: https://github.com/gvwilson/sdxpy
-  color: black
+  color: dark
 tags:
   topics:
     - general

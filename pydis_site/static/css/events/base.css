@@ -19,6 +19,20 @@ pre {
     margin-bottom: 0 !important
 }
 
+.sponsor {
+    border-radius: .1rem;
+    padding: .3rem;
+}
+
+.sponsor img {
+    display: block;
+    margin: auto;
+}
+
+.box .sponsor {
+    margin-bottom: 1rem;
+}
+
 .event-gallery .date-icon, #main-section .date-icon {
     margin-left: -.25rem;
 }
