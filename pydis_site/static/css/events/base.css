@@ -19,27 +19,40 @@ pre {
     margin-bottom: 0 !important
 }
 
-.event-gallery .date-icon {
+.event-gallery .date-icon, #main-section .date-icon {
     margin-left: -.25rem;
 }
 
-.event-gallery .card {
+.event-gallery .card, .event-gallery .box {
     border-radius: 6px;
     margin-bottom: 1.5rem;
 }
 
+/* We are using bulma cards as boxes here to take advantage of the card's
+ * header image component */
 .event-gallery .card img {
     border-top-left-radius: 6px;
     border-top-right-radius: 6px;
 }
 
+/* Custom component: A colored line at the top of a card that can be styled
+ * with bulma's has-background-* classes.*/
+.card .colored-line {
+    /* A default color as grey */
+    background-color: #C1C1C1;
+    height: .3rem;
+    display: block;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+}
+
 @media (min-width: 700px) {
-    .scheduled-events .media-left {
+    #scheduled-events .media-left {
         margin-left: 2rem;
         margin-right: 2rem;
     }
 
-    .previous-events .media-left {
+    #previous-events .media-left {
         margin-left: 1rem;
         margin-right: 1rem;
     }
@@ -60,28 +73,42 @@ pre {
         align-content: space-between;
     }
 
+    #other-events-section {
+        height: 62rem;
+    }
+
+    #other-events-section .box {
+        width: calc(50% - 1rem);
+    }
+
+    #other-events-section .box:nth-child(2n+1) { order: 1; }
+    #other-events-section .box:nth-child(2n)   { order: 2; }
+
+    #other-events-section::before {
+        content: "";
+        flex-basis: 100%;
+        width: 0;
+        order: 2;
+    }
+
     @media (min-width: 900px) {
         /* 3 columns */
-        #main-events {
+        #main-events-section {
             /* Required. Must be only slightly taller than the tallest column */
-            height: 65rem;
+            height: 67rem;
         }
 
-        #other-events {
-            height: 75rem;
-        }
-
-        .event-gallery .card {
+        #main-events-section .card {
             width: calc(33% - 1rem);
         }
 
         /* Reorder vertically */
-        .event-gallery .card:nth-child(3n+1) { order: 1; }
-        .event-gallery .card:nth-child(3n+2) { order: 2; }
-        .event-gallery .card:nth-child(3n)   { order: 3; }
+        #main-events-section .card:nth-child(3n+1) { order: 1; }
+        #main-events-section .card:nth-child(3n+2) { order: 2; }
+        #main-events-section .card:nth-child(3n)   { order: 3; }
 
         /* 2 line breaks to force new columns, for each gap between the three columns. */
-        .event-gallery::before, .event-gallery::after {
+        #main-events-section::before, #main-events-section::after {
             content: "";
             flex-basis: 100%;
             width: 0;
@@ -91,23 +118,23 @@ pre {
 
     @media (max-width: 900px) {
         /* 2 columns */
-        #main-events {
-            height: 100rem;
+        #main-events-section {
+            height: 80rem;
         }
 
-        #other-events {
-            height: 110rem;
+        #other-events-section {
+            height: 80rem;
         }
 
-        .event-gallery .card {
+        #main-events-section .card {
             width: calc(50% - 1rem);
         }
 
-        .event-gallery .card:nth-child(2n+1) { order: 1; }
-        .event-gallery .card:nth-child(2n)   { order: 2; }
+        #main-events-section.card:nth-child(2n+1) { order: 1; }
+        #main-events-section.card:nth-child(2n)   { order: 2; }
 
         /* 1 line break to force a new column, for the gap between the two columns. */
-        .event-gallery::before {
+        #main-events-section::before {
             content: "";
             flex-basis: 100%;
             width: 0;

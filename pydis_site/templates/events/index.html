@@ -7,98 +7,23 @@
 {% endblock %}
 
 {% block event_base_content %}
-<div class="columns is-variable is-8">
-    <div class="column is-two-thirds">
-        <p>Briefly describe events. Explain how to subscribe to updates from the <code>#roles</code> channel.</p>
-        {% include "events/current_event.html" %}
-
-            <div class="box scheduled-events">
-                <h2 class="title is-5" style="margin-bottom: 2rem;">Scheduled events for 2024</h2>
-                <article class="media">
-                    <div class="media-left">
-                        <p class="image is-64x64">
-                            <a href="https://pyweek.org/37/"><img class="is-rounded" src="/static/images/events/icons/pyweek.png"></a>
-                        </p>
-                    </div>
-                    <div class="media-content">
-                        <div class="content">
-                            <h5 class="title is-4"><a href="https://pyweek.org/37/">PyWeek 37</a></h5>
-                            <p class="subtitle is-6">March 17-24</p>
-                            <p>The bi-annual game-jam where you are allowed one week to write a game from scratch, either as an individual or as a team.</p>
-                        </div>
-                        <a class="button is-small is-link is-outlined" href="https://pyweek.org/37/">Learn more</a>
-                    </div>
-                </article>
-                <article class="media">
-                    <div class="media-left">
-                        <p class="image is-64x64">
-                            <a href="{% url "events:page" path="revivalofcode" %}"><img class="is-rounded" src="/static/images/events/icons/adventofcode.png"></a>
-                        </p>
-                    </div>
-                    <div class="media-content">
-                        <div class="content">
-                            <h5 class="title is-4"><a href="{% url "events:page" path="revivalofcode" %}">Revival of Code</a></h5>
-                            <p class="subtitle is-6">TBD</p>
-                            <p>Revisit past years' Advent of Code problems! Puzzles are relased every other day and there will be dedicated solution threads for you to discuss with other participants.</p>
-                        </div>
-                        <a class="button is-small is-link is-outlined" href="{% url "events:page" path="revivalofcode" %}">Learn more</a>
-                    </div>
-                </article>
-                <article class="media">
-                    <div class="media-left">
-                        <p class="image is-64x64">
-                            <a href="{% url "events:page" path="code-jams" %}"><img class="is-rounded" src="/static/images/events/icons/codejam.svg"></a>
-                        </p>
-                    </div>
-                    <div class="media-content">
-                        <div class="content">
-                            <h5 class="title is-4"><a href="{% url "events:page" path="code-jams" %}">Code Jam</a></h5>
-                            <p class="subtitle is-6">TBD</p>
-                            <p>Our annual code-jam where we place you in a team of five and you have 11 days to code some sort of application or program in Python based on a selected technology or framework.</p>
-                        </div>
-                        <a class="button is-small is-link is-outlined" href="{% url "events:page" path="code-jams" %}">Learn more</a>
-                    </div>
-                </article>
-                <article class="media">
-                    <div class="media-left">
-                        <p class="image is-64x64">
-                            <a href="{% url "events:page" path="pyweek" %}"><img class="is-rounded" src="/static/images/events/icons/pyweek.png"></a>
-                        </p>
-                    </div>
-                    <div class="media-content">
-                        <div class="content">
-                            <h5 class="title is-4"><a href="{% url "events:page" path="pyweek" %}">PyWeek 38</a></h5>
-                            <p class="subtitle is-6">September</p>
-                            <p>The bi-annual game-jam where you are allowed one week to write a game from scratch, either as an individual or as a team.</p>
-                        </div>
-                        <a class="button is-small is-link is-outlined" href="https://pyweek.org/">Learn more</a>
-                    </div>
-                </article>
-                <article class="media">
-                    <div class="media-left">
-                        <p class="image is-64x64">
-                            <a href="{% url "events:page" path="adventofcode" %}"><img class="is-rounded" src="/static/images/events/icons/adventofcode.png"></a>
-                        </p>
-                    </div>
-                    <div class="media-content">
-                        <div class="content">
-                            <h5 class="title is-4"><a href="{% url "events:page" path="adventofcode" %}">Advent of Code</a></h5>
-                            <p class="subtitle is-6">December 1-25</p>
-                            <p>Daily programming puzzles with increasing difficulties where each puzzle has a little story and you can discuss solutions with other participants. You are allowed to use any programming language you like.</p>
-                        </div>
-                        <a class="button is-small is-link is-outlined" href="{% url "events:page" path="adventofcode" %}">Learn more</a>
-                    </div>
-                </article>
-            </div>
+    <div class="columns is-variable is-8" id="main-section">
+        <div class="column is-two-thirds">
+            <p>At Python Discord we run a few regular events, such as programming contests and workshops. We also run more ad-hoc events such as Python release streams. All members are welcome to participate in the events live, and for most events we release videos on our <a href="https://www.youtube.com/@PythonDiscord">YouTube channel</a> after the event in case you've missed it.</p>
+            </p>To subscribe to the announcements, head over to the bottom of the <code>#roles</code> channel and get the <code>@Announcements</code> role to receive notifications on the latest updates!</p>
+            {% include "events/current_event.html" %}
+            {% include "events/scheduled_events.html" %}
         </div>
-    <div class="column">
-        {% include "events/sidebar/events_list.html" %}
+        <div class="column">
+            {% include "events/sidebar/main_sidebar.html" %}
+        </div>
     </div>
-</div>
 
-<br>
-<hr/>
-{% include "events/main_events.html" %}
-<hr/>
-{% include "events/other_events.html" %}
+    <br>
+
+    <hr id="main-events"/>
+    {% include "events/main_events.html" %}
+
+    <hr id="other-events"/>
+    {% include "events/other_events.html" %}
 {% endblock %}
