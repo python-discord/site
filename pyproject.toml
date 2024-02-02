@@ -44,6 +44,9 @@ build-backend = "poetry.core.masonry.api"
 [tool.ruff]
 target-version = "py311"
 extend-exclude = [".cache"]
+line-length = 120
+
+[tool.ruff.lint]
 ignore = [
     "ANN002", "ANN003", "ANN101", "ANN102", "ANN204", "ANN206", "ANN401",
     "B904",
@@ -57,10 +60,9 @@ ignore = [
     "S311",
     "SIM102", "SIM108",
 ]
-line-length = 120
 select = ["ANN", "B", "C4", "D", "DJ", "DTZ", "E", "F", "ISC", "INT", "N", "PGH", "PIE", "RET", "RSE", "RUF", "S", "SIM", "T20", "TID", "UP", "W"]
 
-[tool.ruff.per-file-ignores]
+[tool.ruff.lint.per-file-ignores]
 "pydis_site/apps/**/migrations/*.py" = ["ALL"]
 "manage.py" = ["T201"]
 "pydis_site/apps/api/tests/base.py" = ["S106"]
