@@ -26,6 +26,8 @@ from .models import (
     Filter,
     FilterList,
     Infraction,
+    MailingList,
+    MailingListSeenItem,
     MessageDeletionContext,
     Nomination,
     NominationEntry,
@@ -733,3 +735,37 @@ class OffensiveMessageSerializer(FrozenFieldsMixin, ModelSerializer):
         model = OffensiveMessage
         fields = ('id', 'channel_id', 'delete_date')
         frozen_fields = ('id', 'channel_id')
+
+
+class MailingListSeenItemListSerializer(ListSerializer):
+    """A class providing (de-)serialization of `MailingListSeenItem` instances as a list."""
+
+    def to_representation(self, objects: list[MailingListSeenItem]) -> list[str]:
+        """Return the hashes of each seen mailing list item."""
+        return [obj['hash'] for obj in objects.values('hash')]
+
+
+class MailingListSeenItemSerializer(ModelSerializer):
+    """A class providing (de-)serialization of `MailingListSeenItem` instances."""
+
+    class Meta:
+        """Metadata defined for the Django REST Framework."""
+
+        model = MailingListSeenItem
+        # Since this is only exposed on the parent mailing list model,
+        # we don't need information about the list or even the ID.
+        fields = ('hash',)
+        list_serializer_class = MailingListSeenItemListSerializer
+
+
+class MailingListSerializer(FrozenFieldsMixin, ModelSerializer):
+    """A class providing (de-)serialization of `MailingList` instances."""
+
+    seen_items = MailingListSeenItemSerializer(many=True, required=False)
+
+    class Meta:
+        """Metadata defined for the Django REST Framework."""
+
+        model = MailingList
+        fields = ('id', 'name', 'seen_items')
+        frozen_fields = ('name',)

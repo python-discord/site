@@ -8,6 +8,8 @@ from .infraction import Infraction
 from .message import Message
 from .aoc_completionist_block import AocCompletionistBlock
 from .aoc_link import AocAccountLink
+from .mailing_list import MailingList
+from .mailing_list_seen_item import MailingListSeenItem
 from .message_deletion_context import MessageDeletionContext
 from .nomination import Nomination, NominationEntry
 from .off_topic_channel_name import OffTopicChannelName
