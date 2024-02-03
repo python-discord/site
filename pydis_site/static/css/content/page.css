@@ -10,6 +10,11 @@
     #edit-on-github {
         display: none;
     }
+
+   .dropdown-menu {
+        left: unset;
+        right: 0;
+    }
 }
 
 i.has-icon-padding {
@@ -20,6 +25,14 @@ i.has-icon-padding {
     height: 100%;
     display: flex;
     flex-direction: column;
+}
+
+[data-theme="dark"] .card-footer {
+    border-top: solid 1px #4E4F51;
+}
+
+[data-theme="dark"] .card-footer-item:not(:last-child) {
+    border-right: solid 1px #4E4F51;
 }
 
 .card.github-card .card-content {
@@ -95,4 +108,27 @@ ul.menu-list.toc {
  */
 li img {
     margin-top: 0.5em;
+}
+
+.dropdown-menu {
+    min-width: 15rem;
+}
+
+a.dropdown-item {
+    white-space: normal;
+    padding-right: 0;
+}
+
+[data-theme="dark"] .card.github-card {
+    border: solid 1px #4E4F51;
+}
+
+[data-theme="dark"] hr {
+    background-color: #4c515a;
+}
+
+[data-theme="dark"] .has-dark-mode-background {
+    background-color: #EDEDED;
+    border-radius: .1rem;
+    padding: .3rem;
 }

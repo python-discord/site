@@ -5,7 +5,7 @@ title_url: https://codecombat.com/
 urls:
 - icon: branding/github
   url: https://github.com/codecombat/codecombat
-  color: black
+  color: dark
 tags:
   topics:
     - general

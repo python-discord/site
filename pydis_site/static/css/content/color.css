@@ -2,6 +2,10 @@
     color: black;
 }
 
+[data-theme="dark"] .content .fa-github {
+    color: white;
+}
+
 .content .fa-github:hover {
     color: #7289DA;
 }

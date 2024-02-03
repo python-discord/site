@@ -107,7 +107,7 @@ def fetch_tags() -> list[Tag]:
             for file in repo.getmembers():
                 if "/bot/resources/tags" in file.path:
                     included.append(file)
-            repo.extractall(folder, included)
+            repo.extractall(folder, included)  # noqa: S202
 
         for tag_file in Path(folder).rglob("*.md"):
             name = tag_file.name
@@ -206,9 +206,9 @@ def record_tags(tags: list[Tag]) -> None:
             # pretend it's previous state is the current state
             old_tag = new_tag
 
-        if old_tag.sha == new_tag.sha and old_tag.last_commit is not None:
+        if old_tag.sha == new_tag.sha and old_tag.last_commit_id is not None:
             # We still have an up-to-date commit entry
-            new_tag.last_commit = old_tag.last_commit
+            new_tag.last_commit_id = old_tag.last_commit_id
 
         new_tag.save()
 

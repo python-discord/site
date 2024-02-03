@@ -153,12 +153,9 @@ class MessageDeletionContextSerializer(ModelSerializer):
         """
         messages = validated_data.pop('deletedmessage_set')
         deletion_context = MessageDeletionContext.objects.create(**validated_data)
-        for message in messages:
-            DeletedMessage.objects.create(
-                deletion_context=deletion_context,
-                **message
-            )
-
+        DeletedMessage.objects.bulk_create(
+            DeletedMessage(deletion_context=deletion_context, **message) for message in messages
+        )
         return deletion_context
 
 
@@ -510,13 +507,8 @@ class ExpandedInfractionSerializer(InfractionSerializer):
         """Return the dictionary representation of this infraction."""
         ret = super().to_representation(instance)
 
-        user = User.objects.get(id=ret['user'])
-        user_data = UserSerializer(user).data
-        ret['user'] = user_data
-
-        actor = User.objects.get(id=ret['actor'])
-        actor_data = UserSerializer(actor).data
-        ret['actor'] = actor_data
+        ret['user'] = UserSerializer(instance.user).data
+        ret['actor'] = UserSerializer(instance.actor).data
 
         return ret
 

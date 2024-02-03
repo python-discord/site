@@ -4,6 +4,10 @@
     color: #7289DA;
 }
 
+[data-theme="dark"] .content a {
+    color: #99B0FF;
+}
+
 .content a *:hover {
     color: dimgray;
 }

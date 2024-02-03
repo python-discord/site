@@ -85,6 +85,31 @@ Pages, which include guides, articles, and other static content,...
 - **toc:** A number representing the smallest heading tag to show in the table of contents.
     See: [Table of Contents](#table-of-contents)
 
+## Working with dark mode
+
+If your article includes images, you can apply a few classes for a better experience for readers using dark mode.
+
+### Add a white background to an image
+
+Use the `has-dark-mode-background` class to apply a white background to your image, so it can be read easily in dark mode.
+
+```md
+![image alt text](/path/to/my/image.png){: class="has-dark-mode-background" }
+```
+
+### Alternate images for each mode
+
+If you can provide two images, suited for each of the light and dark modes specifically, you can use the `light-image` and `dark-image` classes to have the correct image be used depending on the mode.
+
+```md
+![image alt text](/path/to/my/image_light.png){: class="light-image" }
+![image alt text](/path/to/my/image_dark.png){: class="dark-image" }
+```
+
+This way, when the reader is in light mode, only `image_light.png` is shown, and when the reader is in dark mode, only `image_dark.png` is shown.
+
+All images with `light-image` class are hidden in dark mode and all images with `dark-image` class are hidden in light mode.
+
 ## Extended Markdown
 
 Apart from standard Markdown, certain additions are available:

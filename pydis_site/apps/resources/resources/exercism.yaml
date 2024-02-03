@@ -7,7 +7,7 @@ title_url: https://exercism.org/
 urls:
 - icon: branding/github
   url: https://github.com/exercism/python
-  color: black
+  color: dark
 tags:
   topics:
     - general
