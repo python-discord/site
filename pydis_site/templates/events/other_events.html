@@ -111,8 +111,32 @@
         <article class="media">
             <div class="media-left">
                 <p class="image">
-                    <img class="is-rounded" src="https://s3.dualstack.us-east-2.amazonaws.com/pythondotorg-assets/media/files/python-logo-only.svg" style="width: 3rem;">
+                    <img src="/static/images/events/pixels_logo_transparent.gif" style="width: 3rem;">
                 </p>
+            </div>
+            <div class="media-content">
+                <div class="content">
+                    <h2 class="title is-4"><a href="{% url "events:page" path="pixels" %}">Pixels</a></h2>
+                    <p class="subtitle is-7 has-text-grey">
+                        <span class="icon-text">
+                            <span class="date-icon icon"><i class="fa-regular fa-calendar"></i></span>
+                            <span>May 2021</span>
+                        </span>
+                    </p>
+                    <p>Inspired by r/place, the reddit April Fools experiment where users could place pixels on a canvas one-by-one, Pixels was an application that allowed users to collaboratively decorate a canvas pixel-by-pixel. The twist? Interacting with our canvas can only be done via an API.</p>
+                </div>
+                <a class="button is-small is-link is-outlined" href="{% url "events:page" path="pixels" %}">
+                    <span class="icon"><i class="fas fa-circle-info"></i></span>
+                    <span>Learn more</span>
+                </a>
+            </div>
+        </article>
+    </div>
+
+    <div class="box">
+        <article class="media">
+            <div class="media-left">
+                <span class="icon is-large"><i class="fas fa-comments fa-2xl" style="color: #4B8BBE"></i></span>
             </div>
             <div class="media-content">
                 <div class="content">
@@ -128,32 +152,6 @@
                 <a class="button is-small is-link is-outlined" href="https://www.youtube.com/watch?v=gXMdfBTcOfQ">
                     <span class="icon"><i class="fab fa-youtube"></i></span>
                     <span>Watch on YouTube</span>
-                </a>
-            </div>
-        </article>
-    </div>
-
-    <div class="box">
-        <article class="media">
-            <div class="media-left">
-                <p class="image">
-                    <img class="is-rounded" src="https://user-images.githubusercontent.com/33516116/77593036-5fb09780-6eeb-11ea-9feb-336b2e5e23de.png" style="width: 3rem;">
-                </p>
-            </div>
-            <div class="media-content">
-                <div class="content">
-                    <h2 class="title is-4"><a href="{% url "events:page" path="game-jams" %}">Game Jam</a></h2>
-                    <p class="subtitle is-7 has-text-grey">
-                        <span class="icon-text">
-                            <span class="date-icon icon"><i class="fa-regular fa-calendar"></i></span>
-                            <span>April 2020</span>
-                        </span>
-                    </p>
-                    <p>The Game Jam was similar to our Code Jams, but smaller in scope. Instead of having to complete a qualifier and being teamed up with random strangers, members of our community can just sign-up individually or pair up with whoever they like.</p>
-                </div>
-                <a class="button is-small is-link is-outlined" href="{% url "events:page" path="game-jams" %}">
-                    <span class="icon"><i class="fas fa-circle-info"></i></span>
-                    <span>Learn more</span>
                 </a>
             </div>
         </article>

@@ -88,7 +88,7 @@ pre {
     }
 
     #other-events-section {
-        height: 62rem;
+        height: 63rem;
     }
 
     #other-events-section .box {
@@ -109,7 +109,7 @@ pre {
         /* 3 columns */
         #main-events-section {
             /* Required. Must be only slightly taller than the tallest column */
-            height: 67rem;
+            height: 68rem;
         }
 
         #main-events-section .card {
@@ -133,19 +133,19 @@ pre {
     @media (max-width: 900px) {
         /* 2 columns */
         #main-events-section {
-            height: 80rem;
+            height: 96rem;
         }
 
         #other-events-section {
-            height: 80rem;
+            height: 83rem;
         }
 
         #main-events-section .card {
             width: calc(50% - 1rem);
         }
 
-        #main-events-section.card:nth-child(2n+1) { order: 1; }
-        #main-events-section.card:nth-child(2n)   { order: 2; }
+        #main-events-section .card:nth-child(2n+1) { order: 1; }
+        #main-events-section .card:nth-child(2n)   { order: 2; }
 
         /* 1 line break to force a new column, for the gap between the two columns. */
         #main-events-section::before {
