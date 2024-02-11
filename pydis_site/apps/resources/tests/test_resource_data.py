@@ -1,7 +1,7 @@
 import yaml
 from django.test import TestCase
 
-from pydis_site.apps.resources.views import RESOURCES_PATH
+from pydis_site.apps.resources.apps import RESOURCES_PATH
 
 
 class TestResourceData(TestCase):
