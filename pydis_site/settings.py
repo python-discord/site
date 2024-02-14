@@ -341,6 +341,7 @@ BULMA_SETTINGS = {
         "black-ter": "#E6E6E6",
         "dark": "$black",
 
+        "grey": "#AFAFAF",
         "grey-darker": "#303032",
 
         "text": "#F4F4F4",
