@@ -7,6 +7,8 @@ from .bot import (
     DocumentationLink,
     DeletedMessage,
     Infraction,
+    MailingList,
+    MailingListSeenItem,
     Message,
     MessageDeletionContext,
     Nomination,

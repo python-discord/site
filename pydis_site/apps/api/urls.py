@@ -17,6 +17,7 @@ from .viewsets import (
     FilterListViewSet,
     FilterViewSet,
     InfractionViewSet,
+    MailingListViewSet,
     NominationViewSet,
     OffTopicChannelNameViewSet,
     OffensiveMessageViewSet,
@@ -66,6 +67,10 @@ bot_router.register(
 bot_router.register(
     'infractions',
     InfractionViewSet
+)
+bot_router.register(
+    'mailing-lists',
+    MailingListViewSet
 )
 bot_router.register(
     'nominations',
