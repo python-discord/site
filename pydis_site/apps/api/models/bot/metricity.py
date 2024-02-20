@@ -49,7 +49,7 @@ class Metricity:
             WHERE
                 author_id = '%s'
                 AND NOT is_deleted
-                AND channel_id != ANY(%s)
+                AND channel_id != ALL(%s)
             """,
             [user_id, EXCLUDE_CHANNELS]
         )
@@ -77,7 +77,7 @@ class Metricity:
                 WHERE
                     author_id='%s'
                     AND NOT is_deleted
-                    AND channel_id != ANY(%s)
+                    AND channel_id != ALL(%s)
                 GROUP BY interval
             ) block_query;
             """,
@@ -147,7 +147,7 @@ class Metricity:
             WHERE
                 author_id = ANY(%s)
                 AND NOT is_deleted
-                AND channel_id != ANY(%s)
+                AND channel_id != ALL(%s)
                 AND created_at > now() - interval '%s days'
             GROUP BY author_id
             """,
