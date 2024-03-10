@@ -26,7 +26,8 @@
   {% bulma %}
   {% bulma 'dark' include_js=False %}
 
-  {% font_awesome %}
+  <link href="{% static 'fontawesome/css/all.min.css' %}" rel="stylesheet" type="text/css">
+
   <link rel="stylesheet" href="{% static "css/base/base.css" %}">
   {% block head %}{% endblock %}
 
