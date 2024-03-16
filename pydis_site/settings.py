@@ -299,6 +299,10 @@ LOGGING = {
 
 # Custom settings for django-simple-bulma
 BULMA_SETTINGS = {
+    # NOTE: Due to limitations with Bulma + CSS, it is not possible to
+    # reference these color variables in our custom CSS files. When changing
+    # colors here, please do a project-wise grep and make sure other places
+    # that uses the old color is updated as appropriate.
     "variables": {
         "primary": "#7289DA",    # PyDis blurple
         "green": "#32ac66",      # Colour picked after Discord discussion
@@ -331,6 +335,9 @@ BULMA_SETTINGS = {
 
         "body-background-color": "#252629",
 
+        # These black and white colors are flipped so that when using
+        # has-background-white class for example, a white background is used in
+        # light mode whereas a dark background is applied in dark mode.
         "white": "#2C2F33",
         "white-bis": "#23272A ",
         "white-ter": "#36393F",
@@ -371,7 +378,6 @@ BULMA_SETTINGS = {
         "bulma-dropdown",
         "bulma-navbar-burger",
     ],
-    "fontawesome_token": "ff22cb6f41",
 }
 
 # Information about site repository
