@@ -20,7 +20,7 @@ _ICONS = {
     "Other": "fa-question-circle",
     "Paid": "fa-dollar-sign",
     "Podcast": "fa-microphone-alt",
-    "Project Ideas": "fa-lightbulb-o",
+    "Project Ideas": "fa-lightbulb",
     "Security": "fa-solid fa-lock",
     "Software Design": "fa-paint-brush",
     "Subscription": "fa-credit-card",
