@@ -9,7 +9,7 @@
 [data-theme="dark"] {
   --background-color: #2C2F33;
   --accent: hsl(0, 0%, 34%);
-  --icon-border-color: grey;
+  --icon-border-color: hsl(0, 0%, 50%);
   --content-background-color: #23272A;
 }
 
