@@ -59,10 +59,10 @@
     border-radius: 50%;
     height: 60px;
     width: 60px;
-
     box-shadow: 0 0 0 4px var(--icon-border-color),inset 0 2px 0 rgba(0,0,0,.08),0 3px 0 4px rgba(0,0,0,.05);
-    color: var(--icon-color);
 
+    /* Font Awesome icon size and color */
+    color: var(--icon-color);
     font-size: 1.5em;
 
     @media (min-width: 768px) {
@@ -155,49 +155,50 @@
     background-color: #576297 !important;
 }
 
+/* Used for "Our logo is born" timeline item */
 .pydis-logo-banner {
     border-radius: 10px;
 }
 .pydis-logo-banner img {
     padding-right: 20px;
 }
+
 img, video, svg {
     max-width: 100%
 }
 
 
-/* ANIMATION */
-
+/* Bounce-in and bounce-out animations */
 @media (min-width: 64rem) {
     .cd-timeline__img--hidden, .cd-timeline__content--hidden, .cd-timeline__date--hidden {
         visibility: hidden
     }
     .cd-timeline__img--bounce-in {
-        -webkit-animation: cd-bounce-1 0.6s;
-        animation: cd-bounce-1 0.6s;
+        -webkit-animation: icon-bounce 0.6s;
+        animation: icon-bounce 0.6s;
     }
     .cd-timeline__content--bounce-in,
     .cd-timeline__date--bounce-in {
-        -webkit-animation: cd-bounce-2 0.6s;
-        animation: cd-bounce-2 0.6s;
+        -webkit-animation: item-bounce-left 0.6s;
+        animation: item-bounce-left 0.6s;
     }
     .cd-timeline__block:nth-child(even) .cd-timeline__content--bounce-in,
     .cd-timeline__block:nth-child(even) .cd-timeline__date--bounce-in {
-        -webkit-animation-name: cd-bounce-2-inverse;
-        animation-name: cd-bounce-2-inverse;
+        -webkit-animation-name: item-bounce-right;
+        animation-name: item-bounce-right;
     }
     .cd-timeline__img--bounce-out {
-        -webkit-animation: cd-bounce-out-1 0.6s;
-        animation: cd-bounce-out-1 0.6s;
+        -webkit-animation: icon-bounce-out 0.6s;
+        animation: icon-bounce-out 0.6s;
     }
     .cd-timeline__content--bounce-out,
     .cd-timeline__date--bounce-out {
-        -webkit-animation: cd-bounce-out-3 0.6s;
-        animation: cd-bounce-out-2 0.6s;
+        -webkit-animation: item-bounce-out 0.6s;
+        animation: item-bounce-out 0.6s;
     }
 }
 
-@-webkit-keyframes cd-bounce-1 {
+@-webkit-keyframes icon-bounce {
     0% {
         opacity: 0;
         -webkit-transform: scale(0.5);
@@ -214,7 +215,7 @@ img, video, svg {
     }
 }
 
-@keyframes cd-bounce-1 {
+@keyframes icon-bounce {
     0% {
         opacity: 0;
         -webkit-transform: scale(0.5);
@@ -231,7 +232,7 @@ img, video, svg {
     }
 }
 
-@-webkit-keyframes cd-bounce-2 {
+@-webkit-keyframes item-bounce-left {
     0% {
         opacity: 0;
         -webkit-transform: translateX(-100px);
@@ -248,7 +249,7 @@ img, video, svg {
     }
 }
 
-@keyframes cd-bounce-2 {
+@keyframes item-bounce-left {
     0% {
         opacity: 0;
         -webkit-transform: translateX(-100px);
@@ -265,7 +266,7 @@ img, video, svg {
     }
 }
 
-@-webkit-keyframes cd-bounce-2-inverse {
+@-webkit-keyframes item-bounce-right {
     0% {
         opacity: 0;
         -webkit-transform: translateX(100px);
@@ -282,7 +283,7 @@ img, video, svg {
     }
 }
 
-@keyframes cd-bounce-2-inverse {
+@keyframes item-bounce-right {
     0% {
         opacity: 0;
         -webkit-transform: translateX(100px);
@@ -299,7 +300,7 @@ img, video, svg {
     }
 }
 
-@-webkit-keyframes cd-bounce-out-1 {
+@-webkit-keyframes icon-bounce-out {
     0% {
         opacity: 1;
         -webkit-transform: scale(1);
@@ -316,7 +317,7 @@ img, video, svg {
     }
 }
 
-@keyframes cd-bounce-out-1 {
+@keyframes icon-bounce-out {
     0% {
         opacity: 1;
         -webkit-transform: scale(1);
@@ -335,7 +336,7 @@ img, video, svg {
     }
 }
 
-@-webkit-keyframes cd-bounce-out-2 {
+@-webkit-keyframes item-bounce-out {
     0% {
         opacity: 1;
         -webkit-transform: translateX(0);
@@ -352,7 +353,7 @@ img, video, svg {
     }
 }
 
-@keyframes cd-bounce-out-2 {
+@keyframes item-bounce-out {
     0% {
         opacity: 1;
         -webkit-transform: translateX(0);
