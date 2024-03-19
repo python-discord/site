@@ -5,6 +5,7 @@
 		this.blocks = this.element.getElementsByClassName("cd-timeline__block");
 		this.images = this.element.getElementsByClassName("cd-timeline__img");
 		this.contents = this.element.getElementsByClassName("cd-timeline__content");
+		this.dates = this.element.getElementsByClassName("cd-timeline__date");
 		this.offset = 0.8;
 		this.hideBlocks();
 	};
@@ -20,6 +21,7 @@
 				if( self.blocks[i].getBoundingClientRect().top > window.innerHeight*self.offset ) {
 					self.images[i].classList.add("cd-timeline__img--hidden");
 					self.contents[i].classList.add("cd-timeline__content--hidden");
+					self.dates[i].classList.add("cd-timeline__date--hidden");
 				}
 			})(i);
 		}
@@ -36,10 +38,13 @@
 					// add bounce-in animation
 					self.images[i].classList.add("cd-timeline__img--bounce-in");
 					self.contents[i].classList.add("cd-timeline__content--bounce-in");
+					self.dates[i].classList.add("cd-timeline__date--bounce-in");
 					self.images[i].classList.remove("cd-timeline__img--hidden");
 					self.contents[i].classList.remove("cd-timeline__content--hidden");
+					self.dates[i].classList.remove("cd-timeline__date--hidden");
 					self.images[i].classList.remove("cd-timeline__img--bounce-out");
 					self.contents[i].classList.remove("cd-timeline__content--bounce-out");
+					self.dates[i].classList.remove("cd-timeline__date--bounce-out");
 				}
 			})(i);
 		}
@@ -55,8 +60,10 @@
 				if(self.contents[i].classList.contains("cd-timeline__content--bounce-in") && self.blocks[i].getBoundingClientRect().top > window.innerHeight*self.offset ) {
 					self.images[i].classList.remove("cd-timeline__img--bounce-in");
 					self.contents[i].classList.remove("cd-timeline__content--bounce-in");
+					self.dates[i].classList.remove("cd-timeline__date--bounce-in");
 					self.images[i].classList.add("cd-timeline__img--bounce-out");
 					self.contents[i].classList.add("cd-timeline__content--bounce-out");
+					self.dates[i].classList.add("cd-timeline__date--bounce-out");
 				}
 			})(i);
 		}
@@ -87,6 +94,9 @@
 			} else if (event.target.classList.contains("cd-timeline__content--bounce-out")) {
 				event.target.classList.add("cd-timeline__content--hidden");
 				event.target.classList.remove("cd-timeline__content--bounce-out");
+			} else if (event.target.classList.contains("cd-timeline__date--bounce-out")) {
+				event.target.classList.add("cd-timeline__date--hidden");
+				event.target.classList.remove("cd-timeline__date--bounce-out");
 			}
 		}
 
