@@ -1,18 +1,43 @@
+/* Adapted from https://codyhouse.co/gem/vertical-timeline/ with significant
+ * modifications.
+ * */
+
 :root {
+    --side-padding: 0;
     --background-color: rgb(232, 239, 245);
+    --content-background-color: white;
     --accent: hsl(205, 38%, 89%);
+
+    --timeline-line-width: 4px;
+
+    --icon-width: 60px;
+    --icon-border-width: 4px;
     --icon-border-color: white;
     --icon-color: white;
-    --content-background-color: white;
+    --icon-image-width: 40px;
+    --icon-size: 1.5rem;
+
+    --date-color: hsl(0, 0%, 48%);
 }
 
 [data-theme="dark"] {
     --background-color: #2C2F33;
-    --accent: hsl(0, 0%, 34%);
-    --icon-border-color: hsl(0, 0%, 50%);
     --content-background-color: #23272A;
+    --accent: hsl(0, 0%, 34%);
+
+    --icon-border-color: hsl(0, 0%, 50%);
 }
 
+@media (max-width: 1023px) {
+    :root {
+        --side-padding: 1.25rem;
+        --icon-width: 40px;
+        --icon-image-width: 30px;
+        --icon-size: 1.1rem;
+    }
+}
+
+/* Containers */
 .cd-timeline {
     overflow: hidden;
     padding: 3rem 0;
@@ -21,35 +46,69 @@
 
 .cd-timeline__container {
     position: relative;
-    padding: 1rem 0;
+    padding: 1rem var(--side-padding);
 }
 
+/* Line that goes through all the icons */
 .cd-timeline__container::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: calc(50% - 2px);
+
     height: 100%;
-    width: 4px;
+    width: var(--timeline-line-width);
     background-color: var(--accent);
+    z-index: 1;
 }
 
+@media (min-width: 1023px) {
+    .cd-timeline__container::before {
+        left: calc(50% - var(--timeline-line-width) / 2);
+    }
+}
+
+@media (max-width: 1023px) {
+    .cd-timeline__container::before {
+        margin-left: calc(var(--icon-width) / 2 - var(--timeline-line-width) / 2);
+    }
+}
+
+/* Each timeline item */
 .cd-timeline__block {
     display: flex;
     margin-bottom: 2.5rem;
 }
 
+/* Visual container of the timeline item */
 .cd-timeline__content.box {
     box-shadow: var(--accent) 0px 3px 0px 0px;
     background-color: var(--content-background-color);
 }
 
-@media (min-width: 768px) {
+@media (max-width: 1023px) {
+    .cd-timeline__content.box {
+        margin-left: 1rem;
+    }
+}
+
+@media (min-width: 1023px) {
     .cd-timeline__block:nth-child(even) {
         flex-direction: row-reverse;
     }
 }
 
+/* The title and text */
+.cd-timeline__content {
+    flex-grow: 1;
+}
+
+@media (min-width: 1023px) {
+    .cd-timeline__content  {
+        width: 45%;
+        flex-grow: 0;
+    }
+}
+
+/* Icon */
 .cd-timeline__img {
     display: flex;
     justify-content: center;
@@ -57,58 +116,90 @@
     flex-shrink: 0;
 
     border-radius: 50%;
-    height: 60px;
-    width: 60px;
-    box-shadow: 0 0 0 4px var(--icon-border-color),inset 0 2px 0 rgba(0,0,0,.08),0 3px 0 4px rgba(0,0,0,.05);
+    height: var(--icon-width);
+    width: var(--icon-width);
+    box-shadow: 0 0 0 var(--icon-border-width) var(--icon-border-color),
+                inset 0 2px 0 rgba(0,0,0,.08),
+                0 3px 0 4px rgba(0,0,0,.05);
+    z-index: 2;
 
     /* Font Awesome icon size and color */
     color: var(--icon-color);
-    font-size: 1.5em;
+    font-size: var(--icon-size);
+}
 
-    @media (min-width: 768px) {
+@media (min-width: 1023px) {
+    .cd-timeline__img {
         order: 1;
-    }
-}
 
-.cd-timeline__img img {
-    width: 40px;
-    height: 40px;
-    margin-left: 2px;
-    margin-top: 2px;
-}
-
-.cd-timeline__date {
-    font-size: .9rem;
-}
-
-.cd-timeline__content {
-    flex-grow: 1;
-
-    @media (min-width: 768px) {
-        width: 45%;
-        flex-grow: 0;
-    }
-}
-
-@media (min-width: 64rem) {
-    .cd-timeline__date {
         position: absolute;
-        width: 100%;
-        left: 54%;
-        margin-top: 1rem;
+        left: calc(50% - var(--icon-width) / 2);
     }
+}
+
+/* Icon that uses pydis logo */
+.cd-timeline__img img {
+    /* Visually centering the pydis logo requires a margin adjustment here
+     * due to the right and bottom box shadow on the logo which is not very
+     * visible on the page.
+     *
+     * HACK: Hardcoded and specific to the pydis logo.
+     * */
+    margin-top: 1px;
+    margin-left: 1px;
+
+    width: var(--icon-image-width);
+    height: var(--icon-image-width);
+}
+
+/* Date next to icons */
+.cd-timeline__date {
+    position: absolute;
+    width: 100%;
+    margin-top: 1rem;
+    z-index: 3;
+
+    font-size: .9rem;
+    color: var(--date-color);
+}
+
+@media (min-width: 1023px) {
+    .cd-timeline__date {
+        left: 54%;
+    }
+
     .cd-timeline__block:nth-child(even) .cd-timeline__date {
         left: auto;
         right: 54%;
-        text-align: right
-    }
-
-    .cd-timeline__img {
-        left: calc(50% - 30px);
-        position: absolute;
+        text-align: right;
     }
 }
 
+@media (max-width: 1023px) {
+    .cd-timeline__date {
+        /*
+         * On mobile, place the date at the top of the text box left-aligned
+         * with the other text in the box. When margin-left is zero, the date
+         * is left-aligned to the right of the icon, but left of the icon's
+         * right box shadow.
+         *
+         * However, we're not adding --icon-border-width here because the
+         * 'margin-left: 1rem' for content boxes are aligned from before the
+         * left of the right icon-border.
+         *
+         * 1.25rem is the left padding of content boxes from Bulma.
+         * */
+        margin-left: calc(1rem + 1.25rem);
+        margin-top: .75rem;
+    }
+
+    .cd-timeline__content .title {
+        /* Make space for the date text */
+        margin-top: 1.25rem;
+    }
+}
+
+/* Icon background colors */
 .pastel-red {
     background-color: #ff7878 !important;
 }
@@ -152,6 +243,7 @@
     background-color: #7c9a21 !important;
 }
 .pastel-dark-blue {
+    /* Works well for both themes */
     background-color: #576297 !important;
 }
 
@@ -167,118 +259,55 @@ img, video, svg {
     max-width: 100%
 }
 
-
-/* Bounce-in and bounce-out animations */
-@media (min-width: 64rem) {
+/* Bounce-in and bounce-out animations, desktop-only */
+@media (min-width: 1023px) {
     .cd-timeline__img--hidden, .cd-timeline__content--hidden, .cd-timeline__date--hidden {
         visibility: hidden
     }
     .cd-timeline__img--bounce-in {
-        -webkit-animation: icon-bounce 0.6s;
         animation: icon-bounce 0.6s;
     }
     .cd-timeline__content--bounce-in,
     .cd-timeline__date--bounce-in {
-        -webkit-animation: item-bounce-left 0.6s;
         animation: item-bounce-left 0.6s;
     }
     .cd-timeline__block:nth-child(even) .cd-timeline__content--bounce-in,
     .cd-timeline__block:nth-child(even) .cd-timeline__date--bounce-in {
-        -webkit-animation-name: item-bounce-right;
         animation-name: item-bounce-right;
     }
     .cd-timeline__img--bounce-out {
-        -webkit-animation: icon-bounce-out 0.6s;
         animation: icon-bounce-out 0.6s;
     }
     .cd-timeline__content--bounce-out,
     .cd-timeline__date--bounce-out {
-        -webkit-animation: item-bounce-out 0.6s;
         animation: item-bounce-out 0.6s;
-    }
-}
-
-@-webkit-keyframes icon-bounce {
-    0% {
-        opacity: 0;
-        -webkit-transform: scale(0.5);
-        transform: scale(0.5)
-    }
-    60% {
-        opacity: 1;
-        -webkit-transform: scale(1.2);
-        transform: scale(1.2)
-    }
-    100% {
-        -webkit-transform: scale(1);
-        transform: scale(1)
     }
 }
 
 @keyframes icon-bounce {
     0% {
         opacity: 0;
-        -webkit-transform: scale(0.5);
         transform: scale(0.5);
     }
     60% {
         opacity: 1;
-        -webkit-transform: scale(1.2);
         transform: scale(1.2);
     }
     100% {
-        -webkit-transform: scale(1);
         transform: scale(1);
-    }
-}
-
-@-webkit-keyframes item-bounce-left {
-    0% {
-        opacity: 0;
-        -webkit-transform: translateX(-100px);
-        transform: translateX(-100px)
-    }
-    60% {
-        opacity: 1;
-        -webkit-transform: translateX(20px);
-        transform: translateX(20px)
-    }
-    100% {
-        -webkit-transform: translateX(0);
-        transform: translateX(0)
     }
 }
 
 @keyframes item-bounce-left {
     0% {
         opacity: 0;
-        -webkit-transform: translateX(-100px);
         transform: translateX(-100px)
     }
     60% {
         opacity: 1;
-        -webkit-transform: translateX(20px);
         transform: translateX(20px)
     }
     100% {
-        -webkit-transform: translateX(0);
-        transform: translateX(0)
-    }
-}
-
-@-webkit-keyframes item-bounce-right {
-    0% {
-        opacity: 0;
-        -webkit-transform: translateX(100px);
-        transform: translateX(100px)
-    }
-    60% {
-        opacity: 1;
-        -webkit-transform: translateX(-20px);
-        transform: translateX(-20px)
-    }
-    100% {
-        -webkit-transform: translateX(0);
         transform: translateX(0)
     }
 }
@@ -286,86 +315,43 @@ img, video, svg {
 @keyframes item-bounce-right {
     0% {
         opacity: 0;
-        -webkit-transform: translateX(100px);
         transform: translateX(100px)
     }
     60% {
         opacity: 1;
-        -webkit-transform: translateX(-20px);
         transform: translateX(-20px)
     }
     100% {
-        -webkit-transform: translateX(0);
         transform: translateX(0)
-    }
-}
-
-@-webkit-keyframes icon-bounce-out {
-    0% {
-        opacity: 1;
-        -webkit-transform: scale(1);
-        transform: scale(1)
-    }
-    60% {
-        -webkit-transform: scale(1.2);
-        transform: scale(1.2)
-    }
-    100% {
-        opacity: 0;
-        -webkit-transform: scale(0.5);
-        transform: scale(0.5)
     }
 }
 
 @keyframes icon-bounce-out {
     0% {
         opacity: 1;
-        -webkit-transform: scale(1);
         transform: scale(1);
     }
 
     60% {
-        -webkit-transform: scale(1.2);
         transform: scale(1.2);
     }
 
     100% {
         opacity: 0;
-        -webkit-transform: scale(0.5);
         transform: scale(0.5);
-    }
-}
-
-@-webkit-keyframes item-bounce-out {
-    0% {
-        opacity: 1;
-        -webkit-transform: translateX(0);
-        transform: translateX(0)
-    }
-    60% {
-        -webkit-transform: translateX(20px);
-        transform: translateX(20px)
-    }
-    100% {
-        opacity: 0;
-        -webkit-transform: translateX(-100px);
-        transform: translateX(-100px)
     }
 }
 
 @keyframes item-bounce-out {
     0% {
         opacity: 1;
-        -webkit-transform: translateX(0);
         transform: translateX(0);
     }
     60% {
-        -webkit-transform: translateX(20px);
         transform: translateX(20px);
     }
     100% {
         opacity: 0;
-        -webkit-transform: translateX(-100px);
         transform: translateX(-100px);
     }
 }
