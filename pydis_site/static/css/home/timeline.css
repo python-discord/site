@@ -2,6 +2,7 @@
   --background-color: rgb(232, 239, 245);
   --accent: hsl(205, 38%, 89%);
   --icon-border-color: white;
+  --icon-color: white;
   --content-background-color: white;
 }
 
@@ -60,7 +61,7 @@
   width: 60px;
 
   box-shadow: 0 0 0 4px var(--icon-border-color),inset 0 2px 0 rgba(0,0,0,.08),0 3px 0 4px rgba(0,0,0,.05);
-  color: var(--icon-outline-color);
+  color: var(--icon-color);
 
   font-size: 1.5em;
 
