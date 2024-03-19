@@ -151,17 +151,12 @@
 [data-theme="dark"] .pastel-lime {
     background-color: #7c9a21 !important;
 }
-
 .pastel-dark-blue {
     background-color: #576297 !important;
 }
 
 .pydis-logo-banner {
-    background-color: #7289da !important;
     border-radius: 10px;
-}
-[data-theme="dark"] .pydis-logo-banner {
-  background-color: #3B4774 !important;
 }
 .pydis-logo-banner img {
     padding-right: 20px;
