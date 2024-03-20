@@ -3,19 +3,25 @@
  * */
 
 :root {
-    --side-padding: 0;
+    --side-spacing: 0;
     --background-color: rgb(232, 239, 245);
     --content-background-color: white;
     --accent: hsl(205, 38%, 89%);
 
     --timeline-line-width: 4px;
+    --timeline-line-half-width: calc(var(--timeline-line-width) / 2);
 
     --icon-width: 60px;
+    --icon-half-width: calc(var(--icon-width) / 2);
     --icon-border-width: 4px;
     --icon-border-color: white;
     --icon-color: white;
     --icon-image-width: 40px;
     --icon-size: 1.5rem;
+    /* On desktop: Margin on the left and right of the icon.
+     * On mobile:  Set to be consistent with --side-spacing.
+     * */
+    --icon-side-spacing: 1.5rem;
 
     --date-color: hsl(0, 0%, 48%);
 }
@@ -30,10 +36,24 @@
 
 @media (max-width: 1023px) {
     :root {
-        --side-padding: 1.25rem;
+        --side-spacing: 1.25rem;
+        --icon-side-spacing: var(--side-spacing);
         --icon-width: 40px;
         --icon-image-width: 30px;
         --icon-size: 1.1rem;
+    }
+}
+
+/* Use a tighter margin and smaller icon dimensions on the most narrow screens.
+ * */
+@media (max-width: 600px) {
+    :root {
+        --side-spacing: .75rem;
+        --timeline-line-width: 3px;
+        --icon-width: 30px;
+        --icon-border-width: 3px;
+        --icon-image-width: 24px;
+        --icon-size: .9rem;
     }
 }
 
@@ -46,10 +66,10 @@
 
 .cd-timeline__container {
     position: relative;
-    padding: 1rem var(--side-padding);
+    padding: 1rem var(--side-spacing);
 }
 
-/* Line that goes through all the icons */
+/* The line that goes through all the icons */
 .cd-timeline__container::before {
     content: '';
     position: absolute;
@@ -62,19 +82,20 @@
 
 @media (min-width: 1023px) {
     .cd-timeline__container::before {
-        left: calc(50% - var(--timeline-line-width) / 2);
+        left: calc(50% - var(--timeline-line-half-width));
     }
 }
 
 @media (max-width: 1023px) {
     .cd-timeline__container::before {
-        margin-left: calc(var(--icon-width) / 2 - var(--timeline-line-width) / 2);
+        margin-left: calc(var(--icon-half-width) - var(--timeline-line-half-width));
     }
 }
 
 /* Each timeline item */
 .cd-timeline__block {
     display: flex;
+    align-items: flex-start;
     margin-bottom: 2.5rem;
 }
 
@@ -82,29 +103,75 @@
 .cd-timeline__content.box {
     box-shadow: var(--accent) 0px 3px 0px 0px;
     background-color: var(--content-background-color);
-}
-
-@media (max-width: 1023px) {
-    .cd-timeline__content.box {
-        margin-left: 1rem;
-    }
-}
-
-@media (min-width: 1023px) {
-    .cd-timeline__block:nth-child(even) {
-        flex-direction: row-reverse;
-    }
-}
-
-/* The title and text */
-.cd-timeline__content {
     flex-grow: 1;
 }
 
 @media (min-width: 1023px) {
-    .cd-timeline__content  {
+    .cd-timeline__block:nth-child(odd) {
+        flex-direction: row-reverse;
+    }
+    /* On desktop, the content boxes are anchored with respect to the vertical
+     * center of the screen, set using `left`/`right` properties depending on
+     * even and odd children of cd-timeline__block items.
+     * */
+    .cd-timeline__content.box  {
         width: 45%;
         flex-grow: 0;
+
+        position: relative;
+
+        --content-position: calc(50% + var(--icon-border-width) + var(--icon-half-width));
+
+        left: var(--content-position);
+        margin-left: var(--icon-side-spacing);
+    }
+    .cd-timeline__block:nth-child(odd) .cd-timeline__content.box {
+        left: unset;
+        right: var(--content-position);
+        margin-right: var(--icon-side-spacing);
+    }
+}
+
+@media (max-width: 1023px) {
+    .cd-timeline__content.box {
+        margin-left: var(--icon-side-spacing);
+    }
+}
+@media (max-width: 600px) {
+    .cd-timeline__content.box {
+        margin-left: var(--icon-side-spacing);
+    }
+}
+
+/* The icon and date components are grouped together in a flexbox to ensure
+ * there are center-aligned vertically on both desktop and mobile screens. This
+ * also makes it easy to both have dates' horizontal position follow that of
+ * the icon, and reverse their ordering for alternate timeline items on
+ * desktop.
+ * */
+.icon-date {
+    z-index: 4;
+    display: flex;
+    align-items: baseline;
+}
+
+@media (min-width: 1023px) {
+    .icon-date {
+        order: 1;
+
+        /* Arbitrary container width to prevent wrapping of the date text */
+        width: 50%;
+        align-items: center;
+        gap: var(--icon-side-spacing);
+
+        position: absolute;
+        left: calc(50% - var(--icon-half-width));
+    }
+
+    .cd-timeline__block:nth-child(even) .icon-date {
+        flex-direction: row-reverse;
+        left: unset;
+        right: calc(50% - var(--icon-half-width));
     }
 }
 
@@ -118,82 +185,69 @@
     border-radius: 50%;
     height: var(--icon-width);
     width: var(--icon-width);
+    /* The border does not actually use the border property because this border
+     * needs to cover the bottom box-shadow, which is easier if the border is
+     * implemented as a box-shadow.
+     * */
     box-shadow: 0 0 0 var(--icon-border-width) var(--icon-border-color),
                 inset 0 2px 0 rgba(0,0,0,.08),
                 0 3px 0 4px rgba(0,0,0,.05);
-    z-index: 2;
+    margin-top: var(--icon-border-width);
 
     /* Font Awesome icon size and color */
     color: var(--icon-color);
     font-size: var(--icon-size);
 }
 
-@media (min-width: 1023px) {
-    .cd-timeline__img {
-        order: 1;
-
-        position: absolute;
-        left: calc(50% - var(--icon-width) / 2);
-    }
-}
-
-/* Icon that uses pydis logo */
+/* Icons that use a custom image */
 .cd-timeline__img img {
-    /* Visually centering the pydis logo requires a margin adjustment here
-     * due to the right and bottom box shadow on the logo which is not very
-     * visible on the page.
-     *
-     * HACK: Hardcoded and specific to the pydis logo.
-     * */
-    margin-top: 1px;
-    margin-left: 1px;
-
     width: var(--icon-image-width);
     height: var(--icon-image-width);
 }
 
-/* Date next to icons */
-.cd-timeline__date {
-    position: absolute;
-    width: 100%;
-    margin-top: 1rem;
-    z-index: 3;
+/* Icons that use the pydis logo */
+.cd-timeline__img img.pydis {
+    /* Visually centering the pydis logo requires a margin adjustment here
+     * due to the right and bottom box shadow on the logo which is not very
+     * visible on the page.
+     *
+     * HACK: Harcoded; Unresponsive to actual image dimensions.
+     * */
+    margin-top: 1px;
+    margin-left: 1px;
+}
 
+.cd-timeline__date {
     font-size: .9rem;
     color: var(--date-color);
 }
 
 @media (min-width: 1023px) {
-    .cd-timeline__date {
-        left: 54%;
-    }
-
     .cd-timeline__block:nth-child(even) .cd-timeline__date {
         left: auto;
-        right: 54%;
+        right: 50%;
         text-align: right;
     }
 }
 
 @media (max-width: 1023px) {
     .cd-timeline__date {
-        /*
-         * On mobile, place the date at the top of the text box left-aligned
+        position: absolute;
+        /* On mobile, place the date at the top of the text box left-aligned
          * with the other text in the box. When margin-left is zero, the date
-         * is left-aligned to the right of the icon, but left of the icon's
-         * right box shadow.
+         * is left-aligned to the left of the icon (right of box-shadow).
          *
          * However, we're not adding --icon-border-width here because the
-         * 'margin-left: 1rem' for content boxes are aligned from before the
-         * left of the right icon-border.
+         * 'margin-left: var(--icon-side-spacing)' for content boxes are
+         * aligned from before the left of the right icon-border.
          *
          * 1.25rem is the left padding of content boxes from Bulma.
          * */
-        margin-left: calc(1rem + 1.25rem);
+        margin-left: calc(var(--icon-width) + var(--icon-side-spacing) + 1.25rem);
         margin-top: .75rem;
     }
 
-    .cd-timeline__content .title {
+    .cd-timeline__content.box .title {
         /* Make space for the date text */
         margin-top: 1.25rem;
     }
@@ -247,14 +301,6 @@
     background-color: #576297 !important;
 }
 
-/* Used for "Our logo is born" timeline item */
-.pydis-logo-banner {
-    border-radius: 10px;
-}
-.pydis-logo-banner img {
-    padding-right: 20px;
-}
-
 img, video, svg {
     max-width: 100%
 }
@@ -262,7 +308,7 @@ img, video, svg {
 /* Bounce-in and bounce-out animations, desktop-only */
 @media (min-width: 1023px) {
     .cd-timeline__img--hidden, .cd-timeline__content--hidden, .cd-timeline__date--hidden {
-        visibility: hidden
+        visibility: hidden;
     }
     .cd-timeline__img--bounce-in {
         animation: icon-bounce 0.6s;
