@@ -5,11 +5,14 @@
 :root {
     --side-spacing: 0;
     --background-color: rgb(232, 239, 245);
-    --content-background-color: white;
-    --accent: hsl(205, 38%, 89%);
+    --accent: hsl(205, 26%, 84%);
 
+    --timeline-line-color: hsl(205, 38%, 89%);
     --timeline-line-width: 4px;
     --timeline-line-half-width: calc(var(--timeline-line-width) / 2);
+
+    --content-background-color: white;
+    --content-padding: 1.25rem;
 
     --icon-width: 60px;
     --icon-half-width: calc(var(--icon-width) / 2);
@@ -18,18 +21,17 @@
     --icon-color: white;
     --icon-image-width: 40px;
     --icon-size: 1.5rem;
-    /* On desktop: Margin on the left and right of the icon.
-     * On mobile:  Set to be consistent with --side-spacing.
-     * */
     --icon-side-spacing: 1.5rem;
 
     --date-color: hsl(0, 0%, 48%);
+    --arrow-size: 7px;
 }
 
 [data-theme="dark"] {
     --background-color: #2C2F33;
     --content-background-color: #23272A;
     --accent: hsl(0, 0%, 34%);
+    --timeline-line-color: var(--accent);
 
     --icon-border-color: hsl(0, 0%, 50%);
 }
@@ -49,6 +51,7 @@
 @media (max-width: 600px) {
     :root {
         --side-spacing: .75rem;
+        --icon-side-spacing: .5rem;
         --timeline-line-width: 3px;
         --icon-width: 30px;
         --icon-border-width: 3px;
@@ -76,7 +79,7 @@
 
     height: 100%;
     width: var(--timeline-line-width);
-    background-color: var(--accent);
+    background-color: var(--timeline-line-color);
     z-index: 1;
 }
 
@@ -99,8 +102,44 @@
     margin-bottom: 2.5rem;
 }
 
+/* Arrow indicator on the top left/right of each content box */
+.timeline-content::before {
+    content: '';
+    position: absolute;
+    border: solid var(--arrow-size) transparent;
+    border-right-color: var(--accent);
+    height: 0;
+}
+
+@media (max-width: 1023px) {
+    .timeline-content::before {
+        margin-left: calc(0px - var(--content-padding) - 14px);
+        margin-top: calc(0px - var(--arrow-size) / 2);
+    }
+}
+
+@media (max-width: 600px) {
+    .timeline-content::before {
+        margin-top: calc(0px - var(--icon-half-width) + var(--arrow-size));
+    }
+}
+
+@media (min-width: 1023px) {
+    .timeline-content::before {
+        right: 100%;
+        margin-top: var(--arrow-size);
+    }
+    .timeline-item:nth-child(odd) .timeline-content::before {
+        border-left-color: var(--accent);
+        border-right-color: transparent;
+        left: 100%;
+        right: unset;
+    }
+}
+
 /* Visual container of the timeline item */
 .timeline-content.box {
+    padding: var(--content-padding);
     box-shadow: var(--accent) 0px 3px 0px 0px;
     background-color: var(--content-background-color);
     flex-grow: 1;
@@ -134,12 +173,7 @@
 
 @media (max-width: 1023px) {
     .timeline-content.box {
-        margin-left: var(--icon-side-spacing);
-    }
-}
-@media (max-width: 600px) {
-    .timeline-content.box {
-        margin-left: var(--icon-side-spacing);
+        margin-left: calc(var(--icon-side-spacing) + var(--arrow-size));
     }
 }
 
@@ -236,14 +270,9 @@
         /* On mobile, place the date at the top of the text box left-aligned
          * with the other text in the box. When margin-left is zero, the date
          * is left-aligned to the left of the icon (right of box-shadow).
-         *
-         * However, we're not adding --icon-border-width here because the
-         * 'margin-left: var(--icon-side-spacing)' for content boxes are
-         * aligned from before the left of the right icon-border.
-         *
-         * 1.25rem is the left padding of content boxes from Bulma.
          * */
-        margin-left: calc(var(--icon-width) + var(--icon-side-spacing) + 1.25rem);
+        margin-left: calc(var(--icon-width) + var(--icon-side-spacing)
+                        + var(--arrow-size) + var(--content-padding));
         margin-top: .75rem;
     }
 
