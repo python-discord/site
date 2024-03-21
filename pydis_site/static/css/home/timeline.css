@@ -58,19 +58,19 @@
 }
 
 /* Containers */
-.cd-timeline {
+.timeline {
     overflow: hidden;
     padding: 3rem 0;
     background-color: var(--background-color);
 }
 
-.cd-timeline__container {
+.timeline .container {
     position: relative;
     padding: 1rem var(--side-spacing);
 }
 
 /* The line that goes through all the icons */
-.cd-timeline__container::before {
+.timeline .container::before {
     content: '';
     position: absolute;
 
@@ -81,40 +81,40 @@
 }
 
 @media (min-width: 1023px) {
-    .cd-timeline__container::before {
+    .timeline .container::before {
         left: calc(50% - var(--timeline-line-half-width));
     }
 }
 
 @media (max-width: 1023px) {
-    .cd-timeline__container::before {
+    .timeline .container::before {
         margin-left: calc(var(--icon-half-width) - var(--timeline-line-half-width));
     }
 }
 
 /* Each timeline item */
-.cd-timeline__block {
+.timeline-item {
     display: flex;
     align-items: flex-start;
     margin-bottom: 2.5rem;
 }
 
 /* Visual container of the timeline item */
-.cd-timeline__content.box {
+.timeline-content.box {
     box-shadow: var(--accent) 0px 3px 0px 0px;
     background-color: var(--content-background-color);
     flex-grow: 1;
 }
 
 @media (min-width: 1023px) {
-    .cd-timeline__block:nth-child(odd) {
+    .timeline-item:nth-child(odd) {
         flex-direction: row-reverse;
     }
     /* On desktop, the content boxes are anchored with respect to the vertical
      * center of the screen, set using `left`/`right` properties depending on
-     * even and odd children of cd-timeline__block items.
+     * even and odd children of timeline items.
      * */
-    .cd-timeline__content.box  {
+    .timeline-content.box  {
         width: 45%;
         flex-grow: 0;
 
@@ -125,7 +125,7 @@
         left: var(--content-position);
         margin-left: var(--icon-side-spacing);
     }
-    .cd-timeline__block:nth-child(odd) .cd-timeline__content.box {
+    .timeline-item:nth-child(odd) .timeline-content.box {
         left: unset;
         right: var(--content-position);
         margin-right: var(--icon-side-spacing);
@@ -133,12 +133,12 @@
 }
 
 @media (max-width: 1023px) {
-    .cd-timeline__content.box {
+    .timeline-content.box {
         margin-left: var(--icon-side-spacing);
     }
 }
 @media (max-width: 600px) {
-    .cd-timeline__content.box {
+    .timeline-content.box {
         margin-left: var(--icon-side-spacing);
     }
 }
@@ -149,14 +149,14 @@
  * the icon, and reverse their ordering for alternate timeline items on
  * desktop.
  * */
-.icon-date {
+.timeline-icon-date {
     z-index: 4;
     display: flex;
     align-items: baseline;
 }
 
 @media (min-width: 1023px) {
-    .icon-date {
+    .timeline-icon-date {
         order: 1;
 
         /* Arbitrary container width to prevent wrapping of the date text */
@@ -168,7 +168,7 @@
         left: calc(50% - var(--icon-half-width));
     }
 
-    .cd-timeline__block:nth-child(even) .icon-date {
+    .timeline-item:nth-child(even) .timeline-icon-date {
         flex-direction: row-reverse;
         left: unset;
         right: calc(50% - var(--icon-half-width));
@@ -176,7 +176,7 @@
 }
 
 /* Icon */
-.cd-timeline__img {
+.timeline-icon {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -200,13 +200,13 @@
 }
 
 /* Icons that use a custom image */
-.cd-timeline__img img {
+.timeline-icon img {
     width: var(--icon-image-width);
     height: var(--icon-image-width);
 }
 
 /* Icons that use the pydis logo */
-.cd-timeline__img img.pydis {
+.timeline-icon img.pydis {
     /* Visually centering the pydis logo requires a margin adjustment here
      * due to the right and bottom box shadow on the logo which is not very
      * visible on the page.
@@ -217,13 +217,13 @@
     margin-left: 1px;
 }
 
-.cd-timeline__date {
+.timeline-date {
     font-size: .9rem;
     color: var(--date-color);
 }
 
 @media (min-width: 1023px) {
-    .cd-timeline__block:nth-child(even) .cd-timeline__date {
+    .timeline-item:nth-child(even) .timeline-date {
         left: auto;
         right: 50%;
         text-align: right;
@@ -231,7 +231,7 @@
 }
 
 @media (max-width: 1023px) {
-    .cd-timeline__date {
+    .timeline-date {
         position: absolute;
         /* On mobile, place the date at the top of the text box left-aligned
          * with the other text in the box. When margin-left is zero, the date
@@ -247,7 +247,7 @@
         margin-top: .75rem;
     }
 
-    .cd-timeline__content.box .title {
+    .timeline-content.content h3 {
         /* Make space for the date text */
         margin-top: 1.25rem;
     }
@@ -307,25 +307,25 @@ img, video, svg {
 
 /* Bounce-in and bounce-out animations, desktop-only */
 @media (min-width: 1023px) {
-    .cd-timeline__img--hidden, .cd-timeline__content--hidden, .cd-timeline__date--hidden {
+    .timeline-icon--hidden, .timeline-content--hidden, .timeline-date--hidden {
         visibility: hidden;
     }
-    .cd-timeline__img--bounce-in {
+    .timeline-icon--bounce-in {
         animation: icon-bounce 0.6s;
     }
-    .cd-timeline__content--bounce-in,
-    .cd-timeline__date--bounce-in {
+    .timeline-content--bounce-in,
+    .timeline-date--bounce-in {
         animation: item-bounce-left 0.6s;
     }
-    .cd-timeline__block:nth-child(even) .cd-timeline__content--bounce-in,
-    .cd-timeline__block:nth-child(even) .cd-timeline__date--bounce-in {
+    .timeline-item:nth-child(even) .timeline-content--bounce-in,
+    .timeline-item:nth-child(even) .timeline-date--bounce-in {
         animation-name: item-bounce-right;
     }
-    .cd-timeline__img--bounce-out {
+    .timeline-icon--bounce-out {
         animation: icon-bounce-out 0.6s;
     }
-    .cd-timeline__content--bounce-out,
-    .cd-timeline__date--bounce-out {
+    .timeline-content--bounce-out,
+    .timeline-date--bounce-out {
         animation: item-bounce-out 0.6s;
     }
 }
