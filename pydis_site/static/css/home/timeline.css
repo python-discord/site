@@ -245,7 +245,7 @@
      * due to the right and bottom box shadow on the logo which is not very
      * visible on the page.
      *
-     * HACK: Harcoded; Unresponsive to actual image dimensions.
+     * XXX: Hardcoded; Unresponsive to actual image dimensions.
      * */
     margin-top: 1px;
     margin-left: 1px;
