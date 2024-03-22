@@ -88,10 +88,10 @@ main.site-content {
 }
 
 #linode-logo {
-    padding-left: 15px;
-    background: url(https://www.linode.com/wp-content/uploads/2021/01/Linode-Logo-Black.svg) no-repeat center;
-    filter: invert(1) grayscale(1);
-    background-size: 60px;
+    padding-left: 5px;
+    background: url(/static/images/sponsors_dark/linode_text.png) no-repeat center;
+    background-size: 50px;
+    background-position: 2px -7px;
     color: #00000000;
 }
 
@@ -99,16 +99,16 @@ main.site-content {
     padding-left: 15px;
     background: url(/static/images/sponsors/netcup-white.svg) no-repeat center;
     background-size: 60px;
-    background-position: 0px 3px;
+    background-position: 2px 2px;
     color: #00000000;
 }
 
 #django-logo {
     padding-bottom: 2px;
-    background: url(https://static.djangoproject.com/img/logos/django-logo-negative.svg) no-repeat center;
-    filter: grayscale(1) invert(0.09);
-    background-size: 52px 25.5px;
-    background-position: -2px -1px;
+    padding-left: 5px;
+    background: url(/static/images/events/logos_dark/django.png) no-repeat center;
+    background-size: 56px;
+    background-position: -1px -1px;
     color: #00000000;
 }
 
