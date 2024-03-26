@@ -114,11 +114,11 @@ main.site-content {
 }
 
 #bulma-logo {
-    padding-left: 18px;
+    padding-left: 8px;
     height: 20px;
-    background: url(https://bulma.io/assets/brand/Bulma%20Logo%20White.png) no-repeat center;
-    background-size: 60px;
-    background-position: 2px 4px;
+    background: url(https://bulma.io/assets/brand/Bulma%20Wordmark%20White.png) no-repeat center;
+    background-size: 47px;
+    background-position: center center;
     color: #00000000;
 }
 
