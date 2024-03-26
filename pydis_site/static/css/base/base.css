@@ -89,9 +89,9 @@ main.site-content {
 
 #linode-logo {
     padding-left: 5px;
-    background: url(/static/images/sponsors_dark/linode_text.png) no-repeat;
-    background-size: 50px;
-    background-position: center -5px;
+    background: url(/static/images/sponsors_dark/linode_text.png) no-repeat center;
+    background-size: 49px;
+    background-position: 2px center;
     color: #00000000;
 }
 
