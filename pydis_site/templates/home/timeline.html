@@ -4,23 +4,24 @@
 {% block title %}Timeline{% endblock %}
 {% block head %}
   <link rel="stylesheet" href="{% static "css/home/timeline.css" %}">
-  <link rel="stylesheet" href="{% static "css/home/index.css" %}">
 {% endblock %}
 
 {% block content %}
   {% include "base/navbar.html" %}
 
-  <section class="cd-timeline js-cd-timeline">
-    <div class="container max-width-lg cd-timeline__container">
-
-      <div class="cd-timeline__block">
-        <div class="cd-timeline__img pastel-pink cd-timeline__img--picture">
-          <i class="fa fa-comments"></i>
+  <section class="timeline">
+    <div class="container">
+      <div class="timeline-item">
+        <div class="timeline-icon-date">
+          <div class="timeline-icon pastel-pink">
+            <span class="icon"><i class="fa fa-comments"></i></span>
+          </div>
+          <span class="timeline-date">Jul 11th, 2023</span>
         </div>
 
-        <div class="cd-timeline__content has-background-white-bis text-component">
-          <h2 class="has-text-dark">Switch to new paste service</h2>
-          <p class="color-contrast-medium has-text-dark">
+        <div class="timeline-content content box">
+          <h3>Switch to new paste service</h3>
+          <p>
             We migrate over to <a href="https://github.com/supakeen/pinnwand">pinnwand</a>
             as the service that powers our paste bin over at
             <a href="https://paste.pythondiscord.com">https://paste.pythondiscord.com/</a>.
@@ -28,58 +29,58 @@
             pastes, additional support for text highlighting languages, and plus, it's written in
             Python!
           </p>
-          <div class="flex justify-between items-center">
-            <span class="cd-timeline__date has-text-grey">Jul 11th, 2023</span>
-          </div>
         </div>
       </div>
 
-      <div class="cd-timeline__block">
-        <div class="cd-timeline__img cd-timeline__img--picture">
-          <img src="{% static "images/timeline/cd-icon-picture.svg" %}" alt="Picture">
+      <div class="timeline-item">
+        <div class="timeline-icon-date">
+          <div class="timeline-icon has-background-primary">
+            <img class="pydis" src="{% static "images/timeline/cd-icon-pydis.svg" %}" alt="Logo">
+          </div>
+          <span class="timeline-date">Jan 30th, 2023</span>
         </div>
 
-        <div class="cd-timeline__content has-background-white-bis text-component">
-          <h2 class="has-text-dark">Retirement of Joe and Sebastiaan</h2>
-          <p class="color-contrast-medium has-text-dark">
+        <div class="timeline-content content box">
+          <h3>Retirement of Joe and Sebastiaan</h3>
+          <p>
             Having been at the helm of Python Discord for over 5 and 3 years respectively, Joe and
             Sebastiaan retire and step down. They gain the @Founders role and continue as advisors
             to the @Directors, the new name of the original @Owners role.
 
             At the same time, Mina and Zig join Leon as co-directors.
           </p>
-          <div class="flex justify-between items-center">
-            <span class="cd-timeline__date has-text-grey">Jan 30th, 2023</span>
-          </div>
         </div>
       </div>
 
-      <div class="cd-timeline__block">
-        <div class="cd-timeline__img pastel-pink cd-timeline__img--picture">
-          <i class="fa fa-comments"></i>
+      <div class="timeline-item">
+        <div class="timeline-icon-date">
+          <div class="timeline-icon pastel-pink">
+            <span class="icon"><i class="fa fa-comments"></i></span>
+          </div>
+          <span class="timeline-date">Nov 25th, 2022</span>
         </div>
 
-        <div class="cd-timeline__content has-background-white-bis text-component">
-          <h2 class="has-text-dark">Switch to forum-based help system</h2>
-          <p class="color-contrast-medium has-text-dark">
+        <div class="timeline-content content box">
+          <h3>Switch to forum-based help system</h3>
+          <p>
             We migrate our help system to use a forum channel, retiring our home-grown rotating help
             system after 3 years of service and nearly 500,000 help sessions. Forum channels offer
             a better experience as members can create their own dedicated thread in a discoverable place.
           </p>
-          <div class="flex justify-between items-center">
-            <span class="cd-timeline__date has-text-grey">Nov 25th, 2022</span>
-          </div>
         </div>
       </div>
 
-      <div class="cd-timeline__block">
-        <div class="cd-timeline__img cd-timeline__img--picture">
-          <img src="{% static "images/timeline/cd-icon-picture.svg" %}" alt="Picture">
+      <div class="timeline-item">
+        <div class="timeline-icon-date">
+          <div class="timeline-icon has-background-primary">
+            <img class="pydis" src="{% static "images/timeline/cd-icon-pydis.svg" %}" alt="Logo">
+          </div>
+          <span class="timeline-date">Oct 24th, 2022</span>
         </div>
 
-        <div class="cd-timeline__content has-background-white-bis text-component">
-          <h2 class="has-text-dark">Python 3.11 Release Stream</h2>
-          <p class="color-contrast-medium has-text-dark">
+        <div class="timeline-content content box">
+          <h3>Python 3.11 Release Stream</h3>
+          <p>
             With the Python 3.10 Release Stream being such a success, we brought it back for the
             release of Python 3.11. Hosted by Leon, and CPython 3.11 Release Manager, Pablo Galindo,
             they were joined by other CPython Core Developers. Together, they discuss the specific
@@ -91,21 +92,20 @@
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowfullscreen></iframe>
           </div>
-
-          <div class="flex justify-between items-center">
-            <span class="cd-timeline__date has-text-grey">Oct 24th, 2022</span>
-          </div>
         </div>
       </div>
 
-      <div class="cd-timeline__block">
-        <div class="cd-timeline__img pastel-lime cd-timeline__img--picture">
-          <i class="fa fa-dice"></i>
+      <div class="timeline-item">
+        <div class="timeline-icon-date">
+          <div class="timeline-icon pastel-lime">
+            <span class="icon"><i class="fa fa-dice"></i></span>
+          </div>
+          <span class="timeline-date">July 21st, 2022</span>
         </div>
 
-        <div class="cd-timeline__content has-background-white-bis text-component">
-          <h2 class="has-text-dark">Summer Code Jam 2022 (CJ9)</h2>
-          <p class="color-contrast-medium has-text-dark">
+        <div class="timeline-content content box">
+          <h3>Summer Code Jam 2022 (CJ9)</h3>
+          <p>
             We host the 9th Code Jam. This year, teams had to use <b>websockets</b> to create a
             project based on the theme, <b>It's not a bug, it's a feature</b>. In all, 24 teams
             submitted their projects. At the end, we held a livestream demoing the top 10 projects
@@ -117,129 +117,128 @@
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowfullscreen></iframe>
           </div>
-
-          <div class="flex justify-between items-center">
-            <span class="cd-timeline__date has-text-grey">July 21st, 2022</span>
-          </div>
         </div>
       </div>
 
-      <div class="cd-timeline__block">
-        <div style="background-color: grey;" class="cd-timeline__img cd-timeline__img--picture">
-          <i class="fa fa-handshake"></i>
+      <div class="timeline-item">
+        <div class="timeline-icon-date">
+          <div style="background-color: grey;" class="timeline-icon has-background-primary">
+            <i class="fa fa-handshake"></i>
+          </div>
+          <span class="timeline-date">May 19th, 2022</span>
         </div>
 
-        <div class="cd-timeline__content has-background-white-bis text-component">
-          <h2 class="has-text-dark">Partnership with pyqtgraph</h2>
-          <p class="color-contrast-medium has-text-dark">
+        <div class="timeline-content content box">
+          <h3>Partnership with pyqtgraph</h3>
+          <p>
             The <code>#pyqtgraph</code> channel is created for the Scientific Graphics and GUI
             library pyqtgraph, joining <code>#black-formatter</code>.
           </p>
-          <div class="flex justify-between items-center">
-            <span class="cd-timeline__date has-text-grey">May 19th, 2022</span>
-          </div>
         </div>
       </div>
 
-      <div class="cd-timeline__block">
-        <div class="cd-timeline__img pastel-blue cd-timeline__img--picture">
-          <i class="fa fa-robot"></i>
+      <div class="timeline-item">
+        <div class="timeline-icon-date">
+          <div class="timeline-icon pastel-blue">
+            <span class="icon"><i class="fa fa-robot"></i></span>
+          </div>
+          <span class="timeline-date">Feb 21st, 2022</span>
         </div>
 
-        <div class="cd-timeline__content has-background-white-bis text-component">
-          <h2 class="has-text-dark">Addition of @Sir Robin</h2>
-          <p class="color-contrast-medium has-text-dark">
+        <div class="timeline-content content box">
+          <h3>Addition of @Sir Robin</h3>
+          <p>
             Our arsenal of bots grows! We add @Sir Robin to power and manage all of our future
             events and to support the Events Team.
           </p>
-          <div class="flex justify-between items-center">
-            <span class="cd-timeline__date has-text-grey">Feb 21st, 2022</span>
-          </div>
         </div>
       </div>
 
-      <div class="cd-timeline__block">
-        <div class="cd-timeline__img pastel-green cd-timeline__img--picture">
-          <i class="fa fa-question"></i>
+      <div class="timeline-item">
+        <div class="timeline-icon-date">
+          <div class="timeline-icon pastel-green">
+            <span class="icon"><i class="fa fa-question"></i></span>
+          </div>
+          <span class="timeline-date">Feb 12th, 2022</span>
         </div>
 
-        <div class="cd-timeline__content has-background-white-bis text-component">
-          <h2 class="has-text-dark">Trivia Night</h2>
-          <p class="color-contrast-medium has-text-dark">
+        <div class="timeline-content content box">
+          <h3>Trivia Night</h3>
+          <p>
             How well do you know Python inside out? Members got to find out in a Trivia Night event.
             Contestants were given questions about Python's internals, its development, and more.
             To win, contestants had to get the most questions right while being fast to answer.
           </p>
-          <div class="flex justify-between items-center">
-            <span class="cd-timeline__date has-text-grey">Feb 12th, 2022</span>
-          </div>
         </div>
       </div>
 
-      <div class="cd-timeline__block">
-        <div class="cd-timeline__img cd-timeline__img--picture">
-          <img src="{% static "images/timeline/cd-icon-picture.svg" %}" alt="Picture">
+      <div class="timeline-item">
+        <div class="timeline-icon-date">
+          <div class="timeline-icon has-background-primary">
+            <img class="pydis" src="{% static "images/timeline/cd-icon-pydis.svg" %}" alt="Logo">
+          </div>
+          <span class="timeline-date">Feb 9th, 2022</span>
         </div>
 
-        <div class="cd-timeline__content has-background-white-bis text-component">
-          <h2 class="has-text-dark">Creation of Events Team</h2>
-          <p class="color-contrast-medium has-text-dark">
+        <div class="timeline-content content box">
+          <h3>Creation of Events Team</h3>
+          <p>
             We form the Events Team to organise and run future events. Led by Kat and comprised by
             staff members, the goal of the team is to ultimately host more events in a more
             sustainable way.
           </p>
-          <div class="flex justify-between items-center">
-            <span class="cd-timeline__date has-text-grey">Feb 9th, 2022</span>
-          </div>
         </div>
       </div>
 
 
-      <div class="cd-timeline__block">
-        <div class="cd-timeline__img pastel-red cd-timeline__img--picture">
-          <i class="fa fa-code"></i>
+      <div class="timeline-item">
+        <div class="timeline-icon-date">
+          <div class="timeline-icon pastel-red">
+            <span class="icon"><i class="fa fa-code"></i></span>
+          </div>
+          <span class="timeline-date">Feb 2nd, 2022</span>
         </div>
 
-        <div class="cd-timeline__content has-background-white-bis text-component">
-          <h2 class="has-text-dark">Deployment of Smarter Resources</h2>
-          <p class="color-contrast-medium has-text-dark">
+        <div class="timeline-content content box">
+          <h3>Deployment of Smarter Resources</h3>
+          <p>
             We gave our resources pages some much needed love and
             <a href="https://www.pythondiscord.com/resources/">
               reorganised them into a single page</a>,
             complete with a shiny new resource filter that allows you to more quickly find
             ones that relate to your interests, experience, learning style, and ability to pay!
           </p>
-          <div class="flex justify-between items-center">
-            <span class="cd-timeline__date has-text-grey">Feb 2nd, 2022</span>
-          </div>
         </div>
       </div>
 
-      <div class="cd-timeline__block">
-        <div class="cd-timeline__img pastel-dark-blue cd-timeline__img--picture">
-          <i class="fa fa-users"></i>
+      <div class="timeline-item">
+        <div class="timeline-icon-date">
+          <div class="timeline-icon pastel-dark-blue">
+            <span class="icon"><i class="fa fa-users"></i></span>
+          </div>
+          <span class="timeline-date">Jan 19, 2022</span>
         </div>
 
-        <div class="cd-timeline__content has-background-white-bis text-component">
-          <h2 class="has-text-dark">We hit 300 000 members!</h2>
-          <p class="color-contrast-medium has-text-dark">
+        <div class="timeline-content content box">
+          <h3>We hit 300 000 members!</h3>
+          <p>
             Thanks to an increasing growth rate, Python Discord's membership count doubled from
             150,000 to 300,000 in less than a year!
           </p>
-          <div class="flex justify-between items-center">
-            <span class="cd-timeline__date has-text-grey">Jan 19, 2022</span>
-          </div>
         </div>
       </div>
 
-      <div class="cd-timeline__block">
-        <div class="cd-timeline__img cd-timeline__img--picture">
-          <img src="{% static "images/timeline/cd-icon-picture.svg" %}" alt="Picture">
+      <div class="timeline-item">
+        <div class="timeline-icon-date">
+          <div class="timeline-icon has-background-primary">
+            <img class="pydis" src="{% static "images/timeline/cd-icon-pydis.svg" %}" alt="Logo">
+          </div>
+          <span class="timeline-date">Oct 4th, 2021</span>
         </div>
 
-        <div class="cd-timeline__content has-background-white-bis text-component">
-          <h2 class="has-text-dark">We host the Python 3.10 Release Stream</h2>
-          <p class="color-contrast-medium has-text-dark">
+        <div class="timeline-content content box">
+          <h3>We host the Python 3.10 Release Stream</h3>
+          <p>
             Leon and Pablo Galindo, CPython Core Developer and Release Manager, host the Python 3.10
             Release Stream, joined by other core devs Carol Willing, Irit Katriel, Łukasz Langa, and
             Brandt Bucher. They talked in-depth about the new features introduced in 3.10, the
@@ -251,39 +250,38 @@
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowfullscreen></iframe>
           </div>
-
-          <div class="flex justify-between items-center">
-            <span class="cd-timeline__date has-text-grey">Oct 4th, 2021</span>
-          </div>
         </div>
       </div>
 
-      <div class="cd-timeline__block">
-        <div style="background-color: grey;" class="cd-timeline__img cd-timeline__img--picture">
-          <i class="fa fa-handshake"></i>
+      <div class="timeline-item">
+        <div class="timeline-icon-date">
+          <div style="background-color: grey;" class="timeline-icon has-background-primary">
+            <i class="fa fa-handshake"></i>
+          </div>
+          <span class="timeline-date">May 24th, 2021</span>
         </div>
 
-        <div class="cd-timeline__content has-background-white-bis text-component">
-          <h2 class="has-text-dark">Partnership with Black</h2>
-          <p class="color-contrast-medium has-text-dark">
+        <div class="timeline-content content box">
+          <h3>Partnership with Black</h3>
+          <p>
             We partner with the uncompromising code formatter project, Black, who were looking for a
             new home for their real-time chat. Python Discord ended up being that home, resulting in
             the creation of the <code>#black-formatter</code> channel.
           </p>
-          <div class="flex justify-between items-center">
-            <span class="cd-timeline__date has-text-grey">May 24th, 2021</span>
-          </div>
         </div>
       </div>
 
-      <div class="cd-timeline__block">
-        <div class="cd-timeline__img pastel-orange cd-timeline__img--picture">
-          <i class="fa fa-dice"></i>
+      <div class="timeline-item">
+        <div class="timeline-icon-date">
+          <div class="timeline-icon pastel-orange">
+            <span class="icon"><i class="fa fa-dice"></i></span>
+          </div>
+          <span class="timeline-date">July 9, 2021</span>
         </div>
 
-        <div class="cd-timeline__content has-background-white-bis text-component">
-          <h2 class="has-text-dark">Summer Code Jam 2021 (CJ8)</h2>
-          <p class="color-contrast-medium has-text-dark">
+        <div class="timeline-content content box">
+          <h3>Summer Code Jam 2021 (CJ8)</h3>
+          <p>
             We host the 8th now-annual Code Jam. Teams had to create a program with an text-based user
             interface (TUI), all designed around the theme of “think inside the box.” Ultimately, 51
             teams submitted projects.
@@ -291,65 +289,62 @@
               The winning submissions are listed on our website.
             </a>
           </p>
-
-          <div class="flex justify-between items-center">
-            <span class="cd-timeline__date has-text-grey">July 9, 2021</span>
-          </div>
         </div>
       </div>
 
-      <div class="cd-timeline__block">
-        <div class="cd-timeline__img pastel-purple cd-timeline__img--picture">
-          <i class="fa fa-palette"></i>
+      <div class="timeline-item">
+        <div class="timeline-icon-date">
+          <div class="timeline-icon pastel-purple">
+            <span class="icon"><i class="fa fa-palette"></i></span>
+          </div>
+          <span class="timeline-date">May 24, 2021</span>
         </div>
 
-        <div class="cd-timeline__content has-background-white-bis text-component">
-          <h2 class="has-text-dark">Inaugural run of Pixels</h2>
-          <p class="color-contrast-medium has-text-dark">
+        <div class="timeline-content content box">
+          <h3>Inaugural run of Pixels</h3>
+          <p>
             Inspired by the subreddit, r/place, Pixels was our collaborative canvas event held
             between May 25 to June 14, providing a beginner-friendly API to paint pixels on a
             virtual canvas.
           </p>
-          <p class="color-contrast-medium has-text-dark">
+          <p>
             Later, we released <a href="https://blog.pythondiscord.com/pixels-summer-2021/">a blog post</a>
             summarizing what happened, our motives, and some stories from during development.
           </p>
-
-          <div class="flex justify-between items-center">
-            <span class="cd-timeline__date has-text-grey">May 24, 2021</span>
-          </div>
         </div>
       </div>
 
-      <div class="cd-timeline__block">
-        <div class="cd-timeline__img cd-timeline__img--picture">
-          <img src="{% static "images/timeline/cd-icon-picture.svg" %}" alt="Picture">
+      <div class="timeline-item">
+        <div class="timeline-icon-date">
+          <div class="timeline-icon has-background-primary">
+            <img class="pydis" src="{% static "images/timeline/cd-icon-pydis.svg" %}" alt="Logo">
+          </div>
+          <span class="timeline-date">April 23, 2021</span>
         </div>
 
-        <div class="cd-timeline__content has-background-white-bis text-component">
-          <h2 class="has-text-dark">Owners become PSF Fellows</h2>
-          <p class="color-contrast-medium has-text-dark">Joe, Leon, and Sebastiaan
+        <div class="timeline-content content box">
+          <h3>Owners become PSF Fellows</h3>
+          <p>Joe, Leon, and Sebastiaan
             <a href="https://pyfound.blogspot.com/2021/04/python-software-foundation-fellow.html">
               are recognized as Python Software Foundation Fellows
             </a>
             for their substantial contributions to the Python ecosystem by fostering
             Python Discord.
           </p>
-
-          <div class="flex justify-between items-center">
-            <span class="cd-timeline__date has-text-grey">April 23, 2021</span>
-          </div>
         </div>
       </div>
 
-      <div class="cd-timeline__block">
-        <div class="cd-timeline__img pastel-red cd-timeline__img--picture">
-          <i class="fab fa-youtube"></i>
+      <div class="timeline-item">
+        <div class="timeline-icon-date">
+          <div class="timeline-icon pastel-red">
+            <span class="icon"><i class="fab fa-youtube"></i></span>
+          </div>
+          <span class="timeline-date">Mar 21st, 2021</span>
         </div>
 
-        <div class="cd-timeline__content has-background-white-bis text-component">
-          <h2 class="has-text-dark">Summer Code Jam 2020 Highlights</h2>
-          <p class="color-contrast-medium has-text-dark">
+        <div class="timeline-content content box">
+          <h3>Summer Code Jam 2020 Highlights</h3>
+          <p>
             We release a new video to our YouTube showing the best projects from the Summer Code Jam 2020.
             Better late than never!
           </p>
@@ -359,21 +354,20 @@
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowfullscreen></iframe>
           </div>
-
-          <div class="flex justify-between items-center">
-            <span class="cd-timeline__date has-text-grey">Mar 21st, 2021</span>
-          </div>
         </div>
       </div>
 
-      <div class="cd-timeline__block">
-        <div class="cd-timeline__img pastel-purple cd-timeline__img--picture">
-          <i class="fa fa-comment"></i>
+      <div class="timeline-item">
+        <div class="timeline-icon-date">
+          <div class="timeline-icon pastel-purple">
+            <span class="icon"><i class="fa fa-comment"></i></span>
+          </div>
+          <span class="timeline-date">Mar 13th, 2021</span>
         </div>
 
-        <div class="cd-timeline__content has-background-white-bis text-component">
-          <h2 class="has-text-dark">New feature: Weekly discussion channel</h2>
-          <p class="color-contrast-medium has-text-dark">Every week (or two weeks), we'll be posting a new topic to discuss in a
+        <div class="timeline-content content box">
+          <h3>New feature: Weekly discussion channel</h3>
+          <p>Every week (or two weeks), we'll be posting a new topic to discuss in a
             channel called <b>#weekly-topic-discussion</b>. Our inaugural topic is a PyCon talk by Anthony Shaw called
             <b>Wily Python: Writing simpler and more maintainable Python.</b></a>.
           </p>
@@ -383,43 +377,40 @@
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowfullscreen></iframe>
           </div>
-
-          <div class="flex justify-between items-center">
-            <span class="cd-timeline__date has-text-grey">Mar 13th, 2021</span>
-          </div>
         </div>
       </div>
 
-      <div class="cd-timeline__block">
-        <div class="cd-timeline__img pastel-pink cd-timeline__img--picture">
-          <i class="fa fa-microphone"></i>
+      <div class="timeline-item">
+        <div class="timeline-icon-date">
+          <div class="timeline-icon pastel-pink">
+            <span class="icon"><i class="fa fa-microphone"></i></span>
+          </div>
+          <span class="timeline-date">Mar 13th, 2021</span>
         </div>
 
-        <div class="cd-timeline__content has-background-white-bis text-component">
-          <h2 class="has-text-dark">We're on the Teaching Python podcast!</h2>
-          <p class="color-contrast-medium has-text-dark">Leon joins Sean and Kelly on the Teaching Python podcast to discuss how the pandemic has
+        <div class="timeline-content content box">
+          <h3>We're on the Teaching Python podcast!</h3>
+          <p>Leon joins Sean and Kelly on the Teaching Python podcast to discuss how the pandemic has
             changed the way we learn, and what role communities like Python Discord can play in this new world.
             You can find the episode <a href="https://www.teachingpython.fm/63">at teachingpython.fm</a>.
           </p>
 
           <iframe width="100%" height="166" frameborder="0" scrolling="no"
-                src="https://player.fireside.fm/v2/UIYXtbeL+qOjGAsKi?theme=dark"
-          ></iframe>
-
-          <div class="flex justify-between items-center">
-            <span class="cd-timeline__date has-text-grey">Mar 13th, 2021</span>
-          </div>
+                src="https://player.fireside.fm/v2/UIYXtbeL+qOjGAsKi?theme=dark"></iframe>
         </div>
       </div>
 
-      <div class="cd-timeline__block">
-        <div class="cd-timeline__img pastel-green cd-timeline__img--picture">
-          <i class="fa fa-microphone"></i>
+      <div class="timeline-item">
+        <div class="timeline-icon-date">
+          <div class="timeline-icon pastel-green">
+            <span class="icon"><i class="fa fa-microphone"></i></span>
+          </div>
+          <span class="timeline-date">Mar 1st, 2021</span>
         </div>
 
-        <div class="cd-timeline__content has-background-white-bis text-component">
-          <h2 class="has-text-dark">Leon Sandøy appears on Talk Python To Me</h2>
-          <p class="color-contrast-medium has-text-dark">Leon goes on the Talk Python to Me podcast with Michael Kennedy
+        <div class="timeline-content content box">
+          <h3>Leon Sandøy appears on Talk Python To Me</h3>
+          <p>Leon goes on the Talk Python to Me podcast with Michael Kennedy
             to discuss the history of Python Discord, the critical importance of culture, and how to run a massive
             community. You can find the episode <a href="https://talkpython.fm/episodes/show/305/python-community-at-python-discord"> at talkpython.fm</a>.
           </p>
@@ -427,36 +418,35 @@
           <iframe width="100%" height="166" scrolling="no" frameborder="no"
                src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/996083146&color=ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false">
           </iframe>
-
-          <div class="flex justify-between items-center">
-            <span class="cd-timeline__date has-text-grey">Mar 1st, 2021</span>
-          </div>
         </div>
       </div>
 
-      <div class="cd-timeline__block">
-        <div class="cd-timeline__img pastel-dark-blue cd-timeline__img--picture">
-          <i class="fa fa-users"></i>
+      <div class="timeline-item">
+        <div class="timeline-icon-date">
+          <div class="timeline-icon pastel-dark-blue">
+            <span class="icon"><i class="fa fa-users"></i></span>
+          </div>
+          <span class="timeline-date">Feb 18th, 2021</span>
         </div>
 
-        <div class="cd-timeline__content has-background-white-bis text-component">
-          <h2 class="has-text-dark">We now have 150,000 members!</h2>
-          <p class="color-contrast-medium has-text-dark">Our growth continues to accelerate.</p>
+        <div class="timeline-content content box">
+          <h3>We now have 150,000 members!</h3>
+          <p>Our growth continues to accelerate.</p>
 
-          <div class="flex justify-between items-center">
-            <span class="cd-timeline__date has-text-grey">Feb 18th, 2021</span>
-          </div>
         </div>
       </div>
 
-      <div class="cd-timeline__block">
-        <div class="cd-timeline__img pastel-blue cd-timeline__img--picture">
-          <i class="fa fa-music"></i>
+      <div class="timeline-item">
+        <div class="timeline-icon-date">
+          <div class="timeline-icon pastel-blue">
+            <span class="icon"><i class="fa fa-music"></i></span>
+          </div>
+          <span class="timeline-date">February 8th, 2021</span>
         </div>
 
-        <div class="cd-timeline__content has-background-white-bis text-component">
-          <h2 class="has-text-dark">We release The PEP 8 song</h2>
-          <p class="color-contrast-medium has-text-dark">We release the PEP 8 song on our YouTube channel, which finds tens of
+        <div class="timeline-content content box">
+          <h3>We release The PEP 8 song</h3>
+          <p>We release the PEP 8 song on our YouTube channel, which finds tens of
             thousands of listeners!</p>
 
           <div class="force-aspect-container">
@@ -464,113 +454,107 @@
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowfullscreen></iframe>
           </div>
-
-          <div class="flex justify-between items-center">
-            <span class="cd-timeline__date has-text-grey">February 8th, 2021</span>
-          </div>
         </div>
       </div>
 
-      <div class="cd-timeline__block">
-        <div class="cd-timeline__img pastel-red cd-timeline__img--picture">
-          <i class="fa fa-snowflake"></i>
+      <div class="timeline-item">
+        <div class="timeline-icon-date">
+          <div class="timeline-icon pastel-red">
+            <span class="icon"><i class="fa fa-snowflake"></i></span>
+          </div>
+          <span class="timeline-date">December 1st - 25th, 2020</span>
         </div>
 
-        <div class="cd-timeline__content has-background-white-bis text-component">
-          <h2 class="has-text-dark">Advent of Code attracts hundreds of participants</h2>
-          <p class="color-contrast-medium has-text-dark">
+        <div class="timeline-content content box">
+          <h3>Advent of Code attracts hundreds of participants</h3>
+          <p>
             A total of 443 Python Discord members sign up to be part of
             <a href="https://adventofcode.com/">Eric Wastl's excellent Advent of Code event</a>.
             As always, we provide dedicated announcements, scoreboards, bot commands and channels for our members
             to enjoy the event in.
-
           </p>
-
-          <div class="flex justify-between items-center">
-            <span class="cd-timeline__date has-text-grey">December 1st - 25th, 2020</span>
-          </div>
         </div>
       </div>
 
-      <div class="cd-timeline__block">
-        <div class="cd-timeline__img pastel-orange cd-timeline__img--picture">
-          <i class="fa fa-wrench"></i>
+      <div class="timeline-item">
+        <div class="timeline-icon-date">
+          <div class="timeline-icon pastel-orange">
+            <span class="icon"><i class="fa fa-wrench"></i></span>
+          </div>
+          <span class="timeline-date">Nov 29th, 2020</span>
         </div>
 
-        <div class="cd-timeline__content has-background-white-bis text-component">
-          <h2 class="has-text-dark">We migrate all our infrastructure to Kubernetes</h2>
-          <p class="color-contrast-medium has-text-dark">As our tech stack grows, we decide to migrate all our services over to a
+        <div class="timeline-content content box">
+          <h3>We migrate all our infrastructure to Kubernetes</h3>
+          <p>As our tech stack grows, we decide to migrate all our services over to a
             container orchestration paradigm via Kubernetes. This gives us better control and scalability.
             <b>Joe Banks</b> takes on the role as DevOps Lead.
           </p>
-
-          <div class="flex justify-between items-center">
-            <span class="cd-timeline__date has-text-grey">Nov 29th, 2020</span>
-          </div>
         </div>
       </div>
 
-      <div class="cd-timeline__block">
-        <div class="cd-timeline__img pastel-dark-blue cd-timeline__img--picture">
-          <i class="fa fa-users"></i>
+      <div class="timeline-item">
+        <div class="timeline-icon-date">
+          <div class="timeline-icon pastel-dark-blue">
+            <span class="icon"><i class="fa fa-users"></i></span>
+          </div>
+          <span class="timeline-date">Oct 22nd, 2020</span>
         </div>
 
-        <div class="cd-timeline__content has-background-white-bis text-component">
-          <h2 class="has-text-dark">Python Discord hits 100,000 members!</h2>
-          <p class="color-contrast-medium has-text-dark">Only six months after hitting 40,000 users, we hit 100,000 users. A
-            monumental milestone,
-            and one we're very proud of. To commemorate it, we create this timeline.</p>
-
-          <div class="flex justify-between items-center">
-            <span class="cd-timeline__date has-text-grey">Oct 22nd, 2020</span>
-          </div>
+        <div class="timeline-content content box">
+          <h3>Python Discord hits 100,000 members!</h3>
+          <p>Only six months after hitting 40,000 users, we hit 100,000 users. A
+            monumental milestone, and one we're very proud of. To commemorate
+            it, we create this timeline.</p>
         </div>
       </div>
 
-      <div class="cd-timeline__block">
-        <div class="cd-timeline__img cd-timeline__img--picture">
-          <img src="{% static "images/timeline/cd-icon-picture.svg" %}" alt="Picture">
+      <div class="timeline-item">
+        <div class="timeline-icon-date">
+          <div class="timeline-icon has-background-primary">
+            <img class="pydis" src="{% static "images/timeline/cd-icon-pydis.svg" %}" alt="Logo">
+          </div>
+          <span class="timeline-date">Oct 21st, 2020</span>
         </div>
 
-        <div class="cd-timeline__content has-background-white-bis text-component">
-          <h2 class="has-text-dark">Python Discord hosts the 2020 CPython Core Developer Q&A</h2>
+        <div class="timeline-content content box">
+          <h3>Python Discord hosts the 2020 CPython Core Developer Q&A</h3>
           <div class="force-aspect-container">
             <iframe class="force-aspect-content" src="https://www.youtube.com/embed/gXMdfBTcOfQ" frameborder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowfullscreen></iframe>
           </div>
 
-          <div class="flex justify-between items-center">
-            <span class="cd-timeline__date has-text-grey">Oct 21st, 2020</span>
-          </div>
         </div>
       </div>
 
-      <div class="cd-timeline__block">
-        <div class="cd-timeline__img pastel-pink cd-timeline__img--picture">
-          <i class="fa fa-handshake"></i>
+      <div class="timeline-item">
+        <div class="timeline-icon-date">
+          <div class="timeline-icon pastel-pink">
+            <span class="icon"><i class="fa fa-handshake"></i></span>
+          </div>
+          <span class="timeline-date">Aug 16th, 2020</span>
         </div>
 
-        <div class="cd-timeline__content has-background-white-bis text-component">
-          <h2 class="has-text-dark">Python Discord is now the new home of the PyWeek event!</h2>
-          <p class="color-contrast-medium has-text-dark">PyWeek, a game jam that has been running since 2005, joins Python
-            Discord as one of our official events. Find more information about PyWeek on <a
-                href="https://pyweek.org/">their official website</a>.</p>
-
-          <div class="flex justify-between items-center">
-            <span class="cd-timeline__date has-text-grey">Aug 16th, 2020</span>
-          </div>
+        <div class="timeline-content content box">
+          <h3>Python Discord is now the new home of the PyWeek event!</h3>
+          <p>PyWeek, a game jam that has been running since 2005, joins Python
+            Discord as one of our official events. Find more information about PyWeek on
+            <a href="https://pyweek.org/">their official website</a>.</p>
         </div>
       </div>
 
-      <div class="cd-timeline__block">
-        <div class="cd-timeline__img pastel-blue cd-timeline__img--picture">
-          <i class="fa fa-dice"></i>
+      <div class="timeline-item">
+        <div class="timeline-icon-date">
+          <div class="timeline-icon pastel-blue">
+            <span class="icon"><i class="fa fa-dice"></i></span>
+          </div>
+          <span class="timeline-date">Jul 31st, 2020</span>
         </div>
 
-        <div class="cd-timeline__content has-background-white-bis text-component">
-          <h2 class="has-text-dark">PyDis summer code jam 2020 with the theme “Early Internet” and Django as the technology</h2>
-          <p class="color-contrast-medium has-text-dark">Sponsored by the Django Software Foundation and JetBrains, the Summer
+        <div class="timeline-content content box">
+          <h3>PyDis summer code jam 2020 with the theme “Early Internet” and Django as the technology</h3>
+          <p>Sponsored by the Django Software Foundation and JetBrains, the Summer
             Code Jam for 2020 attracts hundreds of participants, and sees the creation of some fantastic
             projects. Check them out in our judge stream below:</p>
 
@@ -579,72 +563,71 @@
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowfullscreen></iframe>
           </div>
-
-          <div class="flex justify-between items-center">
-            <span class="cd-timeline__date has-text-grey">Jul 31st, 2020</span>
-          </div>
         </div>
       </div>
 
-      <div class="cd-timeline__block">
-        <div class="cd-timeline__img pastel-red cd-timeline__img--picture">
-          <i class="fa fa-chart-bar"></i>
+      <div class="timeline-item">
+        <div class="timeline-icon-date">
+          <div class="timeline-icon pastel-red">
+            <span class="icon"><i class="fa fa-chart-bar"></i></span>
+          </div>
+          <span class="timeline-date">Jun 4th, 2020</span>
         </div>
 
-        <div class="cd-timeline__content has-background-white-bis text-component">
-          <h2 class="has-text-dark">Python Discord Public Statistics are now live</h2>
-          <p class="color-contrast-medium has-text-dark">After getting numerous requests to publish beautiful data on member
+        <div class="timeline-content content box">
+          <h3>Python Discord Public Statistics are now live</h3>
+          <p>After getting numerous requests to publish beautiful data on member
             count and channel use, we create <a href="https://stats.pythondiscord.com/">stats.pythondiscord.com</a> for
             all to enjoy.</p>
-
-          <div class="flex justify-between items-center">
-            <span class="cd-timeline__date has-text-grey">Jun 4th, 2020</span>
-          </div>
         </div>
       </div>
 
-      <div class="cd-timeline__block">
-        <div class="cd-timeline__img pastel-pink cd-timeline__img--picture">
-          <i class="fa fa-handshake"></i>
+      <div class="timeline-item">
+        <div class="timeline-icon-date">
+          <div class="timeline-icon pastel-pink">
+            <span class="icon"><i class="fa fa-handshake"></i></span>
+          </div>
+          <span class="timeline-date">May 28th, 2020</span>
         </div>
 
-        <div class="cd-timeline__content has-background-white-bis text-component">
-          <h2 class="has-text-dark">Python Discord is now listed on python.org/community</h2>
-          <p class="color-contrast-medium has-text-dark">After working towards this goal for months, we finally work out an
+        <div class="timeline-content content box">
+          <h3>Python Discord is now listed on python.org/community</h3>
+          <p>After working towards this goal for months, we finally work out an
             arrangement with the PSF that allows us to be listed on that most holiest of websites:
-            https://python.org/. <a href="https://youtu.be/yciX2meIkXI?t=3">There was much rejoicing.</a></p>
-
-          <div class="flex justify-between items-center">
-            <span class="cd-timeline__date has-text-grey">May 28th, 2020</span>
-          </div>
+            https://python.org/. <a href="https://youtu.be/yciX2meIkXI?t=3">There was much rejoicing.</a>
+          </p>
         </div>
       </div>
 
-      <div class="cd-timeline__block">
-        <div class="cd-timeline__img pastel-green cd-timeline__img--picture">
-          <i class="fa fa-comments"></i>
+      <div class="timeline-item">
+        <div class="timeline-icon-date">
+          <div class="timeline-icon pastel-green">
+            <span class="icon"><i class="fa fa-comments"></i></span>
+          </div>
+          <span class="timeline-date">May 25th, 2020</span>
         </div>
 
-        <div class="cd-timeline__content has-background-white-bis text-component">
-          <h2 class="has-text-dark">ModMail is now live</h2>
-          <p class="color-contrast-medium has-text-dark">Having originally planned to write our own ModMail bot from scratch, we
+        <div class="timeline-content content box">
+          <h3>ModMail is now live</h3>
+          <p>
+            Having originally planned to write our own ModMail bot from scratch, we
             come across an exceptionally good <a href="https://github.com/kyb3r/modmail">ModMail bot by
-              kyb3r</a> and decide to just self-host that one instead.</p>
-
-          <div class="flex justify-between items-center">
-            <span class="cd-timeline__date has-text-grey">May 25th, 2020</span>
-          </div>
+            kyb3r</a> and decide to just self-host that one instead.
+          </p>
         </div>
       </div>
 
-      <div class="cd-timeline__block">
-        <div class="cd-timeline__img pastel-purple cd-timeline__img--picture">
-          <i class="fa fa-gamepad"></i>
+      <div class="timeline-item">
+        <div class="timeline-icon-date">
+          <div class="timeline-icon pastel-purple">
+            <span class="icon"><i class="fa fa-gamepad"></i></span>
+          </div>
+          <span class="timeline-date">Apr 17th, 2020</span>
         </div>
 
-        <div class="cd-timeline__content has-background-white-bis text-component">
-          <h2 class="has-text-dark">PyDis Game Jam 2020 with the “Three of a Kind” theme and Arcade as the technology</h2>
-          <p class="color-contrast-medium has-text-dark">The creator of Arcade, Paul Vincent Craven, joins us as a judge.
+        <div class="timeline-content content box">
+          <h3>PyDis Game Jam 2020 with the “Three of a Kind” theme and Arcade as the technology</h3>
+          <p>The creator of Arcade, Paul Vincent Craven, joins us as a judge.
             Several of the Code Jam participants also end up getting involved contributing to the Arcade
             repository.</p>
 
@@ -653,56 +636,53 @@
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowfullscreen></iframe>
           </div>
-
-          <div class="flex justify-between items-center">
-            <span class="cd-timeline__date has-text-grey">Apr 17th, 2020</span>
-          </div>
         </div>
       </div>
 
-      <div class="cd-timeline__block">
-        <div class="cd-timeline__img pastel-dark-blue cd-timeline__img--picture">
-          <i class="fa fa-users"></i>
+      <div class="timeline-item">
+        <div class="timeline-icon-date">
+          <div class="timeline-icon pastel-dark-blue">
+            <span class="icon"><i class="fa fa-users"></i></span>
+          </div>
+          <span class="timeline-date">Apr 14, 2020</span>
         </div>
 
-        <div class="cd-timeline__content has-background-white-bis text-component">
-          <h2 class="has-text-dark">Python Discord hits 40,000 members, and is now bigger than Liechtenstein.</h2>
-          <p class="color-contrast-medium has-text-dark"><img
-              src="https://raw.githubusercontent.com/python-discord/branding/main/wallpapers/bigger%20than%20liechtenstein/pydis%20postcard.png">
+        <div class="timeline-content content box">
+          <h3>Python Discord hits 40,000 members, and is now bigger than Liechtenstein.</h3>
+          <p>
+            <img src="https://raw.githubusercontent.com/python-discord/branding/main/wallpapers/bigger%20than%20liechtenstein/pydis%20postcard.png">
           </p>
-
-          <div class="flex justify-between items-center">
-            <span class="cd-timeline__date has-text-grey">Apr 14, 2020</span>
-          </div>
         </div>
       </div>
 
-      <div class="cd-timeline__block">
-        <div class="cd-timeline__img pastel-green cd-timeline__img--picture">
-          <i class="fa fa-comments"></i>
+      <div class="timeline-item">
+        <div class="timeline-icon-date">
+          <div class="timeline-icon pastel-green">
+            <span class="icon"><i class="fa fa-comments"></i></span>
+          </div>
+          <span class="timeline-date">Apr 5th, 2020</span>
         </div>
 
-        <div class="cd-timeline__content has-background-white-bis text-component">
-          <h2 class="has-text-dark">The new help channel system is live</h2>
-          <p class="color-contrast-medium has-text-dark">We release our dynamic help-channel system, which allows you to claim
+        <div class="timeline-content content box">
+          <h3>The new help channel system is live</h3>
+          <p>We release our dynamic help-channel system, which allows you to claim
             your very own help channel instead of fighting over the static help channels. We release a <a
                 href="https://pythondiscord.com/pages/resources/guides/help-channels/">Help Channel Guide</a> to
             help our members fully understand how the system works.</p>
-
-          <div class="flex justify-between items-center">
-            <span class="cd-timeline__date has-text-grey">Apr 5th, 2020</span>
-          </div>
         </div>
       </div>
 
-      <div class="cd-timeline__block">
-        <div class="cd-timeline__img pastel-blue cd-timeline__img--picture">
-          <i class="fa fa-dice"></i>
+      <div class="timeline-item">
+        <div class="timeline-icon-date">
+          <div class="timeline-icon pastel-blue">
+            <span class="icon"><i class="fa fa-dice"></i></span>
+          </div>
+          <span class="timeline-date">Jan 17, 2020</span>
         </div>
 
-        <div class="cd-timeline__content has-background-white-bis text-component">
-          <h2 class="has-text-dark">PyDis sixth code jam with the theme “Ancient technology” and the technology Kivy</h2>
-          <p class="color-contrast-medium has-text-dark">Our Code Jams are becoming an increasingly big deal, and the Kivy core
+        <div class="timeline-content content box">
+          <h3>PyDis sixth code jam with the theme “Ancient technology” and the technology Kivy</h3>
+          <p>Our Code Jams are becoming an increasingly big deal, and the Kivy core
             developers join us to judge the event and help out our members during the event. One of them,
             @tshirtman, even joins our staff!</p>
 
@@ -711,307 +691,288 @@
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowfullscreen></iframe>
           </div>
-
-          <div class="flex justify-between items-center">
-            <span class="cd-timeline__date has-text-grey">Jan 17, 2020</span>
-          </div>
         </div>
       </div>
 
-      <div class="cd-timeline__block">
-        <div class="cd-timeline__img pastel-dark-blue cd-timeline__img--picture">
-          <i class="fa fa-users"></i>
+      <div class="timeline-item">
+        <div class="timeline-icon-date">
+          <div class="timeline-icon pastel-dark-blue">
+            <span class="icon"><i class="fa fa-users"></i></span>
+          </div>
+          <span class="timeline-date">Dec 22nd, 2019</span>
         </div>
 
-        <div class="cd-timeline__content has-background-white-bis text-component">
-          <h2 class="has-text-dark">PyDis hits 30,000 members</h2>
-          <p class="color-contrast-medium has-text-dark">More than tripling in size since the year before, the community hits
+        <div class="timeline-content content box">
+          <h3>PyDis hits 30,000 members</h3>
+          <p>More than tripling in size since the year before, the community hits
             30000 users. At this point, we're probably the largest Python chat community on the planet.</p>
-
-          <div class="flex justify-between items-center">
-            <span class="cd-timeline__date has-text-grey">Dec 22nd, 2019</span>
-          </div>
         </div>
       </div>
 
-      <div class="cd-timeline__block">
-        <div class="cd-timeline__img cd-timeline__img--picture">
-          <img src={% static "images/timeline/cd-icon-picture.svg" %} alt="Picture">
+      <div class="timeline-item">
+        <div class="timeline-icon-date">
+          <div class="timeline-icon has-background-primary">
+            <img class="pydis" src={% static "images/timeline/cd-icon-pydis.svg" %} alt="Logo">
+          </div>
+          <span class="timeline-date">Sept 22nd, 2019</span>
         </div>
 
-        <div class="cd-timeline__content has-background-white-bis text-component">
-          <h2 class="has-text-dark">Sebastiaan Zeef becomes an owner</h2>
-          <p class="color-contrast-medium has-text-dark">After being a long time active contributor to our projects and the driving
+        <div class="timeline-content content box">
+          <h3>Sebastiaan Zeef becomes an owner</h3>
+          <p>After being a long time active contributor to our projects and the driving
             force behind many of our events, Sebastiaan Zeef joins the Owners Team alongside Joe & Leon.</p>
-
-          <div class="flex justify-between items-center">
-            <span class="cd-timeline__date has-text-grey">Sept 22nd, 2019</span>
-          </div>
         </div>
       </div>
 
-      <div class="cd-timeline__block">
-        <div class="cd-timeline__img pastel-lime cd-timeline__img--picture">
-          <i class="fa fa-scroll"></i>
+      <div class="timeline-item">
+        <div class="timeline-icon-date">
+          <div class="timeline-icon pastel-lime">
+            <span class="icon"><i class="fa fa-scroll"></i></span>
+          </div>
+          <span class="timeline-date">Oct 26th, 2019</span>
         </div>
 
-        <div class="cd-timeline__content has-background-white-bis text-component">
-          <h2 class="has-text-dark">The code of conduct is created</h2>
-          <p class="color-contrast-medium has-text-dark">Inspired by the Adafruit, Rust and Django communities, an essential
+        <div class="timeline-content content box">
+          <h3>The code of conduct is created</h3>
+          <p>Inspired by the Adafruit, Rust and Django communities, an essential
             community pillar is created; Our <a href="https://pythondiscord.com/pages/code-of-conduct/">Code of
               Conduct.</a></p>
-
-          <div class="flex justify-between items-center">
-            <span class="cd-timeline__date has-text-grey">Oct 26th, 2019</span>
-          </div>
         </div>
       </div>
 
-      <div class="cd-timeline__block">
-        <div class="cd-timeline__img pastel-orange cd-timeline__img--picture">
-          <i class="fa fa-code"></i>
+      <div class="timeline-item">
+        <div class="timeline-icon-date">
+          <div class="timeline-icon pastel-orange">
+            <span class="icon"><i class="fa fa-code"></i></span>
+          </div>
+          <span class="timeline-date">Sep 15, 2019</span>
         </div>
 
-        <div class="cd-timeline__content has-background-white-bis text-component">
-          <h2 class="has-text-dark">The Django rewrite of pythondiscord.com is now live!</h2>
-          <p class="color-contrast-medium has-text-dark">The site is getting more and more complex, and it's time for a rewrite.
+        <div class="timeline-content content box">
+          <h3>The Django rewrite of pythondiscord.com is now live!</h3>
+          <p>The site is getting more and more complex, and it's time for a rewrite.
             We decide to go for a different stack, and build a website based on Django, DRF, Bulma and
             PostgreSQL.</p>
-
-          <div class="flex justify-between items-center">
-            <span class="cd-timeline__date has-text-grey">Sep 15, 2019</span>
-          </div>
         </div>
       </div>
 
-      <div class="cd-timeline__block">
-        <div class="cd-timeline__img pastel-dark-blue cd-timeline__img--picture">
-          <i class="fa fa-users"></i>
+      <div class="timeline-item">
+        <div class="timeline-icon-date">
+          <div class="timeline-icon pastel-dark-blue">
+            <span class="icon"><i class="fa fa-users"></i></span>
+          </div>
+          <span class="timeline-date">Apr 8th, 2019</span>
         </div>
 
-        <div class="cd-timeline__content has-background-white-bis text-component">
-          <h2 class="has-text-dark">PyDis hits 15,000 members; the “hot ones special” video is released</h2>
+        <div class="timeline-content content box">
+          <h3>PyDis hits 15,000 members; the “hot ones special” video is released</h3>
           <div class="force-aspect-container">
             <iframe class="force-aspect-content" src="https://www.youtube.com/embed/DIBXg8Qh7bA" frameborder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowfullscreen></iframe>
           </div>
 
-          <div class="flex justify-between items-center">
-            <span class="cd-timeline__date has-text-grey">Apr 8th, 2019</span>
-          </div>
         </div>
       </div>
 
-      <div class="cd-timeline__block">
-        <div class="cd-timeline__img pastel-orange cd-timeline__img--picture">
-          <i class="fa fa-code"></i>
+      <div class="timeline-item">
+        <div class="timeline-icon-date">
+          <div class="timeline-icon pastel-orange">
+            <span class="icon"><i class="fa fa-code"></i></span>
+          </div>
+          <span class="timeline-date">Dec 19th, 2018</span>
         </div>
 
-        <div class="cd-timeline__content has-background-white-bis text-component">
-          <h2 class="has-text-dark">django-simple-bulma is released on PyPi</h2>
-          <p class="color-contrast-medium has-text-dark">Our very first package on PyPI, <a
+        <div class="timeline-content content box">
+          <h3>django-simple-bulma is released on PyPi</h3>
+          <p>Our very first package on PyPI, <a
               href="https://pypi.org/project/django-simple-bulma/">django-simple-bulma</a> is a package that
             sets up the Bulma CSS framework for your Django application and lets you configure everything in
             settings.py.</p>
-
-          <div class="flex justify-between items-center">
-            <span class="cd-timeline__date has-text-grey">Dec 19th, 2018</span>
-          </div>
         </div>
       </div>
 
-      <div class="cd-timeline__block">
-        <div class="cd-timeline__img pastel-dark-blue cd-timeline__img--picture">
-          <i class="fa fa-users"></i>
+      <div class="timeline-item">
+        <div class="timeline-icon-date">
+          <div class="timeline-icon pastel-dark-blue">
+            <span class="icon"><i class="fa fa-users"></i></span>
+          </div>
+          <span class="timeline-date">Nov 24th, 2018</span>
         </div>
 
-        <div class="cd-timeline__content has-background-white-bis text-component">
-          <h2 class="has-text-dark">PyDis hits 10,000 members</h2>
-          <p class="color-contrast-medium has-text-dark">We partner with RLBot, move from GitLab to GitHub, and start putting
+        <div class="timeline-content content box">
+          <h3>PyDis hits 10,000 members</h3>
+          <p>We partner with RLBot, move from GitLab to GitHub, and start putting
             together the first Advent of Code event.</p>
-
-          <div class="flex justify-between items-center">
-            <span class="cd-timeline__date has-text-grey">Nov 24th, 2018</span>
-          </div>
         </div>
       </div>
 
-      <div class="cd-timeline__block">
-        <div class="cd-timeline__img pastel-blue cd-timeline__img--picture">
-          <i class="fa fa-dice"></i>
+      <div class="timeline-item">
+        <div class="timeline-icon-date">
+          <div class="timeline-icon pastel-blue">
+            <span class="icon"><i class="fa fa-dice"></i></span>
+          </div>
+          <span class="timeline-date">Oct 1st, 2018</span>
         </div>
 
-        <div class="cd-timeline__content has-background-white-bis text-component">
-          <h2 class="has-text-dark">First Hacktoberfest PyDis event; @Sir Lancebot is created</h2>
-          <p class="color-contrast-medium has-text-dark">We create a second bot for our community and fill it up with simple,
+        <div class="timeline-content content box">
+          <h3>First Hacktoberfest PyDis event; @Sir Lancebot is created</h3>
+          <p>We create a second bot for our community and fill it up with simple,
             fun and relatively easy issues. The idea is to create an approachable arena for our members to cut
             their open-source teeth on, and to provide lots of help and hand-holding for those who get stuck.
             We're training our members to be productive contributors in the open-source ecosystem.</p>
-
-          <div class="flex justify-between items-center">
-            <span class="cd-timeline__date has-text-grey">Oct 1st, 2018</span>
-          </div>
         </div>
       </div>
 
-      <div class="cd-timeline__block">
-        <div class="cd-timeline__img pastel-pink cd-timeline__img--picture">
-          <i class="fa fa-handshake"></i>
+      <div class="timeline-item">
+        <div class="timeline-icon-date">
+          <div class="timeline-icon pastel-pink">
+            <span class="icon"><i class="fa fa-handshake"></i></span>
+          </div>
+          <span class="timeline-date">Jul 10th, 2018</span>
         </div>
 
-        <div class="cd-timeline__content has-background-white-bis text-component">
-          <h2 class="has-text-dark">PyDis is now partnered with Discord; the vanity URL discord.gg/python is created</h2>
-          <p class="color-contrast-medium has-text-dark">After being rejected for their Partner program several times, we
+        <div class="timeline-content content box">
+          <h3>PyDis is now partnered with Discord; the vanity URL discord.gg/python is created</h3>
+          <p>After being rejected for their Partner program several times, we
             finally get approved. The recent partnership with the r/Python subreddit plays a significant role in
             qualifying us for this partnership.</p>
-
-          <div class="flex justify-between items-center">
-            <span class="cd-timeline__date has-text-grey">Jul 10th, 2018</span>
-          </div>
         </div>
       </div>
 
-      <div class="cd-timeline__block">
-        <div class="cd-timeline__img pastel-dark-blue cd-timeline__img--picture">
-          <i class="fa fa-users"></i>
+      <div class="timeline-item">
+        <div class="timeline-icon-date">
+          <div class="timeline-icon pastel-dark-blue">
+            <span class="icon"><i class="fa fa-users"></i></span>
+          </div>
+          <span class="timeline-date">Jun 20th, 2018</span>
         </div>
 
-        <div class="cd-timeline__content has-background-white-bis text-component">
-          <h2 class="has-text-dark">PyDis hits 5,000 members and partners with r/Python</h2>
-          <p class="color-contrast-medium has-text-dark">As we continue to grow, we approach the r/Python subreddit and ask to
+        <div class="timeline-content content box">
+          <h3>PyDis hits 5,000 members and partners with r/Python</h3>
+          <p>As we continue to grow, we approach the r/Python subreddit and ask to
             become their official Discord community. They agree, and we become listed in their sidebar, giving
             us yet another source of new members.</p>
-
-          <div class="flex justify-between items-center">
-            <span class="cd-timeline__date has-text-grey">Jun 20th, 2018</span>
-          </div>
         </div>
       </div>
 
-      <div class="cd-timeline__block">
-        <div class="cd-timeline__img pastel-pink cd-timeline__img--picture">
-          <i class="fa fa-handshake"></i>
+      <div class="timeline-item">
+        <div class="timeline-icon-date">
+          <div class="timeline-icon pastel-pink">
+            <span class="icon"><i class="fa fa-handshake"></i></span>
+          </div>
+          <span class="timeline-date">Jun 9th, 2018</span>
         </div>
 
-        <div class="cd-timeline__content has-background-white-bis text-component">
-          <h2 class="has-text-dark">Do You Even Python and PyDis merger</h2>
-          <p class="color-contrast-medium has-text-dark">At this point in time, there are only two serious Python communities on
+        <div class="timeline-content content box">
+          <h3>Do You Even Python and PyDis merger</h3>
+          <p>At this point in time, there are only two serious Python communities on
             Discord - Ours, and one called Do You Even Python. We approach the owners of DYEP with a bold
             proposal - let's shut down their community, replace it with links to ours, and in return we will let
             their staff join our staff. This gives us a big boost in members, and eventually leads to @eivl and
             @Mr. Hemlock joining our Admin team</p>
-
-          <div class="flex justify-between items-center">
-            <span class="cd-timeline__date has-text-grey">Jun 9th, 2018</span>
-          </div>
         </div>
       </div>
 
-      <div class="cd-timeline__block">
-        <div class="cd-timeline__img pastel-lime cd-timeline__img--picture">
-          <i class="fa fa-scroll"></i>
+      <div class="timeline-item">
+        <div class="timeline-icon-date">
+          <div class="timeline-icon pastel-lime">
+            <span class="icon"><i class="fa fa-scroll"></i></span>
+          </div>
+          <span class="timeline-date">May 21st, 2018</span>
         </div>
 
-        <div class="cd-timeline__content has-background-white-bis text-component">
-          <h2 class="has-text-dark">The privacy policy is created</h2>
-          <p class="color-contrast-medium has-text-dark">Since data privacy is quite important to us, we create a privacy page
+        <div class="timeline-content content box">
+          <h3>The privacy policy is created</h3>
+          <p>Since data privacy is quite important to us, we create a privacy page
             pretty much as soon as our new bot and site starts collecting some data. To this day, we keep <a
                 href="https://pythondiscord.com/pages/privacy/">our privacy policy</a> up to date with all
             changes, and since April 2020 we've started doing <a
-                href="https://pythondiscord.notion.site/6784e3a9752444e89d19e65fd4510d8d">monthly data reviews</a>.</p>
-
-          <div class="flex justify-between items-center">
-            <span class="cd-timeline__date has-text-grey">May 21st, 2018</span>
-          </div>
+                href="https://pythondiscord.notion.site/6784e3a9752444e89d19e65fd4510d8d">monthly data reviews</a>.
+          </p>
         </div>
       </div>
 
-      <div class="cd-timeline__block">
-        <div class="cd-timeline__img pastel-blue cd-timeline__img--picture">
-          <i class="fa fa-dice"></i>
+      <div class="timeline-item">
+        <div class="timeline-icon-date">
+          <div class="timeline-icon pastel-blue">
+            <span class="icon"><i class="fa fa-dice"></i></span>
+          </div>
+          <span class="timeline-date">Mar 23rd, 2018</span>
         </div>
 
-        <div class="cd-timeline__content has-background-white-bis text-component">
-          <h2 class="has-text-dark">First code jam with the theme “snakes”</h2>
-          <p class="color-contrast-medium has-text-dark">Our very first Code Jam attracts a handful of users who work in random
+        <div class="timeline-content content box">
+          <h3>First code jam with the theme “snakes”</h3>
+          <p>Our very first Code Jam attracts a handful of users who work in random
             teams of 2. We ask our participants to write a snake-themed Discord bot. Most of the code written
             for this jam still lives on in Sir Lancebot, and you can play with it by using the
             <code>.snakes</code> command. For more information on this event, see <a
                 href="https://pythondiscord.com/pages/code-jams/code-jam-1-snakes-bot/">the event page</a></p>
-
-          <div class="flex justify-between items-center">
-            <span class="cd-timeline__date has-text-grey">Mar 23rd, 2018</span>
-          </div>
         </div>
       </div>
 
-      <div class="cd-timeline__block">
-        <div class="cd-timeline__img pastel-dark-blue cd-timeline__img--picture">
-          <i class="fa fa-users"></i>
+      <div class="timeline-item">
+        <div class="timeline-icon-date">
+          <div class="timeline-icon pastel-dark-blue">
+            <span class="icon"><i class="fa fa-users"></i></span>
+          </div>
+          <span class="timeline-date">Mar 4th, 2018</span>
         </div>
 
-        <div class="cd-timeline__content has-background-white-bis text-component">
-          <h2 class="has-text-dark">PyDis hits 2,000 members; pythondiscord.com and @Python are live</h2>
-          <p class="color-contrast-medium has-text-dark">The public moderation bot we're using at the time, Rowboat, announces
+        <div class="timeline-content content box">
+          <h3>PyDis hits 2,000 members; pythondiscord.com and @Python are live</h3>
+          <p>The public moderation bot we're using at the time, Rowboat, announces
             it will be shutting down. We decide that we'll write our own bot to handle moderation, so that we
             can have more control over its features. We also buy a domain and start making a website in Flask.
           </p>
-
-          <div class="flex justify-between items-center">
-            <span class="cd-timeline__date has-text-grey">Mar 4th, 2018</span>
-          </div>
         </div>
       </div>
 
-      <div class="cd-timeline__block">
-        <div class="cd-timeline__img cd-timeline__img--picture">
-          <img src={% static "images/timeline/cd-icon-picture.svg" %} alt="Picture">
+      <div class="timeline-item">
+        <div class="timeline-icon-date">
+          <div class="timeline-icon has-background-primary">
+            <img class="pydis" src={% static "images/timeline/cd-icon-pydis.svg" %} alt="Logo">
+          </div>
+          <span class="timeline-date">Feb 3rd, 2018</span>
         </div>
 
-            <div class="cd-timeline__content has-background-white-bis text-component">
-                <h2 class="has-text-dark">Our logo is born. Thanks @Aperture!</h2>
-                <p class="pydis-logo-banner"><img
-                        src="https://raw.githubusercontent.com/python-discord/branding/main/logos/logo_banner/logo_site_banner.svg">
-                </p>
-
-          <div class="flex justify-between items-center">
-            <span class="cd-timeline__date has-text-grey">Feb 3rd, 2018</span>
-          </div>
+        <div class="timeline-content content box">
+          <h3>Our logo is born. Thanks @Aperture!</h3>
+          <p style="background-color: #7289DA; border-radius: 10px;">
+            <img style="padding-right: 20px;" src="https://raw.githubusercontent.com/python-discord/branding/main/logos/logo_banner/logo_site_banner.svg">
+          </p>
         </div>
       </div>
 
-      <div class="cd-timeline__block">
-        <div class="cd-timeline__img pastel-dark-blue cd-timeline__img--picture">
-          <i class="fa fa-users"></i>
+      <div class="timeline-item">
+        <div class="timeline-icon-date">
+          <div class="timeline-icon pastel-dark-blue">
+            <span class="icon"><i class="fa fa-users"></i></span>
+          </div>
+          <span class="timeline-date">Nov 10th, 2017</span>
         </div>
 
-        <div class="cd-timeline__content has-background-white-bis text-component">
-          <h2 class="has-text-dark">Python Discord hits 1,000 members</h2>
-          <p class="color-contrast-medium has-text-dark">Our main source of new users at this point is a post on Reddit that
+        <div class="timeline-content content box">
+          <h3>Python Discord hits 1,000 members</h3>
+          <p>Our main source of new users at this point is a post on Reddit that
             happens to get very good SEO. We are one of the top 10 search engine hits for the search term
             "python discord".</p>
-
-          <div class="flex justify-between items-center">
-            <span class="cd-timeline__date has-text-grey">Nov 10th, 2017</span>
-          </div>
         </div>
       </div>
 
-      <div class="cd-timeline__block">
-        <div class="cd-timeline__img cd-timeline__img--picture">
-          <img src="{% static "images/timeline/cd-icon-picture.svg" %}" alt="Picture">
+      <div class="timeline-item">
+        <div class="timeline-icon-date">
+          <div class="timeline-icon has-background-primary">
+            <img class="pydis" src="{% static "images/timeline/cd-icon-pydis.svg" %}" alt="Logo">
+          </div>
+          <span class="timeline-date">Jan 8th, 2017</span>
         </div>
 
-        <div class="cd-timeline__content has-background-white-bis text-component">
-          <h2 class="has-text-dark">Python Discord is created</h2>
-          <p class="color-contrast-medium has-text-dark"><strong>Joe Banks</strong> becomes one of the owners around 3 days after it
-            is created, and <strong>Leon Sandøy</strong> (lemon) joins the owner team later in the year, when the community
-            has around 300 members.</p>
-
-          <div class="flex justify-between items-center">
-            <span class="cd-timeline__date has-text-grey">Jan 8th, 2017</span>
-          </div>
+        <div class="timeline-content content box">
+          <h3>Python Discord is created</h3>
+          <p><strong>Joe Banks</strong> becomes one of the owners around 3 days after it
+            is created, and <strong>Leon Sandøy</strong> (lemon) joins the owner team later in the year,
+            when the community has around 300 members.</p>
         </div>
       </div>
 
