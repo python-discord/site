@@ -16,4 +16,6 @@ This app has a relatively minimal structure:
   matching Django template.
 
 The actual content lives in the [templates directory two layers
-up](../../templates/events).
+up](../../templates/events). Read the
+[README.md](../../templates/events/README.md) in that directory for more
+details.
