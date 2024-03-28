@@ -32,7 +32,9 @@
   {% block head %}{% endblock %}
 
 </head>
-<body class="site">
+<!-- The tabindex attribute fixes the inability to toggle the navbar dropdown
+  -- on touchscreens using Safari. -->
+<body class="site" tabindex="-1">
   <!-- Git hash for this release: {{ git_sha }} -->
 
 <main class="site-content">
