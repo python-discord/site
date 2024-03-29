@@ -93,6 +93,6 @@ class DeletedMessagesLogURLTests(AuthenticatedAPITestCase):
         )
 
     def test_valid_log_url(self):
-        expected_url = reverse('staff:logs', args=(1,))
         [context] = MessageDeletionContext.objects.all()
+        expected_url = reverse('staff:logs', args=(context.id,))
         self.assertEqual(context.log_url, expected_url)
