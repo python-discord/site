@@ -2,16 +2,7 @@
 pydis_site/apps/api/models/bot/infraction.py    @MarkKoz
 pydis_site/apps/api/viewsets/bot/infraction.py  @MarkKoz
 
-# Home app
-pydis_site/apps/home/**                         @ks129
-
-# Django ORM
-**/models/**                                    @Den4200
-
 # CI & Docker
-.github/workflows/**                            @MarkKoz @ks129
+.github/workflows/**                            @MarkKoz
 Dockerfile                                      @MarkKoz
 docker-compose.yml                              @MarkKoz
-
-# Metricity
-pydis_site/apps/api/models/bot/metricity.py     @jb3
