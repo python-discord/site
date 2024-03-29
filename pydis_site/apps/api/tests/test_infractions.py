@@ -559,7 +559,7 @@ class CreationTests(AuthenticatedAPITestCase):
                     second_response.json(),
                     {
                         'non_field_errors': [
-                            'This user already has an active infraction of this type.'
+                            'The fields user, type must make a unique set.'
                         ]
                     }
                 )

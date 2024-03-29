@@ -60,4 +60,4 @@ class BumpedThreadAPITests(AuthenticatedAPITestCase):
 
         response = self.client.get(url)
         self.assertEqual(response.status_code, 404)
-        self.assertEqual(response.json(), {"detail": "Not found."})
+        self.assertEqual(response.json(), {"detail": "No BumpedThread matches the given query."})
