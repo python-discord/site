@@ -1,0 +1,30 @@
+{% extends "events/base_sidebar.html" %}
+
+{% block breadcrumb %}
+    <li><a href="{% url "events:index" %}">Events</a></li>
+    <li class="is-active"><a href="#">PyWeek</a></li>
+{% endblock %}
+
+{% block title %}PyWeek{% endblock %}
+
+{% block event_content %}
+<p>
+    For the past 15 years, <a href="https://pyweek.org" target="_blank" rel="noopener">PyWeek</a> has been running a bi-annual game jam for the
+    Python language. As of 2020, we are excited to say that we are officially partnered with PyWeek to co-run these
+    events.
+</p>
+<p>
+    During each PyWeek event, we open a special discussion channel in which our members can discuss their
+    submissions, meet other participants, and talk to PyWeek staff. The PyWeek organizer,
+    Daniel Pope (<a href="https://twitter.com/lordmauve" target="_blank" rel="noopener">@lordmauve</a>) will be present during the entire event to answer
+    questions and post announcements and information in our community.
+</p>
+<p>
+    Unlike our other events, the <strong>community</strong> will select the winner from all the submissions
+    during PyWeek. We may release YouTube content showcasing the best submissions after the events are finished.
+</p>
+{% endblock %}
+
+{% block sidebar %}
+    {% include "events/sidebar/pyweek/useful-links.html" %}
+{% endblock %}

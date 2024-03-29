@@ -1,0 +1,159 @@
+{% load static %}
+
+<div class="has-text-centered">
+    <h2 class="title is-4">Workshops & other events</h2>
+</div>
+<br>
+
+{# These events should be sorted in reverse-chronological order. Add new events to the top. #}
+<div class="event-gallery" id="other-events-section">
+    <div class="box">
+        <article class="media">
+            <div class="media-left">
+                <h1 class="title is-1">🎩</h1>
+            </div>
+            <div class="media-content">
+                <div class="content">
+                    <h2 class="title is-4"><a href="https://www.youtube.com/watch?v=PTjLkvvjKnM">Fancy Hats: Circuit Python & Microcontrollers Workshop</a></h2>
+                    <p class="subtitle is-7 has-text-grey">
+                        <span class="icon-text">
+                            <span class="date-icon icon"><i class="fa-regular fa-calendar"></i></span>
+                            <span>Mar. 12, 2023</span>
+                        </span>
+                    </p>
+                    <p>In this workshop we went through the process of building a little hat with LEDs of scrolling text, and talked about other ways you can use Circuit Python to bring Python into the physical world around you.</p>
+                </div>
+                <a class="button is-small is-link is-outlined" href="https://www.youtube.com/watch?v=PTjLkvvjKnM">
+                    <span class="icon"><i class="fab fa-youtube"></i></span>
+                    <span>Watch on YouTube</span>
+                </a>
+            </div>
+        </article>
+    </div>
+
+    <div class="box">
+        <article class="media">
+            <div class="media-left">
+                <p class="image">
+                    <img loading=lazy class="is-rounded" src="https://s3.dualstack.us-east-2.amazonaws.com/pythondotorg-assets/media/files/python-logo-only.svg" style="width: 3rem;">
+                </p>
+            </div>
+            <div class="media-content">
+                <div class="content">
+                    <h2 class="title is-4"><a href="https://www.youtube.com/watch?v=PGZPSWZSkJI">Python 3.11 Release Stream</a></h2>
+                    <p class="subtitle is-7 has-text-grey">
+                        <span class="icon-text">
+                            <span class="date-icon icon"><i class="fa-regular fa-calendar"></i></span>
+                            <span>Oct. 25, 2022</span>
+                        </span>
+                    </p>
+                    <p>Pablo Galindo, the 3.11 Python Release Manager and CPython Core Developer, walked through the release process and a number of guests joined to talk about the exciting new features to be found in 3.11. At the end of the release we also hosted a Q&A session.</p>
+                </div>
+                <a class="button is-small is-link is-outlined" href="https://www.youtube.com/watch?v=PGZPSWZSkJI">
+                    <span class="icon"><i class="fab fa-youtube"></i></span>
+                    <span>Watch on YouTube</span>
+                </a>
+            </div>
+        </article>
+    </div>
+
+    <div class="box">
+        <article class="media">
+            <div class="media-left">
+                <span class="icon is-large"><i class="fas fa-cloud fa-2xl" style="color: lightskyblue"></i></span>
+            </div>
+            <div class="media-content">
+                <div class="content">
+                    <h2 class="title is-4"><a href="https://www.youtube.com/watch?v=00CW1y-O8YQ">DevOps Hour with Joe Banks</a></h2>
+                    <p class="subtitle is-7 has-text-grey">
+                        <span class="icon-text">
+                            <span class="date-icon icon"><i class="fa-regular fa-calendar"></i></span>
+                            <span>Jul. 26, 2022</span>
+                        </span>
+                    </p>
+                    <p>One of Python Discord’s owners, Joe Banks, sat down and gave an hour long talk about DevOps in Python Discord and how <em>you</em> can get started with DevOps.</p>
+                </div>
+                <a class="button is-small is-link is-outlined" href="https://www.youtube.com/watch?v=00CW1y-O8YQ">
+                    <span class="icon"><i class="fab fa-youtube"></i></span>
+                    <span>Watch on YouTube</span>
+                </a>
+            </div>
+        </article>
+    </div>
+
+    <div class="box">
+        <article class="media">
+            <div class="media-left">
+                <p class="image">
+                    <img loading=lazy class="is-rounded" src="https://s3.dualstack.us-east-2.amazonaws.com/pythondotorg-assets/media/files/python-logo-only.svg" style="width: 3rem;">
+                </p>
+            </div>
+            <div class="media-content">
+                <div class="content">
+                    <h2 class="title is-4"><a href="https://www.youtube.com/watch?v=AHT2l3hcIJg">Python 3.10 Release Stream</a></h2>
+                    <p class="subtitle is-7 has-text-grey">
+                        <span class="icon-text">
+                            <span class="date-icon icon"><i class="fa-regular fa-calendar"></i></span>
+                            <span>Oct. 5, 2021</span>
+                        </span>
+                    </p>
+                    <p>Python 3.10 was set to be released on 4 October 2021. We hosted a live Python 3.10 Release Stream with Pablo Galindo, CPython Core Developer and Python 3.10 Release Manager, and Leon Sandøy.</p>
+                </div>
+                <a class="button is-small is-link is-outlined" href="https://www.youtube.com/watch?v=AHT2l3hcIJg">
+                    <span class="icon"><i class="fab fa-youtube"></i></span>
+                    <span>Watch on YouTube</span>
+                </a>
+            </div>
+        </article>
+    </div>
+
+    <div class="box">
+        <article class="media">
+            <div class="media-left">
+                <p class="image">
+                    <img loading=lazy src="/static/images/events/pixels_logo_transparent.gif" style="width: 3rem;">
+                </p>
+            </div>
+            <div class="media-content">
+                <div class="content">
+                    <h2 class="title is-4"><a href="{% url "events:page" path="pixels" %}">Pixels</a></h2>
+                    <p class="subtitle is-7 has-text-grey">
+                        <span class="icon-text">
+                            <span class="date-icon icon"><i class="fa-regular fa-calendar"></i></span>
+                            <span>May 2021</span>
+                        </span>
+                    </p>
+                    <p>Inspired by r/place, the reddit April Fools experiment where users could place pixels on a canvas one-by-one, Pixels was an application that allowed users to collaboratively decorate a canvas pixel-by-pixel. The twist? Interacting with our canvas can only be done via an API.</p>
+                </div>
+                <a class="button is-small is-link is-outlined" href="{% url "events:page" path="pixels" %}">
+                    <span class="icon"><i class="fas fa-circle-info"></i></span>
+                    <span>Learn more</span>
+                </a>
+            </div>
+        </article>
+    </div>
+
+    <div class="box">
+        <article class="media">
+            <div class="media-left">
+                <span class="icon is-large"><i class="fas fa-comments fa-2xl" style="color: #4B8BBE"></i></span>
+            </div>
+            <div class="media-content">
+                <div class="content">
+                    <h2 class="title is-4"><a href="https://www.youtube.com/watch?v=gXMdfBTcOfQ">Python Core Developers Q&A</a></h2>
+                    <p class="subtitle is-7 has-text-grey">
+                        <span class="icon-text">
+                            <span class="date-icon icon"><i class="fa-regular fa-calendar"></i></span>
+                            <span>Oct. 21, 2020</span>
+                        </span>
+                    </p>
+                    <p>The first Python Core Developers Q&A! During the Q&A, several core developers answered questions sent in by you, the broader Python community. This Q&A was part of the yearly Python Core Dev Sprint, organized virtually in 2020 on Python Discord.</p>
+                </div>
+                <a class="button is-small is-link is-outlined" href="https://www.youtube.com/watch?v=gXMdfBTcOfQ">
+                    <span class="icon"><i class="fab fa-youtube"></i></span>
+                    <span>Watch on YouTube</span>
+                </a>
+            </div>
+        </article>
+    </div>
+</div>

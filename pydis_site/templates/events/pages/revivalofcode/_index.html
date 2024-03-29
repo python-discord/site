@@ -1,0 +1,33 @@
+{% extends "events/base_sidebar.html" %}
+
+{% block breadcrumb %}
+    <li><a href="{% url "events:index" %}">Events</a></li>
+    <li class="is-active"><a href="#">Revival of Code</a></li>
+{% endblock %}
+
+{% block title %}Revival of Code{% endblock %}
+
+{% block event_content %}
+<p>
+    Each year, many of our members take part of an online coding competition called
+    <a href="https://adventofcode.com/" target="_blank" rel="noopener">Advent of Code (AoC)</a> that takes place in December. Advent of Code is an
+    Advent calendar of small programming puzzles for a variety of skill sets and skill levels that can be solved
+    in any programming language you like, including Python.
+</p>
+<p>
+    Revival of Code is a Python Discord hosted event where we release old Advent of Code puzzles from a previous year. The puzzles start off easy and gradually get more difficult, all while revealing a fun little story that is appropriate for some seasons more than others. Questions will be posted every other day, and you'll be able to discuss your solutions in dedicated threads.
+</p>
+
+<h3 class="title is-4">Keeping up with the puzzles</h3>
+<p>
+    To be notified when new problems are posted you can subscribe to the <code>@Revival of Code role</code> in <code>#roles</code>.
+</p>
+
+<p>
+    If you have any questions or want to discuss the event in general, come talk about it in⁠<code>#Revival of Code Discussion</code>.
+</p>
+{% endblock %}
+
+{% block sidebar %}
+    {% include "events/sidebar/revivalofcode.html" %}
+{% endblock %}

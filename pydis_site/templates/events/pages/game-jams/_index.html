@@ -8,5 +8,25 @@
 {% endblock %}
 
 {% block event_content %}
-    <p>Sorry, this page is not ready yet.</p>
+<div class="columns is-3" style="--columnGap: 0.75rem;">
+    <div class="column">
+        <p>
+            The Game Jam is similar to our Code Jams, but smaller in scope. Instead of having to complete a qualifier
+            and being teamed up with random strangers, members of our community can just sign-up individually or pair up
+            with whoever they like.
+        </p>
+        <p>
+            The participants will have ten days to create a game using the technology we've selected, and drawing
+            inspiration from a provided theme. After the event, a panel of judges will play all the games and select a
+            winner. The top 5 will be featured in a special video on our <a href="https://www.youtube.com/channel/UCQsrA4xo6jvdgsJZhKaBL6w" target="_blank" rel="noopener">YouTube channel</a>.
+        </p>
+        <p>
+            The <a class="has-text-link" href="{% url "events:page" path="game-jams/2020" %}">first edition of the Game Jam</a> ran from
+            <strong>April 17, 2020 to April 26, 2020</strong>.
+        </p>
+    </div>
+    <div class="column is-3">
+        <img src="https://user-images.githubusercontent.com/33516116/77593036-5fb09780-6eeb-11ea-9feb-336b2e5e23de.png" style="border-radius: 10px;" alt="Game Jam 2020">
+    </div>
+</div>
 {% endblock %}
