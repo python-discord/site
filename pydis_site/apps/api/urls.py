@@ -30,7 +30,8 @@ from .viewsets import (
 bot_router = DefaultRouter(trailing_slash=False)
 bot_router.register(
     'filter/filter_lists',
-    FilterListViewSet
+    FilterListViewSet,
+    basename='filter-filter-lists',
 )
 bot_router.register(
     "aoc-account-links",
