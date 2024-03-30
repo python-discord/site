@@ -1,3 +1,4 @@
+import random
 from datetime import UTC, datetime
 
 from django.forms.models import model_to_dict
@@ -67,16 +68,22 @@ class ReminderCreationTests(AuthenticatedAPITestCase):
         url = reverse('api:bot:reminder-list')
         response = self.client.post(url, data=data)
         self.assertEqual(response.status_code, 201)
-        self.assertIsNotNone(Reminder.objects.filter(id=1).first())
+        first = Reminder.objects.first()
+        self.assertIsNotNone(first)
+        self.assertEqual(first.author_id, data['author'])
+        self.assertEqual(first.content, data['content'])
+        self.assertEqual(first.channel_id, data['channel_id'])
 
+
+class EmptyDatabaseReminderCreationTests(AuthenticatedAPITestCase):
     def test_rejects_invalid_data(self):
         data = {
-            'author': self.author.id,  # Missing multiple required fields
+            'author': random.randint(1, 2 ** 8),
         }
         url = reverse('api:bot:reminder-list')
         response = self.client.post(url, data=data)
         self.assertEqual(response.status_code, 400)
-        self.assertRaises(Reminder.DoesNotExist, Reminder.objects.get, id=1)
+        self.assertFalse(Reminder.objects.exists())
 
 
 class ReminderDeletionTests(AuthenticatedAPITestCase):
