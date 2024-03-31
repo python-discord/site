@@ -1,5 +1,6 @@
 import datetime
 
+from django.db import IntegrityError
 from django.db.models import QuerySet
 from django.http.request import HttpRequest
 from django_filters.rest_framework import DjangoFilterBackend
@@ -274,3 +275,28 @@ class InfractionViewSet(
         """
         self.serializer_class = ExpandedInfractionSerializer
         return self.partial_update(*args, **kwargs)
+
+    def create(self, request: HttpRequest, *args, **kwargs) -> Response:
+        """
+        Create an infraction for a target user.
+
+        Called by the Django Rest Framework in response to the corresponding HTTP request.
+        """
+        try:
+            return super().create(request, *args, **kwargs)
+        except IntegrityError as err:
+            # We need to use `__cause__` here, as Django reraises the internal
+            # UniqueViolation emitted by psycopg2 (which contains the attribute
+            # that we actually need)
+            #
+            # _meta is documented and mainly named that way to prevent
+            # name clashes: https://docs.djangoproject.com/en/dev/ref/models/meta/
+            if err.__cause__.diag.constraint_name == Infraction._meta.constraints[0].name:
+                raise ValidationError(
+                    {
+                        'non_field_errors': [
+                            'This user already has an active infraction of this type.',
+                        ]
+                    }
+                )
+            raise  # pragma: no cover - no other constraint to test with
