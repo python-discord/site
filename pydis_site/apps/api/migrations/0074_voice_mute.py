@@ -32,5 +32,5 @@ class Migration(migrations.Migration):
             name='type',
             field=models.CharField(choices=[('note', 'Note'), ('warning', 'Warning'), ('watch', 'Watch'), ('mute', 'Mute'), ('kick', 'Kick'), ('ban', 'Ban'), ('superstar', 'Superstar'), ('voice_ban', 'Voice Ban'), ('voice_mute', 'Voice Mute')], help_text='The type of the infraction.', max_length=10),
         ),
-        migrations.RunPython(migrate_infractions, unmigrate_infractions)
+        migrations.RunPython(migrate_infractions, unmigrate_infractions, elidable=True)
     ]

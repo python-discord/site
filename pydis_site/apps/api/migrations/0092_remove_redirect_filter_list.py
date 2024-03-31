@@ -13,4 +13,4 @@ class Migration(migrations.Migration):
         ("api", "0091_antispam_filter_list"),
     ]
 
-    operations = [migrations.RunPython(forward)]
+    operations = [migrations.RunPython(forward, elidable=True)]

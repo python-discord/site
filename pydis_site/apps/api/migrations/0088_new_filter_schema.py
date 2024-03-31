@@ -163,7 +163,8 @@ class Migration(migrations.Migration):
         ),
         migrations.RunPython(
             code=forward,  # Core of the migration
-            reverse_code=lambda *_: None
+            reverse_code=None,
+            elidable=True,
         ),
         migrations.DeleteModel(
             name='FilterListOld'

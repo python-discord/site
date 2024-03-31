@@ -60,5 +60,5 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RunPython(migrate_nominations_to_new_model),
+        migrations.RunPython(migrate_nominations_to_new_model, elidable=True),
     ]

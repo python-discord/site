@@ -19,5 +19,5 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RunPython(migrate_hidden_warnings_to_notes),
+        migrations.RunPython(migrate_hidden_warnings_to_notes, elidable=True),
     ]

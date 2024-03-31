@@ -58,7 +58,7 @@ class Migration(migrations.Migration):
             bases=(pydis_site.apps.api.models.mixins.ModelReprMixin, models.Model),
             options={'ordering': ('-inserted_at',), 'verbose_name_plural': 'nomination entries'}
         ),
-        migrations.RunPython(migrate_nominations, unmigrate_nominations),
+        migrations.RunPython(migrate_nominations, unmigrate_nominations, elidable=True),
         migrations.RemoveField(
             model_name='nomination',
             name='actor',
