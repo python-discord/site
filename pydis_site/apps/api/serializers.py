@@ -7,7 +7,14 @@ from django.db.models.query import QuerySet
 from django.db.utils import IntegrityError
 from rest_framework.exceptions import NotFound
 from rest_framework.serializers import (
+    BooleanField,
+    CharField,
+    ChoiceField,
+    DateTimeField,
+    DurationField,
     IntegerField,
+    JSONField,
+    ListField,
     ListSerializer,
     ModelSerializer,
     PrimaryKeyRelatedField,
@@ -260,6 +267,145 @@ def get_field_value(data: dict, field_name: str) -> Any:
 
 class FilterSerializer(ModelSerializer):
     """A class providing (de-)serialization of `Filter` instances."""
+
+    # Remove the following once this regression from DRF 3.15 is fixed:
+    # https://github.com/encode/django-rest-framework/issues/9345
+    # ------------------------------8<----------------------------------
+    id = IntegerField(label='ID', read_only=True)
+    created_at = DateTimeField(read_only=True)
+    updated_at = DateTimeField(read_only=True)
+    content = CharField(
+        help_text='The definition of this filter.',
+        style={'base_template': 'textarea.html'},
+    )
+    description = CharField(
+        allow_null=True,
+        help_text='Why this filter has been added.',
+        required=False,
+        style={'base_template': 'textarea.html'}
+    )
+    additional_settings = JSONField(
+        decoder=None,
+        encoder=None,
+        help_text='Additional settings which are specific to this filter.',
+        required=False,
+        style={'base_template': 'textarea.html'},
+    )
+    filter_list = PrimaryKeyRelatedField(
+        help_text='The filter list containing this filter.',
+        queryset=FilterList.objects.all(),
+    )
+    dm_content = CharField(
+        allow_blank=True,
+        allow_null=True,
+        help_text='The DM to send to a user triggering this filter.',
+        max_length=1000,
+        required=False,
+    )
+    dm_embed = CharField(
+        allow_blank=True,
+        allow_null=True,
+        help_text='The content of the DM embed',
+        max_length=2000,
+        required=False,
+    )
+    infraction_type = ChoiceField(
+        allow_null=True,
+        choices=[('NONE', 'None'), ('NOTE', 'Note'), ('WARNING', 'Warning'),
+                 ('WATCH', 'Watch'), ('TIMEOUT', 'Timeout'), ('KICK', 'Kick'),
+                 ('BAN', 'Ban'), ('SUPERSTAR', 'Superstar'), ('VOICE_BAN', 'Voice Ban'),
+                 ('VOICE_MUTE', 'Voice Mute')],
+        help_text='The infraction to apply to this user.',
+        required=False,
+    )
+    infraction_reason = CharField(
+        allow_blank=True,
+        allow_null=True,
+        help_text='The reason to give for the infraction.',
+        max_length=1000,
+        required=False,
+    )
+    infraction_duration = DurationField(
+        allow_null=True,
+        help_text='The duration of the infraction. 0 for permanent.',
+        required=False,
+    )
+    infraction_channel = IntegerField(
+        allow_null=True,
+        help_text='Channel in which to send the infraction.',
+        max_value=9223372036854775807,
+        min_value=0,
+        required=False,
+    )
+    guild_pings = ListField(
+        allow_empty=True,
+        allow_null=True,
+        child=CharField(label='Guild pings', max_length=100),
+        help_text='Who to ping when this filter triggers.',
+        required=False,
+    )
+    filter_dm = BooleanField(
+        allow_null=True,
+        help_text='Whether DMs should be filtered.',
+        required=False,
+    )
+    dm_pings = ListField(
+        allow_empty=True,
+        allow_null=True,
+        child=CharField(label='Dm pings', max_length=100),
+        help_text='Who to ping when this filter triggers on a DM.',
+        required=False,
+    )
+    remove_context = BooleanField(
+        allow_null=True,
+        help_text='Whether this filter should remove the context (such as a message) triggering it.',
+        required=False,
+    )
+    send_alert = BooleanField(
+        allow_null=True,
+        help_text='Whether an alert should be sent.',
+        required=False,
+    )
+    bypass_roles = ListField(
+        allow_empty=True,
+        allow_null=True,
+        child=CharField(label='Bypass roles', max_length=100),
+        help_text='Roles and users who can bypass this filter.',
+        required=False,
+    )
+    enabled = BooleanField(
+        allow_null=True,
+        help_text='Whether this filter is currently enabled.',
+        required=False,
+    )
+    enabled_channels = ListField(
+        allow_empty=True,
+        allow_null=True,
+        child=CharField(label='Enabled channels', max_length=100),
+        help_text="Channels in which to run the filter even if it's disabled in the category.",
+        required=False,
+    )
+    disabled_channels = ListField(
+        allow_empty=True,
+        allow_null=True,
+        child=CharField(label='Disabled channels', max_length=100),
+        help_text="Channels in which to not run the filter even if it's enabled in the category.",
+        required=False,
+    )
+    enabled_categories = ListField(
+        allow_empty=True,
+        allow_null=True,
+        child=CharField(label='Enabled categories', max_length=100),
+        help_text='The only categories in which to run the filter.',
+        required=False,
+    )
+    disabled_categories = ListField(
+        allow_empty=True, allow_null=True,
+        child=CharField(label='Disabled categories', max_length=100),
+        help_text='Categories in which to not run the filter.',
+        required=False,
+    )
+    # ------------------------------8<----------------------------------
 
     def validate(self, data: dict) -> dict:
         """Perform infraction data + allowed and disallowed lists validation."""
