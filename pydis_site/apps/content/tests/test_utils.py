@@ -370,7 +370,7 @@ class TagUtilsTests(TestCase):
         self.assertEqual(self.commit, models.Tag.objects.get(name=tag.name).last_commit)
 
     @mock.patch.object(utils, "set_tag_commit")
-    def test_exiting_commit(self, set_commit_mock: mock.Mock):
+    def test_existing_commit(self, set_commit_mock: mock.Mock):
         """Test that a commit is saved when the data has not changed."""
         tag = models.Tag.objects.create(name="tag-name", body="old body", last_commit=self.commit)
 
@@ -378,8 +378,18 @@ class TagUtilsTests(TestCase):
         tag.last_commit = None
 
         utils.record_tags([tag])
+        tag.refresh_from_db()
         self.assertEqual(self.commit, tag.last_commit)
 
         result = utils.get_tag("tag-name")
         self.assertEqual(tag, result)
         set_commit_mock.assert_not_called()
+
+    def test_deletes_tags_no_longer_present(self):
+        """Test that no longer known tags are deleted."""
+        tag = models.Tag.objects.create(name="tag-name", body="old body", last_commit=self.commit)
+
+        utils.record_tags([])
+
+        with self.assertRaises(models.Tag.DoesNotExist):
+            tag.refresh_from_db()
