@@ -62,3 +62,17 @@ class GitHubWebhookFilterAPITests(APITestCase):
             self.client.post(url, data=payload, headers=headers)
 
             logger.warning.assert_called_once()
+
+    def test_other_error_is_logged(self):
+        url = reverse('api:github-webhook-filter', args=('id', 'token'))
+        payload = {}
+        headers = {'X-GitHub-Event': 'pull_request_review'}
+        with (
+            mock.patch('urllib.request.urlopen') as urlopen,
+            mock.patch.object(GitHubWebhookFilterView, "logger") as logger,
+        ):
+            urlopen.side_effect = HTTPError(None, 451, 'Unavailable For Legal Reasons', {}, None)
+            logger.warning = mock.PropertyMock()
+            self.client.post(url, data=payload, headers=headers)
+
+            logger.warning.assert_called_once()

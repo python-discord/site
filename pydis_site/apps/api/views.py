@@ -304,9 +304,21 @@ class GitHubWebhookFilterView(APIView):
             webhook_id, webhook_token, request.data, dict(request.headers),
         )
 
+        body_decoded = body.decode("utf-8")
+
+        if (
+            not (status.HTTP_200_OK <= response_status < status.HTTP_300_MULTIPLE_CHOICES)
+            and response_status != status.HTTP_429_TOO_MANY_REQUESTS
+        ):
+            self.logger.warning(
+                "Failed to send GitHub webhook to Discord. Response code %d, body: %s",
+                response_status,
+                body_decoded,
+            )
+
         response_body = {
             "original_status": response_status,
-            "data": body.decode("utf-8"),
+            "data": body_decoded,
             "headers": headers,
         }
 
