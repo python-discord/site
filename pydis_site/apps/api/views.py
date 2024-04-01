@@ -305,7 +305,14 @@ class GitHubWebhookFilterView(APIView):
         )
         headers.pop('Connection', None)
         headers.pop('Content-Length', None)
-        return Response(data=body, headers=headers, status=response_status)
+
+        response_body = {
+            "original_status": response_status,
+            "data": body.decode("utf-8"),
+            "headers": headers,
+        }
+
+        return Response(response_body)
 
     def send_webhook(
         self,
