@@ -44,8 +44,10 @@ class GitHubWebhookFilterAPITests(APITestCase):
             context_mock.read.return_value = b'{"status": "ok"}'
 
             response = self.client.post(url, data=payload, headers=headers)
-            self.assertEqual(response.status_code, context_mock.status)
-            self.assertEqual(response.headers.get('X-Clacks-Overhead'), 'Joe Armstrong')
+            response_body = response.json()
+            self.assertEqual(response.status_code, 200)
+            self.assertEqual(response_body.get("headers", {}).get("X-Clacks-Overhead"), 'Joe Armstrong')
+            self.assertEqual(response_body.get("original_status"), 299)
 
     def test_rate_limit_is_logged_to_sentry(self):
         url = reverse('api:github-webhook-filter', args=('id', 'token'))
@@ -56,6 +58,20 @@ class GitHubWebhookFilterAPITests(APITestCase):
             mock.patch.object(GitHubWebhookFilterView, "logger") as logger,
         ):
             urlopen.side_effect = HTTPError(None, 429, 'Too Many Requests', {}, None)
+            logger.warning = mock.PropertyMock()
+            self.client.post(url, data=payload, headers=headers)
+
+            logger.warning.assert_called_once()
+
+    def test_other_error_is_logged(self):
+        url = reverse('api:github-webhook-filter', args=('id', 'token'))
+        payload = {}
+        headers = {'X-GitHub-Event': 'pull_request_review'}
+        with (
+            mock.patch('urllib.request.urlopen') as urlopen,
+            mock.patch.object(GitHubWebhookFilterView, "logger") as logger,
+        ):
+            urlopen.side_effect = HTTPError(None, 451, 'Unavailable For Legal Reasons', {}, None)
             logger.warning = mock.PropertyMock()
             self.client.post(url, data=payload, headers=headers)
 
