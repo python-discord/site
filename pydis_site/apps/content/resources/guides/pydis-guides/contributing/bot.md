@@ -15,7 +15,7 @@ This page will focus on the quickest steps one can take, with mentions of altern
 ### Setup Project Dependencies
 Below are the dependencies you **must** have installed to get started with the bot.
 
-1. Make sure you have [Python 3.11](https://www.python.org/downloads/) installed. It helps if it is your system's default Python version.
+1. Make sure you have [Python 3.12](https://www.python.org/downloads/) installed. It helps if it is your system's default Python version.
 1. [Install Poetry](https://github.com/python-poetry/poetry#installation).
 1. [Install the project's dependencies](../installing-project-dependencies).
 1. Docker.
