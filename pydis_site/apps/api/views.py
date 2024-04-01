@@ -303,8 +303,6 @@ class GitHubWebhookFilterView(APIView):
         (response_status, headers, body) = self.send_webhook(
             webhook_id, webhook_token, request.data, dict(request.headers),
         )
-        headers.pop('Connection', None)
-        headers.pop('Content-Length', None)
 
         response_body = {
             "original_status": response_status,
