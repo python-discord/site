@@ -33,6 +33,11 @@ class User(ModelReprMixin, models.Model):
         max_length=32,
         help_text="The username, taken from Discord.",
     )
+    display_name = models.CharField(
+        max_length=32,
+        blank=True,
+        help_text="The display name, taken from Discord.",
+    )
     discriminator = models.PositiveSmallIntegerField(
         validators=(
             MaxValueValidator(
