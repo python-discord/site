@@ -1,3 +1,4 @@
+import io
 from unittest import mock
 from urllib.error import HTTPError
 
@@ -58,6 +59,7 @@ class GitHubWebhookFilterAPITests(APITestCase):
             mock.patch.object(GitHubWebhookFilterView, "logger") as logger,
         ):
             urlopen.side_effect = HTTPError(None, 429, 'Too Many Requests', {}, None)
+            urlopen.side_effect.fp = io.BytesIO()
             logger.warning = mock.PropertyMock()
             self.client.post(url, data=payload, headers=headers)
 
@@ -72,6 +74,7 @@ class GitHubWebhookFilterAPITests(APITestCase):
             mock.patch.object(GitHubWebhookFilterView, "logger") as logger,
         ):
             urlopen.side_effect = HTTPError(None, 451, 'Unavailable For Legal Reasons', {}, None)
+            urlopen.side_effect.fp = io.BytesIO()
             logger.warning = mock.PropertyMock()
             self.client.post(url, data=payload, headers=headers)
 
