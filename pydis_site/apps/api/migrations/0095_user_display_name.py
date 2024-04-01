@@ -14,5 +14,5 @@ class Migration(migrations.Migration):
             name="display_name",
             field=models.CharField(blank=True, help_text="The display name, taken from Discord.", max_length=32),
         ),
-        migrations.RunSQL("UPDATE api_user SET display_name = name;"),
+        migrations.RunSQL("UPDATE api_user SET display_name = name;", elidable=True),
     ]
