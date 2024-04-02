@@ -18,8 +18,8 @@ jobs:
 
       # Start the database early to give it a chance to get ready before
       # we start running tests.
-      - name: Run database using docker-compose
-        run: docker-compose run -d -p 7777:5432 --name pydis_web postgres
+      - name: Run database using docker compose
+        run: docker compose run -d -p 7777:5432 --name pydis_web postgres
 
       # We will not run `flake8` here, as we will use a separate flake8
       # action.
@@ -50,8 +50,8 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           file: ./coverage.lcov
 
-      - name: Tear down docker-compose containers
-        run: docker-compose stop
+      - name: Tear down docker compose containers
+        run: docker compose stop
         if: ${{ always() }}
 
       # Prepare the Pull Request Payload artifact. If this fails, we
