@@ -22,5 +22,5 @@ class Migration(migrations.Migration):
             name='last_applied',
             field=models.DateTimeField(default=django.utils.timezone.now, help_text='The date and time of when this infraction was last applied.'),
         ),
-        migrations.RunPython(set_last_applied_to_inserted_at)
+        migrations.RunPython(set_last_applied_to_inserted_at, elidable=True)
     ]

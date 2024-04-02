@@ -100,6 +100,6 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RunPython(migrate_inactive_types_to_inactive, reverse_migration),
-        migrations.RunPython(migrate_multiple_active_infractions_per_user_to_one, reverse_migration)
+        migrations.RunPython(migrate_inactive_types_to_inactive, reverse_migration, elidable=True),
+        migrations.RunPython(migrate_multiple_active_infractions_per_user_to_one, reverse_migration, elidable=True)
     ]
