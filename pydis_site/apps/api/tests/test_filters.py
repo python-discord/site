@@ -6,7 +6,7 @@ from typing import Any
 from django.db.models import Model
 from django.urls import reverse
 
-from pydis_site.apps.api.models.bot.filters import Filter, FilterList
+from pydis_site.apps.api.models.bot.filters import Filter, FilterList, FilterListType
 from pydis_site.apps.api.tests.base import AuthenticatedAPITestCase
 
 
@@ -350,3 +350,48 @@ class FilterValidationTests(AuthenticatedAPITestCase):
 
         response = self.client.post(test_filter.url(), data=clean_test_json(test_filter.object))
         self.assertEqual(response.status_code, 400)
+
+
+class FilterCreationMissingOptionalFieldsTestCase(AuthenticatedAPITestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.filter_list = FilterList.objects.create(
+            name="Ingsoc",
+            list_type=FilterListType.ALLOW,
+            dm_content="But if thought corrupts language, language can also corrupt thought.",
+            dm_embed="",
+            infraction_type="timeout",
+            infraction_duration=timedelta(days=80 * 365),
+            infraction_reason="Thoughtcrime",
+            infraction_channel=1,
+            guild_pings=["@BigBrother"],
+            filter_dm=False,
+            dm_pings=["@BigBrother"],
+            remove_context=True,
+            bypass_roles=[],
+            enabled=True,
+            send_alert=True,
+            enabled_channels=[],
+            disabled_channels=[],
+            enabled_categories=[],
+            disabled_categories=[],
+        )
+
+    def test_creation_missing_optional_fields(self) -> None:
+        data = {
+            "filter_list": self.filter_list.id,
+            "content": "1234567",
+            "description": "Guild \"Python\" - Phishing",
+            "additional_settings": {},
+            "guild_pings": [],
+            "infraction_type": "BAN",
+            "infraction_channel": 1,
+            "infraction_duration": 345600.0,
+            "infraction_reason": (
+                "The creatures outside looked from pig to man, and from man to pig, "
+                "and from pig to man again; but already it was impossible to say which was which"
+            )
+        }
+        endpoint = reverse('api:bot:filter-list')
+        response = self.client.post(endpoint, data=data)
+        self.assertEqual(response.status_code, 201)
