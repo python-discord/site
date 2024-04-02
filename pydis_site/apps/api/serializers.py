@@ -434,7 +434,7 @@ class FilterListSerializer(ModelSerializer):
         schema = {name: getattr(instance, name) for name in BASE_FILTERLIST_FIELDS}
         schema['filters'] = [
             FilterSerializer(many=False).to_representation(instance=item)
-            for item in Filter.objects.filter(filter_list=instance.id)
+            for item in Filter.objects.filter(filter_list=instance.id).prefetch_related('filter_list')
         ]
 
         settings = {name: getattr(instance, name) for name in BASE_SETTINGS_FIELDS}
@@ -673,7 +673,7 @@ class UserSerializer(ModelSerializer):
         """Metadata defined for the Django REST Framework."""
 
         model = User
-        fields = ('id', 'name', 'discriminator', 'roles', 'in_guild')
+        fields = ('id', 'name', 'display_name', 'discriminator', 'roles', 'in_guild')
         depth = 1
         list_serializer_class = UserListSerializer
 

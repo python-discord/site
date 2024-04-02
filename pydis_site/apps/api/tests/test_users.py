@@ -61,7 +61,8 @@ class CreationTests(AuthenticatedAPITestCase):
         url = reverse('api:bot:user-list')
         data = {
             'id': 42,
-            'name': "Test",
+            'name': "test",
+            'display_name': "Test Display",
             'discriminator': 42,
             'roles': [
                 self.role.id
@@ -75,6 +76,7 @@ class CreationTests(AuthenticatedAPITestCase):
 
         user = User.objects.get(id=42)
         self.assertEqual(user.name, data['name'])
+        self.assertEqual(user.display_name, data['display_name'])
         self.assertEqual(user.discriminator, data['discriminator'])
         self.assertEqual(user.in_guild, data['in_guild'])
 
@@ -83,7 +85,8 @@ class CreationTests(AuthenticatedAPITestCase):
         data = [
             {
                 'id': 5,
-                'name': "test man",
+                'name': "testman",
+                'display_name': "Test Display 1",
                 'discriminator': 42,
                 'roles': [
                     self.role.id
@@ -92,7 +95,8 @@ class CreationTests(AuthenticatedAPITestCase):
             },
             {
                 'id': 8,
-                'name': "another test man",
+                'name': "anothertestman",
+                'display_name': "Test Display 2",
                 'discriminator': 555,
                 'roles': [],
                 'in_guild': False
@@ -200,7 +204,8 @@ class MultiPatchTests(AuthenticatedAPITestCase):
         data = [
             {
                 "id": 1,
-                "name": "User 1 patched!",
+                "name": "user1patched",
+                "display_name": "User 1 Patched",
                 "discriminator": 1010,
                 "roles": [self.role_developer.id],
                 "in_guild": False

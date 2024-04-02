@@ -12,6 +12,7 @@ import frontmatter
 import httpx
 import markdown
 import yaml
+from django.db import transaction
 from django.http import Http404
 from django.utils import timezone
 from markdown.extensions.toc import TocExtension
@@ -194,23 +195,19 @@ def set_tag_commit(tag: Tag) -> None:
 
 def record_tags(tags: list[Tag]) -> None:
     """Sync the database with an updated set of tags."""
-    # Remove entries which no longer exist
-    Tag.objects.exclude(name__in=[tag.name for tag in tags]).delete()
+    with transaction.atomic():
+        # Remove any tags that we don't want to keep in the future
+        Tag.objects.exclude(name__in=(tag.name for tag in tags)).delete()
 
-    # Insert/update the tags
-    for new_tag in tags:
-        try:
-            old_tag = Tag.objects.get(name=new_tag.name)
-        except Tag.DoesNotExist:
-            # The tag is not in the database yet,
-            # pretend it's previous state is the current state
-            old_tag = new_tag
-
-        if old_tag.sha == new_tag.sha and old_tag.last_commit_id is not None:
-            # We still have an up-to-date commit entry
-            new_tag.last_commit_id = old_tag.last_commit_id
-
-        new_tag.save()
+        # Upsert the data!
+        Tag.objects.bulk_create(
+            tags,
+            update_conflicts=True,
+            # last_commit is not included here. We want to keep that
+            # from the tag that might already be in the database.
+            update_fields=('last_updated', 'sha', 'group', 'body'),
+            unique_fields=('name',),
+        )
 
     # Drop old, unused commits
     Commit.objects.filter(tag__isnull=True).delete()

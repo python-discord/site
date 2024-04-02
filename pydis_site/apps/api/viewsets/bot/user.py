@@ -64,7 +64,8 @@ class UserViewSet(ModelViewSet):
     ...     'results': [
     ...      {
     ...         'id': 409107086526644234,
-    ...         'name': "Python",
+    ...         'name': "python",
+    ...         'display_name': "Python",
     ...         'discriminator': 4329,
     ...         'roles': [
     ...             352427296948486144,
@@ -79,6 +80,7 @@ class UserViewSet(ModelViewSet):
 
     #### Optional Query Parameters
     - username: username to search for
+    - display_name: display name to search for
     - discriminator: discriminator to search for
     - page_size: number of Users in one page, defaults to 10,000
     - page: page number
@@ -92,7 +94,8 @@ class UserViewSet(ModelViewSet):
     #### Response format
     >>> {
     ...     'id': 409107086526644234,
-    ...     'name': "Python",
+    ...     'name': "python",
+    ...     'display_name': "Python",
     ...     'discriminator': 4329,
     ...     'roles': [
     ...         352427296948486144,
@@ -170,6 +173,7 @@ class UserViewSet(ModelViewSet):
     >>> {
     ...     'id': int,
     ...     'name': str,
+    ...     'display_name': str,
     ...     'discriminator': int,
     ...     'roles': List[int],
     ...     'in_guild': bool
@@ -192,6 +196,7 @@ class UserViewSet(ModelViewSet):
     >>> {
     ...     'id': int,
     ...     'name': str,
+    ...     'display_name': str,
     ...     'discriminator': int,
     ...     'roles': List[int],
     ...     'in_guild': bool
@@ -210,6 +215,7 @@ class UserViewSet(ModelViewSet):
     >>> {
     ...     'id': int,
     ...     'name': str,
+    ...     'display_name': str,
     ...     'discriminator': int,
     ...     'roles': List[int],
     ...     'in_guild': bool
@@ -229,6 +235,7 @@ class UserViewSet(ModelViewSet):
     ...     {
     ...         'id': int,
     ...         'name': str,
+    ...         'display_name': str,
     ...         'discriminator': int,
     ...         'roles': List[int],
     ...         'in_guild': bool
@@ -236,6 +243,7 @@ class UserViewSet(ModelViewSet):
     ...     {
     ...         'id': int,
     ...         'name': str,
+    ...         'display_name': str,
     ...         'discriminator': int,
     ...         'roles': List[int],
     ...         'in_guild': bool
@@ -260,7 +268,7 @@ class UserViewSet(ModelViewSet):
     queryset = User.objects.all().order_by("id")
     pagination_class = UserListPagination
     filter_backends = (DjangoFilterBackend,)
-    filterset_fields = ('name', 'discriminator')
+    filterset_fields = ('name', 'discriminator', 'display_name')
 
     def get_serializer(self, *args, **kwargs) -> ModelSerializer:
         """Set Serializer many attribute to True if request body contains a list."""
