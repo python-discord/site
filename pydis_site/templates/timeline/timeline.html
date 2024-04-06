@@ -3,36 +3,33 @@
 
 {% block title %}Timeline{% endblock %}
 {% block head %}
-  <link rel="stylesheet" href="{% static "css/home/timeline.css" %}">
-  <link rel="stylesheet" href="{% static "css/home/index.css" %}">
+  <link rel="stylesheet" href="{% static "css/timeline/timeline.css" %}">
 {% endblock %}
 
 {% block content %}
   {% include "base/navbar.html" %}
 
-  <section class="cd-timeline js-cd-timeline">
-    <div class="container max-width-lg cd-timeline__container">
+  <section class="timeline">
+    <div class="container">
 
       {% for entry in entries %}
-
-        <div class="cd-timeline__block" id="{{ entry.slug }}">
-          <div class="cd-timeline__img cd-timeline__img--picture {{ entry.icon_color }}">
+      <div class="timeline-item" id="{{ entry.slug }}">
+        <div class="timeline-icon-date">
+          <div class="timeline-icon {{ entry.icon_color }}">
             {% if entry.icon == "pydis" %}
-              <img src="{% static "images/timeline/cd-icon-picture.svg" %}" alt="Picture">
+              <img class="pydis" src="{% static "images/timeline/cd-icon-pydis.svg" %}" alt="Logo">
             {% else %}
-              <i class="{{ entry.icon }}"></i>
+              <span class="icon"><i class="{{ entry.icon }}"></i></span>
             {% endif %}
           </div>
-
-          <div class="cd-timeline__content has-background-white-bis text-component content">
-            <h2><a href="#{{ entry.slug }}">{{ entry.title }}</a></h2>
-            {{ entry.content|safe }}
-            <div class="flex justify-between items-center">
-              <span class="cd-timeline__date has-text-grey">{{ entry.date }}</span>
-            </div>
-          </div>
+          <span class="timeline-date">{{ entry.date }}</span>
         </div>
 
+        <div class="timeline-content content box">
+          <h3><a href="#{{ entry.slug }}">{{ entry.title }}</a></h3>
+          {{ entry.content|safe }}
+        </div>
+      </div>
       {% endfor %}
 
     </div>
