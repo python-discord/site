@@ -75,6 +75,7 @@ jobs:
       - name: Deploy to Kubernetes
         uses: Azure/k8s-deploy@v5
         with:
+          namespace: web
           manifests: |
             infra/kubernetes/namespaces/default/site/deployment.yaml
           images: 'ghcr.io/python-discord/site:${{ inputs.sha-tag }}'
