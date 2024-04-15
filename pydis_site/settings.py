@@ -101,7 +101,7 @@ else:
             'pythondiscord.com',
             gethostname(),
             gethostbyname(gethostname()),
-            'site.default.svc.cluster.local',
+            'site.web.svc.cluster.local',
         ],
     )
     SECRET_KEY = env('SECRET_KEY')
