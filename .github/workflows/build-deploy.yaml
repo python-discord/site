@@ -77,7 +77,7 @@ jobs:
         with:
           namespace: web
           manifests: |
-            infra/kubernetes/namespaces/default/site/deployment.yaml
+            infra/kubernetes/namespaces/web/site/deployment.yaml
           images: 'ghcr.io/python-discord/site:${{ inputs.sha-tag }}'
 
       - name: Purge Cloudflare Edge Cache
