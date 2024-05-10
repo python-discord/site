@@ -1,4 +1,5 @@
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.request import Request
 from rest_framework.filters import SearchFilter
 from rest_framework.mixins import (
     CreateModelMixin,
@@ -113,6 +114,7 @@ class ReminderViewSet(
 
     ### DELETE /bot/reminders/<id:int>
     Delete the reminder with the given `id`.
+    This is a soft-delete by setting `active` to False.
 
     #### Status codes
     - 204: returned on success
@@ -126,3 +128,19 @@ class ReminderViewSet(
     queryset = Reminder.objects.prefetch_related('author')
     filter_backends = (DjangoFilterBackend, SearchFilter)
     filterset_fields = ('active', 'author__id')
+
+    def perform_destroy(self, instance: Reminder) -> None:
+        """Soft-delete reminders when DELETE is called."""
+        instance.active = False
+        instance.save()
+
+    def get_queryset(self) -> list[Reminder]:
+        """Filter out soft-deleted reminders by default."""
+        queryset = Reminder.objects.prefetch_related('author')
+        request: Request = self.request
+
+        include_inactive = request.query_params.get("include_inactive", "false")
+        include_inactive = include_inactive.lower() == "true"
+        if not include_inactive:
+            queryset = queryset.filter(active=True)
+        return queryset
