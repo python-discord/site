@@ -114,7 +114,6 @@ class ReminderDeletionTests(AuthenticatedAPITestCase):
         response = self.client.delete(url)
 
         self.assertEqual(response.status_code, 204)
-        self.assertRaises(Reminder.DoesNotExist, Reminder.objects.get, id=self.reminder.id)
 
 
 class ReminderListTests(AuthenticatedAPITestCase):
@@ -154,18 +153,26 @@ class ReminderListTests(AuthenticatedAPITestCase):
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, 200)
+        self.assertNotIn(self.rem_dict_two, response.json())
+
+        response = self.client.get(f"{url}?include_inactive=true")
         self.assertCountEqual(response.json(), [self.rem_dict_one, self.rem_dict_two])
 
     def test_filter_search(self):
         url = reverse('api:bot:reminder-list')
         response = self.client.get(f'{url}?search={self.author.name}')
+        self.assertEqual(response.status_code, 200)
+        self.assertCountEqual(response.json(), [self.rem_dict_one])
 
+    def test_filter_search_with_inactive(self):
+        url = reverse('api:bot:reminder-list')
+        response = self.client.get(f'{url}?search={self.author.name}&include_inactive=true')
         self.assertEqual(response.status_code, 200)
         self.assertCountEqual(response.json(), [self.rem_dict_one, self.rem_dict_two])
 
-    def test_filter_field(self):
+    def test_only_active_by_default(self):
         url = reverse('api:bot:reminder-list')
-        response = self.client.get(f'{url}?active=true')
+        response = self.client.get(url)
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json(), [self.rem_dict_one])
