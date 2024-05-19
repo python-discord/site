@@ -335,7 +335,7 @@ class UserViewSet(ModelViewSet):
     """
 
     serializer_class = UserSerializer
-    queryset = User.objects.all().order_by("id")
+    queryset = User.objects.select_related("mod_settings").all().order_by("id")
     pagination_class = UserListPagination
     filter_backends = (DjangoFilterBackend,)
     filterset_fields = ('name', 'discriminator', 'display_name')
