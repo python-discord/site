@@ -37,7 +37,8 @@ from .models import (
     Reminder,
     Role,
     User,
-    UserAltRelationship
+    UserAltRelationship,
+    UserModSettings
 )
 
 class FrozenFieldsMixin:
@@ -701,11 +702,24 @@ class UserSerializer(ModelSerializer):
     # ID field must be explicitly set as the default id field is read-only.
     id = IntegerField(min_value=0)
 
+    def to_representation(self, instance: User) -> dict:
+        """Serialize the user to a dictionary, serializing the moderator settings."""
+        ret = super().to_representation(instance)
+
+        if hasattr(instance, 'mod_settings') and instance.mod_settings is not None:
+            ret['mod_settings'] = UserModSettingsSerializer(instance.mod_settings).data
+        else:
+            if 'mod_settings' in ret:
+                del ret['mod_settings']
+
+        return ret
+
     class Meta:
         """Metadata defined for the Django REST Framework."""
 
         model = User
-        fields = ('id', 'name', 'display_name', 'discriminator', 'roles', 'in_guild')
+        fields = ('id', 'name', 'display_name', 'discriminator', 'roles',
+                  'in_guild', 'mod_settings')
         depth = 1
         list_serializer_class = UserListSerializer
 
@@ -736,6 +750,24 @@ class UserWithAltsSerializer(FrozenFieldsMixin, UserSerializer):
             for alt in user.alts.through.objects.filter(source=user)
         ]
 
+class UserModSettingsSerializer(ModelSerializer):
+    """A class to serialize the moderator settings for a user."""
+
+    def validate(self, data: dict) -> dict:
+        """Validate the moderator settings contain the necessary fields."""
+        if data.get("pings_schedule_start") and not data.get("pings_schedule_end"):
+            raise ValidationError("missing pings_schedule_end")
+
+        if data.get("pings_schedule_end") and not data.get("pings_schedule_start"):
+            raise ValidationError("missing pings_schedule_start")
+
+        return data
+
+    class Meta:
+        """Meta settings for the user moderator settings serializer."""
+
+        model = UserModSettings
+        fields = ('moderator', 'pings_disabled_until', 'pings_schedule_start', 'pings_schedule_end')
 
 class NominationEntrySerializer(ModelSerializer):
     """A class providing (de-)serialization of `NominationEntry` instances."""
