@@ -29,6 +29,7 @@ class NominationViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
 
     #### Query parameters
     - **active** `bool`: whether the nomination is still active
+    - **reviewed** `bool`: whether the nomination has been voted on/is being voted on
     - **user__id** `int`: snowflake of the user who received the nomination
     - **ordering** `str`: comma-separated sequence of fields to order the returned results
 
@@ -172,7 +173,7 @@ class NominationViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Ge
     serializer_class = NominationSerializer
     queryset = Nomination.objects.all().prefetch_related('entries')
     filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
-    filterset_fields = ('user__id', 'active')
+    filterset_fields = ('user__id', 'active', 'reviewed')
     frozen_on_create = ('ended_at', 'end_reason', 'active', 'inserted_at', 'reviewed')
 
     def create(self, request: HttpRequest, *args, **kwargs) -> Response:
