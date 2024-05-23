@@ -4,7 +4,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 
 from pydis_site.apps.api.models.bot.role import Role
-from pydis_site.apps.api.models.mixins import ModelReprMixin
+from pydis_site.apps.api.models.mixins import ModelReprMixin, ModelTimestampMixin
 
 
 def _validate_existing_role(value: int) -> None:
@@ -66,6 +66,13 @@ class User(ModelReprMixin, models.Model):
         help_text="Whether this user is in our server.",
         verbose_name="In Guild"
     )
+    alts = models.ManyToManyField(
+        'self',
+        through='UserAltRelationship',
+        through_fields=('source', 'target'),
+        help_text="Known alternate accounts of this user. Manually linked.",
+        verbose_name="Alternative accounts"
+    )
 
     def __str__(self):
         """Returns the name and discriminator for the current user, for display purposes."""
@@ -91,3 +98,45 @@ class User(ModelReprMixin, models.Model):
         For usability in read-only fields such as Django Admin.
         """
         return str(self)
+
+
+class UserAltRelationship(ModelReprMixin, ModelTimestampMixin, models.Model):
+    """A relationship between a Discord user and its alts."""
+
+    source = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        verbose_name="Source",
+        help_text="The source of this user to alternate account relationship",
+    )
+    target = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        verbose_name="Target",
+        related_name='+',
+        help_text="The target of this user to alternate account relationship",
+    )
+    context = models.TextField(
+        help_text="The reason for why this account was associated as an alt.",
+        max_length=1900
+    )
+    actor = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='+',
+        help_text="The moderator that associated these accounts together."
+    )
+
+    class Meta:
+        """Add constraints to prevent users from being an alt of themselves."""
+
+        constraints = [
+            models.UniqueConstraint(
+                name="%(app_label)s_%(class)s_unique_relationships",
+                fields=["source", "target"]
+            ),
+            models.CheckConstraint(
+                name="%(app_label)s_%(class)s_prevent_alt_to_self",
+                check=~models.Q(source=models.F("target")),
+            ),
+        ]

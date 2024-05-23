@@ -57,7 +57,7 @@ ignore = [
     "DJ001", "DJ008",
     "RET504",
     "RUF005", "RUF012",
-    "S311",
+    "S101", "S311",
     "SIM102", "SIM108",
 ]
 select = ["ANN", "B", "C4", "D", "DJ", "DTZ", "E", "F", "ISC", "INT", "N", "PGH", "PIE", "RET", "RSE", "RUF", "S", "SIM", "T20", "TID", "UP", "W"]
