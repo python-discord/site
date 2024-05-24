@@ -1,7 +1,7 @@
 ---
 title: Advent of Code attracts hundreds of participants
 date: December 1st - 25th, 2020
-icon: fa fa-snowflake-o
+icon: fa fa-snowflake
 icon_color: pastel-red
 ---
 

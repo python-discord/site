@@ -1,7 +1,7 @@
 ---
 title: Summer Code Jam 2020 Highlights
 date: Mar 21st, 2021
-icon: fa fa-youtube-play
+icon: fab fa-youtube
 icon_color: pastel-red
 ---
 

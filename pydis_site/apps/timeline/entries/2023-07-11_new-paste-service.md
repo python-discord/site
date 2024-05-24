@@ -1,7 +1,7 @@
 ---
 title: Switch to new paste service
 date: Jul 11th, 2023
-icon: fa-regular fa-clipboard
+icon: fa-solid fa-clipboard
 icon_color: pastel-pink
 ---
 
