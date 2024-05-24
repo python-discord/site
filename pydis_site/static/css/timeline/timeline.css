@@ -145,7 +145,7 @@
     flex-grow: 1;
 }
 
-/* Don't make the titles show up as the link colors before hover. */
+/* Don't make the titles show up as link colors before hover. */
 .timeline-content h3 a {
     color: inherit;
 }
