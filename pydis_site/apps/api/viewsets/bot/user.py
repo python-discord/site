@@ -15,10 +15,11 @@ from rest_framework.viewsets import ModelViewSet
 
 from pydis_site.apps.api.models.bot.infraction import Infraction
 from pydis_site.apps.api.models.bot.metricity import Metricity, NotFoundError
-from pydis_site.apps.api.models.bot.user import User, UserAltRelationship
+from pydis_site.apps.api.models.bot.user import User, UserAltRelationship, UserModSettings
 from pydis_site.apps.api.serializers import (
     UserSerializer,
     UserAltRelationshipSerializer,
+    UserModSettingsSerializer,
     UserWithAltsSerializer
 )
 
@@ -366,6 +367,26 @@ class UserViewSet(ModelViewSet):
         serializer.save()
 
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+    @action(detail=True, methods=["PATCH"], name='mod-settings-update')
+    def mod_settings(self, request: Request, pk: str) -> Response:
+        """Update the mod settings for a given user."""
+        user = self.get_object()
+        maybe_mod_settings = UserModSettings.objects.filter(moderator=user).first()
+
+        mod_settings_data = ChainMap({'moderator': user.id}, request.data)
+
+        if maybe_mod_settings:
+            mod_settings = UserModSettingsSerializer(maybe_mod_settings, data=mod_settings_data)
+        else:
+            mod_settings = UserModSettingsSerializer(data=mod_settings_data)
+
+        mod_settings.is_valid(raise_exception=True)
+
+        mod_settings.save()
+
+        return Response(mod_settings.data, status=status.HTTP_200_OK)
+
 
     @action(detail=True, methods=['POST'], name="Add alternate account",
             url_name='alts', url_path='alts')
