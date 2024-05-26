@@ -387,6 +387,19 @@ class UserViewSet(ModelViewSet):
 
         return Response(mod_settings.data, status=status.HTTP_200_OK)
 
+    @mod_settings.mapping.delete
+    def delete_mod_settings(self, request: Request, pk: str) -> Response:
+        """Delete all moderator settings registered for a user."""
+        user = self.get_object()
+        maybe_mod_settings = UserModSettings.objects.filter(moderator=user).first()
+
+        if not maybe_mod_settings:
+            return Response(status=status.HTTP_204_NO_CONTENT)
+
+        maybe_mod_settings.delete()
+
+        return Response(status=status.HTTP_200_OK)
+
 
     @action(detail=True, methods=['POST'], name="Add alternate account",
             url_name='alts', url_path='alts')
