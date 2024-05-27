@@ -381,12 +381,12 @@ bcrypt = ["bcrypt"]
 
 [[package]]
 name = "django-distill"
-version = "3.1.3"
+version = "3.2.4"
 description = "Static site renderer and publisher for Django."
 optional = false
 python-versions = "*"
 files = [
-    {file = "django-distill-3.1.3.tar.gz", hash = "sha256:3c14e85e1197f4c11dddc5caf9e4a13669d83ab9654c64855e6217dea7619678"},
+    {file = "django_distill-3.2.4.tar.gz", hash = "sha256:f10772eac4fb6b6c832fbc3e632329b4429aeddbb35cc17b780c8827c8d5ae99"},
 ]
 
 [package.dependencies]
@@ -1225,4 +1225,4 @@ brotli = ["Brotli"]
 [metadata]
 lock-version = "2.0"
 python-versions = "3.11.*"
-content-hash = "8c56c7cde2a2edae0417bea7247ceb3b7d165719cf58a475d4b41ab46c27b5a3"
+content-hash = "69f883a36058808510c40eae4b9c4c34bf0643961ffa782890fe6de7bd7b0df1"
