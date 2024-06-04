@@ -188,8 +188,8 @@ WSGI_APPLICATION = 'pydis_site.wsgi.application'
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
 DATABASES = {
-    'default': env.db(),
-    'metricity': env.db('METRICITY_DB_URL'),
+    'default': env.db(engine="django_prometheus.db.backends.postgresql"),
+    'metricity': env.db('METRICITY_DB_URL', engine="django_prometheus.db.backends.postgresql"),
 } if not STATIC_BUILD else {}
 
 # Password validation
