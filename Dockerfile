@@ -39,6 +39,8 @@ RUN if [ $STATIC_BUILD = "TRUE" ] ; \
   then SECRET_KEY=dummy_value poetry run python manage.py distill-local build --traceback --force ; \
 fi
 
-# Run web server through custom manager
-ENTRYPOINT ["poetry", "run", "python", "manage.py"]
-CMD ["run"]
+ENTRYPOINT ["poetry", "run"]
+CMD ["gunicorn", "--preload", "-b", "0.0.0.0:8000", \
+     "pydis_site.wsgi:application", "-w", "2", "--statsd-host", \
+     "graphite.default.svc.cluster.local:8125", "--statsd-prefix", "site", \
+     "--config", "file:gunicorn.conf.py"]
