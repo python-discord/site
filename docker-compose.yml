@@ -30,7 +30,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    command: ["run", "--debug"]
+    command: ["python", "manage.py", "run"]
     networks:
       default:
         aliases:
