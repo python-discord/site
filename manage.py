@@ -28,21 +28,21 @@ for key, value in DEFAULT_ENVS.items():
 
 class SiteManager:
     """
-    Manages the preparation and serving of the website.
+    Manages the preparation and serving of the website for local use.
 
-    Handles both development and production environments.
+    This class is used solely for setting up the development
+    environment. In production, gunicorn is invoked directly
+    and migrations are handled in an init container.
 
     Usage:
         manage.py run [option]...
 
     Options:
-        --debug    Runs a development server with debug mode enabled.
         --silent   Sets minimal console output.
         --verbose  Sets verbose console output.
     """
 
     def __init__(self, args: list[str]):
-        self.debug = "--debug" in args
         self.silent = "--silent" in args
 
         if self.silent:
@@ -50,9 +50,8 @@ class SiteManager:
         else:
             self.verbosity = 2 if "--verbose" in args else 1
 
-        if self.debug:
-            os.environ.setdefault("DEBUG", "true")
-            print("Starting in debug mode.")
+        os.environ.setdefault("DEBUG", "true")
+        print("Starting in debug mode.")
 
     @staticmethod
     def create_superuser() -> None:
@@ -104,53 +103,31 @@ class SiteManager:
         call_command("migrate", verbosity=self.verbosity)
 
     def prepare_server(self) -> None:
-        """Preform runserver-specific preparation tasks."""
-        if self.debug:
-            # In Production, collectstatic is ran in the Docker image
-            print("Collecting static files.")
-            call_command(
-                "collectstatic",
-                interactive=False,
-                clear=True,
-                verbosity=self.verbosity - 1
-            )
+        """Perform debug runserver-specific preparation tasks."""
+        print("Collecting static files.")
+        call_command(
+            "collectstatic",
+            interactive=False,
+            clear=True,
+            verbosity=self.verbosity - 1
+        )
 
-            self.set_dev_site_name()
-            self.create_superuser()
+        self.set_dev_site_name()
+        self.create_superuser()
 
-    def run_server(self) -> None:
-        """Prepare and run the web server."""
+    def run_debug(self) -> None:
+        """Prepare and run the debug web server."""
         in_reloader = os.environ.get('RUN_MAIN') == 'true'
 
         # Prevent preparing twice when in dev mode due to reloader
-        if not self.debug or in_reloader:
+        if in_reloader:
             self.prepare_environment()
             self.prepare_server()
 
         print("Starting server.")
 
         # Run the development server
-        if self.debug:
-            call_command("runserver", "0.0.0.0:8000")
-            return
-
-        # Import gunicorn only if we aren't in debug mode.
-        import gunicorn.app.wsgiapp
-
-        # Patch the arguments for gunicorn
-        sys.argv = [
-            "gunicorn",
-            "--preload",
-            "-b", "0.0.0.0:8000",
-            "pydis_site.wsgi:application",
-            "-w", "2",
-            "--statsd-host", "graphite.default.svc.cluster.local:8125",
-            "--statsd-prefix", "site",
-            "--config", "file:gunicorn.conf.py"
-        ]
-
-        # Run gunicorn for the production server.
-        gunicorn.app.wsgiapp.run()
+        call_command("runserver", "0.0.0.0:8000")
 
     def run_tests(self) -> None:
         """Prepare and run the test suite."""
@@ -190,7 +167,7 @@ def main() -> None:
     if len(sys.argv) > 1 and sys.argv[1] in ("run", "test"):
         manager = SiteManager(sys.argv)
         if sys.argv[1] == "run":
-            manager.run_server()
+            manager.run_debug()
         elif sys.argv[1] == "test":
             manager.run_tests()
 
