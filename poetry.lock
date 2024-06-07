@@ -1031,13 +1031,13 @@ files = [
 
 [[package]]
 name = "sentry-sdk"
-version = "2.3.1"
+version = "2.5.0"
 description = "Python client for Sentry (https://sentry.io)"
 optional = false
 python-versions = ">=3.6"
 files = [
-    {file = "sentry_sdk-2.3.1-py2.py3-none-any.whl", hash = "sha256:c5aeb095ba226391d337dd42a6f9470d86c9fc236ecc71cfc7cd1942b45010c6"},
-    {file = "sentry_sdk-2.3.1.tar.gz", hash = "sha256:139a71a19f5e9eb5d3623942491ce03cf8ebc14ea2e39ba3e6fe79560d8a5b1f"},
+    {file = "sentry_sdk-2.5.0-py2.py3-none-any.whl", hash = "sha256:75d2e1fd8a887fdf63df612f5d37991c248a080b886d80714560bdded2bb9051"},
+    {file = "sentry_sdk-2.5.0.tar.gz", hash = "sha256:05453f921c561b51159f712c2cd267b595e5c195b38b337d03baeb42719dd3c7"},
 ]
 
 [package.dependencies]
@@ -1225,4 +1225,4 @@ brotli = ["Brotli"]
 [metadata]
 lock-version = "2.0"
 python-versions = "3.11.*"
-content-hash = "d6ef229e6e120602487e73fb36fbf47209c74a11a800c5ec0a9a88d626d2df3f"
+content-hash = "75757420c28949c9ca29df3d26697fcb352e8e23e5201a4a42b467bc8799f962"
