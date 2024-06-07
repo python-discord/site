@@ -73,7 +73,7 @@ select = ["ANN", "B", "C4", "D", "DJ", "DTZ", "E", "F", "ISC", "INT", "N", "PGH"
 "pydis_site/apps/api/models/bot/off_topic_channel_name.py" = ["RUF001"]
 
 [tool.taskipy.tasks]
-start = "python manage.py run --debug"
+start = "python manage.py run"
 makemigrations = "python manage.py makemigrations"
 django_shell = "python manage.py shell"
 test = "coverage run manage.py test"
