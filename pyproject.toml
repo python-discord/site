@@ -22,7 +22,7 @@ PyJWT = {version = "2.8.0", extras = ["crypto"]}
 pymdown-extensions = "10.8.1"
 python-frontmatter = "1.1.0"
 pyyaml = "6.0.1"
-sentry-sdk = "2.5.1"
+sentry-sdk = "2.6.0"
 whitenoise = "6.6.0"
 psycopg = {extras = ["binary"], version = "3.1.19"}
 
