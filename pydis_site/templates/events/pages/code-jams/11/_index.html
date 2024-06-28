@@ -1,0 +1,58 @@
+{% extends "events/base_sidebar.html" %}
+
+{% load static %}
+
+{% block title %}Code Jam 2024{% endblock %}
+
+{% block breadcrumb %}
+    <li><a href="{% url "events:index" %}">Events</a></li>
+    <li><a href="{% url "events:page" path="code-jams" %}">Code Jams</a></li>
+    <li class="is-active"><a href="#">Code Jam 2024</a></li>
+{% endblock %}
+
+{% block event_content %}
+    <p>Once a year we host a code jam for members of our server to participate in. The code jam is an event where we place you
+        in a team with 5 other random server members. You then have 11 days to code some sort of application or program in Python.
+        Your program must use the specified technology/framework and incorporate the theme chosen by the server.
+    </p>
+    <p>
+        After the 11 days are complete, your team has 4 days to finish documentation and create a video presentation showcasing
+        and walking through the program that your team has created. More details and specifics of this will be released within the next 2 weeks.
+    </p>
+
+    <h3 id="important-dates"><a href="#important-dates">Important Dates</a></h3>
+    <ul>
+        <li>Wednesday, August 16 - The Qualifier is released</li>
+        <li>Wednesday, August 23 - The Qualifier closes</li>
+        <li>Wednesday, August 23 - Voting for the theme opens</li>
+        <li>Thursday, August 31 - Code Jam Begins</li>
+        <li>Sunday, September 10 - Coding portion of the jam ends</li>
+        <li>Thursday, September 14 - Code Jam submissions are closed</li>
+    </ul>
+
+    <h3 id="qualifier"><a href="#qualifier">The Qualifier</a></h3>
+    <p>
+        The qualifier is a coding challenge that you are required to complete before registering for the code jam.
+        This is meant as a basic assessment of your skills to ensure you have enough Python knowledge to effectively contribute in a team environment.
+
+        The qualifier will be released on August 16th.
+    </p>
+
+    <h3 id="technology"><a href="#technology">Technology</a></h3>
+    <p>
+        The chosen technology for this year is <strong>Discord Applications</strong>.
+        Each team must make use of <a href="{% url "events:page" path="code-jams/11/frameworks" %}">the approved frameworks</a> to create an app that strongly incorporates Image Processing and Manipulation.
+    </p>
+
+    <h3 id="prizes"><a href="#prizes">Prizes</a></h3>
+    <p>
+        Prizes for the code jam will be announced in the coming weeks.
+    </p>
+
+{% endblock %}
+
+{% block sidebar %}
+
+    {% include "events/sidebar/code-jams/11.html" %}
+
+{% endblock %}
