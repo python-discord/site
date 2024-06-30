@@ -1,0 +1,39 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}Timeline{% endblock %}
+{% block head %}
+  <link rel="stylesheet" href="{% static "css/timeline/timeline.css" %}">
+{% endblock %}
+
+{% block content %}
+  {% include "base/navbar.html" %}
+
+  <section class="timeline">
+    <div class="container">
+
+      {% for entry in entries %}
+      <div class="timeline-item" id="{{ entry.slug }}">
+        <div class="timeline-icon-date">
+          <div class="timeline-icon {{ entry.icon_color }}">
+            {% if entry.icon == "pydis" %}
+              <img class="pydis" src="{% static "images/timeline/cd-icon-pydis.svg" %}" alt="Logo">
+            {% else %}
+              <span class="icon"><i class="{{ entry.icon }}"></i></span>
+            {% endif %}
+          </div>
+          <span class="timeline-date">{{ entry.date }}</span>
+        </div>
+
+        <div class="timeline-content content box">
+          <h3><a href="#{{ entry.slug }}">{{ entry.title }}</a></h3>
+          {{ entry.content|safe }}
+        </div>
+      </div>
+      {% endfor %}
+
+    </div>
+  </section>
+
+  <script src="{% static "js/timeline/main.js" %}"></script>
+{% endblock %}

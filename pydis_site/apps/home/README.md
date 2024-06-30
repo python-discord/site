@@ -1,8 +1,7 @@
 # The "home" app
 
 This Django application takes care of serving the homepage of our website, that
-is, the first page that you see when you open pythondiscord.com. It also
-manages the timeline page showcasing the history of our community.
+is, the first page that you see when you open pythondiscord.com.
 
 ## Directory structure
 
