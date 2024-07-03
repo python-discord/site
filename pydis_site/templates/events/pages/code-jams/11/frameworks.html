@@ -1,0 +1,106 @@
+{% extends "events/base_sidebar.html" %}
+
+{% load static %}
+
+{% block title %}Summer Code Jam 2024{% endblock %}
+
+{% block breadcrumb %}
+    <li><a href="{% url "events:index" %}">Events</a></li>
+    <li><a href="{% url "events:page" path="code-jams" %}">Code Jams</a></li>
+    <li><a href="{% url "events:page" path="code-jams/11" %}">Code Jam 2024</a></li>
+    <li class="is-active"><a href="#">Approved Frameworks</a></li>
+{% endblock %}
+
+{% block event_content %}
+    <p>
+        Below is the list of approved frameworks that you can use for the code jam.
+        Please work with your team to choose a library (or multiple) that everyone can and want to develop with.
+        If there is a library not listed below that you think should be here, you're welcome to discuss it with the Events Team over in the Discord server.
+
+    </p>
+
+    <h3 id="approved-frameworks"><a href="#approved-frameworks">Approved Frameworks</a></h3>
+
+    <div class="card mb-4">
+        <div class="card-content">
+            <div class="content">
+                <p class="subtitle">discord.py</p>
+                <p>
+                    discord.py is a modern, easy to use, feature-rich, and async ready API wrapper for Discord.
+                </p>
+            </div>
+        </div>
+        <div class="card-footer">
+            <a href="https://discordpy.readthedocs.io/en/stable/" class="card-footer-item"><i class="fas fa-book"></i>&ensp;Documentation</a>
+            <a href="https://github.com/Rapptz/discord.py" class="card-footer-item"><i class="fab fa-github"></i>&ensp;GitHub</a>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-content">
+            <div class="content">
+                <p class="subtitle">nextcord</p>
+                <p>
+                    Nextcord is a modern, easy-to-use, feature-rich, and async-ready API wrapper for Discord, forked from discord.py.
+                </p>
+            </div>
+        </div>
+        <div class="card-footer">
+            <a href="https://docs.nextcord.dev/en/stable/" class="card-footer-item"><i class="fas fa-book"></i>&ensp;Documentation</a>
+            <a href="https://github.com/nextcord/nextcord" class="card-footer-item"><i class="fab fa-github"></i>&ensp;GitHub</a>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-content">
+            <div class="content">
+                <p class="subtitle">disnake</p>
+                <p>
+                    disnake is a modern, easy to use, feature-rich, and async-ready API wrapper for Discord.
+                </p>
+            </div>
+        </div>
+        <div class="card-footer">
+            <a href="https://docs.disnake.dev/en/stable/" class="card-footer-item"><i class="fas fa-book"></i>&ensp;Documentation</a>
+            <a href="https://github.com/DisnakeDev/disnake" class="card-footer-item"><i class="fab fa-github"></i>&ensp;GitHub</a>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-content">
+            <div class="content">
+                <p class="subtitle">hikari</p>
+                <p>
+                    An opinionated, static typed Discord microframework for Python3 and asyncio that supports Discord's v10 REST and Gateway APIs.
+                    Built on good intentions and the hope that it will be extendable and reusable, rather than an obstacle for future development.
+                </p>
+            </div>
+        </div>
+        <div class="card-footer">
+            <a href="https://docs.hikari-py.dev/en/2.0.0.dev126/" class="card-footer-item"><i class="fas fa-book"></i>&ensp;Documentation</a>
+            <a href="https://github.com/hikari-py/hikari" class="card-footer-item"><i class="fab fa-github"></i>&ensp;GitHub</a>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-content">
+            <div class="content">
+                <p class="subtitle">pycord</p>
+                <p>
+                    Pycord is a modern, easy to use, feature-rich, and async ready API wrapper for Discord.
+                </p>
+            </div>
+        </div>
+        <div class="card-footer">
+            <a href="https://docs.pycord.dev/en/stable/" class="card-footer-item"><i class="fas fa-book"></i>&ensp;Documentation</a>
+            <a href="https://github.com/Pycord-Development/pycord" class="card-footer-item"><i class="fab fa-github"></i>&ensp;GitHub</a>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block sidebar %}
+
+    {% include "events/sidebar/code-jams/11.html" %}
+
+{% endblock %}
