@@ -328,6 +328,7 @@ BULMA_SETTINGS = {
         "primary-light": "#2B3660",
         "success-dark": "#EFFAF5",    # Bulma's success-light
         "success-light": "#214133",
+        "success": "#31815D",
         "danger-dark": "#FEECF0",     # Bulma's danger-light
         "danger-light": "#4C1822",
         "info-dark": "#EFF5FB",       # Bulma's info-light
