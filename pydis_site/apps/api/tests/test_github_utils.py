@@ -210,7 +210,7 @@ class ArtifactFetcherTests(unittest.TestCase):
 
     def setUp(self) -> None:
         self.call_args = ["owner", "repo", "action_sha", "action_name", "artifact_name"]
-        self.client = httpx.Client(base_url="https://example.com")
+        self.client = httpx.Client(base_url="https://example.com", timeout=5)
 
         self.patchers = [
             mock.patch.object(self.client, "send", new=self.get_response_get_artifact),
