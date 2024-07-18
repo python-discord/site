@@ -8,6 +8,10 @@
 {% block title %}Code Jams{% endblock %}
 
 {% block event_content %}
+    <div class="notification is-success">
+        The <strong>2024 Summer Code Jam</strong> is currently underway and you can still enter!
+        <strong>The qualifier is open until July 10</strong>; check out the details <a href="{% url "events:page" path="code-jams/11" %}">here</a>.
+    </div>
     <p>
         If you've been around the server for a while, or you just happened to join at the right time,
         you may have heard of something known as a Code Jam.
@@ -66,6 +70,7 @@
 {% endblock %}
 
 {% block sidebar %}
+    {% include "events/sidebar/code-jams/ongoing-code-jam.html" %}
     {% include "events/sidebar/code-jams/previous-code-jams.html" %}
     {% include "events/sidebar/code-jams/useful-information.html" %}
 {% endblock %}

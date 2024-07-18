@@ -12,6 +12,10 @@ from rest_framework.views import APIView
 
 from . import github_utils
 
+WHITELISTED_GITHUB_BOTS = {
+    "pydis-ff-bot",
+    "github-actions"
+}
 
 class HealthcheckView(APIView):
     """
@@ -291,8 +295,16 @@ class GitHubWebhookFilterView(APIView):
             or is_dependabot_branch_deletion
             or is_bot_pr_approval
         )
+
+        stripped_name = sender_name.removesuffix("[bot]")
+        is_whitelisted_bot = stripped_name in WHITELISTED_GITHUB_BOTS
+
         is_noisy_user_action = is_empty_review
-        should_ignore = is_bot_payload or is_noisy_user_action or is_black_non_main_push
+        should_ignore = (
+            (is_bot_payload and not is_whitelisted_bot)
+            or is_noisy_user_action
+            or is_black_non_main_push
+        )
 
         if should_ignore:
             return Response(

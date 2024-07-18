@@ -189,8 +189,8 @@ WSGI_APPLICATION = 'pydis_site.wsgi.application'
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
 DATABASES = {
-    'default': env.db(),
-    'metricity': env.db('METRICITY_DB_URL'),
+    'default': env.db(engine="django_prometheus.db.backends.postgresql"),
+    'metricity': env.db('METRICITY_DB_URL', engine="django_prometheus.db.backends.postgresql"),
 } if not STATIC_BUILD else {}
 
 # Password validation
@@ -329,6 +329,7 @@ BULMA_SETTINGS = {
         "primary-light": "#2B3660",
         "success-dark": "#EFFAF5",    # Bulma's success-light
         "success-light": "#214133",
+        "success": "#31815D",
         "danger-dark": "#FEECF0",     # Bulma's danger-light
         "danger-light": "#4C1822",
         "info-dark": "#EFF5FB",       # Bulma's info-light
