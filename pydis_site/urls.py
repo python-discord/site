@@ -25,6 +25,7 @@ urlpatterns = (
     path('pages/', include('pydis_site.apps.content.urls', namespace='content')),
     path('resources/', include('pydis_site.apps.resources.urls')),
     path('events/', include('pydis_site.apps.events.urls', namespace='events')),
+    path('timeline/', include('pydis_site.apps.timeline.urls', namespace='timeline')),
     path('', include('pydis_site.apps.home.urls', namespace='home')),
 )
 

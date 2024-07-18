@@ -145,6 +145,15 @@
     flex-grow: 1;
 }
 
+/* Don't make the titles show up as link colors before hover. */
+.timeline-content h3 a {
+    color: inherit;
+}
+
+.timeline-content h3 a:hover {
+    color: #7289DA;
+}
+
 @media (min-width: 1023px) {
     .timeline-item:nth-child(odd) {
         flex-direction: row-reverse;

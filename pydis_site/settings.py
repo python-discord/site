@@ -115,6 +115,7 @@ NON_STATIC_APPS = [
 INSTALLED_APPS = [
     *NON_STATIC_APPS,
     'pydis_site.apps.home',
+    'pydis_site.apps.timeline',
     'pydis_site.apps.resources',
     'pydis_site.apps.content',
     'pydis_site.apps.events',
