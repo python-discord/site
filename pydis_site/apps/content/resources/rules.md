@@ -30,7 +30,7 @@ We also reserve the right to enforce compliance of hateful or otherwise inapprop
 
 # Infractions
 
-We have a generally no-nonsense policy when it comes to our rules. If you notice someone breaking them, feel free to mention or DM a staff member and we'll try to deal with it as soon as possible.
+We have a generally no-nonsense policy when it comes to our rules. If you notice someone breaking them, please mention the `@Moderators` role or DM the `@ModMail` bot and we'll try to deal with it as soon as possible.
 
 The possible actions we take based on infractions can include the following:
 
