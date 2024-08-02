@@ -91,7 +91,7 @@ class ResourcesConfig(AppConfig):
         # A complete list of valid filter names
         self.valid_filters = {
             "topics": [to_kebabcase(topic) for topic in self.filters["Topics"]["filters"]],
-            "payment_tiers": [
+            "payment-tiers": [
                 to_kebabcase(tier) for tier in self.filters["Payment tiers"]["filters"]
             ],
             "type": [to_kebabcase(type_) for type_ in self.filters["Type"]["filters"]],
