@@ -348,7 +348,7 @@ class GitHubWebhookFilterView(APIView):
         headers.pop('Content-Length', None)
         headers.pop('Content-Type', None)
         headers.pop('Host', None)
-        request = urllib.request.Request(  # noqa: S310
+        request = urllib.request.Request(
             f'https://discord.com/api/webhooks/{webhook_id}/{webhook_token}/github?wait=1',
             data=payload,
             headers={'Content-Type': 'application/json', **headers},
