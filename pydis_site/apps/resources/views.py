@@ -2,7 +2,7 @@ import json
 
 from django.apps import apps
 from django.core.handlers.wsgi import WSGIRequest
-from django.http import HttpResponse, HttpResponseNotFound
+from django.http import HttpResponse, HttpResponseNotFound, JsonResponse
 from django.shortcuts import render
 from django.views import View
 
@@ -38,3 +38,12 @@ class ResourceView(View):
                 "resource_type": resource_type,
             }
         )
+
+
+class ResourceFilterView(View):
+    """Exposes resource filters for the bot."""
+
+    def get(self, request: WSGIRequest) -> HttpResponse:
+        """Return resource filters as JSON."""
+        app = apps.get_app_config(APP_NAME)
+        return JsonResponse(app.valid_filters)
