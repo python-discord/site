@@ -21,7 +21,7 @@ markdown = "3.6"
 PyJWT = {version = "2.9.0", extras = ["crypto"]}
 pymdown-extensions = "10.9"
 python-frontmatter = "1.1.0"
-pyyaml = "6.0.1"
+pyyaml = "6.0.2"
 sentry-sdk = "2.12.0"
 whitenoise = "6.7.0"
 psycopg = {extras = ["binary"], version = "3.2.1"}
