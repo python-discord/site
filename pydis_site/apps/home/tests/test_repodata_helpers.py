@@ -5,6 +5,7 @@ from unittest import mock
 
 from django.test import TestCase
 from django.utils import timezone
+from httpx import HTTPStatusError
 
 from pydis_site.apps.home.models import RepositoryMetadata
 from pydis_site.apps.home.views import HomeView
@@ -19,6 +20,15 @@ def mocked_requests_get(*args, **kwargs) -> "MockResponse":  # noqa: F821
 
         def json(self):
             return self.json_data
+
+        def raise_for_status(self):
+            if not 200 >= self.status_code < 400:
+                raise HTTPStatusError(
+                    # NOTE: We only consume the response status code when working with this helper.
+                    # If we ever need the request, this shim needs to be updated.
+                    request=None,
+                    response=self
+                )
 
     if args[0] == HomeView.github_api:
         json_path = Path(__file__).resolve().parent / "mock_github_api_response.json"
