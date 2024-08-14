@@ -1,4 +1,5 @@
 import logging
+from json.decoder import JSONDecodeError
 
 import httpx
 from django.core.handlers.wsgi import WSGIRequest
@@ -53,13 +54,23 @@ class HomeView(View):
         repo_dict = {}
         try:
             # Fetch the data from the GitHub API
-            api_data: list[dict] = httpx.get(
+            resp = httpx.get(
                 self.github_api,
                 headers=self.headers,
                 timeout=settings.TIMEOUT_PERIOD
-            ).json()
+            )
+
+            resp.raise_for_status()
+
+            api_data: list[dict] = resp.json()
         except httpx.TimeoutException:
             log.error("Request to fetch GitHub repository metadata for timed out!")
+            return repo_dict
+        except httpx.HTTPStatusError as ex:
+            log.error(f"Received HTTP {ex.response.status_code} from GitHub repository metadata request!")
+            return repo_dict
+        except JSONDecodeError:
+            log.error("GitHub returned invalid JSON for repository metadata!")
             return repo_dict
 
         # Process the API data into our dict
