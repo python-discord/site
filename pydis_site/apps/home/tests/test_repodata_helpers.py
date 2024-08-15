@@ -26,6 +26,7 @@ def mocked_requests_get(*args, **kwargs) -> "MockResponse":  # noqa: F821
                 raise HTTPStatusError(
                     # NOTE: We only consume the response status code when working with this helper.
                     # If we ever need the request, this shim needs to be updated.
+                    f"Received non-200/300 status code when performing request: HTTP {self.status_code}",
                     request=None,
                     response=self
                 )
@@ -107,6 +108,14 @@ class TestRepositoryMetadataHelpers(TestCase):
 
         self.assertIsNotNone(success_data.json_data)
         self.assertIsNone(fail_data.json_data)
+
+    @mock.patch('httpx.get', side_effect=mocked_requests_get)
+    def test_mocked_requests_raise_status(self, mock_get: mock.MagicMock):
+        """Tests if our mocked_requests_get raises an exception for bad statuses."""
+        fail_data = mock_get("failtest")
+
+        with self.assertRaises(HTTPStatusError):
+            fail_data.raise_for_status()
 
     @mock.patch('httpx.get')
     def test_falls_back_to_database_on_error(self, mock_get: mock.MagicMock):
