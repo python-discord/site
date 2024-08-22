@@ -1,0 +1,12 @@
+description: A whistlestop tour of the functionality of discord.py, the most popular Python library for Discord
+name: Discord.py Masterclass
+title_url: https://fallendeity.github.io/discord.py-masterclass
+tags:
+  topics:
+    - discord bots
+  payment_tiers:
+    - free
+  difficulty:
+    - intermediate
+  type:
+    - tutorial
