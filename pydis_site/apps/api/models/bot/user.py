@@ -137,6 +137,6 @@ class UserAltRelationship(ModelReprMixin, ModelTimestampMixin, models.Model):
             ),
             models.CheckConstraint(
                 name="%(app_label)s_%(class)s_prevent_alt_to_self",
-                check=~models.Q(source=models.F("target")),
+                condition=~models.Q(source=models.F("target")),
             ),
         ]

@@ -36,6 +36,6 @@ class Migration(migrations.Migration):
         ),
         migrations.AddConstraint(
             model_name='useraltrelationship',
-            constraint=models.CheckConstraint(check=models.Q(('source', models.F('target')), _negated=True), name='api_useraltrelationship_prevent_alt_to_self'),
+            constraint=models.CheckConstraint(condition=models.Q(('source', models.F('target')), _negated=True), name='api_useraltrelationship_prevent_alt_to_self'),
         ),
     ]
