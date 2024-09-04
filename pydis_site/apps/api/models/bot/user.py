@@ -99,7 +99,6 @@ class User(ModelReprMixin, models.Model):
         """
         return str(self)
 
-
 class UserAltRelationship(ModelReprMixin, ModelTimestampMixin, models.Model):
     """A relationship between a Discord user and its alts."""
 
@@ -139,4 +138,41 @@ class UserAltRelationship(ModelReprMixin, ModelTimestampMixin, models.Model):
                 name="%(app_label)s_%(class)s_prevent_alt_to_self",
                 condition=~models.Q(source=models.F("target")),
             ),
+        ]
+
+class UserModSettings(ModelReprMixin, models.Model):
+    """Moderation settings for a Moderator member of staff."""
+
+    moderator = models.OneToOneField(
+        User,
+        primary_key=True,
+        on_delete=models.CASCADE,
+        related_name="mod_settings",
+        help_text="The moderator for whom these settings belong to"
+    )
+
+    pings_disabled_until = models.DateTimeField(
+        null=True,
+        help_text="Date and time that moderation pings are disabled until"
+    )
+
+    pings_schedule_start = models.TimeField(
+        null=True,
+        help_text="UTC time that the moderator wishes to receive pings from"
+    )
+
+    pings_schedule_end = models.DurationField(
+        null=True,
+        help_text="Duration after the schedule start time the moderator wishes to receive pings"
+    )
+
+    class Meta:
+        """Meta options on the moderator preferences."""
+
+        constraints = [
+            models.CheckConstraint(
+                check=models.Q(pings_schedule_start__isnull=True, pings_schedule_end__isnull=True)
+                | models.Q(pings_schedule_start__isnull=False, pings_schedule_end__isnull=False),
+                name="complete_pings_schedule"
+            )
         ]
