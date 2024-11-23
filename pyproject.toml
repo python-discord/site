@@ -46,6 +46,8 @@ build-backend = "poetry.core.masonry.api"
 target-version = "py311"
 extend-exclude = [".cache"]
 line-length = 120
+output-format = "concise"
+unsafe-fixes = true
 
 [tool.ruff.lint]
 ignore = [
