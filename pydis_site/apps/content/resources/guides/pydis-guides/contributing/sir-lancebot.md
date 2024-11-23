@@ -27,7 +27,7 @@ To do this, you will need a Gitpod account, which you can get [here](https://www
 Afterwards, click on [this link](https://gitpod.io/#/github.com/python-discord/sir-lancebot) to spin up a new workspace for Sir Lancebot. Then run the following commands in the terminal after the existing tasks have finished running:
 ```sh
 git remote rename origin upstream
-git add remote origin https://github.com/{your_username}/sir-lancebot
+git remote add origin https://github.com/{your_username}/sir-lancebot
 ```
 Make sure you replace `{your_username}` with your Github username. These commands will set the Sir Lancebot repository as the secondary remote, and your fork as the primary remote. This means you can easily grab new changes from the main Sir Lancebot repository.
 
