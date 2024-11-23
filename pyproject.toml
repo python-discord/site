@@ -4,6 +4,7 @@ version = "1.0.0"
 description = "The project responsible for maintaining our website and all of its subdomains."
 authors = ["Python Discord <info@pythondiscord.com>"]
 license = "MIT"
+package-mode = false
 
 [tool.poetry.dependencies]
 python = "3.11.*"
