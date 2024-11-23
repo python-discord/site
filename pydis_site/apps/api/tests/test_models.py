@@ -187,3 +187,9 @@ class StringDunderMethodTests(SimpleTestCase):
             "Nomination of Hemlock's Cat#7777 (active)",
             str(self.nomination)
         )
+
+
+class UserTests(SimpleTestCase):
+    def test_str_without_discriminator(self) -> None:
+        user = User(name="lemonfannumber1")
+        self.assertEqual(str(user), "lemonfannumber1")
