@@ -29,7 +29,7 @@ whitenoise = "6.8.2"
 
 [tool.poetry.group.dev.dependencies]
 python-dotenv = "1.0.1"
-taskipy = "1.14.0"
+taskipy = "1.14.1"
 ruff = "0.8.0"
 
 [tool.poetry.group.lint.dependencies]
