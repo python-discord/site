@@ -20,7 +20,7 @@ gunicorn = "23.0.0"
 httpx = "0.27.2"
 markdown = "3.7"
 psycopg = {extras = ["binary"], version = "3.2.3"}
-pyjwt = {version = "2.10.0", extras = ["crypto"]}
+pyjwt = {version = "2.10.1", extras = ["crypto"]}
 pymdown-extensions = "10.12"
 python-frontmatter = "1.1.0"
 pyyaml = "6.0.2"
