@@ -36,7 +36,7 @@ ruff = "0.8.0"
 pre-commit = "4.0.1"
 
 [tool.poetry.group.test.dependencies]
-coverage = "7.6.7"
+coverage = "7.6.9"
 
 [build-system]
 requires = ["poetry-core>=1.2.0"]
