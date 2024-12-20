@@ -30,7 +30,7 @@ whitenoise = "6.8.2"
 [tool.poetry.group.dev.dependencies]
 python-dotenv = "1.0.1"
 taskipy = "1.14.0"
-ruff = "0.8.0"
+ruff = "0.8.4"
 
 [tool.poetry.group.lint.dependencies]
 pre-commit = "4.0.1"
