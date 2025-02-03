@@ -24,7 +24,7 @@ pyjwt = {version = "2.10.0", extras = ["crypto"]}
 pymdown-extensions = "10.12"
 python-frontmatter = "1.1.0"
 pyyaml = "6.0.2"
-sentry-sdk = "2.19.0"
+sentry-sdk = "2.20.0"
 whitenoise = "6.8.2"
 
 [tool.poetry.group.dev.dependencies]
