@@ -9,7 +9,7 @@ toc: 2
 If you need to run your bot 24/7 (with no downtime), you should consider using a virtual private server (VPS). Here is a list of VPS services that are sufficient for running Discord bots.
 
 * Europe
-    * [netcup](https://www.netcup.eu/?ref=177518)
+    * [netcup](https://www.netcup.com/?ref=177518)
         * Germany & Austria data centres.
         * Great affiliate program.
     * [Yandex Cloud](https://cloud.yandex.ru/)
