@@ -33,7 +33,7 @@ taskipy = "1.14.1"
 ruff = "0.8.0"
 
 [tool.poetry.group.lint.dependencies]
-pre-commit = "4.0.1"
+pre-commit = "4.1.0"
 
 [tool.poetry.group.test.dependencies]
 coverage = "7.6.10"
