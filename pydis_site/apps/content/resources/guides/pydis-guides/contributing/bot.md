@@ -57,11 +57,11 @@ See [here](../creating-bot-account) for help with setting up a bot account. Once
 #### Privileged Intents
 
 It is necessary to explicitly request that your Discord bot receives certain gateway events.
-The Python bot requires the `Server Member Intent` to function.
+The Python bot requires `Server Member Intent` and `Message Content Intent` to function.
 In order to enable it, visit the [Developer Portal](https://discord.com/developers/applications/) (from where you copied your bot's login token) and scroll down to the `Privileged Gateway Intents` section.
 The `Presence Intent` is not necessary and can be left disabled.
 
-If your bot fails to start with a `PrivilegedIntentsRequired` exception, this indicates that the required intent was not enabled.
+If your bot fails to start with a `PrivilegedIntentsRequired` exception, this indicates that the required intents were not enabled.
 
 ---
 
