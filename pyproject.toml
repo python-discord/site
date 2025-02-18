@@ -21,7 +21,7 @@ httpx = "0.28.1"
 markdown = "3.7"
 psycopg = {extras = ["binary"], version = "3.2.3"}
 pyjwt = {version = "2.10.1", extras = ["crypto"]}
-pymdown-extensions = "10.12"
+pymdown-extensions = "10.14.3"
 python-frontmatter = "1.1.0"
 pyyaml = "6.0.2"
 sentry-sdk = "2.20.0"
