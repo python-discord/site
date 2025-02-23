@@ -56,7 +56,7 @@ if not STATIC_BUILD:
         send_default_pii=True,
         release=f"site@{GIT_SHA}",
         profiles_sample_rate=1.0,
-        enable_tracing=True,
+        traces_sample_rate=1.0,
         enable_db_query_source=True,
         db_query_source_threshold_ms=100,  # Queries slower that 100ms will include the source in the event
     )
