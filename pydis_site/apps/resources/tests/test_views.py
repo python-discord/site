@@ -27,3 +27,14 @@ class TestResourcesView(TestCase):
         url = reverse("resources:index", kwargs={"resource_type": "urinal-cake"})
         response = self.client.get(url)
         self.assertEqual(response.status_code, 404)
+
+
+class TestResourceFilterView(TestCase):
+    def test_resource_filter_response(self):
+        """Check that the filter endpoint returns JSON-formatted filters."""
+        url = reverse('resources:filters')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        content = response.json()
+        self.assertIn('difficulty', content)
+        self.assertIsInstance(content['difficulty'], list)
