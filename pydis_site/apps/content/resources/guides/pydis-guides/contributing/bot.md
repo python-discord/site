@@ -128,7 +128,7 @@ This file will contain the extracted IDs from your server which are necessary fo
 You are now almost ready to run the Python bot. The simplest way to do so is with Docker.
 
 
-With all of the above setup, you can run The projec with `docker compose up`. This will start the bot an all required services! Enter your server and type `!help` (or whatever prefix you chose instead of `!`) to see the bot in action!
+With all of the above setup, you can run the project with `docker compose up`. This will start the bot and all required services! Enter your server and type `!help` (or whatever prefix you chose instead of `!`) to see the bot in action!
 
 Some other useful docker commands are as follows:
 
