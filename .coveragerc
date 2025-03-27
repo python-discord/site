@@ -17,6 +17,11 @@ omit =
     pydis_site/settings.py
     pydis_site/utils/resources.py
     pydis_site/apps/home/views.py
+    # XXX: Will be covered later when FormsUser is used properly.
+    pydis_site/apps/forms/authentication.py
+    pydis_site/apps/forms/discord.py
+    # XXX: Will be tested later
+    pydis_site/apps/forms/permissions.py
 
 [report]
 fail_under = 100

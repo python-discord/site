@@ -8,6 +8,7 @@ NON_STATIC_PATTERNS = [
 
     # External API ingress (over the net)
     path('api/', include('pydis_site.apps.api.urls', namespace='api')),
+    path('forms/', include('pydis_site.apps.forms.urls', namespace='forms')),
     # Internal API ingress (cluster local)
     path('pydis-api/', include('pydis_site.apps.api.urls', namespace='internal_api')),
 
