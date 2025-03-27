@@ -73,6 +73,7 @@ select = ["ANN", "B", "C4", "D", "DJ", "DTZ", "E", "F", "ISC", "INT", "N", "PGH"
 "pydis_site/apps/**/migrations/*.py" = ["ALL"]
 "manage.py" = ["T201"]
 "pydis_site/apps/api/tests/base.py" = ["S106"]
+"pydis_site/apps/forms/tests/test_api.py" = ["S106"]
 "pydis_site/apps/**/tests/test_*.py" = ["ANN", "D"]
 "static-builds/netlify_build.py" = ["T201"]
 "pydis_site/apps/api/tests/test_off_topic_channel_names.py" = ["RUF001"]
