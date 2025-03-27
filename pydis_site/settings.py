@@ -33,6 +33,10 @@ env = environ.Env(
     GITHUB_TOKEN=(str, None),
     GITHUB_APP_ID=(str, None),
     GITHUB_APP_KEY=(str, None),
+    DISCORD_GUILD_ID=(int, 267624335836053506),
+    DISCORD_BOT_TOKEN=(str, None),
+    DISCORD_OAUTH2_CLIENT_ID=(str, None),
+    DISCORD_OAUTH2_CLIENT_SECRET=(str, None),
 )
 
 GIT_SHA = env("GIT_SHA")
@@ -42,6 +46,15 @@ GITHUB_APP_ID = env("GITHUB_APP_ID")
 GITHUB_APP_KEY = env("GITHUB_APP_KEY")
 GITHUB_TIMESTAMP_FORMAT = "%Y-%m-%dT%H:%M:%SZ"
 """The datetime string format GitHub uses."""
+
+DISCORD_API_BASE_URL = "https://discord.com/api/v8"
+"""Used by forms for Discord API calls."""
+
+DISCORD_GUILD_ID = env("DISCORD_GUILD_ID")
+DISCORD_BOT_TOKEN = env("DISCORD_BOT_TOKEN")
+
+DISCORD_OAUTH2_CLIENT_ID = env("DISCORD_OAUTH2_CLIENT_ID")
+DISCORD_OAUTH2_CLIENT_SECRET = env("DISCORD_OAUTH2_CLIENT_SECRET")
 
 STATIC_BUILD: bool = env("STATIC_BUILD")
 
@@ -72,6 +85,7 @@ DEBUG = env('DEBUG')
 if DEBUG:
     ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['*'])
     SECRET_KEY = "yellow polkadot bikini"  # noqa: S105
+    FORMS_SECRET_KEY = SECRET_KEY
 
     # Prevent verbose warnings emitted when passing a non-timezone aware
     # datetime object to the database, whilst we have time zone support
@@ -85,6 +99,7 @@ if DEBUG:
 elif 'CI' in os.environ:
     ALLOWED_HOSTS = ['*']
     SECRET_KEY = secrets.token_urlsafe(32)
+    FORMS_SECRET_KEY = SECRET_KEY
 
     # See above. We run with `CI=true`, but debug unset in GitHub Actions,
     # so we also want to filter it there.
@@ -105,6 +120,8 @@ else:
         ],
     )
     SECRET_KEY = env('SECRET_KEY')
+    # TODO: Should be deprecated once all JWTs were rotated.
+    FORMS_SECRET_KEY = env('FORMS_SECRET_KEY')
 
 # Application definition
 NON_STATIC_APPS = [
@@ -119,6 +136,7 @@ INSTALLED_APPS = [
     'pydis_site.apps.resources',
     'pydis_site.apps.content',
     'pydis_site.apps.events',
+    'pydis_site.apps.forms',
     'pydis_site.apps.redirect',
 
     'django.contrib.admin',
