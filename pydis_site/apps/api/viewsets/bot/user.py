@@ -15,10 +15,11 @@ from rest_framework.viewsets import ModelViewSet
 
 from pydis_site.apps.api.models.bot.infraction import Infraction
 from pydis_site.apps.api.models.bot.metricity import Metricity, NotFoundError
-from pydis_site.apps.api.models.bot.user import User, UserAltRelationship
+from pydis_site.apps.api.models.bot.user import User, UserAltRelationship, UserModSettings
 from pydis_site.apps.api.serializers import (
     UserSerializer,
     UserAltRelationshipSerializer,
+    UserModSettingsSerializer,
     UserWithAltsSerializer
 )
 
@@ -335,7 +336,7 @@ class UserViewSet(ModelViewSet):
     """
 
     serializer_class = UserSerializer
-    queryset = User.objects.all().order_by("id")
+    queryset = User.objects.select_related("mod_settings").all().order_by("id")
     pagination_class = UserListPagination
     filter_backends = (DjangoFilterBackend,)
     filterset_fields = ('name', 'discriminator', 'display_name')
@@ -366,6 +367,39 @@ class UserViewSet(ModelViewSet):
         serializer.save()
 
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+    @action(detail=True, methods=["PATCH"], name='mod-settings-update')
+    def mod_settings(self, request: Request, pk: str) -> Response:
+        """Update the mod settings for a given user."""
+        user = self.get_object()
+        maybe_mod_settings = UserModSettings.objects.filter(moderator=user).first()
+
+        mod_settings_data = ChainMap({'moderator': user.id}, request.data)
+
+        if maybe_mod_settings:
+            mod_settings = UserModSettingsSerializer(maybe_mod_settings, data=mod_settings_data)
+        else:
+            mod_settings = UserModSettingsSerializer(data=mod_settings_data)
+
+        mod_settings.is_valid(raise_exception=True)
+
+        mod_settings.save()
+
+        return Response(mod_settings.data, status=status.HTTP_200_OK)
+
+    @mod_settings.mapping.delete
+    def delete_mod_settings(self, request: Request, pk: str) -> Response:
+        """Delete all moderator settings registered for a user."""
+        user = self.get_object()
+        maybe_mod_settings = UserModSettings.objects.filter(moderator=user).first()
+
+        if not maybe_mod_settings:
+            return Response(status=status.HTTP_204_NO_CONTENT)
+
+        maybe_mod_settings.delete()
+
+        return Response(status=status.HTTP_200_OK)
+
 
     @action(detail=True, methods=['POST'], name="Add alternate account",
             url_name='alts', url_path='alts')
