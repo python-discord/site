@@ -1,0 +1,15 @@
+description: This course covers the fundamental but often overlooked skills that programmers use everyday,
+  such as using the shell, the command-line environment, and using the modal text editors like vim.
+  The course structure allows you to focus on the topics you want to and skip ones you don't think are relevant.
+name: The Missing Semester of Your CS Education
+title_url: https://missing.csail.mit.edu/
+tags:
+  topics:
+    - general
+    - other
+  payment_tiers:
+    - free
+  difficulty:
+    - beginner
+  type:
+    - course
