@@ -1,0 +1,24 @@
+description: Harvard has made their CS50 course, an Introduction to Programming with Python,
+  available for anyone to take for free. This self-paced course provides lectures to watch and
+  then problem sets to complete after.
+  <br/>
+  <br/>
+  Harvard also provides similar courses on related subject matter.
+  <ul>
+    <li><a href="https://cs50.harvard.edu/x">CS50X&#58; Introduction to Computer Science</a></li>
+    <li><a href="https://cs50.harvard.edu/cybersecurity">CS50 for Cybersecurity</a></li>
+    <li><a href="https://cs50.harvard.edu/ai">CS50 for AI</a></li>
+    <li><a href="https://cs50.harvard.edu/sql">CS50 for SQL</a></li>
+  </ul>
+name: "CS50P: Introduction to Programming with Python"
+title_url: https://cs50.harvard.edu/python/2022/
+tags:
+  topics:
+    - general
+  payment_tiers:
+    - free
+  difficulty:
+    - beginner
+  type:
+    - course
+    - video
