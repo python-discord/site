@@ -161,6 +161,7 @@ class InfractionViewSet(
     def partial_update(self, request: HttpRequest, *_args, **_kwargs) -> Response:
         """Method that handles the nuts and bolts of updating an Infraction."""
         instance = self.get_object()
+        request.data.setdefault("active", True)
         serializer = self.get_serializer(instance, data=request.data, partial=True)
         serializer.is_valid(raise_exception=True)
         serializer.save()
