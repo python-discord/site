@@ -210,8 +210,15 @@ class GenericFilterTests(AuthenticatedAPITestCase):
                 sequence.model.objects.all().delete()
 
                 response = self.client.get(f"{sequence.url()}/42")
+                if "filter-lists" in sequence.url():
+                    kind = "FilterList"
+                else:
+                    kind = "Filter"
                 self.assertEqual(response.status_code, 404)
-                self.assertDictEqual(response.json(), {'detail': 'Not found.'})
+                self.assertDictEqual(
+                    response.json(),
+                    {'detail': f"No {kind} matches the given query."},
+                )
 
     def test_creation(self) -> None:
         for name, sequence in get_test_sequences().items():
