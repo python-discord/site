@@ -284,7 +284,12 @@ class InfractionViewSet(
         """
         try:
             return super().create(request, *args, **kwargs)
-        except IntegrityError as err:
+        except IntegrityError as err:  # pragma: no cover - see below
+            # Not covered: DRF handles this via `UniqueTogetherValidator` these
+            # days, which means it's hard to test this branch specifically.
+            # However, in a productive deployment, it's still very much
+            # possible for two concurrent inserts to run into IntegrityError.
+
             # We need to use `__cause__` here, as Django reraises the internal
             # UniqueViolation emitted by psycopg2 (which contains the attribute
             # that we actually need)
