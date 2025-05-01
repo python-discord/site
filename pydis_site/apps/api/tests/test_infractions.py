@@ -329,7 +329,7 @@ class InfractionTests(AuthenticatedAPITestCase):
 
     def test_partial_update_returns_400_for_frozen_field(self):
         url = reverse('api:bot:infraction-detail', args=(self.ban_hidden.id,))
-        data = {'user': 6, 'active': True}
+        data = {'user': 6}
 
         response = self.client.patch(url, data=data)
         self.assertEqual(response.status_code, 400)
