@@ -395,7 +395,14 @@ class UserViewSet(ModelViewSet):
                     raise ParseError(detail={
                         "source": ["The user may not be an alternate account of itself"]
                     })
-                if err.__cause__.diag.constraint_name == 'api_useraltrelationship_unique_relationships':
+                if (
+                    err.__cause__.diag.constraint_name == 'api_useraltrelationship_unique_relationships'
+                ):  # pragma: no cover - see below
+                    # This is not covered because newer DRF versions automatically validate this,
+                    # however the validation is done via a SELECT query which may race concurrent
+                    # inserts in prod. The only correct way is e.g. what Ecto does which is
+                    # associating the validators to the unique constraint errors to match in
+                    # errors, anything else may race.
                     raise ParseError(detail={
                         "source": ["This relationship has already been established"]
                     })

@@ -379,7 +379,7 @@ class NominationTests(AuthenticatedAPITestCase):
         response = self.client.get(url, data={})
         self.assertEqual(response.status_code, 404)
         self.assertEqual(response.json(), {
-            "detail": "Not found."
+            "detail": "No Nomination matches the given query."
         })
 
     def test_returns_404_on_patch_unknown_nomination(self):
@@ -391,7 +391,7 @@ class NominationTests(AuthenticatedAPITestCase):
         response = self.client.patch(url, data={})
         self.assertEqual(response.status_code, 404)
         self.assertEqual(response.json(), {
-            "detail": "Not found."
+            "detail": "No Nomination matches the given query."
         })
 
     def test_returns_405_on_list_put(self):

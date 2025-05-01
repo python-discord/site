@@ -746,7 +746,7 @@ class UserAltUpdateTests(AuthenticatedAPITestCase):
         response = self.client.post(repeated_url, repeated_data)
         self.assertEqual(response.status_code, 400)
         self.assertEqual(response.json(), {
-            'source': ["This relationship has already been established"]
+            'non_field_errors': ["The fields source, target must make a unique set."]
         })
 
     def test_removing_existing_alt_source_from_target(self) -> None:

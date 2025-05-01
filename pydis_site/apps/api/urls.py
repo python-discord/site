@@ -28,9 +28,11 @@ from .viewsets import (
 
 # https://www.django-rest-framework.org/api-guide/routers/#defaultrouter
 bot_router = DefaultRouter(trailing_slash=False)
+# XXX: We should probably figure out why we have this registered twice.
 bot_router.register(
     'filter/filter_lists',
-    FilterListViewSet
+    FilterListViewSet,
+    basename="filter-filterlists-list",
 )
 bot_router.register(
     "aoc-account-links",
@@ -62,7 +64,7 @@ bot_router.register(
 )
 bot_router.register(
     'filter-lists',
-    FilterListViewSet
+    FilterListViewSet,
 )
 bot_router.register(
     'infractions',

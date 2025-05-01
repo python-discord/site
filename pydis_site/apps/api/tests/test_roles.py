@@ -208,4 +208,7 @@ class CreationTests(AuthenticatedAPITestCase):
         for method in ('get', 'put', 'patch', 'delete'):
             response = getattr(self.client, method)(url)
             self.assertEqual(response.status_code, 404)
-            self.assertJSONEqual(response.content, '{"detail": "Not found."}')
+            self.assertJSONEqual(
+                response.content,
+                '{"detail": "No Role matches the given query."}',
+            )
