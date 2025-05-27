@@ -161,7 +161,12 @@ class InfractionViewSet(
     def partial_update(self, request: HttpRequest, *_args, **_kwargs) -> Response:
         """Method that handles the nuts and bolts of updating an Infraction."""
         instance = self.get_object()
-        request.data.setdefault("active", True)
+        # DRF presently errors out if we are not specifying all fields here.
+        # See this issue:
+        # https://github.com/encode/django-rest-framework/issues/9358. The
+        # merged PR that closed the issue does not appear to work either, so
+        # here's a workaround.
+        request.data.setdefault("active", instance.active)
         serializer = self.get_serializer(instance, data=request.data, partial=True)
         serializer.is_valid(raise_exception=True)
         serializer.save()
