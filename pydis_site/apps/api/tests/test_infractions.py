@@ -327,6 +327,18 @@ class InfractionTests(AuthenticatedAPITestCase):
         self.assertEqual(infraction.type, self.ban_hidden.type)
         self.assertEqual(infraction.hidden, self.ban_hidden.hidden)
 
+    def test_partial_update_of_inactive_infraction(self):
+        url = reverse('api:bot:infraction-detail', args=(self.ban_hidden.id,))
+        data = {
+            'expires_at': '4143-02-15T21:04:31+00:00',
+            'reason': "Do not help out Joe with any electricity-related questions"
+        }
+        self.assertFalse(self.ban_inactive.active, "Infraction should start out as inactive")
+        response = self.client.patch(url, data=data)
+        self.assertEqual(response.status_code, 200)
+        infraction = Infraction.objects.get(id=self.ban_inactive.id)
+        self.assertFalse(infraction.active, "Infraction changed to active via patch")
+
     def test_partial_update_returns_400_for_frozen_field(self):
         url = reverse('api:bot:infraction-detail', args=(self.ban_hidden.id,))
         data = {'user': 6}
@@ -691,6 +703,37 @@ class CreationTests(AuthenticatedAPITestCase):
                 type='ban',
                 reason='A reason.',
             )
+
+    def test_accepts_two_warnings(self):
+        """Two warnings can be created for a user."""
+        url = reverse('api:bot:infraction-list')
+        data = {
+            'user': self.user.id,
+            'actor': self.user.id,
+            'type': 'warning',
+            'reason': "Thought upgrading DRF is a smart idea",
+            'active': False,
+        }
+        first_response = self.client.post(url, data=data)
+        self.assertEqual(first_response.status_code, 201)
+        data['reason'] = "Do not claim King Arthur eats children"
+        second_response = self.client.post(url, data=data)
+        self.assertEqual(second_response.status_code, 201)
+
+    def test_respects_active_false_of_warnings(self):
+        """Infractions can be created as inactive."""
+        url = reverse('api:bot:infraction-list')
+        data = {
+            'user': self.user.id,
+            'actor': self.user.id,
+            'type': 'warning',
+            'reason': "Associate of REDACTED",
+            'active': False,
+        }
+        response = self.client.post(url, data=data)
+        self.assertEqual(response.status_code, 201)
+        infraction = Infraction.objects.get(id=response.json()['id'])
+        self.assertFalse(infraction.active)
 
 
 class InfractionDeletionTests(AuthenticatedAPITestCase):
