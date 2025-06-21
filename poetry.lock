@@ -934,14 +934,14 @@ tests = ["coverage[toml] (==5.0.4)", "pytest (>=6.0.0,<7.0.0)"]
 
 [[package]]
 name = "pymdown-extensions"
-version = "10.14.3"
+version = "10.16"
 description = "Extension pack for Python Markdown."
 optional = false
-python-versions = ">=3.8"
+python-versions = ">=3.9"
 groups = ["main"]
 files = [
-    {file = "pymdown_extensions-10.14.3-py3-none-any.whl", hash = "sha256:05e0bee73d64b9c71a4ae17c72abc2f700e8bc8403755a00580b49a4e9f189e9"},
-    {file = "pymdown_extensions-10.14.3.tar.gz", hash = "sha256:41e576ce3f5d650be59e900e4ceff231e0aed2a88cf30acaee41e02f063a061b"},
+    {file = "pymdown_extensions-10.16-py3-none-any.whl", hash = "sha256:f5dd064a4db588cb2d95229fc4ee63a1b16cc8b4d0e6145c0899ed8723da1df2"},
+    {file = "pymdown_extensions-10.16.tar.gz", hash = "sha256:71dac4fca63fabeffd3eb9038b756161a33ec6e8d230853d3cecf562155ab3de"},
 ]
 
 [package.dependencies]
@@ -1325,4 +1325,4 @@ brotli = ["brotli"]
 [metadata]
 lock-version = "2.1"
 python-versions = "3.11.*"
-content-hash = "56a98384ebe7576c4c0afabb800a758bbef4a36040a259b476f89055a4d058c9"
+content-hash = "7653419c2fda3d731cc18d82c546a1442159afbb9d3461224ef7cd0530547662"
