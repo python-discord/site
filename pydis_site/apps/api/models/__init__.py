@@ -20,5 +20,6 @@ from .bot import (
     Reminder,
     Role,
     User,
-    UserAltRelationship
+    UserAltRelationship,
+    UserModSettings
 )
