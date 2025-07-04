@@ -1,4 +1,3 @@
-# flake8: noqa
 from .filters import FilterList, Filter
 from .bot_setting import BotSetting
 from .bumped_thread import BumpedThread
@@ -17,3 +16,27 @@ from .offensive_message import OffensiveMessage
 from .reminder import Reminder
 from .role import Role
 from .user import User, UserAltRelationship
+
+__all__ = (
+    "AocAccountLink",
+    "AocCompletionistBlock",
+    "BotSetting",
+    "BumpedThread",
+    "DeletedMessage",
+    "DocumentationLink",
+    "Filter",
+    "FilterList",
+    "Infraction",
+    "MailingList",
+    "MailingListSeenItem",
+    "Message",
+    "MessageDeletionContext",
+    "Nomination",
+    "NominationEntry",
+    "OffTopicChannelName",
+    "OffensiveMessage",
+    "Reminder",
+    "Role",
+    "User",
+    "UserAltRelationship"
+)
