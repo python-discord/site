@@ -1,4 +1,3 @@
-# flake8: noqa
 from .bot import (
     FilterList,
     Filter,
@@ -21,4 +20,28 @@ from .bot import (
     Role,
     User,
     UserAltRelationship
+)
+
+__all__ = (
+    "AocAccountLink",
+    "AocCompletionistBlock",
+    "BotSetting",
+    "BumpedThread",
+    "DeletedMessage",
+    "DocumentationLink",
+    "Filter",
+    "FilterList",
+    "Infraction",
+    "MailingList",
+    "MailingListSeenItem",
+    "Message",
+    "MessageDeletionContext",
+    "Nomination",
+    "NominationEntry",
+    "OffTopicChannelName",
+    "OffensiveMessage",
+    "Reminder",
+    "Role",
+    "User",
+    "UserAltRelationship"
 )

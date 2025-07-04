@@ -1,4 +1,3 @@
-# flake8: noqa
 from .aoc_completionist_block import AocCompletionistBlockViewSet
 from .aoc_link import AocAccountLinkViewSet
 from .bot_setting import BotSettingViewSet
@@ -14,3 +13,22 @@ from .offensive_message import OffensiveMessageViewSet
 from .reminder import ReminderViewSet
 from .role import RoleViewSet
 from .user import UserViewSet
+
+__all__ = (
+    "AocAccountLinkViewSet",
+    "AocCompletionistBlockViewSet",
+    "BotSettingViewSet",
+    "BumpedThreadViewSet",
+    "DeletedMessageViewSet",
+    "DocumentationLinkViewSet",
+    "FilterListViewSet",
+    "FilterViewSet",
+    "InfractionViewSet",
+    "MailingListViewSet",
+    "NominationViewSet",
+    "OffTopicChannelNameViewSet",
+    "OffensiveMessageViewSet",
+    "ReminderViewSet",
+    "RoleViewSet",
+    "UserViewSet",
+)
