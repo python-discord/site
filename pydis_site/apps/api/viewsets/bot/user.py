@@ -531,6 +531,6 @@ class UserViewSet(ModelViewSet):
         with Metricity() as metricity:
             data = metricity.total_messages_in_past_n_days(user_ids, days)
 
-        default_data = {user_id: 0 for user_id in user_ids}
+        default_data = dict.fromkeys(user_ids, 0)
         response_data = default_data | dict(data)
         return Response(response_data, status=status.HTTP_200_OK)
