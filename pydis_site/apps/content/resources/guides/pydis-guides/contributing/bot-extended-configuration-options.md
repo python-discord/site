@@ -140,9 +140,9 @@ With at least the site running in Docker already (see the previous section on ho
         <div class="card-content">
             Notice that the bot is started as a module. There are several ways to do so:
             <ul>
-                <li>Through the command line, inside the bot directory, with either <code>poetry run task start</code>, or directly <code>python -m bot</code>.</li>
+                <li>Through the command line, inside the bot directory, with either <code>uv run task start</code>, or directly <code>python -m bot</code>.</li>
                 <li>If using PyCharm, enter <code>Edit Configurations</code> and set everything according to this image: <img src="/static/images/content/contributing/pycharm_run_module.png"></li>
-                <li>If using Visual Studio Code, set the interpreter to the poetry environment you created. In <code>launch.json</code> create a new Python configuration, and set the name of the program to be run to <code>bot</code>. VSC will correctly run it as a module.</li>
+                <li>If using Visual Studio Code, set the interpreter to the uv environment you created. In <code>launch.json</code> create a new Python configuration, and set the name of the program to be run to <code>bot</code>. VSC will correctly run it as a module.</li>
             </ul>
         </div>
     </div>

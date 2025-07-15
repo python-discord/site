@@ -17,9 +17,9 @@ They are split into two parts:
 To get started with building, you can use the following command:
 
 ```shell
-poetry install
+uv sync
 python -m pip install httpx==0.19.0
-poetry run task static
+uv run task static
 ```
 
 Alternatively, you can use the [Dockerfile](/Dockerfile) and extract the build.
