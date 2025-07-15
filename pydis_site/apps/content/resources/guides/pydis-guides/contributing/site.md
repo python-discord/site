@@ -10,8 +10,7 @@ You should have already forked the [`site`](https://github.com/python-discord/si
 ### Requirements
 
 - [Python 3.11](https://www.python.org/downloads/)
-- [Poetry](https://python-poetry.org/docs/#installation)
-    - `pip install poetry`
+- [uv](https://github.com/astral-sh/uv#installation)
 - [Git](https://git-scm.com/downloads)
     - [Windows](https://git-scm.com/download/win)
     - [MacOS](https://git-scm.com/download/mac) or `brew install git`
@@ -114,10 +113,10 @@ If you're not using Docker, then use [pg_ctl](https://www.postgresql.org/docs/cu
 
 ### Webserver
 
-Starting the webserver is done simply through poetry:
+Starting the webserver is done simply through uv:
 
 ```shell
-poetry run task start
+uv run task start
 ```
 
 ---

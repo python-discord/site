@@ -11,7 +11,7 @@ Remember to ensure that you have read the [contributing guidelines](../contribut
 
 ### Requirements
 - [Python 3.13.*](https://www.python.org/downloads/)
-- [Poetry](https://github.com/python-poetry/poetry#installation)
+- [uv](https://github.com/astral-sh/uv#installation)
 - [Git](https://git-scm.com/downloads)
     - [Windows Installer](https://git-scm.com/download/win)
     - [MacOS Installer](https://git-scm.com/download/mac) or `brew install git`
@@ -108,10 +108,10 @@ If you get any Docker related errors, reference the [Possible Issues](../docker#
 {: .notification .is-warning }
 
 ## Run on the host
-After installing project dependencies use the poetry command `poetry run task start` in the project root.
+After installing project dependencies use the uv command `uv run task start` in the project root.
 
 ```shell
-$ poetry run task start
+$ uv run task start
 ```
 ---
 
