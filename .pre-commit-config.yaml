@@ -15,6 +15,6 @@ repos:
       - id: ruff
         name: ruff
         description: This hook runs ruff within our project's environment.
-        entry: poetry run ruff check --force-exclude
+        entry: uv run ruff check --force-exclude
         language: system
         types: [python]

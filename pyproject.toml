@@ -1,46 +1,50 @@
-[tool.poetry]
+[project]
 name = "site"
 version = "1.0.0"
 description = "The project responsible for maintaining our website and all of its subdomains."
-authors = ["Python Discord <info@pythondiscord.com>"]
+authors = [{ name = "Python Discord", email = "info@pythondiscord.com" }]
+requires-python = "==3.11.*"
 license = "MIT"
-package-mode = false
+dependencies = [
+    "django==5.1.9",
+    "django-distill==3.2.7",
+    "django-environ==0.11.2",
+    "django-filter==25.1",
+    "django-prometheus==2.3.1",
+    "django-simple-bulma==2.6.0",
+    "djangorestframework==3.16.0",
+    "gunicorn==23.0.0",
+    "httpx==0.28.1",
+    "markdown==3.8",
+    "psycopg[binary]==3.2.6",
+    "pyjwt[crypto]==2.10.1",
+    "pymdown-extensions==10.14.3",
+    "python-frontmatter==1.1.0",
+    "pyyaml==6.0.2",
+    "sentry-sdk==2.22.0",
+    "whitenoise==6.9.0",
+]
 
-[tool.poetry.dependencies]
-python = "3.11.*"
+[dependency-groups]
+dev = [
+    "python-dotenv==1.1.0",
+    "taskipy==1.14.1",
+    "ruff==0.9.10",
+]
+lint = ["pre-commit==4.2.0"]
+test = ["coverage==7.8.0"]
 
-django = "5.1.9"
-django-distill = "3.2.7"
-django-environ = "0.11.2"
-django-filter = "25.1"
-django-prometheus = "2.3.1"
-django-simple-bulma = "2.6.0"
-djangorestframework = "3.16.0"
-gunicorn = "23.0.0"
-httpx = "0.28.1"
-markdown = "3.8"
-psycopg = {extras = ["binary"], version = "3.2.6"}
-pyjwt = {version = "2.10.1", extras = ["crypto"]}
-pymdown-extensions = "10.14.3"
-python-frontmatter = "1.1.0"
-pyyaml = "6.0.2"
-sentry-sdk = "2.22.0"
-whitenoise = "6.9.0"
-
-[tool.poetry.group.dev.dependencies]
-python-dotenv = "1.1.0"
-taskipy = "1.14.1"
-ruff = "0.9.10"
-
-[tool.poetry.group.lint.dependencies]
-pre-commit = "4.2.0"
-
-[tool.poetry.group.test.dependencies]
-coverage = "7.8.0"
+[tool.uv]
+package = false
+default-groups = [
+    "dev",
+    "lint",
+    "test",
+]
 
 [build-system]
-requires = ["poetry-core>=1.2.0"]
-build-backend = "poetry.core.masonry.api"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
 [tool.ruff]
 target-version = "py311"
