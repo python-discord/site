@@ -42,7 +42,7 @@ This team ensures that our infrastructure runs smoothly, overseeing everything f
 
 These individuals have made lasting contributions to Python Discord. Though they may no longer be actively maintaining projects, their impact and work continues to live on in our projects and the way we think & build.
 
-* [thomaspet](https://github.com/thomaspet)
+* [tagptroll1](https://github.com/tagptroll1)
 * [Den4200](https://github.com/Den4200)
 * [ks129](https://github.com/ks129)
 * [kosayoda](https://github.com/kosayoda)
