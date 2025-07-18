@@ -1,4 +1,3 @@
-# flake8: noqa
 from .bot import (
     AocAccountLinkViewSet,
     AocCompletionistBlockViewSet,
@@ -6,7 +5,6 @@ from .bot import (
     BumpedThreadViewSet,
     DeletedMessageViewSet,
     DocumentationLinkViewSet,
-    FilterListViewSet,
     FilterListViewSet,
     FilterViewSet,
     InfractionViewSet,
@@ -17,4 +15,23 @@ from .bot import (
     ReminderViewSet,
     RoleViewSet,
     UserViewSet
+)
+
+__all__ = (
+    "AocAccountLinkViewSet",
+    "AocCompletionistBlockViewSet",
+    "BotSettingViewSet",
+    "BumpedThreadViewSet",
+    "DeletedMessageViewSet",
+    "DocumentationLinkViewSet",
+    "FilterListViewSet",
+    "FilterViewSet",
+    "InfractionViewSet",
+    "MailingListViewSet",
+    "NominationViewSet",
+    "OffTopicChannelNameViewSet",
+    "OffensiveMessageViewSet",
+    "ReminderViewSet",
+    "RoleViewSet",
+    "UserViewSet",
 )
