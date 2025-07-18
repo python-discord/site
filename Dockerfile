@@ -56,7 +56,6 @@ RUN if [ $STATIC_BUILD = "TRUE" ] ; \
   then SECRET_KEY=dummy_value uv run python manage.py distill-local build --traceback --force ; \
 fi
 
-ENTRYPOINT ["uv", "run"]
 CMD ["gunicorn", "--preload", "-b", "0.0.0.0:8000", \
      "pydis_site.wsgi:application", "-w", "2", "--statsd-host", \
      "graphite.default.svc.cluster.local:8125", "--statsd-prefix", "site", \
