@@ -2,7 +2,7 @@
 # update the contributor guide, which can be found at
 #   pydis_site/apps/content/resources/guides/pydis-guides/contributing/site.md
 # Thank you!
-ARG python_version=3.13-slim
+ARG python_version=3.11-slim
 
 FROM python:$python_version AS builder
 COPY --from=ghcr.io/astral-sh/uv:0.7 /uv /bin/
