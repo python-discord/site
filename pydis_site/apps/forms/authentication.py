@@ -1,12 +1,16 @@
 """Custom authentication for the forms backend."""
 
+import functools
 import typing
+from http import HTTPStatus
 
 import jwt
 from django.conf import settings
 from django.http import HttpRequest
 from rest_framework.authentication import BaseAuthentication
 from rest_framework.exceptions import AuthenticationFailed
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from . import discord
 from . import models
@@ -165,3 +169,45 @@ class JWTAuthentication(BaseAuthentication):
         scopes.extend(user.get_roles())
 
         return user, AuthenticationResult(scopes=tuple(scopes))
+
+
+APIHandlerMethod = typing.Callable[[APIView, HttpRequest, str | None], Response]
+"""Represents a DRF API class-based view endpoint method."""
+
+
+def require_scopes(scopes: frozenset[str]) -> APIHandlerMethod:
+    """Require the requesting user to have the given `scopes`."""
+    if not isinstance(scopes, set):
+        error = TypeError("please supply scopes as a set")
+        error.add_note(f"got {scopes!r} ({type(scopes)})")
+        raise error
+
+    required_scopes = frozenset(scopes)
+
+    def wrapper(f: APIHandlerMethod) -> APIHandlerMethod:
+        @functools.wraps(f)
+        def authenticated_endpoint(instance: APIView, request: HttpRequest, format: str | None = None) -> Response:
+            """Verify the requesting user is authenticated."""
+            if not request.user.is_authenticated:
+                return Response(
+                    data={"king-arthur-verdict": "not-allowed"},
+                    status=HTTPStatus.UNAUTHORIZED,
+                )
+
+            request_scopes = frozenset(request.auth.scopes)
+            actual_scopes = required_scopes.intersection(request_scopes)
+            lacking_scopes = required_scopes - actual_scopes
+            if lacking_scopes:
+                return Response(
+                    data={
+                        "king-arthur-verdict": "missing-scopes",
+                        "missing-scopes": tuple(lacking_scopes),
+                    },
+                    status=HTTPStatus.FORBIDDEN,
+                )
+
+            return f(instance, request, format)
+
+        return authenticated_endpoint
+
+    return wrapper
