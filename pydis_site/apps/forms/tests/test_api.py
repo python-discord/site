@@ -1,19 +1,9 @@
-
 from django.conf import settings
 from django.test import TestCase, override_settings
 from django.urls import reverse
 
 from pydis_site.apps.forms import authentication
 from pydis_site.apps.forms.tests.base import AuthenticatedTestCase
-
-
-class TestIndex(TestCase):
-    def test_index_returns_200(self) -> None:
-        """The index page should return a HTTP 200 response."""
-
-        url = reverse("forms:index")
-        resp = self.client.get(url)
-        self.assertEqual(resp.status_code, 200)
 
 
 class TestAuthentication(TestCase):

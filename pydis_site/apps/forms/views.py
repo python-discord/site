@@ -1,11 +1,14 @@
 import platform
+from http import HTTPStatus
 
 from django.conf import settings
-from django.http import HttpRequest
-from rest_framework.views import APIView
+from django.db import IntegrityError
 from rest_framework.response import Response
+from rest_framework.request import Request
+from rest_framework.views import APIView
 
-from .authentication import JWTAuthentication
+from .authentication import JWTAuthentication, require_scopes
+from .models import Admin
 
 
 class IndexView(APIView):
@@ -36,7 +39,7 @@ class IndexView(APIView):
     authentication_classes = (JWTAuthentication,)
     permission_classes = ()
 
-    def get(self, request: HttpRequest, format: str | None = None) -> Response:
+    def get(self, request: Request, format: str | None = None) -> Response:
         """Return a hello from Python Discord forms!"""
         response_data = {
             "message": "Hello, world!",
@@ -56,3 +59,28 @@ class IndexView(APIView):
             }
 
         return Response(response_data)
+
+
+class AdminView(APIView):
+    """Manage administrators."""
+
+    authentication_classes = (JWTAuthentication,)
+    permission_classes = ()
+
+    @require_scopes({"admin"})
+    def post(self, request: Request, format: str | None = None) -> Response:
+        """Grant a user administrator privileges."""
+        if "id" not in request.data:
+            return Response(
+                {"error": "which-id-please"},
+                status=HTTPStatus.BAD_REQUEST,
+            )
+
+        try:
+            _ = Admin.objects.create(id=request.data["id"])
+            return Response({"status": "ok"})
+        except IntegrityError:
+            return Response(
+                {"error": "already_exists"},
+                status=HTTPStatus.BAD_REQUEST,
+            )
