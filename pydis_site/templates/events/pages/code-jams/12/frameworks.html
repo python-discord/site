@@ -1,0 +1,154 @@
+{% extends "events/base_sidebar.html" %}
+
+{% load static %}
+
+{% block title %}Summer Code Jam 2025{% endblock %}
+
+{% block breadcrumb %}
+    <li><a href="{% url "events:index" %}">Events</a></li>
+    <li><a href="{% url "events:page" path="code-jams" %}">Code Jams</a></li>
+    <li><a href="{% url "events:page" path="code-jams/12" %}">Code Jam 2025</a></li>
+    <li class="is-active"><a href="#">Approved Frameworks</a></li>
+{% endblock %}
+
+{% block event_content %}
+    <p>
+        Below is the list of pre-approved frameworks that you can use for the code jam.
+        Please work with your team to choose a library (or multiple) that everyone can and want to develop with.
+        If there is a library not listed below that you think should be here, you're welcome to discuss it with the Events Team over in the Discord server.
+
+    </p>
+
+    <h3 id="approved-frameworks"><a href="#approved-frameworks">Approved Frameworks</a></h3>
+
+    <div class="card mb-4">
+        <div class="card-content">
+            <div class="content">
+                <p class="subtitle">pyodide</p>
+                <p>
+                    Pyodide is a Python distribution for the browser and Node.js based on WebAssembly.
+                </p>
+            </div>
+        </div>
+        <div class="card-footer">
+            <a href="https://pyodide.org/en/stable/" class="card-footer-item"><i class="fas fa-book"></i>&ensp;Documentation</a>
+            <a href="https://github.com/pyodide/pyodide" class="card-footer-item"><i class="fab fa-github"></i>&ensp;GitHub</a>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-content">
+            <div class="content">
+                <p class="subtitle">pyscript</p>
+                <p>
+                    PyScript is an open source platform for Python in the browser.
+                </p>
+            </div>
+        </div>
+        <div class="card-footer">
+            <a href="https://pyscript.net/" class="card-footer-item"><i class="fas fa-book"></i>&ensp;Documentation</a>
+            <a href="https://github.com/pyscript/pyscript" class="card-footer-item"><i class="fab fa-github"></i>&ensp;GitHub</a>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-content">
+            <div class="content">
+                <p class="subtitle">brython</p>
+                <p>
+                    A Python 3 implementation for client-side web programming
+                </p>
+            </div>
+        </div>
+        <div class="card-footer">
+            <a href="https://brython.info/" class="card-footer-item"><i class="fas fa-book"></i>&ensp;Documentation</a>
+            <a href="https://github.com/brython-dev/brython" class="card-footer-item"><i class="fab fa-github"></i>&ensp;GitHub</a>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-content">
+            <div class="content">
+                <p class="subtitle">marimo</p>
+                <p>
+                    marimo is an open-source reactive Python notebook: run a cell or interact with a UI element,
+                    and marimo automatically runs dependent cells (or marks them as stale), keeping code and outputs
+                    consistent and preventing bugs before they happen. Every marimo notebook is stored as pure Python (Git-friendly),
+                    executable as a script, and deployable as an app; while stored as Python, marimo notebooks also have native support for SQL.
+                </p>
+            </div>
+        </div>
+        <div class="card-footer">
+            <a href="https://docs.marimo.io/" class="card-footer-item"><i class="fas fa-book"></i>&ensp;Documentation</a>
+            <a href="https://github.com/marimo-team/marimo" class="card-footer-item"><i class="fab fa-github"></i>&ensp;GitHub</a>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-content">
+            <div class="content">
+                <p class="subtitle">jupyterlite</p>
+                <p>
+                    JupyterLite is a JupyterLab distribution that runs entirely in the browser built from the ground-up using JupyterLab components and extensions.
+                </p>
+            </div>
+        </div>
+        <div class="card-footer">
+            <a href="https://jupyterlite.readthedocs.io/en/stable/" class="card-footer-item"><i class="fas fa-book"></i>&ensp;Documentation</a>
+            <a href="https://github.com/jupyterlite/jupyterlite" class="card-footer-item"><i class="fab fa-github"></i>&ensp;GitHub</a>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-content">
+            <div class="content">
+                <p class="subtitle">nicegui</p>
+                <p>
+                    NiceGUI is an easy-to-use, Python-based UI framework, which shows up in your web browser. You can create buttons, dialogs, Markdown, 3D scenes, plots and much more.
+                </p>
+            </div>
+        </div>
+        <div class="card-footer">
+            <a href="https://nicegui.io/" class="card-footer-item"><i class="fas fa-book"></i>&ensp;Documentation</a>
+            <a href="https://github.com/zauberzeug/nicegui/" class="card-footer-item"><i class="fab fa-github"></i>&ensp;GitHub</a>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-content">
+            <div class="content">
+                <p class="subtitle">reflex</p>
+                <p>
+                    Reflex is an open-source framework for quickly building beautiful, interactive web applications in pure Python.
+                </p>
+            </div>
+        </div>
+        <div class="card-footer">
+            <a href="https://reflex.dev/docs/getting-started/introduction/" class="card-footer-item"><i class="fas fa-book"></i>&ensp;Documentation</a>
+            <a href="https://github.com/reflex-dev/reflex" class="card-footer-item"><i class="fab fa-github"></i>&ensp;GitHub</a>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-content">
+            <div class="content">
+                <p class="subtitle">rio</p>
+                <p>
+                    Rio is an easy to use framework for creating websites and apps and is based entirely on Python.
+                    You won't need a single line of HTML, CSS, or JavaScript to create beautiful, modern apps.
+                </p>
+            </div>
+        </div>
+        <div class="card-footer">
+            <a href="https://rio.dev/docs" class="card-footer-item"><i class="fas fa-book"></i>&ensp;Documentation</a>
+            <a href="https://pypi.org/project/rio-ui/" class="card-footer-item"><i class="fab fa-github"></i>&ensp;GitHub</a>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block sidebar %}
+
+    {% include "events/sidebar/code-jams/12.html" %}
+
+{% endblock %}
