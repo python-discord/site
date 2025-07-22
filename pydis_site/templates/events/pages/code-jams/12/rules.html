@@ -1,20 +1,20 @@
 {% extends "events/base_sidebar.html" %}
 
-{% block title %}Summer Code Jam 2024{% endblock %}
+{% block title %}Summer Code Jam 2025{% endblock %}
 
 {% block breadcrumb %}
     <li><a href="{% url "events:index" %}">Events</a></li>
     <li><a href="{% url "events:page" path="code-jams" %}">Code Jams</a></li>
-    <li><a href="{% url "events:page" path="code-jams/11" %}">Code Jam 2024</a></li>
+    <li><a href="{% url "events:page" path="code-jams/12" %}">Code Jam 2025</a></li>
     <li class="is-active"><a href="#">Rules</a></li>
 {% endblock %}
 
 {% block event_content %}
 <ol>
-    <li><p>Your solution must use one or more of the approved frameworks. It is not permitted to circumvent this rule by e.g. using the approved framework as a wrapper for another framework.</p></li>
+    <li><p>Your solution must use one or more of the pre-approved frameworks. It is not permitted to circumvent this rule by e.g. using the approved framework as a wrapper for another framework.</p></li>
     <li>
         <p>
-            <strong>The core of your project must focus on and incorporate Discord Applications.</strong>
+            <strong>The core of your project must focus on and incorporate "Python in the Browser".</strong>
         </p>
     </li>
     <li><p>Your solution should be platform agnostic. For example, if you use filepaths in your submission, use <code>pathlib</code> to create platform agnostic Path objects instead of hardcoding the paths.</p></li>
@@ -37,7 +37,7 @@
     <li>
         <p>
             All code and assets must be compatible with the <a href="https://en.wikipedia.org/wiki/MIT_License">MIT license</a>.
-            This is because we will be merging your submission into our <code>summer-code-jam-2024</code> repo at the end of the jam,
+            This is because we will be merging your submission into our <code>summer-code-jam-2025</code> repo at the end of the jam,
             and this repo is licensed with the MIT license.
             <strong>Projects that include assets that are incompatible with this license may be disqualified.</strong>
         </p>
@@ -52,10 +52,10 @@
     </li>
     <li>
         <p>
-            Your team, once the coding portion of the code jam is complete, must create a video presentation that showcases and explains your final product.
-            This must be in a video format and must be uploaded somewhere for the judges to view (i.e. unlisted Youtube video, Vimeo, etc.)
-            The video can be as simple as a screen recording with annotated text.
-            Teams who do not submit a final video presentation may be disqualified.
+            Your team, once the coding portion of the code jam is complete, must create a presentation that showcases and explains your final product.
+            Thorough and robust documentation can fulfill this requirement.
+            This must be uploaded somewhere for the judges to view (i.e. unlisted Youtube video, Google Drive, GitHub etc.)
+            Teams who do not submit a final presentation may be disqualified.
         </p>
     </li>
     <li>
@@ -80,6 +80,6 @@
 
 {% block sidebar %}
 
-    {% include "events/sidebar/code-jams/11.html" %}
+    {% include "events/sidebar/code-jams/12.html" %}
 
 {% endblock %}
