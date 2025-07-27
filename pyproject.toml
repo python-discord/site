@@ -3,7 +3,7 @@ name = "site"
 version = "1.0.0"
 description = "The project responsible for maintaining our website and all of its subdomains."
 authors = [{ name = "Python Discord", email = "info@pythondiscord.com" }]
-requires-python = "==3.11.*"
+requires-python = "==3.13.*"
 license = "MIT"
 dependencies = [
     "django==5.1.11",
@@ -47,7 +47,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [tool.ruff]
-target-version = "py311"
+target-version = "py313"
 extend-exclude = [".cache"]
 line-length = 120
 output-format = "concise"
