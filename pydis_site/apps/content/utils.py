@@ -108,7 +108,7 @@ def fetch_tags() -> list[Tag]:
             for file in repo.getmembers():
                 if "/bot/resources/tags" in file.path:
                     included.append(file)
-            repo.extractall(folder, included)  # noqa: S202
+            repo.extractall(folder, included, filter="tar")
 
         for tag_file in Path(folder).rglob("*.md"):
             name = tag_file.name
