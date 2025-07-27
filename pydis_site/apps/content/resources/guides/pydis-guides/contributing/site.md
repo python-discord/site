@@ -9,7 +9,7 @@ You should have already forked the [`site`](https://github.com/python-discord/si
 
 ### Requirements
 
-- [Python 3.11](https://www.python.org/downloads/)
+- [Python 3.13](https://www.python.org/downloads/)
 - [uv](https://github.com/astral-sh/uv#installation)
 - [Git](https://git-scm.com/downloads)
     - [Windows](https://git-scm.com/download/win)
