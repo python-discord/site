@@ -105,7 +105,7 @@ Note that if you changed code that is not associated with a particular extension
 
 ## Adding new statistics
 
-Details on how to add new statistics can be found on the [statistic infrastructure page](https://blog.pythondiscord.com/statistics-infrastructure).
+Details on how to add new statistics can be found on the [statistic infrastructure page](https://blog.pythondiscord.com/post/statistics-infrastructure-at-python-discord/).
 We are always open to more statistics so add as many as you can!
 
 ---
