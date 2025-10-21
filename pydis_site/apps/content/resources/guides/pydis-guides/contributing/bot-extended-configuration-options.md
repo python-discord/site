@@ -8,7 +8,7 @@ toc: 3
 ## Manual constants configuration
 
 Reading this means that you're ready for a bit of manual labour.
-If for some reason you've missed the automatic server setup section, you can read about it in the bot contributing guide [here](../bot.md#envserver)
+If for some reason you've missed the automatic server setup section, you can read about it in the [bot contributing guide](../bot.md#envserver).
 
 To configure the bot manually, you will **only** need to set inside the `.env.server` file the values for the channels, roles, categories, etc.
 that are used by the component you are developing.
