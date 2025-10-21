@@ -52,6 +52,7 @@ These individuals have made lasting contributions to Python Discord. Though they
 * [lemonsaurus](https://github.com/lemonsaurus)
 * [dementati](https://github.com/dementati)
 * [eivl](https://github.com/eivl)
+* [Akarys42](https://github.com/akarys42)
 
 ## Contributors
 

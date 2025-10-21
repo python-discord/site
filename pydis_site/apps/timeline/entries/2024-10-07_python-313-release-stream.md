@@ -1,6 +1,6 @@
 ---
 title: Python 3.13 Release Stream
-date: Oct 10th, 2022
+date: Oct 10th, 2024
 icon: pydis
 ---
 
