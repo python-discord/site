@@ -12,9 +12,16 @@ repos:
         args: [--markdown-linebreak-ext=md]
   - repo: local
     hooks:
+      - id: uv-lock
+        name: uv lock
+        description: Checks the validity of the uv.lock file.
+        entry: uv lock
+        language: system
+        files: ^(uv\.lock|pyproject\.toml|uv\.toml)$
+        pass_filenames: false
       - id: ruff
         name: ruff
         description: This hook runs ruff within our project's environment.
-        entry: uv run ruff check --force-exclude
+        entry: uv run --frozen ruff check --force-exclude
         language: system
         types: [python]
