@@ -15,7 +15,7 @@ This page will focus on the quickest steps one can take, with mentions of altern
 ### Setup Project Dependencies
 Below are the dependencies you **must** have installed to get started with the bot.
 
-1. Make sure you have [Python 3.13](https://www.python.org/downloads/) installed. uv [can also be used to](https://docs.astral.sh/uv/guides/install-python/#installing-python) install Python, if desired.
+1. Make sure you have [Python 3.14](https://www.python.org/downloads/) installed. uv [can also be used to](https://docs.astral.sh/uv/guides/install-python/#installing-python) install Python, if desired.
 2. [Install uv](https://github.com/astral-sh/uv#installation).
 3. [Install the project's dependencies](../installing-project-dependencies).
 4. Docker.
