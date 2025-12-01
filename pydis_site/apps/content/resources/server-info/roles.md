@@ -63,8 +63,8 @@ See the description of a Helper. Being active in helping others, providing good 
 ##### Role Expectations
 In addition to the informal descriptions below, we've also written down a more formal list of expectations that come with each staff role. While this list is mostly for internal use, you can read it [here](/pages/server-info/staff-role-expectations/).
 
-### <span class="fas fa-circle" style="color:#f85950"></span> Owners
-**Description:** Owners of the server.
+### <span class="fas fa-circle" style="color:#f85950"></span> Directors
+**Description:** Directors of the server, who lead the Admins.
 
 ### <span class="fas fa-circle" style="color:#ff784d"></span> Admins
 **Description:** Staff who administrate the server, its function, its staff, and are involved in deciding the direction of the server.
@@ -101,7 +101,7 @@ Being a helper is also more than just quantity of messages, it's about quality. 
 
 # Code Jam Roles
 ### <span class="fas fa-circle" style="color:#f87dc8"></span> Code Jam Champions
-**Description:** A vanity role for winners of past code jams.
+**Description:** Winners of the Code Jam competition that this server runs. For more details about our Code Jams, see our events page.
 
 **How to get it:** Win a code jam!
 
@@ -119,6 +119,14 @@ Being a helper is also more than just quantity of messages, it's about quality. 
 
 *Note: Similar roles may exist for a game jam.*
 
+
+---
+
+# PyWeek Roles
+### <span class="fas fa-circle" style="color:#f87dc8"></span> PyWeek Champions
+**Description:** Winners of the PyWeek Game Jam competition that this server helps host and run. For more information, see the <a href="https://pyweek.org/">PyWeek website</a>.
+
+**How to get it:** Win PyWeek!
 
 ---
 
