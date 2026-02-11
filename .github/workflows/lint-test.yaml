@@ -50,7 +50,7 @@ jobs:
       # This step will publish the coverage reports coveralls.io and
       # link the report to the commit
       - name: Publish Coverage Report
-        uses: coverallsapp/github-action@v2.3.6
+        uses: coverallsapp/github-action@v2.3.7
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           file: ./coverage.lcov
