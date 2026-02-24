@@ -18,7 +18,7 @@ dependencies = [
     "markdown==3.8.2",
     "psycopg[binary]==3.2.9",
     "pyjwt[crypto]==2.10.1",
-    "pymdown-extensions==10.16",
+    "pymdown-extensions==10.16.1",
     "python-frontmatter==1.1.0",
     "pyyaml==6.0.2",
     "sentry-sdk==2.33.0",
