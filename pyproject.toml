@@ -13,7 +13,7 @@ dependencies = [
     "django-prometheus==2.4.1",
     "django-simple-bulma==2.6.0",
     "djangorestframework==3.16.0",
-    "gunicorn==23.0.0",
+    "gunicorn==25.1.0",
     "httpx==0.28.1",
     "markdown==3.8.2",
     "psycopg[binary]==3.2.9",
