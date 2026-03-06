@@ -1,6 +1,6 @@
 ---
-title: "`if __name__ == "__main__"`"
-description: "What is `if __name__ == "__main__"`, and why would you use it?"
+title: '`if __name__ == "__main__"`'
+description: 'What is `if __name__ == "__main__"`, and why would you use it?'
 ---
 
 You might see this structure in a Python file:
