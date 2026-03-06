@@ -58,3 +58,10 @@ Even if you don't intend your file to be used in two different ways, the convent
 ## Why not have a `main` keyword?
 
 Python often uses so-called "dunder" names for special behavior. The global name `__name__` lets files know how they are being run: directly or imported. Other languages might have a special name for the main function. Python instead lets you write your own if statement using `__name__` to decide what code should run be as the main body.
+
+
+## Other resources
+
+- The Python docs have a section on [Idiomatic usage of `__main__`](https://docs.python.org/3/library/__main__.html#idiomatic-usage).
+
+- Real Python has a [longer tutorial on `__main__`](https://realpython.com/if-name-main-python/).
