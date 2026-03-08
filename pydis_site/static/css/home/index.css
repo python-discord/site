@@ -122,12 +122,8 @@ h1 {
 }
 
 @keyframes wave {
-  0% {
-    margin-left: 0;
-  }
-  100% {
-    margin-left: -1600px;
-  }
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-1600px); }
 }
 
 /* Showcase */
