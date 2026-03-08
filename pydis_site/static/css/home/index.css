@@ -77,13 +77,11 @@ h1 {
 
 #wave-hero .wave {
     background: url(../../images/waves/wave_dark.svg) repeat-x;
+    background-size: 1600px auto;
     position: absolute;
     bottom: 0;
-    width: 6400px;
-    animation-name: wave;
-    animation-timing-function: cubic-bezier(.36,.45,.63,.53);
-    animation-iteration-count: infinite;
-    transform: translate3d(0,0,0);  /* Trigger 3D acceleration for smoother animation */
+    left: 0;
+    width: 100%;
 }
 
 [data-theme="dark"] #wave-hero .wave {
