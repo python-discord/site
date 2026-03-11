@@ -87,7 +87,7 @@ Closing your post once you are finished leads to less occupied ones, which means
 
 Definitely not! We encourage all members of the community to participate in giving help. If you'd like to help answer some questions, you can either browse all posts in the **python-help** forum channel or head over to the **Topical Chat/Help** category.
 
-Before jumping in, please read our guide on [helping others](../helping-others) which explains our expectations for the culture and quailty of help that we aim for on the server.
+Before jumping in, please read our guide on [helping others](../helping-others) which explains our expectations for the culture and quality of help that we aim for on the server.
 
 Tip: run the `!helpdm on` command in the `#bot-commands` channel to get notified via DM with jumplinks to help posts you're participating in.
 
