@@ -27,7 +27,7 @@ dependencies = [
 
 [dependency-groups]
 dev = [
-    "python-dotenv==1.1.1",
+    "python-dotenv==1.2.2",
     "taskipy==1.14.1",
     "ruff==0.12.4",
 ]
