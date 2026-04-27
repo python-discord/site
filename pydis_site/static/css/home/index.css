@@ -18,7 +18,7 @@ h1 {
     height: 32vw;
     min-height: 270px;
     max-height: 500px;
-    overflow-x: hidden;
+    overflow: hidden;
     width: 100%;
     padding: 0;
 }
@@ -74,17 +74,14 @@ h1 {
 #wave-hero-right img:hover {
     box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 }
-
 #wave-hero .wave {
-    background: url(../../images/waves/wave_dark.svg) repeat-x;
-    position: absolute;
-    bottom: 0;
-    width: 6400px;
-    animation-name: wave;
-    animation-timing-function: cubic-bezier(.36,.45,.63,.53);
-    animation-iteration-count: infinite;
-    transform: translate3d(0,0,0);  /* Trigger 3D acceleration for smoother animation */
-}
+    background: url(../../images/waves/wave_dark.svg) repeat-x; 
+    position: absolute; 
+    bottom: 0; width: 6400px; 
+    animation-name: wave; 
+    animation-timing-function: cubic-bezier(.36,.45,.63,.53); 
+    animation-iteration-count: infinite; 
+    transform: translate3d(0,0,0); /* Trigger 3D acceleration for smoother animation */ }
 
 [data-theme="dark"] #wave-hero .wave {
     background: url(../../images/waves_dark/wave_dark.svg) repeat-x;
@@ -122,12 +119,8 @@ h1 {
 }
 
 @keyframes wave {
-  0% {
-    margin-left: 0;
-  }
-  100% {
-    margin-left: -1600px;
-  }
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-1600px); }
 }
 
 /* Showcase */
