@@ -235,15 +235,15 @@ wheels = [
 
 [[package]]
 name = "django-simple-bulma"
-version = "2.6.0"
+version = "4.0.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "django" },
     { name = "libsass" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/09/46/6bce02277e67407d1bdfd4f71d30d5bdb370e63bbbf3daef68cad7d593ab/django-simple-bulma-2.6.0.tar.gz", hash = "sha256:7660aac87f3bfb23f2bbbd564e216337f443c001698d344759ad5753f8e3a3c1", size = 429876, upload-time = "2024-01-02T17:58:38.181Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/ec/f4/20df2ed15e1b1bb5337cc4323e3b104ff9e3da04a7f9d7b7ca03103c4d85/django_simple_bulma-4.0.0.tar.gz", hash = "sha256:e6bb282bcc24b2a854ee92b04e25d0d90bb0ebc15644fec837c5057a214ac54e", size = 58250275, upload-time = "2026-05-03T08:45:33.118Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/c4/07/771daba2ba0efee17ece758c6d384d6ce3eb83f2c1d6f4ce956408a2cd1c/django_simple_bulma-2.6.0-py3-none-any.whl", hash = "sha256:06a195e630f9bfa91060a0075a18ba6953bb72e7396fda3737561af0dfeab0d1", size = 489840, upload-time = "2024-01-02T17:58:35.635Z" },
+    { url = "https://files.pythonhosted.org/packages/6c/ad/d3a5658e25c4c16f916893fe4296cbfcf193036e2db9c4aa8338ad92e111/django_simple_bulma-4.0.0-py3-none-any.whl", hash = "sha256:7bb389ad847f94517fe7b4818470169c2d10c89ab733ae2ac72bc2a64d8b1ddb", size = 61626776, upload-time = "2026-05-03T08:45:28.017Z" },
 ]
 
 [[package]]
@@ -638,7 +638,7 @@ requires-dist = [
     { name = "django-environ", specifier = "==0.12.0" },
     { name = "django-filter", specifier = "==25.1" },
     { name = "django-prometheus", specifier = "==2.4.1" },
-    { name = "django-simple-bulma", specifier = "==2.6.0" },
+    { name = "django-simple-bulma", specifier = "==4.0.0" },
     { name = "djangorestframework", specifier = "==3.16.0" },
     { name = "gunicorn", specifier = "==24.1.1" },
     { name = "httpx", specifier = "==0.28.1" },
