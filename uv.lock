@@ -269,14 +269,14 @@ wheels = [
 
 [[package]]
 name = "gunicorn"
-version = "24.1.1"
+version = "26.0.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "packaging" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/78/0a/10739c03537ec5b131a867bf94df2e412b437696c7e5d26970e2198a80d2/gunicorn-24.1.1.tar.gz", hash = "sha256:f006d110e5cb3102859b4f5cd48335dbd9cc28d0d27cd24ddbdafa6c60929408", size = 287567, upload-time = "2026-01-24T01:15:31.359Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/6d/b7/a4a3f632f823e432ce6bc65f62961b7980c898c77f075a2f7118cb3846fe/gunicorn-26.0.0.tar.gz", hash = "sha256:ca9346f85e3a4aeeb64d491045c16b9a35647abd37ea15efe53080eb8b090baf", size = 727286, upload-time = "2026-05-05T06:38:25.529Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/96/90/cfe637677916fc6f53cd2b05d5746e249f683e1fa14c9e745a88c66f7290/gunicorn-24.1.1-py3-none-any.whl", hash = "sha256:757f6b621fc4f7581a90600b2cd9df593461f06a41d7259cb9b94499dc4095a8", size = 114920, upload-time = "2026-01-24T01:15:29.656Z" },
+    { url = "https://files.pythonhosted.org/packages/e6/40/9c2384fc2be4ad25dd4a49decd5ad9ea5a3639814c11bd40ab77cb9f0a14/gunicorn-26.0.0-py3-none-any.whl", hash = "sha256:40233d26a5f0d1872916188c276e21641155111c2853f0c2cd55260aec0d24fc", size = 212009, upload-time = "2026-05-05T06:38:23.007Z" },
 ]
 
 [[package]]
@@ -640,7 +640,7 @@ requires-dist = [
     { name = "django-prometheus", specifier = "==2.4.1" },
     { name = "django-simple-bulma", specifier = "==2.6.0" },
     { name = "djangorestframework", specifier = "==3.16.0" },
-    { name = "gunicorn", specifier = "==24.1.1" },
+    { name = "gunicorn", specifier = "==26.0.0" },
     { name = "httpx", specifier = "==0.28.1" },
     { name = "markdown", specifier = "==3.8.2" },
     { name = "psycopg", extras = ["binary"], specifier = "==3.2.9" },
