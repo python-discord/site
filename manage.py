@@ -31,7 +31,7 @@ class SiteManager:
     Manages the preparation and serving of the website for local use.
 
     This class is used solely for setting up the development
-    environment. In production, gunicorn is invoked directly
+    environment. In production, the WSGI server is invoked directly
     and migrations are handled in an init container.
 
     Usage:
