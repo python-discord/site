@@ -13,7 +13,6 @@ dependencies = [
     "django-prometheus==2.4.1",
     "django-simple-bulma==2.6.0",
     "djangorestframework==3.16.0",
-    "gunicorn==24.1.1",
     "httpx==0.28.1",
     "markdown==3.8.2",
     "psycopg[binary]==3.2.9",
@@ -22,6 +21,7 @@ dependencies = [
     "python-frontmatter==1.1.0",
     "pyyaml==6.0.2",
     "sentry-sdk==2.33.0",
+    "waitress==3.0.2",
     "whitenoise==6.9.0",
 ]
 
@@ -76,7 +76,6 @@ select = ["ANN", "B", "C4", "D", "DJ", "DTZ", "E", "F", "ISC", "INT", "N", "PGH"
 "pydis_site/apps/**/tests/test_*.py" = ["ANN", "D"]
 "static-builds/netlify_build.py" = ["T201"]
 "pydis_site/apps/api/tests/test_off_topic_channel_names.py" = ["RUF001"]
-"gunicorn.conf.py" = ["ANN", "D"]
 "pydis_site/apps/api/models/bot/off_topic_channel_name.py" = ["RUF001"]
 
 [tool.taskipy.tasks]
