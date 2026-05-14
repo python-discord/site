@@ -18,6 +18,8 @@ jobs:
 
       - name: Checkout code
         uses: actions/checkout@v6
+        with:
+          persist-credentials: false
 
       # The current version (v3) of Docker's build-push action uses
       # buildx, which comes with BuildKit features that help us speed
@@ -63,6 +65,7 @@ jobs:
         with:
           repository: python-discord/infra
           path: infra
+          persist-credentials: false
 
       - uses: azure/setup-kubectl@v5.1.0
 
