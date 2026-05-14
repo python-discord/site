@@ -24,7 +24,7 @@ jobs:
         id: pr_info
         if: github.event.workflow_run.event == 'pull_request'
         run: |
-          curl -s -H "Authorization: token $GITHUB_TOKEN" ${{ github.event.workflow_run.artifacts_url }} > artifacts.json
+          curl -s -H "Authorization: token $GITHUB_TOKEN" ${GITHUB_EVENT_WORKFLOW_RUN_ARTIFACTS_URL} > artifacts.json
           DOWNLOAD_URL=$(cat artifacts.json | jq -r '.artifacts[] | select(.name == "pull_request_payload.json") | .archive_download_url')
           [ -z "$DOWNLOAD_URL" ] && exit 1
           curl -sSL -H "Authorization: token $GITHUB_TOKEN" -o pull_request_payload.json $DOWNLOAD_URL || exit 2
@@ -35,6 +35,7 @@ jobs:
           echo "pr_source=$(jq -r '.head.label // empty' pull_request_payload.json)" >> $GITHUB_OUTPUT
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_EVENT_WORKFLOW_RUN_ARTIFACTS_URL: ${{ github.event.workflow_run.artifacts_url }}
 
       # Send an informational status embed to Discord instead of the
       # standard embeds that Discord sends. This embed will contain

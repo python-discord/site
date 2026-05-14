@@ -50,8 +50,10 @@ jobs:
         run: |
           mkdir docker_build \
           && docker run --entrypoint /bin/echo --name site \
-          ghcr.io/python-discord/static-site:${{ inputs.sha-tag }} \
+          ghcr.io/python-discord/static-site:${INPUTS_SHA_TAG} \
           && docker cp site:/app docker_build/
+        env:
+          INPUTS_SHA_TAG: ${{ inputs.sha-tag }}
 
       # Build directly to a local folder
       - name: Build Docker Image (PR)
