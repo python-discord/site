@@ -10,4 +10,4 @@ concurrency:
 jobs:
   block-fixup-commits:
     if: github.ref != 'refs/heads/main'
-    uses: python-discord/.github/.github/workflows/block-fixup-commits.yaml@main
+    uses: python-discord/.github/.github/workflows/block-fixup-commits.yaml@d89f1b58aa1b844ad73eec63daaabc7e7d3e9d1b # main
