@@ -3,7 +3,6 @@ import functools
 import json
 import logging
 import tarfile
-import tempfile
 from http import HTTPStatus
 from io import BytesIO
 from pathlib import Path
@@ -88,9 +87,9 @@ def fetch_tags() -> list[Tag]:
         for entry in metadata.json():
             if entry["type"] == "dir":
                 # Tag group
-                files = client.get(entry["url"])
-                files.raise_for_status()
-                files = files.json()
+                dir_response = client.get(entry["url"])
+                dir_response.raise_for_status()
+                files = dir_response.json()
             else:
                 files = [entry]
 
@@ -102,26 +101,27 @@ def fetch_tags() -> list[Tag]:
         tar_file.raise_for_status()
 
     tags = []
-    with tempfile.TemporaryDirectory() as folder:
-        with tarfile.open(fileobj=BytesIO(tar_file.content)) as repo:
-            included = []
-            for file in repo.getmembers():
-                if "/bot/resources/tags" in file.path:
-                    included.append(file)
-            repo.extractall(folder, included, filter="tar")
+    with tarfile.open(fileobj=BytesIO(tar_file.content)) as repo:
+        for file in repo.getmembers():
+            if "/bot/resources/tags" not in file.path or not file.path.endswith(".md"):
+                continue
 
-        for tag_file in Path(folder).rglob("*.md"):
-            name = tag_file.name
+            name = Path(file.path).name
+            parent = Path(file.path).parent.name
             group = None
-            if tag_file.parent.name != "tags":
+            if parent != "tags":
                 # Tags in sub-folders are considered part of a group
-                group = tag_file.parent.name
+                group = parent
 
+            f = repo.extractfile(file)
+            if f is None:
+                continue
+            body = f.read().decode("utf-8")
             tags.append(Tag(
                 name=name.removesuffix(".md"),
                 sha=hashes[name],
                 group=group,
-                body=tag_file.read_text(encoding="utf-8"),
+                body=body,
                 last_commit=None,
             ))
 

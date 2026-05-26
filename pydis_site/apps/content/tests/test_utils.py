@@ -1,8 +1,8 @@
 import datetime
 import json
 import tarfile
-import tempfile
 import textwrap
+from io import BytesIO
 from pathlib import Path
 from unittest import mock
 
@@ -171,26 +171,20 @@ class TagUtilsTests(TestCase):
             "This is a grouped tag!",
         )
 
-        # Generate a tar archive with a few tags
-        with tempfile.TemporaryDirectory() as tar_folder:
-            tar_folder = Path(tar_folder)
-            with tempfile.TemporaryDirectory() as folder:
-                folder = Path(folder)
-                (folder / "ignored_file.md").write_text("This is an ignored file.")
-                tags_folder = folder / "bot/resources/tags"
-                tags_folder.mkdir(parents=True)
-
-                (tags_folder / "first_tag.md").write_text(bodies[0])
-                (tags_folder / "second_tag.md").write_text(bodies[1])
-
-                group_folder = tags_folder / "some_group"
-                group_folder.mkdir()
-                (group_folder / "grouped_tag.md").write_text(bodies[2])
-
-                with tarfile.open(tar_folder / "temp.tar", "w") as file:
-                    file.add(folder, recursive=True)
-
-                body = (tar_folder / "temp.tar").read_bytes()
+        # Generate a tar archive in memory
+        tar_buffer = BytesIO()
+        with tarfile.open(fileobj=tar_buffer, mode="w") as tar:
+            for path, content in [
+                ("ignored/ignored_file.md", "This is an ignored file."),
+                ("bot/resources/tags/first_tag.md", bodies[0]),
+                ("bot/resources/tags/second_tag.md", bodies[1]),
+                ("bot/resources/tags/some_group/grouped_tag.md", bodies[2]),
+            ]:
+                data = content.encode("utf-8")
+                info = tarfile.TarInfo(name=path)
+                info.size = len(data)
+                tar.addfile(info, BytesIO(data))
+        body = tar_buffer.getvalue()
 
         returns.append(httpx.Response(
             status_code=200,
@@ -207,7 +201,7 @@ class TagUtilsTests(TestCase):
         self.assertEqual(sorted([
             models.Tag(name="first_tag", body=bodies[0], sha="123"),
             models.Tag(name="second_tag", body=bodies[1], sha="245"),
-            models.Tag(name="grouped_tag", body=bodies[2], group=group_folder.name, sha="789123"),
+            models.Tag(name="grouped_tag", body=bodies[2], group="some_group", sha="789123"),
         ], key=sort), sorted(result, key=sort))
 
     def test_get_real_tag(self):
