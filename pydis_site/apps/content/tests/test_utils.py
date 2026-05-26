@@ -172,13 +172,14 @@ class TagUtilsTests(TestCase):
         )
 
         # Generate a tar archive in memory
+        # GitHub tarballs have a repo-prefix directory, e.g. python-discord-bot-abc123/
         tar_buffer = BytesIO()
         with tarfile.open(fileobj=tar_buffer, mode="w") as tar:
             for path, content in [
-                ("ignored/ignored_file.md", "This is an ignored file."),
-                ("bot/resources/tags/first_tag.md", bodies[0]),
-                ("bot/resources/tags/second_tag.md", bodies[1]),
-                ("bot/resources/tags/some_group/grouped_tag.md", bodies[2]),
+                ("python-discord-bot-abc123/ignored/ignored_file.md", "This is an ignored file."),
+                ("python-discord-bot-abc123/bot/resources/tags/first_tag.md", bodies[0]),
+                ("python-discord-bot-abc123/bot/resources/tags/second_tag.md", bodies[1]),
+                ("python-discord-bot-abc123/bot/resources/tags/some_group/grouped_tag.md", bodies[2]),
             ]:
                 data = content.encode("utf-8")
                 info = tarfile.TarInfo(name=path)
