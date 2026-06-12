@@ -20,6 +20,8 @@ Whenever the assets are images, audio or even code, they must have a license com
 5. **Follow the [Python Discord Code of Conduct](https://pydis.com/coc).**
 We aim to foster a welcoming and friendly environment on our open source projects.
 We take violations of our Code of Conduct very seriously, and may respond with moderator action.
+6. **Disclose usage of AI.**
+If you use AI tools to assist with your contributions, disclose this in the pull request description.
 
 <br/>
 
