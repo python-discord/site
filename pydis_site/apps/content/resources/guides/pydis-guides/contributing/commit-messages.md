@@ -9,6 +9,8 @@ Commits should be as narrow in scope as possible.
 Commits that span hundreds of lines across multiple unrelated functions and/or files are very hard for maintainers to follow.
 After about a week they'll probably be hard for you to follow, too.
 
+If using AI tools to assist with writing code, it is good to disclose this in the commit message, for example using the [`Assisted-by` trailer](https://docs.kernel.org/process/coding-assistants.html#attribution) as recommended by the Linux kernel project.
+
 Please also avoid making minor commits for fixing typos or linting errors.
 [Don’t forget to lint before you push!](https://soundcloud.com/lemonsaurusrex/lint-before-you-push)
 
