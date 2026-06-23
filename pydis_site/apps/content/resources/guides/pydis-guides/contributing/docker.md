@@ -87,6 +87,22 @@ Windows has not been configured to share drives with Docker.
 
 4. Re-run the `docker-compose up` command.
 
+### Issues running on Apple Silicon
+
+Attempting to run some images on non-amd64 architectures may show an error like this:
+
+```
+no matching manifest for linux/arm64/v8 in the manifest list entries
+```
+
+This is due to some images that we use only being build for amd64.
+
+You can force the use of amd64 by setting the following environment variable before running docker commands:
+
+```
+DOCKER_DEFAULT_PLATFORM=linux/amd64
+```
+
 # Compose Project Names
 When you launch services from a docker-compose, you'll notice the name of the containers aren't just the service name.
 You'll see this when launching your compose, as well as being able to be seen in the command `docker-compose ps` which will list the containers.
