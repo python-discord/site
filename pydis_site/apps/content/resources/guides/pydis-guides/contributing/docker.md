@@ -5,7 +5,7 @@ icon: fab fa-docker
 toc: 2
 ---
 
-Both our [Site](../site/) and [Bot](../bot/) projects use Docker and Docker-Compose during development in order to provide an easy to setup and consistent development environment.
+Both our [Site](../site/) and [Bot](../bot/) projects use Docker and Docker Compose during development in order to provide an easy to setup and consistent development environment.
 
 Consider reading some of the following topics if you're interested in learning more about Docker itself:
 
@@ -15,12 +15,12 @@ Consider reading some of the following topics if you're interested in learning m
 
 # Docker Installation
 You can find installation guides available for your respective OS from the official Docker documentation:
-[https://docs.docker.com/install/](https://docs.docker.com/install/)
+[https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/)
 
 ## After Installing on Linux
 If you're on Linux, there's a few extra things you should do:
 
-1. [**Add your user to the `docker` user group so you don't have to use `sudo` when running docker or docker-compose.**](#add-user-group)
+1. [**Add your user to the `docker` user group so you don't have to use `sudo` when running docker**](#add-user-group)
 2. [**Start up the Docker service.**](#run-the-service)
 3. [**Set the Docker service to start on boot.**](#start-on-boot) **(optional)**
 
@@ -67,7 +67,7 @@ Remove the existing `~/.docker/` directory. It will be automatically re-created 
 
 ### Drive has not been shared (Windows users)
 
-When attempting to run the `docker-compose up` command on a Windows machine, you receive the following or similar error message:
+When attempting to run the `docker compose up` command on a Windows machine, you receive the following or similar error message:
 ```text
 ERROR: for bot_bot_1 Cannot create container for service bot: b'Drive has not been shared'
 ```
@@ -85,7 +85,7 @@ Windows has not been configured to share drives with Docker.
 
 3. Click "Apply" and enter appropriate Windows credentials (likely just your own account, if you have administrative privileges).
 
-4. Re-run the `docker-compose up` command.
+4. Re-run the `docker compose up` command.
 
 ### Issues running on Apple Silicon
 
@@ -104,8 +104,8 @@ DOCKER_DEFAULT_PLATFORM=linux/amd64
 ```
 
 # Compose Project Names
-When you launch services from a docker-compose, you'll notice the name of the containers aren't just the service name.
-You'll see this when launching your compose, as well as being able to be seen in the command `docker-compose ps` which will list the containers.
+When you launch services using Docker Compose, you'll notice the name of the containers aren't just the service name.
+You'll see this when launching your compose, as well as being able to be seen in the command `docker compose ps` which will list the containers.
 It should match something like this:
 ```
 site_site_1

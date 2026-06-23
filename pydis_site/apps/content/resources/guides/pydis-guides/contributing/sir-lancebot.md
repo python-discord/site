@@ -31,15 +31,24 @@ The requirements for Docker are:
 
 ---
 # Development Environment
-If you aren't using Docker, you will need to [install the project's dependencies](../installing-project-dependencies) yourself.
+From the root of the cloned repository, run the following command to install the project dependencies:
+
+```shell
+$ uv sync
+```
+
+You should also configure precommit hooks, which will lint your code before you commit it.
+```shell
+$ uv run task precommit
+```
 
 ---
 # Test Server and Bot Account
 
 You will need your own test server and bot account on Discord to test your changes to the bot.
 
-1. [**Create a test server**](../setting-test-server-and-bot-account#setting-up-a-test-server).
-2. [**Create a bot account**](../setting-test-server-and-bot-account#setting-up-a-bot-account) and invite it to the server you just created.
+1. Create a test server.
+2. [**Create a bot account**](../creating-bot-account) and invite it to the server you just created.
 3. Create the following text channels:
     * `#announcements`
     * `#dev-log`
@@ -48,7 +57,7 @@ You will need your own test server and bot account on Discord to test your chang
     * `@Admins`
     * `@Helpers`
 5. Note down the IDs for your server, as well as any channels and roles created.
-    * [**Learn how to obtain the ID of a server, channel or role here.**](../setting-test-server-and-bot-account#obtain-the-ids)
+    * [**Learn how to obtain the ID of a server, channel or role here.**](../obtaining-discord-ids)
 
 ---
 
