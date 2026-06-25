@@ -19,20 +19,6 @@ Remember to ensure that you have read the [contributing guidelines](../contribut
 
 ---
 
-## Using Gitpod
-Sir Lancebot can be edited and tested on Gitpod. Gitpod will automatically install the correct dependencies and Python version, so you can get straight to coding.
-
-To do this, you will need a Gitpod account, which you can get [here](https://www.gitpod.io/#get-started), and a fork of Sir Lancebot. This guide covers forking the repository [here](../forking-repository).
-
-Afterwards, click on [this link](https://gitpod.io/#/github.com/python-discord/sir-lancebot) to spin up a new workspace for Sir Lancebot. Then run the following commands in the terminal after the existing tasks have finished running:
-```sh
-git remote rename origin upstream
-git remote add origin https://github.com/{your_username}/sir-lancebot
-```
-Make sure you replace `{your_username}` with your Github username. These commands will set the Sir Lancebot repository as the secondary remote, and your fork as the primary remote. This means you can easily grab new changes from the main Sir Lancebot repository.
-
-Once you've set up [a test server and bot account](#test-server-and-bot-account) and your [environment variables](#environment-variables), you are ready to begin contributing to Sir Lancebot!
-
 ## Using Docker
 Sir Lancebot can be started using Docker. Using Docker is generally recommended (but not strictly required) because it abstracts away some additional set up work.
 
@@ -45,15 +31,24 @@ The requirements for Docker are:
 
 ---
 # Development Environment
-If you aren't using Docker, you will need to [install the project's dependencies](../installing-project-dependencies) yourself.
+From the root of the cloned repository, run the following command to install the project dependencies:
+
+```shell
+$ uv sync
+```
+
+You should also configure precommit hooks, which will lint your code before you commit it.
+```shell
+$ uv run task precommit
+```
 
 ---
 # Test Server and Bot Account
 
 You will need your own test server and bot account on Discord to test your changes to the bot.
 
-1. [**Create a test server**](../setting-test-server-and-bot-account#setting-up-a-test-server).
-2. [**Create a bot account**](../setting-test-server-and-bot-account#setting-up-a-bot-account) and invite it to the server you just created.
+1. Create a test server.
+2. [**Create a bot account**](../creating-bot-account) and invite it to the server you just created.
 3. Create the following text channels:
     * `#announcements`
     * `#dev-log`
@@ -62,7 +57,7 @@ You will need your own test server and bot account on Discord to test your chang
     * `@Admins`
     * `@Helpers`
 5. Note down the IDs for your server, as well as any channels and roles created.
-    * [**Learn how to obtain the ID of a server, channel or role here.**](../setting-test-server-and-bot-account#obtain-the-ids)
+    * [**Learn how to obtain the ID of a server, channel or role here.**](../obtaining-discord-ids)
 
 ---
 

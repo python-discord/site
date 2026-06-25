@@ -164,7 +164,7 @@ docker compose up -d --build
 
 Now the docker will automatically build the image for you and run the container.
 
-### Why docker-compose
+### Why Docker Compose
 
 The main purpose of Compose is to run several services at once. Mostly we
 don't need this in discord bots, however.
