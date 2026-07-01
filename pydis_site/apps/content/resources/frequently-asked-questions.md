@@ -93,15 +93,6 @@ If a certain channel doesn't have a permission, chances are it was allowed there
 Feel free to ask in `#community-meta` if you'd like the reasoning behind any specific decision.
 
 
-#### **Q: Can we have a channel to show off projects or a channel to find people to work on projects with?**
-
-We previously had these channels, though they unfortunately did not work out the way we had hoped.
-Engagement was low and they were a large burden on our moderators due to the number of low quality or rule violating posts.
-
-In general, a real-time chat client isn't the best avenue for showing off your projects or finding collaborators because messages are typically only seen by those actively engaged at the time they are posted.
-You're welcome to showcase your projects in our off-topic channels or on a different platform like Reddit.
-
-
 #### **Q: Can I make a recommendation about a specific feature in the server?**
 
 If you want to make a recommendation or suggestion about the server feel free to post in `#community-meta`.
