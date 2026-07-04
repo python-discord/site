@@ -1,5 +1,6 @@
 import logging
 from json.decoder import JSONDecodeError
+from typing import TypedDict
 
 import httpx
 from django.core.handlers.wsgi import WSGIRequest
@@ -12,6 +13,14 @@ from pydis_site import settings
 from pydis_site.apps.home.models import RepositoryMetadata
 
 log = logging.getLogger(__name__)
+
+
+class RepoAPIData(TypedDict):
+    full_name: str
+    description: str
+    language: str
+    forks_count: int
+    stargazers_count: int
 
 
 class HomeView(View):
@@ -45,7 +54,7 @@ class HomeView(View):
         else:
             self.headers = {}
 
-    def _get_api_data(self) -> dict[str, dict[str, str]]:
+    def _get_api_data(self) -> dict[str, RepoAPIData]:
         """
         Call the GitHub API and get information about our repos.
 
