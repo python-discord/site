@@ -16,6 +16,12 @@ log = logging.getLogger(__name__)
 
 
 class RepoAPIData(TypedDict):
+    """
+    Partial typing for the GitHub API response for a repository.
+
+    Only the fields we care about are included here.
+    """
+
     full_name: str
     description: str
     language: str
