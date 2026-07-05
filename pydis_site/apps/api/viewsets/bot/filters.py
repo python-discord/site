@@ -315,7 +315,7 @@ class FilterListViewSet(ModelViewSet):
     """
 
     serializer_class = FilterListSerializer
-    queryset = FilterList.objects.all()
+    queryset = FilterList.objects.prefetch_related("filters")
 
 
 class FilterViewSet(ModelViewSet):
