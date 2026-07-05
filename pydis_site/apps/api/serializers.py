@@ -792,9 +792,9 @@ class OffensiveMessageSerializer(FrozenFieldsMixin, ModelSerializer):
 class MailingListSeenItemListSerializer(ListSerializer):
     """A class providing (de-)serialization of `MailingListSeenItem` instances as a list."""
 
-    def to_representation(self, objects: list[MailingListSeenItem]) -> list[str]:
+    def to_representation(self, objects: QuerySet[MailingListSeenItem]) -> list[str]:
         """Return the hashes of each seen mailing list item."""
-        return [obj['hash'] for obj in objects.values('hash')]
+        return [obj.hash for obj in objects.all()]
 
 
 class MailingListSeenItemSerializer(ModelSerializer):
