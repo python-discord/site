@@ -3,7 +3,6 @@
 import django.contrib.postgres.fields
 import django.core.validators
 from django.db import migrations, models
-import pydis_site.apps.api.models.bot.user
 
 
 class Migration(migrations.Migration):
@@ -16,6 +15,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='user',
             name='roles',
-            field=django.contrib.postgres.fields.ArrayField(base_field=models.BigIntegerField(validators=[django.core.validators.MinValueValidator(limit_value=0, message='Role IDs cannot be negative.'), pydis_site.apps.api.models.bot.user._validate_existing_role]), default=list, help_text='IDs of roles the user has on the server', size=None),
+            field=django.contrib.postgres.fields.ArrayField(base_field=models.BigIntegerField(validators=[django.core.validators.MinValueValidator(limit_value=0, message='Role IDs cannot be negative.')]), default=list, help_text='IDs of roles the user has on the server', size=None),
         ),
     ]

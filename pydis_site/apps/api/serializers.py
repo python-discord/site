@@ -8,6 +8,7 @@ from django.db.utils import IntegrityError
 from rest_framework.exceptions import NotFound
 from rest_framework.serializers import (
     IntegerField,
+    ListField,
     ListSerializer,
     ModelSerializer,
     PrimaryKeyRelatedField,
@@ -696,6 +697,14 @@ class UserSerializer(ModelSerializer):
 
     # ID field must be explicitly set as the default id field is read-only.
     id = IntegerField(min_value=0)
+    # Declaring the field explicitly avoids the per-element existence validator
+    # on the model's `roles` ArrayField, which would issue one query per role.
+    # Existence is instead validated in bulk in `validate_roles`.
+    roles = ListField(
+        child=IntegerField(min_value=0),
+        required=False,
+        allow_empty=True,
+    )
 
     class Meta:
         """Metadata defined for the Django REST Framework."""
@@ -704,6 +713,18 @@ class UserSerializer(ModelSerializer):
         fields = ('id', 'name', 'display_name', 'discriminator', 'roles', 'in_guild')
         depth = 1
         list_serializer_class = UserListSerializer
+
+    def validate_roles(self, roles: list[int]) -> list[int]:
+        """Validate that all given roles exist, using a single query."""
+        existing_role_ids = set(
+            Role.objects.filter(id__in=roles).values_list('id', flat=True)
+        )
+        unknown_roles = set(roles) - existing_role_ids
+        if unknown_roles:
+            raise ValidationError([
+                f"Role with ID {role_id} does not exist" for role_id in sorted(unknown_roles)
+            ])
+        return roles
 
     def create(self, validated_data: dict) -> User:
         """Override create method to catch IntegrityError."""

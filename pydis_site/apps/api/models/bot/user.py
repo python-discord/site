@@ -1,18 +1,9 @@
 from django.contrib.postgres.fields import ArrayField
-from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 
 from pydis_site.apps.api.models.bot.role import Role
 from pydis_site.apps.api.models.mixins import ModelReprMixin, ModelTimestampMixin
-
-
-def _validate_existing_role(value: int) -> None:
-    """Validate that a role exists when given in to the user model."""
-    role = Role.objects.filter(id=value)
-
-    if not role:
-        raise ValidationError(f"Role with ID {value} does not exist")
 
 
 class User(ModelReprMixin, models.Model):
@@ -54,7 +45,6 @@ class User(ModelReprMixin, models.Model):
                     limit_value=0,
                     message="Role IDs cannot be negative."
                 ),
-                _validate_existing_role
             )
         ),
         default=list,
