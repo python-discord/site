@@ -684,12 +684,8 @@ class UserAltRelationshipSerializer(FrozenFieldsMixin, ModelSerializer):
         """Add the alts of the target to the representation."""
         representation = super().to_representation(instance)
         representation['alts'] = tuple(
-            user_id
-            for (user_id,) in (
-                UserAltRelationship.objects
-                .filter(source=instance.target)
-                .values_list('target_id')
-            )
+            relationship.target_id
+            for relationship in instance.target.useraltrelationship_set.all()
         )
         return representation
 
@@ -733,7 +729,7 @@ class UserWithAltsSerializer(FrozenFieldsMixin, UserSerializer):
         """Retrieve the alts with all additional data on them."""
         return [
             UserAltRelationshipSerializer(alt).data
-            for alt in user.alts.through.objects.filter(source=user)
+            for alt in user.useraltrelationship_set.all()
         ]
 
 
