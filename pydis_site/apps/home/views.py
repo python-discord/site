@@ -1,5 +1,6 @@
 import logging
 from json.decoder import JSONDecodeError
+from typing import TypedDict
 
 import httpx
 from django.core.handlers.wsgi import WSGIRequest
@@ -12,6 +13,20 @@ from pydis_site import settings
 from pydis_site.apps.home.models import RepositoryMetadata
 
 log = logging.getLogger(__name__)
+
+
+class RepoAPIData(TypedDict):
+    """
+    Partial typing for the GitHub API response for a repository.
+
+    Only the fields we care about are included here.
+    """
+
+    full_name: str
+    description: str
+    language: str
+    forks_count: int
+    stargazers_count: int
 
 
 class HomeView(View):
@@ -45,7 +60,7 @@ class HomeView(View):
         else:
             self.headers = {}
 
-    def _get_api_data(self) -> dict[str, dict[str, str]]:
+    def _get_api_data(self) -> dict[str, RepoAPIData]:
         """
         Call the GitHub API and get information about our repos.
 
@@ -139,26 +154,32 @@ class HomeView(View):
             api_repositories = self._get_api_data()
 
             if not api_repositories:
-                return RepositoryMetadata.objects.all()
+                return list(RepositoryMetadata.objects.all())
 
-            # Update or create all RepoData objects in self.repos
+            # Build updated objects and bulk_update in two queries (fetch + update)
+            existing = {r.repo_name: r for r in RepositoryMetadata.objects.all()}
             database_repositories = []
+            new_repos = []
             for api_data in api_repositories.values():
-                repo_data, _created = RepositoryMetadata.objects.update_or_create(
-                    repo_name=api_data["full_name"],
-                    defaults={
-                        'repo_name': api_data["full_name"],
-                        'description': api_data["description"],
-                        'forks': api_data["forks_count"],
-                        'stargazers': api_data["stargazers_count"],
-                        'language': api_data["language"],
-                    }
-                )
-                database_repositories.append(repo_data)
+                repo = existing.get(api_data["full_name"])
+                if repo is None:
+                    repo = RepositoryMetadata(repo_name=api_data["full_name"])
+                    new_repos.append(repo)
+                repo.description = api_data["description"]
+                repo.forks = api_data["forks_count"]
+                repo.stargazers = api_data["stargazers_count"]
+                repo.language = api_data["language"]
+                database_repositories.append(repo)
+            RepositoryMetadata.objects.bulk_update(
+                [r for r in database_repositories if r not in new_repos],
+                fields=["description", "forks", "stargazers", "language"],
+            )
+            if new_repos:
+                RepositoryMetadata.objects.bulk_create(new_repos)
             return database_repositories
 
         # Otherwise, if the data is fresher than 2 minutes old, we should just return it.
-        return RepositoryMetadata.objects.all()
+        return list(RepositoryMetadata.objects.all())
 
     def get(self, request: WSGIRequest) -> HttpResponse:
         """Collect repo data and render the homepage view."""
