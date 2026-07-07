@@ -120,6 +120,21 @@ class CreationTests(AuthenticatedAPITestCase):
 
         response = self.client.post(url, data=data)
         self.assertEqual(response.status_code, 400)
+        self.assertEqual(
+            response.json(),
+            {'roles': ["Role with ID 190810291 does not exist"]}
+        )
+
+    def test_patch_returns_400_for_unknown_role_id(self):
+        url = reverse('api:bot:user-detail', args=(self.user.id,))
+        data = {'roles': [self.role.id, 190810291]}
+
+        response = self.client.patch(url, data=data)
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(
+            response.json(),
+            {'roles': ["Role with ID 190810291 does not exist"]}
+        )
 
     def test_returns_400_for_bad_data(self):
         url = reverse('api:bot:user-list')
@@ -256,6 +271,17 @@ class MultiPatchTests(AuthenticatedAPITestCase):
         ]
         response = self.client.patch(url, data=data)
         self.assertEqual(response.status_code, 404)
+
+    def test_bulk_patch_returns_400_for_unknown_role_id(self):
+        url = reverse("api:bot:user-bulk-patch")
+        data = [
+            {
+                "id": 1,
+                "roles": [self.role_developer.id, 190810291],
+            }
+        ]
+        response = self.client.patch(url, data=data)
+        self.assertEqual(response.status_code, 400)
 
     def test_returns_400_for_bad_data(self):
         url = reverse("api:bot:user-bulk-patch")
