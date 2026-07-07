@@ -238,7 +238,11 @@ class InfractionViewSet(
 
         qs = self.queryset.filter(**additional_filters)
         if self.serializer_class is ExpandedInfractionSerializer:
-            return qs.prefetch_related('actor', 'user')
+            return qs.prefetch_related(
+                'actor',
+                'user',
+                'user__useraltrelationship_set__target__useraltrelationship_set',
+            )
 
         return qs
 

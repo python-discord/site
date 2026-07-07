@@ -4,11 +4,13 @@ from unittest.mock import patch
 from urllib.parse import quote
 
 from django.db import transaction
+from django.db import connection
 from django.db.utils import IntegrityError
+from django.test.utils import CaptureQueriesContext
 from django.urls import reverse
 
 from .base import AuthenticatedAPITestCase
-from pydis_site.apps.api.models import Infraction, User
+from pydis_site.apps.api.models import Infraction, User, UserAltRelationship
 from pydis_site.apps.api.serializers import InfractionSerializer
 
 
@@ -806,6 +808,34 @@ class ExpandedTests(AuthenticatedAPITestCase):
 
         for infraction in response_data:
             self.check_expanded_fields(infraction)
+
+    def test_list_expanded_query_count_does_not_scale_with_infractions(self):
+        """The expanded list must not run a query per infraction (N+1 regression guard)."""
+        url = reverse('api:bot:infraction-list-expanded')
+
+        # Give the user an alt so the alts serialization path is exercised.
+        alt = User.objects.create(id=6, name='jimmy', discriminator=2)
+        UserAltRelationship.objects.create(
+            source=self.user, target=alt, context='alt account', actor=self.user
+        )
+
+        with CaptureQueriesContext(connection) as ctx:
+            response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        baseline_queries = len(ctx.captured_queries)
+
+        # Add several more infractions for the same user.
+        for _ in range(5):
+            Infraction.objects.create(
+                user_id=self.user.id, actor_id=self.user.id, type='warning', active=False
+            )
+
+        with CaptureQueriesContext(connection) as ctx:
+            response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+
+        # Query count must stay constant regardless of the number of infractions.
+        self.assertEqual(len(ctx.captured_queries), baseline_queries)
 
     def test_create_expanded(self):
         url = reverse('api:bot:infraction-list-expanded')
