@@ -91,6 +91,47 @@ class DeletedMessagesQueryCountTests(AuthenticatedAPITestCase):
         self.assertEqual(len(few_ctx.captured_queries), len(many_ctx.captured_queries))
 
 
+class DeletedMessagesValidationTests(AuthenticatedAPITestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.author = User.objects.create(
+            id=88,
+            name='Stephanie',
+            discriminator=88,
+        )
+
+    def _message(self, message_id: int, author_id: int) -> dict:
+        return {
+            'author': author_id,
+            'id': message_id,
+            'channel_id': 5555,
+            'content': "Content",
+            'embeds': [],
+            'attachments': []
+        }
+
+    def test_rejects_unknown_author(self):
+        url = reverse('api:bot:messagedeletioncontext-list')
+        data = {
+            'actor': None,
+            'creation': datetime.now(tz=UTC).isoformat(),
+            'deletedmessage_set': [self._message(1, author_id=999999)],
+        }
+        response = self.client.post(url, data=data)
+        self.assertEqual(response.status_code, 400)
+
+    def test_rejects_already_existing_message_id(self):
+        url = reverse('api:bot:messagedeletioncontext-list')
+        first = {
+            'actor': None,
+            'creation': datetime.now(tz=UTC).isoformat(),
+            'deletedmessage_set': [self._message(2, author_id=self.author.id)],
+        }
+        self.assertEqual(self.client.post(url, data=first).status_code, 201)
+
+        response = self.client.post(url, data=first)
+        self.assertEqual(response.status_code, 400)
+
 
 class DeletedMessagesWithActorTests(AuthenticatedAPITestCase):
     @classmethod
