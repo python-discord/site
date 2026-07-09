@@ -111,9 +111,10 @@ class DeletedMessageSerializer(ModelSerializer):
     model for more information.
     """
 
-    author = PrimaryKeyRelatedField(
-        queryset=User.objects.all()
-    )
+    # Plain integers to avoid per-row DB validators (id's UniqueValidator, author's
+    # FK lookup) that cause N+1 queries. Validation is done in the `MessageDeletionContextSerializer` instead.
+    id = IntegerField()
+    author = IntegerField(source='author_id', allow_null=True)
     deletion_context = PrimaryKeyRelatedField(
         queryset=MessageDeletionContext.objects.all(),
         # This will be overridden in the `create` function
@@ -145,6 +146,39 @@ class MessageDeletionContextSerializer(ModelSerializer):
         model = MessageDeletionContext
         fields = ('actor', 'creation', 'id', 'deletedmessage_set')
         depth = 1
+
+    def validate_deletedmessage_set(self, messages: list[dict]) -> list[dict]:
+        """
+        Validate the deleted messages using batched queries to avoid N+1 lookups.
+
+        Rather than letting each nested message trigger its own author and
+        uniqueness queries, all referenced authors and message IDs are checked
+        with a single query each.
+        """
+        author_ids = {
+            message['author_id']
+            for message in messages
+            if message['author_id'] is not None
+        }
+        known_author_ids = set(
+            User.objects.filter(id__in=author_ids).values_list('id', flat=True)
+        )
+        unknown_author_ids = author_ids - known_author_ids
+        if unknown_author_ids:
+            raise ValidationError(
+                f"The following message authors do not exist: {sorted(unknown_author_ids)}"
+            )
+
+        message_ids = [message['id'] for message in messages]
+        existing_ids = set(
+            DeletedMessage.objects.filter(id__in=message_ids).values_list('id', flat=True)
+        )
+        if existing_ids:
+            raise ValidationError(
+                f"The following message IDs already exist: {sorted(existing_ids)}"
+            )
+
+        return messages
 
     def create(self, validated_data: dict) -> MessageDeletionContext:
         """
