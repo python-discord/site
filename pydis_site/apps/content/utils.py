@@ -23,6 +23,10 @@ TAG_CACHE_TTL = datetime.timedelta(hours=1)
 log = logging.getLogger(__name__)
 
 
+class TagUpdateError(Exception):
+    """Raised when tags cannot be fetched from GitHub and no cached data is available."""
+
+
 def github_client(**kwargs) -> httpx.Client:
     """Get a client to access the GitHub API with important settings pre-configured."""
     client = httpx.Client(
@@ -228,7 +232,16 @@ def get_tags() -> list[Tag]:
         if settings.STATIC_BUILD:  # pragma: no cover
             tags = get_tags_static()
         else:
-            tags = fetch_tags()
+            try:
+                tags = fetch_tags()
+            except httpx.HTTPError as error:
+                # return the stale cache if we have one, otherwise raise the error
+                if last_update is not None:
+                    log.warning("Failed to refresh tags from GitHub: %r", error)
+                    return list(Tag.objects.all())
+                raise TagUpdateError(
+                    "Failed to fetch tags from GitHub, also have no stale cache to fall back on."
+                ) from error
             record_tags(tags)
 
         return tags
