@@ -79,10 +79,10 @@ class HomeView(View):
 
             api_data: list[dict] = resp.json()
         except httpx.TimeoutException:
-            log.error("Request to fetch GitHub repository metadata for timed out!")
+            log.warning("Request to fetch GitHub repository metadata for timed out!")
             return repo_dict
         except httpx.HTTPStatusError as ex:
-            log.error(f"Received HTTP {ex.response.status_code} from GitHub repository metadata request!")
+            log.warning(f"Received HTTP {ex.response.status_code} from GitHub repository metadata request!")
             return repo_dict
         except JSONDecodeError:
             log.error("GitHub returned invalid JSON for repository metadata!")
