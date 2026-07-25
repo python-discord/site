@@ -358,6 +358,20 @@ class FilterValidationTests(AuthenticatedAPITestCase):
         response = self.client.post(test_filter.url(), data=clean_test_json(test_filter.object))
         self.assertEqual(response.status_code, 400)
 
+    def test_filter_list_includes_nested_filters(self) -> None:
+        filter_list = FilterList.objects.create(**get_test_sequences()["filter_list1"].object)
+        filter_ = Filter.objects.create(
+            filter_list=filter_list, content="bad word", description="This is a bad word."
+        )
+
+        response = self.client.get(f"{reverse('api:bot:filterlist-list')}/{filter_list.id}")
+
+        self.assertEqual(response.status_code, 200)
+        filters = response.json()["filters"]
+        self.assertEqual(len(filters), 1)
+        self.assertEqual(filters[0]["id"], filter_.id)
+        self.assertEqual(filters[0]["filter_list"], filter_list.id)
+
 
 class FilterCreationMissingOptionalFieldsTestCase(AuthenticatedAPITestCase):
     @classmethod

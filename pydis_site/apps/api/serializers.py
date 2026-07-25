@@ -435,10 +435,11 @@ class FilterListSerializer(ModelSerializer):
         into a sub-field called `settings`.
         """
         schema = {name: getattr(instance, name) for name in BASE_FILTERLIST_FIELDS}
-        schema['filters'] = [
-            FilterSerializer(many=False).to_representation(instance=item)
-            for item in Filter.objects.filter(filter_list=instance.id).prefetch_related('filter_list')
-        ]
+        filters = []
+        for item in instance.filters.all():
+            item.filter_list = instance
+            filters.append(FilterSerializer(many=False).to_representation(instance=item))
+        schema['filters'] = filters
 
         settings = {name: getattr(instance, name) for name in BASE_SETTINGS_FIELDS}
         settings['infraction_and_notification'] = {
