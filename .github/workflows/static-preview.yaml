@@ -31,7 +31,7 @@ jobs:
       # Build the container, including an inline cache manifest to
       # allow us to use the registry as a cache source.
       - name: Build Docker Image (Main)
-        uses: docker/build-push-action@bcafcacb16a39f128d818304e6c9c0c18556b85f # v7
+        uses: docker/build-push-action@f9f3042f7e2789586610d6e8b85c8f03e5195baf # v7
         if: github.ref == 'refs/heads/main'
         with:
           context: .
@@ -57,7 +57,7 @@ jobs:
 
       # Build directly to a local folder
       - name: Build Docker Image (PR)
-        uses: docker/build-push-action@bcafcacb16a39f128d818304e6c9c0c18556b85f # v7
+        uses: docker/build-push-action@f9f3042f7e2789586610d6e8b85c8f03e5195baf # v7
         if: github.ref != 'refs/heads/main'
         with:
           context: .
