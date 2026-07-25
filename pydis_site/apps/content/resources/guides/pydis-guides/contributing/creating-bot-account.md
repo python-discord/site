@@ -3,15 +3,19 @@ title: Setting up a Bot Account
 description: How to set up a bot account.
 icon: fab fa-discord
 ---
-1. Go to the [Discord Developers Portal](https://discordapp.com/developers/applications/).
-2. Click on the `New Application` button, enter your desired bot name, and click `Create`.
-3. In your new application, go to the `Bot` tab, click `Add Bot`, and confirm `Yes, do it!`
-4. Change your bot's `Public Bot` setting off so only you can invite it, save, and then get your **Bot Token** with the `Copy` button.
-> **Note:** **DO NOT** post your bot token anywhere public. If you do it can and will be compromised.
-5. Save your **Bot Token** somewhere safe to use in the project settings later.
-6. In the `General Information` tab, grab the **Application ID**.
-7. Replace `<APPLICATION_ID_HERE>` in the following URL and visit it in the browser to invite your bot to your new test server.
-```plaintext
-https://discordapp.com/api/oauth2/authorize?client_id=<APPLICATION_ID_HERE>&permissions=8&scope=bot
-```
-Optionally, you can generate your own invite url in the `OAuth` tab, after selecting `bot` as the scope.
+1. Go to the [Discord Developers Portal](https://discord.com/developers/applications).
+1. Click on the `New Application` button, enter your desired bot name, and click `Create`.
+1. In the `Installation` tab, set `Install Link` to `None` and click `Save Changes`.
+1. In the `Bot` tab:
+
+    - Turn off the `Public Bot` setting.
+    - Turn on the `Message Content Intent` setting.
+    - If setting up Python Bot, also turn on the `Server Members Intent` setting.
+    - ...and click `Save Changes`.
+
+1. Click the `Reset Token` button and then `Copy` the generated token. Save it somewhere safe, as you will need it later.
+
+    **Note**: Do not post this token anywhere public, as it grants complete control of your bot.
+    {: .notification .is-warning }
+
+1. In the  `OAuth2` tab, select the `bot` scope and `Administrator` permission, and visit the generated URL in your Discord app or browser to invite the bot to your server.

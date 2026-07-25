@@ -94,11 +94,7 @@ GitHub is a website based on Git that stores project files in the cloud. We use 
 
 *Note: Members of the Python Discord staff can create feature branches directly on the repo without forking it.*
 
-Check out our [**guide on forking a GitHub repo**](./forking-repository/).
-
-Now that you have your own fork you need to be able to make changes to the code. You can clone the repo to your local machine, commit changes to it there, then push those changes to GitHub.
-
-Check out our [**guide on cloning a GitHub repo**](./cloning-repository/).
+Check out our [**guide on forking and cloning a GitHub repository**](./forking-and-cloning/).
 
 ### 2. Set up the project
 You have the source code on your local computer, now how do you actually run it? We have detailed guides on setting up the environment for each of our main projects:

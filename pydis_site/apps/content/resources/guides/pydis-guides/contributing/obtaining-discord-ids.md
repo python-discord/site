@@ -5,8 +5,9 @@ icon: fab fa-discord
 ---
 First, enable developer mode in your client so you can easily copy IDs.
 
-1. Go to your `User Settings` and click on the `Appearance` tab.
-2. Under `Advanced`, enable `Developer Mode`.
+1. Open your `User Settings` by clicking the gear icon in the bottom left of the Discord client.
+1. Scroll down to the `Developer` section at the bottom of the left sidebar.
+1. Enable the `Developer Mode` option.
 
 #### Guild ID
 

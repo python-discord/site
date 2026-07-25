@@ -4,131 +4,95 @@ description: A guide to setting up and configuring Bot.
 icon: fab fa-github
 toc: 3
 ---
-The purpose of this guide is to get you a running local version of [the Python bot](https://github.com/python-discord/bot).
-You should have already forked the repository and cloned it to your local machine. If not, check out our [detailed walkthrough](../#1-fork-and-clone-the-repo).
-
-This page will focus on the quickest steps one can take, with mentions of alternatives afterwards.
+This guide will walk you through setting up and running [the Python bot](https://github.com/python-discord/bot) locally,
+and get you ready to contribute to it.
 
 ---
 ## Setting up the project
 
-### Setup Project Dependencies
-Below are the dependencies you **must** have installed to get started with the bot.
+### Install Project Requirements
+The following are needed to run the bot. Follow the links for installation instructions.
 
-1. Make sure you have [Python 3.14](https://www.python.org/downloads/) installed. uv [can also be used to](https://docs.astral.sh/uv/guides/install-python/#installing-python) install Python, if desired.
-2. [Install uv](https://github.com/astral-sh/uv#installation).
-3. [Install the project's dependencies](../installing-project-dependencies).
-4. Docker.
+- [uv](https://docs.astral.sh/uv/getting-started/installation/).
+- [Python 3.14](https://www.python.org/downloads/). This can be installed [using uv](https://docs.astral.sh/uv/guides/install-python/#installing-python).
+- [Docker](https://docs.docker.com/get-started/get-docker/).
 
-<div class="card">
-    <button type="button" class="card-header collapsible">
-        <span class="card-header-title subtitle is-6 my-2 ml-2">Getting started with Docker</span>
-        <span class="card-header-icon">
-            <i class="fas fa-fw fa-angle-down title is-5" aria-hidden="true"></i>
-        </span>
-    </button>
-    <div class="collapsible-content collapsed">
-        <div class="card-content">
-            The requirements for Docker are:
-            <ul>
-                <li><a href="https://docs.docker.com/install">Docker CE</a></li>
-                <li>Docker Compose. If you're using macOS and Windows, this already comes bundled with the previous installation. Otherwise, you can download it either from the <a href="https://docs.docker.com/compose/install">website</a>, or by running <code>pip install docker-compose</code>.</li>
-            </ul>
-            <p class="notification is-warning">If you get any Docker related errors, reference the <a href="../docker#possible-issues">Possible Issue</a> section of the Docker page.</p>
-        </div>
-    </div>
-</div>
-<br>
+### Set Up a Development Environment
+
+To start, ensure you have forked and cloned the [bot repository](https://github.com/python-discord/bot) to your local machine. For help with this, check out our [forking and cloning guide](../forking-and-cloning).
+
+From the root of the cloned repository, run the following command to install the project dependencies:
+
+```shell
+$ uv sync
+```
+
+You should also install our pre-commit hooks, which will lint your code before you commit it.
+```shell
+$ uv run task precommit
+```
 
 ### Set Up a Test Server
-The Python bot is tightly coupled with the Python Discord server, so to have a functional version of the bot you need a server with channels it can use.
-It's possible to set the bot to use a single channel for all cogs, but that will cause extreme spam and will be difficult to work with.
+The Python bot is tightly coupled with the Python Discord server, so the bot expects the existence of certain
+channels, roles, and other server configurations to be able to run.
 
-You can start your own server and set up channels as you see fit, but for your convenience we have a template for a development server you can use: [https://discord.new/zmHtscpYN9E3](https://discord.new/zmHtscpYN9E3).
+It is highly recommended to use our [server template](https://discord.new/zmHtscpYN9E3),
+as it allows most configuration to be automatically generated for you.
 
-Keep in mind that this is not an exact mirror of the Python server, but a reduced version for testing purposes.
-The channels there are mostly the ones needed by the bot.
----
+This is not an exact mirror of the Python server, but a reduced version for testing purposes.
 
 ### Set Up a Bot Account
 You will need your own bot account on Discord to test your changes to the bot.
-See [here](../creating-bot-account) for help with setting up a bot account. Once you have a bot account, invite it to the test server you created in the previous section.
+See [our guide](../creating-bot-account) for help with setting up a bot account, and inviting it to your server.
 
-#### Privileged Intents
+If you want to use an existing test bot account, ensure that:
 
-It is necessary to explicitly request that your Discord bot receives certain gateway events.
-The Python bot requires `Server Member Intent` and `Message Content Intent` to function.
-In order to enable it, visit the [Developer Portal](https://discord.com/developers/applications/) (from where you copied your bot's login token) and scroll down to the `Privileged Gateway Intents` section.
-The `Presence Intent` is not necessary and can be left disabled.
-
-If your bot fails to start with a `PrivilegedIntentsRequired` exception, this indicates that the required intents were not enabled.
-
----
+- It has the `Server Members Intent`  and `Message Content Intent` intents enabled.
+- It was invited to your server with the `bot` scope and `Administrator` permission.
 
 ### Configure the Bot
-You now have both the bot's code and a server to run it on. It's time for you to connect the two by setting the bot's configuration.
 
-Both `.env` and `.env.server` files we talk about below are ignored by git, so they do not get accidentally commit to the repository.
+The bot reads variables for configuration from two files, `.env`, and `.env.server`. These files are ignored by git, as they contain information specific to your local environment.
 
 #### .env
-This file will contain sensitive information such as your bot's token, do not share it with anybody!
 
-To start, create a `.env` file in the project root with the below content.
+Create a file called `.env` in the project root with the below content, and insert your bot token and guild ID. Remember that your bot token is sensitive information, and should not be shared with anyone.
 
 ```text
 BOT_TOKEN=YourDiscordBotTokenHere
 GUILD_ID=YourDiscordTestServerIdHere
-BOT_PREFIX=YourDesiredPrefixHere
 ```
 See [here](../creating-bot-account) for help with obtaining the bot token, and [here](../obtaining-discord-ids#guild-id) for help with obtaining the guild's ID.
 
-Other values will be added to your `.env` over time as you need to interact with other parts of the bot, but those are not needed for a basic setup. For a full list of support values see the ENV file option [appendix](#appendix-full-env-file-options)
+This is all that is needed for a basic setup. See the [appendix](#appendix-full-env-file-options) for a full list of available variables.
 
 #### .env.server
-All server related configuration values are saved in this file, which also needs to be at the root directory of the project.
 
-We provide a script to automatically generate a server config.
-**Note**: The script **only** works with servers created with the template mentioned above.
+This file is automatically generated by our bootstrap script, which connects
+to your server and extracts configuration needed for the bot to run.
 
-If you want to setup the bot from an existing guild read out [manual configuration guide](../bot-extended-configuration-options#manual-constants-configuration). This is far more complicated and time consuming.
-
-Running the below command will use the `BOT_TOKEN` and `GUILD_ID` from the `.env` file you created above to download all of the relevant IDs from the template guild into your `.env.server`
-
-**Note**: This script will overwrite the `.env.server` file. We suggest you put any configuration not generated by this script in to `.env` instead
+To run the script, execute the following command in the project root:
 ```shell
 $ uv run task configure
 ```
 
-Once the script has finished running, you'll notice the creation of a new file called `.env.server` at your project's root directory.
-This file will contain the extracted IDs from your server which are necessary for your bot to run.
+**Note**: The script only works with servers created with the template mentioned above. To configure the bot manually, see our [manual configuration guide](../bot-extended-configuration-options#manual-constants-configuration).
+{: .notification }
+
+**Note**: This script will overwrite the `.env.server` file. We suggest you put any configuration not generated by this script in to `.env` instead.
+{: .notification }
+
+
+Ensure that this runs successfully, and that the `.env.server` file is created in the project root.
+
+---
 
 **Congratulations**, you have finished the configuration and can now [run your bot](#run-it).
 
-
-<div class="card">
-    <button type="button" class="card-header collapsible">
-        <span class="card-header-title subtitle is-6 my-2 ml-2">Why do you need a separate config file?</span>
-        <span class="card-header-icon">
-            <i class="fas fa-fw fa-angle-down title is-5" aria-hidden="true"></i>
-        </span>
-    </button>
-    <div class="collapsible-content collapsed">
-        <div class="card-content">
-            While it's technically possible to edit the values in <code>constants.py</code> to match your server, it is heavily discouraged.
-            This file's purpose is to provide the configurations the Python bot needs to run in the Python server in production, and should remain as such.
-            In contrast, the <code>.env.server</code> file can remain in your local copy of the code, and will be ignored by commits via the project's <code>.gitignore</code>.
-        </div>
-    </div>
-</div>
-<br>
-
-
 ### Run it!
-#### With Docker
-You are now almost ready to run the Python bot. The simplest way to do so is with Docker.
+You are now ready to run the bot. The simplest way to do so is with Docker.
 
-
-With all of the above setup, you can run the project with `docker compose up`. This will start the bot and all required services! Enter your server and type `!help` (or whatever prefix you chose instead of `!`) to see the bot in action!
+Start the project by running the command `docker compose up`. This will start the bot and all required services! Enter your server and type `!help` to see the bot in action!
 
 Some other useful docker commands are as follows:
 
@@ -138,6 +102,8 @@ Some other useful docker commands are as follows:
 Your bot is now running, all inside Docker.
 
 **Note**: If you want to read about how to make debugging with an IDE a easier, or for additional running methods, check out our [extended configuration guide](../bot-extended-configuration-options).
+
+If you encounter issues with docker, check out our [docker guide](../docker), which lists some common issues and their solutions.
 
 ---
 

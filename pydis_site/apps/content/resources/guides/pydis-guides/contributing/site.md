@@ -18,9 +18,8 @@ You should have already forked the [`site`](https://github.com/python-discord/si
 
 Using Docker (recommended):
 
-- [Docker CE](https://docs.docker.com/install/)
-- [Docker Compose](https://docs.docker.com/compose/install/)
-    - `pip install docker-compose`
+- [Docker](https://docs.docker.com/get-started/get-docker/)
+
 
 Without Docker:
 
@@ -30,7 +29,16 @@ Without Docker:
 ---
 # Development environment
 
-[Install the project's dependencies](../installing-project-dependencies/)
+From the root of the cloned repository, run the following command to install the project dependencies:
+
+```shell
+$ uv sync
+```
+
+You should also configure precommit hooks, which will lint your code before you commit it.
+```shell
+$ uv run task precommit
+```
 
 ## Without Docker
 
@@ -86,7 +94,7 @@ The project can be started with Docker or by running it directly on your system.
 Start the containers using Docker Compose:
 
 ```shell
-docker-compose up
+docker compose up
 ```
 
 The `-d` option can be appended to the command to run in detached mode. This runs the containers in the background so the current terminal session is available for use with other things.
@@ -106,7 +114,7 @@ Note that this can still be done with Docker even if the webserver will be runni
 If you chose to use Docker for just the database, use Docker Compose to start the container:
 
 ```shell
-docker-compose up postgres
+docker compose up postgres
 ```
 
 If you're not using Docker, then use [pg_ctl](https://www.postgresql.org/docs/current/app-pg-ctl.html) or your system's service manager if PostgreSQL isn't already running.
