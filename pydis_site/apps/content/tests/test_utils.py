@@ -241,6 +241,26 @@ class TagUtilsTests(TestCase):
         with self.assertRaises(models.Tag.DoesNotExist):
             utils.get_tag("fake")
 
+    @mock.patch.object(utils, "fetch_tags")
+    def test_get_tags_falls_back_to_stale_cache_on_error(self, fetch_mock: mock.Mock):
+        """Test that stale cached tags are served when refreshing from GitHub fails."""
+        stale = models.Tag.objects.create(name="stale-tag")
+        models.Tag.objects.update(last_updated=_time)
+        fetch_mock.side_effect = httpx.ReadTimeout("The read operation timed out")
+
+        result = utils.get_tags()
+
+        fetch_mock.assert_called_once()
+        self.assertEqual([stale], result)
+
+    @mock.patch.object(utils, "fetch_tags")
+    def test_get_tags_reraises_on_error_with_empty_cache(self, fetch_mock: mock.Mock):
+        """Test that an error is raised when there is no cached data to fall back on."""
+        fetch_mock.side_effect = httpx.ReadTimeout("The read operation timed out")
+
+        with self.assertRaises(utils.TagUpdateError):
+            utils.get_tags()
+
     @mock.patch.object(utils, "get_tag_category")
     def test_category_pages(self, get_mock: mock.Mock):
         """Test that the category pages function calls the correct method for tags."""
