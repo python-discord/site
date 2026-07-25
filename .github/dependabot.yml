@@ -18,3 +18,17 @@ updates:
       interval: "daily"
     reviewers:
       - "python-discord/devops"
+    groups:
+      github-actions:
+        patterns:
+          - "*"
+  - package-ecosystem: "docker"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    reviewers:
+      - "python-discord/devops"
+    groups:
+      docker:
+        patterns:
+          - "*"
